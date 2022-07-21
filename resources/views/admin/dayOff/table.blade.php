@@ -7,16 +7,16 @@
             <th style="min-width: 100px;">
                 Tipo de conteo
             </th>
-            <th style="min-width: 150px;">
+            <th style="min-width: 100px;">
                 Inicio
             </th>
             <th style="min-width: 90px;">
                 Días inicales
             </th>
-            <th style="min-width: 25px;">
+            {{-- <th style="min-width: 25px;">
                 Incremento de días
-            </th>
-            <th style="min-width: 25px;">
+            </th> --}}
+            <th style="min-width: 120px;">
                 Periodo de corte
             </th>
             <th style="min-width: 200px;">

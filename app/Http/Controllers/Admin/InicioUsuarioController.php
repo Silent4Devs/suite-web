@@ -38,6 +38,9 @@ use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RiesgoIdentificado;
 use App\Models\Sede;
+use App\Models\SolicitudDayOff;
+use App\Models\SolicitudPermisoGoceSueldo;
+use App\Models\SolicitudVacaciones;
 use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
 use Carbon\Carbon;
@@ -251,7 +254,12 @@ class InicioUsuarioController extends Controller
         $mis_sugerencias = Sugerencias::where('empleado_sugirio_id', auth()->user()->empleado->id)->get();
         $mis_sugerencias_count = Sugerencias::where('empleado_sugirio_id', auth()->user()->empleado->id)->count();
 
-        return view('admin.inicioUsuario.index', compact('usuario', 'competencias', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios', 'esLider', 'organizacion', 'usuarioVinculadoConEmpleado', 'mis_quejas', 'mis_quejas_count', 'mis_denuncias', 'mis_denuncias_count', 'mis_propuestas', 'mis_propuestas_count', 'mis_sugerencias', 'mis_sugerencias_count'));
+        $solicitud_vacacion = SolicitudVacaciones::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
+        $solicitud_dayoff = SolicitudDayOff::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
+        $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
+        $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
+
+        return view('admin.inicioUsuario.index', compact('solicitudes_pendientes', 'usuario', 'competencias', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios', 'esLider', 'organizacion', 'usuarioVinculadoConEmpleado', 'mis_quejas', 'mis_quejas_count', 'mis_denuncias', 'mis_denuncias_count', 'mis_propuestas', 'mis_propuestas_count', 'mis_sugerencias', 'mis_sugerencias_count'));
     }
 
     // public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
