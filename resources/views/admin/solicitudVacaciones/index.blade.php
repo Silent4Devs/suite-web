@@ -78,7 +78,7 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Solicitud Vacaciones</h5>
+    <h5 class="col-12 titulo_general_funcion">Solicitud de Vacaciones</h5>
 
     <div class="card">
         @can('amenazas_agregar')
@@ -191,7 +191,7 @@
             ];
 
             let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i>Nueva Solicitud',
                 titleAttr: 'Agregar Regla',
                 url: "{{ route('admin.solicitud-vacaciones.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
@@ -246,14 +246,14 @@
                         }
 
                     },
-                    {
-                        data: 'año',
-                        name: 'año',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:center">${data} año</div>`;
-                        }
+                    // {
+                    //     data: 'año',
+                    //     name: 'año',
+                    //     render: function(data, type, row) {
+                    //         return `<div style="text-align:center">${data} año</div>`;
+                    //     }
 
-                    },
+                    // },
                     {
                         data: 'fecha_inicio',
                         name: 'fecha_inicio',
@@ -304,13 +304,13 @@
                         }
                     },
 
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
+                    // {
+                    //     data: 'descripcion',
+                    //     name: 'descripcion',
+                    //     render: function(data, type, row) {
+                    //         return `<div style="text-align:left">${data}</div>`;
+                    //     }
+                    // },
                     {
                         data: 'actions',
                         render: function(data, type, row, meta) {
@@ -328,8 +328,8 @@
                                 let urlEliminar = '{{ route('admin.solicitud-vacaciones.destroy') }}'
                                 return `     
                                 <div style="text-aling:center">
-                                <a href="solicitud-vacaciones/${row.id}/show"  title="Aprobar/ Rechazar solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-                                <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Eliminar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
+                                <a href="solicitud-vacaciones/${row.id}/show"  title="Ver detalles"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+                                <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
                                 </div>
                                `;
                             }
@@ -355,13 +355,14 @@
             });
             window.eliminar = (url, id) => {
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: '¿Esta seguro de cancelar la solicitud?',
+                    text: "Esta solicitud ya no será visible para el aprobador.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: '¡Sí estoy seguro!',
+                    cancelButtonText: 'Cancelar',
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({

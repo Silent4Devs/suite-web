@@ -188,7 +188,7 @@
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; fontcolor:#153643;">
-                                                Le informamos que <strong>{{$solicitante->name}}</strong> ha presentado una solicitud de Vacaciones la cual requiere de su aprobación o rechazo.
+                                                Le informamos que <strong>{{$solicitante->name}}</strong> ha realizado una solicitud de Vacaciones la cual requiere de su aprobación.
                                             </p>                                                
                                         </div>
                                         <div style="width: 100%; margin-top: 10px;">
@@ -256,7 +256,7 @@
                                         </div>
                                         <div style="text-align:center; margin-top:20px">
                                             <a  href="{{ route("admin.solicitud-vacaciones.respuesta",$solicitud->id) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                Aprobar / Rechazar
+                                                Ver solicitud
                                             </a>
                                         </div>
                                     </td>

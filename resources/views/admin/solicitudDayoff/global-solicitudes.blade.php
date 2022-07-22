@@ -61,7 +61,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width: 200px;">
-                            Colaborador
+                            Solicitante
                         </th>
                         <th style="min-width: 110px;">
                             Días Solicitados
@@ -76,9 +76,9 @@
                         <th style="min-width: 75px;">
                            Estatus
                         </th>
-                        <th style="min-width: 150px;">
+                        {{-- <th style="min-width: 150px;">
                             Comentarios
-                        </th>
+                        </th> --}}
                         <th style="min-width: 70px;">
                             Opciones
                         </th>
@@ -298,13 +298,13 @@
                         }
                     },
 
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
+                    // {
+                    //     data: 'descripcion',
+                    //     name: 'descripcion',
+                    //     render: function(data, type, row) {
+                    //         return `<div style="text-align:left">${data}</div>`;
+                    //     }
+                    // },
                     {
                         data: 'opciones',
                         render: function(data, type, row, meta) {

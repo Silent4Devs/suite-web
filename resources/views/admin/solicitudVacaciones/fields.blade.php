@@ -28,7 +28,7 @@ if ($dias_pendientes >= 1) {
                     </div>
                 </div>
                 <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Considera...</p>
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Importante ...</p>
                     <p class="m-0" style="font-size: 14px; color:#1E3A8A "> Actualmente tienes
                         <strong>{{ $dias_pendientes }} dias</strong> en estado de <strong>"Pendientes"</strong>, los
                         cuales están descontados y en caso de ser rechazados estos serán reembolsados.
@@ -59,7 +59,7 @@ if ($dias_pendientes >= 1) {
             <div class="form-group col-sm-6 ">
                 <fieldset disabled>
                     <label for="disabledTextInput"><i class="bi bi-calendar2-event-fill iconos-crear"></i>Validos
-                        hasta:</label>
+                        hasta el:</label>
                     <input type="text" id="validos_hasta" class="form-control" value="{{ $finVacaciones }}"
                         style="text-align: center">
                 </fieldset>
@@ -112,7 +112,7 @@ if ($dias_pendientes >= 1) {
         <div class="row">
             <div class="form-group col-sm-12">
                 <label for="exampleFormControlTextarea1"> <i
-                        class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}</label>
+                        class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios:') !!}</label>
                 <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
             </div>
         </div>
