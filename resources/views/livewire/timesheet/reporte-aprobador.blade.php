@@ -160,6 +160,9 @@
             <label class="form-label" style="width:100%;">&nbsp;</label><br>
             <a href="" class="btn btn-info"><i class="fa-solid fa-arrow-rotate-right"></i></a>
         </div>
+        <div class="col-12 form-group text-right">
+            <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar correo a colaboradores con horas faltantes de registrar</button>
+        </div>
 
         <div class="datatable-fix w-100 mt-4">
             <table id="timesheet_empleados_lista" class="table w-100 datatable_timesheet_empleados_reportes tabla-fixed"

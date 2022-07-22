@@ -20,12 +20,22 @@
         </a>
     </li>
     @endcan
-    @can('timesheet_acceder')
+    {{-- @can('timesheet_acceder')
     <li>
         <a href="#">
             <div>
                 <i class="fas fa-hand-holding-usd"></i><br>
                Permisos con goce de sueldo
+            </div>
+        </a>
+    </li>
+    @endcan --}}
+    @can('timesheet_acceder')
+    <li>
+        <a href="incidentes-vacaciones">
+            <div>
+                <i class="fas fa-hand-holding-usd"></i><br>
+               Incidentes vacaciones
             </div>
         </a>
     </li>

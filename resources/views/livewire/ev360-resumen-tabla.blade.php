@@ -8,7 +8,7 @@
     </div>
     <div class="container">
         <div wire:ignore class="container pl-0 datatable-fix">
-            <table class="table table-bordered w-100 datatable-Activo" id="tblResumen" style="font-size: 10px;">
+            <table class="table table-bordered w-100 datatable-Activo tabla-fija" id="tblResumen" style="font-size: 10px;">
                 <thead class="thead-dark">
                     <tr>
                         <th class="text-center" colspan="9">
@@ -22,10 +22,10 @@
                         </th>
                     </tr>
                     <tr>
-                        <th style="vertical-align: top;">Colaborador</th>
-                        <th style="vertical-align: top;">Puesto / Área</th>
+                        <th style="vertical-align: top;" class="celdas-colaborador">Colaborador</th>
+                        <th style="vertical-align: top;" class="celdas-puesto">Puesto / Área</th>
                         {{-- <th style="vertical-align: top;">Área</th> --}}
-                        <th style="vertical-align: top;">Evaluador(es)</th>
+                        <th style="vertical-align: top;" class="celdas-evaluacion">Evaluador(es)</th>
                         <th style="vertical-align: top;">Peso Competencias(%)</th>
                         <th style="vertical-align: top;">Peso Objetivos(%)</th>
                         <th style="vertical-align: top;">Competencias</th>
@@ -43,11 +43,11 @@
                 <tbody>
                     @forelse ($lista as $evaluado)
                         <tr>
-                            <td style="text-align: left !important">{{ $evaluado['evaluado'] }}</td>
-                            <td><span class="badge badge-primary">{{ $evaluado['puesto'] }}</span><br><span
+                            <td style="text-align: left !important" class="celdas-colaborador">{{ $evaluado['evaluado'] }}</td>
+                            <td class="celdas-puesto"><span class="badge badge-primary">{{ $evaluado['puesto'] }}</span><br><span
                                     class="badge badge-success">{{ $evaluado['area'] }}</span></td>
                             {{-- <td>{{ $evaluado['area'] }}</td> --}}
-                            <td>
+                            <td class="celdas-evaluacion">
                                 <div class="flex-wrap d-flex">
                                     @foreach ($evaluado['informacion_evaluacion']['evaluadores'] as $evaluador)
                                         @if ($evaluado['evaluado'] != $evaluador->name)

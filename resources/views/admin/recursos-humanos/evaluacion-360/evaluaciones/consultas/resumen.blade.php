@@ -12,6 +12,43 @@
             height: 1px;
         }
 
+        .tabla-fija .celdas-colaborador{
+            position: sticky !important;
+            left: 0px;
+            z-index: 2;
+        }
+        .tabla-fija td.celdas-colaborador{
+            background-color: #fff;
+        }
+        .tabla-fija tr:nth-child(even) td.celdas-colaborador{
+            background-color: #eee;
+        }
+
+        .tabla-fija .celdas-puesto{
+            position: sticky !important;
+            left: 91px;
+            background-color: #fff;
+            z-index: 2;
+        }
+        .tabla-fija td.celdas-puesto{
+            background-color: #fff;
+        }
+        .tabla-fija tr:nth-child(even) td.celdas-puesto{
+            background-color: #eee;
+        }
+        
+        .tabla-fija .celdas-evaluacion{
+            position: sticky !important;
+            left: 209px;
+            background-color: #fff;
+            z-index: 2;
+        }
+        .tabla-fija td.celdas-evaluacion{
+            background-color: #fff;
+        }
+        .tabla-fija tr:nth-child(even) td.celdas-evaluacion{
+            background-color: #eee;
+        }
     </style>
     <div class="mt-4 card">
         <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
@@ -238,9 +275,9 @@
                 }],
             };
             let table = $("#tblResumen").DataTable(dtOverrideGlobals);
-            new $.fn.dataTable.FixedColumns(table, {
-                leftColumns: 3
-            });
+            // new $.fn.dataTable.FixedColumns(table, {
+            //     leftColumns: 3
+            // });
         })
     </script>
 @endsection

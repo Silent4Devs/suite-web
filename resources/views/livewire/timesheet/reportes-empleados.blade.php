@@ -155,7 +155,23 @@
             <label class="form-label" style="width:100%;">&nbsp;</label><br>
             <a href="" class="btn btn-info"><i class="fa-solid fa-arrow-rotate-right"></i></a>
         </div>
-
+        <div class="col-md-3 form-group" style="padding-left:0px !important;">
+            <label class="form-label">Estatus de Colaborador</label>
+            <div class="d-flex">
+                <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus('alta')" style="background-color: #69D552; border:none !important;">
+                    Alta
+                </div>
+                <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus('baja')" style="background-color: #FF9D9D; border:none !important;">
+                    Baja
+                </div>
+                <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus(null)" style="background-color: #42ADDC; border:none !important;">
+                    Todos
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 form-group text-right">
+            <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar correo a colaboradores con horas faltantes de registrar</button>
+        </div>
         <div class="datatable-fix w-100 mt-4">
             <table id="timesheet_empleados_lista" class="table w-100 datatable_timesheet_empleados_reportes tabla-fixed"
                 data-semanas="{{ $semanas_totales_calendario }}">
