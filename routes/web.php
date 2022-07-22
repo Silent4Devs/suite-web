@@ -995,6 +995,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
     Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
 
+    Route::delete('analisis-impacto/destroy', 'AnalisisdeImpactoController@massDestroy')->name('analisis-impacto.massDestroy');
+    Route::get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
+    Route::get('getEmployeeData', 'AnalisisdeImpactoController@getEmployeeData')->name('analisis-impacto.getEmployeeData');
+    Route::resource('analisis-impacto', 'AnalisisdeImpactoController')->names([
+        'index' => 'analisis-impacto.index',
+        'create' => 'analisis-impacto.create',
+        'store' => 'analisis-impacto.store',
+        'show' => 'analisis-impacto.show',
+        'edit' => 'analisis-impacto.edit',
+        'update' => 'analisis-impacto.update',
+    ]);;
+   
+
     //Carta de Aceptación
     // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
     Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
