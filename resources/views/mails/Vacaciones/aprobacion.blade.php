@@ -247,9 +247,9 @@
                                                             if($solicitud->aprobacion == 2){
                                                                 $respuesta ="Rechazada";
                                                             }elseif ($solicitud->aprobacion == 3 ) {
-                                                                $respuesta ="Aceptada";
+                                                                $respuesta ="Aprobada";
                                                             }else {
-                                                                $respuesta ="Pendiente";
+                                                                $respuesta ="Rechazada";
                                                             }
                                                         @endphp
                                                         <li>

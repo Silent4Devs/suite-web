@@ -61,7 +61,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width: 200px;">
-                            Colaborador
+                           Solicitante
                         </th>
                         <th style="min-width: 110px;">
                             Días Solicitados

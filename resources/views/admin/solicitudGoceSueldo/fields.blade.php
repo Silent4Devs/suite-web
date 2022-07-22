@@ -1,7 +1,7 @@
 <!-- Categoria Field -->
 <div class="row">
     <div class="form-group col-sm-6">
-        <label for="inputState"><i class="bi bi-collection-fill iconos-crear"></i>Permiso</label>
+        <label for="inputState"><i class="bi bi-collection-fill iconos-crear"></i>Tipo de permiso a solicitar:</label>
         <select id="permiso_id" class="form-control" name="permiso_id">
             <option selected>Seleccione...</option>
             @foreach ($permisos as $permiso)
