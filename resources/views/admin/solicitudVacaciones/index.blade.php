@@ -82,7 +82,14 @@
 
     <div class="card">
         @can('amenazas_agregar')
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+        <div class="form-group row mt-4">
+            <label for="inputEmail3" class="col-sm-2 col-form-label offset-8 ">Días disponibles:</label>
+            <div class="col-sm-2 pr-5">
+              <input type="text" class="form-control" id="inputEmail3" value="{{$dias_disponibles}}" disabled style="text-align: center;">
+            </div>
+          </div>
+
+            <div style="margin-bottom: 5px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [
                         'model' => 'Amenaza',
@@ -192,7 +199,7 @@
 
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i>Nueva Solicitud',
-                titleAttr: 'Agregar Regla',
+                titleAttr: 'Crear solicitud de Vacaciones',
                 url: "{{ route('admin.solicitud-vacaciones.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config) {
@@ -258,6 +265,9 @@
                         data: 'fecha_inicio',
                         name: 'fecha_inicio',
                         render: function(data, type, row) {
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
@@ -265,6 +275,9 @@
                         data: 'fecha_fin',
                         name: 'fecha_fin',
                         render: function(data, type, row) {
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
@@ -320,7 +333,7 @@
                             if (aprobacion == 3) {
                                 return `  
                                 <div style="text-aling:center">
-                                <a href="solicitud-vacaciones/${row.id}/show"  title="Aprobar/ Rechazar solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+                                <a href="solicitud-vacaciones/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
                                 </div>
                                `;
 
@@ -328,7 +341,7 @@
                                 let urlEliminar = '{{ route('admin.solicitud-vacaciones.destroy') }}'
                                 return `     
                                 <div style="text-aling:center">
-                                <a href="solicitud-vacaciones/${row.id}/show"  title="Ver detalles"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+                                <a href="solicitud-vacaciones/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
                                 <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
                                 </div>
                                `;

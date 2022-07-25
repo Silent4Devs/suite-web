@@ -39,7 +39,7 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Aprobar: Solicitudes de Permiso con Goce de Sueldo</h5>
+    <h5 class="col-12 titulo_general_funcion">Aprobar: Permiso con Goce de Sueldo</h5>
 
     <div class="card">
         @can('amenazas_agregar')
@@ -63,9 +63,12 @@
                         <th style="min-width: 200px;">
                             Solicitante
                         </th>
-                        <th style="min-width: 110px;">
-                            Días Solicitados
+                        <th style="min-width: 200px;">
+                           Tipo de permiso
                         </th>
+                        {{-- <th style="min-width: 110px;">
+                            Días Solicitados
+                        </th> --}}
                         <th style="min-width: 75px;">
                             Inicio
                         </th>
@@ -221,6 +224,7 @@
 
           
             let dtOverrideGlobals = {
+                pageLength : 10,
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
@@ -239,25 +243,39 @@
                         }
                     },
                     {
-                        data: 'dias_solicitados',
-                        name: 'dias_solicitados',
+                        data: 'permiso',
+                        name: 'permiso',
                         render: function(data, type, row) {
-                            return `<div style="text-align:center">${data}</div>`;
+                            data = JSON.parse(data);
+                            return `<div style="text-align:left">${data.nombre}</div>`;
                         }
 
                     },
+                    // {
+                    //     data: 'dias_solicitados',
+                    //     name: 'dias_solicitados',
+                    //     render: function(data, type, row) {
+                    //         return `<div style="text-align:center">${data}</div>`;
+                    //     }
+
+                    // },
 
                     {
                         data: 'fecha_inicio',
                         name: 'fecha_inicio',
                         render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                         }
                     },
                     {
                         data: 'fecha_fin',
                         name: 'fecha_fin',
                         render: function(data, type, row) {
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
