@@ -82,7 +82,7 @@
 
             <div class="mb-3 ml-2 mr-2 card card-body">
                 <div class="mt-4 mb-3 ml-4 col-10" style="">
-                    <h6 class="" style="color: #747474; font-size: 18px;">Deseo realizar una solictud de:</h6>
+                    <h6 class="" style="color: #747474; font-size: 18px;">Deseo realizar una solicitud de:</h6>
                 </div>
                 {{--  --}}
                 <div class="caja_btn_reporte">

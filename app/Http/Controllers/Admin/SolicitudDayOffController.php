@@ -57,15 +57,15 @@ class SolicitudDayOffController extends Controller
             $table->editColumn('fecha_fin', function ($row) {
                 return $row->fecha_fin ? $row->fecha_fin : '';
             });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
-            $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion : '';
-            });
-            $table->editColumn('año', function ($row) {
-                return $row->año ? $row->año : '';
-            });
+            // $table->editColumn('descripcion', function ($row) {
+            //     return $row->descripcion ? $row->descripcion : '';
+            // });
+            // $table->editColumn('aprobacion', function ($row) {
+            //     return $row->aprobacion ? $row->aprobacion : '';
+            // });
+            // $table->editColumn('año', function ($row) {
+            //     return $row->año ? $row->año : '';
+            // });
 
             $table->rawColumns(['actions', 'placeholder']);
 
@@ -273,9 +273,9 @@ class SolicitudDayOffController extends Controller
             $table->editColumn('aprobacion', function ($row) {
                 return $row->aprobacion ? $row->aprobacion  : '';
             });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
+            // $table->editColumn('descripcion', function ($row) {
+            //     return $row->descripcion ? $row->descripcion : '';
+            // });
 
             $table->rawColumns(['actions', 'placeholder']);
 

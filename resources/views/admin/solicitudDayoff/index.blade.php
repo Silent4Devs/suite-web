@@ -246,14 +246,14 @@
                         }
 
                     },
-                    {
-                        data: 'año',
-                        name: 'año',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:center">${data} año</div>`;
-                        }
+                    // {
+                    //     data: 'año',
+                    //     name: 'año',
+                    //     render: function(data, type, row) {
+                    //         return `<div style="text-align:center">${data} año</div>`;
+                    //     }
 
-                    },
+                    // },
                     {
                         data: 'fecha_inicio',
                         name: 'fecha_inicio',
@@ -304,13 +304,13 @@
                         }
                     },
 
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
+                    // {
+                    //     data: 'descripcion',
+                    //     name: 'descripcion',
+                    //     render: function(data, type, row) {
+                    //         return `<div style="text-align:left">${data}</div>`;
+                    //     }
+                    // },
                     {
                         data: 'actions',
                         render: function(data, type, row, meta) {

@@ -59,9 +59,9 @@ if ($dias_pendientes >= 1) {
             <div class="form-group col-sm-6 ">
                 <fieldset disabled>
                     <label for="disabledTextInput"><i class="bi bi-calendar2-event-fill iconos-crear"></i>Validos
-                        hasta:</label>
+                        hasta el:</label>
                     <input type="text" id="validos_hasta" class="form-control"
-                        value="31-Diciembre-{{ $año_limite }}" style="text-align: center">
+                        value="31-12-{{ $año_limite }}" style="text-align: center">
                 </fieldset>
 
             </div>
@@ -112,7 +112,7 @@ if ($dias_pendientes >= 1) {
         <div class="row">
             <div class="form-group col-sm-12">
                 <label for="exampleFormControlTextarea1"> <i
-                        class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}</label>
+                        class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios del solicitante:') !!}</label>
                 <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
             </div>
         </div>
@@ -239,7 +239,7 @@ if ($dias_pendientes >= 1) {
                         }
                     } else {
                         alert(
-                            "Los dias solicitados no pueden ser continuos, solo selecciona 1, ¡Intentalo de nuevo!");
+                            "Recuerda que solo podrás solicitar un dia a la vez de los dias disponibles ¡Intentalo de nuevo!");
                         $("#dias_solicitados").attr("value", 0);
                         document.getElementById("fecha_fin").value = "";
                     }
