@@ -39,7 +39,7 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Reglas para Vacaciones</h5>
+    <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
 
     <div class="card">
         @can('amenazas_agregar')
@@ -163,33 +163,33 @@
                     window.location.href = url;
                 }
             };
-            let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar",
-                url: "{{ route('descarga-amenaza') }}",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                    $('#csvImportModal').modal('show');
-                }
-            };
+            // let btnExport = {
+            //     text: '<i  class="fas fa-download"></i>',
+            //     titleAttr: 'Descargar plantilla',
+            //     className: "btn btn_cargar",
+            //     url: "{{ route('descarga-amenaza') }}",
+            //     action: function(e, dt, node, config) {
+            //         let {
+            //             url
+            //         } = config;
+            //         window.location.href = url;
+            //     }
+            // };
+            // let btnImport = {
+            //     text: '<i  class="fas fa-file-upload"></i>',
+            //     titleAttr: 'Importar datos',
+            //     className: "btn btn_cargar",
+            //     action: function(e, dt, node, config) {
+            //         $('#csvImportModal').modal('show');
+            //     }
+            // };
 
             @can('amenazas_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
 
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
+            // dtButtons.push(btnExport);
+            // dtButtons.push(btnImport);
 
             @can('amenazas_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
@@ -276,43 +276,15 @@
                         data: 'inicio_conteo',
                         name: 'inicio_conteo',
                         render: function(data, type, row) {
-                            const inicio_conteo = row.inicio_conteo;
-                            switch (inicio_conteo) {
-                                case 1:
-                                    return `
-                            <div  style="text-align:left">
-                                Al ingreso
-                            </div>
-                            `;
-                                    break;
-                                case 2:
-                                    return `
-                            <div style="text-align:left">
-                                Después de 1 mes
-                            </div>
-                            `;
-                                    break;
-                                case 3:
-                                    return `
-                            <div style="text-align:left">
-                                Después de 6 meses
-                            </div>
-                            `;
-                                    break;
-                                case 4:
-                                    return `
-                            <div style="text-align:left">
-                                Después de 1 año
-                            </div>
-                            `;
-                                    break;
-                                default:
-                                    return `
-                             <div style="text-align:left">No se ha definido</div>
-                            `;
-                            }
+                            return `<div style="text-align:left">${data}</div>`;
                         }
-
+                    },
+                    {
+                        data: 'fin_conteo',
+                        name: 'fin_conteo',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'dias',
@@ -366,7 +338,7 @@
                             switch (afectados) {
                                 case 1:
                                     return `
-                                    <div  style="text-align:left">
+                                    <div  style="text-align:center">
                                     Toda la empresa
                                     </div>
                                     `;

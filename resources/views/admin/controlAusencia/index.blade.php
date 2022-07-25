@@ -88,7 +88,41 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel"
                     aria-labelledby="nav-empleados-tab">
-                        @include('admin.controlAusencia.menu')
+                    <ul class="mt-4">
+                        <li>
+                          <a href="ajustes-vacaciones">
+                              <div>
+                                <i class="fa-solid fa-users-gear"></i>
+                               
+                                  <br>
+                                Ajustes Vacaciones
+                              </div>
+                          </a>
+                      </li>
+                   
+                      @can('beneficios_acceder')
+                      <li>
+                          <a href="ajustes-dayoff">
+                              <div>
+                                <i class="bi bi-gear-fill"></i>
+                                  <br>
+                                 Ajustes Day Off´s
+                              </div>
+                          </a>
+                      </li>
+                      @endcan
+                      @can('timesheet_acceder')
+                      <li>
+                          <a href="ajustes-permisos-goce-sueldo">
+                              <div>
+                                  <i class="fas fa-hand-holding-usd"></i><br>
+                                Ajustes Permisos con goce de sueldo
+                              </div>
+                          </a>
+                      </li>
+                      @endcan
+                  </ul>
+                  
                 </div>
             </div>
         </div>

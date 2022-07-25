@@ -71,8 +71,21 @@
             </div>
         </form>
     @endcan
-    <div class="datatable-fix w-100 mt-5">
-        <span><i class="fas fa-info-circle mr-2"></i>Filtrar por: Proyecto</span>
+    <div class="row mt-5">
+        @if($origen == 'tareas')
+            <div class="col-6 form-group">
+                <label>Filtrar por proyecto</label>
+                <select id="proyecto_filtro" class="form-control">
+                    <option value=""></option>
+                    @foreach ($proyectos as $proyecto)
+                        <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
+                            {{ $proyecto->proyecto }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endif
+    </div>
+    <div class="datatable-fix w-100 mt-2">
         <table id="tabla_time_tareas" class="table w-100 tabla-animada tabla_time_tareas">
             <thead class="w-100">
                 <tr>
@@ -187,6 +200,11 @@
             document.querySelector('#areas_select').addEventListener('change', (e) => {
                 let value = e.target.value;
                 @this.set('area_select', value, true);
+            });
+
+            document.querySelector('#proyecto_filtro').addEventListener('change', (e) => {
+                let value = e.target.value;
+                @this.updateProyecto(value);
             });
 
             // edit dentro de tabla ----------------------------------------

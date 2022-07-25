@@ -22,6 +22,7 @@ class DayOff extends Model
         'inicio_conteo',
         'incremento_dias',
         'periodo_corte',
+        'meses',
     ];
 
     protected $casts = [
