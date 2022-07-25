@@ -7,7 +7,7 @@
         </li>
         <li class="breadcrumb-item active">Ver</li>
     </ol>
-    <h5 class="col-12 titulo_general_funcion">Ver: Vacación</h5>
+    <h5 class="col-12 titulo_general_funcion">Ver: Solicitud de Vacación</h5>
     <div class="mt-4 card">
         <div class="card-body">
 
@@ -24,7 +24,7 @@
                         <div class="form-group col-sm-12">
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i
-                                        class="fa-solid fa-calendar-check iconos-crear"></i>Nombre del Colaborador</label>
+                                        class="fa-solid fa-calendar-check iconos-crear"></i>Nombre del Colaborador:</label>
                                 <input type="text" class="form-control" value="{{ $vacacion->empleado->name }}"
                                     style="text-align: center">
                             </fieldset>
@@ -72,7 +72,7 @@
                         <div class="form-group col-sm-6">
                             <fieldset disabled>
                                 <label for="disabledTextInput"> <i
-                                        class="fa-solid fa-file-circle-xmark iconos-crear"></i>Fecha fin:</label>
+                                        class="fa-solid fa-file-circle-xmark iconos-crear"></i>Fecha de fin:</label>
                                 <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($vacacion->fecha_fin)->format('d/m/Y')}}"
                                     style="text-align: center">
                             </fieldset>
@@ -105,7 +105,7 @@
                     {{-- Respuesta --}}
                     <div class="text-center form-group"
                         style="background-color:#345183; border-radius: 100px; color: white;">
-                        RESPUESTA
+                        RESPUESTA DEL APROBADOR
                     </div>
 
                     <div class="row">
@@ -124,8 +124,8 @@
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('comentarios_aprobador', 'Comentarios del aprobador:') !!}</label>
+                            <label for="exampleFormControlTextarea1"><i
+                                class="fas fa-file-alt iconos-crear"></i>{!! Form::label('comentarios_aprobador', 'Comentarios del aprobador:') !!}</label>
                             <textarea class="form-control" name="comentarios_aprobador" rows="2" disabled>{{ old('descripcion', $vacacion->comentarios_aprobador) }}</textarea>
                         </div>
                     </div>

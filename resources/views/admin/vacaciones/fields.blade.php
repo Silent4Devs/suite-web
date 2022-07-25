@@ -1,12 +1,18 @@
 <div class="row">
     <!-- Nombre Field -->
     <div class="form-group col-sm-6">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('nombre', 'Nombre:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i><i
+        class="fas fa-info-circle" style="font-size:12pt; float: right;"
+        title="Nombre del lineamiento"></i>{!! Form::label('nombre', 'Nombre:', ['class' => 'required']) !!}
         {!! Form::text('nombre', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255, 'placeholder' => 'Esciba nombre de la regla de vacaciones...']) !!}
     </div>
     <div class="form-group col-sm-6">
         <label for="tipo_conteo" class="required"><i class="fa-solid fa-calendar-days iconos-crear"></i>Tipo de
-            conteo</label>
+            conteo</label><i
+            class="fas fa-info-circle" style="font-size:12pt; float: right;"
+            title="Tipo de discriminación de días;
+            1.- Natural (Se cuenta de Lunes a Domingo)
+            2.- Habil ((Se cuenta de Lunes a Viernes)"></i>
         <select id="tipo_conteo" name="tipo_conteo" class="form-control">
             <option value="1" {{ old('tipo_conteo') == $vacacion->tipo_conteo ? ' selected="selected"' : '' }}>
                 Día Natural</option>
@@ -29,27 +35,39 @@
     </div> --}}
     <!-- Categoria Field -->
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-circle-play iconos-crear"></i>{!! Form::label('inicio_conteo', 'Año de inicio:', ['class' => 'required']) !!}
+        <i class="fa-solid fa-circle-play iconos-crear"></i><i
+        class="fas fa-info-circle" style="font-size:12pt; float: right;"
+        title="Año en el que empezara a aplicar las vacaciones"></i>{!! Form::label('inicio_conteo', 'Año de inicio:', ['class' => 'required']) !!}
         {!! Form::number('inicio_conteo', null, ['class' => 'form-control','placeholder' => 'Ingrese el año en que se aplicara el beneficio...']) !!}
     </div>
      <!-- Categoria Field -->
      <div class="form-group col-sm-6">
-        <i class="fa-solid fa-circle-stop iconos-crear"></i>{!! Form::label('fin_conteo', 'Año de fin:', ['class' => 'required']) !!}
+        <i class="fa-solid fa-circle-stop iconos-crear"></i><i
+        class="fas fa-info-circle" style="font-size:12pt; float: right;"
+        title="Año en el que terminaran de aplicar las vacaciones"></i>{!! Form::label('fin_conteo', 'Año de fin:', ['class' => 'required']) !!}
         {!! Form::number('fin_conteo', null, ['class' => 'form-control', 'placeholder' => 'Ingrese el año en que caduca el beneficio']) !!}
     </div>
     <!-- Categoria Field -->
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-calendar-day iconos-crear"></i>{!! Form::label('dias', 'Días a gozar:', ['class' => 'required']) !!}
+        <i class="fa-solid fa-calendar-day iconos-crear"></i><i
+        class="fas fa-info-circle" style="font-size:12pt; float: right;"
+        title="Días otorgados en el lapso de años seleccionados anteriormente"></i>{!! Form::label('dias', 'Días a gozar:', ['class' => 'required']) !!}
         {!! Form::number('dias', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255, 'placeholder' => 'Ingrese numero inicial de días...']) !!}
     </div>
 
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-arrow-up-9-1 iconos-crear"></i>{!! Form::label('incremento_dias', 'Incremento de días anual:', ['class' => 'required']) !!}
+        <i class="fa-solid fa-arrow-up-9-1 iconos-crear"></i><i
+        class="fas fa-info-circle" style="font-size:12pt; float: right;"
+        title="Incremento de días anual en el lapso seleccionado"></i>{!! Form::label('incremento_dias', 'Incremento de días anual:', ['class' => 'required']) !!}
         {!! Form::number('incremento_dias', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255, 'placeholder' => 'Ingrese numero de días a incrementar...']) !!}
     </div>
 
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-arrows-rotate iconos-crear"></i>{!! Form::label('periodo_corte', 'Reinicio de conteo', ['class' => 'required']) !!}
+        <i class="fa-solid fa-arrows-rotate iconos-crear"></i><i
+        class="fas fa-info-circle" style="font-size:12pt; float: right;"
+        title="Medida de tiempo para aplicar proxima regla;
+        1.- Aniversario (Cuando el colaborador cumpla años en la organización)
+        2.- Anual (Cada inicio de año calendario)"></i>{!! Form::label('periodo_corte', 'Reinicio de conteo', ['class' => 'required']) !!}
         <select id="periodo_corte" name="periodo_corte" class="form-control">
             <option value="1"
                 {{ old('periodo_corte') == $vacacion->periodo_corte ? ' selected="selected"' : '' }}>Aniversario

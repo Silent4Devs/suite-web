@@ -78,11 +78,17 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Solicitud Day Off</h5>
+    <h5 class="col-12 titulo_general_funcion">Solicitud de Day Off</h5>
 
     <div class="card">
         @can('amenazas_agregar')
-            <div style="margin-bottom: 10px; margin-left:10px;" class="row">
+            <div class="form-group row mt-4">
+                <label for="inputEmail3" class="col-sm-2 col-form-label offset-8 ">Días disponibles:</label>
+                <div class="col-sm-2 pr-5">
+                    <input type="text"  style="text-align:center;" class="form-control" id="inputEmail3" value="{{ $dias_disponibles }}" disabled>
+                </div>
+            </div>
+            <div style="margin-bottom: 5px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [
                         'model' => 'Amenaza',
@@ -191,8 +197,8 @@
             ];
 
             let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar Regla',
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Nueva Solicitud',
+                titleAttr: 'Crear solicitud de Day Off',
                 url: "{{ route('admin.solicitud-dayoff.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config) {
@@ -258,6 +264,9 @@
                         data: 'fecha_inicio',
                         name: 'fecha_inicio',
                         render: function(data, type, row) {
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
@@ -265,6 +274,9 @@
                         data: 'fecha_fin',
                         name: 'fecha_fin',
                         render: function(data, type, row) {
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
@@ -320,7 +332,7 @@
                             if (aprobacion == 3) {
                                 return `  
                                 <div style="text-aling:center">
-                                <a href="solicitud-dayoff/${row.id}/show"  title="Aprobar/ Rechazar solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+                                <a href="solicitud-dayoff/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
                                 </div>
                                `;
 
@@ -328,8 +340,8 @@
                                 let urlEliminar = '{{ route('admin.solicitud-dayoff.destroy') }}'
                                 return `     
                                 <div style="text-aling:center">
-                                <a href="solicitud-dayoff/${row.id}/show"  title="Aprobar/ Rechazar solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-                                <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Eliminar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
+                                <a href="solicitud-dayoff/${row.id}/show"  title="Ver Solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
+                                <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
                                 </div>
                                `;
                             }
@@ -355,13 +367,14 @@
             });
             window.eliminar = (url, id) => {
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: '¿Esta seguro de cancelar la solicitud?',
+                    text: "Esta solicitud ya no será visible para el aprobador.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: '¡Sí estoy seguro!',
+                    cancelButtonText: 'Cancelar',
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({

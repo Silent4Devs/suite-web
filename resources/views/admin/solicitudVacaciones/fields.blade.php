@@ -112,7 +112,7 @@ if ($dias_pendientes >= 1) {
         <div class="row">
             <div class="form-group col-sm-12">
                 <label for="exampleFormControlTextarea1"> <i
-                        class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios:') !!}</label>
+                        class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios del solicitante:') !!}</label>
                 <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
             </div>
         </div>

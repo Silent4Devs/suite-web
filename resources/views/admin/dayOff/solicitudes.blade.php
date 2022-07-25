@@ -61,7 +61,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width: 200px;">
-                            Colaborador
+                            Solicitante
                         </th>
                         <th style="min-width: 110px;">
                             Días Solicitados
@@ -76,9 +76,9 @@
                         <th style="min-width: 75px;">
                            Estatus
                         </th>
-                        <th style="min-width: 150px;">
+                        {{-- <th style="min-width: 150px;">
                             Comentarios
-                        </th>
+                        </th> --}}
                         <th style="min-width: 70px;">
                             Opciones
                         </th>
@@ -222,6 +222,7 @@
 
           
             let dtOverrideGlobals = {
+                pageLength : 10,
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
@@ -243,6 +244,7 @@
                         data: 'dias_solicitados',
                         name: 'dias_solicitados',
                         render: function(data, type, row) {
+                            
                             return `<div style="text-align:center">${data}</div>`;
                         }
 
@@ -252,14 +254,19 @@
                         data: 'fecha_inicio',
                         name: 'fecha_inicio',
                         render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
+                            
                         }
                     },
                     {
                         data: 'fecha_fin',
                         name: 'fecha_fin',
                         render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                         }
                     },
                     {
@@ -298,13 +305,13 @@
                         }
                     },
 
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
+                    // {
+                    //     data: 'descripcion',
+                    //     name: 'descripcion',
+                    //     render: function(data, type, row) {
+                    //         return `<div style="text-align:left">${data}</div>`;
+                    //     }
+                    // },
                     {
                         data: 'opciones',
                         render: function(data, type, row, meta) {

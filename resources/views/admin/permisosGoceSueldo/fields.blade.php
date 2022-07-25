@@ -1,7 +1,9 @@
 <div class="row">
     <!-- Nombre Field -->
     <div class="form-group col-sm-6">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('nombre', 'Nombre:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i><i
+        class="fas fa-info-circle" style="font-size:12pt; float: right;"
+        title="Nombre del lineamiento"></i>{!! Form::label('nombre', 'Nombre:', ['class' => 'required']) !!}
         {!! Form::text('nombre', null, [
             'class' => 'form-control',
             'maxlength' => 255,
@@ -12,7 +14,9 @@
 
     <!-- Categoria Field -->
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-calendar-day iconos-crear"></i>{!! Form::label('dias', 'Días a otorgar:', ['class' => 'required']) !!}
+        <i class="fa-solid fa-calendar-day iconos-crear"></i><i
+        class="fas fa-info-circle" style="font-size:12pt; float: right;"
+        title="Días otorgados por la organización"></i>{!! Form::label('dias', 'Días a otorgar:', ['class' => 'required']) !!}
         {!! Form::number('dias', null, [
             'class' => 'form-control',
             'maxlength' => 255,
