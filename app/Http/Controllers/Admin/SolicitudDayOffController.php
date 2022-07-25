@@ -79,7 +79,15 @@ class SolicitudDayOffController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
-        return view('admin.solicitudDayoff.index', compact('logo_actual', 'empresa_actual'));
+
+        $dias_disponibles_date = $this->diasDisponibles();
+        if($dias_disponibles_date > 0){
+            $dias_disponibles = $this->diasDisponibles();
+        }else{
+            $dias_disponibles = 0;
+        }
+
+        return view('admin.solicitudDayoff.index', compact('logo_actual', 'empresa_actual','dias_disponibles'));
     }
 
 
@@ -94,7 +102,6 @@ class SolicitudDayOffController extends Controller
         $existe_regla_ingreso = DayOff::where('inicio_conteo', 1)->exists();
 
         if ($existe_regla_ingreso) {
-
             $existe_regla_por_area = DayOff::where('inicio_conteo', '=', 1)->where('afectados', 2)->whereHas('areas', function ($q) {
                 $q->where('area_id', auth()->user()->empleado->area_id);
             })->select('dias', 'tipo_conteo')->exists();
@@ -112,6 +119,8 @@ class SolicitudDayOffController extends Controller
                 return redirect(route('admin.solicitud-dayoff.index'));
             }
         } else {
+            Flash::error('Regla de Day´s Off no asociada');
+            return redirect(route('admin.solicitud-dayoff.index'));
         }
         $tipo_conteo = $regla_aplicada->tipo_conteo;
         $fecha_limite = Carbon::now();
@@ -123,8 +132,7 @@ class SolicitudDayOffController extends Controller
         $dias_disponibles = $this->diasDisponibles();
         $organizacion = Organizacion::first();
         $dias_pendientes = SolicitudDayOff::where('empleado_id', '=', auth()->user()->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
-
-
+        
         return view('admin.solicitudDayoff.create', compact('vacacion', 'dias_disponibles', 'año', 'autoriza','organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo','año_limite'));
     }
 
@@ -201,9 +209,13 @@ class SolicitudDayOffController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->id;
+        $vacaciones = SolicitudDayOff::find($id);
+        $vacaciones->delete();
+
+        return response()->json(['status' => 200]);
     }
     public function diasDisponibles()
     {

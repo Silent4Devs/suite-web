@@ -145,6 +145,9 @@ class PermisosGoceSueldoController extends Controller
             $table->editColumn('empleado', function ($row) {
                 return $row->empleado ? $row->empleado : '';
             });
+            $table->editColumn('permiso', function ($row) {
+                return $row->permiso ? $row->permiso : '';
+            });
 
             $table->editColumn('dias_solicitados', function ($row) {
                 return $row->dias_solicitados ? $row->dias_solicitados : '';

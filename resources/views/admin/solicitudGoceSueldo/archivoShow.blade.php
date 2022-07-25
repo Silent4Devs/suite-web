@@ -42,7 +42,7 @@
                         <div class="form-group col-sm-6">
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i
-                                        class="fa-solid fa-calendar-check iconos-crear"></i>Area</label>
+                                        class="fa-solid fa-calendar-check iconos-crear"></i>Área</label>
                                 <input type="text" class="form-control" value="{{ $vacacion->empleado->area->area }}"
                                     style="text-align: center">
                             </fieldset>
@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="form-group col-sm-6">
                             <fieldset disabled>
-                                <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Tipos
+                                <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Tipo
                                     de Permiso</label>
                                 <input type="text" id="disabledTextInput" class="form-control"
                                     value="{{ $vacacion->permiso->nombre }}" style="text-align: center">
@@ -73,7 +73,7 @@
                         <div class="form-group col-sm-6">
                             <fieldset disabled>
                                 <label for="disabledTextInput"> <i
-                                        class="fa-solid fa-file-circle-xmark iconos-crear"></i>Fecha fin:</label>
+                                        class="fa-solid fa-file-circle-xmark iconos-crear"></i>Fecha de fin:</label>
                                 <input type="text" class="form-control"
                                     value="{{ \Carbon\Carbon::parse($vacacion->fecha_fin)->format('d/m/Y') }}"
                                     style="text-align: center">
@@ -85,7 +85,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <fieldset disabled>
-                                <label for="disabledTextInput"> <i class="fa-solid fa-calendar-day iconos-crear"></i>Numero
+                                <label for="disabledTextInput"> <i class="fa-solid fa-calendar-day iconos-crear"></i>Número
                                     de
                                     días solicitados:</label>
                                 <input type="text" class="form-control" value="{{ $vacacion->dias_solicitados }}"
@@ -98,7 +98,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios:') !!}</label>
+                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios del solicitante:') !!}</label>
                             <textarea class="form-control" id="edescripcion" name="descripcion" rows="2" readonly>{{ old('descripcion', $vacacion->descripcion) }}</textarea>
                         </div>
                     </div>
@@ -107,18 +107,18 @@
                     {{-- Respuesta --}}
                     <div class="text-center form-group"
                         style="background-color:#345183; border-radius: 100px; color: white;">
-                        RESPUESTA
+                        RESPUESTA DEL APROBADOR
                     </div>
 
                     <div class="row">
                         <div class="form-group col-sm-6">
-                            <label for="aprobacion" class=""><i class="bi bi-envelope-exclamation-fill iconos-crear"></i>Aprueba:</label>
+                            <label for="aprobacion" class=""><i class="bi bi-envelope-exclamation-fill iconos-crear"></i>Estatus:</label>
                             <select class="form-control" name="aprobacion" disabled>
-                                <option value="2" {{ 2 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>No
+                                <option value="2" {{ 2 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>Rechazado
                                 </option>
-                                <option value="3" {{ 3 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>Sí
+                                <option value="3" {{ 3 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>Aprobado
                                 </option>
-                                <option {{ 1 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>Pendiente...
+                                <option {{ 1 == $vacacion->aprobacion ? ' selected="selected"' : '' }}>Pendiente
                                 </option>
                             </select>
                         </div>
@@ -127,7 +127,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('comentarios_aprobador', 'Comentarios:') !!}</label>
+                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('comentarios_aprobador', 'Comentarios del aprobador:') !!}</label>
                             <textarea class="form-control" name="comentarios_aprobador" rows="2" disabled>{{ old('descripcion', $vacacion->comentarios_aprobador) }}</textarea>
                         </div>
                     </div>

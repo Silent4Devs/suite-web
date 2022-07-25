@@ -42,6 +42,22 @@
     <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
 
     <div class="card">
+        
+        <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección se determinarán los lineamientos que se aplicarán a las solicitudes de vacaciones de los colaboradores.
+                    </p>
+    
+                </div>
+            </div>
+        </div>
         @can('amenazas_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -298,7 +314,13 @@
                         data: 'incremento_dias',
                         name: 'incremento_dias',
                         render: function(data, type, row) {
-                            return `<div style="text-align:left">${data} días</div>`;
+                            const incremento = row.incremento_dias;
+                            if( incremento > 0 ){
+                                return `<div style="text-align:left">${data} días</div>`;
+                            }else{
+                                return `<div style="text-align:left">0 días</div>`;
+                            }
+                           
                         }
                     },
                     {

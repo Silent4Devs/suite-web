@@ -191,8 +191,8 @@
             ];
 
             let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar Regla',
+                text: '<i class="pl-2 pr-3 fas fa-plus"></i>Nueva Solicitud',
+                titleAttr: 'Crear solicitu de Permiso con goce de sueldo',
                 url: "{{ route('admin.solicitud-permiso-goce-sueldo.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config) {
@@ -258,6 +258,9 @@
                         data: 'fecha_inicio',
                         name: 'fecha_inicio',
                         render: function(data, type, row) {
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
@@ -265,6 +268,9 @@
                         data: 'fecha_fin',
                         name: 'fecha_fin',
                         render: function(data, type, row) {
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
@@ -329,7 +335,7 @@
                                 return `     
                                 <div style="text-aling:center">
                                 <a href="solicitud-permiso-goce-sueldo/${row.id}/show"  title="Ver solicitud"><i class="fa-solid fa-eye fa-1x text-info text-aling:center"></i></a>
-                                <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Eliminar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
+                                <button onclick="eliminar('${urlEliminar}','${row.id}')" title="Cancelar solicitud" class="btn btn-sm text-danger" style="display:inline-block"><i class="fa-solid fa-trash fa-1x text-danger text-aling:center"></i></button>
                                 </div>
                                `;
                             }
@@ -355,13 +361,14 @@
             });
             window.eliminar = (url, id) => {
                 Swal.fire({
-                    title: '¿Esta seguro de querer borrar esta solicitud?',
-                    text: "No podras revertir esta operación",
+                    title: '¿Esta seguro de cancelar la solicitud?',
+                    text: "Esta solicitud ya no será visible para el aprobador.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: '¡Si, Borrar!'
+                    confirmButtonText: '¡Sí estoy seguro!',
+                    cancelButtonText: 'Cancelar',
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({

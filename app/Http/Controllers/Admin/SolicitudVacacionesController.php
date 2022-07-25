@@ -83,7 +83,13 @@ class SolicitudVacacionesController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
-        return view('admin.solicitudVacaciones.index', compact('logo_actual', 'empresa_actual'));
+        $dias_disponibles_date = $this->diasDisponibles();
+        if($dias_disponibles_date > 0){
+            $dias_disponibles = $this->diasDisponibles();
+        }else{
+            $dias_disponibles = 0;
+        }
+        return view('admin.solicitudVacaciones.index', compact('logo_actual', 'empresa_actual','dias_disponibles'));
     }
 
 

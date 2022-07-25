@@ -219,6 +219,7 @@
 
           
             let dtOverrideGlobals = {
+                pageLength : 10,
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
@@ -249,6 +250,9 @@
                         data: 'fecha_inicio',
                         name: 'fecha_inicio',
                         render: function(data, type, row) {
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
@@ -256,6 +260,9 @@
                         data: 'fecha_fin',
                         name: 'fecha_fin',
                         render: function(data, type, row) {
+                            let fecha = data.split('-');
+                            let fechaDMY = `${fecha[2]}-${fecha[1]}-${fecha[0]}`;
+                            return `<div style="text-align:left">${fechaDMY}</div>`;
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
