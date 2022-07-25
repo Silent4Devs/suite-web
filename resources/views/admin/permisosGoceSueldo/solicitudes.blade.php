@@ -61,8 +61,11 @@
                 <thead class="thead-dark">
                     <tr>
                         <th style="min-width: 200px;">
-                            Colaborador
+                           Solicitante
                         </th>
+                        <th style="min-width: 200px;">
+                            Tipo de permiso
+                         </th>
                         <th style="min-width: 110px;">
                             Días Solicitados
                         </th>
@@ -76,9 +79,9 @@
                         <th style="min-width: 75px;">
                            Estatus
                         </th>
-                        <th style="min-width: 150px;">
+                        {{-- <th style="min-width: 150px;">
                             Comentarios
-                        </th>
+                        </th> --}}
                         <th style="min-width: 70px;">
                             Opciones
                         </th>
@@ -222,6 +225,7 @@
 
           
             let dtOverrideGlobals = {
+                pageLength : 10,
                 buttons: dtButtons,
                 processing: true,
                 serverSide: true,
@@ -239,6 +243,16 @@
                             `;
                         }
                     },
+                    {
+                        data: 'permiso',
+                        name: 'permiso',
+                        render: function(data, type, row) {
+                            data = JSON.parse(data);
+                            return `<div style="text-align:left">${data.nombre}</div>`;
+                        }
+
+                    },
+                    
                     {
                         data: 'dias_solicitados',
                         name: 'dias_solicitados',
@@ -298,13 +312,13 @@
                         }
                     },
 
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
+                    // {
+                    //     data: 'descripcion',
+                    //     name: 'descripcion',
+                    //     render: function(data, type, row) {
+                    //         return `<div style="text-align:left">${data}</div>`;
+                    //     }
+                    // },
                     {
                         data: 'opciones',
                         render: function(data, type, row, meta) {

@@ -1,16 +1,20 @@
 <!-- Categoria Field -->
 <div class="row">
     <div class="form-group col-sm-6">
-        <label for="inputState"><i class="bi bi-collection-fill iconos-crear"></i>Tipo de permiso a solicitar:</label>
+        <label for="inputState" class="required"><i class="bi bi-collection-fill iconos-crear"></i>Tipo de permiso a
+            solicitar:</label>
         <select id="permiso_id" class="form-control" name="permiso_id">
             <option selected>Seleccione...</option>
             @foreach ($permisos as $permiso)
                 <option value="{{ $permiso->id }}" data-dias='{{ $permiso->dias }}'>{{ $permiso->nombre }}</option>
             @endforeach
         </select>
+        @error('permiso_id')
+            <small class="text-danger">{{ $message }}</small>
+        @enderror
     </div>
     <div class="form-group col-sm-6">
-        <i class="bi bi-calendar-week-fill iconos-crear"></i>{!! Form::label('dias_solicitados', 'Días Otorgados:', ['class' => 'required']) !!}
+        <i class="bi bi-calendar-week-fill iconos-crear"></i>{!! Form::label('dias_solicitados', 'Días Otorgados:') !!}
         {!! Form::number('dias_solicitados', null, [
             'class' => 'form-control',
             'placeholder' => '0',
@@ -18,11 +22,9 @@
             'id' => 'dias_solicitados',
             'style' => 'text-align:center',
         ]) !!}
-        @error('dias_solicitados')
-            <small class="text-danger">{{ $message }}</small>
-        @enderror
+
     </div>
-  
+
 </div>
 
 <div class="row">
@@ -43,20 +45,19 @@
             'class' => 'form-control',
             'placeholder' => 'Ingrese el la fecha en que terminan su vacaciones...',
             'id' => 'fecha_fin',
-            
         ]) !!}
         @error('fecha_fin')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>
-  
+
 </div>
 
 <!-- Descripcion Field -->
 <div class="row">
     <div class="form-group col-sm-12">
         <label for="exampleFormControlTextarea1"> <i
-                class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Descripción:') !!}</label>
+                class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios del solicitante:') !!}</label>
         <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
     </div>
 </div>
@@ -92,14 +93,14 @@
                 if (inicio.value != '') {
                     let dias = document.getElementById('dias_solicitados').value;
                     var d = new Date(inicio.value.replaceAll('-', '/'));
-                    let sumar_dias = sumarDias(d, dias -1);
+                    let sumar_dias = sumarDias(d, dias - 1);
                     document.getElementById('fecha_fin').value = sumar_dias;
                 }
             })
             inicio.addEventListener('change', (e) => {
                 let dias = document.getElementById('dias_solicitados').value;
                 var d = new Date(e.target.value.replaceAll('-', '/'));
-                let sumar_dias = sumarDias(d, dias-1);
+                let sumar_dias = sumarDias(d, dias - 1);
                 document.getElementById('fecha_fin').value = sumar_dias;
 
             })

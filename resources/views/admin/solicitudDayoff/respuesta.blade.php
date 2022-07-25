@@ -42,7 +42,7 @@
                         <div class="form-group col-sm-6">
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i
-                                        class="fa-solid fa-calendar-check iconos-crear"></i>Area</label>
+                                        class="fa-solid fa-calendar-check iconos-crear"></i>Área</label>
                                 <input type="text" class="form-control" value="{{ $vacacion->empleado->area->area }}"
                                     style="text-align: center">
                             </fieldset>
@@ -52,7 +52,7 @@
                         <div class="form-group col-sm-6">
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i
-                                        class="fa-solid fa-calendar-check iconos-crear"></i>Aniversario</label>
+                                        class="fa-solid fa-calendar-check iconos-crear"></i>Antiguedad (Años)</label>
                                 <input type="text" id="disabledTextInput" class="form-control"
                                     value="{{ $año }}" style="text-align: center">
                             </fieldset>
@@ -87,7 +87,7 @@
                     <!-- Categoria Field -->
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <i class="fa-solid fa-calendar-day iconos-crear"></i>{!! Form::label('dias_solicitados', 'Numero de días solicitados:') !!}
+                            <i class="fa-solid fa-calendar-day iconos-crear"></i>{!! Form::label('dias_solicitados', 'Número de días solicitados:') !!}
                             {!! Form::number('dias_solicitados', null, ['class' => 'form-control', 'placeholder' => '0', 'readonly', 'id' => 'dias_solicitados', 'style' => 'text-align:center']) !!}
                             @error('dias_solicitados')
                                 <small class="text-danger">{{ $message }}</small>
@@ -98,7 +98,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios:') !!}</label>
+                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios del solicitante:') !!}</label>
                             <textarea class="form-control" id="edescripcion" name="descripcion" rows="2" readonly>{{ old('descripcion', $vacacion->descripcion) }}</textarea>
                         </div>
                     </div>
@@ -110,16 +110,16 @@
 
                     <div class="text-center form-group"
                         style="background-color:#345183; border-radius: 100px; color: white;">
-                        RESPUESTA
+                        RESPUESTA DEL APROBADOR
                     </div>
 
                     <div class="row">
                         <div class="form-group col-sm-6">
-                            <label for="aprobacion" class="">Aprueba:</label>
+                            <label for="aprobacion" class="">Estatus:</label>
                             <select class="form-control" name="aprobacion">
                                 <option selected disabled>Seleccione...</option>
-                                <option value="3">Sí</option>
-                                <option value="2">No</option>
+                                <option value="3">Aprobado</option>
+                                <option value="2">Rechazado</option>
                             </select>
                         </div>
                     </div>
@@ -127,7 +127,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('comentarios_aprobador', 'Comentarios:') !!}</label>
+                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('comentarios_aprobador', 'Comentarios del aprobador:') !!}</label>
                             <textarea class="form-control" name="comentarios_aprobador" rows="2">{{ old('descripcion', $vacacion->comentarios_aprobador) }}</textarea>
                         </div>
                     </div>

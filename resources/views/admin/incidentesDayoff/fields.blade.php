@@ -1,7 +1,9 @@
          <!-- Nombre Field -->
          <div class="row">
              <div class="form-group col-sm-6">
-                 <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('nombre', 'Nombre:', ['class' => 'required']) !!}
+                 <i class="fas fa-id-card iconos-crear"></i><i
+                 class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                 title="Nombre de la excepción"></i>{!! Form::label('nombre', 'Nombre:', ['class' => 'required']) !!}
                  {!! Form::text('nombre', null, [
                      'class' => 'form-control',
                      'maxlength' => 255,
@@ -10,17 +12,22 @@
                  ]) !!}
              </div>
              <div class="form-group col-sm-6">
-                 <i class="fa-solid fa-circle-play iconos-crear"></i>{!! Form::label('dias_aplicados', 'Días aplicados:', ['class' => 'required']) !!}
+                 <i class="fa-solid fa-circle-play iconos-crear"></i><i
+                 class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                 title="Número de días a aplicar"></i>{!! Form::label('dias_aplicados', 'Días aplicados:', ['class' => 'required']) !!}
                  {!! Form::number('dias_aplicados', null, [
                      'class' => 'form-control',
-                     'placeholder' => 'Ingrese el numero de dias ...',
+                     'placeholder' => 'Ingrese el número de dias ...',
                  ]) !!}
              </div>
          </div>
          <!-- Descripcion Field -->
          <div class="row">
              <div class="form-group col-sm-6">
-                 <i class="fa-solid fa-circle-play iconos-crear"></i>{!! Form::label('aniversario', 'Aniversario afectado:', ['class' => 'required']) !!}
+                 <i class="fa-solid fa-circle-play iconos-crear"></i><i
+                 class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                 title="Aniversario (año) a afectar;
+                 Aniversario: Año cumplido por el colaborador(es) en la organización"></i>{!! Form::label('aniversario', 'Aniversario afectado:', ['class' => 'required']) !!}
                  {!! Form::number('aniversario', null, [
                      'class' => 'form-control',
                      'placeholder' => 'Ingrese el aniversario en que se aplicara la incidecia...',
@@ -29,7 +36,9 @@
 
              <div class="form-group col-sm-6">
                  <label for="efecto" class="required"><i
-                         class="fa-solid fa-calendar-days iconos-crear"></i>Efecto</label>
+                         class="fa-solid fa-calendar-days iconos-crear"></i>Acción</label><i
+                         class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                         title="Determine la naturaleza de la excepción"></i>
                  <select id="efecto" name="efecto" class="form-control">
                      <option value="1"
                          {{ old('efecto') == $vacacion->efecto ? ' selected="selected"' : '' }}>
