@@ -37,7 +37,7 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Cuestionario Análisis de Impacto</h5>
+    <h5 class="col-12 titulo_general_funcion">Cuestionario de Análisis de Impacto</h5>
 
     <div class="mt-5 card">
         @can('amenazas_agregar')
@@ -57,7 +57,7 @@
             <table class="table table-bordered w-100 datatable datatable-analisis-impacto tblCSV" id="datatable-analisis-impacto">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="min-width: 40px;">
+                        <th style="min-width: 20px;">
                             ID
                         </th>
                         <th style="min-width: 200px;">
@@ -66,13 +66,13 @@
                         <th style="min-width: 200px;">
                             Área:
                         </th>
-                        <th style="min-width: 250px;">
+                        <th style="min-width: 150px;">
                             Fecha de la entrevista:
                         </th>
-                        <th style="min-width: 250px;">
+                        <th style="min-width: 200px;">
                             ID del Proceso:
                         </th>
-                        <th style="min-width: 250px;">
+                        <th style="min-width: 200px;">
                             Nombre del Proceso:
                         </th>
                         <th style="min-width: 250px;">
@@ -84,10 +84,10 @@
                         <th style="min-width: 250px;">
                             Correo: 
                         </th>
-                        <th style="min-width: 250px;">
+                        <th style="min-width: 25px;">
                             Extensión: 
                         </th>
-                        <th style="min-width: 150px;">
+                        <th style="min-width: 100px;">
                             Opciones
                         </th>
                     </tr>
@@ -200,33 +200,33 @@
                     window.location.href = url;
                 }
             };
-            let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar",
-                url: "{{ route('descarga-amenaza') }}",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                    $('#csvImportModal').modal('show');
-                }
-            };
+            // let btnExport = {
+            //     text: '<i  class="fas fa-download"></i>',
+            //     titleAttr: 'Descargar plantilla',
+            //     className: "btn btn_cargar",
+            //     url: "{{ route('descarga-amenaza') }}",
+            //     action: function(e, dt, node, config) {
+            //         let {
+            //             url
+            //         } = config;
+            //         window.location.href = url;
+            //     }
+            // };
+            // let btnImport = {
+            //     text: '<i  class="fas fa-file-upload"></i>',
+            //     titleAttr: 'Importar datos',
+            //     className: "btn btn_cargar",
+            //     action: function(e, dt, node, config) {
+            //         $('#csvImportModal').modal('show');
+            //     }
+            // };
 
             @can('amenazas_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
 
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
+            // dtButtons.push(btnExport);
+            // dtButtons.push(btnImport);
 
             @can('amenazas_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';

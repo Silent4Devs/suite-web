@@ -27,11 +27,9 @@ class AnalisisImpacto extends Model
         'id_proceso',
         'nombre_proceso',
         'version',
+        'tipo',
         'objetivo_proceso',
-        'p_diaria',
-        'p_semanal',
-        'p_mensual',
-        'p_otro',
+        'periodicidad',
         'p_otro_txt',
     ];
 }

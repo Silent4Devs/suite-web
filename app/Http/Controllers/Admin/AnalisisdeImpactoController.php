@@ -5,10 +5,12 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\AnalisisImpacto;
 use App\Models\Organizacion;
+
+use Yajra\DataTables\Facades\DataTables;
+use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisdeImpactoController extends Controller
 {
@@ -90,65 +92,60 @@ class AnalisisdeImpactoController extends Controller
         return view('admin.analisis-impacto.index', compact('logo_actual', 'empresa_actual'));
     }
 
-    
+
     public function create()
     {
-        return view('admin.analisis-impacto.create');
+        $cuestionario = new AnalisisImpacto();
+        return view('admin.analisis-impacto.create', compact('cuestionario'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // $request->validate([
+        //     'nombre' => 'required|string',
+        //     'dias' => 'required|int',
+        //     'afectados' => 'required|int',
+        //     'tipo_conteo' => 'required|int',
+        //     'inicio_conteo' => 'required|int',
+        //     'incremento_dias' => 'required|int',
+        //     'periodo_corte' => 'required|int',
+        // ]);
+
+        $cuestionario = AnalisisImpacto::create($request->all());
+
+
+        Flash::success('Cuestionario añadido satisfactoriamente.');
+
+        return redirect()->route('admin.analisis-impacto.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        //
+        $cuestionario = AnalisisImpacto::find($id);
+        $cuestionario->delete();
+
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 }
