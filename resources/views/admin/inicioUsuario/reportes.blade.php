@@ -118,7 +118,7 @@
     <div class="row">
         <div class="col-12 px-4">
             <div class="card p-3">
-                <h4>Seguimiento de Reportes</h4>
+                <h4>Seguimiento de mis Reportes</h4>
                 <table class="table w-100" id="tblReportes">
                     <thead>
                         <tr>
