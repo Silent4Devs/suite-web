@@ -85,7 +85,8 @@
                     <h6 class="" style="color: #747474; font-size: 18px;">Deseo realizar una solicitud de:</h6>
                 </div>
                 {{--  --}}
-                <div class="caja_btn_reporte">
+                <div class="caja_btn_reporte"
+                    style="display: flex !important; align-items: center !important; text-align: center !important; justify-content: center !important;">
                     @can('mi_perfil_mis_reportes_realizar_reporte_de_queja')
                         <a href="{{ asset('admin/solicitud-vacaciones') }}" class="btn_reporte">
                             <i class="bi bi-sun"></i><span>Vacaciones</span>
@@ -98,15 +99,16 @@
                     @endcan
                     @can('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora')
                         <a href="{{ asset('admin/solicitud-permiso-goce-sueldo') }}" class="btn_reporte">
-                            <i class="bi bi-piggy-bank"></i><br><span>Permisos con goce de sueldo</span>
+                            <i class="bi bi-coin"></i><br><span>Permisos con goce de sueldo</span>
                         </a>
                     @endcan
                     @can('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora')
                         <a href="{{ asset('admin/solicitud-vacaciones/menu') }}" class="btn_reporte"
-                            style="position: inherit;">
+                            style="position: relative; overflow: inherit !important">
                             <i class="bi bi-check-circle"></i><br>
                             Aprobaciones
-                            <div id="circulo" style="position:absolute; top:49px; right:122px;" class="offset-1 mt-5">
+                            <div id="circulo" style="display:inline-block;position:absolute; top:-60px; right:-13px;"
+                                class="offset-1 mt-5">
                                 <p> {{ $solicitudes_pendientes }}</p>
                             </div>
                         </a>
