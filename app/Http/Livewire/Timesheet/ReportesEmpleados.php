@@ -48,7 +48,11 @@ class ReportesEmpleados extends Component
 
     public $calendario_tabla;
 
+    public $empleados_list_global;
+
     public $times_faltantes_empleado;
+
+    public $empleados_estatus;
 
     public $semanas_totales_calendario = 0;
 
@@ -65,7 +69,7 @@ class ReportesEmpleados extends Component
     {
         $this->areas = Area::get();
 
-        $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(2)->format('Y-m-d');
+        $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
         $this->fecha_fin = Carbon::now()->format('Y-m-d');
     }
 
@@ -115,15 +119,32 @@ class ReportesEmpleados extends Component
         $this->buscarEmpleado($this->empleado->id);
     }
 
+    public function updateEmpleadosEstatus($value)
+    {
+        $this->empleados_estatus = $value;
+    }
+
     public function render()
     {
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
-        if ($this->area_id) {
+
+        if ($this->area_id && $this->empleados_estatus) {
+            $empleados_list = Empleado::where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus)->get();
+            $this->empleados_list_global = Empleado::where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus)->get();
+        }
+        elseif ($this->area_id) {
             $empleados_list = Empleado::where('area_id', $this->area_id)->get();
-        } else {
+            $this->empleados_list_global = Empleado::where('area_id', $this->area_id)->get();
+        }
+        elseif ($this->empleados_estatus) {
+            $empleados_list = Empleado::where('estatus', $this->empleados_estatus)->get();
+            $this->empleados_list_global = Empleado::where('estatus', $this->empleados_estatus)->get();
+        }
+        else{
             $empleados_list = Empleado::get();
+            $this->empleados_list_global = Empleado::get();
         }
 
         //calendario tabla
@@ -561,6 +582,26 @@ class ReportesEmpleados extends Component
 
         $this->alert('success', 'Correo Enviado!');
 
+        $this->empleado = null;
+    }
+
+    public function correoMasivo()
+    {
+        foreach ($this->empleados_list_global as $empleado) {
+            $antiguedad_y = Carbon::parse($empleado->antiguedad)->format('Y');
+            $antiguedad_m = Carbon::parse($empleado->antiguedad)->format('m');
+            $antiguedad_d = Carbon::parse($empleado->antiguedad)->format('d');
+            $times_empleado = Timesheet::where('empleado_id', $empleado->id)->where('estatus', '!=', 'papelera')->where('estatus', '!=', 'rechazado')->get();
+            $times_empleado_array = [];
+
+            foreach ($times_empleado as $time) {
+                $times_empleado_array[] = $time->semana_y;
+            }
+
+            $correo = Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $this->times_faltantes_empleado));
+        }
+
+        $this->alert('success', 'Correos Enviados!');
         $this->empleado = null;
     }
 

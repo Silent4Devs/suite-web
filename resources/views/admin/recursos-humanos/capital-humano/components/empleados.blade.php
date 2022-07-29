@@ -210,7 +210,7 @@
     @endcan
     @can('timesheet_acceder')
     <li>
-        <a href="#">
+        <a href="{{ route('admin.timesheet-inicio') }}">
             <div>
                 <i class="bi bi-file-spreadsheet"></i><br>
                 TimeSheet

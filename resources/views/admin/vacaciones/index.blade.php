@@ -39,9 +39,25 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Reglas para Vacaciones</h5>
+    <h5 class="col-12 titulo_general_funcion">Lineamientos para Vacaciones</h5>
 
     <div class="card">
+        
+        <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+                        <i class="bi bi-info mr-3" style="color: #3B82F6; font-size: 30px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección se determinarán los lineamientos que se aplicarán a las solicitudes de vacaciones de los colaboradores.
+                    </p>
+    
+                </div>
+            </div>
+        </div>
         @can('amenazas_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
@@ -163,33 +179,33 @@
                     window.location.href = url;
                 }
             };
-            let btnExport = {
-                text: '<i  class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar",
-                url: "{{ route('descarga-amenaza') }}",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
-            let btnImport = {
-                text: '<i  class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                    $('#csvImportModal').modal('show');
-                }
-            };
+            // let btnExport = {
+            //     text: '<i  class="fas fa-download"></i>',
+            //     titleAttr: 'Descargar plantilla',
+            //     className: "btn btn_cargar",
+            //     url: "{{ route('descarga-amenaza') }}",
+            //     action: function(e, dt, node, config) {
+            //         let {
+            //             url
+            //         } = config;
+            //         window.location.href = url;
+            //     }
+            // };
+            // let btnImport = {
+            //     text: '<i  class="fas fa-file-upload"></i>',
+            //     titleAttr: 'Importar datos',
+            //     className: "btn btn_cargar",
+            //     action: function(e, dt, node, config) {
+            //         $('#csvImportModal').modal('show');
+            //     }
+            // };
 
             @can('amenazas_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
 
-            dtButtons.push(btnExport);
-            dtButtons.push(btnImport);
+            // dtButtons.push(btnExport);
+            // dtButtons.push(btnImport);
 
             @can('amenazas_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
@@ -276,43 +292,15 @@
                         data: 'inicio_conteo',
                         name: 'inicio_conteo',
                         render: function(data, type, row) {
-                            const inicio_conteo = row.inicio_conteo;
-                            switch (inicio_conteo) {
-                                case 1:
-                                    return `
-                            <div  style="text-align:left">
-                                Al ingreso
-                            </div>
-                            `;
-                                    break;
-                                case 2:
-                                    return `
-                            <div style="text-align:left">
-                                Después de 1 mes
-                            </div>
-                            `;
-                                    break;
-                                case 3:
-                                    return `
-                            <div style="text-align:left">
-                                Después de 6 meses
-                            </div>
-                            `;
-                                    break;
-                                case 4:
-                                    return `
-                            <div style="text-align:left">
-                                Después de 1 año
-                            </div>
-                            `;
-                                    break;
-                                default:
-                                    return `
-                             <div style="text-align:left">No se ha definido</div>
-                            `;
-                            }
+                            return `<div style="text-align:left">${data}</div>`;
                         }
-
+                    },
+                    {
+                        data: 'fin_conteo',
+                        name: 'fin_conteo',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'dias',
@@ -326,7 +314,13 @@
                         data: 'incremento_dias',
                         name: 'incremento_dias',
                         render: function(data, type, row) {
-                            return `<div style="text-align:left">${data} días</div>`;
+                            const incremento = row.incremento_dias;
+                            if( incremento > 0 ){
+                                return `<div style="text-align:left">${data} días</div>`;
+                            }else{
+                                return `<div style="text-align:left">0 días</div>`;
+                            }
+                           
                         }
                     },
                     {
@@ -366,7 +360,7 @@
                             switch (afectados) {
                                 case 1:
                                     return `
-                                    <div  style="text-align:left">
+                                    <div  style="text-align:center">
                                     Toda la empresa
                                     </div>
                                     `;

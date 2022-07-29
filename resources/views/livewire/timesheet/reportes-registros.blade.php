@@ -91,13 +91,19 @@
                                 {!! $time->semana !!}
                             </td>
                             <td>
-                                {{ $time->empleado->name }}
+                                @if ($time->empleado)
+                                    {{ $time->empleado->name }}
+                                @endif
                             </td>
                             <td>
-                                {{ $time->aprobador->name }}
+                                @if ($time->aprobador)
+                                    {{ $time->aprobador->name }}
+                                @endif
                             </td>
                             <td>
-                                {{ $time->empleado->area->area }}
+                                @if ($time->empleado)
+                                    {{ $time->empleado->area->area }}
+                                @endif
                             </td>
                             <td>
                                 @if ($time->estatus == 'aprobado')

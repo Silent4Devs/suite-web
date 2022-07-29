@@ -40,9 +40,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
 
     //Control de Ausencias
+    Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
+    Route::get('ajustes-vacaciones', 'AusenciasController@ajustesVacaciones')->name('ajustes-vacaciones');
+    Route::get('ajustes-permisos-goce-sueldo', 'AusenciasController@ajustesGoceSueldo')->name('ajustes-permisos-goce-sueldo');
     Route::resource('Ausencias', 'AusenciasController');
 
+
     //Control de Ausencias- Vacaciones
+    Route::get('vista-global-vacaciones', 'VacacionesController@vistaGlobal')->name('vista-global-vacaciones');
     Route::delete('vacaciones/destroy', 'VacacionesController@massDestroy')->name('vacaciones.massDestroy');
     Route::resource('vacaciones', 'VacacionesController')->names([
         'create' => 'vacaciones.create',
@@ -54,15 +59,97 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     ]);
 
     //Control de Ausencias- Day-Off
+    Route::get('vista-global-dayoff', 'DayOffController@vistaGlobal')->name('vista-global-dayoff');
     Route::delete('dayOff/destroy', 'DayOffController@massDestroy')->name('dayOff.massDestroy');
     Route::resource('dayOff', 'DayOffController')->names([
-       'create' => 'dayOff.create',
-       'store' => 'dayOff.store',
-       'show' => 'dayOff.show',
-       'edit' => 'dayOff.edit',
-       'update' => 'dayOff.update',
-       'destroy' => 'dayOff.destroy',
-   ]);
+        'create' => 'dayOff.create',
+        'store' => 'dayOff.store',
+        'show' => 'dayOff.show',
+        'edit' => 'dayOff.edit',
+        'update' => 'dayOff.update',
+        'destroy' => 'dayOff.destroy',
+    ]);;
+
+    Route::get('vista-global-permisos-goce-sueldo', 'PermisosGoceSueldoController@vistaGlobal')->name('vista-global-permisos-goce-sueldo');
+    Route::delete('permisos-goce-sueldo/destroy', 'PermisosGoceSueldoController@massDestroy')->name('permisos-goce-sueldo.massDestroy');
+    Route::resource('permisos-goce-sueldo', 'PermisosGoceSueldoController')->names([
+        'create' => 'permisos-goce-sueldo.create',
+        'store' => 'permisos-goce-sueldo.store',
+        'show' => 'permisos-goce-sueldo.show',
+        'edit' => 'permisos-goce-sueldo.edit',
+        'update' => 'permisos-goce-sueldo.update',
+        'destroy' => 'permisos-goce-sueldo.destroy',
+    ]);;
+
+    //Control de Solicitud- Vacaciones
+    Route::get('solicitud-vacaciones/{id}/archivoShow', 'SolicitudVacacionesController@archivoShow')->name('solicitud-vacaciones.archivoShow');
+    Route::get('solicitud-vacaciones/{id}/vistaGlobal', 'SolicitudVacacionesController@showVistaGlobal')->name('solicitud-vacaciones.vistaGlobal');
+    Route::get('solicitud-vacaciones/menu', 'SolicitudVacacionesController@aprobacionMenu')->name('solicitud-vacaciones.menu');
+    Route::get('solicitud-vacaciones/archivo', 'SolicitudVacacionesController@archivo')->name('solicitud-vacaciones.archivo');
+    Route::get('solicitud-vacaciones/aprobacion', 'SolicitudVacacionesController@aprobacion')->name('solicitud-vacaciones.aprobacion');
+    Route::get('solicitud-vacaciones/{id}/respuesta', 'SolicitudVacacionesController@respuesta')->name('solicitud-vacaciones.respuesta');
+    Route::get('solicitud-vacaciones/{id}/show', 'SolicitudVacacionesController@show')->name('solicitud-vacaciones.show');
+    Route::post('solicitud-vacaciones/destroy', 'SolicitudVacacionesController@destroy')->name('solicitud-vacaciones.destroy');
+    Route::resource('solicitud-vacaciones', 'SolicitudVacacionesController')->names([
+        'create' => 'solicitud-vacaciones.create',
+        'store' => 'solicitud-vacaciones.store',
+        'show' => 'solicitud-vacaciones.show',
+        'edit' => 'solicitud-vacaciones.edit',
+        'update' => 'solicitud-vacaciones.update',
+        'destroy' => 'solicitud-vacaciones.destroy',
+    ])->except(['show', 'destroy']);;
+    
+    Route::get('solicitud-dayoff/{id}/showArchivo', 'SolicitudDayOffController@showArchivo')->name('solicitud-dayoff.showArchivo');
+    Route::get('solicitud-dayoff/{id}/vistaGlobal', 'SolicitudDayOffController@showVistaGlobal')->name('solicitud-dayoff.vistaGlobal');
+    Route::get('solicitud-dayoff/menu', 'SolicitudDayOffController@aprobacionMenu')->name('solicitud-dayoff.menu');
+    Route::get('solicitud-dayoff/archivo', 'SolicitudDayOffController@archivo')->name('solicitud-dayoff.archivo');
+    Route::get('solicitud-dayoff/aprobacion', 'SolicitudDayOffController@aprobacion')->name('solicitud-dayoff.aprobacion');
+    Route::get('solicitud-dayoff/{id}/respuesta', 'SolicitudDayOffController@respuesta')->name('solicitud-dayoff.respuesta');
+    Route::get('solicitud-dayoff/{id}/show', 'SolicitudDayOffController@show')->name('solicitud-dayoff.show');
+    Route::post('solicitud-dayoff/destroy', 'SolicitudDayOffController@destroy')->name('solicitud-dayoff.destroy');
+    Route::resource('solicitud-dayoff', 'SolicitudDayOffController')->names([
+        'create' => 'solicitud-dayoff.create',
+        'store' => 'solicitud-dayoff.store',
+        'show' => 'solicitud-dayoff.show',
+        'edit' => 'solicitud-dayoff.edit',
+        'update' => 'solicitud-dayoff.update',
+        'destroy' => 'solicitud-dayoff.destroy',
+    ])->except(['show', 'destroy']);;
+
+    Route::get('solicitud-permiso-goce-sueldo/{id}/showArchivo', 'SolicitudPermisoGoceSueldoController@showArchivo')->name('solicitud-permiso-goce-sueldo.showArchivo');
+    Route::get('solicitud-permiso-goce-sueldo/{id}/vistaGlobal', 'SolicitudPermisoGoceSueldoController@showVistaGlobal')->name('solicitud-permiso-goce-sueldo.vistaGlobal');
+    Route::get('solicitud-permiso-goce-sueldo/menu', 'SolicitudPermisoGoceSueldoController@aprobacionMenu')->name('solicitud-permiso-goce-sueldo.menu');
+    Route::get('solicitud-permiso-goce-sueldo/archivo', 'SolicitudPermisoGoceSueldoController@archivo')->name('solicitud-permiso-goce-sueldo.archivo');
+    Route::get('solicitud-permiso-goce-sueldo/aprobacion', 'SolicitudPermisoGoceSueldoController@aprobacion')->name('solicitud-permiso-goce-sueldo.aprobacion');
+    Route::get('solicitud-permiso-goce-sueldo/{id}/respuesta', 'SolicitudPermisoGoceSueldoController@respuesta')->name('solicitud-permiso-goce-sueldo.respuesta');
+    Route::get('solicitud-permiso-goce-sueldo/{id}/show', 'SolicitudPermisoGoceSueldoController@show')->name('solicitud-permiso-goce-sueldo.show');
+    Route::post('solicitud-permiso-goce-sueldo/destroy', 'SolicitudPermisoGoceSueldoController@destroy')->name('solicitud-permiso-goce-sueldo.destroy');
+    Route::resource('solicitud-permiso-goce-sueldo', 'SolicitudPermisoGoceSueldoController')->names([
+        'create' => 'solicitud-permiso-goce-sueldo.create',
+        'store' => 'solicitud-permiso-goce-sueldo.store',
+        'show' => 'solicitud-permiso-goce-sueldo.show',
+        'edit' => 'solicitud-permiso-goce-sueldo.edit',
+        'update' => 'solicitud-permiso-goce-sueldo.update',
+        'destroy' => 'solicitud-permiso-goce-sueldo.destroy',
+    ])->except(['show', 'destroy']);;
+
+    Route::resource('incidentes-vacaciones', 'IncidentesVacacionesController')->names([
+        'create' => 'incidentes-vacaciones.create',
+        'store' => 'incidentes-vacaciones.store',
+        'show' => 'incidentes-vacaciones.show',
+        'edit' => 'incidentes-vacaciones.edit',
+        'update' => 'incidentes-vacaciones.update',
+        'destroy' => 'incidentes-vacaciones.destroy',
+    ]);;
+
+    Route::resource('incidentes-dayoff', 'IncidentesDayOffController')->names([
+        'create' => 'incidentes-dayoff.create',
+        'store' => 'incidentes-dayoff.store',
+        'show' => 'incidentes-dayoff.show',
+        'edit' => 'incidentes-dayoff.edit',
+        'update' => 'incidentes-dayoff.update',
+        'destroy' => 'incidentes-dayoff.destroy',
+    ]);;
 
     //Tipos de contratos
     Route::resource('recursos-humanos/tipos-contratos-empleados', 'RH\TipoContratoEmpleadoController');
@@ -486,7 +573,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::get('empleados/imprimir/{id}', 'EmpleadoController@imprimir')->name('imprimir');
 
     Route::post('empleados/{empleado}/update-from-curriculum', 'EmpleadoController@updateFromCurriculum')->name('empleados.updateFromCurriculum');
-
+    Route::post('empleados/baja/remover-vacante', 'EmpleadoController@removerVacante')->name('empleados.removerVacante');
     Route::post('empleado/expediente/update', 'EmpleadoController@expedienteUpdate')->name('empleado.edit.expediente-update');
     Route::post('empleado/expediente/Restaurar', 'EmpleadoController@expedienteRestaurar')->name('empleado.edit.expediente-restaurar');
     Route::get('empleado/{empleado}/solicitud-baja', 'EmpleadoController@solicitudBaja')->name('empleado.solicitud-baja');
@@ -880,7 +967,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('indicadores-sgsisInsertar', 'IndicadoresSgsiController@IndicadorInsert')->name('indicadores-sgsisInsertar');
     Route::get('indicadores-sgsisUpdate', 'IndicadoresSgsiController@IndicadorUpdate')->name('indicadores-sgsisUpdate');
     Route::get('evaluaciones-sgsisUpdate', 'IndicadoresSgsiController@evaluacionesUpdate')->name('evaluacionesUpdate');
-
+    Route::get('indicadores/dashboard', 'IndicadoresSgsiController@indicadoresDashboard')->name('indicadores-dashboard');
+    Route::post('indicadores/porcentaje-dashboard', 'IndicadoresSgsiController@indicadoresDashboardPorcentaje')->name('indicadores-porcentaje-dashboard');
     // Indicadorincidentessis
     Route::resource('indicadorincidentessis', 'IndicadorincidentessiController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 

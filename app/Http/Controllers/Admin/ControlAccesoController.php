@@ -9,6 +9,7 @@ use App\Http\Requests\StoreControlAccesoRequest;
 use App\Http\Requests\UpdateControlAccesoRequest;
 use App\Models\ControlAcceso;
 use App\Models\DocumentoControlAcceso;
+use App\Models\Empleado;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
@@ -75,8 +76,9 @@ class ControlAccesoController extends Controller
     {
         abort_if(Gate::denies('control_de_accesos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = DocumentoControlAcceso::get();
+        $responsables=Empleado::get();
 
-        return view('admin.controlAccesos.create', compact('documentos'));
+        return view('admin.controlAccesos.create', compact('responsables','documentos'));
     }
 
     public function store(StoreControlAccesoRequest $request)

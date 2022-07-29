@@ -42,7 +42,8 @@
                         <select id="proyectos_select" class="mr-4 form-control" wire:model="proyecto_id" required>
                             <option selected value="">- -</option>
                             @foreach ($proyectos as $proyecto)
-                                <option value="{{ $proyecto->id }}">{{ $proyecto->proyecto }}</option>
+                                <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
+                                    {{ $proyecto->proyecto }}</option>
                             @endforeach
                         </select>
                     @endif
@@ -70,7 +71,21 @@
             </div>
         </form>
     @endcan
-    <div class="datatable-fix w-100 mt-5">
+    <div class="row mt-5">
+        @if($origen == 'tareas')
+            <div class="col-6 form-group">
+                <label>Filtrar por proyecto</label>
+                <select id="proyecto_filtro" class="form-control">
+                    <option value=""></option>
+                    @foreach ($proyectos as $proyecto)
+                        <option value="{{ $proyecto->id }}">{{ $proyecto->identificador }} -
+                            {{ $proyecto->proyecto }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endif
+    </div>
+    <div class="datatable-fix w-100 mt-2">
         <table id="tabla_time_tareas" class="table w-100 tabla-animada tabla_time_tareas">
             <thead class="w-100">
                 <tr>
@@ -85,8 +100,8 @@
                 @foreach ($tareas as $tarea)
                     <tr>
                         <td wire:ignore>
-                            <textarea class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}"
-                                name="tarea" style="min-height: 40px !important; height:40px !important;">{{ $tarea->tarea }}</textarea>
+                            <textarea class="input_tarea form-control" data-type="change" data-id="{{ $tarea->id }}" name="tarea"
+                                style="min-height: 40px !important; height:40px !important;">{{ $tarea->tarea }}</textarea>
                         </td>
                         <td> {{ $tarea->proyecto_id ? $tarea->proyecto->proyecto : '' }} </td>
                         <td style="display:flex; align-items: center;">
@@ -185,6 +200,11 @@
             document.querySelector('#areas_select').addEventListener('change', (e) => {
                 let value = e.target.value;
                 @this.set('area_select', value, true);
+            });
+
+            document.querySelector('#proyecto_filtro').addEventListener('change', (e) => {
+                let value = e.target.value;
+                @this.updateProyecto(value);
             });
 
             // edit dentro de tabla ----------------------------------------

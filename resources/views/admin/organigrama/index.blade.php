@@ -70,7 +70,6 @@
         .orgchart .node {
             width: 200px;
         }
-
     </style>
     <style>
         /* width */
@@ -265,7 +264,6 @@
             top: 0;
             right: 70px;
         }
-
     </style>
     <style>
         .range-slider {
@@ -366,13 +364,13 @@
         .supervisor img {
             height: 80px !important;
         }
-
     </style>
 @endsection
 
 @section('content')
 
-    <h5 class="col-12 titulo_general_funcion" style="font-size:20px; font-weight: bold;">Organigrama de {{ $organizacion }}
+    <h5 class="col-12 titulo_general_funcion" style="font-size:20px; font-weight: bold;">Organigrama de
+        {{ $organizacion }}
     </h5>
 
 
@@ -401,8 +399,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <img src="{{ asset('img/OrganigramaFinal.jpg') }}" alt="No se pudo cargar el organigrama"
-                    class="mt-3" style="width: 640px;height: 357px;">
+                <img src="{{ asset('img/OrganigramaFinal.jpg') }}" alt="No se pudo cargar el organigrama" class="mt-3"
+                    style="width: 640px;height: 357px;">
             </div>
         @else
             <div class="row">
@@ -476,7 +474,8 @@
                             Control de zoom
                         </span>
                         <div class="d-flex justify-content-center align-items-center" style="height: 75%">
-                            <input id="zoomer" class="range-slider__range" type="range" value="70" min="10" max="200">
+                            <input id="zoomer" class="range-slider__range" type="range" value="70" min="10"
+                                max="200">
                             <span id="output" class="range-slider__value">70</span>
                         </div>
                     </div>
@@ -665,7 +664,8 @@
                         let orgchart = new OrgChart({
                             'chartContainer': '#chart-container',
                             'zoomSlider': '#zoomer',
-                            'data': JSON.parse(response),
+                            'data': JSON.parse(response.replaceAll('children_organigrama',
+                                'children')),
                             'depth': 999,
                             'nodeContent': 'puesto',
                             'withImage': true,

@@ -40,7 +40,6 @@ export default class OrgChart {
     chart.dataset.options = JSON.stringify(opts);
     chart.setAttribute('class', 'orgchart' + (opts.chartClass !== '' ? ' ' + opts.chartClass : '') +
       (opts.direction !== 't2b' ? ' ' + opts.direction : ''));
-    // console.log("type" + typeof data);
     if (typeof data === 'object') { // local json datasource
       this.buildHierarchy(chart, opts.ajaxURL ? data : this._attachRel(data, '00'), 0);
     } else if (typeof data === 'string' && data.startsWith('#')) { // ul datasource
@@ -82,7 +81,6 @@ export default class OrgChart {
         exportBtn.style.fontSize = "14pt";
         exportCSV.title = "Exportar Organigrama a Excel/CSV";
         exportCSV.innerHTML = '<i class="fas fa-file-csv" title="Exportar"></i>';
-        // console.log(this);
         exportCSV.addEventListener('click', this._clickExportCSVButton.bind(this));
       }
       downloadBtn.setAttribute('class', 'oc-download-btn' + (opts.chartClass !== '' ? ' ' + opts.chartClass : ''));
@@ -394,7 +392,6 @@ export default class OrgChart {
     let chartContainer = document.querySelector('#chart-side');
     chartContainer.classList.add('side');
     chartContainer.classList.add('nav-shadow');
-    console.log(dataSourceJSON);
     // Close button
     let a_close = document.createElement('a');
     a_close.href = 'javascript:void(0)';
@@ -421,7 +418,6 @@ export default class OrgChart {
     let title_info_text = document.createElement('p');
     title_info_text.classList.add('side');
     // title_info_text.classList.add('title-nav');
-    console.log(dataSourceJSON.color);
     title_info_text.style.backgroundColor = `${dataSourceJSON.color}`;
     title_info_text.innerText = ``;
 
@@ -496,7 +492,6 @@ export default class OrgChart {
     else {
       photo = `${this.options.nodeRepositoryImages}/${dataSourceJSON.foto}`;
     }
-    // console.log(dataSourceJSON);
     photo_info.classList.add('side');
     photo_info.classList.add('img-nav');
     photo_info.style.clipPath = "circle()"
@@ -516,7 +511,6 @@ export default class OrgChart {
         <h4>Descripción</h4>
         <p class="text-justify mr-3" style="text-align: justify !important">${dataSourceJSON.descripcion}</p>
         `;
-    // console.log(dataSourceJSON.lider);
     if (dataSourceJSON.lider != null) {
       content_more += `
                 <div class="supervisor justify-content-center" style="text-align:center !important" >
@@ -619,6 +613,59 @@ export default class OrgChart {
     let c_more = document.createElement('div');
     title_info_text.classList.add('side');
     c_more.classList.add('c_more');
+
+    //Only for employees
+    window.deleteVacant = (id) => {
+      Swal.fire({
+        title: '¿Desea remover esta vacante?',
+        text: "Esta acción no se puede deshacer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Remover',
+        cancelButtonText: 'Cancelar',
+        showLoaderOnConfirm: true,
+        preConfirm: (empleadoId) => {
+          return fetch(`empleados/baja/remover-vacante`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            body: JSON.stringify({ id })
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText)
+              }
+              return response.json()
+            })
+            .catch(error => {
+              Swal.showValidationMessage(
+                `Request failed: ${error}`
+              )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (result.value.status == 200) {
+            Swal.fire(
+              'Buen Trabajo',
+              result.value.message,
+              'success'
+            ).then(() => {
+              if (document.getElementById('reloadOrg')) {
+                document.getElementById('reloadOrg')?.click();
+              } else {
+                window.location.reload();
+              }
+            })
+          }
+        }
+      })
+    }
+    // end only for employees
+
     let content_more = dataSourceJSON.estatus == 'alta' ? `
         <h4 class="m-0">Información de Contácto</h4>
         <div class="row container mb-2">
@@ -636,7 +683,13 @@ export default class OrgChart {
         <p class="it_5"><i class="fas fa-info-circle" style="margin: 0 7px 0 0px;"></i>
           Teléfono: <span>${dataSourceJSON.telefono == null ? 'Sin dato' : dataSourceJSON.telefono}</span>
         </p>
-        ` : '';
+        ` : `
+        <div class="text-center">
+          <button class="btn btn-danger" onclick="event.preventDefault();deleteVacant('${dataSourceJSON.id
+    }')"><i class="fas fa-trash-alt mr-2"></i>Remover Vacante</button>
+        </div>
+        `;
+
     if (dataSourceJSON.supervisor != null) {
       let photo_s;
       if (dataSourceJSON.supervisor.foto == null) {
@@ -1831,7 +1884,7 @@ export default class OrgChart {
         childNodes = childNodes?.filter(function (item) {
           return item.estatus == 'alta' || item.es_supervisor;
         });
-        console.log(childNodes);
+
         if (nodeData.estatus == 'alta' || nodeData.es_supervisor) {
           this._createNode(nodeData, level)
             .then(function (nodeDiv) {
@@ -2055,7 +2108,6 @@ export default class OrgChart {
           //   }
           // }
           // let orgChart = cloneDoc.querySelector('.charContainerAll');
-          // console.log(orgChart);
           // orgChart.style.transform="scale(0.5) rotate(-90deg) rotateY(180deg)";
           // orgChart.style.background="red";
 

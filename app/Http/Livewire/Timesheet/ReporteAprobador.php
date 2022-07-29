@@ -48,6 +48,8 @@ class ReporteAprobador extends Component
 
     public $calendario_tabla;
 
+    public $empleados_list_global;
+
     public $times_faltantes_empleado;
 
     public $semanas_totales_calendario = 0;
@@ -139,9 +141,12 @@ class ReporteAprobador extends Component
 
         $this->aprobador = Empleado::find(auth()->user()->empleado->id);
         $empleados_list = $this->aprobador->children;
+        $this->empleados_list_global = $this->aprobador->children;
+
         if ($this->habilitarTodos) {
             $equipo_a_cargo = $this->obtenerEquipo($this->aprobador->children);
             $empleados_list = Empleado::find($equipo_a_cargo);
+            $this->empleados_list_global = Empleado::find($equipo_a_cargo);
         }
         //calendario tabla
         $calendario_array = [];
@@ -577,6 +582,26 @@ class ReporteAprobador extends Component
 
         $this->alert('success', 'Correo Enviado!');
 
+        $this->empleado = null;
+    }
+
+    public function correoMasivo()
+    {
+        foreach ($this->empleados_list_global as $empleado) {
+            $antiguedad_y = Carbon::parse($empleado->antiguedad)->format('Y');
+            $antiguedad_m = Carbon::parse($empleado->antiguedad)->format('m');
+            $antiguedad_d = Carbon::parse($empleado->antiguedad)->format('d');
+            $times_empleado = Timesheet::where('empleado_id', $empleado->id)->where('estatus', '!=', 'papelera')->where('estatus', '!=', 'rechazado')->get();
+            $times_empleado_array = [];
+
+            foreach ($times_empleado as $time) {
+                $times_empleado_array[] = $time->semana_y;
+            }
+
+            $correo = Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $this->times_faltantes_empleado));
+        }
+
+        $this->alert('success', 'Correos Enviados!');
         $this->empleado = null;
     }
 
