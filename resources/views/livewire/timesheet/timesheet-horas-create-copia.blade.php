@@ -116,8 +116,8 @@
 
                     @for($i=$i_hora+1; $i<=$contador; $i++)
                         <tr id="tr_time_{{ $i }}" wire:ignore>
-                            <input type="hidden" name="timesheet[{{ $i }}][id_hora]" value="0">
                             <td wire:ignore>
+                                <input type="hidden" name="timesheet[{{ $i }}][id_hora]" value="0">
                                 <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}" data-type="parent" name="timesheet[{{ $i }}][proyecto]" class="select2">
                                     <option selected disabled>Seleccione proyecto</option>
                                     @foreach($proyectos as $proyecto)

@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-	
+
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
-	
+
 	{{ Breadcrumbs::render('timesheet-edit') }}
-	
+
 	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">
 		{!! $timesheet->semana !!} |  <font style="font-weight:lighter;">{{ $timesheet->empleado->name }}</font>
 	 </h5>
@@ -16,7 +16,7 @@
 
 		</div>
 	</div>
-	
+
 @endsection
 
 @section('scripts')
@@ -31,12 +31,12 @@
 
         document.addEventListener('DOMContentLoaded', ()=>{
             let fechasRegistradas = @json($fechasRegistradas);
-            
+
             let dia_semana = @json($organizacion->dia_timesheet);
 
             function toISODate(d) {
                 const z = n => ('0' + n).slice(-2);
-                return d.getFullYear() + '-' + z(d.getMonth()+1) + '-' + z(d.getDate()); 
+                return d.getFullYear() + '-' + z(d.getMonth()+1) + '-' + z(d.getDate());
             }
 
 
@@ -44,25 +44,25 @@
                 "disable": [
                     function(date) {
 
-                        if (dia_semana == 'Domingo') { 
+                        if (dia_semana == 'Domingo') {
                             return (date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
                         }
-                        if (dia_semana == 'Lunes') { 
+                        if (dia_semana == 'Lunes') {
                             return (date.getDay() === 0 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
                         }
-                        if (dia_semana == 'Martes') { 
+                        if (dia_semana == 'Martes') {
                             return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
                         }
-                        if (dia_semana == 'Miércoles') { 
+                        if (dia_semana == 'Miércoles') {
                             return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
                         }
-                        if (dia_semana == 'Jueves') { 
+                        if (dia_semana == 'Jueves') {
                             return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 5 || date.getDay() === 6);
                         }
                         if (dia_semana == 'Viernes') {
                             return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 6);
                         }
-                        if (dia_semana == 'Sábado') { 
+                        if (dia_semana == 'Sábado') {
                             return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5);
                         }
                     },
@@ -75,8 +75,8 @@
                     firstDayOfWeek: 1,
                     weekdays: {
                       shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
-                    }, 
+                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
                     months: {
                       shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
                       longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -135,7 +135,7 @@
         }
 
         function updateValue(index) {
-        	
+
             const suma_horas =  Number($('#ingresar_hora_lunes_' + index).val())+
                                 Number($('#ingresar_hora_martes_' + index).val())+
                                 Number($('#ingresar_hora_miercoles_' + index).val())+
@@ -165,10 +165,10 @@
                 else{
                     suma_horas_lunes_no_fact += Number(item.value);
                 }
-            });      
+            });
             document.getElementById('suma_dia_lunes').innerText = suma_horas_lunes + ' h';
             document.getElementById('suma_dia_lunes_no_fact').innerText = suma_horas_lunes_no_fact + ' h';
-            
+
             // martes ----------------------------------
             let input_martes = document.querySelectorAll('input[data-dia="martes"]');
             let suma_horas_martes = 0;
@@ -181,7 +181,7 @@
                 else{
                     suma_horas_martes_no_fact += Number(item.value);
                 }
-            });      
+            });
             document.getElementById('suma_dia_martes').innerText = suma_horas_martes + ' h';
             document.getElementById('suma_dia_martes_no_fact').innerText = suma_horas_martes_no_fact + ' h';
 
@@ -197,7 +197,7 @@
                 else{
                     suma_horas_miercoles_no_fact += Number(item.value);
                 }
-            });      
+            });
             document.getElementById('suma_dia_miercoles').innerText = suma_horas_miercoles + ' h';
             document.getElementById('suma_dia_miercoles_no_fact').innerText = suma_horas_miercoles_no_fact + ' h';
 
@@ -213,7 +213,7 @@
                 else{
                     suma_horas_jueves_no_fact += Number(item.value);
                 }
-            });      
+            });
             document.getElementById('suma_dia_jueves').innerText = suma_horas_jueves + ' h';
             document.getElementById('suma_dia_jueves_no_fact').innerText = suma_horas_jueves_no_fact + ' h';
 
@@ -229,7 +229,7 @@
                 else{
                     suma_horas_viernes_no_fact += Number(item.value);
                 }
-            });      
+            });
             document.getElementById('suma_dia_viernes').innerText = suma_horas_viernes + ' h';
             document.getElementById('suma_dia_viernes_no_fact').innerText = suma_horas_viernes_no_fact + ' h';
 
@@ -245,7 +245,7 @@
                 else{
                     suma_horas_sabado_no_fact += Number(item.value);
                 }
-            });      
+            });
             document.getElementById('suma_dia_sabado').innerText = suma_horas_sabado + ' h';
             document.getElementById('suma_dia_sabado_no_fact').innerText = suma_horas_sabado_no_fact + ' h';
 
@@ -261,7 +261,7 @@
                 else{
                     suma_horas_domingo_no_fact += Number(item.value);
                 }
-            });   
+            });
 
             let total_h_fact = suma_horas_lunes + suma_horas_martes + suma_horas_miercoles + suma_horas_jueves + suma_horas_viernes + suma_horas_sabado + suma_horas_domingo;
 
@@ -281,7 +281,7 @@
         setTimeout(() => {
         	sumarFilas();
         }, 1000);
-        
+
         function sumarFilas(){
 	        let total_horas_filas = 0;
 	        let tota_filas_elemnt = document.querySelectorAll('.total_filas');
@@ -290,17 +290,5 @@
 	        });
 	        document.getElementById('total_horas_filas').innerText = total_horas_filas + ' h';
         }
-
-        // $('.ingresar_horas').focus(function(){
-        //     let input_hora = $('.ingresar_horas:focus').attr('id');
-
-        //     let input = document.getElementById(input_hora);
-
-        //     input.addEventListener('input', updateValue);
-        // });
-
-        // function updateValue(e) {
-        // 	console.log(e.srcElement.id('id'));
-        // }
     </script>
 @endsection
