@@ -484,7 +484,7 @@
                                             }
 
                                         @endphp
-                                        <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}">
+                                        <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}" data-toggle="modal" data-target="#comunicado_carrusel_modal{{$idx}}" style="cursor: pointer;">
                                             <div class="img_carrusel"
                                                 style="background-image: url('{{ asset($imagen) }}');">
                                             </div>
@@ -519,7 +519,25 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="mt-5 col-lg-12">
+
+                        {{-- modal carrusel --}}
+                        @foreach($comunicacionSgis_carrusel as $idx=>$carrusel)
+                            <div class="modal fade" id="comunicado_carrusel_modal{{$idx}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document" style="max-width: 75% !important;">
+                                <div class="modal-content">
+                                  <div class="modal-body">
+                                    <a href="{{$carrusel->link}}">{{Str::limit($carrusel->link, 50, '...')}}</a>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <img src="{{asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen)}}" style="width: 100%;">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        @endforeach
+
+                        <div class="col-lg-12">
                             @can('portal_comunicacion_mostrar_comunicados')
                                 <div class="card card-body">
                                     <h2 class="titulo-seccion mb-3" style="font-weight:normal;"><i

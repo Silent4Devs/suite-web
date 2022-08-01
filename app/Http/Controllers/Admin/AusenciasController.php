@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class AusenciasController extends Controller
 {
-    
     public function index()
     {
         return view('admin.controlAusencia.index');
@@ -22,10 +20,9 @@ class AusenciasController extends Controller
     {
         return view('admin.controlAusencia.ajustesDayOff');
     }
+
     public function ajustesGoceSueldo()
     {
         return view('admin.controlAusencia.ajustesPermisosGoceSueldo');
     }
-
-   
 }

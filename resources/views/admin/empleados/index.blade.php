@@ -133,6 +133,12 @@
                             Sede
                         </th>
                         <th style="vertical-align: top">
+                            Cumpleaños
+                        </th>
+                        <th style="vertical-align: top">
+                            Fecha Nacimiento
+                        </th>
+                        <th style="vertical-align: top">
                             Opciones
                         </th>
                     </tr>
@@ -437,6 +443,31 @@
                         }
                     },
                     {
+                        data: 'sede',
+                        render: function(data, type, row, meta) {
+                            if (row.cumpleaños != null) {
+                                //get current year
+                                var currentYear = new Date().getFullYear();
+                                let fecha = row.cumpleaños.split('-');
+                                let dia = fecha[2];
+                                let mes = fecha[1];
+                                let anio = fecha[0];
+                                let birthday = `${dia} de ${obtenerMes(Number(mes))} del ${currentYear}`;
+                                return birthday;
+                            }
+                            return '- -';
+                        }
+                    },
+                    {
+                        data: 'sede',
+                        render: function(data, type, row, meta) {
+                            if (row.cumpleaños != null) {
+                                return row.cumpleaños;
+                            }
+                            return '- -';
+                        }
+                    },
+                    {
                         data: 'id',
                         render: function(data, type, row, meta) {
                             let buttons = `
@@ -477,6 +508,49 @@
             //     leftColumns: 2,
             //     rightColumns: 2
             // });
+            function obtenerMes(mes) { 
+                switch (mes) {
+                    case 1:
+                    return 'Enero';   
+                        break;
+                    case 2:
+                    return 'Febrero';   
+                        break;
+                    case 3:
+                    return 'Marzo';   
+                        break;
+                    case 4:
+                    return 'Abril';   
+                        break;
+                    case 5:
+                    return 'Mayo';   
+                        break;
+                    case 6:
+                    return 'Junio';   
+                        break;
+                    case 7:
+                    return 'Julio';   
+                        break;
+                    case 8:
+                    return 'Agosto';   
+                        break;
+                    case 9:
+                    return 'Septiembre';   
+                        break;
+                    case 10:
+                    return 'Octubre';   
+                        break;
+                    case 11:
+                    return 'Noviembre';   
+                        break;
+                    case 12:
+                    return 'Diciembre';   
+                        break;
+                    default:
+                        return '- -';
+                        break;
+                }
+             }
             $('#eliminar_todo').click(function() {
                 let ArregloIds = [];
                 let arregloEliminar = table.rows({
