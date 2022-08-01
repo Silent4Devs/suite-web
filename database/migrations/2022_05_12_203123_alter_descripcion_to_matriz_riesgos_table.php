@@ -14,6 +14,7 @@ class AlterDescripcionToMatrizRiesgosTable extends Migration
     public function up()
     {
         Schema::table('matriz_riesgos', function (Blueprint $table) {
+            $table->dropForeign('matriz_riesgos_activo_id_foreign');
             $table->foreign('activo_id')->references('id')->on('subcategoria_activos');
         });
     }
