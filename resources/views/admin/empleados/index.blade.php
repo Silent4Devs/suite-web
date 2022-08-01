@@ -133,6 +133,9 @@
                             Sede
                         </th>
                         <th style="vertical-align: top">
+                            Cumpleaños
+                        </th>
+                        <th style="vertical-align: top">
                             Opciones
                         </th>
                     </tr>
@@ -432,6 +435,15 @@
                         render: function(data, type, row, meta) {
                             if (row.sede != null) {
                                 return row.sede.sede;
+                            }
+                            return '- -';
+                        }
+                    },
+                    {
+                        data: 'sede',
+                        render: function(data, type, row, meta) {
+                            if (row.cumpleaños != null) {
+                                return row.cumpleaños;
                             }
                             return '- -';
                         }
