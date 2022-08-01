@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             RoleUserTableSeeder::class,
             Clausula9001Seeder::class,
             NormasSeeder::class,
-            ConfigurarSoporteSeeder::class,
+            // ConfigurarSoporteSeeder::class,
             CategoriaActivosSeeder::class,
             SubcategoriaActivosSeeder::class,
             activosDisponibilidadSeeder::class,
