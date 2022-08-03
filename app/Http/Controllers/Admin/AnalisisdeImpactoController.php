@@ -117,27 +117,49 @@ class AnalisisdeImpactoController extends Controller
         $cuestionario = AnalisisImpacto::create($request->all());
 
 
-        Flash::success('Cuestionario añadido satisfactoriamente.');
+        // Flash::success('Cuestionario añadido satisfactoriamente.');
 
-        return redirect()->route('admin.analisis-impacto.index');
+        return redirect()->route('admin.analisis-impacto.edit',['id' => $cuestionario]);
     }
 
 
     public function show($id)
     {
-        //
+        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $cuestionario = AnalisisImpacto::find($id);
+
+        return view('admin.analisis-impacto.show', compact('cuestionario'));
     }
 
 
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
-        //
+        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+      
+        $cuestionario = AnalisisImpacto::find($id);
+        // dd($cuestionario);
+       
+        if (empty($cuestionario)) {
+            Flash::error('Cuestionario no encontrado');
+
+            return redirect(route('admin.analisis-impacto.index'));
+        }
+       
+        return view('admin.analisis-impacto.edit', ['id' => $cuestionario], compact('cuestionario'));
     }
 
 
     public function update(Request $request, $id)
     {
-        //
+        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+      
+        $cuestionario = AnalisisImpacto::find($id);
+        $cuestionario->update($request->all());
+    
+
+        Flash::success('Cuestionario actualizado correctamente.');
+
+        return redirect(route('admin.analisis-impacto.index'));
     }
 
 

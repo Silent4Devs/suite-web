@@ -996,6 +996,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
 
     Route::delete('analisis-impacto/destroy', 'AnalisisdeImpactoController@massDestroy')->name('analisis-impacto.massDestroy');
+    Route::get('analisis-impacto/{id}/edit', 'AnalisisdeImpactoController@edit')->name('analisis-impacto.edit');
     Route::get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
     Route::get('getEmployeeData', 'AnalisisdeImpactoController@getEmployeeData')->name('analisis-impacto.getEmployeeData');
     Route::resource('analisis-impacto', 'AnalisisdeImpactoController')->names([
@@ -1003,9 +1004,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'create' => 'analisis-impacto.create',
         'store' => 'analisis-impacto.store',
         'show' => 'analisis-impacto.show',
-        'edit' => 'analisis-impacto.edit',
         'update' => 'analisis-impacto.update',
-    ]);;
+    ])->except(['edit']);;
    
 
     //Carta de Aceptación

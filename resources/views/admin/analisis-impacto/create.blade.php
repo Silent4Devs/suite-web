@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-
-
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario de Análisis de Impacto</a>
@@ -18,6 +16,17 @@
             {!! Form::open(['route' => 'admin.analisis-impacto.store']) !!}
 
             @include('admin.analisis-impacto.fields')
+
+            <!-- Submit Field -->
+            <div class="row">
+                <div class="text-right form-group col-12">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <button class="btn btn-danger" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
+                </div>
+            </div>
+
 
             {!! Form::close() !!}
         </div>

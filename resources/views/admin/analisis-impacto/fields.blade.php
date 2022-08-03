@@ -145,20 +145,20 @@
     </div>
     <div class="form-group col-sm-12">
         <div class="col-sm-2 form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="peridicidad" value="1"  @click="periodicidad = false">
+            <input class="form-check-input" type="radio" name="periodicidad" value="1"  @click="periodicidad = false" {{ old('periodicidad_mensual',$cuestionario->periodicidad) == '1' ? 'checked' : '' }}>
             <label class="form-check-label" for="inlineRadio1">Diario</label>
         </div>
         <div class="col-sm-2 form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="peridicidad" value="2"  @click="periodicidad = false">
+            <input class="form-check-input" type="radio" name="periodicidad" value="2"  @click="periodicidad = false" {{ old('periodicidad_mensual',$cuestionario->periodicidad) == '2' ? 'checked' : '' }}>
             <label class="form-check-label" for="inlineRadio2">Semanal</label>
         </div>
         <div class="col-sm-2 form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="peridicidad" value="3"  @click="periodicidad = false">
+            <input class="form-check-input" type="radio" name="periodicidad" value="3"  @click="periodicidad = false" {{ old('periodicidad_mensual',$cuestionario->periodicidad) == '3' ? 'checked' : '' }}>
             <label class="form-check-label" for="inlineRadio3">Mensual</label>
         </div>
         <div class="col-sm-2 form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="peridicidad" value="4"
-                @click="periodicidad = true">
+            <input class="form-check-input" type="radio" name="periodicidad" value="4"
+                @click="periodicidad = true" {{ old('periodicidad_mensual',$cuestionario->periodicidad) == '4' ? 'checked' : '' }}>
             <label class="form-check-label" for="inlineRadio3">Otro: </label>
         </div>
     </div>
@@ -166,15 +166,5 @@
     <div class="form-group col-sm-12" x-show="periodicidad">
         <input type="text" class="form-control" name="p_otro_txt" placeholder="Defina" x-bind:disabled="!periodicidad">
     </div>
-
 </div>
 
-<!-- Submit Field -->
-<div class="row">
-    <div class="text-right form-group col-12">
-        <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-        <button class="btn btn-danger" type="submit">
-            {{ trans('global.save') }}
-        </button>
-    </div>
-</div>
