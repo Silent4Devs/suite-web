@@ -30,12 +30,12 @@ class Timesheet extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
+        return $this->belongsTo(Empleado::class, 'empleado_id');
     }
 
     public function aprobador()
     {
-        return $this->belongsTo(Empleado::class, 'aprobador_id')->alta();
+        return $this->belongsTo(Empleado::class, 'aprobador_id');
     }
 
     public function getSemanaAttribute()
