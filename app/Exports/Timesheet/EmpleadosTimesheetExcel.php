@@ -19,10 +19,10 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
     {
         $empleados = Empleado::get();
         $timeSheetEmpleados = collect();
+        $timeSheetHorasCollection = collect();
 
         foreach ($empleados as $empleado) {
             $timeSheets = Timesheet::with('aprobador')->where('empleado_id', $empleado->id)->get();
-            $timeSheetHorasCollection = collect();
             foreach ($timeSheets as $timesheet) {
                 $timeSheetHoras = TimesheetHoras::with('proyecto', 'tarea')->where('timesheet_id', $timesheet->id)->get();
                 foreach ($timeSheetHoras as $horas) {
@@ -61,8 +61,8 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
                     }
                 }
             }
-            return $timeSheetHorasCollection;
         }
+        return $timeSheetHorasCollection;
     }
 
     public function pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas)
