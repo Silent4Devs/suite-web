@@ -69,6 +69,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
     {
         $timeSheetHorasCollection->push([
             'timesheet' => $timesheet->semana_text,
+            'timesheet_fin' => $timesheet->fecha_dia,
             'empleado' => $empleado->name,
             'aprobador' => $timesheet->aprobador ? $timesheet->aprobador->name : 'Sin aprobador',
             'proyecto' => $horas->proyecto->proyecto,
@@ -90,13 +91,13 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
             return $item;
         });
 
-        return $timeSheetHorasCollection;
+        return $timeSheetHorasCollection->sortBy('timesheet_fin');
     }
 
     public function map($timeSheetEmpleados): array
     {
         return [
-            $timeSheetEmpleados['timesheet'],
+            $timeSheetEmpleados['timesheet_fin'],
             $timeSheetEmpleados['empleado'],
             $timeSheetEmpleados['aprobador'],
             $timeSheetEmpleados['proyecto'],
