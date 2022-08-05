@@ -49,8 +49,8 @@
                     href="#nav-proyectos" role="tab" aria-controls="nav-proyectos" aria-selected="false">
                     Proyectos
                 </a>
-                <a class="nav-link" id="nav-semanas-tab" data-type="clientes" data-toggle="tab"
-                    href="#nav-clientes" role="tab" aria-controls="nav-semanas" aria-selected="false">
+                <a class="nav-link" id="nav-semanas-tab" data-type="semanas" data-toggle="tab"
+                    href="#nav-semanas" role="tab" aria-controls="nav-semanas" aria-selected="false">
                     Semanas
                 </a>
             </div>
@@ -294,6 +294,7 @@
                     tablaLivewire('timesheet_empleados_lista');
                     tablaLivewire('datatable_timesheet_empleados');
                     tablaLivewire('datatable_timesheet_proyectos');
+                    tablaLivewire('datatable_timesheet_semanas');
             }, 100);
 
                 // $('#area_id_registros').on('change', function() {
