@@ -25,6 +25,6 @@ class SolicitudPermisoGoceSueldo extends Mailable
 
     public function build()
     {
-        return $this->view('mails.PermisoGoceSueldo.solicitud');
+        return $this->view('mails.PermisoGoceSueldo.solicitud')->subject('Solicitud de Permiso con Goce de Sueldo de: ' . $this->solicitante->name);
     }
 }

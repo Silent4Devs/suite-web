@@ -179,16 +179,28 @@ class SolicitudVacacionesController extends Controller
                $periodo_vencido = 0;
                $finVacaciones_periodo_pasado = null;
            }elseif($año_pasado > 0){
-               $mostrar_reclamo = true;
+                    
                $periodo_vencido = $año-1;
                $finVacaciones_periodo_pasado = $inicio_vacaciones->addMonths(6);
                $finVacaciones_periodo_pasado =$finVacaciones_periodo_pasado->subYear();
-               $finVacaciones_periodo_pasado = $finVacaciones_periodo_pasado->format('d-m-Y');
+            //    $finVacaciones_periodo_pasado = $finVacaciones_periodo_pasado->format('d-m-Y');
+
+            //    $mostrar_reclamo = true;
+              
+            
+               if( $finVacaciones_periodo_pasado >= $dia_hoy){
+                $mostrar_reclamo = true;
+                $finVacaciones_periodo_pasado = $finVacaciones_periodo_pasado->format('d-m-Y');
+               }else{
+                $mostrar_reclamo = false;
+               }
+            //    dd($mostrar_reclamo);
            }else{
                $mostrar_reclamo = false;
                $periodo_vencido = 0;
                $finVacaciones_periodo_pasado = null;
            }
+          
 
         return view('admin.solicitudVacaciones.create', compact('vacacion', 'dias_disponibles', 'año', 'autoriza', 'no_vacaciones', 'organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo','mostrar_reclamo','periodo_vencido','año_pasado','finVacaciones_periodo_pasado'));
     }

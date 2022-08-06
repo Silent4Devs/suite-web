@@ -25,6 +25,6 @@ class RespuestaPermisoGoceSueldo extends Mailable
    
     public function build()
     {
-        return $this->view('mails.PermisoGoceSueldo.aprobacion');
+        return $this->view('mails.PermisoGoceSueldo.aprobacion')->subject('Respuesta de tu solicitud de Permiso con Goce de Sueldo');
     }
 }
