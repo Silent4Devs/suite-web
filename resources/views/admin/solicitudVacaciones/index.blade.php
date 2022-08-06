@@ -253,14 +253,14 @@
                         }
 
                     },
-                    // {
-                    //     data: 'año',
-                    //     name: 'año',
-                    //     render: function(data, type, row) {
-                    //         return `<div style="text-align:center">${data} año</div>`;
-                    //     }
+                    {
+                        data: 'año',
+                        name: 'año',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:center">${data} año</div>`;
+                        }
 
-                    // },
+                    },
                     {
                         data: 'fecha_inicio',
                         name: 'fecha_inicio',

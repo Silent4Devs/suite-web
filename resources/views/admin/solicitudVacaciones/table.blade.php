@@ -5,9 +5,9 @@
             <th style="min-width: 110px;">
                 Días Solicitados
             </th>
-            {{-- <th style="min-width: 80px;">
-               Aniversario
-            </th> --}}
+            <th style="min-width: 80px;">
+               Periodo
+            </th>
             <th style="min-width: 75px;">
                 Inicio
             </th>
