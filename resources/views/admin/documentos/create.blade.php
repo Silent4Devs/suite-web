@@ -100,10 +100,8 @@
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
                     <input type="submit" class="btn btn-danger" value="Guardar">
-                    @can('documentos_publish')
                         <button id="publicar" class="btn btn-danger">Publicar</button>
                     </div>
-                @endcan
             </form>
             <!-- Modal -->
             <div class="modal fade" id="modalPublicar" data-backdrop="static" data-keyboard="false" tabindex="-1"

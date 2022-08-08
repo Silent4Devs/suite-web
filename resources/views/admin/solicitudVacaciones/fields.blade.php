@@ -13,9 +13,40 @@ if ($dias_pendientes >= 1) {
     $leyenda_dias_pendientes = false;
 }
 
+
+
 @endphp
 
-{{-- Leyenda dias Pendientes --}}
+{{-- Leyenda dias Pendientes año pasado --}}
+<div class="row" x-data="{ open: @js($mostrar_reclamo) }">
+    <!-- Categoria Enabled-->
+    <div class="col-12 col-sm-12" x-show="open">
+        <div class="px-1 py-2 mb-4 rounded " style="background-color: #a8ff9670; border-top:solid 1px #423797;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
+
+                        <i class="fa-solid fa-file-circle-exclamation mr-3" style="color: #000000; font-size: 30px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #000000">¡IMPORTANTE! ...</p>
+                    <p class="m-0" style="font-size: 14px; color:#000000 "> Aún tienes
+                        <strong>{{ $año_pasado }} dia(s) disponible(s)</strong> del <strong>periodo {{$periodo_vencido}} </strong>.<br>
+                        Tienes hasta el <strong>{{$finVacaciones_periodo_pasado}}</strong> para disfrutarlas, de lo contrario se eliminaran automaticamente.
+                    </p>
+                    <div class="col-12 pr-5">
+                    <a type="button" class="btn btn-dark col-sm-3 offset-10" href="{{ route('admin.solicitud-vacaciones.periodoAdicional') }}">Solicitar ahora</a>
+                </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+
+
+{{-- Leyenda dias Pendientes de aprobacion --}}
 <div class="row" x-data="{ open: @js($leyenda_dias_pendientes) }">
     <!-- Categoria Enabled-->
     <div class="col-12 col-sm-12" x-show="open">
