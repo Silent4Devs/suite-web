@@ -102,7 +102,6 @@ class VacacionesController extends Controller
             'tipo_conteo' => 'required|int',
             'inicio_conteo' => 'required|int',
             'fin_conteo' => 'required|int',
-            'incremento_dias' => 'required|int',
             'periodo_corte' => 'required|int',
         ]);
 
@@ -154,7 +153,6 @@ class VacacionesController extends Controller
             'tipo_conteo' => 'required|int',
             'inicio_conteo' => 'required|int',
             'fin_conteo' => 'required|int',
-            'incremento_dias' => 'required|int',
             'periodo_corte' => 'required|int',
         ]);
 

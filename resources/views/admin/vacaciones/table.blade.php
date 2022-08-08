@@ -16,9 +16,9 @@
             <th style="min-width: 90px;">
                 Días inicales
             </th>
-            <th style="min-width: 25px;">
+            {{-- <th style="min-width: 25px;">
                 Incremento de días
-            </th>
+            </th> --}}
             <th style="min-width: 25px;">
                 Periodo de corte
             </th>

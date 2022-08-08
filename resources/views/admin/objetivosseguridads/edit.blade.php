@@ -127,6 +127,11 @@
                                 </div>
                                 @livewire('tipo-component')
                                 @livewire('tipo-select-component')
+                                @error('tipo_objetivo_sistema_id')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-group col-sm-6">
@@ -137,7 +142,7 @@
                                     type="text" name="indicador" id="indicador"
                                     value="{{ old('indicador', $objetivosseguridad->indicador) }}" required>
                                 @if ($errors->has('indicador'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         {{ $errors->first('indicador') }}
                                     </div>
                                 @endif
@@ -148,11 +153,11 @@
                         <div class="row">
                             <div class="form-group col-sm-4">
                                 <div class="form-group">
-                                    <label for='responsable_id'><i
+                                    <label for='responsable_id' class="required"><i
                                             class="fas fa-user-tie iconos-crear"></i>Responsable</label>
                                     <select
                                         class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
-                                        name='responsable_id' id='responsable_id'>
+                                        name='responsable_id' id='responsable_id' required>
                                         <option value="">Seleccione un responsable</option>
                                         @foreach ($responsables as $responsable)
                                             <option value="{{ $responsable->id }}"
@@ -163,7 +168,7 @@
                                         @endforeach
                                     </select>
                                     @if ($errors->has('responsable_id'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('responsable_id') }}
                                         </div>
                                     @endif
@@ -171,23 +176,24 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
+                                <label class="required"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                                 <div class="form-control" id="responsable_puesto" readonly></div>
                             </div>
 
 
                             <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                                <label><i class="fas fa-street-view iconos-crear"></i>Área<sup>*</sup></label>
+                                <label class="required"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                                 <div class="form-control" id="responsable_area" readonly></div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
+                                <label for="normas" class="required"><i
+                                        class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
                                 <select
                                     class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
-                                    name="normas[]" id="controles" multiple="multiple">
+                                    required name="normas[]" id="controles" multiple="multiple">
                                     <option value disabled>
                                         Selecciona una opción</option>
                                     @foreach ($normas as $norma)
@@ -198,7 +204,7 @@
                                     @endforeach
                                 </select>
                                 @if ($errors->has('norma'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         {{ $errors->first('normas') }}
                                     </div>
                                 @endif
@@ -206,12 +212,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="objetivoseguridad"><i
+                            <label for="objetivoseguridad" class="required"><i
                                     class="fas fa-file-signature iconos-crear"></i>Objetivo</label>
-                            <textarea class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}" name="objetivoseguridad"
-                                id="objetivoseguridad">{{ old('objetivoseguridad', $objetivosseguridad->objetivoseguridad) }}</textarea>
+                            <textarea required class="form-control {{ $errors->has('objetivoseguridad') ? 'is-invalid' : '' }}"
+                                name="objetivoseguridad" id="objetivoseguridad">{{ old('objetivoseguridad', $objetivosseguridad->objetivoseguridad) }}</textarea>
                             @if ($errors->has('objetivoseguridad'))
-                                <div class="invalid-feedback">
+                                <div class="text-danger">
                                     {{ $errors->first('objetivoseguridad') }}
                                 </div>
                             @endif
@@ -228,7 +234,7 @@
                                         type="number" name="rojo" id="rojo"
                                         value="{{ old('rojo', $objetivosseguridad->rojo) }}" min="0" required>
                                     @if ($errors->has('rojo'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('rojo') }}
                                         </div>
                                     @endif
@@ -245,7 +251,7 @@
                                         value="{{ old('amarillo', $objetivosseguridad->amarillo) }}" min=""
                                         required>
                                     @if ($errors->has('amarillo'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('amarillo') }}
                                         </div>
                                     @endif
@@ -259,10 +265,10 @@
                                     De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
                                 <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}"
                                     type="number" name="verde" id="verde"
-                                    value="{{ old('verde', $objetivosseguridad->verde) }}" placeholder=""
-                                    min="" required>
+                                    value="{{ old('verde', $objetivosseguridad->verde) }}" placeholder="" min=""
+                                    required>
                                 @if ($errors->has('verde'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         {{ $errors->first('verde') }}
                                     </div>
                                 @endif
@@ -278,7 +284,7 @@
                                     type="text" name="unidadmedida" id="unidadmedida"
                                     value="{{ old('unidadmedida', $objetivosseguridad->unidadmedida) }}" required>
                                 @if ($errors->has('unidadmedida'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         {{ $errors->first('unidadmedida') }}
                                     </div>
                                 @endif
@@ -293,7 +299,7 @@
                                         type="text" name="meta" id="meta"
                                         value="{{ old('meta', $objetivosseguridad->meta) }}" required>
                                     @if ($errors->has('meta'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('meta') }}
                                         </div>
                                     @endif
@@ -309,7 +315,7 @@
                                         type="text" name="frecuencia" id="frecuencia"
                                         value="{{ old('frecuencia', $objetivosseguridad->frecuencia) }}" required>
                                     @if ($errors->has('frecuencia'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('frecuencia') }}
                                         </div>
                                     @endif
@@ -325,7 +331,7 @@
                                         type="number" name="revisiones" id="revisiones" min="0"
                                         value="{{ old('revisiones', $objetivosseguridad->revisiones) }}" required>
                                     @if ($errors->has('revisiones'))
-                                        <div class="invalid-feedback">
+                                        <div class="text-danger">
                                             {{ $errors->first('revisiones') }}
                                         </div>
                                     @endif
@@ -340,7 +346,7 @@
                                     type="text" name="ano" id="ano"
                                     value="{{ old('ano', $objetivosseguridad->ano) }}" required>
                                 @if ($errors->has('ano'))
-                                    <div class="invalid-feedback">
+                                    <div class="text-danger">
                                         {{ $errors->first('ano') }}
                                     </div>
                                 @endif
