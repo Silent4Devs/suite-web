@@ -25,12 +25,12 @@ class IndicadoresSgsiController extends Controller
         $area_empleado = auth()->user()->empleado->area->id;
         $isAdmin = in_array('Admin', auth()->user()->roles->pluck('title')->toArray());
         if ($request->ajax()) {
-            if($isAdmin){
+            if ($isAdmin) {
                 $query = IndicadoresSgsi::orderBy('id')->get();
-            }else{
-                $query = IndicadoresSgsi::where('id_area',$area_empleado)->orderBy('id')->get();
+            } else {
+                $query = IndicadoresSgsi::where('id_area', $area_empleado)->orderBy('id')->get();
             }
-           
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -62,9 +62,9 @@ class IndicadoresSgsiController extends Controller
             $table->editColumn('area', function ($row) {
                 return $row->area ? $row->area->area : 'n/a';
             });
-         
+
             $table->editColumn('responsable_name', function ($row) {
-                return $row->empleado ? $row->empleado  :'';
+                return $row->empleado ? $row->empleado  : '';
             });
 
             $table->editColumn('año', function ($row) {
@@ -115,16 +115,30 @@ class IndicadoresSgsiController extends Controller
         abort_if(Gate::denies('indicadores_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = Empleado::alta()->get();
-        $areas=Area::get();
+        $areas = Area::get();
         $procesos = Proceso::get();
 
-        return view('admin.indicadoresSgsis.create', compact('areas','responsables', 'procesos'));
+        return view('admin.indicadoresSgsis.create', compact('areas', 'responsables', 'procesos'));
     }
 
     public function store(Request $request)
     {
         abort_if(Gate::denies('indicadores_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $request->validate([
+            'nombre' => 'required',
+            'formula' => 'required',
+            'frecuencia' => 'required',
+            'unidadmedida' => 'required',
+            'meta' => 'required',
+            'no_revisiones' => 'required',
+            'id_proceso' => 'required',
+            'id_empleado' => 'required',
+            'verde' => 'required',
+            'amarillo' => 'required',
+            'rojo' => 'required',
+            'ano' => 'required',
+            'id_area' => 'required',
+        ]);
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
         //return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with('success', 'Guardado con éxito');
@@ -136,17 +150,31 @@ class IndicadoresSgsiController extends Controller
 
         $procesos = Proceso::get();
         $responsables = Empleado::alta()->get();
-        $areas=Area::get();
+        $areas = Area::get();
         $procesos = Proceso::get();
 
 
-        return view('admin.indicadoresSgsis.edit', compact('areas','procesos', 'indicadoresSgsi', 'responsables'));
+        return view('admin.indicadoresSgsis.edit', compact('areas', 'procesos', 'indicadoresSgsi', 'responsables'));
     }
 
     public function update(Request $request, IndicadoresSgsi $indicadoresSgsi)
     {
         abort_if(Gate::denies('indicadores_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $request->validate([
+            'nombre' => 'required',
+            'formula' => 'required',
+            'frecuencia' => 'required',
+            'unidadmedida' => 'required',
+            'meta' => 'required',
+            'no_revisiones' => 'required',
+            'id_proceso' => 'required',
+            'id_empleado' => 'required',
+            'verde' => 'required',
+            'amarillo' => 'required',
+            'rojo' => 'required',
+            'ano' => 'required',
+            'id_area' => 'required',
+        ]);
         $indicadoresSgsi->update($request->all());
 
         //return redirect()->route('admin.indicadores-sgsis.index');
@@ -266,35 +294,34 @@ class IndicadoresSgsiController extends Controller
     {
         $indicadores = IndicadoresSgsi::with('evaluacion_indicadors')->get();
 
-        $areas=Area::get();
+        $areas = Area::get();
 
-        $porcentajeCumplimiento=DashboardIndicadorSG::first();
+        $porcentajeCumplimiento = DashboardIndicadorSG::first();
 
-        return view('admin.indicadoresSgsis.dashboard', compact('porcentajeCumplimiento','areas','indicadores'));
+        return view('admin.indicadoresSgsis.dashboard', compact('porcentajeCumplimiento', 'areas', 'indicadores'));
     }
 
     public function indicadoresDashboardPorcentaje(Request $request)
     {
         $request->validate([
-            'porcentaje'=>'required|numeric|min:0|max:100'
-        ],[
-            'porcentaje.required'=>'Porcentaje requerido',
-            'porcentaje.min'=>'El porcentaje debe ser mayor o igual a 0',
-            'porcentaje.max'=>"El porcentaje debe ser menor o igual a 100"
+            'porcentaje' => 'required|numeric|min:0|max:100'
+        ], [
+            'porcentaje.required' => 'Porcentaje requerido',
+            'porcentaje.min' => 'El porcentaje debe ser mayor o igual a 0',
+            'porcentaje.max' => "El porcentaje debe ser menor o igual a 100"
 
         ]);
 
-       $porcentajeExists=DashboardIndicadorSG::first();
-       if(is_null($porcentajeExists)){
-        DashboardIndicadorSG::create([
-            'porcentaje_cumplimiento'=>$request->porcentaje,
-        ]);
-       }else{
-        DashboardIndicadorSG::first()->update([
-            'porcentaje_cumplimiento'=>$request->porcentaje,
-        ]);
-        return response()->json(['estatus'=>200]);
-       }
+        $porcentajeExists = DashboardIndicadorSG::first();
+        if (is_null($porcentajeExists)) {
+            DashboardIndicadorSG::create([
+                'porcentaje_cumplimiento' => $request->porcentaje,
+            ]);
+        } else {
+            DashboardIndicadorSG::first()->update([
+                'porcentaje_cumplimiento' => $request->porcentaje,
+            ]);
+            return response()->json(['estatus' => 200]);
+        }
     }
-
 }

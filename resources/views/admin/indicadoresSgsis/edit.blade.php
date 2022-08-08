@@ -120,7 +120,7 @@
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre', $indicadoresSgsi->nombre) }}" required>
                         @if ($errors->has('nombre'))
-                            <div class="invalid-feedback">
+                            <div class="text-danger">
                                 {{ $errors->first('nombre') }}
                             </div>
                         @endif
@@ -128,18 +128,19 @@
                     </div>
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                        <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                        <label for="id_area" class="required"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                         <select class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}" name="id_area"
-                            id="id_area" >
+                            id="id_area" required>
                             <option value="">Seleccione un responsable</option>
                             @foreach ($areas as $area)
-                                <option value="{{ $area->id }}"  {{ old('id_area', $area->id) == $indicadoresSgsi->id_area ? 'selected' : '' }} >
+                                <option value="{{ $area->id }}"
+                                    {{ old('id_area', $area->id) == $indicadoresSgsi->id_area ? 'selected' : '' }}>
                                     {{ $area->area }}
                                 </option>
                             @endforeach
                         </select>
                         @if ($errors->has('id_area'))
-                            <div class="invalid-feedback">
+                            <div class="text-danger">
                                 {{ $errors->first('id_area') }}
                             </div>
                         @endif
@@ -150,11 +151,10 @@
                 <div class="row">
                     <div class="form-group col-sm-4">
                         <div class="form-group">
-                            <label for='id_empleado'><i
+                            <label class="required" for='id_empleado'><i
                                     class="fas fa-user-tie iconos-crear"></i>Responsable</label>
-                            <select
-                                class="form-control select2 {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
-                                name='id_empleado' id='responsable_id'>
+                            <select class="form-control select2 {{ $errors->has('id_empleado') ? 'is-invalid' : '' }}"
+                                name='id_empleado' id='responsable_id' required>
                                 <option value="">Seleccione un responsable</option>
                                 @foreach ($responsables as $responsable)
                                     <option value="{{ $responsable->id }}"
@@ -165,7 +165,7 @@
                                 @endforeach
                             </select>
                             @if ($errors->has('id_empleado'))
-                                <div class="invalid-feedback">
+                                <div class="text-danger">
                                     {{ $errors->first('id_empleado') }}
                                 </div>
                             @endif
@@ -173,13 +173,13 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
+                        <label class="required"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                         <div class="form-control" id="responsable_puesto" readonly></div>
                     </div>
 
 
                     <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                        <label><i class="fas fa-street-view iconos-crear"></i>Área<sup>*</sup></label>
+                        <label class="required"><i class="fas fa-street-view iconos-crear"></i>Área</label>
                         <div class="form-control" id="responsable_area" readonly></div>
                     </div>
                 </div>
@@ -187,9 +187,10 @@
                 <div class="row">
                     <div class="form-group col-sm-12">
                         <div class="form-group">
-                            <label for="id_proceso"><i class="fas fa-cogs iconos-crear"></i></i>Proceso</label>
+                            <label class="required" for="id_proceso"><i
+                                    class="fas fa-cogs iconos-crear"></i></i>Proceso</label>
                             <select class="form-control select2 {{ $errors->has('id_proceso') ? 'is-invalid' : '' }}"
-                                name="id_proceso" id="id_proceso">
+                                required name="id_proceso" id="id_proceso">
                                 <option value="">Seleccione un proceso</option>
                                 @foreach ($procesos as $proceso)
                                     <option value="{{ $proceso->id }}"
@@ -197,12 +198,12 @@
                                         {{ $proceso->codigo }} / {{ $proceso->nombre }}</option>
                                 @endforeach
                             </select>
-                            @if ($errors->has('organizacion'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('organizacion') }}
+                            @if ($errors->has('id_proceso'))
+                                <div class="text-danger">
+                                    {{ $errors->first('id_proceso') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.sede.fields.organizacion_helper') }}</span>
+
                         </div>
                     </div>
 
@@ -213,7 +214,7 @@
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
                         id="descripcion">{{ old('descripcion', $indicadoresSgsi->descripcion) }}</textarea>
                     @if ($errors->has('descripcion'))
-                        <div class="invalid-feedback">
+                        <div class="text-danger">
                             {{ $errors->first('descripcion') }}
                         </div>
                     @endif
@@ -230,7 +231,7 @@
                                 name="rojo" id="rojo" value="{{ old('rojo', $indicadoresSgsi->rojo) }}"
                                 min="0" required>
                             @if ($errors->has('rojo'))
-                                <div class="invalid-feedback">
+                                <div class="text-danger">
                                     {{ $errors->first('rojo') }}
                                 </div>
                             @endif
@@ -246,7 +247,7 @@
                                 name="amarillo" id="amarillo" value="{{ old('amarillo', $indicadoresSgsi->amarillo) }}"
                                 min="" required>
                             @if ($errors->has('amarillo'))
-                                <div class="invalid-feedback">
+                                <div class="text-danger">
                                     {{ $errors->first('amarillo') }}
                                 </div>
                             @endif
@@ -262,7 +263,7 @@
                             name="verde" id="verde" value="{{ old('verde', $indicadoresSgsi->verde) }}"
                             placeholder="" min="" required>
                         @if ($errors->has('verde'))
-                            <div class="invalid-feedback">
+                            <div class="text-danger">
                                 {{ $errors->first('verde') }}
                             </div>
                         @endif
@@ -272,12 +273,13 @@
 
                 <div class="row">
                     <div class="form-group col-sm-6 col-md-2 col-lg-2">
-                        <label class="required" for="unidad"><i class="fas fa-calculator iconos-crear"></i>Unidad</label>
-                        <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}"
-                            type="text" name="unidadmedida" id="unidadmedida"
+                        <label class="required" for="unidad"><i
+                                class="fas fa-calculator iconos-crear"></i>Unidad</label>
+                        <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}" type="text"
+                            name="unidadmedida" id="unidadmedida"
                             value="{{ old('unidadmedida', $indicadoresSgsi->unidadmedida) }}" required>
                         @if ($errors->has('unidadmedida'))
-                            <div class="invalid-feedback">
+                            <div class="text-danger">
                                 {{ $errors->first('unidadmedida') }}
                             </div>
                         @endif
@@ -292,7 +294,7 @@
                                 name="meta" id="meta" value="{{ old('meta', $indicadoresSgsi->meta) }}"
                                 required>
                             @if ($errors->has('meta'))
-                                <div class="invalid-feedback">
+                                <div class="text-danger">
                                     {{ $errors->first('meta') }}
                                 </div>
                             @endif
@@ -308,7 +310,7 @@
                                 type="text" name="frecuencia" id="frecuencia"
                                 value="{{ old('frecuencia', $indicadoresSgsi->frecuencia) }}" required>
                             @if ($errors->has('frecuencia'))
-                                <div class="invalid-feedback">
+                                <div class="text-danger">
                                     {{ $errors->first('frecuencia') }}
                                 </div>
                             @endif
@@ -324,7 +326,7 @@
                                 type="number" name="no_revisiones" id="no_revisiones" min="0"
                                 value="{{ old('no_revisiones', $indicadoresSgsi->no_revisiones) }}" required>
                             @if ($errors->has('no_revisiones'))
-                                <div class="invalid-feedback">
+                                <div class="text-danger">
                                     {{ $errors->first('no_revisiones') }}
                                 </div>
                             @endif
@@ -339,7 +341,7 @@
                             type="text" name="ano" id="ano"
                             value="{{ old('ano', $indicadoresSgsi->ano) }}">
                         @if ($errors->has('ano'))
-                            <div class="invalid-feedback">
+                            <div class="text-danger">
                                 {{ $errors->first('ano') }}
                             </div>
                         @endif
@@ -409,9 +411,8 @@
             </div>
 
             <div class="text-right form-group col-md-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <input type="submit" value="Guardar"
-                    class="btn btn-success btn_enviar_form_modal">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <input type="submit" value="Guardar" class="btn btn-success btn_enviar_form_modal">
             </div>
 
         </div>
@@ -560,30 +561,30 @@
         });
     </script>
 
-<script>
-    if (document.querySelector('#responsable_id') != null) {
+    <script>
+        if (document.querySelector('#responsable_id') != null) {
 
-        let responsable = document.querySelector('#responsable_id');
-        let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
-        let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
-        document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto_init);
-        document.getElementById('responsable_area').innerHTML = recortarTexto(area_init);
+            let responsable = document.querySelector('#responsable_id');
+            let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
+            let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('responsable_area').innerHTML = recortarTexto(area_init);
 
-        responsable.addEventListener('change', function(e) {
-            e.preventDefault();
-            let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');
-            let puesto = e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
-            console.log(e.target.options[e.target.selectedIndex]);
-            document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto)
-            document.getElementById('responsable_area').innerHTML = recortarTexto(area)
-        })
-    }
+            responsable.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');
+                let puesto = e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+                console.log(e.target.options[e.target.selectedIndex]);
+                document.getElementById('responsable_puesto').innerHTML = recortarTexto(puesto)
+                document.getElementById('responsable_area').innerHTML = recortarTexto(area)
+            })
+        }
 
-    function recortarTexto(texto, length = 30) {
-        let trimmedString = texto?.length > length ?
-            texto.substring(0, length - 3) + "..." :
-            texto;
-        return trimmedString;
-    }
-</script>
+        function recortarTexto(texto, length = 30) {
+            let trimmedString = texto?.length > length ?
+                texto.substring(0, length - 3) + "..." :
+                texto;
+            return trimmedString;
+        }
+    </script>
 @endsection
