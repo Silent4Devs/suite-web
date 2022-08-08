@@ -1306,7 +1306,7 @@
                         <img src="{{ asset($logotipo) }}" class="img_logo" style="height: 70px;">
                     </td>
                     <td style="width: 50%;">
-                        <h4><strong>{{ $organizacion->empresa ? $organizacion->empresa : 'Tabantaj' }}</strong></h4>
+                        <h4><strong>{{ !is_null($organizacion) ? $organizacion->empresa : 'Tabantaj' }}</strong></h4>
                         <div id="titulo_tabla"></div>
                     </td>
                     <td style="width: 25%;" class="encabezado_print_td_no_paginas">
