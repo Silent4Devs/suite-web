@@ -474,8 +474,7 @@
 
             {{-- @endcan --}}
 
-            @can('carga_masiva_datos_acceder')
-                {{-- este acceso no corresponde --}}
+            {{-- @can('carga_masiva_datos_acceder')
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route('cargadocs') }}"
                         class="c-sidebar-nav-link {{ request()->is('CargaDocs') || request()->is('CargaDocs/*') ? 'active' : '' }}">
@@ -483,7 +482,7 @@
                         <font class="letra_blanca">Carga Masiva de Datos</font>
                     </a>
                 </li>
-            @endcan
+            @endcan --}}
 
             @can('configurar_organizacion_acceder')
                 <li class="c-sidebar-nav-dropdown">
