@@ -54,6 +54,13 @@ class ControlAccesoController extends Controller
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
             });
+            $table->editColumn('responsable_name', function ($row) {
+                return $row->responsable ? $row->responsable : '';
+            });
+            $table->editColumn('tipo_permiso', function ($row) {
+                return $row->permiso ? $row->permiso->nombre : '';
+            });
+            
             // $table->editColumn('archivo', function ($row) {
             //     return $row->archivo ? '<a href="' . $row->archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             // });
@@ -114,8 +121,10 @@ class ControlAccesoController extends Controller
         abort_if(Gate::denies('control_de_accesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $documentos = DocumentoControlAcceso::get();
         $controlAcceso->load('team');
+        $responsables=Empleado::get();
 
-        return view('admin.controlAccesos.edit', compact('controlAcceso', 'documentos'));
+
+        return view('admin.controlAccesos.edit', compact('responsables','controlAcceso', 'documentos'));
     }
 
     public function update(UpdateControlAccesoRequest $request, ControlAcceso $controlAcceso)

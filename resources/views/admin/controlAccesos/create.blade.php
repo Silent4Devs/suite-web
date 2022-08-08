@@ -9,14 +9,16 @@
             @csrf
 
                 <div class="form-group col-sm-12">
-                    <label class="required" for="tipo"><i
-                            class="fas fa-file-signature iconos-crear"></i></i>Tipo</label>
+                    <label class="required" for="tipo"><i class="fas fa-user-lock iconos-crear"></i>
+                        Tipo de acceso</label>
                     <div style="float: right;">
                         <button id="btnAgregarTipo" onclick="event.preventDefault();"
                             class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"
                             data-toggle="modal" data-target="#tipoCompetenciaModal" data-whatever="@mdo"
                             data-whatever="@mdo" title="Agregar tipo de permiso"><i
                                 class="fas fa-plus"></i></button>
+                        <a href="{{ route('admin.tipo-acceso.index') }}" class="text-white btn btn-sm" style="background:#3eb2ad;height: 32px;"><i
+                        class="fas fa-edit"></i></a>
                     </div>
                     @livewire('permiso-component')
                     @livewire('tipo-permiso-select-component')
@@ -91,6 +93,7 @@
                     </div>
                 @endif
             </div>
+            
             <div class="form-group col-md-12">
                 <label><i class="fas fa-align-left iconos-crear"></i>Justificación</label>
                 <textarea class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}" name="justificacion" id="justificacion">{{ old('justificacion') }}</textarea>
@@ -103,7 +106,7 @@
             </div>
 
             <div class="form-group col-md-12">
-                <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
+                <label for="descripcion"><i class="fas fa-file-alt iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
                 <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
                 @if($errors->has('descripcion'))
                     <div class="invalid-feedback">

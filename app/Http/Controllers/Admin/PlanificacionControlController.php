@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPlanificacionControlRequest;
 use App\Http\Requests\StorePlanificacionControlRequest;
 use App\Http\Requests\UpdatePlanificacionControlRequest;
+use App\Models\Amenaza;
 use App\Models\Empleado;
 use App\Models\PlanificacionControl;
+use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Vulnerabilidad;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,11 +102,13 @@ class PlanificacionControlController extends Controller
     public function create()
     {
         abort_if(Gate::denies('planificacion_y_control_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $amenazas = Amenaza::get();
+        $activos = SubcategoriaActivo::get();
+        $vulnerabilidades = Vulnerabilidad::get();
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::alta()->with('area')->get();
 
-        return view('admin.planificacionControls.create', compact('duenos', 'empleados'));
+        return view('admin.planificacionControls.create', compact('activos','amenazas','vulnerabilidades','duenos', 'empleados'));
     }
 
     public function store(StorePlanificacionControlRequest $request)
@@ -120,12 +125,13 @@ class PlanificacionControlController extends Controller
         abort_if(Gate::denies('planificacion_y_control_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $empleados = Empleado::alta()->with('area')->get();
-
         $planificacionControl->load('dueno', 'team');
+        $amenazas = Amenaza::get();
+        $activos = SubcategoriaActivo::get();
+        $vulnerabilidades = Vulnerabilidad::get();
 
-        return view('admin.planificacionControls.edit', compact('duenos', 'planificacionControl', 'empleados'));
+        return view('admin.planificacionControls.edit', compact('vulnerabilidades','activos','amenazas','duenos', 'planificacionControl', 'empleados'));
     }
 
     public function update(UpdatePlanificacionControlRequest $request, PlanificacionControl $planificacionControl)

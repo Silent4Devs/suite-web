@@ -3,56 +3,23 @@
 
 <style>
 
-    .table tr th:nth-child(2){
+    .table tr th:nth-child(4){
     min-width:600px !important;
     text-align:center !important;
     }
 
-    .table tr td:nth-child(2){
-    text-align:justify !important;
+    .table tr th:nth-child(2){
+    min-width:120px !important;
+    text-align:center !important;
+    }
+    .table tr td:nth-child(3){
+    text-align:center !important;
     }
 
     .table tr th:nth-child(3){
     text-align:center !important;
     }
-    wire:
-    .img-size{
-    /* 	padding: 0;
-        margin: 0; */
-        height: 450px;
-        width: 700px;
-        background-size: cover;
-        overflow: hidden;
-    }
-    .modal-content {
-       width: 700px;
-      border:none;
-    }
-    .modal-body {
-       padding: 0;
-    }
-
-    .carousel-control-prev-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-        width: 30px;
-        height: 48px;
-    }
-    .carousel-control-next-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-        width: 30px;
-        height: 48px;
-    }
-
-    .carousel-control-next {
-        top: 100px;
-        height: 10px;
-    }
-
-    .carousel-control-prev {
-        height: 40px;
-        top: 80px;
-    }
-
+   
     .table tr td:nth-child(6){
 
         max-width:415px !important;
@@ -79,11 +46,54 @@
 
     }
 
-    .tamaño{
+    .img-size {
+            /*  padding: 0;
+                margin: 0; */
+            height: 400px;
+            width: 100%;
+            background-size: contain;
+        }
 
-        width:168px !important;
+        .modal-content {
 
-    }
+            height: 400px;
+            border: none;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .carousel-control-next,
+        .carousel-control-prev {
+            width: 30px;
+            height: 48px;
+            top: 50%;
+        }
+
+        .carousel-control-next {
+            right: 30px !important;
+        }
+
+        .carousel-control-prev {
+            left: 30px;
+        }
+
+        .carousel-control-prev-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 48px;
+        }
+
+        .carousel-control-next-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 48px;
+        }
+
+        .tamaño {
+            width: 168px !important;
+        }
 </style>
 
     {{ Breadcrumbs::render('admin.control-accesos.index') }}
@@ -103,6 +113,12 @@
                         <tr>
                             <th>
                                 {{ trans('cruds.controlAcceso.fields.id') }}
+                            </th>
+                            <th>
+                                Permiso
+                            </th>
+                            <th>
+                                Responsable
                             </th>
                             <th style="max-width: 400px;">
                                 {{ trans('cruds.controlAcceso.fields.descripcion') }}
@@ -260,6 +276,30 @@
                         name: 'id'
                     },
                     {
+                        data: 'tipo_permiso',
+                        name: 'tipo_permiso'
+                    },
+                    {
+                        data: 'responsable_name',
+                        render: function(data, type, row, meta) {
+                            if (row.responsable_id != null) {
+                                if(row.responsable_name.trim()!=""){
+                                    let empleado = JSON.parse(row.responsable_name);
+                                    if (type === "empleadoText") {
+                                        return empleado.name;
+                                    } else {
+                                        let html =
+                                            `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${empleado?.avatar}" title="${empleado?.name}"></img>`;
+
+                                        return `${empleado ? html: ''}`;
+                                    }
+                                }
+                            }
+
+                            return `Sin dato`;
+                        }
+                    },
+                    {
                         data: 'descripcion',
                         name: 'descripcion'
                     },
@@ -307,7 +347,7 @@
                                                         if(extension == 'pdf'){
                                                         return `
                                                     <div class='carousel-item ${idx==0?"active":""}'>
-                                                        <iframe seamless class='img-size' src='{{asset("storage/documentos_control_accesos")}}/${archivo.documento}'></iframe>
+                                                        <embed seamless class='img-size' src='{{asset("storage/documentos_control_accesos")}}/${archivo.documento}'></embed>
                                                     </div>`
                                                 }else{
                                                     return `
@@ -324,7 +364,7 @@
                                                     archivo+=`
                                                     <div class="text-center">
                                                         <h3 style="text-align:center" class="mt-3">Sin archivo agregado</h3>
-                                                        <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:500px !important">
+                                                        <img src="{{asset('img/undrawn.png')}}" class="img-fluid " style="width:350px !important">
                                                         </div>
                                                     `
                                             }

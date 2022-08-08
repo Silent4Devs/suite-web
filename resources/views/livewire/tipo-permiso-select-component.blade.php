@@ -1,13 +1,13 @@
 <div>
     <div id="tipo_competencia_select">
         <select class="form-control serviciodesc {{ $errors->has('tipo_control_acceso_id') ? 'is-invalid' : '' }}" name="tipo_control_acceso_id"
-            id="tipo">
+            id="tipo_control_acceso_id">
             <option value="" selected disabled>
                Selecciona una opción
             </option>
             @foreach ($tipos as $tipo)
                 <option value="{{ $tipo->id }}"
-                    {{ old('nombre', $tipo->id) == $tipo_seleccionado ? 'selected' : '' }}>
+                    {{ old('nombre', $tipo->id) == $tipo_permiso_seleccionado ? 'selected' : '' }}>
                     {{ $tipo->nombre }}</option>
             @endforeach
         </select>

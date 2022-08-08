@@ -9,11 +9,11 @@ class TipoPermisoSelectComponent extends Component
 {
     protected $listeners = ['render-tipo-permiso-select-component' => 'render'];
     public $tipos;
-    public $tipo_seleccionado;
+    public $tipo_permiso_seleccionado;
 
-    public function mount($tipo_seleccionado = null)
+    public function mount($tipo_permiso_seleccionado = null)
     {
-        $this->tipo_permiso_seleccionado = $tipo_seleccionado;
+        $this->tipo_permiso_seleccionado = $tipo_permiso_seleccionado;
         $this->tipos = [];
     }
 

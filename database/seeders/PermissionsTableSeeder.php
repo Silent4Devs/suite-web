@@ -4168,8 +4168,26 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'name' => 'Eliminar Carta de Aceptación Riesgo',
-                'title' => 'carta_aceptacion_delete',
+                'title' => 'tipo-acceso_delete',
             ],
+            [
+                'name' => 'Crear Tipo de Permiso',
+                'title' => 'tipo-acceso_crear',
+            ],
+            [
+                'name' => 'Editar Tipo de Permiso',
+                'title' => 'tipo-acceso_editar',
+            ],
+            [
+                'name' => 'Crear Tipo de Permiso',
+                'title' => 'tipo-acceso_eliminar',
+            ],
+            [
+                'name' => 'Ver Tipo de Permiso',
+                'title' => 'tipo-acceso_ver',
+            ],
+
+
         ];
 
         // Permission::insert($permissions);

@@ -831,6 +831,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('control-accesos/media', 'ControlAccesoController@storeMedia')->name('control-accesos.storeMedia');
     Route::post('control-accesos/ckmedia', 'ControlAccesoController@storeCKEditorImages')->name('control-accesos.storeCKEditorImages');
     Route::resource('control-accesos', 'ControlAccesoController');
+    
+    //Tipo de Acceso
+    Route::delete('tipos-acceso/{acceso}', 'TipoAccesoController@destroy')->name('tipo-acceso.destroy');
+    Route::resource('tipo-acceso', 'TipoAccesoController')->except('destroy');
 
     // Informacion Documetadas
     Route::delete('informacion-documetadas/destroy', 'InformacionDocumetadaController@massDestroy')->name('informacion-documetadas.massDestroy');

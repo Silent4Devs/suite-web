@@ -8,7 +8,7 @@
         <form method="POST" class="row" action="{{ route("admin.planificacion-controls.update", [$planificacionControl->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group col-12">
+            {{-- <div class="form-group col-12">
                 <label class="required" for="activo"><i class="fas fa-chart-line iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.activo') }}</label>
                 <input class="form-control {{ $errors->has('activo') ? 'is-invalid' : '' }}" type="text" name="activo" id="activo" value="{{ old('activo', $planificacionControl->activo) }}" required>
                 @if($errors->has('activo'))
@@ -17,18 +17,9 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.planificacionControl.fields.activo_helper') }}</span>
-            </div>
-            <div class="form-group col-12">
-                <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.descripcion') }}</label>
-                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion', $planificacionControl->descripcion) }}</textarea>
-                @if($errors->has('descripcion'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('descripcion') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.planificacionControl.fields.descripcion_helper') }}</span>
-            </div>
-            <div class="form-group col-md-12 col-lg-12 col-sm-12">
+            </div> --}}
+            
+            <div class="form-group col-md-4 col-lg-4 col-sm-12 mt-3">
                 <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
                 <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="id_reviso"
                     id="id_reviso">
@@ -47,56 +38,99 @@
                     </div>
                 @endif
             </div>
-            <div class="form-group col-md-6">
-                <label for="vulnerabilidad"><i class="fas fa-virus-slash iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.vulnerabilidad') }}</label>
-                <input class="form-control {{ $errors->has('vulnerabilidad') ? 'is-invalid' : '' }}" type="text" name="vulnerabilidad" id="vulnerabilidad" value="{{ old('vulnerabilidad', $planificacionControl->vulnerabilidad) }}">
-                @if($errors->has('vulnerabilidad'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('vulnerabilidad') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.planificacionControl.fields.vulnerabilidad_helper') }}</span>
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-12 mt-3">
+                <label><i class="fas fa-briefcase iconos-crear"></i>Puesto<sup>*</sup></label>
+                <div class="form-control" id="reviso_puesto" readonly></div>
             </div>
-            <div class="form-group col-md-6">
-                <label for="amenaza"><i class="fas fa-virus iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.amenaza') }}</label>
-                <input class="form-control {{ $errors->has('amenaza') ? 'is-invalid' : '' }}" type="text" name="amenaza" id="amenaza" value="{{ old('amenaza', $planificacionControl->amenaza) }}">
-                @if($errors->has('amenaza'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('amenaza') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.planificacionControl.fields.amenaza_helper') }}</span>
+
+
+            <div class="form-group col-sm-12 col-md-4 col-lg-4 mt-3">
+                <label><i class="fas fa-street-view iconos-crear"></i>Área<sup>*</sup></label>
+                <div class="form-control" id="reviso_area" readonly></div>
             </div>
-            <div class="form-group col-md-6">
-                <label for="confidencialidad"><i class="fas fa-key iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.confidencialidad') }}</label>
-                <input class="form-control {{ $errors->has('confidencialidad') ? 'is-invalid' : '' }}" type="text" name="confidencialidad" id="confidencialidad" value="{{ old('confidencialidad', $planificacionControl->confidencialidad) }}">
-                @if($errors->has('confidencialidad'))
+
+
+            <div class="form-group col-md-4 col-sm-12">
+                <label for="id_amenaza" class="required"><i class="fas fa-fire iconos-crear"></i>Amenaza</label>
+                <select class="procesoSelect form-control" name="id_amenaza" id="id_amenaza">
+                    <option value="">Seleccione una opción</option>
+                    @foreach ($amenazas as $amenaza)
+                        <option {{ old('id_amenaza') == $amenaza->id ? ' selected="selected"' : '' }}
+                            value="{{ $amenaza->id }}">{{ $amenaza->nombre }}
+                        </option>
+                    @endforeach
+                </select>
+                @if ($errors->has('id_amenaza'))
+                    <span class="text-danger"> {{ $errors->first('id_amenaza') }}</span>
+                @endif
+            </div>
+
+            <div class="form-group col-md-4 col-sm-12">
+                <label for="id_vulnerabilidad" class="required"><i
+                        class="fas fa-shield-alt iconos-crear"></i>Vulnerabilidad</label>
+                <select class="procesoSelect form-control" name="id_vulnerabilidad" id="id_vulnerabilidad">
+                    <option value="">Seleccione una opción</option>
+                    @foreach ($vulnerabilidades as $vulnerabilidad)
+                        <option {{ old('id_vulnerabilidad') == $vulnerabilidad->id ? ' selected="selected"' : '' }}
+                            value="{{ $vulnerabilidad->id }}">{{ $vulnerabilidad->nombre }}
+                        </option>
+                    @endforeach
+                </select>
+                @if ($errors->has('id_vulnerabilidad'))
+                    <span class="text-danger"> {{ $errors->first('id_vulnerabilidad') }}</span>
+                @endif
+            </div>
+
+            <div class="form-group col-md-4 col-sm-12">
+                <label for="activo_id"  class="required"><i class="fas fa-user-tie iconos-crear"></i>Activo (subcategoría)</label><br>
+                <select class="responsableSelect form-control" name="activo_id" id="activo_id">
+                    <option value="">Seleccione una opción</option>
+                    @foreach ($activos as $activo)
+                        <option {{old('activo_id') == $activo->id ? ' selected="selected"' : ''}} value="{{ $activo->id }}">{{ $activo->subcategoria }}
+                        </option>
+                    @endforeach
+                </select>
+                @if ($errors->has('activo_id'))
+                <span class="text-danger"> {{ $errors->first('activo_id') }}</span>
+                @endif
+            </div>
+            
+            <div class="form-group col-sm-3">
+                <div class="custom-control custom-checkbox">
+                    <input type="hidden" name="confidencialidad" value="off">
+                    <input type="checkbox" class="custom-control-input" id="confidencialidad"
+                        name="confidencialidad"
+                        {{ old('confidencialidad', $planificacionControl->confidencialidad) == 'on' ? 'checked' : '' }}>
+                    <label class="custom-control-label" for="confidencialidad"><i
+                            class="fas fa-lock iconos-crear"></i>Confidencialidad</label>
+                </div>
+
+                @if ($errors->has('confidencialidad'))
                     <div class="invalid-feedback">
                         {{ $errors->first('confidencialidad') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.planificacionControl.fields.confidencialidad_helper') }}</span>
             </div>
-            <div class="form-group col-md-6">
-                <label for="integridad"><i class="fas fa-key iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.integridad') }}</label>
-                <input class="form-control {{ $errors->has('integridad') ? 'is-invalid' : '' }}" type="text" name="integridad" id="integridad" value="{{ old('integridad', $planificacionControl->integridad) }}">
-                @if($errors->has('integridad'))
+
+            <div class="form-group col-sm-3">
+                <div class="custom-control custom-checkbox">
+                    <input type="hidden" name="integridad" value="off">
+                    <input type="checkbox" class="custom-control-input" id="integridad" name="integridad"
+                        {{ old('integridad', $planificacionControl->integridad) == 'on' ? 'checked' : '' }}>
+                    <label class="custom-control-label" for="integridad"><i
+                            class="fab fa-black-tie iconos-crear"></i>Integridad</label>
+                </div>
+                @if ($errors->has('integridad'))
                     <div class="invalid-feedback">
                         {{ $errors->first('integridad') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.planificacionControl.fields.integridad_helper') }}</span>
             </div>
-           <div class="form-group col-md-6">
-                <label for="disponibilidad"><i class="far fa-clock iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.disponibilidad') }}</label>
-                <input class="form-control {{ $errors->has('disponibilidad') ? 'is-invalid' : '' }}" type="text" name="disponibilidad" id="disponibilidad" value="{{ old('disponibilidad', $planificacionControl->disponibilidad) }}">
-                @if($errors->has('disponibilidad'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('disponibilidad') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.planificacionControl.fields.disponibilidad_helper') }}</span>
-            </div>
+
+            
+
+
             <div class="form-group col-md-6">
                 <label for="probabilidad"><i class="fas fa-chart-bar iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.probabilidad') }}</label>
                 <input class="form-control {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}" type="text" name="probabilidad" id="probabilidad" value="{{ old('probabilidad', $planificacionControl->probabilidad) }}">
@@ -126,6 +160,16 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.planificacionControl.fields.nivelriesgo_helper') }}</span>
+            </div>
+            <div class="form-group col-12">
+                <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.planificacionControl.fields.descripcion') }}</label>
+                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion', $planificacionControl->descripcion) }}</textarea>
+                @if($errors->has('descripcion'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('descripcion') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.planificacionControl.fields.descripcion_helper') }}</span>
             </div>
             <div class="text-right form-group col-12">
                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>

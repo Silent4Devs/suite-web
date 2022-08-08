@@ -66,12 +66,17 @@ class ControlAcceso extends Model implements HasMedia
         return $this->belongsTo(Team::class, 'team_id');
     }
 
+    public function responsable()
+    {
+        return $this->belongsTo(Empleado::class, 'responsable_id');
+    }
+
     public function documentos_controlA()
     {
         return $this->hasMany(DocumentoControlAcceso::class, 'controlA_id', 'id');
     }
 
-    public function tipo_de_permiso()
+    public function permiso()
     {
         return $this->belongsTo(TipoDePermiso::class, 'tipo_control_acceso_id');
     }

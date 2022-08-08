@@ -588,4 +588,9 @@ class Empleado extends Model
     {
         return $this->hasMany(Comiteseguridad::class, 'id_asignada', 'id')->orderBy('id');
     }
+
+    public function controlAcceso()
+    {
+        return $this->hasMany(ControlAcceso::class, 'responsable_id');
+    }
 }
