@@ -310,19 +310,19 @@
                         }
                     },
 
-                    {
-                        data: 'incremento_dias',
-                        name: 'incremento_dias',
-                        render: function(data, type, row) {
-                            const incremento = row.incremento_dias;
-                            if( incremento > 0 ){
-                                return `<div style="text-align:left">${data} días</div>`;
-                            }else{
-                                return `<div style="text-align:left">0 días</div>`;
-                            }
+                    // {
+                    //     data: 'incremento_dias',
+                    //     name: 'incremento_dias',
+                    //     render: function(data, type, row) {
+                    //         const incremento = row.incremento_dias;
+                    //         if( incremento > 0 ){
+                    //             return `<div style="text-align:left">${data} días</div>`;
+                    //         }else{
+                    //             return `<div style="text-align:left">0 días</div>`;
+                    //         }
                            
-                        }
-                    },
+                    //     }
+                    // },
                     {
                         data: 'periodo_corte',
                         name: 'periodo_corte',
