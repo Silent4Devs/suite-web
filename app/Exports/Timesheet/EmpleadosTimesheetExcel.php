@@ -18,53 +18,46 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
     public function collection()
     {
         $empleados = Empleado::get();
+        // $empleado = Empleado::find(156);
         $timeSheetEmpleados = collect();
-        $timeSheetHorasCollection = collect();
-
         foreach ($empleados as $empleado) {
-            $timeSheets = Timesheet::with('aprobador')->where('empleado_id', $empleado->id)->get();
+            $timeSheets = Timesheet::with('aprobador')->where('empleado_id', $empleado->id)->whereIn('estatus', ['aprobado', 'pendiente'])->get();
+            $timeSheetHorasCollection = collect();
             foreach ($timeSheets as $timesheet) {
                 $timeSheetHoras = TimesheetHoras::with('proyecto', 'tarea')->where('timesheet_id', $timesheet->id)->get();
                 foreach ($timeSheetHoras as $horas) {
                     $sumatoria = $horas->horas_lunes + $horas->horas_martes + $horas->horas_miercoles + $horas->horas_jueves + $horas->horas_viernes + $horas->horas_sabado + $horas->horas_domingo;
                     $existe_proyecto = in_array($horas->proyecto_id, array_column($timeSheetHorasCollection->toArray(), 'proyecto_id'));
-                    $existe_tarea = in_array($horas->tarea_id, array_column($timeSheetHorasCollection->toArray(), 'tarea_id'));
-                    $existe_fecha_timesheet = in_array($timesheet->semana_text, array_column($timeSheetHorasCollection->toArray(), 'timesheet'));
+                    $existe_tarea = $this->existsTask($timeSheetHorasCollection, $timesheet->fecha_dia, $horas->proyecto_id, $horas->tarea_id);
+                    $existe_fecha_timesheet = in_array($timesheet->fecha_dia, array_column($timeSheetHorasCollection->toArray(), 'timesheet_fin'));
                     if (!$existe_fecha_timesheet) {
-                        if (!$existe_proyecto) {
-                            if (!$existe_tarea) {
-                                $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
-                            } else {
-                                $timeSheetHorasCollection = $this->addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas);
-                            }
-                        } else {
-                            if (!$existe_tarea) {
-                                $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
-                            } else {
-                                $timeSheetHorasCollection = $this->addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas);
-                            }
-                        }
+                        $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
                     } else {
                         if (!$existe_proyecto) {
-                            if (!$existe_tarea) {
-                                $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
-                            } else {
-                                $timeSheetHorasCollection = $this->addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas);
-                            }
+                            $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
                         } else {
                             if (!$existe_tarea) {
                                 $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
                             } else {
-                                $timeSheetHorasCollection = $this->addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas);
+                                $timeSheetHorasCollection = $this->addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas, $timesheet);
                             }
                         }
                     }
                 }
             }
+            $timeSheetEmpleados->push($timeSheetHorasCollection);
         }
-        return $timeSheetHorasCollection;
-    }
 
+        return $timeSheetEmpleados->flatten(1);
+    }
+    public function existsTask($timeSheetHorasCollection, $fecha, $proyecto_id, $tarea_id)
+    {
+        foreach ($timeSheetHorasCollection as $item) {
+            if ($item['timesheet_fin'] == $fecha && $item['proyecto_id'] == $proyecto_id && $item['tarea_id'] == $tarea_id) {
+                return true;
+            }
+        }
+    }
     public function pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas)
     {
         $timeSheetHorasCollection->push([
@@ -81,18 +74,17 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
         ]);
     }
 
-    public function addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas)
+    public function addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas, $timesheet)
     {
-        $timeSheetHorasCollection = $timeSheetHorasCollection->map(function ($item) use ($horas, $sumatoria) {
-            if (($item['proyecto_id'] == $horas->proyecto_id && $item['tarea_id'] == $horas->tarea_id)) {
+        $timeSheetHorasCollection = $timeSheetHorasCollection->map(function ($item) use ($horas, $sumatoria, $timesheet) {
+            if (($item['proyecto_id'] == $horas->proyecto_id && $item['tarea_id'] == $horas->tarea_id && $item['timesheet_fin'] == $timesheet->fecha_dia)) {
                 $item['horas'] += $sumatoria;
             }
-
             return $item;
         });
-
         return $timeSheetHorasCollection->sortBy('timesheet_fin');
     }
+
 
     public function map($timeSheetEmpleados): array
     {
@@ -104,7 +96,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
             $timeSheetEmpleados['tarea'],
             // $timeSheetEmpleados['tarea_descripcion'],
             $timeSheetEmpleados['horas'],
-            0,
+            '0',
             $timeSheetEmpleados['horas']
         ];
     }
