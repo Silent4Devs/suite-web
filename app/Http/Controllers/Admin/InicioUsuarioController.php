@@ -131,6 +131,18 @@ class InicioUsuarioController extends Controller
         $eventos = Calendario::get();
         $oficiales = CalendarioOficial::get();
         $cumples_aniversarios = Empleado::with('area')->alta()->get();
+        $mis_quejas = collect();
+        $mis_quejas_count = 0;
+        $mis_denuncias = collect();
+        $mis_denuncias_count = 0;
+        $mis_propuestas = collect();
+        $mis_propuestas_count = 0;
+        $mis_sugerencias = collect();
+        $mis_sugerencias_count = 0;
+        $solicitud_vacacion = 0;
+        $solicitud_dayoff = 0;
+        $solicitud_permiso = 0;
+        $solicitudes_pendientes = 0;
         if ($usuario->empleado) {
             $auditoria_internas_participante = AuditoriaInterna::whereHas('equipo', function ($query) use ($empleado) {
                 $query->where('auditoria_interno_empleado.empleado_id', $empleado->id);
@@ -243,21 +255,23 @@ class InicioUsuarioController extends Controller
                 }]
             )->find(auth()->user()->empleado->id)->puestoRelacionado;
             $competencias = !is_null($competencias) ? $competencias->competencias : collect();
+
+            $mis_quejas = Quejas::where('empleado_quejo_id', auth()->user()->empleado->id)->get();
+            $mis_quejas_count = Quejas::where('empleado_quejo_id', auth()->user()->empleado->id)->count();
+            $mis_denuncias = Denuncias::where('empleado_denuncio_id', auth()->user()->empleado->id)->get();
+            $mis_denuncias_count = Denuncias::where('empleado_denuncio_id', auth()->user()->empleado->id)->count();
+            $mis_propuestas = Mejoras::where('empleado_mejoro_id', auth()->user()->empleado->id)->get();
+            $mis_propuestas_count = Mejoras::where('empleado_mejoro_id', auth()->user()->empleado->id)->count();
+            $mis_sugerencias = Sugerencias::where('empleado_sugirio_id', auth()->user()->empleado->id)->get();
+            $mis_sugerencias_count = Sugerencias::where('empleado_sugirio_id', auth()->user()->empleado->id)->count();
+
+            $solicitud_vacacion = SolicitudVacaciones::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
+            $solicitud_dayoff = SolicitudDayOff::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
+            $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
+            $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
         }
 
-        $mis_quejas = Quejas::where('empleado_quejo_id', auth()->user()->empleado->id)->get();
-        $mis_quejas_count = Quejas::where('empleado_quejo_id', auth()->user()->empleado->id)->count();
-        $mis_denuncias = Denuncias::where('empleado_denuncio_id', auth()->user()->empleado->id)->get();
-        $mis_denuncias_count = Denuncias::where('empleado_denuncio_id', auth()->user()->empleado->id)->count();
-        $mis_propuestas = Mejoras::where('empleado_mejoro_id', auth()->user()->empleado->id)->get();
-        $mis_propuestas_count = Mejoras::where('empleado_mejoro_id', auth()->user()->empleado->id)->count();
-        $mis_sugerencias = Sugerencias::where('empleado_sugirio_id', auth()->user()->empleado->id)->get();
-        $mis_sugerencias_count = Sugerencias::where('empleado_sugirio_id', auth()->user()->empleado->id)->count();
 
-        $solicitud_vacacion = SolicitudVacaciones::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
-        $solicitud_dayoff = SolicitudDayOff::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
-        $solicitud_permiso = SolicitudPermisoGoceSueldo::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
-        $solicitudes_pendientes = $solicitud_vacacion + $solicitud_dayoff + $solicitud_permiso;
 
         return view('admin.inicioUsuario.index', compact('solicitudes_pendientes', 'usuario', 'competencias', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios', 'esLider', 'organizacion', 'usuarioVinculadoConEmpleado', 'mis_quejas', 'mis_quejas_count', 'mis_denuncias', 'mis_denuncias_count', 'mis_propuestas', 'mis_propuestas_count', 'mis_sugerencias', 'mis_sugerencias_count'));
     }
