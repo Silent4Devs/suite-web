@@ -26,6 +26,6 @@ class SolicitudVacaciones extends Mailable
    
     public function build()
     {
-        return $this->view('mails.vacaciones.solicitud');
+        return $this->view('mails.vacaciones.solicitud')->subject('Solicitud de Vacaciones de: ' . $this->solicitante->name);
     }
 }

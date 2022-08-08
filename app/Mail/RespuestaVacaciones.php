@@ -25,6 +25,6 @@ class RespuestaVacaciones extends Mailable
    
     public function build()
     {
-        return $this->view('mails.vacaciones.aprobacion');
+        return $this->view('mails.vacaciones.aprobacion')->subject('Respuesta de tu Solicitud de Vacaciones');
     }
 }
