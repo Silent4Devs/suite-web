@@ -24,10 +24,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Clausula extends Model
 {
     use HasFactory, SoftDeletes;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     use SoftDeletes;
     protected $table = 'clausulas';
 
@@ -49,7 +46,7 @@ class Clausula extends Model
     public function partes_interesadas()
     {
         return $this->belongsToMany(PartesInteresada::class, 'partes_interesadas_clausula', 'clausula_id', 'partesint_id')
-                    ->withPivot('id')
-                    ->withTimestamps();
+            ->withPivot('id')
+            ->withTimestamps();
     }
 }
