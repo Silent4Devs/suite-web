@@ -157,9 +157,9 @@ class AccionCorrectivaController extends Controller
         $esAprobada = $request->aprobada == 'true' ? true : false;
         // dd($esAprobada);
         $accionCorrectiva->update([
-            'aprobada'=>$esAprobada,
-            'aprobacion_contestada'=>true,
-            'comentarios_aprobacion'=>$request->comentarios,
+            'aprobada' => $esAprobada,
+            'aprobacion_contestada' => true,
+            'comentarios_aprobacion' => $request->comentarios,
         ]);
         // dd($accionCorrectiva->quejasCliente);
 
@@ -167,7 +167,7 @@ class AccionCorrectivaController extends Controller
         Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableSgi->email)->send(new AprobacionAccionCorrectivaEmail($quejasClientes));
 
         if ($esAprobada) {
-            return response()->json(['success'=>true, 'message'=>'Acción Correctiva Generada', 'aprobado'=>true]);
+            return response()->json(['success' => true, 'message' => 'Acción Correctiva Generada', 'aprobado' => true]);
         } else {
             return response()->json(['success' => true, 'message' => 'Acción Correctiva Rechazada', 'aprobado' => false]);
         }
@@ -285,13 +285,11 @@ class AccionCorrectivaController extends Controller
         return view('admin.accionCorrectivas.edit', compact('clientes', 'proyectos', 'quejasClientes', 'nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'accionCorrectiva', 'id', 'empleados', 'areas', 'procesos', 'activos', 'analisis'));
     }
 
-    public function update(UpdateAccionCorrectivaRequest $request, AccionCorrectiva $accionCorrectiva)
+    public function update(Request $request, AccionCorrectiva $accionCorrectiva)
     {
         abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // dd($request->all());
         $accionCorrectiva->update($request->all());
-        //dd($accionCorrectiva);
         if ($request->input('documentometodo', false)) {
             if (!$accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
                 if ($accionCorrectiva->documentometodo) {
