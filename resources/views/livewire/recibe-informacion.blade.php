@@ -2,7 +2,7 @@
 
     <label for="exampleInputEmail1"> <i class="fas fa-id-card iconos-crear"></i>9. ¿Quién recibe la información generada en el proceso?</label>
 
-    <div col-12 offset-10>
+    <div class="row">
         @livewire('create-recibe-informacion', ['cuestionario_id' => $cuestionario_id])
     </div>
 

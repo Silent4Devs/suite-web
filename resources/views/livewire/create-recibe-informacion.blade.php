@@ -11,7 +11,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} quien recibe información</h5>
+                        {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Quien Recibe Información</h5>
 
                     <input id="cuestionario_id" name="cuestionario_id" type="hidden" value=" {{ $cuestionario_id }}"
                         wire:model.defer="cuestionario_id">

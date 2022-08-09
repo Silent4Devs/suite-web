@@ -3,7 +3,7 @@
     <label for="exampleInputEmail1"> <i class="fas fa-id-card iconos-crear"></i>3.¿Quién le proporciona esta
         información?</label>
 
-    <div col-12 offset-10>
+    <div class="row">
         @livewire('create-propociona-informacion', ['cuestionario_id' => $cuestionario_id])
     </div>
 

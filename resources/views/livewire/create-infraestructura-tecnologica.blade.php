@@ -23,15 +23,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <label class="required" for="escenario"> <i
-                                class="fas fa-user-tag iconos-crear"></i>Escenario:</label>
+                        <label class="required" for="escenario"><i class="bi bi-signpost-split-fill iconos-crear"></i>Escenario:</label>
                         {{-- <input class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}" type="text"
                            value="{{ old('escenario', '') }}"
                             wire:model.defer="nescenario" placeholder="..."> --}}
                         <select name="escenario" class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}"  wire:model.defer="escenario" >
                             <option selected>Seleccione</option>
-                            <option value="1">En operación normal</option>
-                            <option value="2">En contingencia</option>
+                            <option value="1">En Operación Normal</option>
+                            <option value="2">En Contingencia</option>
                         </select>
                         @if ($errors->has('escenario'))
                             <div class="invalid-feedback">

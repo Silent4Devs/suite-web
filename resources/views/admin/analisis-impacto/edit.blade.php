@@ -361,6 +361,20 @@
             </div>
 
 
+             <!--RECURSOS MATERIALES (inciso b Anexo67)-->
+             <div class="row">
+                <div class="text-center form-group col-12 mt-4"
+                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    RECURSOS MATERIALES (inciso b Anexo67)
+                </div>
+            </div>
+            <div class="row">
+                    {{-- RECURSOS MATERIALES (inciso b Anexo67) --}}
+                    @livewire('recursos-materiales', ['cuestionario_id' => $cuestionario->id])
+                    {{-- Termina livewire --}}
+            </div>
+
+
             <!-- Submit Field -->
             <div class="row">
                 <div class="text-right form-group col-12">

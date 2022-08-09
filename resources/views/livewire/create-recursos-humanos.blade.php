@@ -11,7 +11,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Personas que intervienen en el proceso </h5>
+                        {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Personas que Intervienen en el Proceso </h5>
 
                     <input id="cuestionario_id" name="cuestionario_id" type="hidden" value=" {{ $cuestionario_id }}"
                         wire:model.defer="cuestionario_id">
@@ -22,14 +22,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="form-group col-sm-6 col-md-6 col-lg-6 mt-3">
-                            <label class="required" for="escenario"> <i
-                                    class="fas fa-user-tag iconos-crear"></i>Escenario:</label>
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                            <label class="required" for="escenario"><i class="bi bi-signpost-split-fill iconos-crear"></i>Escenario:</label>
                            
                             <select name="escenario" class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}"  wire:model.defer="escenario" >
                                 <option selected>Seleccione</option>
-                                <option value="1">En operación normal</option>
-                                <option value="2">En contingencia</option>
+                                <option value="1">En Operación Normal</option>
+                                <option value="2">En Contingencia</option>
                             </select>
                             @if ($errors->has('escenario'))
                                 <div class="invalid-feedback">
@@ -37,7 +36,7 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="form-group col-sm-6 col-md-6 col-lg-6 mt-1">
+                        <div class="form-group col-sm-6 col-md-6 col-lg-6">
                             <label class="required" for="empresa"><i class="bi bi-grid-1x2-fill iconos-crear"></i>Empresa / Área:</label>
                             <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text"
                                 value="{{ old('empresa', '') }}" wire:model.defer="empresa" placeholder="...">
