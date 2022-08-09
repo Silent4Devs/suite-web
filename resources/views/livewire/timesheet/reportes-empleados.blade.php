@@ -319,9 +319,9 @@
                     <td class="cde-puesto"></td>
                     <td class="cde-area"></td>
                     <td class="cde-estatus">Total:</td>
-                    @foreach ($empleado_td['calendario'] as $index => $horas_calendar)
+                    {{-- @foreach ($empleado_td['calendario'] as $index => $horas_calendar)
                         <td></td>
-                    @endforeach
+                    @endforeach --}}
                     <td class="cde-totalh"></td>
                     <td class="cde-semenasf"></td>
                     <td class="cde-op"></td>
