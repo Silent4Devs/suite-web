@@ -13,13 +13,12 @@
     @parent
     <script>
         let cont = 0;
-        function tablaLivewire(id_tabla)
-        {
+
+        function tablaLivewire(id_tabla) {
             $('#' + id_tabla).attr('id', id_tabla + cont);
 
             $(function() {
-                let dtButtons = [
-                    {
+                let dtButtons = [{
                         extend: 'csvHtml5',
                         title: `Mis Registros ${new Date().toLocaleDateString().trim()}`,
                         text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
@@ -51,7 +50,8 @@
                             let empleado = @json(auth()->user()->empleado->name);
 
                             var now = new Date();
-                            var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                            var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
+                            .getFullYear();
                             $(doc.document.body).prepend(`
                                 <div class="row">
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
                                         <p>${empresa_actual}</p>
-                                        <strong style="color:#345183">Tiemsheet: Reportes</strong>
+                                        <strong style="color:#345183">Timesheet: Reportes</strong>
                                     </div>
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
                                         Fecha: ${jsDate}
@@ -105,13 +105,13 @@
                 let btnAgregar = {
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar empleado',
-                    url: "{{asset('admin/inicioUsuario/reportes/quejas')}}",
+                    url: "{{ asset('admin/inicioUsuario/reportes/quejas') }}",
                     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                     action: function(e, dt, node, config) {
-                    let {
-                    url
-                    } = config;
-                    window.location.href = url;
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
                     }
                 };
                 let dtOverrideGlobals = {
@@ -123,18 +123,18 @@
                 let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
             });
         }
-        document.addEventListener('DOMContentLoaded', ()=>{
+        document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                    tablaLivewire('datatable_timesheet_proyectos');
+                tablaLivewire('datatable_timesheet_proyectos');
             }, 100);
         });
     </script>
     <script type="text/javascript">
         $('.select2').select2({
-            'theme' : 'bootstrap4',
+            'theme': 'bootstrap4',
         });
-        $("#chkall").click(function(){
-            if($("#caja_areas_seleccionadas_create #chkall").is(':checked')){
+        $("#chkall").click(function() {
+            if ($("#caja_areas_seleccionadas_create #chkall").is(':checked')) {
                 $("#caja_areas_seleccionadas_create .select2 > option").prop("selected", "selected");
                 $("#caja_areas_seleccionadas_create .select2").trigger("change");
             } else {
@@ -152,6 +152,5 @@
         //         $("#caja_areas_select_edit .select2").trigger("change");
         //     }
         // });
-
     </script>
 @endsection
