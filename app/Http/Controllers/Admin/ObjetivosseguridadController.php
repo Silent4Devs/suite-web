@@ -92,15 +92,30 @@ class ObjetivosseguridadController extends Controller
         $tiposObjetivosSistemas = TiposObjetivosSistema::get();
         $normas = Norma::get();
 
+
         return view('admin.objetivosseguridads.create', compact('normas', 'responsables', 'tiposObjetivosSistemas'));
     }
 
     public function store(Request $request)
     {
         abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $request->validate([
+            'objetivoseguridad' => 'required',
+            'indicador' => 'required',
+            'responsable_id' => 'required',
+            'formula' => 'required',
+            'verde' => 'required',
+            'amarillo' => 'required',
+            'rojo' => 'required',
+            'unidadmedida' => 'required',
+            'meta' => 'required',
+            'frecuencia' => 'required',
+            'revisiones' => 'required',
+            'ano' => 'required',
+            'tipo_objetivo_sistema_id' => 'required',
+            'normas' => 'required',
+        ]);
         $objetivosseguridad = Objetivosseguridad::create($request->all());
-        //return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
-
         $normas = array_map(function ($value) {
             return intval($value);
         }, $request->normas);
@@ -121,12 +136,30 @@ class ObjetivosseguridadController extends Controller
         $normas = Norma::get();
         $responsables = Empleado::alta()->get();
 
+
         return view('admin.objetivosseguridads.edit', compact('normas_seleccionadas', 'normas', 'objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
     }
 
     public function update(UpdateObjetivosseguridadRequest $request, Objetivosseguridad $objetivosseguridad)
     {
         abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'objetivoseguridad' => 'required',
+            'indicador' => 'required',
+            'responsable_id' => 'required',
+            'formula' => 'required',
+            'verde' => 'required',
+            'amarillo' => 'required',
+            'rojo' => 'required',
+            'unidadmedida' => 'required',
+            'meta' => 'required',
+            'frecuencia' => 'required',
+            'revisiones' => 'required',
+            'ano' => 'required',
+            'tipo_objetivo_sistema_id' => 'required',
+            'normas' => 'required',
+        ]);
         $objetivosseguridad->update($request->all());
         $normas = array_map(function ($value) {
             return intval($value);

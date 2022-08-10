@@ -130,10 +130,11 @@ class AuditoriaInternaController extends Controller
         abort_if(Gate::denies('auditoria_interna_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-
             'lider_id' => 'required|exists:empleados,id',
+            'alcance' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
         ]);
-        // dd($request->all());
 
         $auditoriaInterna = AuditoriaInterna::create($request->all());
         $auditoriaInterna->equipo()->sync($request->equipo);
@@ -157,13 +158,14 @@ class AuditoriaInternaController extends Controller
         return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'));
     }
 
-    public function update(UpdateAuditoriaInternaRequest $request, AuditoriaInterna $auditoriaInterna)
+    public function update(Request $request, AuditoriaInterna $auditoriaInterna)
     {
         abort_if(Gate::denies('auditoria_interna_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $request->validate([
-
             'lider_id' => 'required|exists:empleados,id',
+            'alcance' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
         ]);
 
         $auditoriaInterna->update($request->all());
