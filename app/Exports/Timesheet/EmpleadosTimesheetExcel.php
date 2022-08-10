@@ -62,6 +62,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
                 }
             }
         }
+
         return $timeSheetHorasCollection;
     }
 
@@ -105,7 +106,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
             // $timeSheetEmpleados['tarea_descripcion'],
             $timeSheetEmpleados['horas'],
             0,
-            $timeSheetEmpleados['horas']
+            $timeSheetEmpleados['horas'],
         ];
     }
 
@@ -120,7 +121,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
             // 'Task Description',
             'Billable',
             'Non Billable',
-            'Total'
+            'Total',
         ];
     }
 

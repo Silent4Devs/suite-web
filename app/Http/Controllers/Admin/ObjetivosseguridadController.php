@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyObjetivosseguridadRequest;
 use App\Http\Requests\UpdateObjetivosseguridadRequest;
 use App\Models\Empleado;
+use App\Models\Norma;
 use App\Models\Objetivosseguridad;
 use App\Models\Team;
 use App\Models\TiposObjetivosSistema;
 use App\Models\VariablesObjetivosseguridad;
-use App\Models\Norma;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -92,8 +92,7 @@ class ObjetivosseguridadController extends Controller
         $tiposObjetivosSistemas = TiposObjetivosSistema::get();
         $normas = Norma::get();
 
-
-        return view('admin.objetivosseguridads.create', compact('normas','responsables', 'tiposObjetivosSistemas'));
+        return view('admin.objetivosseguridads.create', compact('normas', 'responsables', 'tiposObjetivosSistemas'));
     }
 
     public function store(Request $request)
@@ -101,11 +100,11 @@ class ObjetivosseguridadController extends Controller
         abort_if(Gate::denies('objetivos_del_sistema_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $objetivosseguridad = Objetivosseguridad::create($request->all());
         //return redirect()->route('admin.objetivosseguridads.index')->with("success", 'Guardado con éxito');
-        
+
         $normas = array_map(function ($value) {
             return intval($value);
         }, $request->normas);
-        $objetivosseguridad ->normas()->sync($normas);
+        $objetivosseguridad->normas()->sync($normas);
 
         return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with('success', 'Guardado con éxito');
     }
@@ -113,7 +112,7 @@ class ObjetivosseguridadController extends Controller
     public function edit(Objetivosseguridad $objetivosseguridad)
     {
         abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
+
         $tiposObjetivosSistemas = TiposObjetivosSistema::get();
 
         $objetivosseguridad->load('normas');
@@ -122,8 +121,7 @@ class ObjetivosseguridadController extends Controller
         $normas = Norma::get();
         $responsables = Empleado::alta()->get();
 
-
-        return view('admin.objetivosseguridads.edit', compact('normas_seleccionadas','normas','objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
+        return view('admin.objetivosseguridads.edit', compact('normas_seleccionadas', 'normas', 'objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
     }
 
     public function update(UpdateObjetivosseguridadRequest $request, Objetivosseguridad $objetivosseguridad)
