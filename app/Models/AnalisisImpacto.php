@@ -12,6 +12,14 @@ class AnalisisImpacto extends Model
 
     public $table = 'cuestionario_analisis_impacto';
 
+    const DisruptivoSelect = [
+        '1' => 'Remoto (cada año)',
+        '2' => 'Poco probable(Cada 6 meses)',
+        '3' => 'Probable (Cada 3 meses)',
+        '4' => 'Muy probable (cada mes',
+        '5' => 'Casi cierto (Cada Semana)',
+    ];
+
 
 
     public $fillable = [
@@ -33,7 +41,7 @@ class AnalisisImpacto extends Model
         'objetivo_proceso',
         'periodicidad',
         'p_otro_txt',
-         // RESPONSABLES DEL PROCESO
+        // RESPONSABLES DEL PROCESO
         'titular_nombre',
         'titular_a_paterno',
         'titular_a_materno',
@@ -71,5 +79,37 @@ class AnalisisImpacto extends Model
         'flujo_dias',
         'flujo_otro', //quitar
         'flujo_otro_txt',
+        // RESPALDOS DE INFORMACIÓN
+        'respaldo_q_20',
+        'respaldo_q_21',
+        'respaldo_q_22',
+        'respaldo_q_23',
+        // PROBABILIDAD DE INCIDENTES DISRUPTIVOS
+        'disruptivos_q_1',
+        'disruptivos_q_2',
+        'disruptivos_q_3',
+        'disruptivos_q_4',
+        'disruptivos_q_5',
+        'disruptivos_q_6',
+        'disruptivos_q_7',
+        'disruptivos_q_8',
+        'disruptivos_q_9',
+        'disruptivos_q_10',
+        'disruptivos_q_11',
+        // RIESGOS E INCIDENTES DISRUPTIVOS
+        'operacion_q_1',
+        'operacion_q_2',
+        'operacion_q_3',
+        'regulatorio_q_1',
+        'regulatorio_q_2',
+        'regulatorio_q_3',
+        'reputacion_q_1',
+        'reputacion_q_2',
+        'reputacion_q_3',
+        'social_q_1',
+        'social_q_2',
+        'social_q_3',
+        'incidentes_q_26',
+        'incidentes_q_27',
     ];
 }

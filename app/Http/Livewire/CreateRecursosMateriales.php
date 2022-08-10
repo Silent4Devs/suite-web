@@ -43,15 +43,18 @@ class CreateRecursosMateriales extends Component
     public function saveMateriales()
     {
         $this->validarMaterial();
+        $num_equipos = $this->equipos == "" ? 0: $this->equipos;
+        $num_impresoras = $this->impresoras == "" ? 0: $this->impresoras;
+        $num_telefonos = $this->telefono == "" ? 0: $this->telefono;
         $model = CuestionarioRecursosMateriales::create([
             'escenario' => $this->escenario,
-            'equipos' => $this->equipos,
-            'impresoras' => $this->impresoras,
-            'telefono' => $this->telefono,
+            'equipos' => $num_equipos,
+            'impresoras' => $num_impresoras,
+            'telefono' => $num_telefonos,
             'otro' => $this->otro,
             'cuestionario_id' => $this->cuestionario_id,
         ]);
-        dd($model);
+       
         $this->reset('id', 'escenario', 'impresoras', 'telefono', 'otro', 'equipos');
         $this->emit('render');
         $this->emit('cerrar-modal-materiales', ['editarMateriales' => false]);
@@ -87,11 +90,14 @@ class CreateRecursosMateriales extends Component
     {
         $this->validarMaterial();
         $model = CuestionarioRecursosMateriales::find($this->recursoID);
+        $num_equipos = $this->equipos == "" ? 0: $this->equipos;
+        $num_impresoras = $this->impresoras == "" ? 0: $this->impresoras;
+        $num_telefonos = $this->telefono == "" ? 0: $this->telefono;
         $model->update([
             'escenario' => $this->escenario,
-            'equipos' => $this->equipos,
-            'impresoras' => $this->impresoras,
-            'telefono' => $this->telefono,
+            'equipos' => $num_equipos,
+            'impresoras' => $num_impresoras,
+            'telefono' => $num_telefonos,
             'otro' => $this->otro,
             'cuestionario_id' => $this->cuestionario_id,
         ]);
