@@ -55,10 +55,10 @@
                     role="tab" aria-controls="nav-proyectos" aria-selected="false">
                     Proyectos
                 </a>
-                <a class="nav-link" id="nav-semanas-tab" data-type="semanas" data-toggle="tab"
+                {{-- <a class="nav-link" id="nav-semanas-tab" data-type="semanas" data-toggle="tab"
                     href="#nav-semanas" role="tab" aria-controls="nav-semanas" aria-selected="false">
                     Semanas
-                </a>
+                </a> --}}
             </div>
         </nav>
 
@@ -73,9 +73,9 @@
             <div class="tab-pane mb-4 fade p-4" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
                 @livewire('timesheet.reportes-proyectos')
             </div>
-            <div class="tab-pane mb-4 fade p-4" id="nav-semanas" role="tabpanel" aria-labelledby="nav-semanas-tab">
+            {{-- <div class="tab-pane mb-4 fade p-4" id="nav-semanas" role="tabpanel" aria-labelledby="nav-semanas-tab">
                 @livewire('timesheet.reportes-semanas')
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection

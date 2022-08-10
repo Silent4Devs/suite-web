@@ -236,7 +236,7 @@ class ReportesEmpleados extends Component
                 if (gettype($fecha_inicio_timesheet_empleado == 'string')) {
                     $fecha_inicio_timesheet_empleado = Carbon::parse($fecha_inicio_timesheet_empleado);
                 }
-                $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
+                $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->subweek()->subMonth();
             }
 
             // horas totales por empleado
