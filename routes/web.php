@@ -1128,6 +1128,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('octave/graficas/{matriz}', 'MatrizRiesgosController@graficas')->name('octave-graficas');
 
     // Matriz de riesgos -- Sistema de Gestion
+    Route::post('matriz-seguridad/sistema-gestion/identificadorExist', 'MatrizRiesgosController@identificadorExist')->name('matriz-seguridad.sistema-gestion.identificadorExist');
     Route::get('matriz-seguridad/sistema-gestion', 'MatrizRiesgosController@SistemaGestion')->name('matriz-seguridad.sistema-gestion');
     Route::post('matriz-seguridad/sistema-gestion/data', 'MatrizRiesgosController@SistemaGestionData')->name('matriz-seguridad.sistema-gestion.data');
     Route::get('matriz-riesgos/sistema-gestion/create', 'MatrizRiesgosController@createSistemaGestion')->name('matriz-riesgos.sistema-gestion.create');
