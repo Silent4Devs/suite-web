@@ -475,7 +475,6 @@
             display: block;
             padding: 6px;
         }
-
     </style>
 
     <div class="mt-4 card">
@@ -502,12 +501,22 @@
                         <div class="col-11">
                             <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
                             </p>
-                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Llene los siguientes campos según corresponda:</p>
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A ">Llene los siguientes campos según
+                                corresponda:</p>
                         </div>
                     </div>
                 </div><br>
 
                 <input type="hidden" value="{{ $id_analisis }}" name="id_analisis">
+
+                <div class="row">
+                    <div class="form-group col-md-4 mb-4">
+                        <label for="validationServer01"><i class="fas fa-barcode iconos-crear"></i>ID</label>
+                        <input type="number" class="form-control" name="identificador" id="identificador" required>
+                        <div id="identificadorDisponible">
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
@@ -590,12 +599,12 @@
                 </div>
 
                 <div class="row">
-                   
+
                     @livewire('select-amenaza-component')
 
                     @livewire('select-vulnerabilidad-component')
 
-                   
+
 
                     <div class="form-group col-md-4 col-sm-4">
                         <label for="tipo_riesgo"><i class="fas fa-asterisk iconos-crear"></i>Tipo de riesgo</label>
@@ -615,8 +624,7 @@
                                 {{ $errors->first('tipo_riesgo') }}
                             </div>
                         @endif
-                        <span
-                            class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
                     </div>
 
                 </div>
@@ -624,15 +632,13 @@
                 <div class="form-group">
                     <label for="descripcionriesgo"><i class="far fa-file-alt iconos-crear"></i>Descripción Riesgo</label>
                     <textarea class="form-control {{ $errors->has('descripcionriesgo') ? 'is-invalid' : '' }}" type="text"
-                        name="descripcionriesgo" id="descripcionriesgo" value="{{ old('descripcionriesgo', '') }}"
-                        rows="3"></textarea>
+                        name="descripcionriesgo" id="descripcionriesgo" value="{{ old('descripcionriesgo', '') }}" rows="3"></textarea>
                     @if ($errors->has('descripcionriesgo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcionriesgo') }}
                         </div>
                     @endif
-                    <span
-                        class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.responsableproceso_helper') }}</span>
                 </div>
 
                 <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
@@ -643,7 +649,8 @@
                     afectados</p>
                 <hr>
                 <div class="sumaFactores">
-                    <div class="text-center form-group" style="background-color: #e3e6eb;
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
                         ISO 9001:2015
@@ -670,8 +677,7 @@
                                     {{ $errors->first('probabilidad_residual') }}
                                 </div>
                             @endif
-                            <span
-                                class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
                         </div>
 
                         <div class="form-group col-sm-4">
@@ -696,7 +702,8 @@
                             <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                         </div>
                         <div class="form-group col-sm-4">
-                            <label for="cliente"><i class="fa-solid fa-circle-dollar-to-slot iconos-crear"></i>Cliente</label>
+                            <label for="cliente"><i
+                                    class="fa-solid fa-circle-dollar-to-slot iconos-crear"></i>Cliente</label>
                             <select class="form-control {{ $errors->has('cliente') ? 'is-invalid' : '' }}" name="cliente"
                                 id="cliente">
                                 <option value disabled {{ old('cliente', null) === null ? 'selected' : '' }}>
@@ -718,7 +725,8 @@
                     </div>
                     {{-- 20000-1:2018 --}}
                     <hr>
-                    <div class="text-center form-group" style="background-color: #e3e6eb;
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
                         ISO 20000-1:2018
@@ -726,7 +734,8 @@
                     <hr>
                     <div class="row">
                         <div class="form-group col-sm-4">
-                            <label for="disponibilidad_2000"><i class="fa-solid fa-check iconos-crear"></i>Disponibilidad</label>
+                            <label for="disponibilidad_2000"><i
+                                    class="fa-solid fa-check iconos-crear"></i>Disponibilidad</label>
                             <select class="form-control {{ $errors->has('disponibilidad_2000') ? 'is-invalid' : '' }}"
                                 name="disponibilidad_2000" id="disponibilidad_2000">
                                 <option value disabled {{ old('disponibilidad_2000', null) === null ? 'selected' : '' }}>
@@ -743,8 +752,7 @@
                                     {{ $errors->first('probabilidad_residual') }}
                                 </div>
                             @endif
-                            <span
-                                class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
                         </div>
 
                         <div class="form-group col-sm-4">
@@ -792,7 +800,8 @@
                     </div>
                     {{-- 27001:2013 --}}
                     <hr>
-                    <div class="text-center form-group" style="background-color: #e3e6eb;
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
                         ISO 27001:2013
@@ -802,8 +811,7 @@
                         <div class="form-group col-sm-4">
                             <label for="confidencialidad_270000"><i
                                     class="fas fa-lock iconos-crear"></i>Confidencialidad</label>
-                            <select
-                                class="form-control {{ $errors->has('confidencialidad_270000') ? 'is-invalid' : '' }}"
+                            <select class="form-control {{ $errors->has('confidencialidad_270000') ? 'is-invalid' : '' }}"
                                 name="confidencialidad_270000" id="confidencialidad_270000">
                                 <option value disabled
                                     {{ old('confidencialidad_270000', null) === null ? 'selected' : '' }}>
@@ -820,8 +828,7 @@
                                     {{ $errors->first('confidencialidad_270000') }}
                                 </div>
                             @endif
-                            <span
-                                class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.vulnerabilidad_helper') }}</span>
                         </div>
 
                         <div class="form-group col-sm-4">
@@ -849,8 +856,7 @@
                                     class="fas fa-lock-open iconos-crear"></i>Disponibilidad</label>
                             <select class="form-control {{ $errors->has('disponibilidad_27000') ? 'is-invalid' : '' }}"
                                 name="disponibilidad_27000" id="disponibilidad_27000">
-                                <option value disabled
-                                    {{ old('disponibilidad_27000', null) === null ? 'selected' : '' }}>
+                                <option value disabled {{ old('disponibilidad_27000', null) === null ? 'selected' : '' }}>
                                     Selecciona una opción</option>
                                 @foreach (App\Models\MatrizRiesgo::EV_INICIAL_SELECT as $key => $label)
                                     <option value="{{ $key }}"
@@ -983,7 +989,8 @@
 
                 <p class="font-weight-bold" style="font-size:11pt;">Riesgo Residual</p>
                 <div class="sumaFactoresResiduales">
-                    <div class="text-center form-group" style="background-color: #e3e6eb;
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
                         ISO 9001:2015
@@ -994,8 +1001,7 @@
                         <div class="form-group col-sm-4">
                             <label for="estrategia_negocioRes"><i class="fa-solid fa-chess iconos-crear"></i>Estrategia de
                                 Negocio</label>
-                            <select
-                                class="form-control {{ $errors->has('estrategia_negocioRes') ? 'is-invalid' : '' }}"
+                            <select class="form-control {{ $errors->has('estrategia_negocioRes') ? 'is-invalid' : '' }}"
                                 name="estrategia_negocioRes" id="estrategia_negocioRes">
                                 <option value disabled
                                     {{ old('estrategia_negocioRes', null) === null ? 'selected' : '' }}>
@@ -1021,8 +1027,7 @@
                                 servicio</label>
                             <select class="form-control {{ $errors->has('calidad_servicioRes') ? 'is-invalid' : '' }}"
                                 name="calidad_servicioRes" id="calidad_servicioRes">
-                                <option value disabled
-                                    {{ old('calidad_servicioRes', null) === null ? 'selected' : '' }}>
+                                <option value disabled {{ old('calidad_servicioRes', null) === null ? 'selected' : '' }}>
                                     Selecciona una opción</option>
                                 @foreach (App\Models\MatrizRiesgo::EV_INICIAL_SELECT as $key => $label)
                                     <option value="{{ $key }}"
@@ -1039,7 +1044,8 @@
                             <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                         </div>
                         <div class="form-group col-sm-4">
-                            <label for="clienteRes"><i class="fa-solid fa-circle-dollar-to-slot iconos-crear"></i>Cliente</label>
+                            <label for="clienteRes"><i
+                                    class="fa-solid fa-circle-dollar-to-slot iconos-crear"></i>Cliente</label>
                             <select class="form-control {{ $errors->has('clienteRes') ? 'is-invalid' : '' }}"
                                 name="clienteRes" id="clienteRes">
                                 <option value disabled {{ old('clienteRes', null) === null ? 'selected' : '' }}>
@@ -1061,7 +1067,8 @@
                     </div>
                     {{-- 20000-1:2018 --}}
                     <hr>
-                    <div class="text-center form-group" style="background-color: #e3e6eb;
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
                         ISO 20000-1:2018
@@ -1069,9 +1076,9 @@
                     <hr>
                     <div class="row">
                         <div class="form-group col-sm-4">
-                            <label for="disponibilidad_2000Res"><i class="fa-solid fa-check iconos-crear"></i>Disponibilidad</label>
-                            <select
-                                class="form-control {{ $errors->has('disponibilidad_2000Res') ? 'is-invalid' : '' }}"
+                            <label for="disponibilidad_2000Res"><i
+                                    class="fa-solid fa-check iconos-crear"></i>Disponibilidad</label>
+                            <select class="form-control {{ $errors->has('disponibilidad_2000Res') ? 'is-invalid' : '' }}"
                                 name="disponibilidad_2000Res" id="disponibilidad_2000Res">
                                 <option value disabled
                                     {{ old('disponibilidad_2000Res', null) === null ? 'selected' : '' }}>
@@ -1097,8 +1104,7 @@
                                 Servicio</label>
                             <select class="form-control {{ $errors->has('niveles_servicioRes') ? 'is-invalid' : '' }}"
                                 name="niveles_servicioRes" id="niveles_servicioRes">
-                                <option value disabled
-                                    {{ old('niveles_servicioRes', null) === null ? 'selected' : '' }}>
+                                <option value disabled {{ old('niveles_servicioRes', null) === null ? 'selected' : '' }}>
                                     Selecciona una opción</option>
                                 @foreach (App\Models\MatrizRiesgo::EV_INICIAL_SELECT as $key => $label)
                                     <option value="{{ $key }}"
@@ -1138,7 +1144,8 @@
                     </div>
                     {{-- 27001:2013 --}}
                     <hr>
-                    <div class="text-center form-group" style="background-color: #e3e6eb;
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
                         ISO 27001:2013
@@ -1175,8 +1182,7 @@
                                     class="fab fa-black-tie iconos-crear"></i>Integridad</label>
                             <select class="form-control {{ $errors->has('integridad_27000Res') ? 'is-invalid' : '' }}"
                                 name="integridad_27000Res" id="integridad_27000Res">
-                                <option value disabled
-                                    {{ old('integridad_27000Res', null) === null ? 'selected' : '' }}>
+                                <option value disabled {{ old('integridad_27000Res', null) === null ? 'selected' : '' }}>
                                     Selecciona una opción</option>
                                 @foreach (App\Models\MatrizRiesgo::EV_INICIAL_SELECT as $key => $label)
                                     <option value="{{ $key }}"
@@ -1242,8 +1248,7 @@
                         <div class="form-group col-sm-4">
                             <label for="probabilidad_residual"><i
                                     class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
-                            <select
-                                class="form-control {{ $errors->has('probabilidad_residual') ? 'is-invalid' : '' }}"
+                            <select class="form-control {{ $errors->has('probabilidad_residual') ? 'is-invalid' : '' }}"
                                 name="probabilidad_residual" id="probabilidad_residual">
                                 <option value disabled
                                     {{ old('probabilidad_residual', null) === null ? 'selected' : '' }}>
@@ -1302,30 +1307,30 @@
                             </div>
                         </div>
                     </div>
-                        <hr>
+                    <hr>
 
-                        <div class="row">
-                            <div class="form-group col-sm-12 col-12" style="text-align:center;">
-                                <label for="riesgo_residual"><i class="fas fa-exclamation-circle iconos-crear"></i>Riesgo
-                                    Total Residual
-                                </label>
-                                <div class="mb-3 input-group" style="pointer-events: none;">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text text-dark mayus" id="nivelriesgo_residual_pre"></span>
-                                    </div>
-                                    <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}"
-                                        type="number" name="riesgo_residual" id="riesgo_residual"
-                                        value="{{ old('riesgo_residual', '') }}" style="text-align: center">
-                                    @if ($errors->has('riesgo_residual'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('riesgo_residual') }}
-                                        </div>
-                                    @endif
+                    <div class="row">
+                        <div class="form-group col-sm-12 col-12" style="text-align:center;">
+                            <label for="riesgo_residual"><i class="fas fa-exclamation-circle iconos-crear"></i>Riesgo
+                                Total Residual
+                            </label>
+                            <div class="mb-3 input-group" style="pointer-events: none;">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-dark mayus" id="nivelriesgo_residual_pre"></span>
                                 </div>
+                                <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}"
+                                    type="number" name="riesgo_residual" id="riesgo_residual"
+                                    value="{{ old('riesgo_residual', '') }}" style="text-align: center">
+                                @if ($errors->has('riesgo_residual'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('riesgo_residual') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
+                    </div>
 
-                   
+
                 </div>
                 <hr>
                 {{-- Acciones --}}
@@ -1354,8 +1359,7 @@
                                         {{ $errors->first('controles_id') }}
                                     </div>
                                 @endif
-                                <span
-                                    class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
+                                <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                             </div>
                         </div>
                     </div>
@@ -1375,8 +1379,8 @@
                     </div>
                     <div class="form-group col-sm-12">
                         <!-- <label for="" style="margin-left: 15px; margin-bottom:5px;"> <i class="fas fa-lightbulb iconos-crea"></i> Justificación</label> -->
-                        <textarea class="form-control" type="text" for="aceptar_transferir" name="aceptar_transferir" id="ver1" value="1"
-                            placeholder="Justificación" rows="3" style="display: none;"></textarea>
+                        <textarea class="form-control" type="text" for="aceptar_transferir" name="aceptar_transferir" id="ver1"
+                            value="1" placeholder="Justificación" rows="3" style="display: none;"></textarea>
                     </div>
                     <div class="form-group col-sm-12" id="modulo_planaccion" style="display: none;">
 
@@ -1384,22 +1388,26 @@
                         <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i
                                     class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
-                            @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
+                            @livewire('planes-implementacion-select', ['planes_seleccionados' => []])
                             <div class="pl-0 ml-0 col-2">
                                 <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
                                     data-target="#planAccionModal">
                                     <i class="mr-1 fas fa-plus-circle"></i> Crear
                                 </button>
                             </div>
-                            @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de
-                            riesgos', 'id_matriz' => $id_analisis])
+                            @livewire('plan-implementacion-create', [
+                                'referencia' => null,
+                                'modulo_origen' => 'Matríz de
+                                                        riesgos',
+                                'id_matriz' => $id_analisis,
+                            ])
                         </div>
                         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
                     <!-- hasta aqui -->
                 </div>
                 <hr>
-                
+
 
                 {{-- Enviar - Cancelar --}}
                 <div class="text-right form-group col-12">
@@ -1416,3 +1424,50 @@
 @endsection
 
 @include('admin.matrizSistemaGestion.scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('identificador').addEventListener('keyup', (e) => {
+            let identificador = e.target.value;
+            let url = "{{ route('admin.matriz-seguridad.sistema-gestion.identificadorExist') }}";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    identificador
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: "JSON",
+                beforeSend: function() {
+                    document.getElementById('identificadorDisponible').innerHTML =
+                        "Buscando.."
+                    e.target.classList.remove('is-valid');
+                    document.getElementById('identificadorDisponible').classList.remove(
+                        "valid-feedback")
+                    e.target.classList.remove('is-invalid');
+                    document.getElementById('identificadorDisponible').classList.remove(
+                        "invalid-feedback")
+                },
+                success: function(response) {
+                    if (response.existe) {
+                        e.target.classList.add('is-invalid');
+                        document.getElementById('identificadorDisponible').classList.add(
+                            "invalid-feedback")
+                        document.getElementById('identificadorDisponible').innerHTML =
+                            "ID no disponible"
+                    } else {
+                        e.target.classList.add('is-valid');
+                        document.getElementById('identificadorDisponible').classList.add(
+                            "valid-feedback")
+                        document.getElementById('identificadorDisponible').innerHTML =
+                            "ID disponible"
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        })
+    })
+</script>

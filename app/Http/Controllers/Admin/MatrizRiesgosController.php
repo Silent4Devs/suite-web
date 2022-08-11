@@ -477,8 +477,8 @@ class MatrizRiesgosController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
+            $table->editColumn('identificador', function ($row) {
+                return $row->identificador ? $row->identificador : '';
             });
             $table->editColumn('id_sede', function ($row) {
                 return $row->sede ? $row->sede->sede : '';
@@ -783,11 +783,18 @@ class MatrizRiesgosController extends Controller
         return view('admin.matrizSistemaGestion.create', compact('amenazas', 'matrizRiesgo', 'activos', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
 
+    public function identificadorExist(Request $request){
+        $identificador = $request->identificador;
+        $exist = MatrizRiesgosSistemaGestion::where('identificador',$identificador)->exists();
+        return response()->json(['existe'=>$exist]);
+    }
+
     public function storeSistemaGestion(Request $request)
     {
         abort_if(Gate::denies('analisis_de_riesgo_integral_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'controles_id' => 'required',
+            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador'
         ]);
         $controles = array_map(function ($value) {
             return intval($value);
@@ -839,6 +846,12 @@ class MatrizRiesgosController extends Controller
     public function updateSistemaGestion(Request $request, $matrizRiesgo)
     {
         abort_if(Gate::denies('analisis_de_riesgo_integral_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $request->validate([
+            'controles_id' => 'required',
+            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador,'.$matrizRiesgo,
+        ],[
+            'identificador.unique'=>'El identificador ya está en uso'
+        ]);
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with('matriz_riesgos_controles_pivots')->find($matrizRiesgo);
         $calculo = new Mriesgos();
         $res = $calculo->CalculoD($request);

@@ -59,6 +59,7 @@ class MatrizRiesgosSistemaGestion extends Model
     ];
 
     protected $fillable = [
+        'identificador',
         'descripcionriesgo',
         'tipo_riesgo',
         'probabilidad',
