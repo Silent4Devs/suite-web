@@ -48,6 +48,15 @@
                 <input type="hidden" value="{{ $matrizRiesgo->id_analisis }}" name="id_analisis">
 
                 <div class="row">
+                    <div class="form-group col-md-4 mb-4">
+                        <label for="validationServer01"><i class="fas fa-barcode iconos-crear"></i>ID</label>
+                        <input type="number" class="form-control" name="identificador" id="identificador" required>
+                        <div id="identificadorDisponible">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="id_sede"><i class="fas fa-map-marker-alt iconos-crear"></i>Sede</label><br>
                         <select class="sedeSelect form-control" name="id_sede" id="id_sede"
@@ -998,3 +1007,51 @@
 
 
 @include('admin.matrizSistemaGestion.scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('identificador').addEventListener('keyup', (e) => {
+            let identificador = e.target.value;
+            let url = "{{ route('admin.matriz-seguridad.sistema-gestion.identificadorExist') }}";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    identificador
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: "JSON",
+                beforeSend: function() {
+                    document.getElementById('identificadorDisponible').innerHTML =
+                        "Buscando.."
+                    e.target.classList.remove('is-valid');
+                    document.getElementById('identificadorDisponible').classList.remove(
+                        "valid-feedback")
+                    e.target.classList.remove('is-invalid');
+                    document.getElementById('identificadorDisponible').classList.remove(
+                        "invalid-feedback")
+                },
+                success: function(response) {
+                    if (response.existe) {
+                        e.target.classList.add('is-invalid');
+                        document.getElementById('identificadorDisponible').classList.add(
+                            "invalid-feedback")
+                        document.getElementById('identificadorDisponible').innerHTML =
+                            "ID no disponible"
+                    } else {
+                        e.target.classList.add('is-valid');
+                        document.getElementById('identificadorDisponible').classList.add(
+                            "valid-feedback")
+                        document.getElementById('identificadorDisponible').innerHTML =
+                            "ID disponible"
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        })
+    })
+</script>
+

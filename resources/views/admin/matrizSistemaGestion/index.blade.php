@@ -79,7 +79,7 @@
                             <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </tr>
                         <tr>
-                            <th style="min-width: 30px;">
+                            <th style="min-width: 50px;">
                                 Id
                             </th>
                             <th style="min-width: 50px;">
@@ -393,10 +393,16 @@
                     method: 'POST',
                 },
                 columns: [{
-                        data: 'id',
-                        name: 'id',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
+                        data: 'identificador',
+                        name: 'identificador',
+                        render: function(data, type, row, meta) {
+                            const identificador = row.identificador;
+                            if (identificador >= 1) {
+                                return `<div style="text-align:left">${data}</div>`;
+                            }
+                            else {
+                                return `<div style="text-align:left">No definido</div>`;
+                            }
                         }
                     },
                     {
