@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Area;
-use App\Models\DayOff;
 use App\Models\Empleado;
 use App\Models\IncidentesDayoff;
 use App\Models\Organizacion;
@@ -15,7 +13,6 @@ use Illuminate\Support\Facades\Gate;
 
 class IncidentesDayOffController extends Controller
 {
-
     public function index(Request $request)
     {
         abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -70,9 +67,9 @@ class IncidentesDayOffController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.incidentesDayOff.index', compact('logo_actual', 'empresa_actual'));
     }
-
 
     public function create()
     {
@@ -82,7 +79,6 @@ class IncidentesDayOffController extends Controller
 
         return view('admin.incidentesDayOff.create', compact('vacacion', 'empleados', 'empleados_seleccionados'));
     }
-
 
     public function store(Request $request)
     {
@@ -100,12 +96,10 @@ class IncidentesDayOffController extends Controller
         $vacacion = IncidentesDayOff::create($request->all());
         $vacacion->empleados()->sync($empleados);
 
-
         Flash::success('Incidencia añadida satisfactoriamente.');
 
         return redirect()->route('admin.incidentes-dayoff.index');
     }
-
 
     public function show($id)
     {
@@ -114,7 +108,6 @@ class IncidentesDayOffController extends Controller
 
         return view('admin.incidentesDayOff.show', compact('vacacion'));
     }
-
 
     public function edit($id)
     {
@@ -130,7 +123,6 @@ class IncidentesDayOffController extends Controller
 
         return view('admin.incidentesDayOff.edit', compact('vacacion', 'empleados', 'empleados_seleccionados'));
     }
-
 
     public function update(Request $request, $id)
     {
@@ -154,7 +146,6 @@ class IncidentesDayOffController extends Controller
 
         return redirect(route('admin.incidentes-dayoff.index'));
     }
-
 
     public function destroy($id)
     {
