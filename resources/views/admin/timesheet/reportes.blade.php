@@ -111,6 +111,9 @@
         $(".cde-estatus").mouseleave(function() {
             $(".cde-estatus").removeClass("ver");
         });
+        $(".cde-fecha").mouseleave(function() {
+            $(".cde-fecha").removeClass("ver");
+        });
 
         $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").mouseover(
             function() {
@@ -274,7 +277,7 @@
                 "footerCallback": function(row, data, start, end, display) {
                     var api = this.api();
                     nb_cols = api.columns().nodes().length;
-                    var j = 5;
+                    var j = 6;
                     while (j < nb_cols) {
                         var pageTotal = api
                             .column(j, {
