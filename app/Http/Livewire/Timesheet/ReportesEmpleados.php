@@ -68,7 +68,7 @@ class ReportesEmpleados extends Component
     public function mount()
     {
         $this->areas = Area::get();
-
+        $this->empleados_estatus = 'alta';
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
         $this->fecha_fin = Carbon::now()->format('Y-m-d');
     }
@@ -236,7 +236,7 @@ class ReportesEmpleados extends Component
                 if (gettype($fecha_inicio_timesheet_empleado == 'string')) {
                     $fecha_inicio_timesheet_empleado = Carbon::parse($fecha_inicio_timesheet_empleado);
                 }
-                $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
+                $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->subweek()->subMonth();
             }
 
             // horas totales por empleado
@@ -335,6 +335,7 @@ class ReportesEmpleados extends Component
                 'puesto' => $empleado_list->puesto,
                 'times_atrasados' => $times_atrasados,
                 'times_faltantes' => $this->times_faltantes_empleado,
+                'fecha_alta_baja' => $empleado_list->estatus == 'alta' ? Carbon::parse($empleado_list->fecha_ingreso)->format('d/m/Y') : Carbon::parse($empleado_list->fecha_baja)->format('d/m/Y'),
                 'calendario' => $calendario_tabla_empleado,
             ]);
         }

@@ -1541,6 +1541,7 @@ class EmpleadoController extends Controller
         $empleado->update([
             'vacante_activa' => false,
         ]);
+
         return response()->json(['status' => 200, 'message' => 'Vacante eliminada']);
     }
 

@@ -112,7 +112,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
             // 'Task Description',
             'Billable',
             'Non Billable',
-            'Total'
+            'Total',
         ];
     }
 
