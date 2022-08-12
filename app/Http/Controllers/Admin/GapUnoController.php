@@ -107,13 +107,13 @@ class GapUnoController extends Controller
 
                     return response()->json(['success' => true]);
                     break;
-                    case 'valoracion':
-                        $gapun = GapUno::findOrFail($id);
-                        $gapun->valoracion = $request->value;
-                        $gapun->save();
+                case 'valoracion':
+                    $gapun = GapUno::findOrFail($id);
+                    $gapun->valoracion = $request->value;
+                    $gapun->save();
 
-                        return response()->json(['success' => true]);
-                        break;
+                    return response()->json(['success' => true]);
+                    break;
             }
         }
 

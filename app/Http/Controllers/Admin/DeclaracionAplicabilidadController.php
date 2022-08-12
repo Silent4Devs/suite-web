@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Throwable;
-use Carbon\Carbon;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
+use App\Mail\DeclaracionAplicabilidadAprobadores as MailDeclaracionAplicabilidadAprobadores;
+use App\Mail\NotificacionDeclaracionAplicabilidadAprobadores;
+use App\Mail\NotificacionDeclaracionAplicabilidadResponsables;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\DeclaracionAplicabilidadAprobadores;
 use App\Models\DeclaracionAplicabilidadResponsable;
-use App\Mail\NotificacionDeclaracionAplicabilidadAprobadores;
-use App\Mail\NotificacionDeclaracionAplicabilidadResponsables;
-use App\Mail\DeclaracionAplicabilidadAprobadores as MailDeclaracionAplicabilidadAprobadores;
+use App\Models\Empleado;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class DeclaracionAplicabilidadController extends Controller
 {
@@ -144,78 +144,77 @@ class DeclaracionAplicabilidadController extends Controller
 
                 case 'justificacion':
 
-                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['justificacion' => $request->value]);
-                        $control=DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
-                        $aplicabilidad=DeclaracionAplicabilidad::find($control->declaracion_id);
-                        if($control->aplica!=null){
-                            $aprobadorDeclaracion=DeclaracionAplicabilidadAprobadores::where('declaracion_id',$id)->orderBy('created_at')->first();
-                            $aprobador=Empleado::select('id','name','email')->find($aprobadorDeclaracion->aprobadores_id);
-                            $responsable=Empleado::select('id','name','email')->find($control->empleado_id);
-                            Mail::to($aprobador->email)->send(new  NotificacionDeclaracionAplicabilidadAprobadores($aprobador,$responsable,$aplicabilidad));
+                    $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['justificacion' => $request->value]);
+                    $control = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+                    $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
+                    if ($control->aplica != null) {
+                        $aprobadorDeclaracion = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $id)->orderBy('created_at')->first();
+                        $aprobador = Empleado::select('id', 'name', 'email')->find($aprobadorDeclaracion->aprobadores_id);
+                        $responsable = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
+                        Mail::to($aprobador->email)->send(new  NotificacionDeclaracionAplicabilidadAprobadores($aprobador, $responsable, $aplicabilidad));
+                    }
 
-                        }
-
-                        return response()->json(['success' => true, 'id' => $id]);
+                    return response()->json(['success' => true, 'id' => $id]);
 
                     break;
                 case 'aplica':
 
-                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
-                        $control=DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+                    $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
+                    $control = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
 
-                        $aplicabilidad=DeclaracionAplicabilidad::find($control->declaracion_id);
-                        if($control->justificacion!=null){
-                            $aprobadorDeclaracion=DeclaracionAplicabilidadAprobadores::where('declaracion_id',$id)->orderBy('created_at')->first();
-                            $aprobador=Empleado::select('id','name','email')->find($aprobadorDeclaracion->aprobadores_id);
-                            $responsable=Empleado::select('id','name','email')->find($control->empleado_id);
-                            Mail::to($aprobador->email)->send(new NotificacionDeclaracionAplicabilidadAprobadores($aprobador,$responsable,$aplicabilidad));
+                    $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
+                    if ($control->justificacion != null) {
+                        $aprobadorDeclaracion = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $id)->orderBy('created_at')->first();
+                        $aprobador = Empleado::select('id', 'name', 'email')->find($aprobadorDeclaracion->aprobadores_id);
+                        $responsable = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
+                        Mail::to($aprobador->email)->send(new NotificacionDeclaracionAplicabilidadAprobadores($aprobador, $responsable, $aplicabilidad));
+                    }
 
-                        }
-                        return response()->json(['success' => true, 'id' => $id]);
-
+                    return response()->json(['success' => true, 'id' => $id]);
 
                     break;
-                    case 'aplica2':
-                        try {
-                            $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
-                            // $gapun->aplica = $request->value;
-                            return response()->json(['success' => true, 'id' => $id]);
-                        } catch (Throwable $e) {
-                            return response()->json(['success' => false]);
-                        }
+                case 'aplica2':
+                    try {
+                        $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
+                        // $gapun->aplica = $request->value;
+                        return response()->json(['success' => true, 'id' => $id]);
+                    } catch (Throwable $e) {
+                        return response()->json(['success' => false]);
+                    }
 
-                        break;
+                    break;
                 case 'estatus':
 
-                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['estatus' => $request->value]);
-                        $control = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->first();
-                      
-                        $aplicabilidad=DeclaracionAplicabilidad::find($control->declaracion_id);
-                        if($control->comentarios!=null){
-                            $responsableDeclaracion=DeclaracionAplicabilidadResponsable::where('declaracion_id',$id)->orderBy('created_at')->first();
-                            $responsable=Empleado::select('id','name','email')->find($responsableDeclaracion->empleado_id);
-                            $aprobador=Empleado::select('id','name','email')->find($control->aprobadores_id);
-                            Mail::to($responsable->email)->send(new NotificacionDeclaracionAplicabilidadResponsables($aprobador,$responsable,$aplicabilidad,$control));
-                        }
-                        return response()->json(['success' => true, 'id' => $id, 'value' => $request->value, 'fecha' => Carbon::parse($control->updated_at)->format('d-m-Y')]);
+                    $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['estatus' => $request->value]);
+                    $control = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->first();
 
+                    $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
+                    if ($control->comentarios != null) {
+                        $responsableDeclaracion = DeclaracionAplicabilidadResponsable::where('declaracion_id', $id)->orderBy('created_at')->first();
+                        $responsable = Empleado::select('id', 'name', 'email')->find($responsableDeclaracion->empleado_id);
+                        $aprobador = Empleado::select('id', 'name', 'email')->find($control->aprobadores_id);
+                        Mail::to($responsable->email)->send(new NotificacionDeclaracionAplicabilidadResponsables($aprobador, $responsable, $aplicabilidad, $control));
+                    }
+
+                    return response()->json(['success' => true, 'id' => $id, 'value' => $request->value, 'fecha' => Carbon::parse($control->updated_at)->format('d-m-Y')]);
 
                     break;
 
                 case 'comentarios':
-                        $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['comentarios' => $request->value]);
-               
-                        // $gapun->comentarios = $request->value;
-                        $control = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->first();
+                    $gapun = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->update(['comentarios' => $request->value]);
 
-                        $aplicabilidad=DeclaracionAplicabilidad::find($control->declaracion_id);
-                        if($control->estatus!=null){
-                            $responsableDeclaracion=DeclaracionAplicabilidadResponsable::where('declaracion_id',$id)->orderBy('created_at')->first();
-                            $responsable=Empleado::select('id','name','email')->find($responsableDeclaracion->empleado_id);
-                            $aprobador=Empleado::select('id','name','email')->find($control->aprobadores_id);
-                            Mail::to($responsable->email)->send(new NotificacionDeclaracionAplicabilidadResponsables($aprobador,$responsable,$aplicabilidad,$control));
-                        }
-                        return response()->json(['success' => true, 'id' => $id]);
+                    // $gapun->comentarios = $request->value;
+                    $control = DeclaracionAplicabilidadAprobadores::where('declaracion_id', '=', $id)->where('aprobadores_id', auth()->user()->empleado->id)->first();
+
+                    $aplicabilidad = DeclaracionAplicabilidad::find($control->declaracion_id);
+                    if ($control->estatus != null) {
+                        $responsableDeclaracion = DeclaracionAplicabilidadResponsable::where('declaracion_id', $id)->orderBy('created_at')->first();
+                        $responsable = Empleado::select('id', 'name', 'email')->find($responsableDeclaracion->empleado_id);
+                        $aprobador = Empleado::select('id', 'name', 'email')->find($control->aprobadores_id);
+                        Mail::to($responsable->email)->send(new NotificacionDeclaracionAplicabilidadResponsables($aprobador, $responsable, $aplicabilidad, $control));
+                    }
+
+                    return response()->json(['success' => true, 'id' => $id]);
 
                     break;
 
