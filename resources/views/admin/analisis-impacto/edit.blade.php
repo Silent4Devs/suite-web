@@ -380,6 +380,385 @@
                 {{-- Termina livewire --}}
             </div>
 
+            <!--RECURSOS MATERIALES (inciso b Anexo67)-->
+            <div class="row">
+                <div class="text-center form-group col-12 mt-4"
+                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    RECURSOS MATERIALES (inciso b Anexo67)
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center form-group col-12">
+                    <table class="table">
+                        <TR
+                            style="background-color:#FFFF00; color: rgb(0, 0, 0); text-align:center; height:65px; font-size:15px;">
+                            <TH>PRIMER SEMESTRE<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>SEGUNDO SEMESTRE<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                        </TR>
+                    </table>
+                </div>
+
+                <div class="text-center form-group col-12">
+                    <table class="table">
+                        <TR class="mt-5"
+                            style="background-color:#FFFF00; color: rgb(0, 0, 0); text-align:center; height:65px;">
+                            <TH>ENE<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>FEB<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>MAR<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>ABR<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>MAY<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>JUN<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>JUL<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>AGO<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>SEP<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>OCT<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>NOV<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                            <TH>DIC<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TH>
+                        </TR>
+                    </table>
+                </div>
+
+                <div class="text-center form-group col-12">
+                    <table class="table">
+                        <TR style="background-color:#FFFF00; color: rgb(0, 0, 0); text-align:center; height:65px;">
+                            <TD>S1</TD>
+                            <TD>S2</TD>
+                            <TD>S3</TD>
+                            <TD>S4</TD>
+                        </TR>
+                    </table>
+                </div>
+
+                <div class="text-center form-group col-12">
+                    <table class="table table-sm">
+                        <TR
+                            style="background-color:#FFFF00; color: rgb(0, 0, 0); text-align:center; font-size:10px; height:65px;">
+                            <TD>02<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>01<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>03<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>04<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>05<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>06<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>07<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>08<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>09<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>10<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>11<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>12<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>13<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>14<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>15<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>16<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>17<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>18<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>19<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>20<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>21<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>22<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>23<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>24<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>25<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>26<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>27<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>28<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>29<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>30<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                            <TD>31<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+                            </TD>
+                        </TR>
+                    </table>
+                </div>
+
+                <div class="text-center form-group col-12">
+                    <table class="table  table-sm">
+                        <TR
+                            style="background-color:#FFFF00; color: rgb(0, 0, 0); text-align:center; text-align:center; font-size:15px; height:65px;">
+                            <TD>01<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>02<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>03<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>04<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>05<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>06<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>07<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>08<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>09<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>10<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>11<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>12<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>13<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>14<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>15<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>16<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>17<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>18<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>19<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>20<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>21<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>22<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>23<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                            <TD>24<br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                </div></TD>
+                        </TR>
+                    </table>
+                </div>
+
+
+            </div>
+
+
+
+
+
             <!-- RESPALDOS DE INFORMACIÓN -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
@@ -643,59 +1022,86 @@
                 <label class="col-sm-6 col-form-label offset-6"><strong>NIVELES</strong></label>
                 <label class="col-sm-6 col-form-label"><strong>IMPACTOS</strong></label>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm"  placeholder="< 4 hrs" disabled >
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        placeholder="< 4 hrs" disabled>
                 </div>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm"  placeholder="4-24 hrs" disabled>
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        placeholder="4-24 hrs" disabled>
                 </div>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm"  placeholder="> 24 hrs" disabled>
-                </div><hr>
-                
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        placeholder="> 24 hrs" disabled>
+                </div>
+                <hr>
+
 
                 <label class="col-sm-6 col-form-label">Afectación operacional (IO)</label>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="operacion_q_1" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_1) }}">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="operacion_q_1" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="operacion_q_2" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="operacion_q_2" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="operacion_q_3" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
-                </div><hr>
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="operacion_q_3" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                </div>
+                <hr>
 
                 <label class="col-sm-6 col-form-label">Impacto Regulatorio (IR)</label>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="regulatorio_q_1" placeholder="..." value="{{ old('meta', $cuestionario->regulatorio_q_1) }}">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="regulatorio_q_1" placeholder="..."
+                        value="{{ old('meta', $cuestionario->regulatorio_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="regulatorio_q_2" placeholder="..." value="{{ old('meta', $cuestionario->regulatorio_q_2) }}">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="regulatorio_q_2" placeholder="..."
+                        value="{{ old('meta', $cuestionario->regulatorio_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="regulatorio_q_3" placeholder="..." value="{{ old('meta', $cuestionario->regulatorio_q_3) }}">
-                </div><hr>
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="regulatorio_q_3" placeholder="..."
+                        value="{{ old('meta', $cuestionario->regulatorio_q_3) }}">
+                </div>
+                <hr>
 
-                <label class="col-sm-6 col-form-label">Afectación en la Reputación / Imagen Pública o Política (IIR)</label>
+                <label class="col-sm-6 col-form-label">Afectación en la Reputación / Imagen Pública o Política
+                    (IIR)</label>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="reputacion_q_1" placeholder="..." value="{{ old('meta', $cuestionario->reputacion_q_1) }}">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="reputacion_q_1" placeholder="..."
+                        value="{{ old('meta', $cuestionario->reputacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="reputacion_q_2" placeholder="..." value="{{ old('meta', $cuestionario->reputacion_q_2) }}">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="reputacion_q_2" placeholder="..."
+                        value="{{ old('meta', $cuestionario->reputacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="reputacion_q_3"  placeholder="..." value="{{ old('meta', $cuestionario->reputacion_q_3) }}">
-                </div><hr>
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="reputacion_q_3" placeholder="..."
+                        value="{{ old('meta', $cuestionario->reputacion_q_3) }}">
+                </div>
+                <hr>
 
                 <label class="col-sm-6 col-form-label">Impacto Social (IS)</label>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="social_q_1" placeholder="..." value="{{ old('meta', $cuestionario->social_q_1) }}">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="social_q_1" placeholder="..." value="{{ old('meta', $cuestionario->social_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="social_q_2" pplaceholder="..." value="{{ old('meta', $cuestionario->social_q_2) }}">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="social_q_2" pplaceholder="..." value="{{ old('meta', $cuestionario->social_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
-                    <input type="number" style="text-align: center;" class="form-control form-control-sm" name="social_q_3" pplaceholder="..." value="{{ old('meta', $cuestionario->social_q_3) }}">
-                </div><hr>
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="social_q_3" pplaceholder="..." value="{{ old('meta', $cuestionario->social_q_3) }}">
+                </div>
+                <hr>
 
                 <div class="form-group col-sm-12">
                     {!! Form::label(
