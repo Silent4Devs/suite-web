@@ -2,8 +2,15 @@
 
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
+use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
+    Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
+    Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
+    Route::resource('/', 'RegistroVisitantesController');
+});
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 Route::get('/usuario-bloqueado', 'UsuarioBloqueado@usuarioBloqueado')->name('users.usuario-bloqueado');
@@ -21,6 +28,12 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+    // Visitantes
+    Route::get('visitantes/menu', 'VisitantesController@menu')->name('visitantes.menu');
+    Route::resource('visitantes/aviso-privacidad', 'VisitantesAvisoPrivacidadController')->names('visitantes.aviso-privacidad');
+    Route::resource('visitantes', 'VisitantesController');
+    // Fin visitantes
+
     Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
     Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
     Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
@@ -99,7 +112,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'update' => 'solicitud-vacaciones.update',
         'destroy' => 'solicitud-vacaciones.destroy',
     ])->except(['show', 'destroy']);;
-    
+
     Route::get('solicitud-dayoff/{id}/showArchivo', 'SolicitudDayOffController@showArchivo')->name('solicitud-dayoff.showArchivo');
     Route::get('solicitud-dayoff/{id}/vistaGlobal', 'SolicitudDayOffController@showVistaGlobal')->name('solicitud-dayoff.vistaGlobal');
     Route::get('solicitud-dayoff/menu', 'SolicitudDayOffController@aprobacionMenu')->name('solicitud-dayoff.menu');
@@ -1128,7 +1141,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('octave/graficas/{matriz}', 'MatrizRiesgosController@graficas')->name('octave-graficas');
 
     // Matriz de riesgos -- Sistema de Gestion
-    Route::post('matriz-seguridad/sistema-gestion/identificadorExist', 'MatrizRiesgosController@identificadorExist')->name('matriz-seguridad.sistema-gestion.identificadorExist');
     Route::get('matriz-seguridad/sistema-gestion', 'MatrizRiesgosController@SistemaGestion')->name('matriz-seguridad.sistema-gestion');
     Route::post('matriz-seguridad/sistema-gestion/data', 'MatrizRiesgosController@SistemaGestionData')->name('matriz-seguridad.sistema-gestion.data');
     Route::get('matriz-riesgos/sistema-gestion/create', 'MatrizRiesgosController@createSistemaGestion')->name('matriz-riesgos.sistema-gestion.create');

@@ -1821,7 +1821,7 @@
             });
         }
     </script>
-    <script>
+    {{-- <script>
         $(function() {
             let idleTime = Number(@json(env('SESSION_LIFETIME')))*60*1000; // in milliseconds
             // Set idle time
@@ -1834,7 +1834,7 @@
                 window.location.href = "/login"
             });
         });
-    </script>
+    </script> --}}
 
 </body>
 

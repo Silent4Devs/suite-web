@@ -483,6 +483,13 @@
                     </a>
                 </li>
             @endcan --}}
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.visitantes.menu') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/visitantes') || request()->is('admin/visitantes/*') ? 'active' : '' }}">
+                    <i class="bi bi-gear iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">Ajustes Visitantes</font>
+                </a>
+            </li>
 
             @can('configurar_organizacion_acceder')
                 <li class="c-sidebar-nav-dropdown">
