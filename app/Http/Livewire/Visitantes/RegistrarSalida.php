@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Visitantes;
 
 use App\Models\Visitantes\RegistrarVisitante;
+use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -41,6 +42,7 @@ class RegistrarSalida extends Component
     {
         $registroVisitante = RegistrarVisitante::find($this->visitante->id);
         $registroVisitante->update([
+            'fecha_salida' => Carbon::now(),
             'firma' => $this->firma,
             'registro_salida' => true,
         ]);

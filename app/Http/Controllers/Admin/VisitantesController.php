@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Visitantes\RegistrarVisitante;
 use Illuminate\Http\Request;
 
 class VisitantesController extends Controller
@@ -19,6 +20,8 @@ class VisitantesController extends Controller
      */
     public function index()
     {
+        $visitantes = RegistrarVisitante::get();
+        return view('admin.visitantes.index', compact('visitantes'));
     }
 
     /**

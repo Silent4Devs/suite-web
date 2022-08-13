@@ -211,6 +211,18 @@
                                     Aviso de Privacidad
                                 </div>
                             </a></li>
+                        <li><a href="{{ route('admin.visitantes.aviso-privacidad.index') }}">
+                                <div>
+                                    <i class="bi bi-file-earmark-lock"></i><br>
+                                    Aviso de Privacidad
+                                </div>
+                            </a></li>
+                        <li><a href="{{ route('admin.visitantes.index') }}">
+                                <div>
+                                    <i class="bi bi-people"></i><br>
+                                    Visitantes
+                                </div>
+                            </a></li>
                     </ul>
                 </div>
 
