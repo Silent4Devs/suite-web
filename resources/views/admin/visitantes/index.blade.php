@@ -49,7 +49,7 @@
                                 @endif
                             </td>
                             <td>
-                                <i class="fas fa-eye"></i>
+                                <a href="" style="text-decoration: none;"><i class="fas fa-eye"></i></a>
                             </td>
                         </tr>
                     @empty
