@@ -247,12 +247,12 @@
 
                     },
                     {
-                        data: 'año',
-                        name: 'año',
+                        data: 'permiso',
+                        name: 'permiso',
                         render: function(data, type, row) {
-                            return `<div style="text-align:center">${data} año</div>`;
+                            data = JSON.parse(data);
+                            return `<div style="text-align:left">${data.nombre}</div>`;
                         }
-
                     },
                     {
                         data: 'fecha_inicio',
