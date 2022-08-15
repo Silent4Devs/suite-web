@@ -57,14 +57,14 @@
                                     value="{{ $año }}" style="text-align: center">
                             </fieldset>
                         </div>
-                        <div class="form-group col-sm-6">
+                        {{-- <div class="form-group col-sm-6">
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Días
                                     disponibles</label>
                                 <input type="text" class="form-control"
                                     value="{{ $dias_disponibles }}" style="text-align: center">
                             </fieldset>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- Categoria Field -->
                     <div class="row">
