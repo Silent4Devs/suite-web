@@ -179,7 +179,7 @@
                             <i class="bi bi-clipboard-check"></i>
                             Reportes</a>
                     @endcan
-                    @can('mi_perfil_mis_reportes_acceder')
+                    @can('mi_perfil_modulo_solicitud_ausencia')
                     <a href="#" id="b_solicitudes" onclick="almacenarMenuEnLocalStorage('solicitudes')" data-tabs="s_solicitudes">
                         <i class="bi bi-clipboard-check"></i>
                         Solicitudes
@@ -230,7 +230,7 @@
                                 </div>
                             </section>
                         @endcan
-                        @can('mi_perfil_mis_reportes_acceder')
+                        @can('mi_perfil_modulo_solicitud_ausencia')
                         <section id="s_solicitudes" data-id="solicitudes">
                             <div class="container">
                                 @include('admin.inicioUsuario.solicitudes')

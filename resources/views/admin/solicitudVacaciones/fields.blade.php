@@ -33,7 +33,7 @@ if ($dias_pendientes >= 1) {
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #000000">¡IMPORTANTE! ...</p>
                     <p class="m-0" style="font-size: 14px; color:#000000 "> Aún tienes
                         <strong>{{ $año_pasado }} dia(s) disponible(s)</strong> del <strong>periodo {{$periodo_vencido}} </strong>.<br>
-                        Tienes hasta el <strong>{{$finVacaciones_periodo_pasado}}</strong> para disfrutarlas, de lo contrario se eliminaran automaticamente.
+                        Tienes hasta antes de el <strong>{{$finVacaciones_periodo_pasado}}</strong> para disfrutarlas, de lo contrario se eliminaran automaticamente.
                     </p>
                     <div class="col-12 pr-5">
                     <a type="button" class="btn btn-dark col-sm-3 offset-10" href="{{ route('admin.solicitud-vacaciones.periodoAdicional') }}">Solicitar ahora</a>

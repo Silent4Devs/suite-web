@@ -87,22 +87,22 @@
                 {{--  --}}
                 <div class="caja_btn_reporte"
                     style="display: flex !important; align-items: center !important; text-align: center !important; justify-content: center !important;">
-                    @can('mi_perfil_mis_reportes_realizar_reporte_de_queja')
+                    @can('mi_perfil_modulo_solicitud_ausencia')
                         <a href="{{ asset('admin/solicitud-vacaciones') }}" class="btn_reporte">
                             <i class="bi bi-sun"></i><span>Vacaciones</span>
                         </a>
                     @endcan
-                    @can('mi_perfil_mis_reportes_realizar_reporte_de_denuncia')
+                    @can('mi_perfil_modulo_solicitud_ausencia')
                         <a href="{{ asset('admin/solicitud-dayoff') }}" class="btn_reporte">
                             <i class="bi bi-bicycle"></i><br><span>Day Off´s</span>
                         </a>
                     @endcan
-                    @can('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora')
+                    @can('mi_perfil_modulo_solicitud_ausencia')
                         <a href="{{ asset('admin/solicitud-permiso-goce-sueldo') }}" class="btn_reporte">
                             <i class="bi bi-coin"></i><br><span>Permisos con goce de sueldo</span>
                         </a>
                     @endcan
-                    @can('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora')
+                    @can('modulo_aprobacion_ausencia')
                         <a href="{{ asset('admin/solicitud-vacaciones/menu') }}" class="btn_reporte"
                             style="position: relative; overflow: inherit !important">
                             <i class="bi bi-check-circle"></i><br>
