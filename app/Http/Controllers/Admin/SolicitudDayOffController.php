@@ -23,7 +23,7 @@ class SolicitudDayOffController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('solicitud_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
         if ($request->ajax()) {
@@ -93,6 +93,7 @@ class SolicitudDayOffController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ingreso = auth()->user()->empleado->antiguedad;
         $actual = Carbon::now();
         $año = Carbon::createFromDate($ingreso)->age;
@@ -139,7 +140,7 @@ class SolicitudDayOffController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
             'fecha_inicio' => 'required|date',
@@ -163,7 +164,7 @@ class SolicitudDayOffController extends Controller
 
     public function show($id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('solicitud_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
@@ -184,7 +185,7 @@ class SolicitudDayOffController extends Controller
 
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('solicitud_dayoff_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
             'fecha_inicio' => 'required|date',
@@ -211,6 +212,7 @@ class SolicitudDayOffController extends Controller
 
     public function destroy(Request $request)
     {
+        abort_if(Gate::denies('solicitud_dayoff_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $id = $request->id;
         $vacaciones = SolicitudDayOff::find($id);
         $vacaciones->delete();
@@ -219,7 +221,6 @@ class SolicitudDayOffController extends Controller
     }
     public function diasDisponibles()
     {
-
         $ingreso = auth()->user()->empleado->antiguedad;
         $año = Carbon::createFromDate($ingreso)->age;
         $existe_regla_ingreso = DayOff::where('inicio_conteo', 1)->exists();
@@ -259,7 +260,7 @@ class SolicitudDayOffController extends Controller
 
     public function aprobacion(Request $request)
     {
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
         if ($request->ajax()) {
@@ -307,7 +308,7 @@ class SolicitudDayOffController extends Controller
     public function respuesta($id)
     {
 
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {
@@ -326,7 +327,7 @@ class SolicitudDayOffController extends Controller
     public function archivo(Request $request)
     {
 
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
         if ($request->ajax()) {
@@ -381,6 +382,7 @@ class SolicitudDayOffController extends Controller
     }
     public function showVistaGlobal($id)
     {
+        abort_if(Gate::denies('reglas_dayoff_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {
@@ -391,6 +393,7 @@ class SolicitudDayOffController extends Controller
     }
     public function showArchivo($id)
     {
+        abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
         if (empty($vacacion)) {

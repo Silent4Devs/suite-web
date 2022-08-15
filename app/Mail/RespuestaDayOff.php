@@ -29,6 +29,6 @@ class RespuestaDayOff extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.Dayoff.aprobacion')->subject('Respuesta de tu solicitud de Day-Off');
+        return $this->view('mails.Dayoff.aprobacion')->subject('Respuesta de tu solicitud de Day-Off')->cc('gestiondetalento@silent4business.com');
     }
 }

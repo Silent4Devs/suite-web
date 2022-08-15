@@ -6,7 +6,7 @@
                 Días Solicitados
             </th>
             <th style="min-width: 80px;">
-               Aniversario
+                Tipo de permiso
             </th>
             <th style="min-width: 75px;">
                 Inicio

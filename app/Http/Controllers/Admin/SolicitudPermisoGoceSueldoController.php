@@ -21,10 +21,10 @@ use Illuminate\Validation\Rules\Exists;
 
 class SolicitudPermisoGoceSueldoController extends Controller
 {
-   
+
     public function index(Request $request)
     {
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
         if ($request->ajax()) {
@@ -64,8 +64,8 @@ class SolicitudPermisoGoceSueldoController extends Controller
             $table->editColumn('aprobacion', function ($row) {
                 return $row->aprobacion ? $row->aprobacion : '';
             });
-            $table->editColumn('año', function ($row) {
-                return $row->año ? $row->año : '';
+            $table->editColumn('permiso', function ($row) {
+                return $row->permiso ? $row->permiso : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -83,20 +83,21 @@ class SolicitudPermisoGoceSueldoController extends Controller
         return view('admin.solicitudGoceSueldo.index', compact('logo_actual', 'empresa_actual'));
     }
 
-   
+
     public function create()
     {
+        abort_if(Gate::denies('solicitud_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new SolicitudPermisoGoceSueldo();
         $autoriza = auth()->user()->empleado->supervisor_id;
         $permisos = PermisosGoceSueldo::get();
 
-        return view('admin.solicitudGoceSueldo.create',compact('vacacion','autoriza','permisos'));
+        return view('admin.solicitudGoceSueldo.create', compact('vacacion', 'autoriza', 'permisos'));
     }
 
-   
+
     public function store(Request $request)
     {
-      
+        abort_if(Gate::denies('solicitud_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'permiso_id' => 'required|int',
             'fecha_inicio' => 'required|date',
@@ -105,18 +106,18 @@ class SolicitudPermisoGoceSueldoController extends Controller
         $supervisor = Empleado::find($request->autoriza);
         $solicitante = Empleado::find($request->empleado_id);
         $solicitud = SolicitudPermisoGoceSueldo::create($request->all());
-        Mail::to($supervisor->email)->send(new MailSolicitudPermisoGoceSueldo( $solicitante,$supervisor,$solicitud));
+        Mail::to($supervisor->email)->send(new MailSolicitudPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
 
         Flash::success('Solicitud creada satisfactoriamente.');
         return redirect()->route('admin.solicitud-permiso-goce-sueldo.index');
     }
 
-    
+
     public function show($id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $vacacion = SolicitudPermisoGoceSueldo::with(['empleado','permiso'])->find($id);
+        $vacacion = SolicitudPermisoGoceSueldo::with(['empleado', 'permiso'])->find($id);
 
         if (empty($vacacion)) {
             Flash::error('Vacación not found');
@@ -126,26 +127,26 @@ class SolicitudPermisoGoceSueldoController extends Controller
         return view('admin.solicitudGoceSueldo.show', compact('vacacion'));
     }
 
-   
+
     public function edit(Request $request, $id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-       
-        $vacacion = SolicitudPermisoGoceSueldo::find($id);
-        if (empty($vacacion)) {
-            Flash::error('Permiso not found');
+        // abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            return redirect(route('admin.solicitud-goce-sueldo.index'));
-        }
-       
-        return view('admin.solicitudGoceSueldo.edit', compact('vacacion'));
+        // $vacacion = SolicitudPermisoGoceSueldo::find($id);
+        // if (empty($vacacion)) {
+        //     Flash::error('Permiso not found');
+
+        //     return redirect(route('admin.solicitud-goce-sueldo.index'));
+        // }
+
+        // return view('admin.solicitudGoceSueldo.edit', compact('vacacion'));
     }
 
-   
+
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-      
+        abort_if(Gate::denies('solicitud_permiso_goce_aprobar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $request->validate([
             'aprobacion' => 'required|int',
         ]);
@@ -154,15 +155,16 @@ class SolicitudPermisoGoceSueldoController extends Controller
         $solicitante = Empleado::find($request->empleado_id);
         $solicitud->update($request->all());
 
-        Mail::to($solicitante->email)->send(new MailRespuestaPermisoGoceSueldo( $solicitante,$supervisor,$solicitud));
+        Mail::to($solicitante->email)->send(new MailRespuestaPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
         Flash::success('Respuesta enviada satisfactoriamente.');
 
         return redirect(route('admin.solicitud-permiso-goce-sueldo.aprobacion'));
     }
 
-    
+
     public function destroy(Request $request)
     {
+        abort_if(Gate::denies('solicitud_goce_sueldo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $id = $request->id;
         $vacaciones = SolicitudPermisoGoceSueldo::find($id);
         $vacaciones->delete();
@@ -172,7 +174,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
     public function aprobacion(Request $request)
     {
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
         if ($request->ajax()) {
@@ -223,7 +225,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
     public function respuesta($id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudPermisoGoceSueldo::with('empleado')->find($id);
         return view('admin.solicitudGoceSueldo.respuesta', compact('vacacion'));
     }
@@ -231,7 +233,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
     public function archivo(Request $request)
     {
 
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
         if ($request->ajax()) {
@@ -286,23 +288,25 @@ class SolicitudPermisoGoceSueldoController extends Controller
     }
     public function showVistaGlobal($id)
     {
+        abort_if(Gate::denies('reglas_goce_sueldo_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudPermisoGoceSueldo::with('empleado')->find($id);
 
         if (empty($vacacion)) {
             Flash::error('Vacación not found');
             return redirect(route('admin.solicitud-vacaciones.index'));
         }
-        return view('admin.solicitudGoceSueldo.vistaGlobal',compact('vacacion'));
+        return view('admin.solicitudGoceSueldo.vistaGlobal', compact('vacacion'));
     }
 
     public function showArchivo($id)
     {
+        abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudPermisoGoceSueldo::with('empleado')->find($id);
 
         if (empty($vacacion)) {
             Flash::error('Vacación not found');
             return redirect(route('admin.solicitud-permiso-goce-sueldo.index'));
         }
-        return view('admin.solicitudGoceSueldo.archivoShow',compact('vacacion'));
+        return view('admin.solicitudGoceSueldo.archivoShow', compact('vacacion'));
     }
 }

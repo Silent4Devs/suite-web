@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-{{ Breadcrumbs::render('Ajustes-permisos-goce-sueldo') }}
+    {{ Breadcrumbs::render('Ajustes-permisos-goce-sueldo') }}
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
@@ -61,7 +61,6 @@
         a:hover {
             text-decoration: none !important;
         }
-
     </style>
     <style>
         .ventana_menu {
@@ -75,13 +74,12 @@
             height: calc(100% - 40px);
 
         }
-
     </style>
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
     <div style="display:flex; justify-content:space-between;">
         <h5 class="titulo_general_funcion">Administración de Permisos con Goce de Sueldo</h5>
-        
+
     </div>
     <div class="card">
         <div class="card-body">
@@ -89,29 +87,31 @@
                 <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel"
                     aria-labelledby="nav-empleados-tab">
                     <ul class="mt-4">
-                        <li>
-                          <a href="permisos-goce-sueldo">
-                              <div>
-                                <i class="fa-solid fa-book"></i>
-                                  <br>
-                                Lineamientos
-                              </div>
-                          </a>
-                      </li>
-                      <li>
-                        <a href="vista-global-permisos-goce-sueldo">
-                            <div>
-                                <i class="fa-solid fa-globe"></i><br>
-                               Vista Global
-                            </div>
-                        </a>
-                    </li>
-                  </ul>
-                  
+                        @can('reglas_goce_sueldo_acceder')
+                            <li>
+                                <a href="permisos-goce-sueldo">
+                                    <div>
+                                        <i class="fa-solid fa-book"></i>
+                                        <br>
+                                        Lineamientos
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('reglas_goce_sueldo_vista_global')
+                            <li>
+                                <a href="vista-global-permisos-goce-sueldo">
+                                    <div>
+                                        <i class="fa-solid fa-globe"></i><br>
+                                        Vista Global
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
-
