@@ -16,7 +16,7 @@ class PermisosGoceSueldoController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('reglas_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = PermisosGoceSueldo::orderByDesc('id')->get();
             $table = datatables()::of($query);
@@ -67,6 +67,7 @@ class PermisosGoceSueldoController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('reglas_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new Vacaciones();
 
         return view('admin.permisosGoceSueldo.create', compact('vacacion'));
@@ -74,6 +75,7 @@ class PermisosGoceSueldoController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('reglas_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string',
             'dias' => 'required|int',
@@ -86,7 +88,7 @@ class PermisosGoceSueldoController extends Controller
 
     public function show($id)
     {
-        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('reglas_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = PermisosGoceSueldo::find($id);
 
         return view('admin.permisosGoceSueldo.show', compact('vacacion'));
@@ -94,7 +96,7 @@ class PermisosGoceSueldoController extends Controller
 
     public function edit($id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('reglas_goce_sueldo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $vacacion = PermisosGoceSueldo::find($id);
         if (empty($vacacion)) {
@@ -108,7 +110,7 @@ class PermisosGoceSueldoController extends Controller
 
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('reglas_goce_sueldo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string',
             'dias' => 'required|int',
@@ -125,6 +127,7 @@ class PermisosGoceSueldoController extends Controller
 
     public function destroy($id)
     {
+        abort_if(Gate::denies('reglas_goce_sueldo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = PermisosGoceSueldo::find($id);
         $vacaciones->delete();
 
@@ -133,7 +136,7 @@ class PermisosGoceSueldoController extends Controller
 
     public function vistaGlobal(Request $request)
     {
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('reglas_goce_sueldo_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
         if ($request->ajax()) {

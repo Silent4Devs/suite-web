@@ -15,7 +15,7 @@ class IncidentesVacacionesController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('incidentes_vacaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = IncidentesVacaciones::with('empleados')->orderByDesc('id')->get();
             $table = datatables()::of($query);
@@ -73,6 +73,7 @@ class IncidentesVacacionesController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('incidentes_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new IncidentesVacaciones();
         $empleados = Empleado::get();
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
@@ -82,7 +83,7 @@ class IncidentesVacacionesController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('incidentes_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string',
             'dias_aplicados' => 'required|int',
@@ -103,7 +104,7 @@ class IncidentesVacacionesController extends Controller
 
     public function show($id)
     {
-        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('incidentes_vacaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = IncidentesVacaciones::with('empleados')->find($id);
 
         return view('admin.incidentesVacaciones.show', compact('vacacion'));
@@ -111,6 +112,7 @@ class IncidentesVacacionesController extends Controller
 
     public function edit($id)
     {
+        abort_if(Gate::denies('incidentes_vacaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
         $vacacion = IncidentesVacaciones::with('empleados')->find($id);
         if (empty($vacacion)) {
@@ -125,7 +127,7 @@ class IncidentesVacacionesController extends Controller
 
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('incidentes_vacaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string',
             'dias_aplicados' => 'required|int',
@@ -148,6 +150,7 @@ class IncidentesVacacionesController extends Controller
 
     public function destroy($id)
     {
+        abort_if(Gate::denies('incidentes_vacaciones_elimiar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = IncidentesVacaciones::find($id);
         $vacaciones->delete();
 
