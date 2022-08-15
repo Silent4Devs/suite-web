@@ -64,8 +64,8 @@ class SolicitudPermisoGoceSueldoController extends Controller
             $table->editColumn('aprobacion', function ($row) {
                 return $row->aprobacion ? $row->aprobacion : '';
             });
-            $table->editColumn('año', function ($row) {
-                return $row->año ? $row->año : '';
+            $table->editColumn('permiso', function ($row) {
+                return $row->permiso ? $row->permiso : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
