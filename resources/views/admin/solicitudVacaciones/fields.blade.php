@@ -32,8 +32,8 @@ if ($dias_pendientes >= 1) {
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #000000">¡IMPORTANTE! ...</p>
                     <p class="m-0" style="font-size: 14px; color:#000000 "> Aún tienes
-                        <strong>{{ $año_pasado }} dia(s) disponible(s)</strong> del <strong>periodo {{$periodo_vencido}} </strong>.<br>
-                        Tienes hasta antes de el <strong>{{$finVacaciones_periodo_pasado}}</strong> para disfrutarlas, de lo contrario se eliminaran automaticamente.
+                        <strong>{{ $año_pasado }} día(s) disponible(s)</strong> del <strong> periodo {{$periodo_vencido}} </strong>.<br>
+                        Tienes hasta antes de él <strong>{{$finVacaciones_periodo_pasado}}</strong> para disfrutarlas, de lo contrario se eliminarán automáticamente..
                     </p>
                     <div class="col-12 pr-5">
                     <a type="button" class="btn btn-dark col-sm-3 offset-10" href="{{ route('admin.solicitud-vacaciones.periodoAdicional') }}">Solicitar ahora</a>
@@ -59,9 +59,9 @@ if ($dias_pendientes >= 1) {
                     </div>
                 </div>
                 <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Importante ...</p>
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">¡IMPORTANTE! ...</p>
                     <p class="m-0" style="font-size: 14px; color:#1E3A8A "> Actualmente tienes
-                        <strong>{{ $dias_pendientes }} dias</strong> en estado de <strong>"Pendientes"</strong>, los
+                        <strong>{{ $dias_pendientes }} días</strong> en estado de <strong>"Pendientes"</strong>, los
                         cuales están descontados y en caso de ser rechazados estos serán reembolsados.
                     </p>
                 </div>
@@ -89,8 +89,7 @@ if ($dias_pendientes >= 1) {
             </div>
             <div class="form-group col-sm-6 ">
                 <fieldset disabled>
-                    <label for="disabledTextInput"><i class="bi bi-calendar2-event-fill iconos-crear"></i>Validos
-                        hasta el:</label>
+                    <label for="disabledTextInput"><i class="bi bi-calendar2-event-fill iconos-crear"></i>Válidos hasta él:</label>
                     <input type="text" id="validos_hasta" class="form-control" value="{{ $finVacaciones }}"
                         style="text-align: center">
                 </fieldset>
