@@ -6,6 +6,31 @@
         margin: 0% !important;
         margin-bottom: 10px !important;
     }
+
+    #primer_semestre {
+        display: none;
+    }
+
+    input[type=checkbox]+.label_calendario {
+        cursor: pointer;
+    }
+
+    .label_calendario::before {
+        content: '';
+        background: transparent;
+        border: 4px solid #FFFF00;
+        border-radius: 25px;
+
+        height: 95px;
+        margin-right: 20px;
+        width: 95px;
+    }
+
+    input[type=checkbox]:checked+.label_calendario::before {
+        content: '✓';
+        background-color: #f4ff00;
+        font-size: 15px;
+    }
 </style>
 @section('content')
     <ol class="breadcrumb">
@@ -390,16 +415,18 @@
             <div class="row">
                 <div class="text-center form-group col-12">
                     <table class="table">
-                        <TR
-                            style="background-color:#FFFF00; color: rgb(0, 0, 0); text-align:center; height:65px; font-size:15px;">
-                            <TH>PRIMER SEMESTRE<br>
+                        <TR style="color: rgb(0, 0, 0); text-align:center; height:65px; font-size:15px;">
+                            <TH><br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input check_calendario" type="checkbox"
+                                        id="primer_semestre">
+                                    <label for="primer_semestre" class="label_calendario">PRIMER SEMESTRE</label>
                                 </div>
                             </TH>
-                            <TH>SEGUNDO SEMESTRE<br>
+                            <TH>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox"  id="segundo_semestre">
+                                    <label for="segundo_semestre" class="label_calendario">SEGUNDO SEMESTRE</label>
                                 </div>
                             </TH>
                         </TR>
@@ -655,99 +682,123 @@
                             <TD>01<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>02<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>03<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>04<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>05<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>06<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>07<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>08<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>09<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>10<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>11<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>12<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>13<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>14<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>15<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>16<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>17<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>18<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>19<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>20<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>21<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>22<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>23<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                             <TD>24<br>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                </div></TD>
+                                </div>
+                            </TD>
                         </TR>
                     </table>
                 </div>
