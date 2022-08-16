@@ -10,6 +10,9 @@
     #primer_semestre {
         display: none;
     }
+    #segundo_semestre {
+        display: none;
+    }
 
     input[type=checkbox]+.label_calendario {
         cursor: pointer;
@@ -18,7 +21,7 @@
     .label_calendario::before {
         content: '';
         background: transparent;
-        border: 4px solid #FFFF00;
+        border: 4px solid #ffffff;
         border-radius: 25px;
 
         height: 95px;
@@ -416,7 +419,7 @@
                 <div class="text-center form-group col-12">
                     <table class="table">
                         <TR style="color: rgb(0, 0, 0); text-align:center; height:65px; font-size:15px;">
-                            <TH><br>
+                            <TH>
                                 <div class="form-check">
                                     <input class="form-check-input check_calendario" type="checkbox"
                                         id="primer_semestre">
