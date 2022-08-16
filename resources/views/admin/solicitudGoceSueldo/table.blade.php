@@ -5,7 +5,7 @@
             <th style="min-width: 110px;">
                 Días Solicitados
             </th>
-            <th style="min-width: 80px;">
+            <th style="min-width: 110px;">
                 Tipo de permiso
             </th>
             <th style="min-width: 75px;">
