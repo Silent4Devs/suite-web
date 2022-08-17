@@ -250,6 +250,10 @@
                                                         <li>
                                                             Días Solicitados: <strong>{{ $solicitud->dias_solicitados }}</strong> 
                                                         </li>
+                                                        <li>
+                                                            Comentarios del solicitante:
+                                                            <strong>{{ $solicitud->descripcion }}</strong>
+                                                        </li>
                                                    
                                                 </ul>  
                                             </p>

@@ -255,7 +255,7 @@
                                                     <strong>{{ $endDate }}</strong>
                                                 </li>
                                                 <li>
-                                                    Comentarios:
+                                                    Comentarios del solicitante:
                                                     <strong>{{ $solicitud->descripcion }}</strong>
                                                 </li>
                                             </ul>
