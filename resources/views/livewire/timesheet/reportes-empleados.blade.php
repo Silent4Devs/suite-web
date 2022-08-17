@@ -139,7 +139,7 @@
     <div class="row print-none" style="margin: 0 !important;">
         <x-loading-indicator />
         <div class="col-md-3 form-group" style="padding-left:0 !important;">
-            <label class="form-label">Área</label>
+            <label class="form-label">Colaboradores del Área: </label>
             <select class="form-control" wire:model="area_id">
                 <option selected value="0">Todas</option>
                 @foreach ($areas as $area)

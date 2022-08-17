@@ -999,8 +999,18 @@ class TimesheetController extends Controller
     {
         $proyecto_id = $request->proyecto_id;
         $tareas_obtenidas = TimesheetTarea::where('proyecto_id', $proyecto_id)->get();
+        $tareas_array = collect();
 
-        return response()->json(['tareas' => $tareas_obtenidas]);
+        foreach ($tareas_obtenidas as $key => $tarea) {
+            if (($tarea->todos == true) || ($tarea->area_id == auth()->user()->empleado->area_id)) {
+                $tareas_array->push([
+                    'id'=>$tarea->id,
+                    'tarea'=>$tarea->tarea,
+                ]);
+            }
+        }
+
+        return response()->json(['tareas' => $tareas_array]);
     }
 
     public function reporteAprobador($id)
