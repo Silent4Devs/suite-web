@@ -90,7 +90,7 @@
                     aria-labelledby="nav-empleados-tab">
                     <ul class="mt-4">
                         <li>
-                          <a href="ajustes-vacaciones">
+                          <a href="reglas_vacaciones_acceder">
                               <div>
                                 <i class="fa-solid fa-users-gear"></i>
                                
@@ -100,7 +100,7 @@
                           </a>
                       </li>
                    
-                      @can('beneficios_acceder')
+                      @can('reglas_dayoff_acceder')
                       <li>
                           <a href="ajustes-dayoff">
                               <div>
@@ -111,7 +111,7 @@
                           </a>
                       </li>
                       @endcan
-                      @can('timesheet_acceder')
+                      @can('reglas_goce_sueldo_acceder')
                       <li>
                           <a href="ajustes-permisos-goce-sueldo">
                               <div>
