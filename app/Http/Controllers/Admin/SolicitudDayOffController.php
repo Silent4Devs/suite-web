@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Mail\RespuestaDayoff as MailRespuestaDayoff;
-use App\Mail\SolicitudDayoff as MailSolicitudDayoff;
+use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
+use App\Mail\SolicitudDayOff as MailSolicitudDayoff;
 use App\Http\Controllers\Controller;
 use App\Models\DayOff;
 use App\Models\Empleado;
