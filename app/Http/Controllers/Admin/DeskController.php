@@ -957,7 +957,7 @@ class DeskController extends Controller
                 ]);
             }
         }
-
+        
         if ($correo_cliente) {
             Mail::to($quejasClientes->correo)->cc($quejasClientes->registro->email)->send(new SeguimientoQuejaClienteEmail($quejasClientes));
         }

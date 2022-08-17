@@ -839,9 +839,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('informacion-documetadas', 'InformacionDocumetadaController');
 
     // Planificacion Controls
+    Route::post('planificacion-controls/firma', 'PlanificacionControlController@guardarFirmaAprobacion')->name('planificacion-controls.firma-aprobacion');
     Route::delete('planificacion-controls/destroy', 'PlanificacionControlController@massDestroy')->name('planificacion-controls.massDestroy');
     Route::resource('planificacion-controls', 'PlanificacionControlController');
-
+    
     // Activos
 
     // Route::post('activos/create', 'ActivosController@create');
@@ -1082,6 +1083,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('analisis-riesgos-menu', 'AnalisisdeRiesgosController@menu')->name('analisis-riesgos.menu');
     Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
     Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
+
+    Route::delete('analisis-impacto/destroy', 'AnalisisdeImpactoController@massDestroy')->name('analisis-impacto.massDestroy');
+    Route::get('analisis-impacto/{id}/edit', 'AnalisisdeImpactoController@edit')->name('analisis-impacto.edit');
+    Route::get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
+    Route::get('getEmployeeData', 'AnalisisdeImpactoController@getEmployeeData')->name('analisis-impacto.getEmployeeData');
+    Route::resource('analisis-impacto', 'AnalisisdeImpactoController')->names([
+        'index' => 'analisis-impacto.index',
+        'create' => 'analisis-impacto.create',
+        'store' => 'analisis-impacto.store',
+        'show' => 'analisis-impacto.show',
+        'update' => 'analisis-impacto.update',
+    ])->except(['edit']);;
+   
 
     //Carta de Aceptación
     // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
