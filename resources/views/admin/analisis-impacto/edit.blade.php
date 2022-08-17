@@ -10,6 +10,7 @@
     #primer_semestre {
         display: none;
     }
+
     #segundo_semestre {
         display: none;
     }
@@ -29,11 +30,11 @@
         width: 95px;
     }
 
-    input[type=checkbox]:checked+.label_calendario::before {
+    /* input[type=checkbox]:checked+.label_calendario::before {
         content: '✓';
         background-color: #f4ff00;
         font-size: 15px;
-    }
+    } */
 </style>
 @section('content')
     <ol class="breadcrumb">
@@ -428,7 +429,7 @@
                             </TH>
                             <TH>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox"  id="segundo_semestre">
+                                    <input class="form-check-input" type="checkbox" id="segundo_semestre">
                                     <label for="segundo_semestre" class="label_calendario">SEGUNDO SEMESTRE</label>
                                 </div>
                             </TH>
@@ -812,6 +813,168 @@
 
 
 
+            <!-- RESPALDOS DE INFORMACIÓN -->
+            <div class="row">
+                <div class="text-center form-group col-12 mt-4"
+                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    TIEMPOS DE RECUPERACIÓN
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    {!! Form::label(
+                        'respaldo_q_20',
+                        '19.	Tiempos de Respaldo (RPO), Recuperación (RTO), Trabajo en Contingencia (WRT) y Máximo Tiempo de Interrupción del Proceso (MTPD)',
+                        ['class' => 'required'],
+                    ) !!}
+
+                </div>
+            </div>
+            <hr>
+            {{-- RPO: --}}
+            <div class="row">
+                <div class="form-group col-sm-2">
+                    <span class="badge badge-secondary mt-4" style="font-size: 21px">RPO:</span>
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_meses', 'Mes(es)') !!}
+                    {!! Form::number('flujo_meses', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_semanas', 'Semana(s)') !!}
+                    {!! Form::number('flujo_semanas', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_dias', 'Día(s)') !!}
+                    {!! Form::number('flujo_dias', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_años', 'Horas(s)') !!}
+                    {!! Form::number('flujo_años', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+
+            </div>
+            <hr>
+            {{-- RTO: --}}
+            <div class="row">
+                <div class="form-group col-sm-2">
+                    <span class="badge badge-secondary mt-4" style="font-size: 21px">RTO:</span>
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_meses', 'Mes(es)') !!}
+                    {!! Form::number('flujo_meses', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_semanas', 'Semana(s)') !!}
+                    {!! Form::number('flujo_semanas', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_dias', 'Día(s)') !!}
+                    {!! Form::number('flujo_dias', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_años', 'Horas(s)') !!}
+                    {!! Form::number('flujo_años', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+            </div>
+            <hr>
+            {{-- WRT: --}}
+            <div class="row">
+                <div class="form-group col-sm-2">
+                    <span class="badge badge-secondary mt-4" style="font-size: 21px">WRT:</span>
+                </div>
+              
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_meses', 'Mes(es)') !!}
+                    {!! Form::number('flujo_meses', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_semanas', 'Semana(s)') !!}
+                    {!! Form::number('flujo_semanas', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_dias', 'Día(s)') !!}
+                    {!! Form::number('flujo_dias', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_años', 'Horas(s)') !!}
+                    {!! Form::number('flujo_años', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+
+            </div>
+            <hr>
+            {{-- WRT: --}}
+            <div class="row">
+                <div class="form-group col-sm-2">
+                    <span class="badge badge-secondary mt-4" style="font-size: 21px">MTPD:</span>
+                </div>
+
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_meses', 'Mes(es)') !!}
+                    {!! Form::number('flujo_meses', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_semanas', 'Semana(s)') !!}
+                    {!! Form::number('flujo_semanas', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_dias', 'Día(s)') !!}
+                    {!! Form::number('flujo_dias', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+                <div class="form-group col-sm-2">
+                    {!! Form::label('flujo_años', 'Horas(s)') !!}
+                    {!! Form::number('flujo_años', null, [
+                        'class' => 'form-control form-control-sm',
+                        'placeholder' => '...',
+                    ]) !!}
+                </div>
+
+            </div>
 
             <!-- RESPALDOS DE INFORMACIÓN -->
             <div class="row">
