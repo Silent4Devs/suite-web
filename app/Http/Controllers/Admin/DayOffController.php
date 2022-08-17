@@ -214,6 +214,6 @@ class DayOffController extends Controller
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.dayoff.solicitudes', compact('logo_actual', 'empresa_actual'));
+        return view('admin.dayOff.solicitudes', compact('logo_actual', 'empresa_actual'));
     }
 }
