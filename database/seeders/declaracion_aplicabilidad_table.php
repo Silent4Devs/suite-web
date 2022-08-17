@@ -14,6 +14,8 @@ class declaracion_aplicabilidad_table extends Seeder
      */
     public function run()
     {
+        DeclaracionAplicabilidad::truncate();
+
         $gapdo = [
              [
                  'control-uno' => 'A5',

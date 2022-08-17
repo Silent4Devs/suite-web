@@ -839,9 +839,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('informacion-documetadas', 'InformacionDocumetadaController');
 
     // Planificacion Controls
+    Route::post('planificacion-controls/firma', 'PlanificacionControlController@guardarFirmaAprobacion')->name('planificacion-controls.firma-aprobacion');
     Route::delete('planificacion-controls/destroy', 'PlanificacionControlController@massDestroy')->name('planificacion-controls.massDestroy');
     Route::resource('planificacion-controls', 'PlanificacionControlController');
-
+    
     // Activos
 
     // Route::post('activos/create', 'ActivosController@create');
