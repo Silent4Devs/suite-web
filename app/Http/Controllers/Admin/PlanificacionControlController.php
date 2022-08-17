@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPlanificacionControlRequest;
 use App\Http\Requests\StorePlanificacionControlRequest;
 use App\Http\Requests\UpdatePlanificacionControlRequest;
+use App\Mail\PlanificacionAceptadaRechazada;
 use App\Mail\PlanificacionSolicitudResponsableAprobador;
 use App\Mail\SolicitudFirmasControlCambios;
 use App\Models\Empleado;
@@ -146,14 +147,14 @@ class PlanificacionControlController extends Controller
         ]);
 
         
-        // Mail::to($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl));
+        Mail::to($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl));
 
 
         // dd($request->all());
         // $planificacionControl = PlanificacionControl::create($request->all());
 
          // Almacenamiento de participantes relacionados
-         if($request->paticipantes){
+         if($request->participantes){
          $this->vincularParticipantes($request, $planificacionControl);
          }
 
@@ -219,8 +220,13 @@ class PlanificacionControlController extends Controller
             'origen_id' => $request->origen_id,
             'descripcion' => $request->descripcion,
             'id_responsable_aprobar'=> $request->id_responsable_aprobar,
-
+            'es_aprobado'=>'pendiente',
+            'comentarios'=>null,
         ]);
+
+        if($planificacionControl->es_aprobado == 'pendiente'){ 
+             Mail::to($planificacionControl->responsableAprobar->email)->cc([$planificacionControl->empleado->email , $planificacionControl->responsable->email])->send(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
+        }
 
         $this->vincularParticipantes($request, $planificacionControl);
 
@@ -266,6 +272,7 @@ class PlanificacionControlController extends Controller
 
     public function guardarFirmaAprobacion(Request $request)
     {
+        // dd($request->all());
         $planificacionControl=PlanificacionControl::find($request->id)->load('responsableAprobar');
         $existsFolderFirmasCartas = Storage::exists('public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_',  $planificacionControl->id));
         if (!$existsFolderFirmasCartas) {
@@ -278,12 +285,8 @@ class PlanificacionControlController extends Controller
             $image = $new_name_image;
             $route = 'public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_',  $planificacionControl->id) . '/' . $new_name_image;
             Storage::put($route, $value);
-            // dd($request->tipo);
-            if($request->aprobado  != null){
-                $planificacionControl->update([
-                    'aprobado'=>$request->aprobado == '1' ? true:false,
-                ]);
-            }
+            // dd($request->aprobado);
+            
             if($request->tipo == 'responsable_aprobador' ){
                 $planificacionControl->update([
                     'firma_'.$request->tipo => $image,
@@ -295,19 +298,30 @@ class PlanificacionControlController extends Controller
     
                 ]);
             }
+            
+            if($planificacionControl->firma_registro){
+                Mail::to($planificacionControl->responsable->email)->cc($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl));
 
-            // if($planificacionControl->firma_registro){
-            //     Mail::to($planificacionControl->responsable->email)->cc($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl));
+            }
 
-            // }
+            if($planificacionControl->firma_registro && $planificacionControl->firma_responsable){
+                Mail::to($planificacionControl->responsableAprobar->email)->cc([$planificacionControl->empleado->email , $planificacionControl->responsable->email])->send(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
 
-            // if($planificacionControl->firma_registro && $planificacionControl->firma_responsable){
-            //     Mail::to($planificacionControl->responsableAprobar->email)->cc([$planificacionControl->empleado->email , $planificacionControl->responsable->email])->send(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
-
-            // }
+            }
             
             
         }
+        // dd($request->aprobado);
+            if($request->aprobado  != null){
+                $planificacionControl->update([
+                    'es_aprobado'=>$request->aprobado == '1' ? 'aprobado':'rechazado',
+                    'comentarios'=>$request->comentarios,
+                ]);
+                Mail::to($planificacionControl->empleado->email)->cc([$planificacionControl->responsableAprobar->email , $planificacionControl->responsable->email])->send(new PlanificacionAceptadaRechazada($planificacionControl));
+
+            }
+            
+
         return response()->json(['success'=>true]);
 
     }
