@@ -32,14 +32,12 @@
                             @livewire('planes-implementacion-select',['planes_seleccionados'=>$accionCorrectiva->planes->pluck('id')->toArray()])
 
                             <div class="pl-0 ml-0 col-2">
-
                                 <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
                                     data-target="#planAccionModal">
 
                                     <i class="mr-1 fas fa-plus-circle"></i> Crear
 
                                 </button>
-
                             </div>
 
                             @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Acciones

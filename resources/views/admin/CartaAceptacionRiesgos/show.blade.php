@@ -179,8 +179,7 @@
                                                         <tr>
                                                             <td colspan="4">
                                                                 <div class="row">
-                                                                    <div class="col-md-12"
-                                                                        style="display: flex;align-items: center;justify-content: center;">
+                                                                    <div class="col-md-12">
                                                                     @if($aprobador->firma == null)
                                                                         <canvas style="background-color:#fff"
                                                                             id="sig-{{ $aprobador->nivel }}-canvas">

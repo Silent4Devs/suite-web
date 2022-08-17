@@ -75,7 +75,9 @@
                         <th>
                             Aprobador
                         </th>
+                        <th>
 
+                        </th>
                     </tr>
 
                 </thead>
@@ -151,7 +153,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "responsableText"
                     }
                 },
                 {
@@ -161,7 +164,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "responsableText"
                     }
                 },
                 {
@@ -172,12 +176,13 @@
                     titleAttr: 'Exportar PDF',
                     orientation: 'landscape',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "responsableText"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
-                        doc.styles.tableHeader.fontSize = 7.5;
-                        doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                        // doc.styles.tableHeader.fontSize = 7.5;
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -187,7 +192,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "responsableText"
                     }
                 },
                 {
@@ -276,6 +282,10 @@
                         data: 'responsable',
                         name: 'responsable',
                         render: function(data, type, row, meta) {
+                            if(type === "responsableText"){
+                                console.log('hola');
+                                return data.name;
+                            }
                             let responsableselect = "";
                             let responsableselects = @json($empleados);
                             //  console.log(row.empleados.declaraciones_responsable);
@@ -290,6 +300,10 @@
                         data: 'aprobador',
                         name: 'aprobador',
                         render: function(data, type, row, meta) {
+                            if(type === "responsableText"){
+                                console.log('hola');
+                                return data.name;
+                            }
                             let aprobadorselect = "";
                             let aprobadoreselects = @json($empleados);
                             aprobadorselect = `
@@ -299,6 +313,13 @@
                                 </select>`;
 
                             return aprobadorselect;
+                        }
+                    },
+                    {
+                        data:'id',
+                        name:'id',
+                        render: function(data, type, row, meta) {
+                            return '';
                         }
                     }
                 ],

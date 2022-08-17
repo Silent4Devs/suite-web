@@ -40,10 +40,8 @@
                             href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
                             name="action">Agregar nuevo</a>
                     @endcan
-                    @can('analisis_de_riesgos_matriz_riesgo_analisis_grafica_show')
-                        <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                            href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
-                    @endcan --}}
+                  
+                    
 
                     {{-- <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
                         href="{{ route('admin.matriz-riesgos.octave') }}?id_analisis={{ $id_matriz }}" type="submit"
