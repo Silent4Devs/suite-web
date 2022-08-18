@@ -332,28 +332,29 @@
                         <div x-show="expanded" x-collapse>
                             <div class="caja_nuevo">
                                 @forelse($aniversarios as $aniversario)
-                                    <div class="nuevo">
-                                        <div class="img_nuevo">
-                                            <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
-                                                class="">
+                                    @if (\Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() > 0)
+                                        <div class="nuevo">
+                                            <div class="img_nuevo">
+                                                <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
+                                                    class="">
+                                            </div>
+                                            <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
+                                            <div class="datos_nuevo">
+                                                <p>{{ $aniversario->puesto }}<br>
+                                                    @if (is_null($aniversario->area->area))
+                                                        No hay Area
+                                                    @else
+                                                        {{ $aniversario->area->area }}
+                                                    @endif
+                                                </p>
+                                                <h6 class="mt-3">Antigüedad</h6>
+                                                <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
+                                                    año(s)
+                                                </span>
+                                            </div>
                                         </div>
-                                        <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
-                                        <div class="datos_nuevo">
-                                            <p>{{ $aniversario->puesto }}<br>
-                                                @if (is_null($aniversario->area->area))
-                                                    No hay Area
-                                                @else
-                                                    {{ $aniversario->area->area }}
-                                                @endif
-                                            </p>
-                                            <h6 class="mt-3">Antigüedad</h6>
-                                            <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
-                                                año(s)
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                @empty
+                                    @endif
+                                 @empty
                                     <div class="nuevo">No hay aniversarios registrados en este mes.</div>
                                 @endforelse
                             </div>
