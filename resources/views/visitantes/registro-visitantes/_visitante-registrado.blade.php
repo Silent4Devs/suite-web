@@ -6,15 +6,23 @@
         </div>
         <div class="mt-3">
             <img src="{{ $visitante['foto'] ? $visitante['foto'] : asset('assets/user.png') }}"
-                style="max-width: 250px;clip-path: circle();" alt="{{ $visitante['nombre'] }}">
+                style="max-width: 250px;clip-path: circle();" alt="{{ $visitante['nombre'] }}" width="150px"
+                height="150px">
         </div>
         <div class="mt-3 rounded border border-2  p-2" style="text-transform: capitalize">
             {{ $visitante['nombre'] }} {{ $visitante['apellidos'] }}
         </div>
-        <div class="mt-3 rounded border border-2  p-2">
-            Dispositivo: {{ $visitante['dispositivo'] ? $visitante['dispositivo'] : 'N/A' }}
-            Serie: {{ $visitante['serie'] ? $visitante['serie'] : 'N/A' }}
-        </div>
+        @if (count($visitante['dispositivos']))
+            <div class="mt-3 rounded border border-2  p-2">
+                <strong>Dispositivos</strong>
+                @foreach ($visitante['dispositivos'] as $item)
+                    <div>
+                        Dispositivo: {{ $item['dispositivo'] ? $item['dispositivo'] : 'N/A' }}
+                        Serie: {{ $item['serie'] ? $item['serie'] : 'N/A' }}
+                    </div>
+                @endforeach
+            </div>
+        @endif
         <div class="mt-3 rounded border border-2  p-2">
             VISITA
             @if ($visitante['tipo_visita'] == 'persona')
@@ -25,6 +33,9 @@
         </div>
         @if ($mostrarQrIngreso)
             <div class="mt-3 rounded border border-2  p-2">
+                <div class="alert alert-primary mb-2" role="alert">
+                    <i class="bi bi-info-circle"></i> <strong>¡Escaneame para registrar tu salida!</strong>
+                </div>
                 {!! QrCode::size(120)->generate($urlQrIngreso) !!}
             </div>
         @endif

@@ -49,9 +49,9 @@ class RegistroVisitantesController extends Controller
         return view('visitantes.registro-visitantes.salida');
     }
 
-    public function registrarSalida(RegistrarVisitante $registrarVisitante)
+    public function registrarSalida($registrarVisitante)
     {
-
-        return view('visitantes.registro-visitantes.salida-registro', compact('registrarVisitante'));
+        $visitante = RegistrarVisitante::where('uuid', $registrarVisitante)->first();
+        return view('visitantes.registro-visitantes.salida-registro', compact('visitante'));
     }
 }

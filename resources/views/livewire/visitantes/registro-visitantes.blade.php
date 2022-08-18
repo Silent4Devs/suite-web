@@ -95,7 +95,9 @@
                                     'visitante' => $registrarVisitante,
                                     'mostrarQrIngreso' => true,
                                     'urlQrIngreso' => route('visitantes.salida.registrar', [
-                                        'registrarVisitante' => $registrarVisitante,
+                                        'registrarVisitante' => $registrarVisitante
+                                            ? $registrarVisitante->uuid
+                                            : null,
                                     ]),
                                     'mostrarQrSalida' => false,
                                     'urlQrSalida' => '',

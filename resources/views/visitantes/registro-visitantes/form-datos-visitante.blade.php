@@ -26,27 +26,48 @@
 
     <div class="col-12">
         <div class="row">
-            <div class="col-6 mb-3">
-                <label for="dispositivo" class="form-label">Dispositivo Eléctrónico</label>
-                <input wire:model.defer="dispositivo" type="text"
-                    class="form-control @error('dispositivo') is-invalid @enderror" id="dispositivo" placeholder="--"
-                    required>
-                @error('dispositivo')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="col-6 mb-3">
-                <label for="serie" class="form-label">No. de Serie o Badge</label>
-                <input wire:model.defer="serie" type="text"
-                    class="form-control @error('serie') is-invalid @enderror" id="serie" placeholder="--" required>
-                @error('serie')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
+            @foreach ($dispositivos as $key => $dispositivo)
+                <div class="col-5 mb-3">
+                    <label for="dispositivo{{ $key }}" class="form-label">Dispositivo Eléctrónico
+                        {{ $key + 1 }}</label>
+                    <input wire:model.defer="dispositivos.{{ $key }}.dispositivo" type="text"
+                        class="form-control @error('dispositivos.' . $key . '.dispositivo') is-invalid @enderror"
+                        id="dispositivo{{ $key }}" placeholder="--" required>
+                    @error('dispositivos.' . $key . '.dispositivo')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col-5 mb-3">
+                    <label for="serie{{ $key }}" class="form-label">No. de Serie o Badge
+                        {{ $key + 1 }}</label>
+                    <input wire:model.defer="dispositivos.{{ $key }}.serie" type="text"
+                        class="form-control @error('dispositivos.' . $key . '.serie') is-invalid @enderror"
+                        id="serie{{ $key }}" placeholder="--" required>
+                    @error('dispositivos.' . $key . '.serie')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col-2 d-flex" style="align-items: center">
+                    @if ($key > 0)
+                        <div wire:click="removeInput({{ $key }})"
+                            class="flex items-center justify-end text-red-600 text-sm w-full cursor-pointer"
+                            style="cursor: pointer;font-size: 26px;display: flex;align-items: center;">
+                            <i class="bi bi-trash"></i>
+                        </div>
+                    @else
+                        <div wire:click="addInput"
+                            class="flex items-center justify-center text-blue-600 text-sm py-4 w-full cursor-pointer"
+                            style="cursor: pointer;font-size: 26px;display: flex;align-items: center;">
+                            <i class="bi bi-plus-circle"></i>
+                        </div>
+                    @endif
+                </div>
+            @endforeach
+
             <div class="col-12">
                 <label for="motivo">Motivo <sup class="text-danger">*</sup></label>
                 <textarea wire:model.defer="motivo" class="form-control @error('motivo') is-invalid @enderror" placeholder="--"

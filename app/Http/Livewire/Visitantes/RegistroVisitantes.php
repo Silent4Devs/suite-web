@@ -5,8 +5,11 @@ namespace App\Http\Livewire\Visitantes;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Visitantes\RegistrarVisitante;
+use App\Models\Visitantes\VisitantesDispositivo;
+use App\Rules\DispositivosVisitantesRule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class RegistroVisitantes extends Component
 {
@@ -16,6 +19,7 @@ class RegistroVisitantes extends Component
     public $empleados;
     public $areas;
     // step 1
+    public $dispositivos;
     public $nombre;
     public $apellidos;
     public $dispositivo;
@@ -43,6 +47,13 @@ class RegistroVisitantes extends Component
 
     public function mount()
     {
+        $this->fill([
+            'dispositivos' => collect([[
+                'dispositivo' => '',
+                'serie' => '',
+            ]]),
+        ]);
+
         $this->empleados = Empleado::alta()->orderBy('name')->get();
         $this->areas = Area::orderBy('area')->get();
     }
@@ -50,6 +61,20 @@ class RegistroVisitantes extends Component
     public function render()
     {
         return view('livewire.visitantes.registro-visitantes');
+    }
+
+    public function addInput()
+    {
+        $this->dispositivos->push([
+            'dispositivo' => '',
+            'serie' => '',
+        ]);
+    }
+
+
+    public function removeInput($key)
+    {
+        $this->dispositivos->pull($key);
     }
 
     public function goToStep($step)
@@ -118,6 +143,7 @@ class RegistroVisitantes extends Component
                 'apellidos' => $this->apellidos,
                 'dispositivo' => $this->dispositivo,
                 'serie' => $this->serie,
+                'dispositivos' => $this->dispositivos,
                 'motivo' => $this->motivo,
                 'foto' => $this->foto,
                 'empleado' => [
@@ -145,6 +171,11 @@ class RegistroVisitantes extends Component
                 'dispositivo' => 'nullable|string|max:255',
                 'serie' => 'nullable|string|max:255',
                 'motivo' => 'required|string',
+                'dispositivos.*.dispositivo' => 'required_unless:dispositivos.*.serie,""',
+                'dispositivos.*.serie' => 'required_unless:dispositivos.*.dispositivo,""',
+            ], [
+                'dispositivos.*.dispositivo.required_unless' => 'El campo dispositivo es requerido si el campo serie no está vacío',
+                'dispositivos.*.serie.required_unless' => 'El campo serie es requerido si el campo dispositivo no está vacío',
             ]);
         } else if ($this->currentStep == 2) {
             $this->validate([
@@ -179,7 +210,19 @@ class RegistroVisitantes extends Component
             'empleado_id' => $this->empleado_id,
             'area_id' => $this->area_id,
             'tipo_visita' => $this->tipo_visita,
+            'uuid' => Str::uuid()
         ]);
+        $registrarDispositivos = true;
+        if ($this->dispositivos->count() == 1) {
+            foreach ($this->dispositivos as $item) {
+                if ($item['dispositivo'] == '' && $item['serie'] == '') {
+                    $registrarDispositivos = false;
+                }
+            }
+        }
+        if ($registrarDispositivos) {
+            $this->registrarDispositivos();
+        }
         $this->alert('success', 'Bien Hecho ' . $this->nombre . ', te has registrado correctamente', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -188,6 +231,16 @@ class RegistroVisitantes extends Component
         $this->emit('guardarRegistroVisitante', $this->registrarVisitante);
     }
 
+    public function registrarDispositivos()
+    {
+        foreach ($this->dispositivos as $dispositivo) {
+            VisitantesDispositivo::create([
+                'registrar_visitante_id' => $this->registrarVisitante->id,
+                'dispositivo' => $dispositivo['dispositivo'],
+                'serie' => $dispositivo['serie'],
+            ]);
+        }
+    }
     public function imprimirCredencial()
     {
         $pdf = \PDF::loadView('visitantes.credencial.index', ['visitante' => $this->registrarVisitante])->output();
