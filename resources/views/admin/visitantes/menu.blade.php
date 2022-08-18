@@ -211,10 +211,10 @@
                                     Aviso de Privacidad
                                 </div>
                             </a></li>
-                        <li><a href="{{ route('admin.visitantes.aviso-privacidad.index') }}">
+                        <li><a href="{{ route('admin.visitantes.cita-textual.index') }}">
                                 <div>
-                                    <i class="bi bi-file-earmark-lock"></i><br>
-                                    Aviso de Privacidad
+                                    <i class="bi bi-quote"></i><br>
+                                    Cita Textual
                                 </div>
                             </a></li>
                         <li><a href="{{ route('admin.visitantes.index') }}">

@@ -9,7 +9,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var avisoPrivacidadVisitantesBtn = document.getElementById('avisoPrivacidadVisitantesBtn');
-            // avisoPrivacidadVisitantesBtn.click();
+            avisoPrivacidadVisitantesBtn.click();
         });
     </script>
 @endsection

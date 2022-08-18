@@ -25,6 +25,7 @@
         background: url({{ asset('assets/camera@2x.png') }}) no-repeat center center;
         border-radius: 10px;
         position: relative;
+        background-size: contain;
         color: black;
     }
 

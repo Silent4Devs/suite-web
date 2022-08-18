@@ -4,15 +4,22 @@ namespace App\Http\Controllers\Visitantes;
 
 use App\Http\Controllers\Controller;
 use App\Models\Organizacion;
-use App\Models\Visitante\RegistrarVisitante;
+use App\Models\Visitantes\RegistrarVisitante;
 use App\Models\Visitantes\AvisoPrivacidadVisitante;
+use App\Models\Visitantes\VisitanteQuote;
 use Illuminate\Http\Request;
 
 class RegistroVisitantesController extends Controller
 {
     public function presentacion()
     {
-        return view('visitantes.registro-visitantes.presentacion');
+        $quote = VisitanteQuote::first();
+        if (VisitanteQuote::count() > 0) {
+            $quote = VisitanteQuote::first();
+        } else {
+            $quote = new VisitanteQuote();
+        }
+        return view('visitantes.registro-visitantes.presentacion', compact('quote'));
     }
     /**
      * Display a listing of the resource.
@@ -40,5 +47,11 @@ class RegistroVisitantesController extends Controller
     {
 
         return view('visitantes.registro-visitantes.salida');
+    }
+
+    public function registrarSalida(RegistrarVisitante $registrarVisitante)
+    {
+
+        return view('visitantes.registro-visitantes.salida-registro', compact('registrarVisitante'));
     }
 }

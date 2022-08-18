@@ -30,14 +30,20 @@ class RegistroVisitantes extends Component
     public $castArea;
     public $tipo_visita = 'persona';
 
+    public $visitanteFake = [];
+    public $registrarVisitante;
     public $showStepOne = true;
     public $showStepTwo = false;
     public $showStepThree = false;
     public $showStepFour = false;
 
+    protected $rules = [
+        'registrarVisitante' => 'nullable'
+    ];
+
     public function mount()
     {
-        $this->empleados = Empleado::alta(-1)->orderBy('name')->get();
+        $this->empleados = Empleado::alta()->orderBy('name')->get();
         $this->areas = Area::orderBy('area')->get();
     }
 
@@ -105,6 +111,27 @@ class RegistroVisitantes extends Component
             $this->showStepTwo = false;
             $this->showStepThree = false;
             $this->showStepFour = true;
+            $castEmpleado = Empleado::with('area')->find($this->empleado_id);
+            $castArea = Area::find($this->area_id);
+            $this->visitanteFake = [
+                'nombre' => $this->nombre,
+                'apellidos' => $this->apellidos,
+                'dispositivo' => $this->dispositivo,
+                'serie' => $this->serie,
+                'motivo' => $this->motivo,
+                'foto' => $this->foto,
+                'empleado' => [
+                    'id' => $this->empleado_id,
+                    'name' => $castEmpleado ? $castEmpleado->name : '',
+                    'area' => $castEmpleado ? $castEmpleado->area->area : '',
+                    'avatar' => $castEmpleado ? $castEmpleado->avatar : ''
+                ],
+                'area' => [
+                    'id' => $this->area_id,
+                    'area' => $castArea ? $castArea->area : '',
+                ],
+                'tipo_visita' => $this->tipo_visita
+            ];
         }
     }
 
@@ -142,7 +169,7 @@ class RegistroVisitantes extends Component
 
     public function guardarRegistroVisitante()
     {
-        $registrarVisitante = RegistrarVisitante::create([
+        $this->registrarVisitante = RegistrarVisitante::create([
             'nombre' => $this->nombre,
             'apellidos' => $this->apellidos,
             'dispositivo' => $this->dispositivo,
@@ -158,6 +185,28 @@ class RegistroVisitantes extends Component
             'timer' => 3000,
             'toast' => true,
         ]);
-        $this->emit('guardarRegistroVisitante', $registrarVisitante);
+        $this->emit('guardarRegistroVisitante', $this->registrarVisitante);
+    }
+
+    public function imprimirCredencial()
+    {
+        $pdf = \PDF::loadView('visitantes.credencial.index', ['visitante' => $this->registrarVisitante])->output();
+        $fileName = 'credencial' . $this->registrarVisitante->nombre . '' . $this->registrarVisitante->apellidos . '.pdf';
+        return response()->streamDownload(
+            function () use ($pdf) {
+                echo ($pdf);
+                $this->alert('success', 'Bien Hecho ' . $this->nombre . ', se ha imprimido correctamente la credencial', [
+                    'position' => 'top-end',
+                    'timer' => 1000,
+                    'toast' => true,
+                ]);
+                $this->emit('imprimirCredencial');
+            },
+            $fileName,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+            ]
+        );
     }
 }

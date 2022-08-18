@@ -81,7 +81,35 @@
                 </div>
             </div>
         </div>
-
+        {{-- MODAL --}}
+        <div class="modal fade" id="visitanteCredencial" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-body p-5">
+                        <div class="m-0 row container justify-content-center">
+                            <div
+                                class="col-8 col-md-12 col-sm-12 col-lg-8 text-center header-text border rounded p-4 border-4">
+                                <h3 style="color: #3086AF">REGISTRADO CON ÉXITO</h3>
+                                @include('visitantes.registro-visitantes._visitante-registrado', [
+                                    'visitante' => $registrarVisitante,
+                                    'mostrarQrIngreso' => true,
+                                    'urlQrIngreso' => route('visitantes.salida.registrar', [
+                                        'registrarVisitante' => $registrarVisitante,
+                                    ]),
+                                    'mostrarQrSalida' => false,
+                                    'urlQrSalida' => '',
+                                ])
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" wire:click.prevent="imprimirCredencial"><i
+                                class="bi bi-printer"></i> Imprimir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -91,14 +119,16 @@
                 window.location.href = "{{ route('visitantes.index') }}";
             });
 
-            // Livewire.on('cameraVisitante', () => {
-            //     document.querySelector('.stop').click();
-            // })
-            Livewire.on('guardarRegistroVisitante', () => {
-
+            Livewire.on('imprimirCredencial', (pdf) => {
                 setTimeout(() => {
                     window.location.href = "{{ route('visitantes.presentacion') }}";
-                }, 3000);
+                }, 1000);
+            })
+
+            Livewire.on('guardarRegistroVisitante', (registrarVisitante) => {
+                //open modal 
+                $('#visitanteCredencial').modal('show');
+
             })
 
             Livewire.on('increaseStepVisitantes', (step) => {
