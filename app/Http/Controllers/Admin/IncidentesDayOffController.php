@@ -68,7 +68,7 @@ class IncidentesDayOffController extends Controller
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.incidentesDayOff.index', compact('logo_actual', 'empresa_actual'));
+        return view('admin.incidentesDayoff.index', compact('logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -78,7 +78,7 @@ class IncidentesDayOffController extends Controller
         $empleados = Empleado::get();
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
 
-        return view('admin.incidentesDayOff.create', compact('vacacion', 'empleados', 'empleados_seleccionados'));
+        return view('admin.incidentesDayoff.create', compact('vacacion', 'empleados', 'empleados_seleccionados'));
     }
 
     public function store(Request $request)
@@ -107,7 +107,7 @@ class IncidentesDayOffController extends Controller
         abort_if(Gate::denies('incidentes_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = IncidentesDayoff::with('empleados')->find($id);
 
-        return view('admin.incidentesDayOff.show', compact('vacacion'));
+        return view('admin.incidentesDayoff.show', compact('vacacion'));
     }
 
     public function edit($id)
@@ -122,7 +122,7 @@ class IncidentesDayOffController extends Controller
         }
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
 
-        return view('admin.incidentesDayOff.edit', compact('vacacion', 'empleados', 'empleados_seleccionados'));
+        return view('admin.incidentesDayoff.edit', compact('vacacion', 'empleados', 'empleados_seleccionados'));
     }
 
     public function update(Request $request, $id)

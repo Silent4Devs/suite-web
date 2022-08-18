@@ -155,6 +155,10 @@ Breadcrumbs::for('admin.analisis-riesgos.menu', function ($trail) {
     $trail->push('Análisis de Riesgos');
     $trail->push('Menú');
 });
+Breadcrumbs::for('admin.analisis-impacto.menu', function ($trail) {
+    $trail->push('Análisis de de Impacto');
+    $trail->push('Menú');
+});
 
 Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
     $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));

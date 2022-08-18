@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-{{ Breadcrumbs::render('Ausencias') }}
+    {{ Breadcrumbs::render('Ausencias') }}
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
@@ -61,7 +61,6 @@
         a:hover {
             text-decoration: none !important;
         }
-
     </style>
     <style>
         .ventana_menu {
@@ -75,13 +74,12 @@
             height: calc(100% - 40px);
 
         }
-
     </style>
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
     <div style="display:flex; justify-content:space-between;">
         <h5 class="titulo_general_funcion">Centro de Administración</h5>
-        
+
     </div>
     <div class="card">
         <div class="card-body">
@@ -89,44 +87,43 @@
                 <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel"
                     aria-labelledby="nav-empleados-tab">
                     <ul class="mt-4">
-                        <li>
-                          <a href="ajustes-vacaciones">
-                              <div>
-                                <i class="fa-solid fa-users-gear"></i>
-                               
-                                  <br>
-                                Ajustes Vacaciones
-                              </div>
-                          </a>
-                      </li>
-                   
-                      @can('beneficios_acceder')
-                      <li>
-                          <a href="ajustes-dayoff">
-                              <div>
-                                <i class="bi bi-gear-fill"></i>
-                                  <br>
-                                 Ajustes Day Off´s
-                              </div>
-                          </a>
-                      </li>
-                      @endcan
-                      @can('timesheet_acceder')
-                      <li>
-                          <a href="ajustes-permisos-goce-sueldo">
-                              <div>
-                                  <i class="fas fa-hand-holding-usd"></i><br>
-                                Ajustes Permisos con goce de sueldo
-                              </div>
-                          </a>
-                      </li>
-                      @endcan
-                  </ul>
-                  
+                        @can('reglas_vacaciones_acceder')
+                            <li>
+                                <a href="ajustes-vacaciones">
+                                    <div>
+                                        <i class="fa-solid fa-users-gear"></i>
+
+                                        <br>
+                                        Ajustes Vacaciones
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('reglas_dayoff_acceder')
+                            <li>
+                                <a href="ajustes-dayoff">
+                                    <div>
+                                        <i class="bi bi-gear-fill"></i>
+                                        <br>
+                                        Ajustes Day Off´s
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('reglas_goce_sueldo_acceder')
+                            <li>
+                                <a href="ajustes-permisos-goce-sueldo">
+                                    <div>
+                                        <i class="fas fa-hand-holding-usd"></i><br>
+                                        Ajustes Permisos con goce de sueldo
+                                    </div>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
-

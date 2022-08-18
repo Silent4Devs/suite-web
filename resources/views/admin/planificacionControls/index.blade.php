@@ -1,112 +1,64 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.planificacion-controls.index') }}
 
 
     <h5 class="col-12 titulo_general_funcion">Planificación y Control</h5>
 
-        <div class="mt-5 card">
+    <div class="mt-5 card">
 
-    @include('partials.flashMessages')
+        @include('partials.flashMessages')
         <div class="card-body datatable-fix">
+            <div class="text-right mb-4 mr-4">
+                <a class="btn btn-danger" class="btn btn-sm btn-success" data-toggle="modal"
+                    data-target="#planAccionModal">Crear Plan de Acción</a>
+            </div>
+            @livewire('plan-implementacion-create', [
+                'referencia' => null,
+                'modulo_origen' => 'Planificacion
+                        Control',
+            ])
             <table class="table table-bordered w-100 datatable-PlanificacionControl">
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            {{ trans('cruds.planificacionControl.fields.id') }}
+                            ID
+                        </th>
+                        <th style="min-width: 110px;">
+                            Fecha de registro
                         </th>
                         <th>
-                            {{ trans('cruds.planificacionControl.fields.activo') }}
+                            Reporta
                         </th>
-                        <th style="min-width: 500px;">
-                            {{ trans('cruds.planificacionControl.fields.descripcion') }}
+                        <th style="min-width: 200px;">
+                            Objetivo
                         </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.dueno') }}
+                        <th style="min-width: 110px;">
+                            Origen
                         </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.vulnerabilidad') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.amenaza') }}
+                        <th style="min-width: 400px;">
+                            Descripción
                         </th>
                         <th>
-                            {{ trans('cruds.planificacionControl.fields.confidencialidad') }}
+                            Responsable
                         </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.integridad') }}
+                        <th style="min-width: 80px; text-align: center !important;">
+                            Fecha inicio
                         </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.disponibilidad') }}
+                        <th style="min-width: 90px; text-align: center !important;">
+                            Fecha termino
                         </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.probabilidad') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.planificacionControl.fields.impacto') }}
-                        </th>
-                        <th>
-                            Nivel&nbsp;del&nbsp;riesgo
+                        <th style="min-width: 140px;">
+                            Criterios aceptación
                         </th>
                         <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
                 </thead>
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -182,43 +134,55 @@
 
             @can('planificacion_y_control_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar planificación y control',
-                url: "{{ route('admin.planificacion-controls.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar planificación y control',
+                    url: "{{ route('admin.planificacion-controls.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan
             @can('planificacion_y_control_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.planificacion-controls.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.planificacion-controls.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -231,52 +195,70 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.planificacion-controls.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'folio_cambio',
+                        name: 'folio_cambio'
                     },
                     {
-                        data: 'activo',
-                        name: 'activo'
+                        data: 'fecha_registro',
+                        name: 'fecha_registro'
+                    },
+                    {
+                        data: 'reporta',
+                        name: 'reporta',
+                        render: function(data, type, row, meta) {
+                            let reportaJson = JSON.parse(row.reporta ? row.reporta : '{}')
+                            if (type === "empleadoText") {
+                                return reportaJson.name;
+                            }
+                            let reporta = "";
+                            if (reportaJson) {
+                                reporta += `
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${reportaJson.avatar}" title="${reportaJson.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            `;
+                            }
+                            return reporta;
+                        }
+                    },
+                    {
+                        data: 'objetivo',
+                        name: 'objetivo'
+                    },
+                    {
+                        data: 'origen',
+                        name: 'origen'
                     },
                     {
                         data: 'descripcion',
                         name: 'descripcion'
                     },
                     {
-                        data: 'id_reviso',
-                        name: 'id_reviso'
+                        data: 'responsable',
+                        name: 'responsable',
+                        render: function(data, type, row, meta) {
+                            let responsableJson = JSON.parse(row.responsable ? row.responsable : '{}')
+                            if (type === "empleadoText") {
+                                return responsableJson.name;
+                            }
+                            let responsable = "";
+                            if (responsableJson) {
+                                responsable += `
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${responsableJson.avatar}" title="${responsableJson.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            `;
+                            }
+                            return responsable;
+                        }
                     },
                     {
-                        data: 'vulnerabilidad',
-                        name: 'vulnerabilidad'
+                        data: 'fecha_inicio',
+                        name: 'fecha_inicio'
                     },
                     {
-                        data: 'amenaza',
-                        name: 'amenaza'
+                        data: 'fecha_termino',
+                        name: 'fecha_termino'
                     },
                     {
-                        data: 'confidencialidad',
-                        name: 'confidencialidad'
-                    },
-                    {
-                        data: 'integridad',
-                        name: 'integridad'
-                    },
-                    {
-                        data: 'disponibilidad',
-                        name: 'disponibilidad'
-                    },
-                    {
-                        data: 'probabilidad',
-                        name: 'probabilidad'
-                    },
-                    {
-                        data: 'impacto',
-                        name: 'impacto'
-                    },
-                    {
-                        data: 'nivelriesgo',
-                        name: 'nivelriesgo'
+                        data: 'criterios',
+                        name: 'criterios'
                     },
                     {
                         data: 'actions',
@@ -302,6 +284,17 @@
             //         .draw()
             // });
         });
+    </script>
 
+    <script type="text/javascript">
+        Livewire.on('planStore', () => {
+
+            $('#planAccionModal').modal('hide');
+
+            $('.modal-backdrop').hide();
+
+            toastr.success('Plan de Acción creado con éxito');
+
+        });
     </script>
 @endsection

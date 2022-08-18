@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+
 use App\Mail\RespuestaVacaciones as MailRespuestaVacaciones;
 use App\Mail\SolicitudVacaciones as MailSolicitudVacaciones;
+
 use App\Models\Empleado;
 use App\Models\IncidentesVacaciones;
 use App\Models\Organizacion;

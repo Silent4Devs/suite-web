@@ -7,15 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 
-/**
- * Class Amenaza.
- * @version August 5, 2021, 6:19 pm UTC
- *
- * @property \Illuminate\Database\Eloquent\Collection $vulnerabilidads
- * @property string $nombre
- * @property string $categoria
- * @property string $descripcion
- */
 class Amenaza extends Model
 {
     use SoftDeletes;

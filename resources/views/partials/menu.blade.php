@@ -375,51 +375,21 @@
                 <a href="{{ route('admin.analisis-riesgos.menu') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/matriz-riesgos') || request()->is('admin/matriz-riesgos*') ? 'active' : '' }}">
                     <i class="bi bi-exclamation-triangle iconos_menu letra_blanca"></i>
-                    <font class="letra_blanca"> Análisis de Riesgos </font>
+                    <font class="letra_blanca"> Análisis de Riesgos (RA) </font>
                 </a>
             </li>
         @endcan
-        {{-- <li
-            class="c-sidebar-nav-dropdown {{ request()->is('admin/matriz-riesgos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-unos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-dos*') ? 'c-show' : '' }} {{ request()->is('admin/gap-tres*') ? 'c-show' : '' }}">
-            <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                <i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
-                <font class="letra_blanca"> Análisis de Riesgos </font>
+        {{-- @can('analisis_de_riesgo_integral_acceder')
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.analisis-impacto.menu') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/matriz-riesgos') || request()->is('admin/matriz-riesgos*') ? 'active' : '' }}">
+                <i class="fas fa-traffic-light iconos_menu letra_blanca"></i>
+                <font class="letra_blanca"> Análisis de Impacto (BIA) </font>
             </a>
-            <ul class="c-sidebar-nav-dropdown-items">
-                <li class="c-sidebar-nav-item">
-                    <a href="{{ route('admin.amenazas.index') }}"
-                        class="c-sidebar-nav-link {{ request()->is('admin/amenazas') || request()->is('admin/amenazas/*') ? 'active' : '' }}">
-                        <i class="fas fa-fire iconos_menu letra_blanca">
-
-                        </i>
-                        <font class="letra_blanca" style="margin-left:11px;"> Amenazas</font>
-                    </a>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <a href="{{ route('admin.vulnerabilidads.index') }}"
-                        class="c-sidebar-nav-link {{ request()->is('admin/vulnerabilidads') || request()->is('admin/vulnerabilidads/*') ? 'active' : '' }}">
-                        <i class="fas fa-shield-alt iconos_menu letra_blanca">
-
-                        </i>
-                        <font class="letra_blanca"> Vulnerabilidades</font>
-                    </a>
-                </li>
-
-                @can('configuracion_procesos_access')
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.analisis-riesgos.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/admin.analisis-riesgos') || request()->is('admin/admin.analisis-riesgos') ? 'active' : '' }}">
-
-                            <i class="fas fa-table iconos_menu letra_blanca">
-
-                            </i>
-                            <font class="letra_blanca">Matríz de Riesgos</font>
-                        </a>
-                    </li>
-                @endcan
-
-            </ul>
-        </li> --}}
+        </li>
+    @endcan
+        --}}
+      
         @can('sistema_de_gestion_acceder')
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') ||
