@@ -100,7 +100,7 @@
         }
 
         .modal-dialog {
-            margin-top: 30px !important;
+            margin-top: 170px !important;
         }
     </style>
     <style>

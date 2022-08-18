@@ -371,7 +371,7 @@
                         <div class="modal-body">
 
                             <label><i class="fas fa-birthday-cake iconos-crear"></i> Envia tus felicitaciones a <strong
-                                    id="nombre_cumple"></strong></label>
+                                    id="nombre_cumple" style="color: #3086AF;"></strong></label>
 
                             <div id="formulario_comentarios"></div>
                             <div style="background-color: rgba(255, 255, 255, 0.1); position:fixed; z-index:99999999; width: 100%; height: 100%; justify-content: center; align-items: center; top: 0; left:0;"
@@ -436,7 +436,7 @@
 
 
 
-                            $('.modal').modal('show');
+                            $('#cumpleaños_comentarios_Modal').modal('show');
                         }
                     });
 
