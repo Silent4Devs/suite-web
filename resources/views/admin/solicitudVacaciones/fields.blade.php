@@ -13,8 +13,6 @@ if ($dias_pendientes >= 1) {
     $leyenda_dias_pendientes = false;
 }
 
-
-
 @endphp
 
 {{-- Leyenda dias Pendientes año pasado --}}
@@ -32,12 +30,15 @@ if ($dias_pendientes >= 1) {
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #000000">¡IMPORTANTE! ...</p>
                     <p class="m-0" style="font-size: 14px; color:#000000 "> Aún tienes
-                        <strong>{{ $año_pasado }} día(s) disponible(s)</strong> del <strong> periodo {{$periodo_vencido}} </strong>.<br>
-                        Tienes hasta antes de él <strong>{{$finVacaciones_periodo_pasado}}</strong> para disfrutarlas, de lo contrario se eliminarán automáticamente..
+                        <strong>{{ $año_pasado }} día(s) disponible(s)</strong> del <strong> periodo
+                            {{ $periodo_vencido }} </strong>.<br>
+                        Tienes hasta antes de él <strong>{{ $finVacaciones_periodo_pasado }}</strong> para disfrutarlas,
+                        de lo contrario se eliminarán automáticamente..
                     </p>
                     <div class="col-12 pr-5">
-                    <a type="button" class="btn btn-dark col-sm-3 offset-10" href="{{ route('admin.solicitud-vacaciones.periodoAdicional') }}">Solicitar ahora</a>
-                </div>
+                        <a type="button" class="btn btn-dark col-sm-3 offset-10"
+                            href="{{ route('admin.solicitud-vacaciones.periodoAdicional') }}">Solicitar ahora</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,7 +90,8 @@ if ($dias_pendientes >= 1) {
             </div>
             <div class="form-group col-sm-6 ">
                 <fieldset disabled>
-                    <label for="disabledTextInput"><i class="bi bi-calendar2-event-fill iconos-crear"></i>Válidos hasta él:</label>
+                    <label for="disabledTextInput"><i class="bi bi-calendar2-event-fill iconos-crear"></i>Válidos hasta
+                        él:</label>
                     <input type="text" id="validos_hasta" class="form-control" value="{{ $finVacaciones }}"
                         style="text-align: center">
                 </fieldset>
@@ -138,6 +140,8 @@ if ($dias_pendientes >= 1) {
                 @enderror
             </div>
         </div>
+
+        <x-loading-indicator/>
         <!-- Descripcion Field -->
         <div class="row">
             <div class="form-group col-sm-12">
@@ -155,7 +159,7 @@ if ($dias_pendientes >= 1) {
         <!-- Submit Field -->
         <div class="text-right form-group col-12">
             <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-            <button class="btn btn-danger" type="submit">
+            <button class="btn btn-danger" id="enviar" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>
@@ -173,7 +177,8 @@ if ($dias_pendientes >= 1) {
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Lo sentimos...</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">"Aún no cuentas con días de vacaciones, su
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">"Aún no cuentas con días de vacaciones,
+                        su
                         fecha de ingreso es el <b>{{ $no_vacaciones }}</b>, por política debes de cumplir un año en
                         <b>
                             {{ $organizacion->empresa }} </b>para poder gozar de este beneficio"</b>
@@ -261,7 +266,7 @@ if ($dias_pendientes >= 1) {
                 let startDate = new Date(fecha2);
                 let endDate = new Date(fecha1);
                 dias = getBusinessDatesCount(startDate, endDate);
-                dias = dias == 0 ? NaN:dias;
+                dias = dias == 0 ? NaN : dias;
 
             } else {
                 var aFecha1 = fecha1.split('-');
@@ -269,11 +274,11 @@ if ($dias_pendientes >= 1) {
                 var fFecha1 = Date.UTC(aFecha1[0], aFecha1[1] - 1, aFecha1[2]);
                 var fFecha2 = Date.UTC(aFecha2[0], aFecha2[1] - 1, aFecha2[2]);
                 var dif = fFecha2 - fFecha1;
-               dias = Math.floor((dif / (24 * 60 * 60 * 1000)) * (-1)+ 1);
-              
-                
+                dias = Math.floor((dif / (24 * 60 * 60 * 1000)) * (-1) + 1);
+
+
             }
-         
+
 
             if (!isNaN(dias)) {
                 if (dias > 0) {
@@ -302,7 +307,7 @@ if ($dias_pendientes >= 1) {
                 let startDate = new Date(fecha2);
                 let endDate = new Date(fecha1);
                 dias = getBusinessDatesCount(startDate, endDate);
-              
+
 
             } else {
 
@@ -311,7 +316,7 @@ if ($dias_pendientes >= 1) {
                 var fFecha1 = Date.UTC(aFecha1[0], aFecha1[1] - 1, aFecha1[2]);
                 var fFecha2 = Date.UTC(aFecha2[0], aFecha2[1] - 1, aFecha2[2]);
                 var dif = fFecha2 - fFecha1;
-                dias = Math.floor((dif / (24 * 60 * 60 * 1000)) * (-1)+1);
+                dias = Math.floor((dif / (24 * 60 * 60 * 1000)) * (-1) + 1);
             }
             console.log(dias);
             if (!isNaN(dias)) {
@@ -330,6 +335,9 @@ if ($dias_pendientes >= 1) {
                     document.getElementById("fecha_fin").value = "";
                 }
             }
+        })
+        document.getElementById('enviar').addEventListener('click', (e) => {
+            document.getElementById('loaderComponent').style.display = 'block';
         })
     </script>
 @endsection
