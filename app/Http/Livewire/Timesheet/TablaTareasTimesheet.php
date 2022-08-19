@@ -35,6 +35,8 @@ class TablaTareasTimesheet extends Component
     public function updateProyecto($value)
     {
         $this->proyecto_filtro = $value;
+
+        $this->emit('updateProyecto');
     }
 
     public function render()
