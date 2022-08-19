@@ -851,17 +851,7 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('analisis_de_riesgo_integral_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'controles_id' => 'required',
-            // 'identificador' =>'required|email|unique:users,email,NULL,id,deleted_at,NULL'
-            // 'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,'.$matrizRiesgo.',deleted_at,NULL',
-            // 'identificador'=>'required|unique:matriz_riesgos_sistema_gestion,identificador,NULL,deleted_at,NULL'
-            'identificador' => 'required|string|',
-
-
-
-            // 'identificador' => ['required', Rule::unique('matriz_riesgos_sistema_gestion')->whereNull('deleted_at')]
-
-        ],[
-            'identificador.unique'=>'El identificador ya está en uso'
+            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador,'.$matrizRiesgo.',id,deleted_at,NULL',
         ]);
 
         // dd($matrizRiesgo);
