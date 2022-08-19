@@ -335,7 +335,7 @@ class ReportesEmpleados extends Component
                 'puesto' => $empleado_list->puesto,
                 'times_atrasados' => $times_atrasados,
                 'times_faltantes' => $this->times_faltantes_empleado,
-                'fecha_alta_baja' => $empleado_list->estatus == 'alta' ? Carbon::parse($empleado_list->fecha_ingreso)->format('d/m/Y') : Carbon::parse($empleado_list->fecha_baja)->format('d/m/Y'),
+                'fecha_alta_baja' => $empleado_list->estatus == 'alta' ? Carbon::parse($empleado_list->fecha_ingreso)->format('d/m/Y') : ($empleado_list->fecha_baja==null ? 'Fecha no registrada' : Carbon::parse($empleado_list->fecha_baja)->format('d/m/Y')),
                 'calendario' => $calendario_tabla_empleado,
             ]);
         }
