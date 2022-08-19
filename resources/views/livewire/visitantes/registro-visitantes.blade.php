@@ -1,4 +1,4 @@
-<div style="background: #f1f1f1;">
+<div style="background: #f1f1f1;zoom: 80%">
     @include('visitantes.registro-visitantes.estilos-camara')
     @include('visitantes.registro-visitantes.estilos-stepper')
     <x-loading-indicator />
@@ -82,8 +82,8 @@
             </div>
         </div>
         {{-- MODAL --}}
-        <div class="modal fade" id="visitanteCredencial" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div wire:ignore.self class="modal fade" id="visitanteCredencial" data-bs-backdrop="static"
+            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-body p-5">
@@ -91,17 +91,19 @@
                             <div
                                 class="col-8 col-md-12 col-sm-12 col-lg-8 text-center header-text border rounded p-4 border-4">
                                 <h3 style="color: #3086AF">REGISTRADO CON ÉXITO</h3>
-                                @include('visitantes.registro-visitantes._visitante-registrado', [
-                                    'visitante' => $registrarVisitante,
-                                    'mostrarQrIngreso' => true,
-                                    'urlQrIngreso' => route('visitantes.salida.registrar', [
-                                        'registrarVisitante' => $registrarVisitante
-                                            ? $registrarVisitante->uuid
-                                            : null,
-                                    ]),
-                                    'mostrarQrSalida' => false,
-                                    'urlQrSalida' => '',
-                                ])
+                                <div id="credencialVisitante" class="border border-4 rounded">
+                                    @include('visitantes.registro-visitantes._visitante-registrado', [
+                                        'visitante' => $registrarVisitante,
+                                        'mostrarQrIngreso' => true,
+                                        'urlQrIngreso' => route('visitantes.salida.registrar', [
+                                            'registrarVisitante' => $registrarVisitante
+                                                ? $registrarVisitante->uuid
+                                                : null,
+                                        ]),
+                                        'mostrarQrSalida' => false,
+                                        'urlQrSalida' => '',
+                                    ])
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -121,11 +123,18 @@
                 window.location.href = "{{ route('visitantes.index') }}";
             });
 
-            Livewire.on('imprimirCredencial', (pdf) => {
+            Livewire.on('imprimirCredencialSelf', (pdf) => {
+                html2canvas(document.querySelector("#credencialVisitante")).then(canvas => {
+                    let imgData = canvas.toDataURL('image/png');
+                    @this.emit('imprimirCredencialImage', imgData);
+                });
+            });
+
+            Livewire.on('credencialImpresa', (pdf) => {
                 setTimeout(() => {
                     window.location.href = "{{ route('visitantes.presentacion') }}";
                 }, 1000);
-            })
+            });
 
             Livewire.on('guardarRegistroVisitante', (registrarVisitante) => {
                 //open modal 

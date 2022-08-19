@@ -5,8 +5,8 @@
  </button>
 
  <!-- Modal -->
- <div class="modal fade" id="avisoPrivacidadVisitantesModal" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+ <div style="zoom: 70%" class="modal fade" id="avisoPrivacidadVisitantesModal" data-bs-backdrop="static"
+     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
          <div class="modal-content">
              <div class="text-center p-3">

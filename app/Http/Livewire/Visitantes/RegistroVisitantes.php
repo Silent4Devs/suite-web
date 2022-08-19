@@ -45,6 +45,8 @@ class RegistroVisitantes extends Component
         'registrarVisitante' => 'nullable'
     ];
 
+    protected $listeners = ['imprimirCredencialImage'];
+
     public function mount()
     {
         $this->fill([
@@ -243,8 +245,13 @@ class RegistroVisitantes extends Component
     }
     public function imprimirCredencial()
     {
-        $pdf = \PDF::loadView('visitantes.credencial.index', ['visitante' => $this->registrarVisitante])->output();
-        $fileName = 'credencial' . $this->registrarVisitante->nombre . '' . $this->registrarVisitante->apellidos . '.pdf';
+        $this->emit('imprimirCredencialSelf');
+    }
+
+    public function imprimirCredencialImage($dataImage)
+    {
+        $pdf = \PDF::loadView('visitantes.credencial.index', ['credencial' => $dataImage])->output();
+        $fileName = 'Credencial de ' . $this->registrarVisitante->nombre . ' ' . $this->registrarVisitante->apellidos . '.pdf';
         return response()->streamDownload(
             function () use ($pdf) {
                 echo ($pdf);
@@ -253,7 +260,7 @@ class RegistroVisitantes extends Component
                     'timer' => 1000,
                     'toast' => true,
                 ]);
-                $this->emit('imprimirCredencial');
+                $this->emit('credencialImpresa');
             },
             $fileName,
             [
