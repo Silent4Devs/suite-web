@@ -52,6 +52,8 @@
     </div>
 
 </div>
+<x-loading-indicator/>
+
 
 <!-- Descripcion Field -->
 <div class="row">
@@ -68,7 +70,7 @@
 <!-- Submit Field -->
 <div class="text-right form-group col-12">
     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-    <button class="btn btn-danger" type="submit">
+    <button class="btn btn-danger" id="enviar"  type="submit">
         {{ trans('global.save') }}
     </button>
 </div>
@@ -103,6 +105,9 @@
                 let sumar_dias = sumarDias(d, dias - 1);
                 document.getElementById('fecha_fin').value = sumar_dias;
 
+            })
+            document.getElementById('enviar').addEventListener('click',(e)=>{
+                document.getElementById('loaderComponent').style.display='block';
             })
         })
     </script>
