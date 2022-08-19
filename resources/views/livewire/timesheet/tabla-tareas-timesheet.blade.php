@@ -187,7 +187,7 @@
                 tablaLivewire('tabla_time_tareas');
             });
 
-            document.getElementById('tarea_name').addEventListener('keyup', (e) => {
+            document.getElementById('tarea_name')?.addEventListener('keyup', (e) => {
                 let value = e.target.value;
                 @this.set('tarea_name', value, true);
             });
@@ -197,18 +197,18 @@
                 @this.llenarAreas(proyecto_id);
             });
 
-            document.querySelector('#areas_select').addEventListener('change', (e) => {
+            document.querySelector('#areas_select')?.addEventListener('change', (e) => {
                 let value = e.target.value;
                 @this.set('area_select', value, true);
             });
 
-            document.querySelector('#proyecto_filtro').addEventListener('change', (e) => {
+            document.querySelector('#proyecto_filtro')?.addEventListener('change', (e) => {
                 let value = e.target.value;
                 @this.updateProyecto(value);
             });
 
             // edit dentro de tabla ----------------------------------------
-            document.querySelector('.tabla_time_tareas').addEventListener('change', (e) => {
+            document.querySelector('.tabla_time_tareas')?.addEventListener('change', (e) => {
                 if (e.target.getAttribute('data-type') == 'change') {
                     let elemento = e.target;
                     let id = elemento.getAttribute('data-id');
