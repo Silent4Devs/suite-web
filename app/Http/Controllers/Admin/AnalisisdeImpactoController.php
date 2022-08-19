@@ -5,12 +5,11 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\AnalisisImpacto;
 use App\Models\Organizacion;
-
-use Yajra\DataTables\Facades\DataTables;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisdeImpactoController extends Controller
 {
@@ -75,7 +74,6 @@ class AnalisisdeImpactoController extends Controller
                 return $row->nombre_proceso ? $row->nombre_proceso : '';
             });
 
-
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
@@ -92,13 +90,12 @@ class AnalisisdeImpactoController extends Controller
         return view('admin.analisis-impacto.index', compact('logo_actual', 'empresa_actual'));
     }
 
-
     public function create()
     {
         $cuestionario = new AnalisisImpacto();
+
         return view('admin.analisis-impacto.create', compact('cuestionario'));
     }
-
 
     public function store(Request $request)
     {
@@ -116,12 +113,10 @@ class AnalisisdeImpactoController extends Controller
 
         $cuestionario = AnalisisImpacto::create($request->all());
 
-
         // Flash::success('Cuestionario añadido satisfactoriamente.');
 
-        return redirect()->route('admin.analisis-impacto.edit',['id' => $cuestionario]);
+        return redirect()->route('admin.analisis-impacto.edit', ['id' => $cuestionario]);
     }
-
 
     public function show($id)
     {
@@ -131,37 +126,33 @@ class AnalisisdeImpactoController extends Controller
         return view('admin.analisis-impacto.show', compact('cuestionario'));
     }
 
-
-    public function edit(Request $request,$id)
+    public function edit(Request $request, $id)
     {
         abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-      
+
         $cuestionario = AnalisisImpacto::find($id);
         // dd($cuestionario);
-       
+
         if (empty($cuestionario)) {
             Flash::error('Cuestionario no encontrado');
 
             return redirect(route('admin.analisis-impacto.index'));
         }
-       
+
         return view('admin.analisis-impacto.edit', ['id' => $cuestionario], compact('cuestionario'));
     }
-
 
     public function update(Request $request, $id)
     {
         abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-      
+
         $cuestionario = AnalisisImpacto::find($id);
         $cuestionario->update($request->all());
-    
 
         Flash::success('Cuestionario actualizado correctamente.');
 
         return redirect(route('admin.analisis-impacto.index'));
     }
-
 
     public function destroy($id)
     {

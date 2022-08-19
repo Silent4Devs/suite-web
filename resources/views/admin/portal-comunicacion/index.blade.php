@@ -99,6 +99,9 @@
             color: #1040dd;
         }
 
+        .modal-dialog {
+            margin-top: 170px !important;
+        }
     </style>
     <style>
         .c_main,
@@ -418,8 +421,12 @@
             display: none !important;
         }
 
-        .modal-dialog {
-            margin-top: 200px !important;
+        .carrusel-modal .modal-dialog {
+            margin-top: 30px !important;
+        }
+
+        .carousel-indicators{
+            z-index: 5 !important;
         }
 
     </style>
@@ -522,7 +529,7 @@
 
                         {{-- modal carrusel --}}
                         @foreach($comunicacionSgis_carrusel as $idx=>$carrusel)
-                            <div class="modal fade" id="comunicado_carrusel_modal{{$idx}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade carrusel-modal" id="comunicado_carrusel_modal{{$idx}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                               <div class="modal-dialog" role="document" style="max-width: 75% !important;">
                                 <div class="modal-content">
                                   <div class="modal-body">

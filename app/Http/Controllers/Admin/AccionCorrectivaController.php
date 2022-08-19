@@ -6,7 +6,6 @@ use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
-use App\Http\Requests\UpdateAccionCorrectivaRequest;
 use App\Mail\AprobacionAccionCorrectivaEmail;
 use App\Models\AccionCorrectiva;
 use App\Models\ActividadAccionCorrectiva;
