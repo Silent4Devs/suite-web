@@ -246,6 +246,24 @@
                     }
                 });
             });
+
+            Livewire.on('updateProyecto', (tarea) => {
+                document.querySelector('.tabla_time_tareas').addEventListener('change', (e) => {
+                    if (e.target.getAttribute('data-type') == 'change') {
+                        let elemento = e.target;
+                        let id = elemento.getAttribute('data-id');
+                        let value = elemento.value;
+                        @this.actualizarNameTarea(id, value);
+                    }
+
+                    if (e.target.getAttribute('data-type') == 'changeArea') {
+                        let elemento = e.target;
+                        let id = elemento.getAttribute('data-id');
+                        let value = elemento.value;
+                        @this.actualizarAreaTarea(id, value);
+                    }
+                });
+            });
         });
     </script>
 </div>
