@@ -60,7 +60,7 @@ if ($dias_pendientes >= 1) {
                 <fieldset disabled>
                     <label for="disabledTextInput"><i class="bi bi-calendar2-event-fill iconos-crear"></i>Válidos hasta él:</label>
                     <input type="text" id="validos_hasta" class="form-control"
-                        value="31-12-{{ $año_limite }}" style="text-align: center">
+                        value="31-12-{{ $año }}" style="text-align: center">
                 </fieldset>
 
             </div>
