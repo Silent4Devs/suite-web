@@ -224,11 +224,18 @@ class PlanificacionControlController extends Controller
             'comentarios'=>null,
         ]);
 
+        // dd($planificacionControl);
+
         if($planificacionControl->es_aprobado == 'pendiente'){ 
              Mail::to($planificacionControl->responsableAprobar->email)->cc([$planificacionControl->empleado->email , $planificacionControl->responsable->email])->send(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
         }
 
-        $this->vincularParticipantes($request, $planificacionControl);
+        if($request->participantes){
+            $this->vincularParticipantes($request, $planificacionControl);
+            }
+
+                    // dd($request->all());
+
 
         return redirect()->route('admin.planificacion-controls.index')->with('success', 'Editado con éxito');
     }
