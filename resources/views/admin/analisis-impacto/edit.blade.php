@@ -822,6 +822,11 @@
             </div>
             <div class="row">
                 <div class="form-group col-sm-12">
+                    <a id="btnAgregarTipo" onclick="event.preventDefault();"
+                        style="font-size:12pt; float: right;"data-toggle="modal" data-target="#tiempos_recuperacion"
+                        data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
+                            class="fas fa-info-circle"></i></a>
+                    </a>
                     {!! Form::label(
                         'respaldo_q_20',
                         '19.	Tiempos de Respaldo (RPO), Recuperación (RTO), Trabajo en Contingencia (WRT) y Máximo Tiempo de Interrupción del Proceso (MTPD)',
@@ -907,7 +912,7 @@
                 <div class="form-group col-sm-2">
                     <span class="badge badge-secondary mt-4" style="font-size: 21px">WRT:</span>
                 </div>
-              
+
                 <div class="form-group col-sm-2">
                     {!! Form::label('flujo_meses', 'Mes(es)') !!}
                     {!! Form::number('flujo_meses', null, [
@@ -1045,9 +1050,13 @@
             </div>
             <div class="row">
                 <div class="form-group col-sm-12">
+                    <a id="btnAgregarTipo" onclick="event.preventDefault();"
+                        style="font-size:12pt; float: right;"data-toggle="modal"
+                        data-target="#probabilidad_incidentes_disruptivos" data-whatever="@mdo" data-whatever="@mdo"
+                        title="Dar click"><i class="fas fa-info-circle"></i></a>
+                    </a>
                     <label>24. Por favor, indique los tipos de incidentes en los que el proceso se ha visto interrumpido y
                         aproximadamente cada cuando ha ocurrido.</label>
-
                 </div>
                 <hr>
                 {{-- PROBABILIDAD DE INCIDENTES DISRUPTIVOS --}}
@@ -1253,7 +1262,13 @@
                 <hr>
 
 
-                <label class="col-sm-6 col-form-label">Afectación operacional (IO)</label>
+                <label class="col-sm-6 col-form-label">
+                    <a id="btnAgregarTipo" onclick="event.preventDefault();"
+                        style="font-size:12pt; float: right;"data-toggle="modal" data-target="#afectacion_operacional"
+                        data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
+                            class="fas fa-info-circle"></i></a>
+                    Afectación operacional (IO) </label>
+
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
                         name="operacion_q_1" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_1) }}">
@@ -1268,7 +1283,12 @@
                 </div>
                 <hr>
 
-                <label class="col-sm-6 col-form-label">Impacto Regulatorio (IR)</label>
+                <label class="col-sm-6 col-form-label">
+                    <a id="btnAgregarTipo" onclick="event.preventDefault();"
+                        style="font-size:12pt; float: right;"data-toggle="modal" data-target="#impacto_regulatorio"
+                        data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
+                            class="fas fa-info-circle"></i></a>
+                    Impacto Regulatorio (IR)</label>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
                         name="regulatorio_q_1" placeholder="..."
@@ -1286,7 +1306,12 @@
                 </div>
                 <hr>
 
-                <label class="col-sm-6 col-form-label">Afectación en la Reputación / Imagen Pública o Política
+                <label class="col-sm-6 col-form-label">
+                    <a id="btnAgregarTipo" onclick="event.preventDefault();"
+                        style="font-size:12pt; float: right;"data-toggle="modal" data-target="#afectacion_reputacion"
+                        data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
+                            class="fas fa-info-circle"></i></a>
+                    Afectación en la Reputación / Imagen Pública o Política
                     (IIR)</label>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
@@ -1305,7 +1330,12 @@
                 </div>
                 <hr>
 
-                <label class="col-sm-6 col-form-label">Impacto Social (IS)</label>
+                <label class="col-sm-6 col-form-label">
+                    <a id="btnAgregarTipo" onclick="event.preventDefault();"
+                        style="font-size:12pt; float: right;"data-toggle="modal" data-target="#afectacion_operacional"
+                        data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
+                            class="fas fa-info-circle"></i></a>
+                    Impacto Social (IS)</label>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
                         name="social_q_1" placeholder="..." value="{{ old('meta', $cuestionario->social_q_1) }}">
@@ -1350,6 +1380,300 @@
             </div>
 
 
+
+            {{-- Modales --}}
+
+            {{-- PROBABILIDAD DE INCIDENTES DISRUPTIVOS --}}
+            <div class="modal fade" id="probabilidad_incidentes_disruptivos" tabindex="-1"
+                aria-labelledby="probabilidad_incidentes_disruptivos" aria-hidden="true">
+                <div class="modal-dialog  modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Detalle de la probabilidad de
+                                los incidentes disruptivos </h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color:rgb(238, 238, 238);">
+                                    <strong class="text-center">Nivel de Probabilidad</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Descripción</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:60px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color:#FF0000;">
+                                    <strong style="color:#fff" class="text-center">5-Casi Cierto</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Cuenta con antecedentes de ocurrencia frecuentes; es más
+                                        probable que se presente a que no. Existen muchos factores y condiciones que
+                                        propician su ocurrencia. <strong>(Cada semana).</strong> </span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:60px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: #FFC000;">
+                                    <strong style="color:#fff" class="text-center">4-Muy probable</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Cuenta con antecedentes de ocurrencia; es más probable
+                                        que se presente a que no. Existen factores y condiciones que propician su
+                                        ocurrencia. <strong>(Cada mes).</strong></span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:60px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color: yellow">
+                                    <strong style="color:black class="text-center">3-Probable</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">Cuenta con antecedentes, pero su ocurrencia ha sido
+                                        ocasional; Es igual de probable se presente. Las condiciones son medianamente
+                                        favorables para permitir su ocurrencia.<strong>(cada 3 meses).</strong></span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:70px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color:#00B050;">
+                                    <strong style="color:#fff" class="text-center">2-Poco Probable</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">No se tienen antecedentes de ocurrencia recientes o
+                                        Cuenta con antecedentes, pero su ocurrencia ha sido ocasional; Es igual de probable
+                                        se presente o no se presente. Las condiciones son mínimamente favorables para
+                                        permitir su ocurrencia.<strong>(cada 6 meses).</strong> </span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:70px; border-bottom: 1px solid #ccc;">
+                                <div class="col-4" style="background-color:#92D050;">
+                                    <strong style="color:#fff" class="text-center">1-Remoto</strong>
+                                </div>
+                                <div class="col-8">
+                                    <span style="justify-content;">No se tienen antecedentes de ocurrencia. Es probable que
+                                        no se presente (no se cuenta con elementos para determinar si es más probable que
+                                        suceda o que no suceda). Las condiciones son mínimamente favorables para permitir su
+                                        ocurrencia.<strong>(cada año).</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- TIEMPOS DE RECUPERACIÓN --}}
+            <div class="modal fade" id="tiempos_recuperacion" tabindex="-1" aria-labelledby="tiempos_recuperacion"
+                aria-hidden="true">
+                <div class="modal-dialog  modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Definiciones:</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-2" style="background-color:rgb(238, 238, 238);">
+                                    <strong class="text-center">Concepto</strong>
+                                </div>
+                                <div class="col-10" style="background-color:rgb(238, 238, 238);">
+                                    <span style="justify-content;">Descripción</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:60px; border-bottom: 1px solid #ccc;">
+                                <div class="col-2" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">RPO:</strong>
+                                </div>
+                                <div class="col-10">
+                                    <span style="justify-content;"><u>Punto Objetivo de Recuperación</u> <i>(Recovery Point
+                                            Objective)</i>, es la cantidad de información expresada en tiempo que podría
+                                        perderse en caso de una interrupción del proceso sin que esta pérdida genere un
+                                        impacto significativo.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:60px; border-bottom: 1px solid #ccc;">
+                                <div class="col-2" style="background-color: #c9c7c2;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">RTO:</strong>
+                                </div>
+                                <div class="col-10">
+                                    <span style="justify-content;"><u>Tiempo Objetivo de Recuperación</u> <i>(Recovery Time
+                                            Objective)</i>, es el tiempo en el que los procesos deben ser recuperados antes
+                                        de generar un impacto relevante a la institución.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:75px; border-bottom: 1px solid #ccc;">
+                                <div class="col-2" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">WRT:</strong>
+                                </div>
+                                <div class="col-10">
+                                    <span style="justify-content;"><u>Tiempo de Trabajo en Recuperación </u> <i>(Work
+                                            Recovery Time)</i>, es la cantidad de tiempo en el que los procesos son
+                                        ejecutados durante la recuperación con los recursos mínimos necesarios y determina
+                                        la cantidad máxima de tiempo requerido para verificar la integridad de los sistemas
+                                        y de los datos.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:75px; border-bottom: 1px solid #ccc;">
+                                <div class="col-2" style="background-color: #c9c7c2;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">MTPD:</strong>
+                                </div>
+                                <div class="col-10">
+                                    <span style="justify-content;"><u>áximo Tiempo de Interrupción Tolerable </u>
+                                        <i>(Maximun Tolerable Period of Disruption)</i>, es la suma de RTO y WRT; y se
+                                        define como el periodo de tiempo de inactividad máximo tolerable en total que puede
+                                        interrumpirse un proceso sin causar consecuencias inaceptables.</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- RIESGOS E INCIDENTES DISRUPTIVOS - Afectación operacional (IO) --}}
+            <div class="modal fade" id="afectacion_operacional" tabindex="-1" aria-labelledby="afectacion_operacional"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="afectacion_operacional" id="exampleModalLabel">Afectación
+                                operacional (IO)</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="height:35px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:rgb(238, 238, 238);">
+                                    <strong class="text-center">Valor</strong>
+                                </div>
+                                <div class="col-9" style="background-color:rgb(238, 238, 238);">
+                                    <span style="justify-content;">Descripción</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 2
+                                        días.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1
+                                        día y hasta 2 días.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 4
+                                        horas y hasta 1 día.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1
+                                        hora y hasta 4 horas.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">1-MUY BAJO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos hasta 1
+                                        hora.</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- RIESGOS E INCIDENTES DISRUPTIVOS - Impacto Regulatorio (IR) --}}
+            <div class="modal fade" id="impacto_regulatorio" tabindex="impacto_regulatorio" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="impacto_regulatorio" id="exampleModalLabel">Impacto Regulatorio
+                                (IR)</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:rgb(238, 238, 238);">
+                                    <strong class="text-center">Valor</strong>
+                                </div>
+                                <div class="col-9" style="background-color:rgb(238, 238, 238);">
+                                    <span style="justify-content;">Descripción</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Podrían generarse penalizaciones, y/o investigación
+                                        contra la institución por faltas a normatividad Nacional o Constitucional.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Podrían generarse penalizaciones y/o investigación
+                                        contra la institución por faltas a los organismos reguladores (ASF y Secretaria de
+                                        la Función Pública).</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Podrían generarse penalizaciones por faltas a las
+                                        políticas manuales y/o reglamentos organizacionales.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Faltas a los procedimientos operativos internos.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">1-MUY BAJO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Sin afectación o incumplimientos regulatorios.</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <!-- Submit Field -->
             <div class="row">
                 <div class="text-right form-group col-12">
@@ -1359,6 +1683,9 @@
                     </button>
                 </div>
             </div>
+
+
+
 
 
             {!! Form::close() !!}

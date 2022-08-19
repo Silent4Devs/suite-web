@@ -48,24 +48,7 @@
                             </fieldset>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-sm-6">
-                            <fieldset disabled>
-                                <label for="disabledTextInput"><i
-                                        class="fa-solid fa-calendar-check iconos-crear"></i>Antiguedad (Años)</label>
-                                <input type="text" id="disabledTextInput" class="form-control"
-                                    value="{{ $año }}" style="text-align: center">
-                            </fieldset>
-                        </div>
-                        {{-- <div class="form-group col-sm-6">
-                            <fieldset disabled>
-                                <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Días
-                                    disponibles</label>
-                                <input type="text" class="form-control"
-                                    value="{{ $dias_disponibles }}" style="text-align: center">
-                            </fieldset>
-                        </div> --}}
-                    </div>
+                   
                     <!-- Categoria Field -->
                     <div class="row">
                         <div class="form-group col-sm-6">
