@@ -48,7 +48,7 @@
                             </fieldset>
                         </div>
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="form-group col-sm-6">
                             <fieldset disabled>
                                 <label for="disabledTextInput"><i
@@ -58,7 +58,7 @@
                             </fieldset>
                         </div>
 
-                    </div>
+                    </div> --}}
                     <!-- Categoria Field -->
                     <div class="row">
                         <div class="form-group col-sm-6">

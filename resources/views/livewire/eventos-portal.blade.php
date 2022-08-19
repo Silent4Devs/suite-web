@@ -332,28 +332,29 @@
                         <div x-show="expanded" x-collapse>
                             <div class="caja_nuevo">
                                 @forelse($aniversarios as $aniversario)
-                                    <div class="nuevo">
-                                        <div class="img_nuevo">
-                                            <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
-                                                class="">
+                                    @if (\Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() > 0)
+                                        <div class="nuevo">
+                                            <div class="img_nuevo">
+                                                <img src="{{ asset('storage/empleados/imagenes/' . $aniversario->avatar) }}"
+                                                    class="">
+                                            </div>
+                                            <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
+                                            <div class="datos_nuevo">
+                                                <p>{{ $aniversario->puesto }}<br>
+                                                    @if (is_null($aniversario->area->area))
+                                                        No hay Area
+                                                    @else
+                                                        {{ $aniversario->area->area }}
+                                                    @endif
+                                                </p>
+                                                <h6 class="mt-3">Antigüedad</h6>
+                                                <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
+                                                    año(s)
+                                                </span>
+                                            </div>
                                         </div>
-                                        <h5 class="nombre_nuevo">{{ $aniversario->name }}</h5>
-                                        <div class="datos_nuevo">
-                                            <p>{{ $aniversario->puesto }}<br>
-                                                @if (is_null($aniversario->area->area))
-                                                    No hay Area
-                                                @else
-                                                    {{ $aniversario->area->area }}
-                                                @endif
-                                            </p>
-                                            <h6 class="mt-3">Antigüedad</h6>
-                                            <span>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($aniversario->antiguedad))->diffInYears() }}
-                                                año(s)
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                @empty
+                                    @endif
+                                 @empty
                                     <div class="nuevo">No hay aniversarios registrados en este mes.</div>
                                 @endforelse
                             </div>
@@ -370,7 +371,7 @@
                         <div class="modal-body">
 
                             <label><i class="fas fa-birthday-cake iconos-crear"></i> Envia tus felicitaciones a <strong
-                                    id="nombre_cumple"></strong></label>
+                                    id="nombre_cumple" style="color: #3086AF;"></strong></label>
 
                             <div id="formulario_comentarios"></div>
                             <div style="background-color: rgba(255, 255, 255, 0.1); position:fixed; z-index:99999999; width: 100%; height: 100%; justify-content: center; align-items: center; top: 0; left:0;"
@@ -435,7 +436,7 @@
 
 
 
-                            $('.modal').modal('show');
+                            $('#cumpleaños_comentarios_Modal').modal('show');
                         }
                     });
 
