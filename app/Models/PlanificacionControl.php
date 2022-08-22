@@ -37,6 +37,8 @@ class PlanificacionControl extends Model
         'firma_responsable_aprobador',
         'aprobado',
         'id_responsable_aprobar',
+        'es_aprobado',
+        'comentarios',
 
     ];
 

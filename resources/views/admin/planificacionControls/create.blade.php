@@ -149,11 +149,11 @@
 
                 <div class="form-group col-4">
                     <label><i class="fas fa-user-tie iconos-crear"></i>Responsable de aprobar<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
+                    <select class="form-control {{ $errors->has('responsable_aprobar') ? 'is-invalid' : '' }}"
                         name="id_responsable_aprobar" id="id_responsable_aprobar">
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($aprobadores as $aprobador)
-                            <option {{ old('id_aprobador_aprobar') == $aprobador->id ? ' selected="selected"' : '' }}
+                            <option {{ old('id_responsable_aprobar') == $aprobador->id ? ' selected="selected"' : '' }}
                                 data-puesto="{{ $aprobador->puesto }}" value="{{ $aprobador->id }}"
                                 data-area="{{ $aprobador->area->area }}">
                                 {{ Str::limit($aprobador->name, 30, '...') }}

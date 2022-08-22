@@ -387,8 +387,8 @@
                 <font class="letra_blanca"> Análisis de Impacto (BIA) </font>
             </a>
         </li>
-    @endcan
-        --}}
+    @endcan --}}
+       
       
         @can('sistema_de_gestion_acceder')
             <li class="c-sidebar-nav-item">

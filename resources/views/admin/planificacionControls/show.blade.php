@@ -355,60 +355,67 @@
                                 @if ($planificacionControl->firma_registro && $planificacionControl->firma_responsable == null)
                                     <span>Aún no es posible firmar</span>
                                 @else
-                                    @if ($planificacionControl->firma_responsable_aprobador == null)
-                                        <div>
-                                            <div class=" text-center justify-content-center">
-
-                                                <button class="aprobar-planificacion btn btn-sm text-success"
-                                                    data-action="aprobar" id="btn-aprobar"
-                                                    style="display:inline-block"><i
-                                                        class="mr-2 text-success far fa-thumbs-up"
-                                                        style="font-size:12pt;"></i>Aprobar</button>
-                                                <button class="aprobar-planificacion btn btn-sm text-danger"
-                                                    data-action="rechazar" id="btn-rechazar"
-                                                    style="display:inline-block"><i
-                                                        class="text-danger mr-2  far fa-thumbs-down"
-                                                        style="font-size:12pt;"></i>Rechazar</button>
-
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <canvas id="sig-responsable-aprobar-canvas" style="width:100%;">
-                                                        Navegador no compatible
-                                                    </canvas>
+                                    @if ($planificacionControl->es_aprobado == 'aprobado')
+                                        @if ($planificacionControl->firma_responsable_aprobador == null)
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <canvas id="sig-responsable-aprobar-canvas" style="width:100%;">
+                                                            Navegador no compatible
+                                                        </canvas>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    {{-- <button class="btn btn-sm btn-success"
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        {{-- <button class="btn btn-sm btn-success"
                                             id="sig-evaluador-submitBtn">Confirmar</button> --}}
-                                                    <button class="btn btn-sm" data-action="firmar"
-                                                        data-tipo="responsable_aprobador"
-                                                        id="sig-responsable-aprobar-guardar"><i
-                                                            class="mr-2 fas fa-check"></i>Guardar</button>
-                                                    <button class="btn btn-sm" id="sig-responsable-aprobar-clearBtn"><i
-                                                            class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
+                                                        <button class="btn btn-sm" data-action="firmar"
+                                                            data-tipo="responsable_aprobador"
+                                                            id="sig-responsable-aprobar-guardar"><i
+                                                                class="mr-2 fas fa-check"></i>Guardar</button>
+                                                        <button class="btn btn-sm"
+                                                            id="sig-responsable-aprobar-clearBtn"><i
+                                                                class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
 
+                                                    </div>
+                                                </div>
+
+
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <textarea id="sig-responsable-aprobar-dataUrl" readonly class=" form-control d-none" rows="5">Data URL de tu firma será almacenada aquí</textarea>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        @else
+                                            <img
+                                                src="{{ asset($route . $planificacionControl->firma_responsable_aprobador) }}"></img>
+                                        @endif
+                                    @elseif($planificacionControl->es_aprobado == 'pendiente')
+                                        <div class=" text-center justify-content-center aprobar-planificacion">
 
-                                            
-                                            <br />
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <textarea id="sig-responsable-aprobar-dataUrl" readonly class=" form-control d-none" rows="5">Data URL de tu firma será almacenada aquí</textarea>
-                                                </div>
-                                            </div>
+                                            <button class=" btn btn-sm text-success" data-action="aprobar"
+                                                data-type="aprobacion" id="btn-aprobar" style="display:inline-block"><i
+                                                    class="mr-2 text-success far fa-thumbs-up"
+                                                    style="font-size:12pt;"></i>Aprobar</button>
+                                            <button class=" btn btn-sm text-danger" data-action="rechazar"
+                                                data-type="aprobacion" id="btn-rechazar" style="display:inline-block"><i
+                                                    class="text-danger mr-2  far fa-thumbs-down"
+                                                    style="font-size:12pt;"></i>Rechazar</button>
+
                                         </div>
-                                    @else
-                                        <img
-                                            src="{{ asset($route . $planificacionControl->firma_responsable_aprobador) }}"></img>
+                                    @elseif($planificacionControl->es_aprobado == 'rechazado')
+                                    <div class="mt-2 mb-2">
+                                    <strong class="text-danger mt-4">Solicitud rechazada</strong>
+                                    </div>
                                     @endif
                                 @endif
                             @endif
                             <div>
                                 @if ($planificacionControl->id_responsable_aprobar == auth()->user()->empleado->id)
                                     <span>{{ $planificacionControl->responsableAprobar ? $planificacionControl->responsableAprobar->name : 'Sin registro' }}</span>
+                                    <br>
                                     <span>{{ $planificacionControl->responsableAprobar ? $planificacionControl->responsableAprobar->puesto : 'Sin registro' }}</span>
                                 @else
                                     @if (isset($planificacionControl->firma_responsable_aprobador))
@@ -416,6 +423,7 @@
                                             src="{{ asset($route . $planificacionControl->firma_responsable_aprobador) }}"></img>
                                         <br>
                                         <span>{{ $planificacionControl->responsableAprobar ? $planificacionControl->responsableAprobar->name : 'Sin registro' }}</span>
+                                        <br>
                                         <span>{{ $planificacionControl->responsableAprobar ? $planificacionControl->responsableAprobar->puesto : 'Sin registro' }}</span>
                                     @else
                                         <br>
@@ -423,6 +431,7 @@
                                         <br>
                                         <br>
                                         <span>{{ $planificacionControl->responsableAprobar ? $planificacionControl->responsableAprobar->name : 'Sin registro' }}</span>
+                                        <br>
                                         <span>{{ $planificacionControl->responsableAprobar ? $planificacionControl->responsableAprobar->puesto : 'Sin registro' }}</span>
                                     @endif
                                 @endif
@@ -478,30 +487,59 @@
         // 1500 milisegundos en que tarda de recargar la pagina
         document.querySelector('.aprobar-planificacion')?.addEventListener('click', (e) => {
             e.preventDefault();
-            let tipo = e.target.getAttribute('data-action');
-            let url = "{{ route('admin.planificacion-controls.firma-aprobacion') }}";
-            let aprobado = tipo == 'aprobar' ? '1' : '0';
-            let controlCambios = @json($planificacionControl);
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: {
-                    aprobado,
-                    id: controlCambios.id,
-                },
-                headers: {
-                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                },
-                dataType: "JSON",
-                success: function(response) {
-                    if (response.success) {
-                        toastr.success('Este documento ha sido aprobado');
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1500);
+            if (e.target.getAttribute('data-type') == 'aprobacion') {
+                let tipo = e.target.getAttribute('data-action');
+                let url = "{{ route('admin.planificacion-controls.firma-aprobacion') }}";
+                let aprobado = tipo == 'aprobar' ? '1' : '0';
+                let controlCambios = @json($planificacionControl);
+                let mensajeBtn=tipo == 'rechazar' ? 'Rechazar':'Aprobar';
+                Swal.fire({
+                    title: 'Esta seguro que desea ' + tipo + '?',
+                    text: 'comentarios',
+                    input: 'textarea',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: mensajeBtn,
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (comentarios) => {
+                        return fetch(url, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                                },
+                                body: JSON.stringify({
+                                    aprobado,
+                                    id: controlCambios.id,
+                                    comentarios
+                                })
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let mensaje=tipo == 'rechazar' ? 'Rechazado':'Aprobado';
+                        Swal.fire('',mensaje + ' con éxito','success').then(() => {
+                                window.location.reload();
+                        })
                     }
-                }
-            });
+                })
+
+            }
         });
         // // fin aprobación
 

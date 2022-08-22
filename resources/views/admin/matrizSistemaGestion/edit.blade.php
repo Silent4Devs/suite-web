@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="form-group col-md-4 mb-4">
                         <label for="validationServer01"><i class="fas fa-barcode iconos-crear"></i>ID</label>
-                        <input type="number" class="form-control" name="identificador" id="identificador" required>
+                        <input type="number" name="identificador" value="{{ old('identificador', $matrizRiesgo->identificador) }}" class="form-control" name="identificador" id="identificador" required>
                         <div id="identificadorDisponible">
                         </div>
                     </div>
