@@ -168,7 +168,6 @@
 
             ];
 
-            @can('puesto_create')
                 let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar proceso',
@@ -203,7 +202,7 @@
             dtButtons.push(btnAgregar);
             dtButtons.push(btnExport);
             dtButtons.push(btnImport);
-            @endcan
+            
 
 
             let dtOverrideGlobals = {

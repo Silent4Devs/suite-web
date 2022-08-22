@@ -1150,7 +1150,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('matriz-riesgos/sistema-gestion/edit/{id}', 'MatrizRiesgosController@editSistemaGestion')->name('matriz-riesgos.sistema-gestion.edit');
     Route::put('matriz-seguridad/sistema-gestion/update/{id}', 'MatrizRiesgosController@updateSistemaGestion')->name('matriz-riesgos.sistema-gestion.update');
     Route::get('matriz-seguridad/sistema-gestion/show/{id}', 'MatrizRiesgosController@showSistemaGestion')->name('matriz-riesgos.sistema-gestion.show');
-    Route::delete('matriz-seguridad/sistema-gestion/destroy/{id}', 'MatrizRiesgosController@destroySistemaGestion')->name('matriz-riesgos.sistema-gestion.destroy');
+    Route::delete('matriz-seguridad/sistema-gestion/{riesgo}', 'MatrizRiesgosController@destroySistemaGestion')->name('matriz-riesgos.sistema-gestion.destroy');
     Route::get('matriz-seguridad/sistema-gestion/seguridadMapa', 'MatrizRiesgosController@MapaCalorSistemaGestion')->name('matriz-mapa.SistemaGestion');
 
     //ProcesosOctave
