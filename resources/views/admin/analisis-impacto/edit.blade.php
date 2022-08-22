@@ -30,11 +30,34 @@
         width: 95px;
     }
 
-    /* input[type=checkbox]:checked+.label_calendario::before {
-        content: '✓';
+    input[type=checkbox]:checked+.label_cuadro::after{
+        content: 'PRIMER SEMESTRE';
         background-color: #f4ff00;
         font-size: 15px;
-    } */
+        width:100%;
+        height: 100%;
+        position: absolute;
+        top:0;
+        left:0;
+        z-index:1;
+        padding-top:3px; 
+    }
+
+    input[type=checkbox]:checked+.label_cuadro_dos::after{
+        content: 'SEGUNDO SEMESTRE';
+        background-color: #f4ff00;
+        font-size: 15px;
+        width:100%;
+        height: 100%;
+        position: absolute;
+        top:0;
+        left:0;
+        z-index:1;
+        padding-top:3px;
+    }
+    #color-relleno .card{
+        background-color: rgba(0,0,0,0) !important;
+    }
 </style>
 @section('content')
     <ol class="breadcrumb">
@@ -419,18 +442,18 @@
             <div class="row">
                 <div class="text-center form-group col-12">
                     <table class="table">
-                        <TR style="color: rgb(0, 0, 0); text-align:center; height:65px; font-size:15px;">
+                        <TR style="color: rgb(0, 0, 0); text-align:center; height:65px; font-size:15px;" id="color-relleno">
                             <TH>
                                 <div class="form-check">
                                     <input class="form-check-input check_calendario" type="checkbox"
-                                        id="primer_semestre">
-                                    <label for="primer_semestre" class="label_calendario">PRIMER SEMESTRE</label>
+                                        id="primer_semestre" >
+                                    <label for="primer_semestre" class="label_cuadro" >PRIMER SEMESTRE</label>
                                 </div>
                             </TH>
                             <TH>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="segundo_semestre">
-                                    <label for="segundo_semestre" class="label_calendario">SEGUNDO SEMESTRE</label>
+                                    <label for="segundo_semestre" class="label_cuadro_dos">SEGUNDO SEMESTRE</label>
                                 </div>
                             </TH>
                         </TR>
