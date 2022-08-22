@@ -13,7 +13,7 @@
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {
-                    $logotipo = 'logotipo-tabantaj.png';
+                    $logotipo = 'img/logo_monocromatico.png';
                 }
             @endphp
 
@@ -387,9 +387,8 @@
                 <font class="letra_blanca"> Análisis de Impacto (BIA) </font>
             </a>
         </li>
-    @endcan
-        --}}
-      
+    @endcan --}}
+
         @can('sistema_de_gestion_acceder')
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->is('admin/iso27001') ||
@@ -971,7 +970,8 @@
                 </ul>
             </li>
         @endcan --}}
-        @if (\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') && \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
+        @if (\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') &&
+            \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
             <li class="c-sidebar-nav-item">
                 <a class="{{ request()->is('admin/team-members') || request()->is('admin/team-members/*') ? 'active' : '' }} c-sidebar-nav-link"
                     href="{{ route('admin.team-members.index') }}">
