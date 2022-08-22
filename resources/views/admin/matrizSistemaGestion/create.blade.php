@@ -574,7 +574,8 @@
                         <select class="responsableSelect form-control" name="id_responsable" id="id_responsable">
                             <option value="">Seleccione una opción</option>
                             @foreach ($responsables as $responsable)
-                                <option data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}"
+                                <option {{ old('id_responsable') == $responsable->id ? ' selected="selected"' : '' }} 
+                                data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}"
                                     data-area="{{ $responsable->area->area }}">{{ $responsable->name }}
                                 </option>
                             @endforeach
