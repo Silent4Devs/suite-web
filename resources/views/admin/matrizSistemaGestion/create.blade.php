@@ -1374,6 +1374,8 @@
                             <option value="1">Aceptar</option>&gt;
                             <option value="0">Mitigar</option>&gt;
                             <option value="2">Transferir</option>&gt;
+                            <option value="3">Eliminar</option>&gt;
+                            <option value="4">Evitar</option>&gt;
                         </select>
                         <!-- Note, I changed hidden to text so you can see it<br/> -->
                     </div>

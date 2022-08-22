@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="form-group col-md-4 mb-4">
                         <label for="validationServer01"><i class="fas fa-barcode iconos-crear"></i>ID</label>
-                        <input type="number" class="form-control" name="identificador" id="identificador" required>
+                        <input type="number" class="form-control" name="identificador" id="identificador"  value="{{ $matrizRiesgo->identificador }}" required>
                         <div id="identificadorDisponible">
                         </div>
                     </div>
@@ -961,6 +961,8 @@
                             <option value="1"   {{ old('tipo_tratamiento',$matrizRiesgo->tipo_tratamiento) == 1 ? 'selected' : '' }}>Aceptar</option>
                             <option value="0"   {{ old('tipo_tratamiento',$matrizRiesgo->tipo_tratamiento) == 0 ? 'selected' : '' }}>Mitigar</option>
                             <option value="2"   {{ old('tipo_tratamiento',$matrizRiesgo->tipo_tratamiento) == 2 ? 'selected' : '' }}>Transferir</option>
+                            <option value="3"   {{ old('tipo_tratamiento',$matrizRiesgo->tipo_tratamiento) == 3 ? 'selected' : '' }}>Eliminar</option>&gt;
+                            <option value="4"   {{ old('tipo_tratamiento',$matrizRiesgo->tipo_tratamiento) == 4 ? 'selected' : '' }}>Evitar</option>&gt;
                         </select>
                         <!-- Note, I changed hidden to text so you can see it<br/> -->
                     </div>
