@@ -17,8 +17,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgo_helper') }}</span>
             </div> --}}
+            
             <div class="row">
-                <div class="form-group col-md-4 mb-4">
+                <div class="form-group col-md-12 mb-12">
                     <label for="validationServer01"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                     <input type="number" class="form-control" name="identificador" id="identificador">
                     <div id="identificadorDisponible">
@@ -26,15 +27,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="form-group col-md-4 mb-4">
-                    <label for="validationServer01"><i class="fas fa-barcode iconos-crear"></i>ID</label>
-                    <input type="number" class="form-control" name="identificador" id="identificador" required>
-                    <div id="identificadorDisponible">
-                    </div>
-                </div>
-            </div>
-
+           
             <div class="col-md-12">
                 <label for="acciones_tratamiento"><i class="fas fa-chart-bar iconos-crear"></i>Acciones de Tratamiento</label> 
                 <textarea class="form-control"></textarea>
