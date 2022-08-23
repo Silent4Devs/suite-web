@@ -14,16 +14,35 @@ class DropColumnsToTratamientoRiesgosTable extends Migration
     public function up()
     {
         Schema::table('tratamiento_riesgos', function (Blueprint $table) {
-            $table->dropColumn('prioridad');
-            $table->dropColumn('estatus');
-            $table->dropColumn('probabilidad');
-            $table->dropColumn('impacto');
-            $table->dropColumn('nivelriesgoresidual');
-            $table->dropColumn('id_reviso');
-            $table->dropColumn('responsable_id');
-            $table->dropColumn('control_id');
-            $table->dropColumn('team_id');
-            $table->dropColumn('responsable_id');
+            if(Schema::hasColumn($table->getTable(), 'prioridad')) {
+                $table->dropColumn('prioridad');
+            }
+            if(Schema::hasColumn($table->getTable(), 'estatus')) {
+                $table->dropColumn('estatus');
+            }
+            if(Schema::hasColumn($table->getTable(), 'probabilidad')) {
+                $table->dropColumn('probabilidad');
+            }
+            if(Schema::hasColumn($table->getTable(), 'impacto')) {
+                $table->dropColumn('impacto');
+            }
+            if(Schema::hasColumn($table->getTable(), 'nivelriesgoresidual')) {
+                $table->dropColumn('nivelriesgoresidual');
+            }
+            if(Schema::hasColumn($table->getTable(), 'id_reviso')) {
+                $table->dropColumn('id_reviso');
+            }
+            if(Schema::hasColumn($table->getTable(), 'responsable_id')) {
+                $table->dropColumn('responsable_id');
+            }
+            if(Schema::hasColumn($table->getTable(), 'control_id')) {
+                $table->dropColumn('control_id');
+            }
+            if(Schema::hasColumn($table->getTable(), 'team_id')) {
+                $table->dropColumn('team_id');
+            }
+          
+        
         });
     }
 
