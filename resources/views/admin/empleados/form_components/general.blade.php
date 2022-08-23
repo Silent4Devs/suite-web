@@ -12,8 +12,8 @@
     </div>
     <div class="form-group col-sm-6">
         <label class="required" for="name"><i class="fas fa-user-circle iconos-crear"></i>Nombre</label>
-        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name"
-            value="{{ old('name', $empleado->name) }}" required>
+        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
+            id="name" value="{{ old('name', $empleado->name) }}" required>
         <small id="error_name" class="text-danger errores"></small>
         @if ($errors->has('name'))
             <div class="invalid-feedback">
@@ -25,8 +25,8 @@
         <label for="n_empleado"><i class="fas fa-id-card iconos-crear"></i>N°
             de
             empleado</label>
-        <input class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}" type="text" name="n_empleado"
-            id="n_empleado" value="{{ old('n_empleado', $empleado->n_empleado) }}" required>
+        <input class="form-control {{ $errors->has('n_empleado') ? 'is-invalid' : '' }}" type="text"
+            name="n_empleado" id="n_empleado" value="{{ old('n_empleado', $empleado->n_empleado) }}" required>
         <small id="error_n_empleado" class="text-danger errores"></small>
         @error('n_empleado')
             <span class="invalid-feedback d-block" role="alert">
@@ -71,8 +71,7 @@
             <small id="error_puesto_id" class="text-danger errores"></small>
         </div>
         <button id="btnAgregarPuesto" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
-            data-toggle="modal" data-target="#PuestoModal" title="Agregar Puesto"><i
-                class="fas fa-plus"></i></button>
+            data-toggle="modal" data-target="#PuestoModal" title="Agregar Puesto"><i class="fas fa-plus"></i></button>
         @livewire('puesto-create')
 
         @if ($errors->has('puesto_id'))
@@ -204,7 +203,8 @@
         <label for="telefono_movil"><i class="fas fa-mobile-alt iconos-crear"></i></i>Teléfono
             móvil</label>
         <input class="form-control {{ $errors->has('telefono_movil') ? 'is-invalid' : '' }}" type="text"
-            name="telefono_movil" id="telefono_movil" value="{{ old('telefono_movil', $empleado->telefono_movil) }}">
+            name="telefono_movil" id="telefono_movil"
+            value="{{ old('telefono_movil', $empleado->telefono_movil) }}">
         <small id="error_telefono_movil" class="text-danger errores"></small>
         @if ($errors->has('telefono_movil'))
             <div class="invalid-feedback">
@@ -215,8 +215,8 @@
     <div class="form-group col-sm-4">
         <label for="telefono"><i class="fas fa-phone iconos-crear"></i>Teléfono
             oficina</label>
-        <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="text" name="telefono"
-            id="telefono" value="{{ old('telefono', $empleado->telefono) }}">
+        <input class="form-control {{ $errors->has('telefono') ? 'is-invalid' : '' }}" type="text"
+            name="telefono" id="telefono" value="{{ old('telefono', $empleado->telefono) }}">
         <small id="error_telefono" class="text-danger errores"></small>
         @if ($errors->has('telefono'))
             <div class="invalid-feedback">
@@ -226,8 +226,8 @@
     </div>
     <div class="form-group col-sm-2">
         <label for="extension"><i class="fas fa-phone-volume iconos-crear"></i>Ext.</label>
-        <input class="form-control {{ $errors->has('extension') ? 'is-invalid' : '' }}" type="text" name="extension"
-            id="extension" value="{{ old('extension', $empleado->extension) }}">
+        <input class="form-control {{ $errors->has('extension') ? 'is-invalid' : '' }}" type="text"
+            name="extension" id="extension" value="{{ old('extension', $empleado->extension) }}">
         <small id="error_extension" class="text-danger errores"></small>
         @if ($errors->has('extension'))
             <div class="invalid-feedback">
@@ -336,10 +336,12 @@
         @endif
     </div>
     <div class="form-group col-sm-12" id="c_semanas_min_timesheet">
-        <label for="semanas_min_timesheet"><i class="fa-solid fa-calendar-week iconos-crear"></i>Semanas limite de registros atrasados en Timesheet</label>
-            <input class="form-control {{ $errors->has('semanas_min_timesheet') ? 'is-invalid' : '' }}" type="number"
+        <label for="semanas_min_timesheet"><i class="fa-solid fa-calendar-week iconos-crear"></i>Semanas limite de
+            registros atrasados en Timesheet</label>
+        <input class="form-control {{ $errors->has('semanas_min_timesheet') ? 'is-invalid' : '' }}" type="number"
             name="semanas_min_timesheet" id="semanas_min_timesheet"
-            value="{{ old('semanas_min_timesheet', $empleado->semanas_min_timesheet ? $empleado->semanas_min_timesheet : $organizacion->semanas_min_timesheet) }}" min="0">
+            value="{{ old('semanas_min_timesheet', $empleado != null ? $empleado->semanas_min_timesheet : ($organizacion != null ? $organizacion->semanas_min_timesheet : 3)) }}"
+            min="0">
         @if ($errors->has('semanas_min_timesheet'))
             <div class="invalid-feedback">
                 {{ $errors->first('semanas_min_timesheet') }}
