@@ -58,6 +58,7 @@
     #color-relleno .card{
         background-color: rgba(0,0,0,0) !important;
     }
+
 </style>
 @section('content')
     <ol class="breadcrumb">
@@ -461,67 +462,90 @@
                 </div>
 
                 <div class="text-center form-group col-12">
-                    <table class="table">
+                    <table class="table table_checkbox">
                         <TR class="mt-5"
-                            style="background-color:#FFFF00; color: rgb(0, 0, 0); text-align:center; height:65px;">
-                            <TH>ENE<br>
+                            style="color: rgb(0, 0, 0); text-align:center; height:65px;">
+                            <TH style="position: relative;">
+                                <label for="eneCheckbox">ENE</label><br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="eneCheckbox">
                                 </div>
                             </TH>
-                            <TH>FEB<br>
+                            <TH>
+                                <label for="febCheckbox">FEB</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="febCheckbox">
                                 </div>
                             </TH>
-                            <TH>MAR<br>
+                            <TH>
+                                <label for="marCheckbox">MAR</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="marCheckbox">
                                 </div>
                             </TH>
-                            <TH>ABR<br>
+                            <TH>
+                                <label for="abrCheckbox">ABR</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="abrCheckbox">
                                 </div>
                             </TH>
-                            <TH>MAY<br>
+                            <TH>
+                                <label for="mayCheckbox">MAY</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="mayCheckbox">
                                 </div>
                             </TH>
-                            <TH>JUN<br>
+                            <TH>
+                               <label for="junCheckbox">JUN</label> 
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="junCheckbox">
                                 </div>
                             </TH>
-                            <TH>JUL<br>
+                            <TH>
+                                <label for="julCheckbox">JUL</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="julCheckbox">
                                 </div>
                             </TH>
-                            <TH>AGO<br>
+                            <TH>
+                                <label for="agoCheckbox">AGO</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="agoCheckbox">
                                 </div>
                             </TH>
-                            <TH>SEP<br>
+                            <TH>
+                                <label for="sepCheckbox">SEP</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="sepCheckbox">
                                 </div>
                             </TH>
-                            <TH>OCT<br>
+                            <TH>
+                                <label for="octCheckbox">OCT</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="octCheckbox">
                                 </div>
                             </TH>
-                            <TH>NOV<br>
+                            <TH>
+                                <label for="novCheckbox">NOV</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="novCheckbox">
                                 </div>
                             </TH>
-                            <TH>DIC<br>
+                            <TH>
+                                <label for="dicCheckbox">DIC</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="dicCheckbox">
                                 </div>
                             </TH>
                         </TR>
@@ -529,173 +553,261 @@
                 </div>
 
                 <div class="text-center form-group col-12">
-                    <table class="table">
-                        <TR style="background-color:#FFFF00; color: rgb(0, 0, 0); text-align:center; height:65px;">
-                            <TD>S1</TD>
-                            <TD>S2</TD>
-                            <TD>S3</TD>
-                            <TD>S4</TD>
+                    <table class="table table_checkbox">
+                        <TR style="color: rgb(0, 0, 0); text-align:center; height:65px;">
+                            <TD>
+                                <label for="s1Checkbox">S1</label>
+                                <br>
+                                <div class="form-check">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="s1Checkbox">
+                                </div>
+                            </TD>
+                            <TD>
+                                <label for="s2Checkbox">
+                                    S2
+                                </label>
+                                <br>
+                                <div class="form-check">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="s2Checkbox">
+                                </div>
+                            </TD>
+                            <TD>
+                                <label for="s3Checkbox">S3</label>
+                                <br>
+                                <div class="form-check">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="s3Checkbox">
+                                </div>
+                            </TD>
+                            <TD>
+                                <label for="s4Checkbox">S4</label>
+                                <br>
+                                <div class="form-check">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="s4Checkbox">
+                                </div>
+                            </TD>
                         </TR>
                     </table>
                 </div>
 
                 <div class="text-center form-group col-12">
-                    <table class="table table-sm">
+                    <table class="table table-sm table_checkbox">
                         <TR
-                            style="background-color:#FFFF00; color: rgb(0, 0, 0); text-align:center; font-size:10px; height:65px;">
-                            <TD>02<br>
+                            style="color: rgb(0, 0, 0); text-align:center; font-size:10px; height:65px;">
+                            <TD>
+                                <label for="check_number_01">01</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_01">
                                 </div>
                             </TD>
-                            <TD>01<br>
+                            <TD>
+                                <label for="check_number_02">02</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_02">
                                 </div>
                             </TD>
-                            <TD>03<br>
+                            <TD>
+                                <label for="check_number_03">03</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_03">
                                 </div>
                             </TD>
-                            <TD>04<br>
+                            <TD>
+                                <label for="check_number_04">04</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_04">
                                 </div>
                             </TD>
-                            <TD>05<br>
+                            <TD>
+                                <label for="check_number_05">05</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_05">
                                 </div>
                             </TD>
-                            <TD>06<br>
+                            <TD>
+                                <label for="check_number_06">06</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_06">
                                 </div>
                             </TD>
-                            <TD>07<br>
+                            <TD>
+                                <label for="check_number_07">07</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_07">
                                 </div>
                             </TD>
-                            <TD>08<br>
+                            <TD>
+                                <label for="check_number_08">08</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_08">
                                 </div>
                             </TD>
-                            <TD>09<br>
+                            <TD>
+                                <label for="check_number_09">09</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_09">
                                 </div>
                             </TD>
-                            <TD>10<br>
+                            <TD>
+                                <label for="check_number_010">10</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_010">
                                 </div>
                             </TD>
-                            <TD>11<br>
+                            <TD>
+                                <label for="check_number_011">11</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_011">
                                 </div>
                             </TD>
-                            <TD>12<br>
+                            <TD>
+                                <label for="check_number_012">12</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_012">
                                 </div>
                             </TD>
-                            <TD>13<br>
+                            <TD>
+                                <label for="check_number_013">13</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_013">
                                 </div>
                             </TD>
-                            <TD>14<br>
+                            <TD>
+                                <label for="check_number_014">14</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_014">
                                 </div>
                             </TD>
-                            <TD>15<br>
+                            <TD>
+                                <label for="check_number_015">15</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_015">
                                 </div>
                             </TD>
-                            <TD>16<br>
+                            <TD>
+                                <label for="check_number_016">16</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_016">
                                 </div>
                             </TD>
-                            <TD>17<br>
+                            <TD>
+                                <label for="check_number_017">17</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_017">
                                 </div>
                             </TD>
-                            <TD>18<br>
+                            <TD>
+                                <label for="check_number_018">18</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_018">
                                 </div>
                             </TD>
-                            <TD>19<br>
+                            <TD>
+                                <label for="check_number_019">19</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_019">
                                 </div>
                             </TD>
-                            <TD>20<br>
+                            <TD>
+                                <label for="check_number_020">20</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_020">
                                 </div>
                             </TD>
-                            <TD>21<br>
+                            <TD>
+                                <label for="check_number_021">21</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_021">
                                 </div>
                             </TD>
-                            <TD>22<br>
+                            <TD>
+                                <label for="check_number_022">22</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_022">
                                 </div>
                             </TD>
-                            <TD>23<br>
+                            <TD>
+                                <label for="check_number_023">23</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_023">
                                 </div>
                             </TD>
-                            <TD>24<br>
+                            <TD>
+                                <label for="check_number_024">24</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_024">
                                 </div>
                             </TD>
-                            <TD>25<br>
+                            <TD>
+                                <label for="check_number_025">25</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_025">
                                 </div>
                             </TD>
-                            <TD>26<br>
+                            <TD>
+                                <label for="check_number_026">26</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_026">
                                 </div>
                             </TD>
-                            <TD>27<br>
+                            <TD>
+                                <label for="check_number_027">27</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_027">
                                 </div>
                             </TD>
-                            <TD>28<br>
+                            <TD>
+                                <label for="check_number_028">28</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_028">
                                 </div>
                             </TD>
-                            <TD>29<br>
+                            <TD>
+                                <label for="check_number_029">29</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_029">
                                 </div>
                             </TD>
-                            <TD>30<br>
+                            <TD>
+                                <label for="check_number_030">30</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_030">
                                 </div>
                             </TD>
-                            <TD>31<br>
+                            <TD>
+                                <label for="check_number_031">31</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_031">
                                 </div>
                             </TD>
                         </TR>
@@ -703,127 +815,175 @@
                 </div>
 
                 <div class="text-center form-group col-12">
-                    <table class="table  table-sm">
+                    <table class="table table-sm table_checkbox">
                         <TR
-                            style="background-color:#FFFF00; color: rgb(0, 0, 0); text-align:center; text-align:center; font-size:15px; height:65px;">
-                            <TD>01<br>
+                            style="color: rgb(0, 0, 0); text-align:center; text-align:center; font-size:15px; height:65px;">
+                            <TD>
+                                <label for="check_no_01">01</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_01">
                                 </div>
                             </TD>
-                            <TD>02<br>
+                            <TD>
+                                <label for="check_no_02">02</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_02">
                                 </div>
                             </TD>
-                            <TD>03<br>
+                            <TD>
+                                <label for="check_no_03">03</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_03">
                                 </div>
                             </TD>
-                            <TD>04<br>
+                            <TD>
+                                <label for="check_no_04">04</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_04">
                                 </div>
                             </TD>
-                            <TD>05<br>
+                            <TD>
+                                <label for="check_no_05">05</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_05">
                                 </div>
                             </TD>
-                            <TD>06<br>
+                            <TD>
+                                <label for="check_no_06">06</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_06">
                                 </div>
                             </TD>
-                            <TD>07<br>
+                            <TD>
+                                <label for="check_no_07">07</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_07">
                                 </div>
                             </TD>
-                            <TD>08<br>
+                            <TD>
+                                <label for="check_no_08">08</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_08">
                                 </div>
                             </TD>
-                            <TD>09<br>
+                            <TD>
+                                <label for="check_no_09">09</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_09">
                                 </div>
                             </TD>
-                            <TD>10<br>
+                            <TD>
+                                <label for="check_no_10">10</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_10">
                                 </div>
                             </TD>
-                            <TD>11<br>
+                            <TD>
+                                <label for="check_no_11">11</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_11">
                                 </div>
                             </TD>
-                            <TD>12<br>
+                            <TD>
+                                <label for="check_no_12">12</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_12">
                                 </div>
                             </TD>
-                            <TD>13<br>
+                            <TD>
+                                <label for="check_no_13">13</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_13">
                                 </div>
                             </TD>
-                            <TD>14<br>
+                            <TD>
+                                <label for="check_no_14">14</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_14">
                                 </div>
                             </TD>
-                            <TD>15<br>
+                            <TD>
+                                <label for="check_no_15">15</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_15">
                                 </div>
                             </TD>
-                            <TD>16<br>
+                            <TD>
+                                <label for="check_no_16">16</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_16">
                                 </div>
                             </TD>
-                            <TD>17<br>
+                            <TD>
+                                <label for="check_no_17">17</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_17">
                                 </div>
                             </TD>
-                            <TD>18<br>
+                            <TD>
+                                <label for="check_no_18">18</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_18">
                                 </div>
                             </TD>
-                            <TD>19<br>
+                            <TD>
+                                <label for="check_no_19">19</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_19">
                                 </div>
                             </TD>
-                            <TD>20<br>
+                            <TD>
+                                <label for="check_no_20">20</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_20">
                                 </div>
                             </TD>
-                            <TD>21<br>
+                            <TD>
+                                <label for="check_no_21">21</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_21">
                                 </div>
                             </TD>
-                            <TD>22<br>
+                            <TD>
+                                <label for="check_no_22">22</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_22">
                                 </div>
                             </TD>
-                            <TD>23<br>
+                            <TD>
+                                <label for="check_no_23">23</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_23">
                                 </div>
                             </TD>
-                            <TD>24<br>
+                            <TD>
+                                <label for="check_no_24">24</label>
+                                <br>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_24">
                                 </div>
                             </TD>
                         </TR>
@@ -1714,4 +1874,21 @@
             {!! Form::close() !!}
         </div>
     </div>
+@endsection
+
+
+@section('scripts')
+    <script>
+        $('.table_checkbox input[type=checkbox]').click(function(e){
+           if(e.target.checked == true){
+            $('.table_checkbox th input[type=checkbox]:hover').parents('th').css('background-color', 'yellow');
+            $('.table_checkbox td input[type=checkbox]:hover').parents('td').css('background-color', 'yellow');
+
+           }else{
+            $('.table_checkbox th input[type=checkbox]:hover').parents('th').css('background-color', 'white');
+            $('.table_checkbox td input[type=checkbox]:hover').parents('td').css('background-color', 'white');
+
+           }
+        });
+    </script>
 @endsection
