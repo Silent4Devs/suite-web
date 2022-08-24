@@ -35,11 +35,6 @@ class AccionCorrectivaController extends Controller
 
     public function index(Request $request)
     {
-        $accionesCorrectivas = AccionCorrectiva::with(['deskQuejaCliente' => function ($query) {
-            $query->with('registro', 'responsableSgi');
-        }])->where('aprobada', false)->where('aprobacion_contestada', false)->get();
-        dd($accionesCorrectivas);
-        
         abort_if(Gate::denies('accion_correctiva_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados','reporto'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
         // dd($query);
