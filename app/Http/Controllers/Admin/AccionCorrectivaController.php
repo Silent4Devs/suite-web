@@ -35,6 +35,11 @@ class AccionCorrectivaController extends Controller
 
     public function index(Request $request)
     {
+        $accionesCorrectivas = AccionCorrectiva::with(['deskQuejaCliente' => function ($query) {
+            $query->with('registro', 'responsableSgi');
+        }])->where('aprobada', false)->where('aprobacion_contestada', false)->get();
+        dd($accionesCorrectivas);
+        
         abort_if(Gate::denies('accion_correctiva_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $query = AccionCorrectiva::with(['nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team','empleados','reporto'])->select(sprintf('%s.*', (new AccionCorrectiva)->table))->orderByDesc('id')->get();
         // dd($query);
@@ -47,8 +52,8 @@ class AccionCorrectivaController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate = 'accion_correctiva_show';
-                $editGate = 'accion_correctiva_edit';
-                $deleteGate = 'accion_correctiva_delete';
+                $editGate = 'accion_correctiva_show';
+                $deleteGate = 'accion_correctiva_show';
                 $crudRoutePart = 'accion-correctivas';
 
                 return view('partials.datatablesActions', compact(

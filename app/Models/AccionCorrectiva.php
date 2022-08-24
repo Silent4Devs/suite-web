@@ -215,8 +215,11 @@ class AccionCorrectiva extends Model implements HasMedia
         return $this->hasMany(QuejasCliente::class, 'accion_correctiva_id', 'id');
     }
 
+
     public function deskQuejaCliente()
     {
-        return $this->morphedByMany(QuejasCliente::class, 'acciones_correctivas_aprobacionables', null, 'acciones_correctivas_id')->withPivot('created_at');
+        return $this->morphMany(QuejasCliente::class, 'acciones_correctivas_aprobacionables', null,null, 'acciones_correctivas_id');
     }
+
+    
 }

@@ -348,6 +348,12 @@ Breadcrumbs::for('admin.tratamiento-riesgos.create', function ($trail) {
     $trail->push('Formulario', route('admin.tratamiento-riesgos.create'));
 });
 
+Breadcrumbs::for('admin.tratamiento-riesgos.show', function ($trail) {
+    $trail->push('Tratamiento de los Riesgos', route('admin.tratamiento-riesgos.index'));
+    $trail->push('Visualizar');
+});
+
+
 Breadcrumbs::for('admin.indicadores-sgsis.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Evaluacion', route('admin.iso27001.index') . '#evaluacion');

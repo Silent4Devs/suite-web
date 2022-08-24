@@ -163,6 +163,7 @@ class TratamientoRiesgosController extends Controller
         abort_if(Gate::denies('tratamiento_de_los_riesgos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tratamientoRiesgo->load('control', 'responsable', 'team');
+        // dd($tratamientoRiesgo);
 
         return view('admin.tratamientoRiesgos.show', compact('tratamientoRiesgo'));
     }

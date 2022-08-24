@@ -119,7 +119,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -129,7 +130,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -140,7 +142,8 @@
                     titleAttr: 'Exportar PDF',
                     orientation: 'portrait',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
@@ -265,34 +268,46 @@
                 createdRow: (row, data, dataIndex, cells) => {
                         let color = "green";
                         let texto = "white";
-                        if (data.riesgototal >=140) {
+                        if (data.riesgototal <= 185) {
                             color = "#FF417B";
                             texto = "white";
                         }
-                        if (data.riesgototal >=90) {
+                        if (data.riesgototal <= 135) {
+                            color = "#FFAC6A";
+                            texto = "white";
+                        }
+                        if (data.riesgototal <= 90) {
                             color = "#FFCB63";
                             texto = "white";
                         }
-                        if (data.riesgototal >=90) {
-                            color = "#FFCB63";
+                        if (data.riesgototal <= 45) {
+                            color = "#6DC866";
+                            texto = "white";
+                        }
+                        if (data.riesgototal == null) {
+                            color = "white";
                             texto = "white";
                         }
                         
                         let fondo = "green";
                         let letras = "white";
-                        if (data.riesgo_total_residual >=135) {
+                        if (data.riesgo_total_residual <= 185) {
                             fondo = "#FF417B";
                             letras = "white";
                         }
-                        if (data.riesgo_total_residual >=90) {
+                        if (data.riesgo_total_residual >= 135) {
+                            fondo = "#FFAC6A";
+                            letras = "white";
+                        }
+                        if (data.riesgo_total_residual <= 90) {
                             fondo = "#FFCB63";
                             letras = "white";
                         }
-                        if (data.riesgo_total_residual <= 45) {
+                        if (data.riesgo_total_residual  <= 45) {
                             fondo = "#6DC866";
                             letras = "white";
                         }
-                        if (data.riesgo_total_residual <= 0) {
+                        if (data.riesgo_total_residual == null) {
                             fondo = "#fff";
                             letras = "white";
                         }
