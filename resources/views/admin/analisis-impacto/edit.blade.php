@@ -30,33 +30,34 @@
         width: 95px;
     }
 
-    input[type=checkbox]:checked+.label_cuadro::after{
+    input[type=checkbox]:checked+.label_cuadro::after {
         content: 'PRIMER SEMESTRE';
         background-color: #f4ff00;
         font-size: 15px;
-        width:100%;
+        width: 100%;
         height: 100%;
         position: absolute;
-        top:0;
-        left:0;
-        z-index:1;
-        padding-top:3px; 
+        top: 0;
+        left: 0;
+        z-index: 1;
+        padding-top: 3px;
     }
 
-    input[type=checkbox]:checked+.label_cuadro_dos::after{
+    input[type=checkbox]:checked+.label_cuadro_dos::after {
         content: 'SEGUNDO SEMESTRE';
         background-color: #f4ff00;
         font-size: 15px;
-        width:100%;
+        width: 100%;
         height: 100%;
         position: absolute;
-        top:0;
-        left:0;
-        z-index:1;
-        padding-top:3px;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        padding-top: 3px;
     }
-    #color-relleno .card{
-        background-color: rgba(0,0,0,0) !important;
+
+    #color-relleno .card {
+        background-color: rgba(0, 0, 0, 0) !important;
     }
 
 </style>
@@ -443,12 +444,13 @@
             <div class="row">
                 <div class="text-center form-group col-12">
                     <table class="table">
-                        <TR style="color: rgb(0, 0, 0); text-align:center; height:65px; font-size:15px;" id="color-relleno">
+                        <TR style="color: rgb(0, 0, 0); text-align:center; height:65px; font-size:15px;"
+                            id="color-relleno">
                             <TH>
                                 <div class="form-check">
                                     <input class="form-check-input check_calendario" type="checkbox"
-                                        id="primer_semestre" >
-                                    <label for="primer_semestre" class="label_cuadro" >PRIMER SEMESTRE</label>
+                                        id="primer_semestre">
+                                    <label for="primer_semestre" class="label_cuadro">PRIMER SEMESTRE</label>
                                 </div>
                             </TH>
                             <TH>
@@ -1515,7 +1517,7 @@
 
                 <label class="col-sm-6 col-form-label">
                     <a id="btnAgregarTipo" onclick="event.preventDefault();"
-                        style="font-size:12pt; float: right;"data-toggle="modal" data-target="#afectacion_operacional"
+                        style="font-size:12pt; float: right;"data-toggle="modal" data-target="#impacto_social"
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
                             class="fas fa-info-circle"></i></a>
                     Impacto Social (IS)</label>
@@ -1562,6 +1564,139 @@
                 </div>
             </div>
 
+            {{-- Firmas --}}
+            <div class="row">
+                <div class="text-center form-group col-12 mt-4"
+                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    FIRMAS
+                </div>
+            </div>
+
+            <div class="row">
+                @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Entrevistado'], key(1))
+                @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Jefe'], key(2))
+            </div>
+            <div class="row offset-3">
+                @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Entrevistador'], key(3))
+            </div>
+
+            <div class="row">
+                <div class="text-center form-group col-12 mt-4"
+                    style="background-color:#345183; border-radius: 100px; color: white;">
+                    Anexos
+                </div>
+            </div>
+            <div class="row">
+                <h4><span class="badge badge-secondary">Anexo 1</span></h4>
+
+                <table class="table table-border" style="font-size: 12px">
+                    <tr>
+                        <th class="col-sm-4" style="background-color:#345183; color: white;">Clasificación</th>
+                        <th class="col-sm-8" style="background-color:#345183; color: white;">Escenarios de Contingencia</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2" style="background-color:#ffffff;">Indisponibilidad de las instalaciones (oficinas), por bloqueo de acceso, manifestaciones.</th>
+                        <td>Manifestaciones.</td>
+                    </tr>
+                    <tr>
+                        <td>Bloqueos.</td>
+                    </tr>
+                    <tr>
+                        <th rowspan="4" style="background-color:#ffffff;">Ataques cibernéticos o a la actividad informática</th>
+                        <td>Acceso y/o modificaciones no autorizadas a sistemas e información.</td>
+                    </tr>
+                    <tr>
+                        <td>Ataque de denegación de servicios (DoS Attack).</td>
+                    </tr>
+                    <tr>
+                        <td>Hackeo y/o secuestro de información (ransomware).</td>
+                    </tr>
+                    <tr>
+                        <td>Ataque de denegación de servicios (DoS Attack).</td>
+                    </tr>
+                    <tr>
+                        <th rowspan="7" style="background-color:#ffffff;">Desastres naturales y ambientales.</th>
+                        <td>Contaminación ambiental.</td>
+                    </tr>
+                    <tr>
+                        <td>Contaminación por agentes químicos.</td>
+                    </tr>
+                    <tr>
+                        <td>Erupción volcánica.</td>
+                    </tr>
+                    <tr>
+                        <td>Incendio / Explosión.</td>
+                    </tr>
+                    <tr>
+                        <td>Inundación.</td>
+                    </tr>
+                    <tr>
+                        <td>Rayos/Tormentas Eléctricas.</td>
+                    </tr>
+                    <tr>
+                        <td>Sismo / Terremoto.</td>
+                    </tr>
+                    <tr>
+                        <th>Enfermedades infecciosas.</th>
+                        <td>Indisponibilidad del personal (pandemias, enfermedades virales o infecciosas).</td>
+                    </tr>
+                    <tr>
+                        <th rowspan="2" style="background-color:#ffffff;">Desastres naturales y ambientales.</th>
+                        <td>Ejecución inadecuada de los procesos.</td>
+                    </tr>
+                    <tr>
+                        <td>Incumplimiento de obligaciones normativas.</td>
+                    </tr>
+                    <tr>
+                        <th rowspan="3" style="background-color:#ffffff;">Fallas o indisponibilidad en la infraestructura tecnológica (telecomunicaciones, procesamiento de información y redes).</th>
+                        <td>Deterioro en aplicaciones (fallas/caídas).</td>
+                    </tr>
+                    <tr>
+                        <td>Falla en enlaces y comunicaciones.</td>
+                    </tr>
+                    <tr>
+                        <td>Fallas en la infraestructura tecnológica (equipos, servidores, etc.).</td>
+                    </tr>
+                    <tr>
+                        <th rowspan="3" style="background-color:#ffffff;">Indisponibilidad del personal (Accidentes, enfermedad, jubilación o fallecimiento del personal).</th>
+                        <td>IIndisponibilidad del personal (Accidentes, enfermedad, jubilación o fallecimiento del personal).</td>
+                    </tr>
+                    <tr>
+                        <td>Indisponibilidad del personal (Falta de personal, inasistencia o baja de personal).</td>
+                    </tr>
+                    <tr>
+                        <td>Daño en equipos (aire acondicionado).</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color:#ffffff;">Interrupciones en el suministro de energía eléctrica.</th>
+                        <td>Interrupciones en el suministro de energía eléctrica.</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color:#ffffff;">Interrupciones ocurridas en servicios prestados por terceros.</th>
+                        <td>Indisponibilidad de información o insumos de terceros o proveedores externos.</td>
+                    </tr>
+                    <tr>
+                        <th rowspan="5" style="background-color:#ffffff;">Sabotaje.</th>
+                        <td>Atentados y actos vandálicos a las instalaciones y/o al personal (motín / huelga/ sabotaje / toma de instalaciones).</td>
+                    </tr>
+                    <tr>
+                        <td>Filtración de información (robo, espionaje industrial, fraude interno/externo).</td>
+                    </tr>
+                    <tr>
+                        <td>Negación de acceso a instalaciones por marchas, manifestaciones y bloqueos.</td>
+                    </tr>
+                    <tr>
+                        <td>Robo o daño de activos e información física.</td>
+                    </tr>
+                    <tr>
+                        <td>Violación de acceso físico a las instalaciones y áreas restringidas.</td>
+                    </tr>
+                    <tr>
+                        <th>Terrorismo.</th>
+                        <td>Atentados y actos vandálicos a las instalaciones y/o al personal (robo y actividades criminales).</td>
+                    </tr>
+                </table>
+            </div>
 
 
             {{-- Modales --}}
@@ -1645,8 +1780,8 @@
             </div>
 
             {{-- TIEMPOS DE RECUPERACIÓN --}}
-            <div class="modal fade" id="tiempos_recuperacion" tabindex="-1" aria-labelledby="tiempos_recuperacion"
-                aria-hidden="true">
+            <div class="modal fade" id="tiempos_recuperacion" tabindex="tiempos_recuperacion"
+                aria-labelledby="tiempos_recuperacion" aria-hidden="true">
                 <div class="modal-dialog  modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1715,8 +1850,8 @@
             </div>
 
             {{-- RIESGOS E INCIDENTES DISRUPTIVOS - Afectación operacional (IO) --}}
-            <div class="modal fade" id="afectacion_operacional" tabindex="-1" aria-labelledby="afectacion_operacional"
-                aria-hidden="true">
+            <div class="modal fade" id="afectacion_operacional" tabindex="afectacion_operacional"
+                aria-labelledby="afectacion_operacional" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1791,7 +1926,8 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="impacto_regulatorio" id="exampleModalLabel">Impacto Regulatorio
+                            <h5 class="modal-title" id="impacto_regulatorio" id="exampleModalLabel">Impacto
+                                Regulatorio
                                 (IR)</h5>
                         </div>
                         <div class="modal-body">
@@ -1855,6 +1991,147 @@
                     </div>
                 </div>
             </div>
+
+            {{-- RIESGOS E INCIDENTES DISRUPTIVOS - Afectación en la Reputación / Imagen Pública o Política (IIR) --}}
+            <div class="modal fade" id="afectacion_reputacion" tabindex="afectacion_reputacion" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="afectacion_reputacion">Afectación en la Reputación / Imagen
+                                Pública o Política (IIR)</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:rgb(238, 238, 238);">
+                                    <strong class="text-center">Valor</strong>
+                                </div>
+                                <div class="col-9" style="background-color:rgb(238, 238, 238);">
+                                    <span style="justify-content;">Descripción</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Cobertura mediática a escala nacional y limitada a
+                                        nivel internacional, investigación formal de organismos reguladores, implicación de
+                                        directivos del SENASICA.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Cobertura mediática a escala nacional, incremento en
+                                        reclamaciones de la ciudadanía, solicitud de organismos reguladores.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Cobertura mediática local, incremento en reclamaciones
+                                        de la ciudadanía.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Sin cobertura mediática, ligero incremento en
+                                        reclamaciones de la ciudadanía.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">1-MUY BAJO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Sin efecto externo.</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- RIESGOS E INCIDENTES DISRUPTIVOS - Impacto Social (IS) --}}
+            <div class="modal fade" id="impacto_social" tabindex="impacto_social" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="afectacion_reputacion">Impacto Social (IS)</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="height:40px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:rgb(238, 238, 238);">
+                                    <strong class="text-center">Valor</strong>
+                                </div>
+                                <div class="col-9" style="background-color:rgb(238, 238, 238);">
+                                    <span style="justify-content;">Descripción</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
+                                        ciudadanía a toda la República Mexicana o incluso a niveles Internacionales.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
+                                        ciudadanía a más de un estado de la República Mexicana.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
+                                        ciudadanía de manera estatal.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Presenta afectación en los servicios brindados a la
+                                        ciudadanía de manera local.</span>
+                                </div>
+                            </div>
+                            <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
+                                <div class="col-3" style="background-color:#ffffff;">
+                                    <strong style="color:rgb(0, 0, 0)" class="text-center">1-MUY BAJO:</strong>
+                                </div>
+                                <div class="col-9">
+                                    <span style="justify-content;">Sin afectación a la población.</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 
             <!-- Submit Field -->
