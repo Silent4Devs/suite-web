@@ -1,121 +1,92 @@
 @extends('layouts.admin')
 @section('content')
+    {{ Breadcrumbs::render('admin.planificacion-controls.create') }}
 
-    {{ Breadcrumbs::render('admin.tratamiento-riesgos.create') }}
+    <style>
+        span.errors {
+            font-size: 11px;
+        }
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.tratamientoRiesgo.title') }}
-    </div>
+        canvas {
+            border: 2px dotted #CCCCCC;
+            border-radius: 15px;
+            cursor: crosshair;
+        }
 
-    <div class="card-body">
-        <div class="form-group">
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.tratamiento-riesgos.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-            </div>
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $tratamientoRiesgo->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.nivelriesgo') }}
-                        </th>
-                        <td>
-                            {{ $tratamientoRiesgo->nivelriesgo }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.control') }}
-                        </th>
-                        <td>
-                            {{ $tratamientoRiesgo->control->anexo_indice }} {{ $tratamientoRiesgo->control->anexo_politica }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.acciones') }}
-                        </th>
-                        <td>
-                            {{ $tratamientoRiesgo->acciones }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.responsable') }}
-                        </th>
-                        <td>
-                            {{ $tratamientoRiesgo->empleado->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.fechacompromiso') }}
-                        </th>
-                        <td>
-                            {{ $tratamientoRiesgo->fechacompromiso }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.prioridad') }}
-                        </th>
-                        <td>
-                            {{ App\Models\TratamientoRiesgo::PRIORIDAD_SELECT[$tratamientoRiesgo->prioridad] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.estatus') }}
-                        </th>
-                        <td>
-                            {{ $tratamientoRiesgo->estatus }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.probabilidad') }}
-                        </th>
-                        <td>
-                            {{ $tratamientoRiesgo->probabilidad }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.impacto') }}
-                        </th>
-                        <td>
-                            {{ $tratamientoRiesgo->impacto }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.tratamientoRiesgo.fields.nivelriesgoresidual') }}
-                        </th>
-                        <td>
-                            {{ $tratamientoRiesgo->nivelriesgoresidual }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.tratamiento-riesgos.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+        canvas {
+            border: 2px dotted #CCCCCC;
+            border-radius: 15px;
+            cursor: crosshair;
+        }
 
 
+        img.rounded-circle {
+            border-radius: 0 !important;
+            clip-path: circle(35px at 50% 50%);
+            height: 70px;
+        }
+
+        .card-custom {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            margin: auto;
+            text-align: center;
+            height: 100%;
+            font-family: arial;
+        }
+
+        .title-custom {
+            color: grey;
+            font-size: 14px;
+        }
+    </style>
+
+    <div>
+        <div class="mt-4 row justify-content-center">
+            <div class="card col-sm-12 col-md-10">
+                <div class="card-body">
+
+                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                        onclick="javascript:window.print()">
+                        <i class="fas fa-print"></i>
+                        Imprimir
+                    </button>
+
+                    @php
+                        use App\Models\Organizacion;
+                        $organizacion = Organizacion::first();
+                        $logotipo = $organizacion->logotipo;
+                        $empresa = $organizacion->empresa;
+                    @endphp
+
+                    <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                        <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                            <img src="{{ asset($logotipo) }}" class="mt-2" style="width:90px;">
+                        </div>
+                        <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                            <span
+                                style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
+                            <br>
+                            <span style="color:#345183; font-size:15px;"><strong>Control de Cambios
+                                    Administrativos:</strong></span>
+
+                        </div>
+                        <div class="col-3 p-2">
+                            <span style="color:#345183;">ID:
+                                {{ \Carbon\Carbon::parse($tratamientoRiesgo->created_at)->format('d-m-Y') }}
+                            </span>
+                        </div>
+                     
+                    </div>
+
+
+                    <div class="col-3 p-2">
+                        <span style="color:#345183;">ID:
+                            {{ \Carbon\Carbon::parse($tratamientoRiesgo->created_at)->format('d-m-Y') }}
+                        </span>
+                    </div>
+                  
+
+                   
 
 @endsection

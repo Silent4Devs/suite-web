@@ -593,4 +593,9 @@ class Empleado extends Model
     {
         return $this->belongsToMany(PlanificacionControl::class, 'planificacion_id');
     }
+
+    public function tratamiento()
+    {
+        return $this->belongsToMany(PlanificacionControl::class, 'tratamiento_id');
+    }
 }
