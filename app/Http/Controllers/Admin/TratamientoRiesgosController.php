@@ -8,6 +8,7 @@ use App\Http\Requests\StoreTratamientoRiesgoRequest;
 use App\Http\Requests\UpdateTratamientoRiesgoRequest;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Empleado;
+use App\Models\Proceso;
 use App\Models\Team;
 use App\Models\TratamientoRiesgo;
 use App\Models\User;
@@ -44,46 +45,47 @@ class TratamientoRiesgosController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
+            // $table->editColumn('id', function ($row) {
+            //     return $row->id ? $row->id : '';
+            // });
+            $table->editColumn('identificador', function ($row) {
+                return $row->identificador ? $row->identificador : '';
             });
-            $table->editColumn('nivelriesgo', function ($row) {
-                return $row->nivelriesgo ? $row->nivelriesgo : '';
+            $table->editColumn('descripcionriesgo', function ($row) {
+                return $row->descripcionriesgo ? $row->descripcionriesgo : '';
             });
-            $table->addColumn('control_id', function ($row) {
-                return $row->control ? $row->control->anexo_politica : '';
+            $table->addColumn('tipo_riesgo', function ($row) {
+                return $row->tipo_riesgo ? $row->tipo_riesgo : '';
+            });
+
+            $table->editColumn('riesgototal', function ($row) {
+                return $row->riesgototal ? $row->riesgototal : '';
+            });
+
+            $table->editColumn('riesgo_total_residual', function ($row) {
+                return $row->riesgo_total_residual ? $row->riesgo_total_residual : '';
             });
 
             $table->editColumn('acciones', function ($row) {
                 return $row->acciones ? $row->acciones : '';
             });
-            // $table->addColumn('responsable_name', function ($row) {
-            //     return $row->responsable ? $row->responsable->name : '';
-            // });
-
-            $table->addColumn('id_reviso', function ($row) {
-                return $row->empleado ? $row->empleado->name : '';
+           
+            $table->editColumn('proceso', function ($row) {
+                return $row->proceso ? $row->proceso->nombre : '';
+            });
+                     
+            $table->addColumn('responsable', function ($row) {
+                return $row->responsable ? $row->responsable : '';
             });
 
             $table->addColumn('fechacompromiso', function ($row) {
                 return $row->fechacompromiso ? $row->fechacompromiso : '';
             });
 
-            $table->editColumn('prioridad', function ($row) {
-                return $row->prioridad ? TratamientoRiesgo::PRIORIDAD_SELECT[$row->prioridad] : '';
+            $table->addColumn('inversion_requerida', function ($row) {
+                return $row->inversion_requerida ? $row->inversion_requerida : '';
             });
-            $table->editColumn('estatus', function ($row) {
-                return $row->estatus ? $row->estatus : '';
-            });
-            $table->editColumn('probabilidad', function ($row) {
-                return $row->probabilidad ? $row->probabilidad : '';
-            });
-            $table->editColumn('impacto', function ($row) {
-                return $row->impacto ? $row->impacto : '';
-            });
-            $table->editColumn('nivelriesgoresidual', function ($row) {
-                return $row->nivelriesgoresidual ? $row->nivelriesgoresidual : '';
-            });
+
 
             $table->rawColumns(['actions', 'placeholder', 'control', 'responsable']);
 
@@ -118,6 +120,16 @@ class TratamientoRiesgosController extends Controller
         return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Guardado con éxito');
     }
 
+    public function vincularParticipantes($request, $planificacionControl)
+    {
+        $arrstrParticipantes = explode(',', $request->participantes);
+        $participantes = array_map(function ($valor) {
+            return intval($valor);
+        }, $arrstrParticipantes);
+        $planificacionControl->participantes()->sync($participantes);
+        
+    }
+
     public function edit($tratamientos)
     {
         abort_if(Gate::denies('tratamiento_de_los_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -126,8 +138,11 @@ class TratamientoRiesgosController extends Controller
         $controls = DeclaracionAplicabilidad::with('control')->get();
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::alta()->with('area')->get();
+        $procesos = Proceso::get();
 
-        return view('admin.tratamientoRiesgos.edit', compact('tratamientos', 'controls', 'responsables', 'empleados'));
+      
+   
+        return view('admin.tratamientoRiesgos.edit', compact('procesos','tratamientos', 'controls', 'responsables', 'empleados'));
     }
 
     public function update(UpdateTratamientoRiesgoRequest $request, TratamientoRiesgo $tratamientoRiesgo)
@@ -135,6 +150,10 @@ class TratamientoRiesgosController extends Controller
         abort_if(Gate::denies('tratamiento_de_los_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tratamientoRiesgo->update($request->all());
+
+        if($request->participantes){
+            $this->vincularParticipantes($request, $tratamientoRiesgo);
+            }
 
         return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Editado con éxito');
     }

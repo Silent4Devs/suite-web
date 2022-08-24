@@ -33,6 +33,7 @@ use App\Models\Sede;
 use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
+use App\Models\TratamientoRiesgo;
 use App\Models\Vulnerabilidad;
 use Gate;
 use Illuminate\Http\Request;
@@ -810,6 +811,20 @@ class MatrizRiesgosController extends Controller
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
 
+        if($matrizRiesgo->riesgo_total >=90){
+            $tratamiento_riesgo=TratamientoRiesgo::create([
+                'matriz_sistema_gestion_id'=>$matrizRiesgo->id,
+                'identificador'=>$request->identificador,
+                'descripcionriesgo'=>$request->descripcionriesgo,
+                'tipo_riesgo'=>$request->tipo_riesgo,
+                'riesgototal'=>$request->riesgo_total,
+                'riesgo_total_residual'=>$request->riesgo_residual,
+                'acciones'=>$request->acciones,
+                'id_proceso'=>$request->id_proceso,
+                'id_dueno'=>$request->id_responsable,
+            ]);
+        }
+
         return redirect()->route('admin.matriz-seguridad.sistema-gestion', ['id' => $request->id_analisis])->with('success', 'Guardado con éxito');
     }
 
@@ -866,6 +881,10 @@ class MatrizRiesgosController extends Controller
             // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
+
+        
+
+        
 
         return redirect()->route('admin.matriz-seguridad.sistema-gestion', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
     }

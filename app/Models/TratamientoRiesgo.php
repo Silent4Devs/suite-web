@@ -37,7 +37,19 @@ class TratamientoRiesgo extends Model
         'Baja'    => 'Baja',
     ];
 
+    const TIPO_INVERSION_SELECT = [
+        '1' => 'Sí',
+        '0' => 'No',
+    ];
+
     protected $fillable = [
+        'identificador',
+        'descripcionriesgo',
+        'tipo_riesgo',
+        'riesgototal',
+        'riesgo_total_residual',
+        'acciones',
+        'id_proceso',    
         'nivelriesgo',
         'control_id',
         'id_reviso',
@@ -49,10 +61,12 @@ class TratamientoRiesgo extends Model
         'probabilidad',
         'impacto',
         'nivelriesgoresidual',
+        'id_dueno',
+        'inversion_requerida',
+        'matriz_sistema_gestion_id',
         'created_at',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -65,10 +79,10 @@ class TratamientoRiesgo extends Model
         return $this->belongsTo(DeclaracionAplicabilidad::class, 'control_id', 'id');
     }
 
-    public function responsable()
-    {
-        return $this->belongsTo(User::class, 'responsable_id');
-    }
+    // public function responsable()
+    // {
+    //     return $this->belongsTo(User::class, 'responsable_id');
+    // }
 
     public function getFechacompromisoAttribute($value)
     {
@@ -85,8 +99,18 @@ class TratamientoRiesgo extends Model
         return $this->belongsTo(Team::class, 'team_id');
     }
 
-    public function empleado()
+    public function responsable()
     {
-        return $this->belongsTo(Empleado::class, 'id_reviso', 'id')->alta()->with('area');
+        return $this->belongsTo(Empleado::class, 'id_dueno', 'id')->alta()->with('area');
+    }
+
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'id_proceso');
+    }
+
+    public function participantes()
+    {
+        return $this->belongsToMany(Empleado::class, 'empleados_tratamiento_riesgos', 'tratamiento_id', 'empleado_id')->alta()->with('area');
     }
 }
