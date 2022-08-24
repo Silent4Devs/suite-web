@@ -545,9 +545,9 @@
 
             });
 
-            $(".yearpicker").yearpicker(
-                year: {!! $indicadoresSgsi->ano !!},
-            )
+            $(".yearpicker").yearpicker({
+                year: {!! $indicadoresSgsi->ano !!},   
+            })
 
         });
     </script>
