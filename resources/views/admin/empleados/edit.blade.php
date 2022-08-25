@@ -461,21 +461,7 @@
     </script> --}}
     <script>
         $(document).ready(function() {
-            $('.areas').select2({
-                theme: 'bootstrap4',
-            });
-            $('.select-search').select2({
-                theme: 'bootstrap4',
-            });
-            $('.supervisor').select2({
-                theme: 'bootstrap4',
-            });
-            $('#puesto_id').select2({
-                theme: 'bootstrap4',
-            });
-            $('#perfil_empleado_id').select2({
-                theme: 'bootstrap4',
-            });
+           
             $('#nacionalidad').select2({
                 theme: 'bootstrap4',
                 templateResult: customizeNationalitySelect,
@@ -2884,10 +2870,24 @@
             $('.modal-backdrop').hide();
             toastr.success('Puesto de empleado creado con éxito');
         });
-
-        window.initSelect2 = () => {
-            $('.select2').select2({
+        $('.select2').select2({
                 'theme': 'bootstrap4'
+            });
+        window.initSelect2 = () => {
+            $('.areas').select2({
+                theme: 'bootstrap4',
+            });
+            $('.select-search').select2({
+                theme: 'bootstrap4',
+            });
+            $('.supervisor').select2({
+                theme: 'bootstrap4',
+            });
+            $('#puesto_id').select2({
+                theme: 'bootstrap4',
+            });
+            $('#perfil_empleado_id').select2({
+                theme: 'bootstrap4',
             });
         }
 
