@@ -111,5 +111,12 @@ class AnalisisImpacto extends Model
         'social_q_3',
         'incidentes_q_26',
         'incidentes_q_27',
+        // firmas
+        'firma_Entrevistado',
+        'firma_Jefe',
+        'firma_Entrevistador',
+        'exite_firma_Entrevistado',
+        'exite_firma_Jefe',
+        'exite_firma_Entrevistador',
     ];
 }

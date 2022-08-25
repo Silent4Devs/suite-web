@@ -104,6 +104,11 @@ class TratamientoRiesgo extends Model
         return $this->belongsTo(Empleado::class, 'id_dueno', 'id')->alta()->with('area');
     }
 
+    public function registro()
+    {
+        return $this->belongsTo(Empleado::class, 'id_registro', 'id')->alta()->with('area');
+    }
+
     public function proceso()
     {
         return $this->belongsTo(Proceso::class, 'id_proceso');
