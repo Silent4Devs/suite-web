@@ -1007,8 +1007,8 @@
             <ul class="ml-auto c-header-nav">
                 @if (count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                            aria-expanded="false">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
                             {{ strtoupper(app()->getLocale()) }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
@@ -1057,8 +1057,8 @@
                 <ul class="ml-auto c-header-nav">
 
                     <li class="c-header-nav-item dropdown show">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                            aria-expanded="false">
+                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
                                     <span class="mr-2" style="font-weight: bold;">
@@ -1202,8 +1202,8 @@
 
     <script>
         window.Laravel.user = {!! json_encode([
-    'user' => auth()->check() ? auth()->user()->id : null,
-]) !!};
+            'user' => auth()->check() ? auth()->user()->id : null,
+        ]) !!};
     </script>
     <script src="//unpkg.com/alpinejs" defer></script>
 

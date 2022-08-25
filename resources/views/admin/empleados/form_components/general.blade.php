@@ -70,8 +70,9 @@
             @livewire('puesto-select', ['puestos_seleccionado' => $puestos_seleccionado])
             <small id="error_puesto_id" class="text-danger errores"></small>
         </div>
-        <button id="btnAgregarPuesto" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
-            data-toggle="modal" data-target="#PuestoModal" title="Agregar Puesto"><i class="fas fa-plus"></i></button>
+        <button id="btnAgregarPuesto" onclick="event.preventDefault();" class="text-white btn btn-sm"
+            style="background:#3eb2ad;height: 34px;" data-toggle="modal" data-target="#PuestoModal"
+            title="Agregar Puesto"><i class="fas fa-plus"></i></button>
         @livewire('puesto-create')
 
         @if ($errors->has('puesto_id'))
@@ -116,25 +117,12 @@
                     Nivel Jerárquico</label>
             </div>
             <div class="col-sm-9 col-md-9 col-9 pr-0">
-                <select class="form-control {{ $errors->has('perfil_empleado_id') ? 'is-invalid' : '' }}"
-                    name="perfil_empleado_id" id="perfil_empleado_id" value="{{ old('perfil_empleado_id', '') }}"
-                    required>
-                    <option value="" selected disabled>
-                        -- Selecciona un perfil --
-                    </option>
-                    @foreach ($perfiles as $perfil)
-                        <option value="{{ $perfil->id }}"
-                            {{ old('perfil_empleado_id', $empleado->perfil_empleado_id) == $perfil->id ? ' selected="selected"' : '' }}>
-                            {{ $perfil->nombre }}
-                        </option>
-                    @endforeach
-                </select>
-                <small id="error_perfil_empleado_id" class="text-danger errores"></small>
+                @livewire('perfil-select', ['perfiles_seleccionado' => $perfiles_seleccionado])
             </div>
             <div class="col-sm-3 col-md-3 col-3">
-                <button id="btnAgregarPerfil" class="text-white btn btn-sm" style="background:#3eb2ad;height: 34px;"
-                    data-toggle="modal" data-target="#PerfilModal" title="Agregar Perfil"><i
-                        class="fas fa-plus"></i></button>
+                <button id="btnAgregarPerfil" onclick="event.preventDefault();" class="text-white btn btn-sm"
+                    style="background:#3eb2ad;height: 34px;" data-toggle="modal" data-target="#PerfilModal"
+                    title="Agregar Perfil"><i class="fas fa-plus"></i></button>
                 @livewire('perfil-create')
             </div>
             @if ($errors->has('perfil_empleado_id'))
