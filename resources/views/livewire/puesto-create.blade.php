@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-sm-12 col-lg-12">
                         <div class="form-group">
-                            <label for="descripcion">Descripción: <span class="text-danger">*</span></label>
+                            <label for="descripcion">Descripción: </label>
                             <input type="text"
                                 class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
                                 id="descripcion" aria-describedby="descripcion" wire:model.defer="descripcion"

@@ -379,7 +379,7 @@
                 </a>
             </li>
         @endcan
-        {{-- @can('analisis_de_riesgo_integral_acceder')
+        @can('analisis_de_riesgo_integral_acceder')
         <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.analisis-impacto.menu') }}"
                 class="c-sidebar-nav-link {{ request()->is('admin/matriz-riesgos') || request()->is('admin/matriz-riesgos*') ? 'active' : '' }}">
@@ -387,7 +387,7 @@
                 <font class="letra_blanca"> Análisis de Impacto (BIA) </font>
             </a>
         </li>
-    @endcan --}}
+    @endcan
 
         @can('sistema_de_gestion_acceder')
             <li class="c-sidebar-nav-item">

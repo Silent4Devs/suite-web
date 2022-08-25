@@ -416,21 +416,21 @@
         </script>
         <script>
             $(document).ready(function() {
-                $('.areas').select2({
-                    theme: 'bootstrap4',
-                });
-                $('.select-search').select2({
-                    theme: 'bootstrap4',
-                });
-                $('.supervisor').select2({
-                    theme: 'bootstrap4',
-                });
-                $('#puesto_id').select2({
-                    theme: 'bootstrap4',
-                });
-                $('#perfil_empleado_id').select2({
-                    theme: 'bootstrap4',
-                });
+                // $('.areas').select2({
+                //     theme: 'bootstrap4',
+                // });
+                // $('.select-search').select2({
+                //     theme: 'bootstrap4',
+                // });
+                // $('.supervisor').select2({
+                //     theme: 'bootstrap4',
+                // });
+                // $('#puesto_id').select2({
+                //     theme: 'bootstrap4',
+                // });
+                // $('#perfil_empleado_id').select2({
+                //     theme: 'bootstrap4',
+                // });
                 $('#nacionalidad').select2({
                     theme: 'bootstrap4',
                     templateResult: customizeNationalitySelect,
@@ -607,7 +607,7 @@
 
         <script>
             $(document).ready(function() {
-                document.getElementById('btnSiguiente').addEventListener('click', function(e) {
+                document.getElementById('btnSiguiente')?.addEventListener('click', function(e) {
                     e.preventDefault();
                     $("#formEmpleado").removeAttr('action');
                     $("#formEmpleado").attr('action', '{{ route('admin.empleados.storeWithCompetencia') }}');
@@ -633,7 +633,7 @@
                 })
 
                 let vigencia_certificado = document.getElementById('vigencia');
-                vigencia_certificado.addEventListener('change', function() {
+                vigencia_certificado?.addEventListener('change', function() {
                     // console.log(this);
                     let vigencia = this.value;
                     let estatus = document.getElementById('vencio_alta');
@@ -656,32 +656,32 @@
 
 
 
-                document.getElementById('btn-agregar-experiencia').addEventListener('click', function(e) {
+                document.getElementById('btn-agregar-experiencia')?.addEventListener('click', function(e) {
                     e.preventDefault();
                     limpiarErrores();
                     suscribirExperiencia()
                 })
 
-                document.getElementById('btn-agregar-educacion').addEventListener('click', function(e) {
+                document.getElementById('btn-agregar-educacion')?.addEventListener('click', function(e) {
                     e.preventDefault();
                     limpiarErrores();
                     suscribirEducacion()
                 })
 
-                document.getElementById('btn-suscribir-curso').addEventListener('click', function(e) {
+                document.getElementById('btn-suscribir-curso')?.addEventListener('click', function(e) {
                     e.preventDefault();
                     limpiarErrores();
                     suscribirCurso()
                 })
 
-                document.getElementById('btn-suscribir-certificado').addEventListener('click', function(e) {
+                document.getElementById('btn-suscribir-certificado')?.addEventListener('click', function(e) {
                     e.preventDefault();
                     limpiarErrores();
                     suscribirCertificado()
                 })
 
 
-                document.getElementById('btnGuardar').addEventListener('click', function(e) {
+                document.getElementById('btnGuardar')?.addEventListener('click', function(e) {
                     // e.preventDefault();
                     enviarExperiencia()
                     enviarEducacion()
@@ -1021,10 +1021,25 @@
                 $('.modal-backdrop').hide();
                 toastr.success('Puesto de empleado creado con éxito');
             });
-
+            $('.select2').select2({
+                'theme': 'bootstrap4'
+            });
             window.initSelect2 = () => {
-                $('.select2').select2({
-                    'theme': 'bootstrap4'
+
+                $('.areas').select2({
+                    theme: 'bootstrap4',
+                });
+                $('.select-search').select2({
+                    theme: 'bootstrap4',
+                });
+                $('.supervisor').select2({
+                    theme: 'bootstrap4',
+                });
+                $('#puesto_id').select2({
+                    theme: 'bootstrap4',
+                });
+                $('#perfil_empleado_id').select2({
+                    theme: 'bootstrap4',
                 });
             }
 
