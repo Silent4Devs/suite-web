@@ -145,9 +145,6 @@
                                         <th style="vertical-align: top; min-width:500px;">
                                             Descripción
                                         </th>
-                                        <th style="vertical-align: top; min-width:500px;">
-                                            Comentarios
-                                        </th>
                                         <th style="vertical-align: top">
                                             Opciones
                                         </th>
@@ -423,11 +420,6 @@
                         data: 'descripcion',
                         name: 'descripcion',
                         className: 'descripcion'
-                    },
-                    {
-                        data: 'comentarios',
-                        name: 'comentarios',
-                        className: 'comentarios'
                     },
                     // {
                     //     data: 'metodo_causa',

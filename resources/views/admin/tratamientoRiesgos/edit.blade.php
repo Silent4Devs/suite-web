@@ -168,7 +168,7 @@
 
                 <div class="mb-4 ml-4 w-100" style="border-bottom: solid 2px #345183;">
                     <span class="ml-1" style="font-size: 17px; font-weight: bold;">
-                        Participantes</span>
+                        Participantes en la atención del riesgo</span>
                 </div>
                 <div class="pl-3 row w-100">
                     <div class="col-12" style="text-align: end">

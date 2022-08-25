@@ -34,72 +34,20 @@
                         <th style="min-width: 150px;">
                             Proceso
                         </th>
-                        <th style="min-width: 100px;">
+                        <th style="min-width: 80px;">
                            Dueño
                         </th>
                         <th style="min-width: 130px;">
                             Fecha compromiso
                         </th>
-                        <th style="min-width: 150px;">
+                        <th style="min-width: 120px;">
                             Inversión requerida
                         </th>
                         <th style="min-width: 20px;">
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($controles as $key => $item)
-                                    <option value="{{ $item->control }}">{{ $item->control }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <select class="search" strict="true">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach (App\Models\TratamientoRiesgo::PRIORIDAD_SELECT as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+                   
                 </thead>
             </table>
         </div>
