@@ -60,6 +60,9 @@
         background-color: rgba(0, 0, 0, 0) !important;
     }
 
+    .dias td {
+        padding: 0;
+    }
 </style>
 @section('content')
     <ol class="breadcrumb">
@@ -442,20 +445,28 @@
                 </div>
             </div>
             <div class="row">
+                <div class="text-center form-group col-12 mt-4"
+                    style="background-color:#9da0a6; border-radius: 100px; color: white;">
+                    SEMESTRES
+                </div>
                 <div class="text-center form-group col-12">
                     <table class="table">
                         <TR style="color: rgb(0, 0, 0); text-align:center; height:65px; font-size:15px;"
                             id="color-relleno">
                             <TH>
                                 <div class="form-check">
-                                    <input class="form-check-input check_calendario" type="checkbox"
-                                        id="primer_semestre">
+                                    <input type="hidden" value="1" name="primer_semestre">
+                                    <input class="form-check-input check_calendario" type="checkbox" id="primer_semestre"
+                                        name="primer_semestre" value="2"
+                                        {{ old('primer_semestre', $cuestionario->primer_semestre) == 2 ? 'checked' : '' }}>
                                     <label for="primer_semestre" class="label_cuadro">PRIMER SEMESTRE</label>
                                 </div>
                             </TH>
                             <TH>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="segundo_semestre">
+                                    <input type="hidden" value="1" name="segundo_semestre">
+                                    <input type="checkbox" id="segundo_semestre" name="segundo_semestre" value="2"
+                                        {{ old('segundo_semestre', $cuestionario->segundo_semestre) == 2 ? 'checked' : '' }}>
                                     <label for="segundo_semestre" class="label_cuadro_dos">SEGUNDO SEMESTRE</label>
                                 </div>
                             </TH>
@@ -463,95 +474,127 @@
                     </table>
                 </div>
 
+                <div class="text-center form-group col-12"
+                    style="background-color:#9da0a6; border-radius: 100px; color: white;">
+                    MESES
+                </div>
+
                 <div class="text-center form-group col-12">
                     <table class="table table_checkbox">
-                        <TR class="mt-5"
-                            style="color: rgb(0, 0, 0); text-align:center; height:65px;">
+                        <TR class="mt-5" style="color: rgb(0, 0, 0); text-align:center; height:65px;">
                             <TH style="position: relative;">
                                 <label for="eneCheckbox">ENE</label><br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="eneCheckbox">
+                                    <input type="hidden" value="1" name="ene">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="ene"
+                                        id="eneCheckbox" {{ old('ene', $cuestionario->ene) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
                                 <label for="febCheckbox">FEB</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="febCheckbox">
+                                    <input type="hidden" value="1" name="feb">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="feb"
+                                        id="febCheckbox" {{ old('feb', $cuestionario->feb) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
                                 <label for="marCheckbox">MAR</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="marCheckbox">
+                                    <input type="hidden" value="1" name="mar">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="mar"
+                                        id="marCheckbox" {{ old('mar', $cuestionario->mar) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
                                 <label for="abrCheckbox">ABR</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="abrCheckbox">
+                                    <input type="hidden" value="1" name="abr">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="abr"
+                                        id="abrCheckbox" {{ old('abr', $cuestionario->abr) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
                                 <label for="mayCheckbox">MAY</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="mayCheckbox">
+                                    <input type="hidden" value="1" name="may">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="may"
+                                        id="mayCheckbox" {{ old('may', $cuestionario->may) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
-                               <label for="junCheckbox">JUN</label> 
+                                <label for="junCheckbox">JUN</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="junCheckbox">
+                                    <input type="hidden" value="1" name="jun">
+                                    <input class=" d-none" type="checkbox" value="2" name="jun"
+                                        id="junCheckbox" {{ old('jun', $cuestionario->jun) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
                                 <label for="julCheckbox">JUL</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="julCheckbox">
+                                    <input type="hidden" value="1" name="jul">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="jul"
+                                        id="julCheckbox" {{ old('jul', $cuestionario->jul) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
                                 <label for="agoCheckbox">AGO</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="agoCheckbox">
+                                    <input type="hidden" value="1" name="ago">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="ago"
+                                        id="agoCheckbox" {{ old('ago', $cuestionario->ago) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
                                 <label for="sepCheckbox">SEP</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="sepCheckbox">
+                                    <input type="hidden" value="1" name="sep">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="sep"
+                                        id="sepCheckbox" {{ old('sep', $cuestionario->sep) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
                                 <label for="octCheckbox">OCT</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="octCheckbox">
+                                    <input type="hidden" value="1" name="oct">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="oct"
+                                        id="octCheckbox" {{ old('oct', $cuestionario->oct) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
                                 <label for="novCheckbox">NOV</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="novCheckbox">
+                                    <input type="hidden" value="1" name="nov">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="nov"
+                                        id="novCheckbox" {{ old('nov', $cuestionario->nov) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                             <TH>
                                 <label for="dicCheckbox">DIC</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="dicCheckbox">
+                                    <input type="hidden" value="1" name="dic">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="dic"
+                                        id="dicCheckbox" {{ old('dic', $cuestionario->dic) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TH>
                         </TR>
                     </table>
+                </div>
+                <div class="text-center form-group col-12"
+                    style="background-color:#9da0a6; border-radius: 100px; color: white;">
+                    SEMANAS
                 </div>
 
                 <div class="text-center form-group col-12">
@@ -561,7 +604,9 @@
                                 <label for="s1Checkbox">S1</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="s1Checkbox">
+                                    <input type="hidden" value="1" name="s1">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="s1"
+                                        id="s1Checkbox" {{ old('s1', $cuestionario->s1) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -570,250 +615,328 @@
                                 </label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="s2Checkbox">
+                                    <input type="hidden" value="1" name="s2">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="s2"
+                                        id="s2Checkbox" {{ old('s2', $cuestionario->s2) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="s3Checkbox">S3</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="s3Checkbox">
+                                    <input type="hidden" value="1" name="s3">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="s3"
+                                        id="s3Checkbox" {{ old('s3', $cuestionario->s3) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="s4Checkbox">S4</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="s4Checkbox">
+                                    <input type="hidden" value="1" name="s4">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="s4"
+                                        id="s4Checkbox" {{ old('s4', $cuestionario->s4) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                         </TR>
                     </table>
                 </div>
 
+                <div class="text-center form-group col-12"
+                    style="background-color:#9da0a6; border-radius: 100px; color: white;">
+                    DÍAS DEL MES
+                </div>
+
                 <div class="text-center form-group col-12">
-                    <table class="table table-sm table_checkbox">
-                        <TR
-                            style="color: rgb(0, 0, 0); text-align:center; font-size:10px; height:65px;">
+                    <table class="table table-sm table_checkbox table-responsive">
+                        <TR style="color: rgb(0, 0, 0); text-align:center; font-size:10px; height:65px;">
                             <TD>
                                 <label for="check_number_01">01</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_01">
+                                    <input type="hidden" value="1" name="d1">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d1"
+                                        id="check_number_01" {{ old('d1', $cuestionario->d1) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_02">02</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_02">
+                                    <input type="hidden" value="1" name="d2">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d2"
+                                        id="check_number_02" {{ old('d2', $cuestionario->d2) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_03">03</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_03">
+                                    <input type="hidden" value="1" name="d3">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d3"
+                                        id="check_number_03" {{ old('d3', $cuestionario->d3) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_04">04</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_04">
+                                    <input type="hidden" value="1" name="d4">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d4"
+                                        id="check_number_04" {{ old('d4', $cuestionario->d4) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_05">05</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_05">
+                                    <input type="hidden" value="1" name="d5">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d5"
+                                        id="check_number_05" {{ old('d5', $cuestionario->d5) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_06">06</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_06">
+                                    <input type="hidden" value="1" name="d6">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d6"
+                                        id="check_number_06" {{ old('d6', $cuestionario->d6) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_07">07</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_07">
+                                    <input type="hidden" value="1" name="d7">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d7"
+                                        id="check_number_07" {{ old('d7', $cuestionario->d7) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_08">08</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_08">
+                                    <input type="hidden" value="1" name="d8">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d8"
+                                        id="check_number_08" {{ old('d8', $cuestionario->d8) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_09">09</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_09">
+                                    <input type="hidden" value="1" name="d9">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d9"
+                                        id="check_number_09" {{ old('d9', $cuestionario->d9) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_010">10</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_010">
+                                    <input type="hidden" value="1" name="d10">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d10"
+                                        id="check_number_010" {{ old('d10', $cuestionario->d10) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_011">11</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_011">
+                                    <input type="hidden" value="1" name="d11">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d11"
+                                        id="check_number_011" {{ old('d11', $cuestionario->d11) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_012">12</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_012">
+                                    <input type="hidden" value="1" name="d12">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d12"
+                                        id="check_number_012" {{ old('d12', $cuestionario->d12) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_013">13</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_013">
+                                    <input type="hidden" value="1" name="d13">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d13"
+                                        id="check_number_013" {{ old('d13', $cuestionario->d13) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_014">14</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_014">
+                                    <input type="hidden" value="1" name="d14">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d14"
+                                        id="check_number_014" {{ old('d14', $cuestionario->d14) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_015">15</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_015">
+                                    <input type="hidden" value="1" name="d15">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d15"
+                                        id="check_number_015" {{ old('d15', $cuestionario->d15) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_016">16</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_016">
+                                    <input type="hidden" value="1" name="d16">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d16"
+                                        id="check_number_016" {{ old('d16', $cuestionario->d16) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_017">17</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_017">
+                                    <input type="hidden" value="1" name="d17">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d17"
+                                        id="check_number_017" {{ old('d17', $cuestionario->d17) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_018">18</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_018">
+                                    <input type="hidden" value="1" name="d18">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d18"
+                                        id="check_number_018" {{ old('d18', $cuestionario->d18) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_019">19</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_019">
+                                    <input type="hidden" value="1" name="d19">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d19"
+                                        id="check_number_019" {{ old('d19', $cuestionario->d19) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_020">20</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_020">
+                                    <input type="hidden" value="1" name="d20">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d20"
+                                        id="check_number_020" {{ old('d20', $cuestionario->d20) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_021">21</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_021">
+                                    <input type="hidden" value="1" name="d21">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d21"
+                                        id="check_number_021" {{ old('d21', $cuestionario->d21) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_022">22</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_022">
+                                    <input type="hidden" value="1" name="d22">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d22"
+                                        id="check_number_022" {{ old('d22', $cuestionario->d22) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_023">23</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_023">
+                                    <input type="hidden" value="1" name="d23">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d23"
+                                        id="check_number_023" {{ old('d23', $cuestionario->d23) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_024">24</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_024">
+                                    <input type="hidden" value="1" name="d24">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d24"
+                                        id="check_number_024" {{ old('d24', $cuestionario->d24) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_025">25</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_025">
+                                    <input type="hidden" value="1" name="d25">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d25"
+                                        id="check_number_025" {{ old('d25', $cuestionario->d25) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_026">26</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_026">
+                                    <input type="hidden" value="1" name="d26">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d26"
+                                        id="check_number_026" {{ old('d26', $cuestionario->d26) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_027">27</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_027">
+                                    <input type="hidden" value="1" name="d27">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d27"
+                                        id="check_number_027" {{ old('d27', $cuestionario->d27) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_028">28</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_028">
+                                    <input type="hidden" value="1" name="d28">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d28"
+                                        id="check_number_028" {{ old('d28', $cuestionario->d28) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_029">29</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_029">
+                                    <input type="hidden" value="1" name="d29">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d29"
+                                        id="check_number_029" {{ old('d29', $cuestionario->d29) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_030">30</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_030">
+                                    <input type="hidden" value="1" name="d30">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d30"
+                                        id="check_number_030" {{ old('d30', $cuestionario->d30) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_number_031">31</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_number_031">
+                                    <input type="hidden" value="1" name="d31">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d31"
+                                        id="check_number_031" {{ old('d31', $cuestionario->d31) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                         </TR>
                     </table>
+                </div>
+
+
+                <div class="text-center form-group col-12"
+                    style="background-color:#9da0a6; border-radius: 100px; color: white;">
+                    HORAS DEL DÍA
                 </div>
 
                 <div class="text-center form-group col-12">
@@ -824,168 +947,216 @@
                                 <label for="check_no_01">01</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_01">
+                                      <input type="hidden" value="1" name="h1">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h1"
+                                        id="check_no_01" {{ old('h1', $cuestionario->h1) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_02">02</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_02">
+                                      <input type="hidden" value="1" name="h2">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h2"
+                                        id="check_no_02" {{ old('h2', $cuestionario->h2) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_03">03</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_03">
+                                      <input type="hidden" value="1" name="h3">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h3"
+                                        id="check_no_03" {{ old('h3', $cuestionario->h3) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_04">04</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_04">
+                                      <input type="hidden" value="1" name="h4">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h4"
+                                        id="check_no_04" {{ old('h4', $cuestionario->h4) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_05">05</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_05">
+                                      <input type="hidden" value="1" name="h5">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h5"
+                                        id="check_no_05" {{ old('h5', $cuestionario->h5) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_06">06</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_06">
+                                      <input type="hidden" value="1" name="h6">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h6"
+                                        id="check_no_06" {{ old('h6', $cuestionario->h6) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_07">07</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_07">
+                                      <input type="hidden" value="1" name="h7">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h7"
+                                        id="check_no_07" {{ old('h7', $cuestionario->h7) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_08">08</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_08">
+                                      <input type="hidden" value="1" name="h8">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h8"
+                                        id="check_no_08" {{ old('h8', $cuestionario->h8) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_09">09</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_09">
+                                      <input type="hidden" value="1" name="h9">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h9"
+                                        id="check_no_09" {{ old('h9', $cuestionario->h9) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_10">10</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_10">
+                                      <input type="hidden" value="1" name="h10">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h10"
+                                        id="check_no_10" {{ old('h10', $cuestionario->h10) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_11">11</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_11">
+                                      <input type="hidden" value="1" name="h11">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h11"
+                                        id="check_no_11" {{ old('h11', $cuestionario->h11) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_12">12</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_12">
+                                      <input type="hidden" value="1" name="h12">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h12"
+                                        id="check_no_12" {{ old('h12', $cuestionario->h12) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_13">13</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_13">
+                                      <input type="hidden" value="1" name="h13">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h13"
+                                        id="check_no_13" {{ old('h13', $cuestionario->h13) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_14">14</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_14">
+                                    <input type="hidden" value="1" name="h14">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h14"
+                                        id="check_no_14" {{ old('h14', $cuestionario->h14) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_15">15</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_15">
+                                    <input type="hidden" value="1" name="h15">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h15"
+                                        id="check_no_15" {{ old('h15', $cuestionario->h15) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_16">16</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_16">
+                                    <input type="hidden" value="1" name="h16">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h16"
+                                        id="check_no_16" {{ old('h16', $cuestionario->h16) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_17">17</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_17">
+                                    <input type="hidden" value="1" name="h17">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h17"
+                                        id="check_no_17" {{ old('h17', $cuestionario->h17) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_18">18</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_18">
+                                    <input type="hidden" value="1" name="h18">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h18"
+                                        id="check_no_18" {{ old('h18', $cuestionario->h18) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_19">19</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_19">
+                                    <input type="hidden" value="1" name="h19">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h19"
+                                        id="check_no_19" {{ old('h19', $cuestionario->h19) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_20">20</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_20">
+                                    <input type="hidden" value="1" name="h20">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h20"
+                                        id="check_no_20" {{ old('h20', $cuestionario->h20) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_21">21</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_21">
+                                    <input type="hidden" value="1" name="h21">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h21"
+                                        id="check_no_21" {{ old('h21', $cuestionario->h21) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_22">22</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_22">
+                                    <input type="hidden" value="1" name="h22">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h22"
+                                        id="check_no_22" {{ old('h22', $cuestionario->h22) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_23">23</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_23">
+                                    <input type="hidden" value="1" name="h23">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h23"
+                                        id="check_no_23" {{ old('h23', $cuestionario->h23) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
                                 <label for="check_no_24">24</label>
                                 <br>
                                 <div class="form-check">
-                                    <input class="form-check-input d-none" type="checkbox" value="" id="check_no_24">
+                                    <input type="hidden" value="1" name="h24">
+                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h24"
+                                        id="check_no_24" {{ old('h24', $cuestionario->h24) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                         </TR>
@@ -1456,15 +1627,18 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_1" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_1) }}">
+                        name="operacion_q_1" placeholder="..."
+                        value="{{ old('meta', $cuestionario->operacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_2" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                        name="operacion_q_2" placeholder="..."
+                        value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_3" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                        name="operacion_q_3" placeholder="..."
+                        value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <hr>
 
@@ -1592,17 +1766,20 @@
                 <table class="table table-border" style="font-size: 12px">
                     <tr>
                         <th class="col-sm-4" style="background-color:#345183; color: white;">Clasificación</th>
-                        <th class="col-sm-8" style="background-color:#345183; color: white;">Escenarios de Contingencia</th>
+                        <th class="col-sm-8" style="background-color:#345183; color: white;">Escenarios de Contingencia
+                        </th>
                     </tr>
                     <tr>
-                        <th rowspan="2" style="background-color:#ffffff;">Indisponibilidad de las instalaciones (oficinas), por bloqueo de acceso, manifestaciones.</th>
+                        <th rowspan="2" style="background-color:#ffffff;">Indisponibilidad de las instalaciones
+                            (oficinas), por bloqueo de acceso, manifestaciones.</th>
                         <td>Manifestaciones.</td>
                     </tr>
                     <tr>
                         <td>Bloqueos.</td>
                     </tr>
                     <tr>
-                        <th rowspan="4" style="background-color:#ffffff;">Ataques cibernéticos o a la actividad informática</th>
+                        <th rowspan="4" style="background-color:#ffffff;">Ataques cibernéticos o a la actividad
+                            informática</th>
                         <td>Acceso y/o modificaciones no autorizadas a sistemas e información.</td>
                     </tr>
                     <tr>
@@ -1648,7 +1825,8 @@
                         <td>Incumplimiento de obligaciones normativas.</td>
                     </tr>
                     <tr>
-                        <th rowspan="3" style="background-color:#ffffff;">Fallas o indisponibilidad en la infraestructura tecnológica (telecomunicaciones, procesamiento de información y redes).</th>
+                        <th rowspan="3" style="background-color:#ffffff;">Fallas o indisponibilidad en la
+                            infraestructura tecnológica (telecomunicaciones, procesamiento de información y redes).</th>
                         <td>Deterioro en aplicaciones (fallas/caídas).</td>
                     </tr>
                     <tr>
@@ -1658,8 +1836,10 @@
                         <td>Fallas en la infraestructura tecnológica (equipos, servidores, etc.).</td>
                     </tr>
                     <tr>
-                        <th rowspan="3" style="background-color:#ffffff;">Indisponibilidad del personal (Accidentes, enfermedad, jubilación o fallecimiento del personal).</th>
-                        <td>IIndisponibilidad del personal (Accidentes, enfermedad, jubilación o fallecimiento del personal).</td>
+                        <th rowspan="3" style="background-color:#ffffff;">Indisponibilidad del personal (Accidentes,
+                            enfermedad, jubilación o fallecimiento del personal).</th>
+                        <td>IIndisponibilidad del personal (Accidentes, enfermedad, jubilación o fallecimiento del
+                            personal).</td>
                     </tr>
                     <tr>
                         <td>Indisponibilidad del personal (Falta de personal, inasistencia o baja de personal).</td>
@@ -1672,12 +1852,15 @@
                         <td>Interrupciones en el suministro de energía eléctrica.</td>
                     </tr>
                     <tr>
-                        <th style="background-color:#ffffff;">Interrupciones ocurridas en servicios prestados por terceros.</th>
+                        <th style="background-color:#ffffff;">Interrupciones ocurridas en servicios prestados por
+                            terceros.
+                        </th>
                         <td>Indisponibilidad de información o insumos de terceros o proveedores externos.</td>
                     </tr>
                     <tr>
                         <th rowspan="5" style="background-color:#ffffff;">Sabotaje.</th>
-                        <td>Atentados y actos vandálicos a las instalaciones y/o al personal (motín / huelga/ sabotaje / toma de instalaciones).</td>
+                        <td>Atentados y actos vandálicos a las instalaciones y/o al personal (motín / huelga/ sabotaje /
+                            toma de instalaciones).</td>
                     </tr>
                     <tr>
                         <td>Filtración de información (robo, espionaje industrial, fraude interno/externo).</td>
@@ -1693,7 +1876,8 @@
                     </tr>
                     <tr>
                         <th>Terrorismo.</th>
-                        <td>Atentados y actos vandálicos a las instalaciones y/o al personal (robo y actividades criminales).</td>
+                        <td>Atentados y actos vandálicos a las instalaciones y/o al personal (robo y actividades
+                            criminales).</td>
                     </tr>
                 </table>
             </div>
@@ -1707,7 +1891,8 @@
                 <div class="modal-dialog  modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Detalle de la probabilidad de
+                            <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Detalle de la probabilidad
+                                de
                                 los incidentes disruptivos </h5>
                         </div>
                         <div class="modal-body">
@@ -1724,7 +1909,8 @@
                                     <strong style="color:#fff" class="text-center">5-Casi Cierto</strong>
                                 </div>
                                 <div class="col-8">
-                                    <span style="justify-content;">Cuenta con antecedentes de ocurrencia frecuentes; es más
+                                    <span style="justify-content;">Cuenta con antecedentes de ocurrencia frecuentes; es
+                                        más
                                         probable que se presente a que no. Existen muchos factores y condiciones que
                                         propician su ocurrencia. <strong>(Cada semana).</strong> </span>
                                 </div>
@@ -1765,7 +1951,8 @@
                                     <strong style="color:#fff" class="text-center">1-Remoto</strong>
                                 </div>
                                 <div class="col-8">
-                                    <span style="justify-content;">No se tienen antecedentes de ocurrencia. Es probable que
+                                    <span style="justify-content;">No se tienen antecedentes de ocurrencia. Es probable
+                                        que
                                         no se presente (no se cuenta con elementos para determinar si es más probable que
                                         suceda o que no suceda). Las condiciones son mínimamente favorables para permitir su
                                         ocurrencia.<strong>(cada año).</strong></span>
@@ -1801,7 +1988,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">RPO:</strong>
                                 </div>
                                 <div class="col-10">
-                                    <span style="justify-content;"><u>Punto Objetivo de Recuperación</u> <i>(Recovery Point
+                                    <span style="justify-content;"><u>Punto Objetivo de Recuperación</u> <i>(Recovery
+                                            Point
                                             Objective)</i>, es la cantidad de información expresada en tiempo que podría
                                         perderse en caso de una interrupción del proceso sin que esta pérdida genere un
                                         impacto significativo.</span>
@@ -1812,7 +2000,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">RTO:</strong>
                                 </div>
                                 <div class="col-10">
-                                    <span style="justify-content;"><u>Tiempo Objetivo de Recuperación</u> <i>(Recovery Time
+                                    <span style="justify-content;"><u>Tiempo Objetivo de Recuperación</u> <i>(Recovery
+                                            Time
                                             Objective)</i>, es el tiempo en el que los procesos deben ser recuperados antes
                                         de generar un impacto relevante a la institución.</span>
                                 </div>
@@ -2156,16 +2345,31 @@
 
 @section('scripts')
     <script>
-        $('.table_checkbox input[type=checkbox]').click(function(e){
-           if(e.target.checked == true){
-            $('.table_checkbox th input[type=checkbox]:hover').parents('th').css('background-color', 'yellow');
-            $('.table_checkbox td input[type=checkbox]:hover').parents('td').css('background-color', 'yellow');
+        $(document).ready(function() {
 
-           }else{
-            $('.table_checkbox th input[type=checkbox]:hover').parents('th').css('background-color', 'white');
-            $('.table_checkbox td input[type=checkbox]:hover').parents('td').css('background-color', 'white');
+            document.querySelectorAll('.table_checkbox input[type=checkbox]').forEach(element => {
+                if (element.checked == true) {
+                    $(element).parents('th').css('background-color', 'yellow');
+                    $(element).parents('td').css('background-color', 'yellow');
 
-           }
+                } else {
+                    $(element).parents('th').css('background-color', 'white');
+                    $(element).parents('td').css('background-color', 'white');
+
+                }
+
+            });
+        });
+        $('.table_checkbox input[type=checkbox]').click(function(e) {
+            if (e.target.checked == true) {
+                $('.table_checkbox th input[type=checkbox]:hover').parents('th').css('background-color', 'yellow');
+                $('.table_checkbox td input[type=checkbox]:hover').parents('td').css('background-color', 'yellow');
+
+            } else {
+                $('.table_checkbox th input[type=checkbox]:hover').parents('th').css('background-color', 'white');
+                $('.table_checkbox td input[type=checkbox]:hover').parents('td').css('background-color', 'white');
+
+            }
         });
     </script>
 @endsection

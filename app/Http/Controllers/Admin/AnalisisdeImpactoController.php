@@ -110,6 +110,7 @@ class AnalisisdeImpactoController extends Controller
         //     'incremento_dias' => 'required|int',
         //     'periodo_corte' => 'required|int',
         // ]);
+      
 
         $cuestionario = AnalisisImpacto::create($request->all());
 
@@ -147,6 +148,7 @@ class AnalisisdeImpactoController extends Controller
         abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $cuestionario = AnalisisImpacto::find($id);
+        // dd($request->all());
         $cuestionario->update($request->all());
 
         Flash::success('Cuestionario actualizado correctamente.');
