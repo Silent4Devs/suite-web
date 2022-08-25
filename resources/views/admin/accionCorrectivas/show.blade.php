@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@inject('Empleado', 'App\Models\Empleado')
 @section('content')
     <style type="text/css">
         .datos_der_cv {
@@ -57,11 +58,11 @@
             .table th td:nth-child(1) {
                 min-width: 100px;
             }
-            .print-none{
-            display: none !important;
+
+            .print-none {
+                display: none !important;
             }
         }
-
     </style>
 
 
@@ -70,7 +71,8 @@
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
 
-                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
+                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                        onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
                     </button>
@@ -101,354 +103,293 @@
                         </div>
                     </div>
 
+                    <div style="color:#18183c">
 
-                    {{-- <div class="row">
-                        <div class="col-5">
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong style="color:#0CA193">Reportó</strong>
-                                </div>
-                                <div class="col-6">
-                                    <span style="color:#345183"></span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong style="color:#345183">Puesto</strong>
-                                </div>
-                                <div class="col-6">
-                                    <span style="color:#345183"></span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong style="color:#345183">Área</strong>
-                                </div>
-                                <div class="col-6">
-                                    <span style="color:#345183"></span>
-                                </div>
-                            </div>
+                        <span class="p-1" style="text-align:center">Folio:</span>
 
-
-                        </div>
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-7">
-                                    <strong style="color:#345183">ID del riesgo</strong>
-                                </div>
-                                <div class="col-5">
-                                    <span style="color:#345183"></span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-7">
-                                    <strong style="color:#345183">Implementación del cambio </strong>
-                                </div>
-                                <div class="col-5">
-
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-7">
-                                    <strong style="color:#345183">Impacto del riesgo evaluado</strong>
-                                </div>
-                                <div class="col-5">
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-3">
-                            <strong style="color:#345183">Fecha de riesgo levantado</strong>
-                            <br>
-                            <span style="color:#345183"></span>
-                            <br>
-                            <strong style="color:#345183">Fecha de aprobación del riesgo</strong>
-                            <br>
-                            <span style="color:#345183"></span>
-                            <br>
-                            <strong style="color:#345183">Probabilidad del riesgo evaluado</strong>
-                            <br>
-                            <span style="color:#345183"></span>
-                        </div>
-                    </div> --}}
-
-                    <div class="mb-5 d-flex" style="margin-left: 70%;position: absolute;">
-                        <div style="width:60px; border: 1px solid #ccc; border-radius: 3px;">
-                            <span class="p-2" style="text-align:center; color:#0CA193">Folio</span>
-                        </div>
-                        <div
-                            style="margin-left:-3px; width:90px; background-color:#0CA193;border: 1px solid #0CA193; border-radius: 3px;">
-                            <span class="p-2"
-                                style="color:#fff">{{ $accionCorrectiva->folio ?? 'sin registro' }}</span>
-                        </div>
+                        <strong>{{ $accionCorrectiva->folio ?? 'sin registro' }}</strong>
                     </div>
+                    <div style="color:#18183c">
+
+                        <span class="p-1" style="text-align:center">Fecha de registro:</span>
+
+                        <strong>{{ $accionCorrectiva->fecharegistro ? \Carbon\Carbon::parse($accionCorrectiva->fecharegistro)->format('d-m-Y') : 'sin registro' }}
+                        </strong>
+                    </div>
+                    <div style="color:#18183c">
+
+                        <span class="p-1" style="text-align:center">Reportó:</span>
+
+                        <strong>{{ $accionCorrectiva->reporto ? $accionCorrectiva->reporto->name : 'Sin definir' }}</strong>
+                    </div>
+
+                    <div style="color:#18183c">
+
+                        <span class="p-1" style="text-align:center">Puesto:</span>
+
+                        <strong>{{ $accionCorrectiva->reporto ? $accionCorrectiva->reporto->puesto : 'Sin definir' }}</strong>
+                    </div>
+
+                    <div style="color:#18183c">
+
+                        <span class="p-1" style="text-align:center">Registró:</span>
+
+                        <strong>{{ $accionCorrectiva->empleados ? $accionCorrectiva->empleados->name : 'Sin definir' }}</strong>
+                    </div>
+
+                    <div style="color:#18183c">
+
+                        <span class="p-1" style="text-align:center">Puesto:</span>
+
+                        <strong>{{ $accionCorrectiva->empleados ? $accionCorrectiva->empleados->puesto : 'Sin definir' }}
+                        </strong>
+                    </div>
+
+                    <div style="color:#18183c">
+
+                        <span class="p-1" style="text-align:center">Causa de origen:</span>
+
+                        <strong>{{ $accionCorrectiva->causaorigen ?? 'sin registro' }}
+                        </strong>
+                    </div>
+
+                    <div style="color:#18183c">
+
+                        <span class="p-1" style="text-align:center">Estatus:</span>
+                        @if (is_null($accionCorrectiva->estatus))
+                            <span>Sin registro</span>
+                        @else
+                            @if ($accionCorrectiva->estatus == 'Sin atender')
+                                <i class="fas fa-circle" style="color:#FFCB63;font-size:10pt;"></i><strong>
+                                    {{ $accionCorrectiva->estatus }}</strong>
+                            @elseif ($accionCorrectiva->estatus == 'En curso')
+                                <i class="fas fa-circle" style="color:"#AC84FF;font-size:10pt;"></i><strong>
+                                    {{ $accionCorrectiva->estatus}}</strong>
+                            @elseif ($accionCorrectiva->estatus ='En espera')
+                                <i class="fas fa-circle" style="color:#6863FF;font-size:10pt;"></i><strong>
+                                    {{ $accionCorrectiva->estatus }}</strong>
+                            @elseif ($accionCorrectiva->estatus == 'Cerrado')
+                                <i class="fas fa-circle" style="color: #6DC866;font-size:10pt;"></i><strong>
+                                    {{ $accionCorrectiva->estatus }}</strong>
+                            @elseif ($accionCorrectiva->estatus == 'No procedente')
+                            <i class="fas fa-circle" style="color: #6DC866;font-size:10pt;"></i><strong>
+                                {{ $accionCorrectiva->estatus }}</strong>
+                            @endif
+                        @endif
+                    </div>
+
+
+                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
+                        <span style="font-size: 17px; font-weight: bold;">Descripción</span>
+                    </div>
+
+                    <div class="col-12 m-0 p-0" style="color:#18183c">
+                        {!! $accionCorrectiva->descripcion ?? 'sin registro' !!}
+                    </div>
+
+                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
+                        <span style="font-size: 17px; font-weight: bold;">Análisis Causa Raíz</span>
+                    </div>
+                    @forelse ($accionCorrectiva->analisis as $analisis)
+                        <strong style="color:#18183c">Metodo: {{ $analisis->metodo }}</strong>
+                    @empty
+                        <strong style="color:#18183c">Sin registro</strong>
+                    @endforelse
+                    <br>
+                    <br>
+                    @foreach ($accionCorrectiva->analisis as $analisis)
+
+                    @if($analisis->metodo == "5 Porqués (5 Why)")
+                        <div style="color:#18183c">
+                            <p>{{ $analisis->problema_porque ? $analisis->problema_porque : 'Sin registro' }}</p>
+                        </div>
+                        <div style="color:#18183c">
+                            <strong>1. ¿Por qué? </strong>
+                            <p>{{ $analisis->porque_1 ? $analisis->porque_1 : 'Sin registro' }}</p>
+                        </div>
+                        <div style="color:#18183c">
+                            <strong>2. ¿Por qué? </strong>
+                            <p>{{ $analisis->porque_2 ? $analisis->porque_2 : 'Sin registro' }}</p>
+                        </div>
+                        <div style="color:#18183c">
+                            <strong>3. ¿Por qué? </strong>
+                            <p>{{ $analisis->porque_3 ? $analisis->porque_3 : 'Sin registro' }}</p>
+                        </div>
+                        <div style="color:#18183c">
+                            <strong>4. ¿Por qué? </strong>
+                            <p>{{ $analisis->porque_4 ? $analisis->porque_4 : 'Sin registro' }}</p>
+                        </div>
+                        <div style="color:#18183c">
+                            <strong>5. ¿Por qué? </strong>
+                            <p>{{ $analisis->porque_5 ? $analisis->porque_5 : 'Sin registro' }}</p>
+                        </div>
+
+                    @elseif($analisis->metodo == "Lluvia de ideas (Brainstorming)" )
+
+                        <div style="color:#18183c">
+                            <span style="text-align: justify">{!! $analisis->ideas ? $analisis->ideas : 'sin registro' !!}
+                            </span>
+                        </div>
+
+                    @elseif($analisis->metodo == "Diagrama causa efecto (Ishikawa)")
+
+                            <div class="mt-3 mb-5 col-md-12">
+                                <div style="width: 100%;">
+                                    <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
+                                        style="width:100%; margin-top:20px; height:270px;">
+                                    <div
+                                        style="top:0px;left:20px; position: absolute;height:35px; width:150px;  background-color:rgb(73, 142, 170); border-radius:15px;">
+                                        <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
+                                                style="padding-top:6px; color:white;"></i></span><strong
+                                            style="color:#ffffff">Control</strong>
+                                    </div>
+                                    <div
+                                        style="top:0px; left:200px; position: absolute;height:35px; width:150px;  background-color:rgb(73, 142, 170);border-radius:15px;">
+                                        <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
+                                                style="padding-top:6px; color:white;"></i></span><strong
+                                            style="color:#ffffff">Proceso</strong>
+                                    </div>
+                                    <div
+                                        style="top:0px; left:390px; position: absolute;height:35px; width:150px;  background-color:rgb(73, 142, 170);border-radius:15px;">
+                                        <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-users"
+                                                style="padding-top:6px; color:white;"></i></span><strong
+                                            style="color:#ffffff">Personas</strong>
+                                    </div>
+                                    <div
+                                        style="buttom:0px; left:60px; position: absolute;height:35px; width:150px;  background-color:rgb(73, 142, 170);border-radius:15px;">
+                                        <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card"
+                                                style="padding-top:6px; color:white;"></i></span><strong
+                                            style="color:#ffffff">Tecnología</strong>
+                                    </div>
+                                    <div
+                                        style="buttom:0px; left:290px; position: absolute;height:35px; width:150px;  background-color:rgb(73, 142, 170);border-radius:15px;">
+                                        <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card"
+                                                style="padding-top:6px; color:white;"></i></span><strong
+                                            style="color:#ffffff">Métodos</strong>
+                                    </div>
+                                    <div
+                                        style="buttom:0px;left:480px; position: absolute;height:35px; width:150px; background-color:rgb(73, 142, 170);border-radius:15px;">
+                                        <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-chalkboard"
+                                                style="padding-top:6px; color:white;"></i></span><strong
+                                            style="color:#ffffff">Recursos</strong>
+                                    </div>
+                                    <div class="p-2"
+                                        style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; top:40px; left:5px; position: absolute; height:90px !important; width:180px;">
+                                        <span  style="font-size:5pt;">{!!$analisis->control_a  ? $analisis->control_a : 'Sin registro' !!}</span>
+                                    </div>
+                                    <div class="p-2"
+                                    style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; top:40px; left:195px; position: absolute; height:90px !important; width:180px;">
+                                    <span style="font-size:5pt;">{!! $analisis->proceso_a  ? $analisis->proceso_a : 'Sin registro' !!}</span>
+                                    </div>
+                                    <div class="p-2"
+                                    style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; top:40px; left:385px; position: absolute; height:90px !important; width:180px;">
+                                    <span style="font-size:5pt;">{!! $analisis->personas_a ? $analisis->personas_a : 'Sin registro' !!}</span>
+                                    </div>
+                                    <div class="p-2" style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:15px; right:510px; position: absolute; height:95px !important; width:180px;">
+                                        <span style="font-size:5pt;">{!! $analisis->tecnologia_a ? $analisis->tecnologia_a : 'Sin registro' !!}</span>
+                                    </div>
+                                    <div class="p-2" style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:15px; right:320px; position: absolute; height:95px !important; width:180px;">
+                                        <span style="font-size:5pt;">{!! $analisis->metodos_a ? $analisis->metodos_a : 'Sin registro' !!}</span>
+                                    </div>
+                                    <div class="p-2" style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:15px; right:125px; position: absolute; height:95px !important; width:180px;">
+                                        <span style="font-size:5pt;">{!! $analisis->ambiente_a ? $analisis->ambiente_a : 'Sin registro' !!}</span>
+                                    </div>
+
+                                    <div class="p-2" style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:90px; right:-30px; position: absolute; height:95px !important; width:150px;">
+                                        <span style="font-size:5pt;">{!! $analisis->problema_diagrama ? $analisis->problema_diagrama : 'Sin registro' !!}</span>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
 
                     <br>
-                    <div class="row ml-2 mt-5 p-2" style="border: 2px solid #ccc; border-radius: 3px;">
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong style="color:#0CA193;">Reportó</strong>
-                                </div>
-                                <div class="col-6">
-                                    <span style="color:#345183">
-                                        {{ $accionCorrectiva->reporto ? $accionCorrectiva->reporto->name : 'Sin definir' }}
-                                    </span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong style="color:#0CA193;">Puesto</strong>
-                                </div>
-                                <div class="col-6">
-                                    <span style="color:#345183">
-                                        {{ $accionCorrectiva->reporto ? $accionCorrectiva->reporto->puesto : 'Sin definir' }}
-                                    </span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong style="color:#0CA193;">Registró</strong>
-                                </div>
-                                <div class="col-6">
-                                    <span style="color:#345183">
-                                        {{ $accionCorrectiva->empleados ? $accionCorrectiva->empleados->name : 'Sin definir' }}
-                                    </span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong style="color:#0CA193;">Puesto</strong>
-                                </div>
-                                <div class="col-6">
-                                    <span style="color:#345183">
-                                        {{ $accionCorrectiva->empleados ? $accionCorrectiva->empleados->puesto : 'Sin definir' }}
-                                    </span>
-                                </div>
-                            </div>
 
-                        </div>
-
-                        <div class="col-5">
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong style="color:#0CA193;">Fecha de registro</strong>
-                                </div>
-                                <div class="col-6">
-                                    <span style="color:#345183">
-                                        {{ $accionCorrectiva->fecharegistro? \Carbon\Carbon::parse($accionCorrectiva->fecharegistro)->format('d-m-Y'): 'sin registro' }}
-                                    </span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong style="color:#0CA193;">Causa de origen</strong>
-                                </div>
-                                <div class="col-6">
-                                    <span style="color:#345183">
-                                        {{ $accionCorrectiva->causaorigen ?? 'sin registro' }}
-                                    </span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-6">
-                                    <strong style="color:#0CA193;">Estatus</strong>
-                                </div>
-                                <div class="col-6">
-                                    {{-- <span style="color:#345183">
-                                        {{$accionCorrectiva->estatus ?? 'sin registro' }}
-                                    </span> --}}
-                                    @switch ($accionCorrectiva->estatus)
-                                        @case(1)
-                                            <div class="cuadro_verdelimon">{{ $accionCorrectiva->estatus }}</div>
-                                        @break
-
-                                        @case(2)
-                                            <div class="cuadro_verde">{{ $accionCorrectiva->estatus }}</div>
-                                        @break
-
-                                        @case(3)
-                                            <div class="cuadro_amarillo">{{ $accionCorrectiva->estatus }}</div>
-                                        @break
-
-                                        @case(4)
-                                            <div class="cuadro_naranja">{{ $accionCorrectiva->estatus }}</div>
-                                        @break
-
-                                        @case(5)
-                                            <div class="cuadro_rojo">{{ $accionCorrectiva->estatus }}</div>
-                                        @break
-
-                                        ;
-
-                                        @default
-                                            <span>No hay registro</span>
-                                    @endswitch
-                                </div>
-                            </div>
-                        </div>
+                    <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
+                        <span style="font-size: 17px; font-weight: bold;">Plan de Acción</span>
                     </div>
 
-
-
                     <div class="row medidas d-flex" style="justify-content: space-between;">
-
-
-                        <div class="mt-4 mb-3 ">
-
-                            <div class="ml-4 mt-2 mb-3  dato_mairg" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold; ml-4">
-                                    Descripción</span>
-                            </div>
-                            <div class="form-group ml-4">
-                                <span style="text-align: justify;">{!! $accionCorrectiva->descripcion ?? 'sin registro' !!} </span>
-                            </div>
-                            <div class="ml-4 mt-2 mb-3  dato_mairg" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold; ml-4">
-                                    Método utilizado</span>
-
-
-                            </div>
-
-                            @foreach ($accionCorrectiva->analisis as $analisis)
-                                <span class="ml-5"
-                                    style="font-size:11pt;color:#0CA193"><strong>{{ $analisis->metodo ?? 'sin registro' }}</strong></span>
-                                <br>
-                                <br>
-                                <div class="ml-4" style="text-align: justify !important;">
-                                    <span
-                                        style="font-size:11pt; text-align: justify !important;">{!! $analisis->ideas ?? 'sin registro' !!}</span>
-
-                                </div>
-                                <br>
-                            @endforeach
-
-
-
-
-                            <div class="ml-4 mt-2 mb-3  dato_mairg" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold; ml-4">
-                                    Atención de la Acción Correctiva</span>
-                            </div>
-
-                            <div class="row ml-2">
-                                <div class="col-sm-12 col-lg-12 col-md-12">
-                                    <div class="col-12">
-                                        <span class="p-2" style="text-align:center;"><strong
-                                                style="color:#0CA193">Fecha de cierre</strong>
-                                            {{ $accionCorrectiva->fecha_cierre ?? 'Sin registro' }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="ml-4 mt-2 mb-3  dato_mairg" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold; ml-4">
-                                    Plan de Acción </span>
-                            </div>
-
-                            <div class="mt-4 datatable-fix" style="width: 100%;">
+                        
+                        @if($accionCorrectiva->planes->count()>0)
+                        <div class="mt-2 mb-3 ">
+                           <div class="datatable-fix" style="width: 100%;">
                                 <table id="tabla_plan_accion" class="table w-100">
                                     <thead style="background-color:#0CA193;color:#fff">
                                         <tr>
                                             <th>Actividad</th>
                                             <th>Fecha&nbsp;de&nbsp;inicio</th>
                                             <th>Fecha&nbsp;de&nbsp;fin</th>
-                                            <th>Prioridad</th>
-                                            <th>Tipo</th>
+                                            <th>Estatus</th>
                                             <th>Responsable(s)</th>
-                                            <th>Comentarios</th>
+                                            <th>Descripción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($actividades as $actividad)
+                                        @foreach ($accionCorrectiva->planes as $plan)
+                                            @php
+                                                $actividades=($plan->tasks);
+                                            @endphp
+                                            @foreach($actividades as $actividad)
                                             <tr>
-                                                <td>{{ $actividad->actividad }}</td>
-                                                <td>{{ $actividad->fecha_inicio }}</td>
-                                                <td>{{ $actividad->fecha_fin }}</td>
-                                                <td>{{ $actividad->prioridad }}</td>
-                                                <td>{{ $actividad->tipo }}</td>
+                                                <td>{{ $actividad->name ? $actividad->name : 'Sin registro' }}</td>
+                                                <td>{{ Carbon\Carbon::parse($actividad->start)->format('d-m-Y')}}</td>
+                                                <td>{{ Carbon\Carbon::parse($actividad->end)->format('d-m-Y')}}</td>
+                                                <td>
+                                                    @if ($actividad->status  == 'STATUS_UNDEFINED') 
+                                                        
+                                                            <span class="badge badge-primary">Sin iniciar</span>
+                                                       
+                                                   @elseif ($actividad->status  == 'STATUS_ACTIVE') 
+                                                        
+                                                            <span class="badge badge-warning">En proceso</span>
+                                                       
+                    
+                                                   @elseif ($actividad->status  == 'STATUS_DONE') 
+                                                        
+                                                            <span class="badge badge-success">Completado</span>
+                                                       
+                    
+                                                   @elseif ($actividad->status  == 'STATUS_FAILED') 
+                                                        
+                                                            <span class="badge badge-danger">Retraso</span>
+                                                       
+                    
+                                                   @elseif ($actividad->status  == 'STATUS_SUSPENDED') 
+                                                        
+                                                            <span class="badge badge-secondary">Suspendido</span>
+                                                       
+                                                    @endif
+                                                
+                                                </td>
                                                 <td>
                                                     <ul>
-                                                        @foreach ($actividad->responsables as $responsable)
-                                                            <li>{{ $responsable->name }}</li>
-                                                        @endforeach
+                                                      @forelse($actividad->assigs as $empleado_id)
+                                                      @php
+                                                          $empleado=$Empleado::select('id','name')->find($empleado_id->resourceId);
+                                                      @endphp
+                                                      <li>
+                                                        {{ $empleado->name }}
+                                                      </li>
+                                                      @empty
+                                                      <span>Sin registros</span>
+                                                      @endforelse
                                                     </ul>
                                                 </td>
-                                                <td>{{ !is_null($actividad->comentarios) ? $actividad->comentarios : 'Sin comentarios' }}
+                                                <td>
+                                                    {{ $actividad->description ? $actividad->description : 'Sin registro' }}
                                                 </td>
                                             </tr>
+                                            @endforeach
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
 
-                            {{-- <div class="form-group">
-                                <span style="text-align: justify;"><strong style="color:#0CA193;">Área(s) afectada(s) : </strong>{{$accionCorrectiva->areas ?? 'sin registro' }}  </span>
-                            </div>
-                            <div class="form-group">
-                                <span style="text-align: justify;"><strong style="color:#0CA193;">Proceso(s) afectado(s) : </strong>{{$accionCorrectiva->procesos ?? 'sin registro' }}  </span>
-                            </div>
-                            <div class="form-group">
-                                <span style="text-align: justify;"><strong style="color:#0CA193;">Activo(s) afectado(s) : </strong>{{$accionCorrectiva->activos ?? 'sin registro' }}  </span>
-                            </div>
-                            <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
-                                <span style="font-size: 17px; font-weight: bold;">
-                                    Comentarios</span>
-                            </div>
-                            <div class="form-group">
-                                <span style="text-align: justify;">{!!$accionCorrectiva->comentarios ?? 'sin registro' !!}  </span>
-                            </div> --}}
+
                         </div>
-                        {{-- <table class="w-100 mb-5 mt-5">
-                            <thead style="background-color:#0CA193;color:#fff;text-align:center">
-                                <tr>
-                                    <th style = "width: 50% !important;">
-                                        Reportó
-                                    </th>
-                                    <th style = "width: 50% !important;">
-                                        Registró
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="text-align:center; vertical-align: initial;">
-                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $accionCorrectiva->reporto->name ? $accionCorrectiva->reporto->avatar : "user.png"}}"
-                                            class="img_empleado text-center mt-1">
-                                        <br>
-                                        <span><strong>{{ $accionCorrectiva->reporto ? $accionCorrectiva->reporto->name : 'Sin definir' }}</strong></span>
-                                        <br>
-                                        <span>{{ $accionCorrectiva->reporto ? $accionCorrectiva->reporto->puesto : 'Sin definir'}}</span>
-                                        <br>
-                                        <span style="color:#0CA193">{{$accionCorrectiva->reporto ? $accionCorrectiva->reporto->area->area : 'Sin definir'  }}</span>
-                                    </td>
-
-
-                                    <td style="text-align:center; vertical-align: initial;">
-                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $accionCorrectiva->empleados ? $accionCorrectiva->empleados->avatar : "user.png"}}"
-                                            class="img_empleado text-center mt-1">
-                                        <br>
-                                        <span><strong>{{ $accionCorrectiva->empleados ? $accionCorrectiva->empleados->name : 'Sin definir' }}</strong></span>
-                                        <br>
-                                        <span>{{ $accionCorrectiva->empleados ? $accionCorrectiva->empleados->puesto : 'Sin definir'}}</span>
-                                        <br>
-                                        <span style="color:#0CA193">{{ $accionCorrectiva->empleados ? $accionCorrectiva->empleados->area->area : 'Sin definir' }}</span>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table> --}}
+                        @endif
                     </div>
                 </div>
             </div>

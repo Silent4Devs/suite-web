@@ -47,8 +47,8 @@ class AccionCorrectivaController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate = 'accion_correctiva_show';
-                $editGate = 'accion_correctiva_edit';
-                $deleteGate = 'accion_correctiva_delete';
+                $editGate = 'accion_correctiva_show';
+                $deleteGate = 'accion_correctiva_show';
                 $crudRoutePart = 'accion-correctivas';
 
                 return view('partials.datatablesActions', compact(
@@ -213,7 +213,7 @@ class AccionCorrectivaController extends Controller
             'areas' => $request->areas,
             'procesos' => $request->procesos,
             'activos' => $request->activos,
-            'estatus' => 'Nuevo',
+            'estatus' => 'Sin atender',
         ]);
 
         // $accionCorrectiva = AccionCorrectiva::create($request->all());;
@@ -328,7 +328,7 @@ class AccionCorrectivaController extends Controller
 
         $actividades = ActividadAccionCorrectiva::with('responsables')->where('accion_correctiva_id', $accionCorrectiva->id)->get();
         $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas', 'planes');
-        // dd($actividades);
+        // dd($accionCorrectiva->planes);
         return view('admin.accionCorrectivas.show', compact('accionCorrectiva', 'actividades'));
     }
 

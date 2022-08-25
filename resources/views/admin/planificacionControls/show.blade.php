@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-    {{ Breadcrumbs::render('admin.planificacion-controls.create') }}
 
     <style>
         span.errors {
@@ -39,8 +38,54 @@
             color: grey;
             font-size: 14px;
         }
-    </style>
 
+        @media print {
+            header {
+                display: none !important;
+            }
+
+            .ps__rail-y {
+                display: none !important;
+            }
+
+            .ps__thumb-y {
+                display: none !important;
+            }
+
+            .titulo_general_funcion {
+                display: none !important;
+            }
+
+            #sidebar {
+                display: none !important;
+            }
+
+            body {
+                background-color: #fff !important;
+            }
+
+            #but {
+                display: none !important;
+            }
+
+            .datos_der_cv {
+                margin-right: -50px !important;
+
+
+            }
+
+            .table th td:nth-child(1) {
+                min-width: 100px;
+            }
+            .print-none{
+            display: none !important;
+            }
+        }
+    </style>
+    </style>
+    <div class="print-none">
+        {{ Breadcrumbs::render('admin.planificacion-controls.create') }}
+    </div>
     <div>
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
@@ -406,9 +451,9 @@
 
                                         </div>
                                     @elseif($planificacionControl->es_aprobado == 'rechazado')
-                                    <div class="mt-2 mb-2">
-                                    <strong class="text-danger mt-4">Solicitud rechazada</strong>
-                                    </div>
+                                        <div class="mt-2 mb-2">
+                                            <strong class="text-danger mt-4">Solicitud rechazada</strong>
+                                        </div>
                                     @endif
                                 @endif
                             @endif
@@ -492,7 +537,7 @@
                 let url = "{{ route('admin.planificacion-controls.firma-aprobacion') }}";
                 let aprobado = tipo == 'aprobar' ? '1' : '0';
                 let controlCambios = @json($planificacionControl);
-                let mensajeBtn=tipo == 'rechazar' ? 'Rechazar':'Aprobar';
+                let mensajeBtn = tipo == 'rechazar' ? 'Rechazar' : 'Aprobar';
                 Swal.fire({
                     title: 'Esta seguro que desea ' + tipo + '?',
                     text: 'comentarios',
@@ -532,9 +577,9 @@
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        let mensaje=tipo == 'rechazar' ? 'Rechazado':'Aprobado';
-                        Swal.fire('',mensaje + ' con éxito','success').then(() => {
-                                window.location.reload();
+                        let mensaje = tipo == 'rechazar' ? 'Rechazado' : 'Aprobado';
+                        Swal.fire('', mensaje + ' con éxito', 'success').then(() => {
+                            window.location.reload();
                         })
                     }
                 })

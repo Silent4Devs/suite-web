@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyTratamientoRiesgoRequest;
 use App\Http\Requests\StoreTratamientoRiesgoRequest;
 use App\Http\Requests\UpdateTratamientoRiesgoRequest;
+use App\Mail\SolicitudAceptacionTratamientoRiesgo;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Empleado;
 use App\Models\Proceso;
@@ -14,6 +15,7 @@ use App\Models\TratamientoRiesgo;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -52,7 +54,7 @@ class TratamientoRiesgosController extends Controller
                 return $row->identificador ? $row->identificador : '';
             });
             $table->editColumn('descripcionriesgo', function ($row) {
-                return $row->descripcionriesgo ? $row->descripcionriesgo : '';
+                return $row->descripcionriesgo ? html_entity_decode(strip_tags($row->descripcionriesgo), ENT_QUOTES, 'UTF-8') : 'n/a';
             });
             $table->addColumn('tipo_riesgo', function ($row) {
                 return $row->tipo_riesgo ? $row->tipo_riesgo : '';
@@ -67,7 +69,7 @@ class TratamientoRiesgosController extends Controller
             });
 
             $table->editColumn('acciones', function ($row) {
-                return $row->acciones ? $row->acciones : '';
+                return $row->acciones ? html_entity_decode(strip_tags($row->acciones), ENT_QUOTES, 'UTF-8') : 'n/a';
             });
            
             $table->editColumn('proceso', function ($row) {
@@ -140,7 +142,9 @@ class TratamientoRiesgosController extends Controller
         $empleados = Empleado::alta()->with('area')->get();
         $procesos = Proceso::get();
 
-      
+        Mail::to($tratamientos->responsable->email)->cc($tratamientos->registro->email)->send(new SolicitudAceptacionTratamientoRiesgo($tratamientos));
+        
+
    
         return view('admin.tratamientoRiesgos.edit', compact('procesos','tratamientos', 'controls', 'responsables', 'empleados'));
     }
@@ -163,6 +167,7 @@ class TratamientoRiesgosController extends Controller
         abort_if(Gate::denies('tratamiento_de_los_riesgos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tratamientoRiesgo->load('control', 'responsable', 'team');
+        // dd($tratamientoRiesgo);
 
         return view('admin.tratamientoRiesgos.show', compact('tratamientoRiesgo'));
     }
