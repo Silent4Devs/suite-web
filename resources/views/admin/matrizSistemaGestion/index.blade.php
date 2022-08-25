@@ -50,7 +50,18 @@
                 </div>
             </div>
             @include('partials.flashMessages')
+            
             <div class="card-body datatable-fix">
+
+                <div class="d-flex float-right">
+                  
+                        <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                            href="{{ route('admin.tratamiento-riesgos.index')}}"
+                            type="submit" name="action">Tratamiento Riesgo</a>
+                  
+
+                </div>
+                
                 <div class="d-flex justify-content-between">
                     @can('analisis_de_riesgo_integral_agregar')
                         <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
@@ -62,7 +73,9 @@
                         <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
                             href="{{ route('admin.matriz-mapa.SistemaGestion', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
                     @endcan
+
                 </div>
+                
                 <table class="table table-bordered w-100 datatable datatable-Matriz" id="datatable-Matriz">
                     <thead class="thead-dark">
                         <tr class="negras">

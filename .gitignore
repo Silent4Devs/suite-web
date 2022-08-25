@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /storage/framework
+/storage/app/public/BIA/signatures/
 /vendor
 .idea
 # /public/css/app.css
