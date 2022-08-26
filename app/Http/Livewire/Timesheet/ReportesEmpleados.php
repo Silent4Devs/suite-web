@@ -569,17 +569,14 @@ class ReportesEmpleados extends Component
     public function correoRetraso($id)
     {
         $empleado = Empleado::select('id', 'name', 'email', 'antiguedad')->find($id);
-        $antiguedad_y = Carbon::parse($empleado->antiguedad)->format('Y');
-        $antiguedad_m = Carbon::parse($empleado->antiguedad)->format('m');
-        $antiguedad_d = Carbon::parse($empleado->antiguedad)->format('d');
-        $times_empleado = Timesheet::where('empleado_id', $empleado->id)->where('estatus', '!=', 'papelera')->where('estatus', '!=', 'rechazado')->get();
-        $times_empleado_array = [];
 
-        foreach ($times_empleado as $time) {
-            $times_empleado_array[] = $time->semana_y;
+        foreach ( $this->empleados as $key => $empleado_a) {
+            if($empleado_a['id'] == $id){
+                $semanas_faltantes = $empleado_a['times_faltantes'];
+            }
         }
 
-        Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $this->times_faltantes_empleado));
+        Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
 
         $this->alert('success', 'Correo Enviado!');
 
@@ -588,18 +585,10 @@ class ReportesEmpleados extends Component
 
     public function correoMasivo()
     {
-        foreach ($this->empleados_list_global as $empleado) {
-            $antiguedad_y = Carbon::parse($empleado->antiguedad)->format('Y');
-            $antiguedad_m = Carbon::parse($empleado->antiguedad)->format('m');
-            $antiguedad_d = Carbon::parse($empleado->antiguedad)->format('d');
-            $times_empleado = Timesheet::where('empleado_id', $empleado->id)->where('estatus', '!=', 'papelera')->where('estatus', '!=', 'rechazado')->get();
-            $times_empleado_array = [];
-
-            foreach ($times_empleado as $time) {
-                $times_empleado_array[] = $time->semana_y;
+        foreach ( $this->empleados as $empleado) {
+            if($empleado['times_atrasados'] > 0){
+                $this->correoRetraso($empleado['id']);
             }
-
-            $correo = Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $this->times_faltantes_empleado));
         }
 
         $this->alert('success', 'Correos Enviados!');
