@@ -188,12 +188,12 @@
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; fontcolor:#153643;">
-                                                Le recordamos que para {{ $empresa }} es muy importante que se cumpla con su registro de jornada laboral en el sistema. 
+                                                Le recordamos que para {{ $empresa }} es muy importante que se cumpla con su registro de jornada laboral en el sistema.
                                             </p>
                                         </div>
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
-                                               Semanas faltantes:  
+                                               Semanas faltantes:
                                             </p>
                                         </div>
                                         <style type="text/css">
@@ -238,7 +238,7 @@
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
                                                <ul class="list_times_faltantes scroll_estilo mt-3">
-                                                    @foreach($times_faltantes_empleado as $time_f)
+                                                    @foreach($semanas_faltantes as $time_f)
                                                         @php
                                                             $fechas_array = explode('|', $time_f);
                                                             $start = $fechas_array[0];
@@ -250,7 +250,7 @@
                                                             Del <strong>{{ $startDate }}</strong> al <strong>{{ $endDate }}</strong>
                                                         </li>
                                                     @endforeach
-                                                </ul>  
+                                                </ul>
                                             </p>
                                         </div>
                                         <div style="text-align:center; margin-top:20px">
