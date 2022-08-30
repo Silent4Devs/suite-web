@@ -109,8 +109,8 @@ class EmpleadoImport implements ToModel, WithHeadingRow, WithValidation
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        if (Role::find(1) != null) {
-            User::findOrFail($user->id)->roles()->sync(1);
+        if (Role::find(4) != null) {
+            User::findOrFail($user->id)->roles()->sync(4);
         }
         //Send email with generated password
         Mail::to($empleado->email)->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));

@@ -40,7 +40,6 @@ class Area extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
 
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'areas';
 
     protected $dates = [
