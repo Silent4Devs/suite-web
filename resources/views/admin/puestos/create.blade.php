@@ -21,7 +21,8 @@
 
                     <div class="row col-12">
                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                            <label for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Nombre del puesto</label>
+                            <label class="required" for="puesto"><i class="fas fa-briefcase iconos-crear"></i>Nombre del
+                                puesto</label>
                             <input class="form-control {{ $errors->has('puesto') ? 'is-invalid' : '' }}" type="text"
                                 name="puesto" id="puesto" value="{{ old('puesto', '') }}" required>
                             @if ($errors->has('puesto'))
@@ -119,7 +120,7 @@
 
                     <div class="row col-12">
                         <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                            <label for="descripcion" class="required"><i class="fas fa-clipboard-list iconos-crear"></i>Objetivo
+                            <label for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>Objetivo
                                 general del puesto</label>
                             <textarea class="form-control date" type="text" name="descripcion" id="descripcion" required>
                                             {{ old('descripcion') }}
@@ -368,8 +369,8 @@
                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
                             <label for="requisito"><i class="fas fa-tasks iconos-crear"></i>Requisito</label>
                             {{-- <select class="form-control {{ $errors->has('requisito') ? 'is-invalid' : '' }}" name="requisito" id="requisito"> --}}
-                            <select class="form-control {{ $errors->has('requisito') ? 'is-invalid' : '' }}"
-                                name="requisito" id="requisito_certificado">
+                            <select class="form-control {{ $errors->has('requisito') ? 'is-invalid' : '' }}" name="requisito"
+                                id="requisito_certificado">
                                 <option value="" selected>Selecciona</option>
                                 <option value="Indispensable">Indispensable</option>
                                 <option value="Deseable">Deseable</option>
@@ -725,8 +726,8 @@
                     <div class="row col-12">
                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
                             <label for="reviso_id"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
-                            <select class="form-control {{ $errors->has('reviso_id') ? 'is-invalid' : '' }}"
-                                name="reviso_id" id="reviso_id">
+                            <select class="form-control {{ $errors->has('reviso_id') ? 'is-invalid' : '' }}" name="reviso_id"
+                                id="reviso_id">
                                 <option value="" selected disabled>
                                     -- Selecciona el nombre del empleado --
                                 </option>

@@ -485,6 +485,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Declaracion de Aplicabilidad
     Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
+    Route::get('declaracion-aplicabilidad/tabla', 'DeclaracionAplicabilidadController@tabla')->name('declaracion-aplicabilidad.tabla');
+    Route::put('declaracion-aplicabilidad/tabla/{control}', 'DeclaracionAplicabilidadController@updateTabla')->name('declaracion-aplicabilidad.updateTabla');
     Route::get('declaracion-aplicabilidad/{id}', 'DeclaracionAplicabilidadController@index')->name('declaracion-aplicabilidad');
     Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
     Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');

@@ -121,7 +121,7 @@
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             @if (Request::route()->getName() == 'admin.roles.index')
-                @if ($row->id > 1)
+                @if ($row->id != 1 && $row->id != 4)
                     <div class="btn btn-sm text-danger {{ $row->id }} rounded">
                         {{-- {{ trans('global.delete') }} --}} <i class="fas fa-trash" data-toggle="tooltip" data-placement="top"
                             title="Eliminar"></i>

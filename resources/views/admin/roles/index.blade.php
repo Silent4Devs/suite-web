@@ -38,9 +38,6 @@
     @can('role_create')
         <h5 class="col-12 titulo_general_funcion">Roles</h5>
         <div class="mt-5 card">
-            {{-- <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-                <h3 class="mb-2 text-center text-white"><strong>Roles</strong></h3>
-            </div> --}}
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modalroles', [
@@ -59,34 +56,11 @@
                         </th>
                         <th>
                             Nombre&nbsp;del&nbsp;rol
-                        </th>
-                        {{-- <th>
-                            {{ trans('cruds.role.fields.permissions') }}
-                        </th> --}}
+                        </th>                     
                         <th style="max-width: 100px;">
                             Opciones
                         </th>
-                    </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($permissions as $key => $item)
-                                    <option value="{{ $item->title }}">{{ $item->title }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+                    </tr>                 
                 </thead>
             </table>
         </div>
@@ -241,11 +215,7 @@
                     {
                         data: 'title',
                         name: 'title'
-                    },
-                    // {
-                    //     data: 'permissions',
-                    //     name: 'permissions.title'
-                    // },
+                    },                  
                     {
                         data: 'actions',
                         render: function(data, type, row) {

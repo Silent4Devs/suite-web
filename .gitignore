@@ -3,6 +3,7 @@
 /public/storage
 /storage/framework
 /storage/app/public/BIA/signatures/
+/storage/app/public/tratamiento/firmas/
 /vendor
 .idea
 # /public/css/app.css
