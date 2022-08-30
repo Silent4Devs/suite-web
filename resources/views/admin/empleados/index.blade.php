@@ -249,28 +249,28 @@
                         window.location.href = url;
                     }
                 };
-                let btnExport = {
-                    text: '<i class="fas fa-download"></i>',
-                    titleAttr: 'Descargar plantilla',
-                    className: "btn btn_cargar",
-                    url: "{{ route('descarga-empleado') }}",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                };
+                // let btnExport = {
+                //     text: '<i class="fas fa-download"></i>',
+                //     titleAttr: 'Descargar plantilla',
+                //     className: "btn btn_cargar",
+                //     url: "{{ route('descarga-empleado') }}",
+                //     action: function(e, dt, node, config) {
+                //         let {
+                //             url
+                //         } = config;
+                //         window.location.href = url;
+                //     }
+                // };
                 let btnImport = {
                     text: '<i class="fas fa-file-upload"></i>',
                     titleAttr: 'Importar datos',
                     className: "btn btn_cargar",
                     action: function(e, dt, node, config) {
-                        $('#xlsxImportModal').modal('show');
+                        window.location.href = "{{ route('admin.empleado.importar') }}";
                     }
                 };
                 dtButtons.push(btnAgregar);
-                dtButtons.push(btnExport);
+                // dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
             @endcan
 
