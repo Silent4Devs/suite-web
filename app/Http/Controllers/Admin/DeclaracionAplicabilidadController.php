@@ -129,6 +129,32 @@ class DeclaracionAplicabilidadController extends Controller
             ->with('responsables', $responsables);
     }
 
+    public function tabla(Request $request)
+    {
+        if ($request->ajax()) {
+            $controles = DeclaracionAplicabilidad::orderBy('id')->get();
+            return datatables()->of($controles)->toJson();
+        }
+
+        return view('admin.declaracionaplicabilidad.tabla');
+    }
+
+    public function edit(Request $request, $control)
+    {
+        $control = DeclaracionAplicabilidad::find($control);
+        return view('admin.declaracionaplicabilidad.tabla-edit', compact('control'));
+    }
+
+    public function updateTabla(Request $request, $control)
+    {
+        $control = DeclaracionAplicabilidad::find($control);
+        $control->update([
+            'anexo_politica' => $request->anexo_politica,
+            'anexo_descripcion' => $request->anexo_descripcion,
+        ]);
+        return redirect()->route('admin.declaracion-aplicabilidad.tabla')->with('success', 'Declaración de aplicabilidad actualizada con éxito');
+    }
+
     /**
      * Update the specified resource in storage.
      *

@@ -15,6 +15,8 @@ class DeclaracionAplicabilidad extends Model
     protected $fillable = [
         'control-uno',
         'control-dos',
+        'anexo_descripcion',
+        'anexo_politica',
         'anexo_indice',
         'control',
         'descripcion_control',
