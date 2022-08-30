@@ -24,6 +24,7 @@ class ImportEmpleadosCompnent extends Component
     public function import()
     {
         // try {
+        $this->validateFile();
         Excel::import(new EmpleadoImport, $this->file);
         $this->alert('success', 'Bien Hecho!', [
             'position' => 'top-end',
