@@ -1827,8 +1827,12 @@
     <script>
         $(function() {
             let idleTime = Number(@json(env('SESSION_LIFETIME')))*60*1000; // in milliseconds
+            if (idleTime == 0) {
+                idleTime = 120*60*1000;
+            }
+            console.log(idleTime);
             // Set idle time
-            $(document).idleTimer(idleTime); // in milliseconds
+            $(document).idleTimer(idleTime); // in milliseconds                
         });
 
         $(function() {

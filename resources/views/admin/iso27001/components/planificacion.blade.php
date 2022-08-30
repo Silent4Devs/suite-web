@@ -57,6 +57,14 @@
                     </div>
                 </a></li>
         @endcan
+        @can('declaracion_de_aplicabilidad_acceder')
+            <li><a href="{{ route('admin.declaracion-aplicabilidad.tabla') . '#declaracion' }}">
+                    <div>
+                        <i class="bi bi-file-diff"></i> <br>
+                        Declaración de aplicabilidad Tabla
+                    </div>
+                </a></li>
+        @endcan
         {{-- <li><a href="{{ route('admin.riesgosoportunidades.index') }}">
                 <div>
                     <i class="fas fa-asterisk"></i>
