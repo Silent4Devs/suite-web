@@ -182,7 +182,7 @@
                                             </p>
 
                                             <p style="font-size:11pt; color:#153643;">
-                                                Para ver el registro del nuevo control dé clic en el siguiente botón:
+                                                Para ver el registro dé clic en el siguiente botón:
                                             </p>
 
                                             <div style="text-align:center; margin-top:20px">

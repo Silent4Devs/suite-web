@@ -218,16 +218,16 @@
                         @if ($tratamientoRiesgo->riesgototal == null)
                         <span>Sin registro</span>
                         @else
-                        @if ($tratamientoRiesgo->riesgototal <= 185)
+                        @if ($tratamientoRiesgo->riesgototal >= 136 && $tratamientoRiesgo->riesgototal <= 185)
                             <i class="fas fa-circle" style="color:#FF417B;font-size:10pt;"></i><strong>
                                 {{ $tratamientoRiesgo->riesgototal }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgototal  <= 135)
+                        @elseif ($tratamientoRiesgo->riesgototal >= 91 && $tratamientoRiesgo->riesgototal <= 135)
                             <i class="fas fa-circle" style="color:#FFAC6A;font-size:10pt;"></i><strong>
                                 {{ $tratamientoRiesgo->riesgototal }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgototal >= 90)
+                        @elseif ($tratamientoRiesgo->riesgototal >= 46 && $tratamientoRiesgo->riesgototal >= 90)
                             <i class="fas fa-circle" style="color:#FFCB63;font-size:10pt;"></i>
                             {{ $tratamientoRiesgo->riesgototal }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgototal <= 45)
+                        @elseif ($tratamientoRiesgo->riesgototal  >= 0 && $tratamientoRiesgo->riesgototal <= 45)
                         <i class="fas fa-circle" style="color:#6DC866;font-size:10pt;"></i>
                         {{ $tratamientoRiesgo->riesgototal }}</strong>
                         @endif
@@ -235,29 +235,26 @@
                     </div>
 
                     <div style="color:#18183c">
-                        {{$tratamientoRiesgo->riesgo_total_residual}}
                         <span class="p-1" style="text-align:center">Riesgo Residual:</span>
-                        @if (is_null($tratamientoRiesgo->riesgo_total_residual))
+                        @if ($tratamientoRiesgo->riesgo_total_residual == null)
                         <span>Sin registro</span>
                         @else
-                        @if ($tratamientoRiesgo->riesgo_total_residual <= 185)
+                        @if ($tratamientoRiesgo->riesgo_total_residual >= 136 && $tratamientoRiesgo->riesgo_total_residual <= 185)
                         <i class="fas fa-circle" style="color:#FF417B;font-size:10pt;"></i><strong>
                             {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgo_total_residual <= 135)
+                        @elseif ($tratamientoRiesgo->riesgo_total_residual >= 91 && $tratamientoRiesgo->riesgo_total_residual <= 135)
                         <i class="fas fa-circle" style="color:#FFAC6A;font-size:10pt;"></i><strong>
                             {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgo_total_residual >= 90)
+                        @elseif ($tratamientoRiesgo->riesgo_total_residual >= 46 && $tratamientoRiesgo->riesgo_total_residual  >= 90)
                             <i class="fas fa-circle" style="color:#FFCB63;font-size:10pt;"></i><strong>
                                 {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgo_total_residual <= 45)
+                        @elseif ($tratamientoRiesgo->riesgo_total_residual >= 0 && $tratamientoRiesgo->riesgo_total_residual <= 45)
                             <i class="fas fa-circle" style="color: #6DC866;font-size:10pt;"></i><strong>
                                 {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
                        
                         @endif
                         @endif
-
                     </div>
-
 
                     <div class="col-12 m-0 p-0" style="color:#18183c">
                         <br>
@@ -287,7 +284,102 @@
                     @endforeach
 
 
+                    <br>
+                    <br>
+                    <div class="row col-12 ml-0" id="contenedor_firmas" >
 
+                        <div class="col-12 p-2" style="color:#18183c; text-align: center;">
+                            @if ($tratamientoRiesgo->id_dueno == auth()->user()->empleado->id) 
+                                    @if ($tratamientoRiesgo->es_aprobado == 'aprobado')
+                                        @if ($tratamientoRiesgo->firma_responsable_aprobador == null)
+                                            <div>
+                                                <div class="row justify-content-center">
+                                                    <div class="col-md-6">
+                                                        <canvas id="sig-responsable-aprobar-canvas" style="width:100%;">
+                                                            Navegador no compatible
+                                                        </canvas>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        {{-- <button class="btn btn-sm btn-success"
+                                            id="sig-evaluador-submitBtn">Confirmar</button> --}}
+                                                        <button class="btn btn-sm" data-action="firmar"
+                                                            data-tipo="responsable_aprobador"
+                                                            id="sig-responsable-aprobar-guardar"><i
+                                                                class="mr-2 fas fa-check"></i>Guardar</button>
+                                                        <button class="btn btn-sm"
+                                                            id="sig-responsable-aprobar-clearBtn"><i
+                                                                class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
+
+                                                    </div>
+                                                </div>
+
+
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <textarea id="sig-responsable-aprobar-dataUrl" readonly class=" form-control d-none" rows="5">Data URL de tu firma será almacenada aquí</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <img
+                                                src="{{ asset($route . $tratamientoRiesgo->firma_responsable_aprobador) }}"></img>
+                                        @endif
+                                    @elseif($tratamientoRiesgo->es_aprobado == 'pendiente')
+                                        <div class=" text-center justify-content-center aprobar-planificacion">
+
+                                            <button class=" btn btn-sm text-success" data-action="aprobar"
+                                                data-type="aprobacion" id="btn-aprobar" style="display:inline-block"><i
+                                                    class="mr-2 text-success far fa-thumbs-up"
+                                                    style="font-size:12pt;"></i>Aprobar</button>
+                                            <button class=" btn btn-sm text-danger" data-action="rechazar"
+                                                data-type="aprobacion" id="btn-rechazar" style="display:inline-block"><i
+                                                    class="text-danger mr-2  far fa-thumbs-down"
+                                                    style="font-size:12pt;"></i>Rechazar</button>
+
+                                        </div>
+                                    @elseif($tratamientoRiesgo->es_aprobado == 'rechazado')
+                                        <div class="mt-2 mb-2">
+                                            <strong class="text-danger mt-4">Solicitud rechazada</strong>
+                                        </div>
+                                    @endif
+                                
+                             @endif 
+                            <div>
+                                @if ($tratamientoRiesgo->id_dueno == auth()->user()->empleado->id)
+                                    <strong>Dueño del riesgo</strong>
+                                    <br>
+                                    <span>{{ $tratamientoRiesgo->responsable ? $tratamientoRiesgo->responsable->name : 'Sin registro' }}</span>
+                                    <br>
+                                    <span>{{ $tratamientoRiesgo->responsable ? $tratamientoRiesgo->responsable->puesto : 'Sin registro' }}</span>
+                                @else
+                                    @if (isset($tratamientoRiesgo->firma_responsable_aprobador))
+                                        <img
+                                            src="{{ asset($route . $tratamientoRiesgo->firma_responsable_aprobador) }}"></img>
+                                        <br>
+                                        <strong>Dueño del riesgo</strong>
+                                        <br>
+                                        <span>{{ $tratamientoRiesgo->responsable ? $tratamientoRiesgo->responsable->name : 'Sin registro' }}</span>
+                                        <br>
+                                        <span>{{ $tratamientoRiesgo->responsable ? $tratamientoRiesgo->responsable->puesto : 'Sin registro' }}</span>
+                                    @else
+                                        <br>
+                                        <strong style="color:#8b7f7f">Sin firma</strong>
+                                        <br>
+                                        <br>
+                                        <strong>Dueño del riesgo</strong>
+                                        <br>
+                                        <span>{{ $tratamientoRiesgo->responsable ? $tratamientoRiesgo->responsable->name : 'Sin registro' }}</span>
+                                        <br>
+                                        <span>{{ $tratamientoRiesgo->responsable ? $tratamientoRiesgo->responsable->puesto : 'Sin registro' }}</span>
+                                    @endif
+                                @endif
+
+                            </div>
+                        </div>
+                    </div>
 
 
 
@@ -299,4 +391,305 @@
         </div>
 
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    (function() {
+
+
+        window.requestAnimFrame = (function(callback) {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimaitonFrame ||
+                function(callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+
+        if (document.getElementById('sig-evaluador-canvas')) {
+            renderCanvas("sig-evaluador-canvas", "sig-evaluador-clearBtn");
+
+        }
+        if (document.getElementById('sig-responsable-canvas')) {
+            renderCanvas("sig-responsable-canvas", "sig-responsable-clearBtn");
+
+        }
+        if (document.getElementById('sig-responsable-aprobar-canvas')) {
+            renderCanvas("sig-responsable-aprobar-canvas", "sig-responsable-aprobar-clearBtn");
+        }
+
+
+    })();
+
+    //aprobar y rechazar
+    // 1500 milisegundos en que tarda de recargar la pagina
+    document.querySelector('.aprobar-planificacion')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (e.target.getAttribute('data-type') == 'aprobacion') {
+            let tipo = e.target.getAttribute('data-action');
+            let url = "{{ route('admin.tratamiento-riesgos.firma-aprobacion') }}";
+            let aprobado = tipo == 'aprobar' ? '1' : '0';
+            let controlCambios = @json($tratamientoRiesgo);
+            let mensajeBtn = tipo == 'rechazar' ? 'Rechazar' : 'Aprobar';
+            Swal.fire({
+                title: 'Esta seguro que desea ' + tipo + '?',
+                text: 'comentarios',
+                input: 'textarea',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: mensajeBtn,
+                cancelButtonText: 'Cancelar',
+                showLoaderOnConfirm: true,
+                preConfirm: (comentarios) => {
+                    return fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                            },
+                            body: JSON.stringify({
+                                aprobado,
+                                id: controlCambios.id,
+                                comentarios
+                            })
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                `Request failed: ${error}`
+                            )
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let mensaje = tipo == 'rechazar' ? 'Rechazado' : 'Aprobado';
+                    Swal.fire('', mensaje + ' con éxito', 'success').then(() => {
+                        window.location.reload();
+                    })
+                }
+            })
+
+        }
+    });
+    // // fin aprobación
+
+
+    if (document.getElementById('contenedor_firmas')) {
+        document.getElementById('contenedor_firmas').addEventListener('click', (e) => {
+            if (e.target.getAttribute('data-action') == 'firmar') {
+
+                e.preventDefault();
+                let btnId = e.target.getAttribute('id');
+                let canvasId = btnId.replaceAll('guardar', 'canvas');
+                let controlCambios = @json($tratamientoRiesgo);
+                let url = "{{ route('admin.tratamiento-riesgos.firma-aprobacion') }}";
+                var canvas = document.getElementById(canvasId);
+                var dataUrl = canvas.toDataURL();
+                let tipo = e.target.getAttribute('data-tipo');
+                var data = {
+                    id: controlCambios.id,
+                    tipo,
+                    firma: '',
+                };
+                var isCanvasEmptySigned = isCanvasEmpty(canvas);
+                if (isCanvasEmptySigned) {
+                    toastr.info('Firma(s) no dibujadas');
+                } else {
+                    data['firma'] = dataUrl;
+
+                }
+                console.log(data);
+                if (!isCanvasEmptySigned) {
+                    $.ajax({
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                        type: "POST",
+                        data: data,
+                        url: url,
+
+                        success: function(response) {
+                            if (response.success) {
+                                toastr.success('Firmado con éxito');
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1500);
+                            }
+                        },
+                        error: function(request, status, error) {
+                            toastr.error(
+                                'Ocurrió un error: ' + error);
+                        }
+                    });
+                }
+            }
+        })
+    }
+
+    function renderCanvas(contenedor, clearBtnCanvas) {
+
+        var canvas = document.getElementById(contenedor);
+        console.log(canvas);
+        var ctx = canvas.getContext("2d");
+        ctx.strokeStyle = "#222222";
+        ctx.lineWidth = 1;
+
+        var drawing = false;
+        var mousePos = {
+            x: 0,
+            y: 0
+        };
+        var lastPos = mousePos;
+
+        canvas.addEventListener("mousedown", function(e) {
+            drawing = true;
+            lastPos = getMousePos(canvas, e);
+        }, false);
+
+        canvas.addEventListener("mouseup", function(e) {
+            drawing = false;
+        }, false);
+
+        canvas.addEventListener("mousemove", function(e) {
+            mousePos = getMousePos(canvas, e);
+        }, false);
+
+        // Add touch event support for mobile
+        canvas.addEventListener("touchstart", function(e) {
+
+        }, false);
+
+        canvas.addEventListener("touchmove", function(e) {
+            var touch = e.touches[0];
+            var me = new MouseEvent("mousemove", {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(me);
+        }, false);
+
+        canvas.addEventListener("touchstart", function(e) {
+            mousePos = getTouchPos(canvas, e);
+            var touch = e.touches[0];
+            var me = new MouseEvent("mousedown", {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(me);
+        }, false);
+
+        canvas.addEventListener("touchend", function(e) {
+            var me = new MouseEvent("mouseup", {});
+            canvas.dispatchEvent(me);
+        }, false);
+
+        function getMousePos(canvasDom, mouseEvent) {
+            var rect = canvasDom.getBoundingClientRect();
+            return {
+                x: mouseEvent.clientX - rect.left,
+                y: mouseEvent.clientY - rect.top
+            }
+        }
+
+        function getTouchPos(canvasDom, touchEvent) {
+            var rect = canvasDom.getBoundingClientRect();
+            return {
+                x: touchEvent.touches[0].clientX - rect.left,
+                y: touchEvent.touches[0].clientY - rect.top
+            }
+        }
+
+        function renderCanvas() {
+            if (drawing) {
+                ctx.moveTo(lastPos.x, lastPos.y);
+                ctx.lineTo(mousePos.x, mousePos.y);
+                ctx.stroke();
+                lastPos = mousePos;
+            }
+        }
+
+        // Prevent scrolling when touching the canvas
+        document.body.addEventListener("touchstart", function(e) {
+            if (e.target == canvas) {
+                e.preventDefault();
+            }
+        }, false);
+        document.body.addEventListener("touchend", function(e) {
+            if (e.target == canvas) {
+                e.preventDefault();
+            }
+        }, false);
+        document.body.addEventListener("touchmove", function(e) {
+            if (e.target == canvas) {
+                e.preventDefault();
+            }
+        }, false);
+
+        (function drawLoop() {
+            requestAnimFrame(drawLoop);
+            renderCanvas();
+        })();
+
+        function clearCanvas() {
+            canvas.width = canvas.width;
+        }
+
+        function isCanvasBlank() {
+            const context = canvas.getContext('2d');
+
+            const pixelBuffer = new Uint32Array(
+                context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+            );
+
+            return !pixelBuffer.some(color => color !== 0);
+        }
+
+        // Set up the UI
+        // var sigText = document.getElementById(dataBaseCanvas);
+        // var sigImage = document.getElementById(imageCanvas);
+        var clearBtn = document.getElementById(clearBtnCanvas);
+        // var submitBtn = document.getElementById(submitBtnCanvas);
+        clearBtn.addEventListener("click", function(e) {
+            clearCanvas();
+            // sigText.innerHTML = "Data URL for your signature will go here!";
+            // sigImage.setAttribute("src", "");
+        }, false);
+        // submitBtn.addEventListener("click", function(e) {
+        //     const blank = isCanvasBlank();
+        //     if (!blank) {
+        //         // var dataUrl = canvas.toDataURL();
+        //         // sigText.innerHTML = dataUrl;
+        //         // sigImage.setAttribute("src", dataUrl);
+        //     } else {
+        //         if (toastr) {
+        //             toastr.info('No has firmado en el canvas');
+        //         } else {
+        //             alert('No has firmado en el canvas');
+        //         }
+        //     }
+        // }, false);
+
+    }
+
+    function isCanvasEmpty(canvas) {
+        const context = canvas.getContext('2d');
+
+        const pixelBuffer = new Uint32Array(
+            context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+        );
+
+        return !pixelBuffer.some(color => color !== 0);
+    }
+</script>
 @endsection
