@@ -116,88 +116,56 @@
                                         </div>
 
                                         <div style="margin-top:50px;">
-                                            @if($planificacionControles->firma_registro == null)
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{ $planificacionControles->empleado->name }},
+                                                Estimado(a) {{ $tratamientoRiesgo->registro->name }},
                                             </strong>
-                                            @else
-                                            <strong
-                                                style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{ $planificacionControles->responsable->name }},
-                                            </strong>
-                                            @endif
+
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
-                                            <p style="font-size:11pt; color:#153643;">
-                                                Le informamos que se ha registrado un nuevo control de cambios
-                                                administrativos con el ID {{ $planificacionControles->folio_cambio }},
-                                                por lo que se solicita su firma de aprobación .
-                                            </p>
-                                            <br>
+                                            @if ($tratamientoRiesgo->es_aprobado == 'aprobado')
+                                                <p style="font-size:11pt; color:#153643;">
+                                                    Le informamos que derivado de la solicitud de aprobación del riesgo
+                                                    <strong style="font-size:10pt;">ID
+                                                        {{ $tratamientoRiesgo->identificador }}</strong>,
+                                                    {{ $tratamientoRiesgo->responsable->name }} ha dado su consentimiento                                             </p>
+                                                <strong
+                                                    style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
+                                                    Comentarios:</strong>
+                                                <p style="font-size:11pt; color:#153643;">
+                                                    {{ $tratamientoRiesgo->comentarios != null ? $tratamientoRiesgo->comentarios : 'Sin comentario' }}
+                                                </p>
+                                            @else
+                                                <p style="font-size:11pt; color:#153643;">
+                                                    Le informamos que derivado de su solicitud de aprobación del riesgo
+                                                    <strong style="font-size:10pt;">ID
+                                                        {{ $tratamientoRiesgo->identificador }}</strong>,
+                                                    {{ $tratamientoRiesgo->responsable->name }}, ha
+                                                    rechazado el riesgo
+                                                </p>
+                                                <p style="font-size:11pt; color:#153643;"><i
+                                                        class="mr-2 far fa-comments"></i><strong>Comentarios:</strong>
+                                                </p>
+                                                <p style="font-size:11pt; color:#153643;">
+                                                    {{ $tratamientoRiesgo->comentarios != null ? $tratamientoRiesgo->comentarios : 'Sin comentario' }}
+                                                </p>
 
-                                            <strong
-                                                style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Descripción del cambio administrativo</strong>
-                                            <p>
-                                            <ul style="font-size:11pt; color:#153643;">
-                                                <li style="font-size:11pt;">Reportó:<strong style="font-size:10pt;">
-                                                        {{ $planificacionControles->empleado ? $planificacionControles->empleado->name : 'Sin definir' }}
-                                                    </strong>
-                                                </li>
-                                                <style>
-                                                    .estilockedi * {
-                                                        all: unset;
-                                                        text-align: justify !important;
-                                                    }
-                                                </style>
-                                                <li style="font-size:11pt;">Objetivo:
-                                                    {!! $planificacionControles->objetivo !!}
-                                                </li>
-                                                <li style="font-size:11pt;">Fecha Inicio:<strong
-                                                        style="font-size:10pt;">
-                                                        {{ \Carbon\Carbon::parse($planificacionControles->fecha_inicio)->format('d-m-Y') }}
-                                                    </strong></li>
-                                                <li style="font-size:11pt;">Fecha Fin: <strong style="font-size:10pt;">
-                                                        {{ \Carbon\Carbon::parse($planificacionControles->fecha_termino)->format('d-m-Y H:i:s') }}</strong>
-                                                </li>
-                                                <li style="font-size:11pt;">Origen del cambio: <strong
-                                                        style="font-size:10pt;">
-                                                        {{ $planificacionControles->origen ? $planificacionControles->origen->nombre : 'Sin definir' }}
-                                                    </strong>
-                                                </li>
-                                                <style>
-                                                    .estilockedicriterio * {
-                                                        all: unset;
-                                                        text-align: justify !important;
-                                                    }
-                                                </style>
-                                                <li style="font-size:11pt;">Criterios de aceptación:<strong
-                                                        class="estilockedicriterio" style="font-size:10pt;">
-                                                        {!! $planificacionControles->criterios_aceptacion
-                                                            ? $planificacionControles->criterios_aceptacion
-                                                            : 'Sin definir' !!} </strong>
+                                               
+                                            @endif
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <p style="font-size:11pt; color:#153643; mt-3">
+                                            Para ingresar a revisar el riesgo dé clic en el
+                                            siguiente botón:
+                                        </p>
 
-                                                </li>
-                                                <li style="font-size:11pt;">Descripción
-                                                    <span style="font-size:10pt;">{!! $planificacionControles->descripcion ? $planificacionControles->descripcion : 'Sin definir' !!} </span>
-                                                </li>
-
-                                            </ul>
-                                            </p>
-
-                                            <p style="font-size:11pt; color:#153643;">
-                                                Para ver el registro dé clic en el siguiente botón:
-                                            </p>
-
-                                            <div style="text-align:center; margin-top:20px">
-                                                <a href="{{route('admin.planificacion-controls.show',$planificacionControles) }}"
-                                                    style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                    Revisar Control Administrativo
-                                                </a>
-                                            </div>
-
+                                        <div style="text-align:center; margin-top:20px">
+                                            <a href="{{ route('admin.tratamiento-riesgos.show', $tratamientoRiesgo) }}"
+                                                style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                                Revisar Riesgo
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>

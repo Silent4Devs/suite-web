@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SolicitudAceptacionTratamientoRiesgo extends Mailable
+class RiesgoAceptadoRechazado extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,14 +18,14 @@ class SolicitudAceptacionTratamientoRiesgo extends Mailable
      *
      * @return void
      */
-
+    // public $tratamientoRiesgo;
     public $tratamientoRiesgo;
-    public $empleado;
-
-    public function __construct(TratamientoRiesgo $tratamientoRiesgo, Empleado $empleado)
+    
+    public function __construct(TratamientoRiesgo $tratamientoRiesgo)
     {
+        // $this->empleado = $empleado;
         $this->tratamientoRiesgo = $tratamientoRiesgo;
-        $this->empleado = $empleado;
+
     }
 
     /**
@@ -35,6 +35,6 @@ class SolicitudAceptacionTratamientoRiesgo extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.tratamientoRiesgos.solicitud-aceptacion-riesgo')->subject('Solicitud de aprobación del riesgo ID ' . $this->tratamientoRiesgo->identificador);
+        return $this->view('mails.tratamientoRiesgos.riesgo-aceptado-rechazado')->subject('Respuesta a la solicitud de aprobación del riesgo ID ' . $this->tratamientoRiesgo->identificador);
     }
 }

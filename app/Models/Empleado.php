@@ -598,4 +598,10 @@ class Empleado extends Model
     {
         return $this->belongsToMany(PlanificacionControl::class, 'tratamiento_id');
     }
+
+    public function responsableTratamiento()
+    {
+        return $this->hasMany(TratamientoRiesgo::class, 'id_dueno', 'id')->alta()->with('area');
+    }
+
 }
