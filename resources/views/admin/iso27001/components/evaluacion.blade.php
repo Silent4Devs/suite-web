@@ -56,13 +56,12 @@
             </li>
         @endcan
         @can('revision_por_direccion_acceder')
-            <li><a href="{{ route('admin.revision-direccions.index') }}">
+            <li><a href="{{ route('admin.minutasaltadireccions.index') }}">
                     <div>
-                        <i class="bi bi-journal-check"></i> <br>
+                        <i class="bi bi-file-earmark-text"></i> <br>
                         Revisión por dirección
                     </div>
-                </a>
-            </li>
+                </a></li>
         @endcan
     </ul>
 @else

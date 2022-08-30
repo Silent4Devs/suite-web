@@ -134,39 +134,58 @@
                                     style="color:#ffffff">Recursos</strong>
                             </div>
                             <div class="col-6"
-                                style="top:55px; left:290px; position: absolute; height:30px !important;">
+                                style="top:60px; left:290px; position: absolute; height:30px !important;">
                                 <textarea name="control_a" class="politicas_txtarea"
                                     id="analisisControl">{{ $analisis ? $analisis->control_a : '' }}</textarea>
+                                @error('control_a')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror    
                             </div>
+                            
                             {{-- <textarea name="control_b"
                                 class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis ? $analisis->control_b : '' }}</textarea> --}}
                             <div class="col-6"
-                                style="top:55px; left:810px; position: absolute; height:30px !important;">
+                                style="top:60px; left:810px; position: absolute; height:30px !important;">
                                 <textarea name="proceso_a" class="procesos_txtarea"
                                     id="analisisProceso">{{ $analisis ? $analisis->proceso_a : '' }}</textarea>
+                                @error('proceso_a')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             {{-- <textarea name="proceso_b"
                                 class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis ? $analisis->proceso_b : '' }}</textarea> --}}
                             <div class="col-6"
-                                style="top:55px; left:1315px; position: absolute; height:30px !important;">
+                                style="top:60px; left:1315px; position: absolute; height:30px !important;">
                                 <textarea name="personas_a" class="personas_txtarea"
                                     id="analisisPersona">{{ $analisis ? $analisis->personas_a : '' }}</textarea>
+                                @error('personas_a')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             {{-- <textarea name="personas_b"
                                 class="personas_txtarea txt_obj_secundarios_a">{{ $analisis ? $analisis->personas_b : '' }}</textarea> --}}
-                            <div class="col-6" style="bottom:5px; right:480px; position: absolute;">
+                            <div class="col-6" style="bottom:5px; right:380px; position: absolute;">
                                 <textarea name="tecnologia_a" class="tecnologia_txtarea txt_obj_secundarios_b"
                                     id="analisisTecnologia">{{ $analisis ? $analisis->tecnologia_a : '' }}</textarea>
+                                @error('tecnologia_a')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             {{-- <textarea name="tecnologia_b" class="tecnologia_txtarea ">{{ $analisis ? $analisis->tecnologia_b : '' }}</textarea> --}}
                             <div class="col-6" style="bottom:5px; left:540px; position: absolute;">
                                 <textarea name="metodos_a" id="analisisMetodos"
                                     class="metodos_txtarea txt_obj_secundarios_b">{{ $analisis ? $analisis->metodos_a : '' }}</textarea>
+                                @error('metodos_a')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             {{-- <textarea name="metodos_b" class="metodos_txtarea ">{{ $analisis ? $analisis->metodos_b : '' }}</textarea> --}}
                             <div class="col-6" style="bottom:5px; left:1060px; position: absolute;">
                                 <textarea name="ambiente_a"
                                     class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis ? $analisis->ambiente_a : '' }}</textarea>
+                                @error('ambiente_a')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             {{-- <textarea name="ambiente_b" class="ambiente_txtarea ">{{ $analisis ? $analisis->ambiente_b : '' }}</textarea> --}}
                             <div class="col-6" style="bottom:5px; left:1600px; position: absolute;">
@@ -177,9 +196,12 @@
                     </div>
                 </div>
             </div>
-            <div class="py-3 text-right col-12">
+            <div class="text-right form-group col-12">
+                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
                 <input type="submit" class="btn btn-success" value="Guardar">
             </div>
+            {{-- <div class="py-3 text-right col-12">
+            </div> --}}
         </form>
     </div>
 

@@ -53,6 +53,9 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <style type="text/css">
+        .custom-file-input~.custom-file-label::after {
+            content: "Elegir";
+        }
         .printModal {
             font-family: sans-serif;
             display: flex;

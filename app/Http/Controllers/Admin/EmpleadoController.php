@@ -1587,4 +1587,9 @@ class EmpleadoController extends Controller
             }
         }
     }
+
+    public function importar()
+    {
+        return view('admin.empleados.importar');
+    }
 }

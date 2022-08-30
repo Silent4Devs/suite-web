@@ -333,13 +333,21 @@
                                             @endphp
                                             @foreach($actividades as $actividad)
                                             <tr>
-                                                <td>{{ $actividad->name ? $actividad->name : 'Sin registro' }}</td>
-                                                <td>{{ Carbon\Carbon::parse($actividad->start)->format('d-m-Y')}}</td>
-                                                <td>{{ Carbon\Carbon::parse($actividad->end)->format('d-m-Y')}}</td>
+                                                <td>
+                                               <span style="color:#18183c">{{ $actividad->name ? $actividad->name : 'Sin registro' }}</span>     
+                                                </td>
+                                                <td>
+                                                    <span style="color:#18183c">{{ Carbon\Carbon::parse($actividad->start)->format('d-m-Y')}}</span> 
+                                                    
+                                                </td>
+                                                <td>
+                                                    <span style="color:#18183c" >{{ Carbon\Carbon::parse($actividad->end)->format('d-m-Y')}}</span>
+                                                    
+                                                </td>
                                                 <td>
                                                     @if ($actividad->status  == 'STATUS_UNDEFINED') 
                                                         
-                                                            <span class="badge badge-primary">Sin iniciar</span>
+                                                            <span  class="badge badge-primary">Sin iniciar</span>
                                                        
                                                    @elseif ($actividad->status  == 'STATUS_ACTIVE') 
                                                         
@@ -370,15 +378,17 @@
                                                           $empleado=$Empleado::select('id','name')->find($empleado_id->resourceId);
                                                       @endphp
                                                       <li>
-                                                        {{ $empleado->name }}
+                                                        <span style="color:#18183c">{{ $empleado->name }}</span>
                                                       </li>
                                                       @empty
-                                                      <span>Sin registros</span>
+                                                      <span style="color:#18183c">Sin registros</span>
                                                       @endforelse
                                                     </ul>
                                                 </td>
                                                 <td>
-                                                    {{ $actividad->description ? $actividad->description : 'Sin registro' }}
+                                                    <span style="color:#18183c">
+                                                        {{ $actividad->description ? $actividad->description : 'Sin registro' }}
+                                                    </span>
                                                 </td>
                                             </tr>
                                             @endforeach

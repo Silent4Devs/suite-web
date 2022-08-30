@@ -99,7 +99,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'update' => 'solicitud-vacaciones.update',
         'destroy' => 'solicitud-vacaciones.destroy',
     ])->except(['show', 'destroy']);;
-    
+
     Route::get('solicitud-dayoff/{id}/showArchivo', 'SolicitudDayOffController@showArchivo')->name('solicitud-dayoff.showArchivo');
     Route::get('solicitud-dayoff/{id}/vistaGlobal', 'SolicitudDayOffController@showVistaGlobal')->name('solicitud-dayoff.vistaGlobal');
     Route::get('solicitud-dayoff/menu', 'SolicitudDayOffController@aprobacionMenu')->name('solicitud-dayoff.menu');
@@ -533,6 +533,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
     // Empleados
+    Route::get('empleados/importar', 'EmpleadoController@importar')->name('empleado.importar');
     Route::post('empleados/list/get', 'EmpleadoController@getListaEmpleadosIndex')->name('empleado.getListaEmpleadosIndex');
     Route::post('empleado/buscar-empleado-por-correo', 'EmpleadoController@buscarEmpleadoPorCorreo')->name('empleado.buscarEmpleadoPorCorreo');
     Route::get('empleado/{empleado}/documentos', 'EmpleadoController@getDocumentos')->name('empleado.documentos');
@@ -842,7 +843,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('planificacion-controls/firma', 'PlanificacionControlController@guardarFirmaAprobacion')->name('planificacion-controls.firma-aprobacion');
     Route::delete('planificacion-controls/destroy', 'PlanificacionControlController@massDestroy')->name('planificacion-controls.massDestroy');
     Route::resource('planificacion-controls', 'PlanificacionControlController');
-    
+
     // Activos
 
     // Route::post('activos/create', 'ActivosController@create');
@@ -871,6 +872,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('modelos', 'ModeloController');
 
     // Tratamiento Riesgos
+    Route::post('tratamiento-riesgos/firma', 'TratamientoRiesgosController@guardarFirmaAprobacion')->name('tratamiento-riesgos.firma-aprobacion');
     Route::delete('tratamiento-riesgos/destroy', 'TratamientoRiesgosController@massDestroy')->name('tratamiento-riesgos.massDestroy');
     Route::resource('tratamiento-riesgos', 'TratamientoRiesgosController');
 
@@ -1095,7 +1097,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         'show' => 'analisis-impacto.show',
         'update' => 'analisis-impacto.update',
     ])->except(['edit']);;
-   
+
 
     //Carta de Aceptación
     // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
