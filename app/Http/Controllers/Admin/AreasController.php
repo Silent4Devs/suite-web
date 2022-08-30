@@ -99,14 +99,21 @@ class AreasController extends Controller
         return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados'));
     }
 
-    public function store(StoreAreaRequest $request)
+    public function store(Request $request)
     {
         abort_if(Gate::denies('crear_area_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
+
         $validateReporta = 'nullable|exists:areas,id';
         if ($direccion_exists) {
             $validateReporta = 'required|exists:areas,id';
         }
+        $request->validate([
+            'area' => 'required|string',
+            'id_reporta' => $validateReporta,
+        ], [
+            'id_reporta.required' => 'El área a la que reporta es requerido'
+        ]);
 
         $area = Area::create($request->all());
 
@@ -128,13 +135,6 @@ class AreasController extends Controller
             'foto_area' => $image,
         ]);
 
-        $request->validate([
-            'area' => 'required|string',
-            'id_grupo' => 'required|exists:grupos,id',
-            'id_reporta' => $validateReporta,
-            'descripcion' => 'required|string',
-
-        ]);
 
         return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
@@ -167,6 +167,14 @@ class AreasController extends Controller
             }
         }
 
+        $request->validate([
+            'area' => 'required|string',
+            'id_reporta' => $validateReporta,
+        ], [
+            'id_reporta.required' => 'El área a la que reporta es requerido'
+        ]);
+
+
         $image = $area->foto_area;
         if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
 
@@ -189,13 +197,6 @@ class AreasController extends Controller
                 $constraint->aspectRatio();
             })->save($route);
         }
-
-        $request->validate([
-            'area' => 'required|string',
-            'id_grupo' => 'required|exists:grupos,id',
-            'id_reporta' => $validateReporta,
-            'descripcion' => 'required|string',
-        ]);
 
         $area->update([
             'area' => $request->area,
