@@ -193,4 +193,10 @@ class AnalisisImpacto extends Model
         'h23',
         'h24',
     ];
+
+    public function infraestructura()
+    {
+        return $this->belongsTo(CuestionarioInfraestructuraTecnologica::class, 'cuestionario_id');
+    }
+
 }

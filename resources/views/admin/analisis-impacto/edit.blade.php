@@ -441,7 +441,7 @@
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
                     style="background-color:#345183; border-radius: 100px; color: white;">
-                    RECURSOS MATERIALES (inciso b Anexo67)
+                    PERÍODOS CRÍTICOS
                 </div>
             </div>
             <div class="row">
