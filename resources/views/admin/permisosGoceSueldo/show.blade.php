@@ -2,7 +2,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Mostrar Lineamiento Permiso con Goce de Sueldo
+            Mostrar Lineamiento de Permiso
         </div>
 
         <div class="card-body">

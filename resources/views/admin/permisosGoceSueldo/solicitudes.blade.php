@@ -39,7 +39,7 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Permisos con Goce de Sueldo</h5>
+    <h5 class="col-12 titulo_general_funcion">Vista Global de Solicitudes de Permisos</h5>
 
     <div class="card">
         @can('amenazas_agregar')
@@ -64,6 +64,9 @@
                            Solicitante
                         </th>
                         <th style="min-width: 200px;">
+                            Nombre de permiso
+                         </th>
+                         <th style="min-width: 200px;">
                             Tipo de permiso
                          </th>
                         <th style="min-width: 110px;">
@@ -252,7 +255,35 @@
                         }
 
                     },
-                    
+                    {
+                        data: 'tipo',
+                        name: 'tipo',
+                        render: function(data, type, row) {
+                            const tipo = row.tipo;
+                            switch (Number(tipo)) {
+                                case 1:
+                                    return `
+                                    <div  style="text-align:left">
+                                        Permisos conforme a la ley
+                                    </div>
+                                    `;
+                                    break;
+                                case 2:
+                                    return `
+                                    <div style="text-align:left">
+                                        Permisos otorgados por la empresa
+                                    </div>
+                                    `;
+                                    break;
+                                default:
+                                    return `
+                                    <div style="text-align:left">
+                                       No definido
+                                    </div>
+                                    `;
+                            }
+                        }
+                    },
                     {
                         data: 'dias_solicitados',
                         name: 'dias_solicitados',
