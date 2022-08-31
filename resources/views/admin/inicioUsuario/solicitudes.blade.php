@@ -69,7 +69,7 @@
             <div class="col-11">
                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
                 <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá hacer la solicitud de
-                    Vacaciones, Day Off y permisos con Goce de Sueldo.
+                    Vacaciones, Day Off y Permisos.
                 </p>
 
             </div>
@@ -99,7 +99,7 @@
                     @endcan
                     @can('mi_perfil_modulo_solicitud_ausencia')
                         <a href="{{ asset('admin/solicitud-permiso-goce-sueldo') }}" class="btn_reporte">
-                            <i class="bi bi-coin"></i><br><span>Permisos con goce de sueldo</span>
+                            <i class="bi bi-coin"></i><br><span>Permisos</span>
                         </a>
                     @endcan
                     @can('modulo_aprobacion_ausencia')

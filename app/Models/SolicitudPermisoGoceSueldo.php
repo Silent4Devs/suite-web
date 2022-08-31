@@ -30,6 +30,10 @@ class SolicitudPermisoGoceSueldo extends Model
     {
         return $this->belongsTo(PermisosGoceSueldo::class,'permiso_id');
     }
+    // public function tipo()
+    // {
+    //     return $this->belongsTo(PermisosGoceSueldo::class,'tipo_permiso');
+    // }
     public function empleado()
     {
         return $this->belongsTo(Empleado::class,'empleado_id');
