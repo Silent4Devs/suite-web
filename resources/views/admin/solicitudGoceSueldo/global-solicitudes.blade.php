@@ -64,8 +64,11 @@
                             Solicitante
                         </th>
                         <th style="min-width: 200px;">
-                           Tipo de permiso
+                           Nombre del permiso
                         </th>
+                        <th style="min-width: 200px;">
+                            Tipo de permiso
+                         </th>
                         {{-- <th style="min-width: 110px;">
                             Días Solicitados
                         </th> --}}
@@ -250,6 +253,35 @@
                             return `<div style="text-align:left">${data.nombre}</div>`;
                         }
 
+                    },
+                    {
+                        data: 'tipo',
+                        name: 'tipo',
+                        render: function(data, type, row) {
+                            const tipo = row.tipo;
+                            switch (Number(tipo)) {
+                                case 1:
+                                    return `
+                                    <div  style="text-align:left">
+                                        Permisos conforme a la ley
+                                    </div>
+                                    `;
+                                    break;
+                                case 2:
+                                    return `
+                                    <div style="text-align:left">
+                                        Permisos otorgados por la empresa
+                                    </div>
+                                    `;
+                                    break;
+                                default:
+                                    return `
+                                    <div style="text-align:left">
+                                       No definido
+                                    </div>
+                                    `;
+                            }
+                        }
                     },
                     // {
                     //     data: 'dias_solicitados',

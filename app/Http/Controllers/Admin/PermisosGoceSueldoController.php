@@ -42,6 +42,9 @@ class PermisosGoceSueldoController extends Controller
             $table->editColumn('nombre', function ($row) {
                 return $row->nombre ? $row->nombre : '';
             });
+            $table->editColumn('', function ($row) {
+                return $row->tipo_permiso ? $row->tipo_permiso : '';
+            });
             $table->editColumn('dias', function ($row) {
                 return $row->dias ? $row->dias : '';
             });
@@ -68,7 +71,7 @@ class PermisosGoceSueldoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('reglas_goce_sueldo_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $vacacion = new Vacaciones();
+        $vacacion = new PermisosGoceSueldo();
 
         return view('admin.permisosGoceSueldo.create', compact('vacacion'));
     }
@@ -79,6 +82,7 @@ class PermisosGoceSueldoController extends Controller
         $request->validate([
             'nombre' => 'required|string',
             'dias' => 'required|int',
+            'tipo_permiso' => 'required|int',
         ]);
         $vacacion = PermisosGoceSueldo::create($request->all());
         Flash::success('Regla añadida satisfactoriamente.');
@@ -114,6 +118,7 @@ class PermisosGoceSueldoController extends Controller
         $request->validate([
             'nombre' => 'required|string',
             'dias' => 'required|int',
+            'tipo_permiso' => 'required|int',
         ]);
 
         $vacacion = PermisosGoceSueldo::find($id);
@@ -152,7 +157,9 @@ class PermisosGoceSueldoController extends Controller
             $table->editColumn('permiso', function ($row) {
                 return $row->permiso ? $row->permiso : '';
             });
-
+            $table->editColumn('tipo', function ($row) {
+                return $row->permiso->tipo_permiso ? $row->permiso->tipo_permiso : '';
+            });
             $table->editColumn('dias_solicitados', function ($row) {
                 return $row->dias_solicitados ? $row->dias_solicitados : '';
             });

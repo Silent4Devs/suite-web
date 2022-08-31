@@ -78,7 +78,7 @@
 
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
     <div style="display:flex; justify-content:space-between;">
-        <h5 class="titulo_general_funcion">Administración de Permisos con Goce de Sueldo</h5>
+        <h5 class="titulo_general_funcion">Administración de Permisos</h5>
 
     </div>
     <div class="card">

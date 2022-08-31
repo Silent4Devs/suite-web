@@ -3,7 +3,7 @@
 @section('content')
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
-        <a href="{!! route('admin.permisos-goce-sueldo.index') !!}">Lineamientos para Permiso con Goce de Sueldo</a>
+        <a href="{!! route('admin.permisos-goce-sueldo.index') !!}">Lineamientos para Permisos</a>
     </li>
     <li class="breadcrumb-item active">Editar</li>
 </ol>

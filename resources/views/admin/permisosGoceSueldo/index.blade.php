@@ -39,7 +39,7 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Lineamientos para Permisos con Goce de Suledo</h5>
+    <h5 class="col-12 titulo_general_funcion">Lineamientos para Permisos</h5>
 
     <div class="card">
         <div class="px-1 py-2 mb-4 rounded mt-2 mr-1 ml-1 " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
@@ -52,7 +52,7 @@
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
                     <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección se determinarán los
-                        lineamientos que se aplicarán a las solicitudes de permisos con goce de sueldo de los colaborares.
+                        lineamientos que se aplicarán a las solicitudes de permisos de los colaborares.
                     </p>
 
                 </div>
@@ -260,6 +260,35 @@
                             return `<div style="text-align:left">${data}</div>`;
                         }
 
+                    },
+                    {
+                        data: 'tipo_permiso',
+                        name: 'tipo_permiso',
+                        render: function(data, type, row) {
+                            const tipo = row.tipo_permiso;
+                            switch (Number(tipo)) {
+                                case 1:
+                                    return `
+                                    <div  style="text-align:left">
+                                        Permisos conforme a la ley
+                                    </div>
+                                    `;
+                                    break;
+                                case 2:
+                                    return `
+                                    <div style="text-align:left">
+                                        Permisos otorgados por la empresa
+                                    </div>
+                                    `;
+                                    break;
+                                default:
+                                    return `
+                                    <div style="text-align:left">
+                                       No definido
+                                    </div>
+                                    `;
+                            }
+                        }
                     },
                     {
                         data: 'dias',
