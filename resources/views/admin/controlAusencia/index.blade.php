@@ -115,7 +115,7 @@
                                 <a href="ajustes-permisos-goce-sueldo">
                                     <div>
                                         <i class="fas fa-hand-holding-usd"></i><br>
-                                        Ajustes Permisos con goce de sueldo
+                                        Ajustes Permisos
                                     </div>
                                 </a>
                             </li>

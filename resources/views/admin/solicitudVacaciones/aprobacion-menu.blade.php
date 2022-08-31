@@ -111,7 +111,7 @@
                 </div>
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá aprobar/rechazar las solicitudes de Vacaciones, Day Off y Permisos con goce de sueldo de sus colaborador(es).
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">En esta sección podrá aprobar/rechazar las solicitudes de Vacaciones, Day Off y Permisos de sus colaborador(es).
                     </p>
     
                 </div>
@@ -150,8 +150,8 @@
                             <a href="{{ route('admin.solicitud-permiso-goce-sueldo.aprobacion') }}">
                                 <div style="position: relative !important;">
                                     <i class="bi bi-coin"></i><br>
-                                    Permisos con goce de sueldo
-                                    <div id="circulo" style="position:absolute; top:-58px; right:-19px" class="offset-4 mt-4">
+                                    Permisos
+                                    <div id="circulo" style="position:absolute; top:-70px; right:-50px" class="offset-4 mt-4">
                                         <p> {{ $solicitud_permiso }}</p>
                                     </div>
                                 </div>

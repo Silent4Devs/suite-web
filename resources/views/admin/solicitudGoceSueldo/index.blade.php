@@ -255,6 +255,35 @@
                         }
                     },
                     {
+                        data: 'tipo',
+                        name: 'tipo',
+                        render: function(data, type, row) {
+                            const tipo = row.tipo;
+                            switch (Number(tipo)) {
+                                case 1:
+                                    return `
+                                    <div  style="text-align:left">
+                                        Permisos conforme a la ley
+                                    </div>
+                                    `;
+                                    break;
+                                case 2:
+                                    return `
+                                    <div style="text-align:left">
+                                        Permisos otorgados por la empresa
+                                    </div>
+                                    `;
+                                    break;
+                                default:
+                                    return `
+                                    <div style="text-align:left">
+                                       No definido
+                                    </div>
+                                    `;
+                            }
+                        }
+                    },
+                    {
                         data: 'fecha_inicio',
                         name: 'fecha_inicio',
                         render: function(data, type, row) {

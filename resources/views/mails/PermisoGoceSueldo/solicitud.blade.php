@@ -182,7 +182,7 @@
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; fontcolor:#153643;">
                                                 Le informamos que <strong>{{ $solicitante->name }}</strong> ha
-                                                realizado una solicitud de permiso con goce de sueldo la cual requiere
+                                                realizado una solicitud de permiso la cual requiere
                                                 de su aprobación .
                                             </p>
                                         </div>
@@ -244,6 +244,16 @@
                                                 @endphp
                                                 <li>
                                                     Tipo de Permiso:
+                                                    @if ($solicitud->permiso->tipo_permiso == 1)
+                                                        <strong>Permisos conforme a la ley</strong>
+                                                    @elseif ($solicitud->permiso->tipo_permiso == 2)
+                                                        <strong>Permisos otorgados por la empresa</strong>
+                                                    @else
+                                                        <strong>No definido</strong>
+                                                    @endif
+                                                </li>
+                                                <li>
+                                                    Nombre del Permiso:
                                                     <strong>{{ $solicitud->permiso->nombre }}</strong>
                                                 </li>
                                                 <li>
@@ -251,6 +261,7 @@
                                                     <strong>{{ $solicitud->dias_solicitados }}</strong>
                                                 </li>
                                                 <li>
+                                                    Periodo propuesto:
                                                     Del <strong>{{ $startDate }}</strong> al
                                                     <strong>{{ $endDate }}</strong>
                                                 </li>

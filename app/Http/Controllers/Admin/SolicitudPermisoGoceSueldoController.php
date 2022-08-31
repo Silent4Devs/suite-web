@@ -67,6 +67,9 @@ class SolicitudPermisoGoceSueldoController extends Controller
             $table->editColumn('permiso', function ($row) {
                 return $row->permiso ? $row->permiso : '';
             });
+            $table->editColumn('tipo', function ($row) {
+                return $row->permiso->tipo_permiso ? $row->permiso->tipo_permiso : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder']);
 
@@ -190,7 +193,9 @@ class SolicitudPermisoGoceSueldoController extends Controller
             $table->editColumn('permiso', function ($row) {
                 return $row->permiso ? $row->permiso : '';
             });
-
+            $table->editColumn('tipo', function ($row) {
+                return $row->permiso->tipo_permiso ? $row->permiso->tipo_permiso : '';
+            });
             $table->editColumn('dias_solicitados', function ($row) {
                 return $row->dias_solicitados ? $row->dias_solicitados : '';
             });

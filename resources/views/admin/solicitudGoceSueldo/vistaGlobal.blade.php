@@ -3,11 +3,11 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.vista-global-permisos-goce-sueldo') !!}">Vista Global Permisos con Goce de Sueldo</a>
+            <a href="{!! route('admin.vista-global-permisos-goce-sueldo') !!}">Vista Global Permisos</a>
         </li>
         <li class="breadcrumb-item active">Ver</li>
     </ol>
-    <h5 class="col-12 titulo_general_funcion">Ver: Solicitud de Permiso con Goce de Sueldo</h5>
+    <h5 class="col-12 titulo_general_funcion">Ver: Solicitud de Permiso</h5>
     <div class="mt-4 card">
         <div class="card-body">
 
@@ -48,17 +48,33 @@
                             </fieldset>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-sm-6">
-                            <fieldset disabled>
-                                <label for="disabledTextInput"><i
-                                        class="fa-solid fa-calendar-check iconos-crear"></i>Tipo de Permiso</label>
-                                <input type="text" id="disabledTextInput" class="form-control"
-                                    value="{{ $vacacion->permiso->nombre }}" style="text-align: center">
-                            </fieldset>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <fieldset disabled>
+                                    <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Nombre
+                                        del Permiso</label>
+                                    <input type="text" id="disabledTextInput" class="form-control"
+                                        value="{{ $vacacion->permiso->nombre }}" style="text-align: center">
+                                </fieldset>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <fieldset disabled>
+                                    <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Tipo
+                                       </label>
+                                        @if ($vacacion->permiso->tipo_permiso == 1)
+                                        <input type="text" id="disabledTextInput" class="form-control"
+                                        value="Permisos conforme a la ley" style="text-align: center">
+                                        @elseif ($vacacion->permiso->tipo_permiso == 2)
+                                        <input type="text" id="disabledTextInput" class="form-control"
+                                        value=" Permisos otorgados por la empresa" style="text-align: center">
+                                        @else
+                                        <input type="text" id="disabledTextInput" class="form-control"
+                                        value="No definido" style="text-align: center">
+                                        @endif
+                                </fieldset>
+                            </div>
                         </div>
 
-                    </div>
                     <!-- Categoria Field -->
                     <div class="row">
                         <div class="form-group col-sm-6">
