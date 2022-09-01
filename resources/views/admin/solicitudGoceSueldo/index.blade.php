@@ -78,7 +78,7 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Solicitud Permiso con Goce de Sueldo</h5>
+    <h5 class="col-12 titulo_general_funcion">Solicitud Permiso</h5>
 
     <div class="card">
         @can('amenazas_agregar')
