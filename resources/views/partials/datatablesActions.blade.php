@@ -80,7 +80,13 @@
         @endif
 
     @endif
-
+    
+    @if (Request::route()->getName() == 'admin.auditoria-anuals.index')
+        <button  class="btn btn-sm" data-toggle="modal" data-auditoria-id="{{ $row->id }}"
+            data-target="#largeModal">
+            <i class="fas fa-file-alt" title="Abrir programa"></i>
+        </button>
+    @endif
 
     @if (Request::route()->getName() == 'admin.entendimiento-organizacions.index')
     @can('analisis_foda_duplicar')

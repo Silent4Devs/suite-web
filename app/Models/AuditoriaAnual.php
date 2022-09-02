@@ -13,21 +13,14 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class AuditoriaAnual extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+  
     public $table = 'auditoria_anuals';
 
     public static $searchable = [
         'tipo',
     ];
 
-    const TIPO_SELECT = [
-        'Interna' => 'Interna',
-        'Externa' => 'Externa',
-    ];
-
+   
     protected $dates = [
         'fechainicio',
         'fechafin',
@@ -37,16 +30,15 @@ class AuditoriaAnual extends Model
     ];
 
     protected $fillable = [
-        'tipo',
+        'nombre',
         'fechainicio',
         'fechafin',
-        'dias',
-        'auditorlider_id',
-        'observaciones',
+        'fecha_auditoria',
+        'objetivo',
+        'alcance',
         'created_at',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -74,8 +66,18 @@ class AuditoriaAnual extends Model
         return $this->belongsTo(Empleado::class, 'auditorlider_id')->alta();
     }
 
+    public function programa()
+    {
+        return $this->hasMany(AuditoriaAnualDocumento::class, 'id_auditoria_anuals', 'id');
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function documentos_material()
+    {
+        return $this->hasMany(AuditoriaAnualDocumento::class, 'id_auditoria_anuals', 'id');
     }
 }

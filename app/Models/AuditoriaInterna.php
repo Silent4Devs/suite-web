@@ -67,9 +67,13 @@ class AuditoriaInterna extends Model implements HasMedia
 
     protected $fillable = [
         'alcance',
+        'auditor_externo',
+        'objetivo',
         'fecha_inicio',
-        'fecha_fin',
         'hallazgos',
+        'criterios_auditoria',
+        'id_auditoria',
+        'nombre_auditoria',
         'cheknoconformidadmenor',
         'totalnoconformidadmenor',
         'checknoconformidadmayor',
