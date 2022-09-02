@@ -39,6 +39,8 @@ class AnalisisImpacto extends Model
         'version',
         'tipo',
         'objetivo_proceso',
+        'macroproceso',
+        'subproceso',
         'periodicidad',
         'p_otro_txt',
         // RESPONSABLES DEL PROCESO
@@ -194,9 +196,100 @@ class AnalisisImpacto extends Model
         'h24',
     ];
 
-    public function infraestructura()
-    {
-        return $this->belongsTo(CuestionarioInfraestructuraTecnologica::class, 'cuestionario_id');
+    protected $appends=[
+        'cantidad_total_personas_normal',
+        'cantidad_total_personas_contingencia',
+        'cantidad_equipo_computo_normal',
+        'cantidad_telefonia_normal',
+        'cantidad_impresora_normal',
+        'cantidad_otros_normal',
+        'cantidad_equipo_computo_contingencia',
+        'cantidad_telefonia_contingencia',
+        'cantidad_impresora_contingencia',
+        'cantidad_otros_contingencia',
+        'cantidad_proporciona_informacion',
+        'cantidad_recibe_informacion',
+        'diferencia_flujo_informacion',
+    ];
+
+     // Appens 3.0 Entradas y salidas
+     public function recibeInformacion(){
+        return $this->hasMany(CuestionarioRecibeInformacion::class, 'cuestionario_id');
+    }
+    public function proporcionaInformacion(){
+        return $this->hasMany(CuestionarioProporcionaInformacion::class, 'cuestionario_id');
     }
 
+    public function getCantidadRecibeInformacionAttribute(){
+        return $this->recibeInformacion()->count();
+    }
+
+    public function getCantidadProporcionaInformacionAttribute(){
+        return $this->proporcionaInformacion()->count();
+    }
+
+   
+
+    public function getDiferenciaFlujoInformacionAttribute(){
+        $proporciona = $this->getCantidadProporcionaInformacionAttribute();
+        $recibe = $this->getCantidadRecibeInformacionAttribute();
+       
+        if( $proporciona > $recibe){
+            $rowspan = $proporciona;
+        }elseif( $recibe > $proporciona){
+            $rowspan = $recibe;
+        }elseif( $recibe == $proporciona){
+            $rowspan = $proporciona;
+        }
+
+        $diferencia =  $proporciona - $recibe;
+
+        return  [$diferencia, 2];
+    }
+
+    // Appens 5.0 Requerimientos minimos
+
+    public function recursosHumanos(){
+        return $this->hasMany(CuestionarioRecursosHumanos::class, 'cuestionario_id');
+    }
+
+    public function getCantidadTotalPersonasNormalAttribute(){
+        return $this->recursosHumanos()->where('escenario','1')->count();
+    }
+
+    public function getCantidadTotalPersonasContingenciaAttribute(){
+        return $this->recursosHumanos()->where('escenario','2')->count();
+    }
+
+    public function recursosMateriales(){
+        return $this->hasMany(CuestionarioRecursosMateriales::class, 'cuestionario_id');
+    }
+
+    public function getCantidadEquipoComputoNormalAttribute(){
+        return $this->recursosMateriales()->where('escenario','1')->pluck('equipos')->sum();
+    }
+    public function getCantidadTelefoniaNormalAttribute(){
+        return $this->recursosMateriales()->where('escenario','1')->pluck('telefono')->sum();
+    }
+    public function getCantidadImpresoraNormalAttribute(){
+        return $this->recursosMateriales()->where('escenario','1')->pluck('impresoras')->sum();
+    }
+    public function getCantidadOtrosNormalAttribute(){
+        return $this->recursosMateriales()->where('escenario','1')->pluck('otro')->first();
+    }
+    public function getCantidadEquipoComputoContingenciaAttribute(){
+        return $this->recursosMateriales()->where('escenario','2')->pluck('equipos')->sum();
+    }
+    public function getCantidadTelefoniaContingenciaAttribute(){
+        return $this->recursosMateriales()->where('escenario','2')->pluck('telefono')->sum();
+    }
+    public function getCantidadImpresoraContingenciaAttribute(){
+        return $this->recursosMateriales()->where('escenario','2')->pluck('impresoras')->sum();
+    }
+    public function getCantidadOtrosContingenciaAttribute(){
+        return $this->recursosMateriales()->where('escenario','2')->pluck('otro')->first();
+    }
+
+
+   
 }
