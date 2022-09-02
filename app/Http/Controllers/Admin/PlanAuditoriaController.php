@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatePlanAuditoriumRequest;
 use App\Models\ActividadesPlanAuditorium;
 use App\Models\AuditoriaAnual;
 use App\Models\Empleado;
+use App\Models\PlanAuditoria;
 use App\Models\PlanAuditorium;
 use App\Models\Puesto;
 use App\Models\Team;
@@ -78,9 +79,8 @@ class PlanAuditoriaController extends Controller
         }
 
         $auditoria_anuals = AuditoriaAnual::get();
-        $teams = Team::get();
 
-        return view('admin.planAuditoria.index', compact('auditoria_anuals', 'teams'));
+        return view('admin.planAuditoria.index', compact('auditoria_anuals'));
     }
 
     public function create()
@@ -97,20 +97,33 @@ class PlanAuditoriaController extends Controller
 
         $actividadesAuditoria = ActividadesPlanAuditorium::get();
 
-        return view('admin.planAuditoria.create', compact('equipoauditorias', 'empleados', 'puesto', 'actividadesAuditoria'));
+        $planAuditoria=PlanAuditoria::get();
+
+        return view('admin.planAuditoria.create', compact('planAuditoria','equipoauditorias', 'empleados', 'puesto', 'actividadesAuditoria'));
     }
 
-    public function store(StorePlanAuditoriumRequest $request)
+    public function store(Request $request)
     {
         abort_if(Gate::denies('plan_de_auditoria_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        
+        $request->validate([
+            'fecha_inicio_auditoria' => 'required',
+            'fecha_fin_auditoria' => 'required',
+            'objetivo' => 'required',
+            'alcance' => 'required',
+            'criterios'=> 'required',
 
-        $planAuditorium = PlanAuditorium::create($request->all());
-        // $generar = new GeneratePdf();
-        // $generar->Generate($request['pdf-value'], $planAuditorium);
+        ]);
+
+        $planAuditorium=PlanAuditorium::create($request->all());
+
+     
         $planAuditorium->auditados()->sync($request->equipo);
         $this->saveUpdateAuditados($request->auditados, $planAuditorium);
 
-        return redirect()->route('admin.plan-auditoria.index');
+
+        return redirect()->route('admin.plan-auditoria.edit', ['planAuditorium'=>$planAuditorium]);
+
     }
 
     public function edit(PlanAuditorium $planAuditorium)
@@ -129,12 +142,31 @@ class PlanAuditoriaController extends Controller
         return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium', 'equipo_seleccionado', 'actividadesAuditoria'));
     }
 
-    public function update(UpdatePlanAuditoriumRequest $request, PlanAuditorium $planAuditorium)
+    public function update(Request $request, PlanAuditorium $planAuditorium)
     {
         abort_if(Gate::denies('plan_de_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $planAuditorium->update($request->all());
-        // $planAuditorium->auditados()->sync($request->input('auditados', []));
+        
+        $request->validate([
+            'fecha_inicio_auditoria' => 'required',
+            'fecha_fin_auditoria' => 'required',
+            'objetivo' => 'required',
+            'alcance' => 'required',
+            'criterios'=> 'required',
+
+        ]);
+
+        $planAuditorium->update([
+            'fecha_inicio_auditoria' => $request->fecha_inicio_auditoria,
+            'fecha_fin_auditoria' => $request->fecha_fin_auditoria,
+            'objetivo' => $request->objetivo,
+            'alcance' => $request->alcance,
+            'criterios' => $request->criterios,
+            'documentoauditar' => $request->documentoauditar,
+           
+        ]);
+
+         // $planAuditorium->auditados()->sync($request->input('auditados', []));
         $planAuditorium->auditados()->sync($request->equipo);
         $this->saveUpdateAuditados($request->auditados, $planAuditorium);
 

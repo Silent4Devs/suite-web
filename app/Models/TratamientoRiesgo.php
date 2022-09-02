@@ -13,10 +13,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class TratamientoRiesgo extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+   
     public $table = 'tratamiento_riesgos';
 
     public static $searchable = [

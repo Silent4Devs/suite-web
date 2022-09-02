@@ -4,7 +4,7 @@
         height: 80px;
         color: #fff;
         margin-bottom: 40px;
-        font-size: 15pt;
+        font-size: 12pt;
         border-radius: 6px;
     }
 
@@ -77,7 +77,7 @@
     <div class="col-6 col-md-2">
         <div class="tarjetas_seguridad_indicadores cdr-rojo">
             <div class="numero"><i class="far fa-circle"></i> {{ $cancelados_seguridad }}</div>
-            <div>Cancelados</div>
+            <div>No procedentes</div>
         </div>
     </div>
 </div>
@@ -103,9 +103,7 @@
                 <th style="min-width: 250px;">Quién reportó</th>
                 <th style="min-width: 250px;">Correo</th>
                 <th style="min-width: 250px;">Teléfono</th>
-                <th>Urgencia</th>
-                <th>Impacto</th>
-                <th>Estatus</th>
+                <th style="min-width: 90px;">Estatus</th>
                 <th style="min-width: 150px;">Fecha de cierre</th>
                 <th style="min-width: 250px;">Asignado a</th>
                 <th style="min-width: 500px;">Comentarios</th>
@@ -263,13 +261,22 @@
                             data: 'descripcion'
                         },
                         {
-                            data: 'areas_afectados'
+                            data: 'areas_afectados',
+                            render: function(data, type, row, meta) {
+                                return `${row.areas_afectados?row.areas_afectados :'n/a'}`;
+                            }
                         },
                         {
-                            data: 'procesos_afectados'
+                            data: 'procesos_afectados',
+                            render: function(data, type, row, meta) {
+                                return `${row.procesos_afectados?row.procesos_afectados :'n/a'}`;
+                            }
                         },
                         {
-                            data: 'activos_afectados'
+                            data: 'activos_afectados',
+                            render: function(data, type, row, meta) {
+                                return `${row.activos_afectados?row.activos_afectados :'n/a'}`;
+                            }
                         },
                         {
                             data: 'fecha_creacion'
@@ -295,13 +302,10 @@
                             }
                         },
                         {
-                            data: 'urgencia'
-                        },
-                        {
-                            data: 'impacto'
-                        },
-                        {
-                            data: 'estatus'
+                            data: 'estatus',
+                            render: function(data, type, row, meta) {
+                                return `<span style="text-transform:capitalize">${data}</span>`;
+                            }
                         },
                         {
                             data: 'fecha_cerrado'
@@ -317,7 +321,10 @@
                             }
                         },
                         {
-                            data: 'comentarios'
+                            data: 'comentarios',
+                            render: function(data, type, row, meta) {
+                                return `${row.comentarios?row.comentarios :'n/a'}`;
+                            }
                         },
                         {
                             data: 'id',
@@ -341,7 +348,36 @@
                                 return html;
                             }
                         },
-                    ],
+                    ],  
+                    createdRow: (row, data, dataIndex, cells) => {
+                        let fondo = "green";
+                        let letras = "white";
+                        if (data.estatus == 'Sin atender') {
+                            fondo = "#FFCB63";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'En curso') {
+                            fondo = "#AC84FF";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'En espera') {
+                            fondo = "#6863FF";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'Cerrado') {
+                            fondo = "#6DC866";
+                            letras = "white";
+                        }
+                        if (data.estatus == 'No procedente') {
+                            fondo = "#FF417B";
+                            letras = "white";
+                        }
+                        if(data.estatus !=null){
+                            $(cells[12]).css('background-color', fondo)
+                            $(cells[12]).css('color', letras)
+                        }
+                      
+                    },
                         order:[
                             [0,'desc']
                         ]
