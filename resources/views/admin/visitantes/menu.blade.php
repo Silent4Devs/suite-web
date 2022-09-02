@@ -217,12 +217,30 @@
                                     Cita Textual
                                 </div>
                             </a></li>
-                        <li><a href="{{ route('admin.visitantes.index') }}">
+                        <li><a href="{{ route('admin.visitantes.autorizar') }}">
                                 <div>
-                                    <i class="bi bi-people"></i><br>
-                                    Visitantes
+                                    <i class="bi bi-file-lock"></i><br>
+                                    Autorizar Salidas
                                 </div>
                             </a></li>
+                        <li><a href="{{ route('admin.visitantes.index') }}">
+                                <div>
+                                    <i class="bi bi-clipboard-data"></i><br>
+                                    Bistácora de Accesos
+                                </div>
+                            </a></li>
+                        <li><a href="{{ route('admin.visitantes.configuracion') }}">
+                                <div>
+                                    <i class="bi bi-gear"></i><br>
+                                    Configuración
+                                </div>
+                            </a></li>
+                        {{-- <li><a href="{{ route('admin.visitantes.dashboard') }}">
+                                <div>
+                                    <i class="bi bi-pie-chart"></i><br>
+                                    Dashboard
+                                </div>
+                            </a></li> --}}
                     </ul>
                 </div>
 

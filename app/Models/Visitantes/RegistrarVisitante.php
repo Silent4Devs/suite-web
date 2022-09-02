@@ -31,7 +31,8 @@ class RegistrarVisitante extends Model
         'firma',
         'registro_salida',
         'fecha_salida',
-        'uuid'
+        'uuid',
+        'autorizado'
     ];
     protected $casts = [
         'empleado_id' => 'integer',

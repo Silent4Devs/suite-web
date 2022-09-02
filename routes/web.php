@@ -30,6 +30,9 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
     // Visitantes
+    Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
+    Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');
+    Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
     Route::get('visitantes/menu', 'VisitantesController@menu')->name('visitantes.menu');
     Route::resource('visitantes/aviso-privacidad', 'VisitantesAvisoPrivacidadController')->names('visitantes.aviso-privacidad');
     Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');

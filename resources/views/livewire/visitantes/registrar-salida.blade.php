@@ -1,4 +1,5 @@
 <div class="row m-0 p-5">
+    <x-loading-indicator />
     <div class="col-12 text-center" style="color: #1C274A">
         <h3>REGISTRO DE SALIDA</h3>
         <p>Por favor, da clic en el botón de opciones para completar tu registro</p>

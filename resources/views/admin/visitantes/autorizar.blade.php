@@ -1,12 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-    <h5 class="col-12 titulo_general_funcion">Bitácora de Visitantes</h5>
-    <div class="card rounded">
+    <h5 class="col-12 titulo_general_funcion">Autorizar Salidas</h5>
+    <div class="mt-5 card">
         <div class="card-body">
-
-            @livewire('visitantes.bitacora-accesos')
+            @livewire('visitantes.bitacora-accesos', ['tipoVista' => 'autorizar']);
         </div>
-        <div class="row p-4 print-none">
+        <div class="row p-4">
             <div class="col-12" style="text-align: end">
                 <a href="{{ route('admin.visitantes.menu') }}" class="btn btn-success">Regresar</a>
             </div>
