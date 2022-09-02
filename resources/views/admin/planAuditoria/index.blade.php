@@ -47,22 +47,7 @@
         text-align: justify !important;
         }
 
-        .table tr th:nth-child(6) {
-
-        text-align: center !important;
-        }
-
-
-        .table tr td:nth-child(8) {
-
-        min-width: 600px !important;
-        text-align: justify !important;
-        }
-
-        .table tr th:nth-child(8) {
-
-        text-align: center !important;
-        }
+     
 
     </style>
 
@@ -100,59 +85,10 @@
                             Equipo&nbsp;auditor
                         </th>
                         <th>
-                            Descripción&nbsp;general&nbsp;de&nbsp;actividades
-                        </th>
-                        <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($auditoria_anuals as $key => $item)
-                                    <option value="{{ $item->fechainicio }}">{{ $item->fechainicio }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+                   
                 </thead>
             </table>
         </div>
@@ -169,7 +105,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
                     }
                 },
                 {
@@ -179,7 +117,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
                     }
                 },
                 {
@@ -205,7 +145,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
                     }
                 },
                 {
@@ -285,8 +227,8 @@
                         name: 'id'
                     },
                     {
-                        data: 'fecha_auditoria',
-                        name: 'fecha_auditoria'
+                        data: 'fecha_inicio_auditoria',
+                        name: 'fecha_inicio_auditoria'
                     },
                     {
                         data: 'objetivo',
@@ -321,6 +263,15 @@
                         data: 'equipo_auditor',
                         render: function(data, type, row, meta){
                             let equipos = JSON.parse(data);
+                            if (type === "empleadoText") {
+                                let equiposTexto = "";
+                                equipos.forEach(equipo => {
+                                    equiposTexto += `
+                            ${equipo.name},
+                            `;
+                                });
+                                return equiposTexto.trim();
+                            }
                             let html = '<div class="d-flex">';
                             equipos.forEach(empleado=>{
                                 html += `
@@ -332,10 +283,6 @@
                             return html
                         },
                         width:'20%'
-                    },
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion'
                     },
                     {
                         data: 'actions',

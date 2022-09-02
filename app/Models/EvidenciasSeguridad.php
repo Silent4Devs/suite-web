@@ -9,10 +9,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class EvidenciasSeguridad extends Model
 {
     use HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    
     protected $table = 'evidencias_seguridad';
 
     protected $dates = [

@@ -13,16 +13,7 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                {{-- <div class="form-group col-md-6">
-                <label for="nivelriesgo"><i class="fas fa-chart-bar iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgo') }}</label>
-                <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}" type="text" name="nivelriesgo" id="nivelriesgo" value="{{ old('nivelriesgo', $tratamientos->nivelriesgo) }}">
-                @if ($errors->has('nivelriesgo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('nivelriesgo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgo_helper') }}</span>
-            </div> --}}
+            
                 <div class="form-group col-md-4 mb-4">
                     <label for="validationServer01"><i class="fas fa-barcode iconos-crear"></i>ID</label>
                     <input readonly disabled type="number" name="identificador"
