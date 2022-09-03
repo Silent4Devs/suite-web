@@ -50,7 +50,7 @@
             <li><a href="{{ route('admin.auditoria-internas.index') }}">
                     <div>
                         <i class="bi bi-diagram-2"></i> <br>
-                        Auditoria Interna
+                        Informe de Auditoría
                     </div>
                 </a>
             </li>

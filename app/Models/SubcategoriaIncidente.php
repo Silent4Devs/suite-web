@@ -9,10 +9,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class SubcategoriaIncidente extends Model
 {
     use HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+   
     protected $table = 'subcategorias_incidentes';
 
     protected $guarded = [

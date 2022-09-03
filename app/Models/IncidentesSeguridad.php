@@ -15,10 +15,7 @@ class IncidentesSeguridad extends Model implements HasMedia
     use InteractsWithMedia;
     use HasFactory;
     use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    
     const ARCHIVADO = '1';
     const NO_ARCHIVADO = '0';
 
@@ -87,5 +84,15 @@ class IncidentesSeguridad extends Model implements HasMedia
     public function accionCorrectivaAprobacional()
     {
         return $this->morphToMany(AccionCorrectiva::class, 'acciones_correctivas_aprobacionables', null, null, 'acciones_correctivas_id');
+    }
+
+    public function categorias()
+    {
+        return $this->belongsTo(CategoriaIncidente::class, 'categoria_id', 'id')->alta();
+    }
+
+    public function subcategorias()
+    {
+        return $this->belongsTo(SubcategoriaIncidente::class, 'subcategoria_id', 'id')->alta();
     }
 }

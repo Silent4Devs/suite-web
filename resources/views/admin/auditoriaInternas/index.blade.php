@@ -4,7 +4,7 @@
 
     @can('auditoria_interna_create')
     @endcan
-    <h5 class="col-12 titulo_general_funcion">Auditoría Interna</h5>
+    <h5 class="col-12 titulo_general_funcion">Informe de Auditoría </h5>
     <div class="mt-5 card">
         {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="ml-4 row">
         <div class="col-lg-12">
@@ -18,6 +18,12 @@
             <table class="table table-bordered w-100 datatable-AuditoriaInterna">
                 <thead class="thead-dark">
                     <tr>
+                        <th style="min-width: 70px;">
+                            Id
+                        </th>
+                        <th style="min-width: 150px;">
+                            Nombre de auditoría
+                        </th>
                         <th style="min-width: 300px;">
                             Objetivo
                         </th>
@@ -27,8 +33,8 @@
                         <th>
                             Fecha&nbsp;inicio
                         </th>
-                        <th style="min-width: 200px;">
-                            Críterio de Auditoría
+                        <th style="min-width: 300px;">
+                            Críterio de auditoría
                         </th>
                         <th>
                             Auditor&nbsp;líder
@@ -187,6 +193,14 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.auditoria-internas.index') }}",
                 columns: [{
+                        data: 'id_auditoria',
+                        name: 'id_auditoria'
+                    },
+                    {
+                        data: 'nombre_auditoria',
+                        name: 'nombre_auditoria'
+                    },
+                    {
                         data: 'objetivo',
                         name: 'objetivo'
                     },
@@ -198,18 +212,22 @@
                         data: 'fecha_inicio',
                         name: 'fecha_inicio'
                     },
+                    // {
+                    //     data: 'clausulas',
+                    //     render: function(data, type, row, meta) {
+                    //         let html = '<ul>';
+                    //         data.forEach(clausula => {
+                    //             html += `
+                    //                 <li>${clausula.nombre}</li>
+                    //             `;
+                    //         })
+                    //         html += '</ul>';
+                    //         return html
+                    //     }
+                    // },
                     {
-                        data: 'clausulas',
-                        render: function(data, type, row, meta) {
-                            let html = '<ul>';
-                            data.forEach(clausula => {
-                                html += `
-                                    <li>${clausula.nombre}</li>
-                                `;
-                            })
-                            html += '</ul>';
-                            return html
-                        }
+                        data: 'criterios_auditoria',
+                        name: 'criterios_auditoria'
                     },
                     {
                         data: 'lider',
@@ -222,7 +240,7 @@
                             let lider = "";
                             if (liderJson) {
                                 lider += `
-                            <img src="{{ asset('storage/empleados/imagenes') }}/${liderJson.avatar}" title="${liderJson.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            <img  src="{{ asset('storage/empleados/imagenes') }}/${liderJson.avatar}" title="${liderJson.name}" class="rounded-circle; ml-4" style="clip-path: circle(15px at 50% 50%);height: 30px; " />
                             `;
                             }
                             return lider;
@@ -231,7 +249,10 @@
                     },
                     {
                         data: 'auditor_externo',
-                        name: 'auditor_externo'
+                        name: 'auditor_externo',
+                        render: function(data, type, row, meta) {
+                                return `${row.auditor_externo?row.auditor_externo :'n/a'}`;
+                            }
                     },
                     {
                         data: 'equipo',
@@ -246,7 +267,7 @@
                                 });
                                 return equiposTexto.trim();
                             }
-                            let html = '<div class="d-flex">';
+                            let html = '<div class="d-flex" style="flex-wrap:wrap">';
                             equipos.forEach(empleado => {
                                 html += `
                                     <img src="{{ asset('storage/empleados/imagenes') }}/${empleado.avatar}" title="${empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />

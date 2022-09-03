@@ -9,12 +9,14 @@ use App\Http\Requests\StorePlanAuditoriumRequest;
 use App\Http\Requests\UpdatePlanAuditoriumRequest;
 use App\Models\ActividadesPlanAuditorium;
 use App\Models\AuditoriaAnual;
+use App\Models\AuditoriaInternasHallazgos;
 use App\Models\Empleado;
 use App\Models\PlanAuditoria;
 use App\Models\PlanAuditorium;
 use App\Models\Puesto;
 use App\Models\Team;
 use Gate;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -50,18 +52,23 @@ class PlanAuditoriaController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+
+            $table->addColumn('nombre_auditoria', function ($row) {
+                return $row->nombre_auditoria ? $row->nombre_auditoria : '';
+            });
+
             $table->addColumn('fecha_auditoria', function ($row) {
                 return $row->fecha_auditoria ? $row->fecha_auditoria : '';
             });
 
             $table->editColumn('objetivo', function ($row) {
-                return $row->objetivo ? $row->objetivo : '';
+                return $row->objetivo ? html_entity_decode(strip_tags($row->objetivo), ENT_QUOTES, 'UTF-8') : 'n/a';
             });
             $table->editColumn('alcance', function ($row) {
-                return $row->alcance ? $row->alcance : '';
+                return $row->alcance ? html_entity_decode(strip_tags($row->alcance), ENT_QUOTES, 'UTF-8') : 'n/a';
             });
             $table->editColumn('criterios', function ($row) {
-                return $row->criterios ? $row->criterios : '';
+                return $row->criterios ? html_entity_decode(strip_tags($row->criterios), ENT_QUOTES, 'UTF-8') : 'n/a';
             });
             $table->editColumn('documentoauditar', function ($row) {
                 return $row->documentoauditar ? $row->documentoauditar : '';
@@ -69,9 +76,7 @@ class PlanAuditoriaController extends Controller
             $table->editColumn('equipo_auditor', function ($row) {
                 return $row->auditados ? $row->auditados : '';
             });
-            $table->editColumn('descripcion', function ($row) {
-                return $row->descripcion ? $row->descripcion : '';
-            });
+          
 
             $table->rawColumns(['actions', 'placeholder', 'auditados']);
 
@@ -108,10 +113,12 @@ class PlanAuditoriaController extends Controller
         
         $request->validate([
             'fecha_inicio_auditoria' => 'required',
+            'nombre_auditoria'=>'required',
             'fecha_fin_auditoria' => 'required',
             'objetivo' => 'required',
             'alcance' => 'required',
             'criterios'=> 'required',
+            'id_auditoria' => ['nullable', Rule::unique('plan_auditoria')->whereNull('deleted_at')]
 
         ]);
 
@@ -153,6 +160,8 @@ class PlanAuditoriaController extends Controller
             'objetivo' => 'required',
             'alcance' => 'required',
             'criterios'=> 'required',
+            'nombre_auditoria'=>'required',
+            'id_auditoria' => 'nullable|unique:plan_auditoria,id_auditoria,'.$planAuditorium->id.',id,deleted_at,NULL',
 
         ]);
 
@@ -163,6 +172,8 @@ class PlanAuditoriaController extends Controller
             'alcance' => $request->alcance,
             'criterios' => $request->criterios,
             'documentoauditar' => $request->documentoauditar,
+            'nombre_auditoria'=>$request->nombre_auditoria,
+            'id_auditoria'=>$request->id_auditoria,
            
         ]);
 
@@ -177,7 +188,9 @@ class PlanAuditoriaController extends Controller
     {
         abort_if(Gate::denies('plan_de_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $planAuditorium->load('auditados', 'team');
+        $planAuditorium->load('auditados', 'team', 'actividadesPlan');
+        
+
 
         return view('admin.planAuditoria.show', compact('planAuditorium'));
     }
