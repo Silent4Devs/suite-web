@@ -232,12 +232,10 @@
                             </div>
 
 
-                            <div class="row col-12 d-none" id="campo_estatus">
-                                <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-12 d-none" id="campo_estatus">
                                     <label class="form-label"><i
                                             class="fas fa-comment-dots iconos-crear"></i>Justificación</label>
                                     <textarea name="justificacion" class="form-control">{{ $incidentesSeguridad->justificacion }}</textarea>
-                                </div>
                             </div>
 
 
@@ -322,7 +320,7 @@
                             <div class="mt-2 form-group col-5">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
                                     y hora de ocurrencia</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
-                                    title="Fecha y hora aproximada en la que ocurrió el evento que motivó la queja."></i>
+                                    title="Fecha y hora aproximada en la que ocurrió el evento que motivó el incidente de seguridad."></i>
                                 <input type="datetime-local" name="fecha" class="form-control"
                                     value="{{ old('fecha', \Carbon\Carbon::parse($incidentesSeguridad->fecha)->format('Y-m-d\TH:i')) }}"
                                     required>
@@ -338,6 +336,8 @@
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación
                                     exacta</label>
+                                    <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                    title="Indique el lugar en el que ocurrió el evento que motivó el incidente."></i>
                                 <input type="" name="ubicacion" class="form-control"
                                     value="{{ $incidentesSeguridad->ubicacion }}">
                             </div>
@@ -356,19 +356,50 @@
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i
                                         class="fas fa-layer-group iconos-crear"></i>Categoría</label>
-                                <select id="select_categoria" class="form-control"
+                                <select  class="form-control"
                                     value="{{ $incidentesSeguridad->categoria }}" name="categoria_id">
                                     <option selected disabled>Seleccione categoría</option>
                                     @foreach ($categorias as $categoria)
                                         <option value="{{ $categoria->id }}"
                                             {{ $incidentesSeguridad->categoria_id == $categoria->id ? 'selected' : '' }}>
-                                            {{ $categoria->categoria_id }}
+                                            {{ $categoria->categoria }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
+                                <label class="form-label"><i
+                                        class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
+                                <select  class="form-control"
+                                    value="{{ $incidentesSeguridad->subcategoria }}" name="subcategoria_id">
+                                    <option selected disabled >Seleccione subcategoría</option>
+                                    @foreach ($subcategorias as $subcategoria)
+                                        <option 
+                                            value="{{ $subcategoria->id }}"
+                                            {{ $incidentesSeguridad->subcategoria_id == $subcategoria->id ? 'selected' : '' }}>
+                                            {{ $subcategoria->subcategoria }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- <div class="mt-2 form-group col-md-6">
+                                <label class="form-label"><i
+                                        class="fas fa-layer-group iconos-crear"></i>Categoría</label>
+                                <select id="select_categoria" class="form-control"
+                                    value="{{ $incidentesSeguridad->categoria }}" name="categoria_id">
+                                    <option selected disabled>Seleccione categoría</option>
+                                    @foreach ($categorias as $categoria)
+                                        <option value="{{ $categoria->id }}"
+                                            {{ $incidentesSeguridad->categoria_id == $categoria->id ? 'selected' : '' }}>
+                                            {{ $categoria->categoria }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div> --}}
+
+                            {{-- <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i
                                         class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
                                 <select id="select_subcategorias" class="form-control"
@@ -382,7 +413,9 @@
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
+
+                            
 
                             <div class="mt-2 form-group col-md-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción

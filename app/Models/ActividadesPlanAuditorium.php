@@ -54,4 +54,6 @@ class ActividadesPlanAuditorium extends Model
     {
         return $this->belongsTo(PlanAuditorium::class, 'plan_auditoria_id');
     }
+
+    
 }

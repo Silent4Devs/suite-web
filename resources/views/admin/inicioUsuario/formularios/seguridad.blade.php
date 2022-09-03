@@ -81,22 +81,25 @@
                         <p><strong>no hay un empleado vinculado a este usuario</strong></p>
                     @endif
 
+
                     <div class="mt-4 form-group col-12">
-                        <label class="form-label">
-                            <strong>Descripción del incidente:</strong>
-                        </label>
+                        <b>Descripción del incidente:</b>
                     </div>
 
                     <div class="mt-2 form-group col-md-8">
-                        <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título corto del
+                        <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto del
                             incidente<sup>*</sup></label>
+                            <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                title="Describa de forma breve y con palabras clave el motivo del incidente."></i>
                         <input type="" name="titulo" class="form-control" required>
                     </div>
 
                     <div class="mt-2 form-group col-md-4">
-                        <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i> Fecha y hora aproximada
+                        <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i> Fecha y hora 
                             de
-                            ocurrencia</label>
+                            ocurrencia</label><i class="fas fa-info-circle"
+                            style="font-size:12pt; float: right;"
+                            title="Indique la fecha y hora aproximada en la que ocurrió el evento que motivó el incidente."></i>
                         <input type="datetime-local" name="fecha" class="form-control">
                     </div>
 
@@ -112,12 +115,16 @@
 
                     <div class="mt-2 form-group col-md-8">
                         <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación exacta</label>
+                        <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                title="Indique el lugar en el que ocurrió el evento que motivó el incidente."></i>
                         <input type="" name="ubicacion" class="form-control">
                     </div>
 
                     <div class="mt-2 form-group col-12">
                         <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> Describa detalladamente el
                             incidente<sup>*</sup></label>
+                            <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
                         <textarea name="descripcion" class="form-control" required></textarea>
                     </div>
 

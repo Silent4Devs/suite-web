@@ -266,8 +266,8 @@ class HomeController
         $actividadcompl = PlanBaseActividade::select('id')->where('estatus_id', '=', '3')->count('id');
         $actividadretr = PlanBaseActividade::select('id')->where('estatus_id', '=', '4')->count('id');
 
-        $auditexterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Interna')->count('id');
-        $auditinterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Externa')->count('id');
+        $auditexterna = AuditoriaAnual::select('id')->count('id');
+        $auditinterna = AuditoriaAnual::select('id')->count('id');
 
         $exist_doc = ControlDocumento::select('deleted_at')->where('deleted_at', '=', null)->count();
         $capacitaciones = Recurso::get();

@@ -32,6 +32,6 @@ class PlanAuditoriaActividades extends Model
 
     public function planAuditoria()
     {
-        return $this->belongsTo(PlanAuditoria::class, 'plan_auditoria_id', 'id');
+        return $this->belongsTo(PlanAuditorium::class, 'plan_auditoria_id', 'id');
     }
 }

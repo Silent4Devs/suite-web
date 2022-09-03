@@ -202,15 +202,14 @@ class DeskController extends Controller
     public function updateSeguridad(Request $request, $id_incidente)
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($request->file('evidencia'));
+    //    dd($request->all());
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
+        // dd( $incidentesSeguridad);
         $incidentesSeguridad->update([
             'titulo' => $request->titulo,
             'estatus' => $request->estatus,
             'fecha' => $request->fecha,
             'empleado_asignado_id' => $request->empleado_asignado_id,
-            'categoria' => $request->categoria,
-            'subcategoria' => $request->subcategoria,
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
@@ -218,16 +217,16 @@ class DeskController extends Controller
             'areas_afectados' => $request->areas_afectados,
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
-
             'empleado_reporto_id' => $incidentesSeguridad->empleado_reporto_id,
-
             'urgencia' => $request->urgencia,
             'impacto' => $request->impacto,
             'prioridad' => $request->prioridad,
             'comentarios' => $request->comentarios,
             'justificacion' => $request->justificacion,
+            'categoria_id' => $request->categoria_id,
+            'subcategoria_id' => $request->subcategoria_id,
         ]);
-
+        // dd($incidentesSeguridad);
         $documento = $incidentesSeguridad->evidencia;
         // dd($documento);
         if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
