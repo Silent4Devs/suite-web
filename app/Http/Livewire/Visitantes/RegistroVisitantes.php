@@ -22,7 +22,10 @@ class RegistroVisitantes extends Component
     public $dispositivos;
     public $nombre;
     public $apellidos;
+    public $correo;
+    public $celular;
     public $dispositivo;
+    public $empresa;
     public $serie;
     public $motivo;
     // step 2
@@ -52,6 +55,7 @@ class RegistroVisitantes extends Component
         $this->fill([
             'dispositivos' => collect([[
                 'dispositivo' => '',
+                'marca' => '',
                 'serie' => '',
             ]]),
         ]);
@@ -69,6 +73,7 @@ class RegistroVisitantes extends Component
     {
         $this->dispositivos->push([
             'dispositivo' => '',
+            'marca' => '',
             'serie' => '',
         ]);
     }
@@ -151,7 +156,8 @@ class RegistroVisitantes extends Component
                 'empleado' => [
                     'id' => $this->empleado_id,
                     'name' => $castEmpleado ? $castEmpleado->name : '',
-                    'area' => $castEmpleado ? $castEmpleado->area->area : '',
+                    'area' => $castEmpleado ? $castEmpleado->area : '',
+                    'puesto' => $castEmpleado ? $castEmpleado->puesto : '',
                     'avatar' => $castEmpleado ? $castEmpleado->avatar : ''
                 ],
                 'area' => [
@@ -170,14 +176,18 @@ class RegistroVisitantes extends Component
             $this->validate([
                 'nombre' => 'required|string|max:255',
                 'apellidos' => 'required|string|max:255',
+                'correo' => 'required|email|max:255',
+                'celular' => 'nullable|numeric|max:255',
                 'dispositivo' => 'nullable|string|max:255',
                 'serie' => 'nullable|string|max:255',
                 'motivo' => 'required|string',
-                'dispositivos.*.dispositivo' => 'required_unless:dispositivos.*.serie,""',
-                'dispositivos.*.serie' => 'required_unless:dispositivos.*.dispositivo,""',
+                'dispositivos.*.dispositivo' => 'required_unless:dispositivos.*.serie,""|required_unless:dispositivos.*.marca,""',
+                'dispositivos.*.marca' => 'required_unless:dispositivos.*.dispositivo,""|required_unless:dispositivos.*.serie,""',
+                'dispositivos.*.serie' => 'required_unless:dispositivos.*.dispositivo,""|required_unless:dispositivos.*.marca,""',
             ], [
-                'dispositivos.*.dispositivo.required_unless' => 'El campo dispositivo es requerido si el campo serie no está vacío',
-                'dispositivos.*.serie.required_unless' => 'El campo serie es requerido si el campo dispositivo no está vacío',
+                'dispositivos.*.dispositivo.required_unless' => 'El campo dispositivo es requerido cuando se ha ingresado información en alguno de los campos contiguos',
+                'dispositivos.*.marca.required_unless' => 'El campo marca es requerido cuando se ha ingresado información en alguno de los campos contiguos',
+                'dispositivos.*.serie.required_unless' => 'El campo serie es requerido cuando se ha ingresado información en alguno de los campos contiguos',
             ]);
         } else if ($this->currentStep == 2) {
             $this->validate([
@@ -205,6 +215,8 @@ class RegistroVisitantes extends Component
         $this->registrarVisitante = RegistrarVisitante::create([
             'nombre' => $this->nombre,
             'apellidos' => $this->apellidos,
+            'email' => $this->correo,
+            'celular' => $this->celular,
             'dispositivo' => $this->dispositivo,
             'serie' => $this->serie,
             'motivo' => $this->motivo,
@@ -239,6 +251,7 @@ class RegistroVisitantes extends Component
             VisitantesDispositivo::create([
                 'registrar_visitante_id' => $this->registrarVisitante->id,
                 'dispositivo' => $dispositivo['dispositivo'],
+                'marca' => $dispositivo['marca'],
                 'serie' => $dispositivo['serie'],
             ]);
         }

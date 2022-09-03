@@ -14,6 +14,8 @@ class VisitantesDispositivo extends Model
         'registrar_visitante_id',
         'dispositivo',
         'serie',
+        'marca',
+        'modelo'
     ];
 
     public function visitante()
