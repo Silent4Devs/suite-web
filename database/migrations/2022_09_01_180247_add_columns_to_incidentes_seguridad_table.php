@@ -14,10 +14,10 @@ class AddColumnsToIncidentesSeguridadTable extends Migration
     public function up()
     {
         Schema::table('incidentes_seguridad', function (Blueprint $table) {
-            $table->unsignedInteger('categorias_incidentes_id')->nullable();
+            $table->unsignedInteger('categoria_id')->nullable();
             $table->unsignedInteger('subcategoria_id')->nullable();
-            $table->foreign('categorias_incidentes_id')->references('id')->on('subcategorias_incidentes');
-            $table->foreign('subcategoria_id')->references('id')->on('categorias_incidentes');
+            $table->foreign('categoria_id')->references('id')->on('categorias_incidentes');
+            $table->foreign('subcategoria_id')->references('id')->on('subcategorias_incidentes');
 
         });
     }

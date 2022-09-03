@@ -19,7 +19,7 @@
                 class="row">
                 @csrf
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
-                    <label class="required"><i class="fas fa-bullseye iconos-crear"></i>Id</label>
+                    <label class="required"><i class="fas fa-ticket-alt iconos-crear"></i>Id</label>
                     <input class="form-control {{ $errors->has('id_auditoria') ? 'is-invalid' : '' }}" type="text" name="id_auditoria"
                         id="id_auditoria"  value="{{ old('id_auditoria', '') }}" required>
                     @if ($errors->has('id_auditoria'))
@@ -30,7 +30,7 @@
                     <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
                 </div>
                 <div class="form-group col-sm-12 col-md-8 col-lg-8">
-                    <label class="required"><i class="fas fa-bullseye iconos-crear"></i>Nombre de auditoría</label>
+                    <label class="required"><i class="fas fa-clipboard-list iconos-crear"></i>Nombre de auditoría</label>
                     <input class="form-control {{ $errors->has('nombre_auditoria') ? 'is-invalid' : '' }}" type="text" name="nombre_auditoria"
                         id="nombre_auditoria" value="{{ old('nombre_auditoria', '') }}" required>
                     @if ($errors->has('nombre_auditoria'))
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label ><i class="fas fa-bullseye iconos-crear"></i>Criteríos de auditoría</label>
+                    <label ><i class="far fa-file iconos-crear"></i>Criteríos de auditoría</label>
                     <textarea class="form-control {{ $errors->has('criterios_auditoria') ? 'is-invalid' : '' }}" type="text" name="criterios_auditoria"
                         id="criterios_auditoria" required>{{ old('criterios_auditoria', '') }}</textarea>
                     @if ($errors->has('criterios_auditoria'))
@@ -89,7 +89,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="auditorlider_id"><i
-                            class="fas fa-user-tie iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.auditorlider') }}</label>
+                            class="fas fa-user-tie iconos-crear"></i>Auditor líder</label>
                     <select class="form-control select2 {{ $errors->has('auditorlider') ? 'is-invalid' : '' }}"
                         name="lider_id" id="auditorlider_id">
                         <option value="" disabled selected>Seleccione una opción</option>
@@ -110,7 +110,7 @@
                 </div>
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="auditor_externo"><i class="fas fa-user-tie iconos-crear"></i>Auditor Externo</label>
+                    <label for="auditor_externo"><i class="fas fa-user-tie iconos-crear"></i>Auditor externo</label>
                     <input class="form-control mt-2" id="auditor_externo" name="auditor_externo"
                         value="{{ old('auditor_externo') }}">
                     @if ($errors->has('auditor_externo'))
@@ -123,7 +123,7 @@
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label for="equipoauditoria_id"><i
-                            class="fas fa-users iconos-crear"></i>{{ trans('cruds.auditoriaInterna.fields.equipoauditoria') }}</label>
+                            class="fas fa-users iconos-crear"></i>Equipo auditoría</label>
                     <select multiple class="form-control select2 {{ $errors->has('equipoauditoria') ? 'is-invalid' : '' }}"
                         name="equipo[]" id="equipoauditoria_id">
                         @foreach ($equipoauditorias as $equipoauditoria)

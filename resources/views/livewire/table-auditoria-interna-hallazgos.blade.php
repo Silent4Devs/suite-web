@@ -7,7 +7,7 @@
     <table class="table">
         <thead class="head-light">
             <tr>
-                <th scope="col-6">Incumplimiento</th>
+                <th scope="col-6">Requisito</th>
                 <th scope="col-6">Descripción</th>
                 <th scope="col-6">Clasificación</th>
                 <th scope="col-6">Proceso relacionado</th>
@@ -19,11 +19,11 @@
         <tbody>
             @foreach ($datas as $data)
                 <tr>
-                    <th style="min-width:130px;">{{ $data->incumplimiento_requisito}}</th>
+                    <td style="min-width:130px;">{{ $data->incumplimiento_requisito}}</td>
                     <td style="min-width:100px;">{{ $data->descripcion }}</td>
                     <td style="min-width:100px;">{{ $data->clasificacion_hallazgo }}</td>
-                    <td style="min-width:100px;">{{$data->procesos ? $data->procesos->nombre : 'N/A'}}</td>
-                    <td style="min-width:100px;">{{$data->areas ? $data->areas->area : 'N/A'}}</td> 
+                    <td style="min-width:100px;">{{$data->procesos ? $data->procesos->nombre : 'n/a'}}</td>
+                    <td style="min-width:100px;">{{$data->areas ? $data->areas->area : 'n/a'}}</td> 
                     <td style="min-width:40px;">
                         <i class="fas fa-edit" wire:click.prevent="$emit('editarParteInteresada',{{ $data->id }})">
                         </i>
