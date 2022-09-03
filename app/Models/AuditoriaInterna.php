@@ -157,4 +157,9 @@ class AuditoriaInterna extends Model implements HasMedia
     {
         return $this->belongsToMany(Clausula::class, 'auditoria_interno_clausula', 'auditoria_id', 'clausula_id');
     }
+
+    public function auditoriaHallazgos()
+    {
+        return $this->hasMany(AuditoriaInternasHallazgos::class, 'auditoria_internas_id');
+    }
 }

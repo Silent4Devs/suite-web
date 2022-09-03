@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label class="required" for="incumplimiento_requisito"><i class="fas fa-clipboard-list iconos-crear"></i>
-                                Incumplimiento o requisito<span class="text-danger">*</span></label>
+                                Requisito</label>
                             <textarea class="form-control {{ $errors->has('incumplimiento_requisito') ? 'is-invalid' : '' }}"
                                 name="incumplimiento_requisito" id="incumplimiento_requisito" wire:model.defer="incumplimiento_requisito">{{ old('incumplimiento_requisito') }}</textarea>
                             @if ($errors->has('incumplimiento_requisito'))
@@ -40,7 +40,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label class="required"  for="descripcion"><i class="fas fa-clipboard-list iconos-crear"></i>
-                                Descripción<span class="text-danger">*</span></label>
+                                Descripción</label>
                             <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion"
                                 wire:model.defer="descripcion">{{ old('descripcion') }}</textarea>
                             @if ($errors->has('descripcion'))
@@ -55,7 +55,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12 col-md-12 col-lg-12">
                             <label class="required" for="clasificacion_hallazgo"><i
-                                    class="fas fa-user-tie iconos-crear"></i>Clasificación del Hallazgo<span class="text-danger">*</span></label>
+                                    class="fas fa-user-tie iconos-crear"></i>Clasificación del Hallazgo</label>
                             <input class="form-control {{ $errors->has('clasificacion_hallazgo') ? 'is-invalid' : '' }}"
                                 type="text" name="clasificacion_hallazgo" id="clasificacion_hallazgo"
                                 value="{{ old('clasificacion_hallazgo', '') }}"

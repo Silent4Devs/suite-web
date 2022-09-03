@@ -1,55 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <style>
-        .table tr td:nth-child(2) {
-            text-align: center !important;
-        }
 
-        .table tr th:nth-child(2) {
-            text-align: center !important;
-        }
-        .table tr th:nth-child(3) {
-            text-align: center !important;
-        }
-
-        .table tr td:nth-child(3) {
-
-            min-width: 600px !important;
-            text-align: justify !important;
-        }
-
-        .table tr td:nth-child(4) {
-
-            min-width: 600px !important;
-            text-align: justify !important;
-        }
-
-        .table tr th:nth-child(4) {
-
-        text-align: center !important;
-        }
-
-        .table tr td:nth-child(5) {
-
-            min-width: 600px !important;
-            text-align: justify !important;
-        }
-
-        .table tr th:nth-child(5) {
-
-        text-align: center !important;
-        }
-
-        .table tr td:nth-child(6) {
-
-        min-width: 600px !important;
-        text-align: justify !important;
-        }
-
-     
-
-    </style>
 
     {{ Breadcrumbs::render('admin.plan-auditoria.index') }}
 
@@ -66,19 +18,22 @@
                             {{ trans('cruds.planAuditorium.fields.id') }}
                         </th>
                         <th>
+                            Nombre&nbsp;auditoría
+                        </th>
+                        <th>
                             Fecha&nbsp;auditoría
                         </th>
 
-                        <th>
+                        <th style="min-width: 600px;">
                             Objetivo&nbsp;de&nbsp;la&nbsp;auditoría
                         </th>
-                        <th>
+                        <th style="min-width: 600px;">
                             {{ trans('cruds.planAuditorium.fields.alcance') }}
                         </th>
-                        <th>
+                        <th style="min-width: 600px;">
                             Criterios&nbsp;de&nbsp;auditoría&nbsp;a&nbsp;utilizar
                         </th>
-                        <th>
+                        <th style="min-width: 600px;">
                             Procesos&nbsp;y&nbsp;documentos&nbsp;a&nbsp;auditar
                         </th>
                         <th>
@@ -227,6 +182,10 @@
                         name: 'id'
                     },
                     {
+                        data: 'nombre_auditoria',
+                        name: 'nombre_auditoria'
+                    },
+                    {
                         data: 'fecha_inicio_auditoria',
                         name: 'fecha_inicio_auditoria'
                     },
@@ -272,7 +231,7 @@
                                 });
                                 return equiposTexto.trim();
                             }
-                            let html = '<div class="d-flex">';
+                            let html = '<div class="d-flex" style="flex-wrap:wrap">';
                             equipos.forEach(empleado=>{
                                 html += `
                                    <img src="{{ asset('storage/empleados/imagenes') }}/${empleado.avatar}" title="${empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />

@@ -138,7 +138,7 @@ class AuditoriaAnualController extends Controller
     {
         abort_if(Gate::denies('programa_anual_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditoriaAnual->load('auditorlider', 'team', 'fechaPlanAuditoria');
+        $auditoriaAnual->load( 'team');
 
         return view('admin.auditoriaAnuals.show', compact('auditoriaAnual'));
     }

@@ -30,6 +30,8 @@ class PlanAuditorium extends Model
         'objetivo',
         'alcance',
         'criterios',
+        'id_auditoria',
+        'nombre_auditoria',
         'id_equipo_auditores',
         'documentoauditar',
         'fecha_auditoria',
@@ -87,5 +89,11 @@ class PlanAuditorium extends Model
     public function getDocumentoAuditarHtmlAttribute()
     {
         return html_entity_decode(strip_tags($this->documentoauditar), ENT_QUOTES, 'UTF-8');
+    }
+
+
+    public function actividadesPlan()
+    {
+        return $this->hasMany(PlanAuditoriaActividades::class, 'plan_auditoria_id', 'id');
     }
 }
