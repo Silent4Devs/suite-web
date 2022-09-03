@@ -7,6 +7,7 @@ use App\Models\Empleado;
 use App\Models\Visitantes\RegistrarVisitante;
 use App\Models\Visitantes\VisitantesDispositivo;
 use App\Rules\DispositivosVisitantesRule;
+use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -242,6 +243,7 @@ class RegistroVisitantes extends Component
             'timer' => 3000,
             'toast' => true,
         ]);
+        // Mail::to($this->correo)->send(new )
         $this->emit('guardarRegistroVisitante', $this->registrarVisitante);
     }
 
