@@ -42,7 +42,8 @@
             <div class="w-100 grid justify-content-center">
                 <div class="col-12">
                     <select wire:model.defer="empleado_id"
-                        class="form-control @error('empleado_id') is-invalid @enderror" name="persona" id="persona">
+                        class="form-control select-buscador @error('empleado_id') is-invalid @enderror" name="persona"
+                        id="persona">
                         <option value="">Selecciona una persona</option>
                         @foreach ($empleados as $empleado)
                             <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
@@ -62,8 +63,9 @@
             <p>Despliega la lista y selecciona una área</p>
             <div class="w-100 row justify-content-center">
                 <div class="col-12">
-                    <select wire:model.defer="area_id" class="form-control @error('area_id') is-invalid @enderror"
-                        name="area" id="area">
+                    <select wire:model.defer="area_id"
+                        class="select-buscador form-control @error('area_id') is-invalid @enderror" name="area"
+                        id="area">
                         <option value="">Selecciona un área</option>
                         @foreach ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -81,4 +83,27 @@
     <div class="col-12 mt-3" style="text-align: end">
         <button class="btn btn-primary" wire:click.prevent="increaseStep()">¡Listo!</button>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initSelect2();
+            Livewire.on('select2', () => {
+                initSelect2();
+            });
+
+            $('#persona').on('select2:select', function(e) {
+                var data = e.params.data;
+                @this.set('empleado_id', data.id);
+            });
+
+            $('#area').on('select2:select', function(e) {
+                var data = e.params.data;
+                @this.set('area_id', data.id);
+            });
+        })
+
+        function initSelect2() {
+            $('#persona').select2();
+            $('#area').select2();
+        }
+    </script>
 </div>

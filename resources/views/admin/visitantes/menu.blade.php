@@ -205,36 +205,77 @@
                 <div class="tab-pane mb-4 fade show active" id="nav-visitantes" role="tabpanel"
                     aria-labelledby="nav-visitantes-tab">
                     <ul class="mt-4">
-                        <li><a href="{{ route('admin.visitantes.aviso-privacidad.index') }}">
+                        <li style="position: relative">
+                            <a href="{{ route('admin.visitantes.aviso-privacidad.index') }}">
                                 <div>
                                     <i class="bi bi-file-earmark-lock"></i><br>
                                     Aviso de Privacidad
                                 </div>
-                            </a></li>
-                        <li><a href="{{ route('admin.visitantes.cita-textual.index') }}">
+                            </a>
+                            @if (!$existsAvisoPrivacidad)
+                                <span style="position: absolute;top:-8px;right: -10px;color: #345183;">
+                                    <i style="font-size: 25px !important;" class="far fa-bell"></i>
+                                </span>
+                            @endif
+                        </li>
+                        <li style="position: relative">
+                            <a href="{{ route('admin.visitantes.cita-textual.index') }}">
                                 <div>
                                     <i class="bi bi-quote"></i><br>
                                     Cita Textual
                                 </div>
-                            </a></li>
-                        <li><a href="{{ route('admin.visitantes.autorizar') }}">
+                            </a>
+                            @if (!$existsCitaTextual)
+                                <span style="position: absolute;top:-8px;right: -10px;color: #345183;">
+                                    <i style="font-size: 25px !important;" class="far fa-bell"></i>
+                                </span>
+                            @endif
+                        </li>
+                        <li style="position: relative"><a href="{{ route('admin.visitantes.autorizar') }}">
                                 <div>
                                     <i class="bi bi-file-lock"></i><br>
                                     Autorizar Salidas
                                 </div>
-                            </a></li>
-                        <li><a href="{{ route('admin.visitantes.index') }}">
+                            </a>
+                            @if (!$existsResponsable)
+                                <div class="p-1"
+                                    style="position: absolute; background: rgba(75, 75, 75, 0.144);height: 100%;width: 100%">
+                                    <span class="badge-danger">No se ha configurado el módulo de visitante</span>
+                                </div>
+                            @else
+                                <span style="position: absolute;top:-8px;right: -9px;color: #345183;">
+                                    <i style="font-size: 25px !important;" class="far fa-bell"></i>
+                                </span>
+                                <span style="position: absolute;top:-8px;right: -3px;color: #345183;">
+                                    {{ $cantidadAutorizacion }}
+                                </span>
+                            @endif
+                        </li>
+                        <li style="position: relative"><a href="{{ route('admin.visitantes.index') }}">
                                 <div>
                                     <i class="bi bi-clipboard-data"></i><br>
                                     Bistácora de Accesos
                                 </div>
-                            </a></li>
-                        <li><a href="{{ route('admin.visitantes.configuracion') }}">
+                            </a>
+                            @if (!$existsResponsable)
+                                <div class="p-1"
+                                    style="position: absolute; background: rgba(75, 75, 75, 0.144);height: 100%;width: 100%">
+                                    <span class="badge-danger">No se ha configurado el módulo de visitante</span>
+                                </div>
+                            @endif
+                        </li>
+                        <li style="position: relative"><a href="{{ route('admin.visitantes.configuracion') }}">
                                 <div>
                                     <i class="bi bi-gear"></i><br>
                                     Configuración
                                 </div>
-                            </a></li>
+                            </a>
+                            @if (!$existsResponsable)
+                                <span style="position: absolute;top:-8px;right: -10px;color: #345183;">
+                                    <i style="font-size: 25px !important;" class="far fa-bell"></i>
+                                </span>
+                            @endif
+                        </li>
                         {{-- <li><a href="{{ route('admin.visitantes.dashboard') }}">
                                 <div>
                                     <i class="bi bi-pie-chart"></i><br>

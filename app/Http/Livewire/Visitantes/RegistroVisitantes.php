@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Visitantes;
 
+use App\Mail\Visitantes\NotificarIngresoVisitante;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Visitantes\RegistrarVisitante;
+use App\Models\Visitantes\ResponsableVisitantes;
 use App\Models\Visitantes\VisitantesDispositivo;
 use App\Rules\DispositivosVisitantesRule;
 use Illuminate\Support\Facades\Mail;
@@ -50,6 +52,11 @@ class RegistroVisitantes extends Component
     ];
 
     protected $listeners = ['imprimirCredencialImage'];
+
+    public function hydrate()
+    {
+        $this->emit('select2');
+    }
 
     public function mount()
     {
@@ -178,7 +185,7 @@ class RegistroVisitantes extends Component
                 'nombre' => 'required|string|max:255',
                 'apellidos' => 'required|string|max:255',
                 'correo' => 'required|email|max:255',
-                'celular' => 'nullable|numeric|max:255',
+                'celular' => 'nullable|regex:/[0-9]{10}/',
                 'dispositivo' => 'nullable|string|max:255',
                 'serie' => 'nullable|string|max:255',
                 'motivo' => 'required|string',
@@ -189,11 +196,22 @@ class RegistroVisitantes extends Component
                 'dispositivos.*.dispositivo.required_unless' => 'El campo dispositivo es requerido cuando se ha ingresado información en alguno de los campos contiguos',
                 'dispositivos.*.marca.required_unless' => 'El campo marca es requerido cuando se ha ingresado información en alguno de los campos contiguos',
                 'dispositivos.*.serie.required_unless' => 'El campo serie es requerido cuando se ha ingresado información en alguno de los campos contiguos',
+                'celular' => 'El formato del celular debe ser de 10 digitos'
             ]);
         } else if ($this->currentStep == 2) {
-            $this->validate([
-                'foto' => 'nullable'
-            ]);
+            if (ResponsableVisitantes::first()) {
+                if (ResponsableVisitantes::first()->fotografia_requerida) {
+                    $this->validate([
+                        'foto' => 'required'
+                    ], [
+                        'foto.required' => 'Es requerido por la organización que se tome una fotografia para ingresar'
+                    ]);
+                } else {
+                    $this->validate([
+                        'foto' => 'nullable'
+                    ]);
+                }
+            }
         } else if ($this->currentStep == 3) {
             $this->validate([
                 'tipo_visita' => 'required',
@@ -238,13 +256,19 @@ class RegistroVisitantes extends Component
         if ($registrarDispositivos) {
             $this->registrarDispositivos();
         }
+        $this->enviarCorreoDeConfirmacion($this->correo, $this->registrarVisitante);
         $this->alert('success', 'Bien Hecho ' . $this->nombre . ', te has registrado correctamente', [
             'position' => 'top-end',
             'timer' => 3000,
             'toast' => true,
         ]);
-        // Mail::to($this->correo)->send(new )
+
         $this->emit('guardarRegistroVisitante', $this->registrarVisitante);
+    }
+
+    public function enviarCorreoDeConfirmacion($correo, $visitante)
+    {
+        Mail::to($correo)->send(new NotificarIngresoVisitante($visitante));
     }
 
     public function registrarDispositivos()

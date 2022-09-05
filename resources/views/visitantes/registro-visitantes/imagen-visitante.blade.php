@@ -27,6 +27,13 @@
     <input type="hidden" id="snapshoot" readonly autocomplete="off" wire:model.defer="foto" name="snap_foto"
         class="imageCrop" enctype="multipart/form-data">
 </div>
+@error('foto')
+    <div class="text-center w-100">
+        <strong class="text-danger">
+            <i class="fas fa-info-circle mr-2"></i> {{ $message }}
+        </strong>
+    </div>
+@enderror
 {{-- <script>
     //Cambiar imagen
     document.getElementById("foto")?.addEventListener('change', cambiarImagen);

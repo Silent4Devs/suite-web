@@ -17,13 +17,17 @@
     <div class="mt-4">
         @if ($responsableVisitante)
             <p>Actualizado el {{ $responsableVisitante->updated_at }}</p>
+        @else
+            <p class="badge badge-danger"><i class="fas fa-info-circle mr-2"></i>No has definido un responsable de
+                recepción</p>
+            <br>
         @endif
         <label for="responsable"><i class="bi bi-person mr-2"></i> Responsable</label>
-        <select wire:model="responsable" class="custom-select">
+        <select id="selectResponsable" wire:model="responsable" class="custom-select">
             <option value="" disabled>-- Selecciona un responsable --</option>
             @foreach ($empleados as $empleado)
-                <option value="{{ $empleado->id }}"
-                    {{ $empleado->id == $responsableVisitante->empleado_id ? 'selected' : '' }}>{{ $empleado->name }}
+                <option value="{{ $empleado->id }}" {{ $empleado->id == $responsable ? 'selected' : '' }}>
+                    {{ $empleado->name }}
                 </option>
             @endforeach
         </select>
@@ -31,9 +35,26 @@
             <label for="fotografiaRequerida"><i class="bi bi-camera mr-2"></i>¿Es requerida la fotografía al momento de
                 ingresar?</label>
             <select wire:model="fotografiaRequerida" class="custom-select">
-                <option value="false" {{ !$responsableVisitante->fotografia_requerida ? 'selected' : '' }}>No</option>
-                <option value="true" {{ $responsableVisitante->fotografia_requerida ? 'selected' : '' }}>Sí</option>
+                <option value="false" {{ !$fotografiaRequerida ? 'selected' : '' }}>No</option>
+                <option value="true" {{ $fotografiaRequerida ? 'selected' : '' }}>Sí</option>
 
             </select>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                initSelect2();
+                Livewire.on('select2', () => {
+                    initSelect2();
+                });
+
+                $('#selectResponsable').on('select2:select', function(e) {
+                    var data = e.params.data;
+                    @this.set('responsable', data.id);
+                });
+            })
+
+            function initSelect2() {
+                $('#selectResponsable').select2();
+            }
+        </script>
     </div>

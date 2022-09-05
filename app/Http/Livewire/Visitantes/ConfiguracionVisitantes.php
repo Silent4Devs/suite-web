@@ -17,6 +17,11 @@ class ConfiguracionVisitantes extends Component
         'responsable' => 'required|numeric'
     ];
 
+    public function hydrate()
+    {
+        $this->emit('select2');
+    }
+
     public function mount()
     {
 
@@ -26,6 +31,7 @@ class ConfiguracionVisitantes extends Component
     public function render()
     {
         $this->responsableVisitante = ResponsableVisitantes::first();
+
         if ($this->responsableVisitante != null) {
             $this->responsable = $this->responsableVisitante->empleado_id;
             $this->fotografiaRequerida = $this->responsableVisitante->fotografia_requerida;
@@ -36,16 +42,16 @@ class ConfiguracionVisitantes extends Component
     public function updatedResponsable($value)
     {
         ResponsableVisitantes::updateOrCreate(
-            ['id' => 1],
+            ['id' => ResponsableVisitantes::first()->id ?? 1],
             ['empleado_id' => $value]
         );
     }
 
     public function updatedfotografiaRequerida($value)
     {
-        $value = 'true' ? true : false;
+        $value = $value == 'true' ? true : false;
         ResponsableVisitantes::updateOrCreate(
-            ['id' => 1],
+            ['id' => ResponsableVisitantes::first()->id ?? 1],
             ['fotografia_requerida' => $value]
         );
     }

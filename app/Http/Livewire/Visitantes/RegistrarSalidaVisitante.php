@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Visitantes;
 use App\Mail\Visitantes\SolicitudSalidaVisitante;
 use App\Models\Empleado;
 use App\Models\Visitantes\RegistrarVisitante;
+use App\Models\Visitantes\ResponsableVisitantes;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -63,7 +64,8 @@ class RegistrarSalidaVisitante extends Component
             'toast' => true,
         ]);
         $this->visitantes = RegistrarVisitante::where('registro_salida', false)->get();
-        $responsable = Empleado::select('id', 'name', 'email')->find(222);
+        $responsable_model = ResponsableVisitantes::with('empleado')->first();
+        $responsable = $responsable_model->empleado;
         Mail::to($responsable->email)->send(new SolicitudSalidaVisitante($registroVisitante, $responsable));
         $this->emitTo('visitantes.registrar-salida', 'salidaRegistrada', $this->visitante->id);
         if ($this->tipo == 'full') {
