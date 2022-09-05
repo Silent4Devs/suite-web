@@ -133,16 +133,13 @@ class ReportesEmpleados extends Component
         if ($this->area_id && $this->empleados_estatus) {
             $empleados_list = Empleado::where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus)->get();
             $this->empleados_list_global = Empleado::where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus)->get();
-        }
-        elseif ($this->area_id) {
+        } elseif ($this->area_id) {
             $empleados_list = Empleado::where('area_id', $this->area_id)->get();
             $this->empleados_list_global = Empleado::where('area_id', $this->area_id)->get();
-        }
-        elseif ($this->empleados_estatus) {
+        } elseif ($this->empleados_estatus) {
             $empleados_list = Empleado::where('estatus', $this->empleados_estatus)->get();
             $this->empleados_list_global = Empleado::where('estatus', $this->empleados_estatus)->get();
-        }
-        else{
+        } else {
             $empleados_list = Empleado::get();
             $this->empleados_list_global = Empleado::get();
         }
@@ -335,7 +332,7 @@ class ReportesEmpleados extends Component
                 'puesto' => $empleado_list->puesto,
                 'times_atrasados' => $times_atrasados,
                 'times_faltantes' => $this->times_faltantes_empleado,
-                'fecha_alta_baja' => $empleado_list->estatus == 'alta' ? Carbon::parse($empleado_list->fecha_ingreso)->format('d/m/Y') : ($empleado_list->fecha_baja==null ? 'Fecha no registrada' : Carbon::parse($empleado_list->fecha_baja)->format('d/m/Y')),
+                'fecha_alta_baja' => $empleado_list->estatus == 'alta' ? Carbon::parse($empleado_list->fecha_ingreso)->format('d/m/Y') : ($empleado_list->fecha_baja == null ? 'Fecha no registrada' : Carbon::parse($empleado_list->fecha_baja)->format('d/m/Y')),
                 'calendario' => $calendario_tabla_empleado,
             ]);
         }
@@ -457,7 +454,7 @@ class ReportesEmpleados extends Component
 
             if (gettype($fecha_inicio_timesheet_empleado) == 'string') {
                 $fecha_inicio_timesheet_empleado = Carbon::parse($fecha_inicio_timesheet_empleado)->startOfMonth()->subMonth();
-            }else{
+            } else {
                 $fecha_inicio_timesheet_empleado = $fecha_inicio_timesheet_empleado->startOfMonth()->subMonth();
             }
         }
@@ -570,12 +567,11 @@ class ReportesEmpleados extends Component
     {
         $empleado = Empleado::select('id', 'name', 'email', 'antiguedad')->find($id);
 
-        foreach ( $this->empleados as $key => $empleado_a) {
-            if($empleado_a['id'] == $id){
+        foreach ($this->empleados as $key => $empleado_a) {
+            if ($empleado_a['id'] == $id) {
                 $semanas_faltantes = $empleado_a['times_faltantes'];
             }
         }
-
         Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
 
         $this->alert('success', 'Correo Enviado!');
@@ -585,8 +581,8 @@ class ReportesEmpleados extends Component
 
     public function correoMasivo()
     {
-        foreach ( $this->empleados as $empleado) {
-            if($empleado['times_atrasados'] > 0){
+        foreach ($this->empleados as $empleado) {
+            if ($empleado['times_atrasados'] > 0) {
                 $this->correoRetraso($empleado['id']);
             }
         }
