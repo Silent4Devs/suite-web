@@ -19,9 +19,9 @@ class TimesheetCorreoRetraso extends Mailable
     public $times_faltantes_empleado = [];
     public $empleado;
 
-    public function __construct(Empleado $empleado, $semanas_faltantes)
+    public function __construct(Empleado $empleado, $times_faltantes_empleado)
     {
-        $this->semanas_faltantes = $times_faltantes_empleado;
+        $this->times_faltantes_empleado = $times_faltantes_empleado;
         $this->empleado = $empleado;
     }
 
