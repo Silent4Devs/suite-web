@@ -96,6 +96,9 @@
 			setTimeout(slider, 20000);
 		}
 		setTimeout(slider, 20000);
+		$(document).click(function(){
+			document.body.requestFullscreen();
+		});
 	</script>
 </body>
 </html>
