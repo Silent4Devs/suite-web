@@ -1,9 +1,6 @@
 <div>
     <x-loading-indicator />
     <div class="row" wire:ignore>
-        <div class="col-12" style="text-align: end">
-            @livewire('timesheet.empleados-timesheet-export', ['tipo' => 'xlsx'])
-        </div>
         <div class="col-md-4 form-group" style="padding-left:0px !important;">
             <label class="form-label">Área</label>
             <select class="form-control" wire:model="area_id">
@@ -48,8 +45,7 @@
                     style="background-color: #F48C16; border:none !important; position: relative;" id="btn_pendiente"
                     wire:click="pendientes">
                     @if ($pendientes_contador > 0)
-                        <span class="indicador_numero"
-                            style="filter: contrast(200%);">{{ $pendientes_contador }}</span>
+                        <span class="indicador_numero" style="filter: contrast(200%);">{{ $pendientes_contador }}</span>
                     @endif
                     Pendientes
                 </button>
@@ -57,8 +53,7 @@
                     style="background-color: #61CB5C; border:none !important; position: relative;" id="btn_aprobado"
                     wire:click="aprobados">
                     @if ($aprobados_contador > 0)
-                        <span class="indicador_numero"
-                            style="filter: contrast(200%);">{{ $aprobados_contador }}</span>
+                        <span class="indicador_numero" style="filter: contrast(200%);">{{ $aprobados_contador }}</span>
                     @endif
                     Aprobados
                 </button>
@@ -72,9 +67,48 @@
                 </button>
             </div>
         </div>
-
-        <div class="datatable-fix w-100 mt-4">
-            <table id="datatable_timesheet" class="table w-100 datatable_timesheet_registros_reportes">
+        <div class="row w-100 mt-4" style="align-items: end">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="row" style="justify-content: center">
+                            <div class="col-4 p-0" style="font-size: 11px;align-self: center">
+                                <p class="m-0">Mostrando</p>
+                            </div>
+                            <div class="col-4 p-0">
+                                <select name="" id="" class="form-control" wire:model="perPage">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="-1">Todos</option>
+                                </select>
+                            </div>
+                            <div class="col-4 p-0" style="font-size: 11px;align-self: center;text-align: end">
+                                <p class="m-0">por página</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="col-12" style="text-align: end">
+                            @livewire('timesheet.empleados-timesheet-export', ['tipo' => 'xlsx'])
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 p-0" style="text-align: end">
+                <div class="row">
+                    <div class="col-6 p-0"></div>
+                    <div class="col-6 p-0">
+                        <input type="text" class="form-control" placeholder="Buscar..." wire:model="search">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="datatable-fix w-100 mt-2">
+            <table class="table w-100 datatable_timesheet_registros_reportes">
+                {{-- id="datatable_timesheet" --}}
                 <thead class="w-100">
                     <tr>
                         <th>Semana </th>
@@ -136,6 +170,19 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="row">
+                <div class="col-6 p-0">
+                    <strong>
+                        Mostrando {{ $perPage }} de {{ $totalRegistrosMostrando }} resultados @if ($estatus)
+                            <span class="badge badge-primary">(filtrando por {{ $estatus }})</span>
+                        @endif
+                    </strong>
+                </div>
+                <div class="col-6 p-0" style="display: flex;justify-content: end">
+                    {{ $times->links() }}
+
+                </div>
+            </div>
         </div>
 
     </div>
