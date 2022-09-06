@@ -15,6 +15,7 @@ Route::get('/revisiones/{revisionDocumento}', 'RevisionDocumentoController@edit'
 Route::post('/minutas/revisiones/approve', 'RevisionMinutasController@approve')->name('minutas.revisiones.approve');
 Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->name('minutas.revisiones.reject');
 Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@edit')->name('minutas.revisiones.revisar');
+Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
 
 Auth::routes();
 
