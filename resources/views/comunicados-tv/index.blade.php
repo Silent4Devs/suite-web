@@ -70,9 +70,9 @@
                 }
 
             @endphp
-			<li class="active"><img src="{{ asset($imagen) }}"></li>
+			<li class=""><img src="{{ asset($imagen) }}"></li>
 		 @empty
-		 	<li class="active"><img src="{{ asset('img/tabantaj_fondo_blanco.png') }}"></li>
+		 	<li class=""><img src="{{ asset('img/tabantaj_fondo_blanco.png') }}"></li>
 		@endforelse
 	</ul>
 
@@ -85,6 +85,7 @@
 			let last = $('#slider li:last-child');
 
 			last.attr('data-n', 'ultimo');
+			first.addClass('active');
 			
 			if (current.attr('data-n') != 'ultimo') {
 				current.removeClass('active');	
