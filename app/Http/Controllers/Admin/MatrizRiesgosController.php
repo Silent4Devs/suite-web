@@ -882,7 +882,28 @@ class MatrizRiesgosController extends Controller
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
 
-        
+        if($matrizRiesgo->riesgo_total <90){
+            if( TratamientoRiesgo::where('matriz_sistema_gestion_id',$matrizRiesgo->id)->first()){
+                TratamientoRiesgo::where('matriz_sistema_gestion_id',$matrizRiesgo->id)->first()->delete();
+            }
+        }
+        if($matrizRiesgo->riesgo_total >=90){
+            $tratamiento_riesgo=TratamientoRiesgo::updateOrCreate(
+                [
+                    'matriz_sistema_gestion_id'=>$matrizRiesgo->id,
+
+                ],
+                [
+                'identificador'=>$request->identificador,
+                'descripcionriesgo'=>$request->descripcionriesgo,
+                'tipo_riesgo'=>$request->tipo_riesgo,
+                'riesgototal'=>$request->riesgo_total,
+                'riesgo_total_residual'=>$request->riesgo_residual,
+                'acciones'=>$request->acciones,
+                'id_proceso'=>$request->id_proceso,
+                'id_dueno'=>$request->id_responsable,
+            ]);
+        }
 
         
 
