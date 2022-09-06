@@ -78,6 +78,7 @@
 
 	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 	<script type="text/javascript">
+		$('#slider li:first-child').addClass('active');
 		function slider() {
 			let current = $('#slider li.active');
 			let next = $('#slider li.active + li');
@@ -85,7 +86,6 @@
 			let last = $('#slider li:last-child');
 
 			last.attr('data-n', 'ultimo');
-			first.addClass('active');
 			
 			if (current.attr('data-n') != 'ultimo') {
 				current.removeClass('active');	
