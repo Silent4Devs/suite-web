@@ -302,6 +302,14 @@
                 $('tfoot .cde-totalh').innerHTML = '';
             }
 
+            if (id_tabla == 'datatable_timesheet_proyectos') {
+                console.log('"bPaginate": false,');
+                dtOverrideGlobals.bPaginate = false;
+                dtOverrideGlobals.bFilter = false;
+                dtOverrideGlobals.info = false;
+                dtOverrideGlobals.buttons = []
+            }
+
             let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
 
             return table;

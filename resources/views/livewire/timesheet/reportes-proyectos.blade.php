@@ -129,7 +129,44 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="datatable-fix mt-5">
+                <div class="row w-100 mt-4" style="align-items: end">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row" style="justify-content: center">
+                                    <div class="col-4 p-0" style="font-size: 11px;align-self: center">
+                                        <p class="m-0">Mostrando</p>
+                                    </div>
+                                    <div class="col-4 p-0">
+                                        <select name="" id="" class="form-control" wire:model="perPage">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                            <option value="-1">Todos</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4 p-0" style="font-size: 11px;align-self: center;text-align: end">
+                                        <p class="m-0">por página</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-8">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 p-0" style="text-align: end">
+                        <div class="row">
+                            <div class="col-6 p-0"></div>
+                            <div class="col-6 p-0">
+                                <input type="text" class="form-control" placeholder="Buscar..." wire:model="search">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="datatable-fix">
                     <table id="datatable_timesheet_proyectos"
                         class="datatable_timesheet_proyectos table w-100 tabla-fixed">
                         <thead>
@@ -243,6 +280,17 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="row mt-4">
+                        <div class="col-6 p-0">
+                            <strong>
+                                Mostrando {{ $perPage }} de {{ $totalRegistrosMostrando }} resultados
+                            </strong>
+                        </div>
+                        <div class="col-6 p-0" style="display: flex;justify-content: end">
+                            {{ $proyectos_array->links() }}
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
