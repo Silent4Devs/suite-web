@@ -16,11 +16,18 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\WithPagination;
 
 class ReportesProyectos extends Component
 {
     use getWeeksFromRange;
     use LivewireAlert;
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+    public $totalRegistrosMostrando;
+    public $perPage = 5;
+    public $search;
 
     public $areas;
     public $proyectos;
@@ -33,21 +40,14 @@ class ReportesProyectos extends Component
     public $total_horas_proyecto;
     public $hoy_format;
     // public $proyectos_array;
-
     public $area_id;
-
     public $fecha_inicio;
     public $fecha_fin;
-
     public $hoy;
-
     public $fecha_inicio_proyecto;
     public $fecha_fin_proyecto;
-
     public $horas_totales_todos_proyectos = 0;
-
     public $semanas_totales_calendario = 0;
-
     public $calendario_tabla;
     public $organizacion;
 
@@ -216,7 +216,9 @@ class ReportesProyectos extends Component
 
         $proyectos_array = collect();
         if ($this->area_id) {
-            $this->proyectos = TimesheetProyecto::where('area_id', $this->area_id)->get();
+            $this->proyectos = TimesheetProyecto::get()->filter(function ($item) {
+                return $item->areas->contains(Area::select('id', 'area')->find($this->area_id));
+            });
         } else {
             $this->proyectos = TimesheetProyecto::get();
         }
@@ -270,7 +272,16 @@ class ReportesProyectos extends Component
                 'calendario' => $calendario_tabla_proyectos,
             ]);
         }
-        // $proyectos_array = $this->paginate($proyectos_array);
+        if ($this->search) {
+            $proyectos_array = $proyectos_array->filter(function ($item) {
+                return (str_contains($item['cliente'], $this->search) || str_contains($item['proyecto'], $this->search) || $item['areas']->pluck('area')->contains(function ($item) {
+                    return str_contains($item, $this->search);
+                }));
+            });
+        }
+
+        $this->totalRegistrosMostrando = count($proyectos_array);
+        $proyectos_array = $this->paginate($proyectos_array, $this->perPage);
 
 
         $this->calendario_tabla = $calendario_array;
