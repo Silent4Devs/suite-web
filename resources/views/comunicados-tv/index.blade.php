@@ -78,7 +78,7 @@
 
 	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 	<script type="text/javascript">
-		first.addClass('active');
+		$('#slider li:first-child').addClass('active');
 		function slider() {
 			let current = $('#slider li.active');
 			let next = $('#slider li.active + li');
