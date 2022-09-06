@@ -11,11 +11,11 @@
                 transform-origin: 0% 0%;
                 color: black;
             }
-            #tabla_blanca_imprimir_global td{
+
+            #tabla_blanca_imprimir_global td {
                 color: black !important;
             }
         }
-
     </style>
     <div class="mt-5 card">
 
@@ -50,18 +50,18 @@
                 </div>
             </div>
             @include('partials.flashMessages')
-            
+
             <div class="card-body datatable-fix">
 
                 <div class="d-flex float-right">
-                  
-                        <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                            href="{{ route('admin.tratamiento-riesgos.index')}}"
-                            type="submit" name="action">Tratamiento Riesgo</a>
-                  
+
+                    <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                        href="{{ route('admin.tratamiento-riesgos.index') }}" type="submit" name="action">Tratamiento
+                        Riesgo</a>
+
 
                 </div>
-                
+
                 <div class="d-flex justify-content-between">
                     @can('analisis_de_riesgo_integral_agregar')
                         <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
@@ -75,7 +75,7 @@
                     @endcan
 
                 </div>
-                
+
                 <table class="table table-bordered w-100 datatable datatable-Matriz" id="datatable-Matriz">
                     <thead class="thead-dark">
                         <tr class="negras">
@@ -413,8 +413,7 @@
                             const identificador = row.identificador;
                             if (identificador >= 1) {
                                 return `<div style="text-align:left">${data}</div>`;
-                            }
-                            else {
+                            } else {
                                 return `<div style="text-align:left">No definido</div>`;
                             }
                         }
@@ -546,25 +545,28 @@
                         data: 'riesgo_total',
                         name: 'riesgo_total',
                         render: function(data) {
-                            switch (true) {
-                                case data >= 136 && data <= 185:
-                                    return `<div><div style="text-align:center">${data} - MUY ALTO</div></div>`;
-                                    break;
-                                case data >= 91 && data <= 135:
-                                    return `<div><div style="text-align:center">${data} - ALTO</div></div>`;
-                                    break;
-                                case data >= 46 && data <= 90:
-                                    return `<div><div style="text-align:center">${data} - MEDIO</div></div>`;
-                                    break;
-                                case data >= 0 && data <= 45:
-                                    return `<div><div style="text-align:center">${data} - BAJO</div></div>`;
-                                    break;
-                                case data == null:
-                                    return `<div ><div style="text-align:center">${data} - BAJO</div></div>`;
-                                    break;
-                                default:
-                                    break;
+                            if (data) {
+                                switch (true) {
+                                    case data >= 136 && data <= 185:
+                                        return `<div><div style="text-align:center">${data} - MUY ALTO</div></div>`;
+                                        break;
+                                    case data >= 91 && data <= 135:
+                                        return `<div><div style="text-align:center">${data} - ALTO</div></div>`;
+                                        break;
+                                    case data >= 46 && data <= 90:
+                                        return `<div><div style="text-align:center">${data} - MEDIO</div></div>`;
+                                        break;
+                                    case data >= 0 && data <= 45:
+                                        return `<div><div style="text-align:center">${data} - BAJO</div></div>`;
+                                        break;
+                                    case data == null:
+                                        return `<div ><div style="text-align:center">${data} - BAJO</div></div>`;
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
+                            return 'N/A';
                         }
                     },
                     {
@@ -656,25 +658,29 @@
                         data: 'riesgo_residual',
                         name: 'riesgo_residual',
                         render: function(data) {
-                            switch (true) {
-                                case data >= 136 && data <= 185:
-                                    return `<div style="text-align:center"><div>${data} - MUY ALTO</div></div>`;
-                                    break;
-                                case data >= 91 && data <= 135:
-                                    return `<div style="text-align:center"><div>${data} - ALTO</div></div>`;
-                                    break;
-                                case data >= 46 && data <= 90:
-                                    return `<div style="text-align:center"><div>${data} - MEDIO</div></div>`;
-                                    break;
-                                case data >= 0 && data <= 45:
-                                    return `<div style="text-align:center"><div>${data} - BAJO</div></div>`;
-                                    break;
-                                case data == null:
-                                    return `<div style="text-align:center"><div>${data} - BAJO</div></div>`;
-                                    break;
-                                default:
-                                    break;
+                            if (data) {
+                                switch (true) {
+                                    case data >= 136 && data <= 185:
+                                        return `<div style="text-align:center"><div>${data} - MUY ALTO</div></div>`;
+                                        break;
+                                    case data >= 91 && data <= 135:
+                                        return `<div style="text-align:center"><div>${data} - ALTO</div></div>`;
+                                        break;
+                                    case data >= 46 && data <= 90:
+                                        return `<div style="text-align:center"><div>${data} - MEDIO</div></div>`;
+                                        break;
+                                    case data >= 0 && data <= 45:
+                                        return `<div style="text-align:center"><div>${data} - BAJO</div></div>`;
+                                        break;
+                                    case data == null:
+                                        return `<div style="text-align:center"><div>${data} - BAJO</div></div>`;
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
+
+                            return "N/A";
                         }
 
                     },
@@ -752,7 +758,7 @@
                 ],
             };
             let table = $('.datatable-Matriz').DataTable(dtOverrideGlobals);
-            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function(){
+            $('.btn.buttons-print.btn-sm.rounded.pr-2').unbind().click(function() {
                 let titulo_tabla = `
                     <h5>
                         <strong>
