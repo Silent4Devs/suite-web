@@ -172,7 +172,13 @@
                         data: 'acciones',
                     },
                     {
-                        data: 'proceso',
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            if(row.proceso){
+                                return row.proceso;
+                            }
+                            return "n/a"
+                        }
                     },
                     {
                         data: 'responsable',
