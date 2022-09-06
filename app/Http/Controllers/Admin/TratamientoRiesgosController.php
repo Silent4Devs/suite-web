@@ -33,7 +33,7 @@ class TratamientoRiesgosController extends Controller
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
-
+           
             $table->editColumn('actions', function ($row) {
                 $viewGate = 'tratamiento_de_los_riesgos_ver';
                 $editGate = 'tratamiento_de_los_riesgos_editar';
@@ -48,7 +48,7 @@ class TratamientoRiesgosController extends Controller
                     'row'
                 ));
             });
-
+            
             // $table->editColumn('id', function ($row) {
             //     return $row->id ? $row->id : '';
             // });
@@ -76,6 +76,7 @@ class TratamientoRiesgosController extends Controller
            
             $table->editColumn('proceso', function ($row) {
                 return $row->proceso ? $row->proceso->nombre : '';
+
             });
                      
             $table->addColumn('responsable', function ($row) {
