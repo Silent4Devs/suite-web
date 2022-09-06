@@ -29,7 +29,7 @@ class TimesheetProyecto extends Model
 
         $areas = collect();
         foreach ($ids_areas as $key => $area_p) {
-            $areas->push(Area::find($area_p->area_id));
+            $areas->push(Area::select('id','area')->find($area_p->area_id));
         }
 
         return $areas;
