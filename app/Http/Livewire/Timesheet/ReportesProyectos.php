@@ -12,6 +12,9 @@ use App\Models\TimesheetTarea;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
 use Livewire\Component;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ReportesProyectos extends Component
@@ -29,7 +32,7 @@ class ReportesProyectos extends Component
     public $empleados_proyecto;
     public $total_horas_proyecto;
     public $hoy_format;
-    public $proyectos_array;
+    // public $proyectos_array;
 
     public $area_id;
 
@@ -211,7 +214,7 @@ class ReportesProyectos extends Component
             $this->semanas_totales_calendario += $total_weeks_year;
         }
 
-        $this->proyectos_array = collect();
+        $proyectos_array = collect();
         if ($this->area_id) {
             $this->proyectos = TimesheetProyecto::where('area_id', $this->area_id)->get();
         } else {
@@ -259,7 +262,7 @@ class ReportesProyectos extends Component
                 }
             }
 
-            $this->proyectos_array->push([
+            $proyectos_array->push([
                 'id' => $proyecto->id,
                 'proyecto' => $proyecto->proyecto,
                 'areas' => $proyecto->areas,
@@ -267,11 +270,20 @@ class ReportesProyectos extends Component
                 'calendario' => $calendario_tabla_proyectos,
             ]);
         }
+        // $proyectos_array = $this->paginate($proyectos_array);
+
 
         $this->calendario_tabla = $calendario_array;
         $this->hoy_format = $this->hoy->format('d/m/Y');
 
-        return view('livewire.timesheet.reportes-proyectos');
+        return view('livewire.timesheet.reportes-proyectos', compact('proyectos_array'));
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
     public function genrarReporte($id)
