@@ -495,6 +495,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
 
     //Panel declaracion
+    Route::post('paneldeclaracion/controles', 'PanelDeclaracionController@controles')->name('paneldeclaracion.controles');
     Route::post('paneldeclaracion/responsables-quitar', 'PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
     Route::post('paneldeclaracion/responsables', 'PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
     Route::post('paneldeclaracion/enviar-correo', 'PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
