@@ -134,9 +134,12 @@
                                                 @foreach ($responsables as $responsable)
                                                     @if (!is_null($responsable))
                                                         @if ($responsable->declaracion_id == $g5s->id)
-                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                                class="img_empleado"
-                                                                title="{{ $responsable->empleado->name }}">
+                                                            @if (!is_null($responsable->empleado))
+                                                                <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                    class="img_empleado"
+                                                                    title="{{ $responsable->empleado->name }}">
+                                                                
+                                                            @endif
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -144,9 +147,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g5s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -415,9 +420,11 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g6s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                         @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -425,9 +432,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g6s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -678,18 +687,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g62s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g62s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -965,9 +979,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g71s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -1222,18 +1238,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g72s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g72s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -1488,18 +1509,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g73s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g73s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -1769,18 +1795,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g81s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g81s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -2046,18 +2077,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g82s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g82s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -2315,9 +2351,12 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g83s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -2325,9 +2364,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g83s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -2853,18 +2894,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g92s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g92s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -3120,18 +3166,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g93s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g93s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -3389,18 +3440,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g94s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g94s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -3661,18 +3717,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g101s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g101s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -3933,9 +3994,12 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g111s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -4205,18 +4269,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g112s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g112s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -4480,18 +4549,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g121s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g121s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -4749,18 +4823,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g122s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g122s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -5020,18 +5099,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g123s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g123s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -5282,9 +5366,12 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g124s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -5292,9 +5379,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g124s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -5552,18 +5641,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g125s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g125s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -5823,18 +5917,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g126s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g126s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -6095,18 +6194,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g127s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g127s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -6368,18 +6472,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g131s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g131s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -6635,18 +6744,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g132s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g132s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -6905,18 +7019,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g141s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g141s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -7171,18 +7290,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g142s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g142s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -7427,9 +7551,12 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g143s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -7437,9 +7564,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g143s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -7698,18 +7827,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g151s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g151s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -7967,18 +8101,23 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g152s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g152s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -8237,9 +8376,12 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g161s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -8247,9 +8389,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g161s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -8511,9 +8655,12 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g171s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -8521,9 +8668,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g171s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -8781,9 +8930,12 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g172s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -8791,9 +8943,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g172s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -9053,9 +9207,12 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g181s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -9063,9 +9220,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g181s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach
@@ -9319,9 +9478,12 @@
                                             <td>
                                                 @foreach ($responsables as $responsable)
                                                     @if ($responsable->declaracion_id == $g182s->id)
-                                                        <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
-                                                            class="img_empleado"
-                                                            title="{{ $responsable->empleado->name }}">
+                                                        @if (!is_null($responsable->empleado))
+                                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
+                                                                class="img_empleado"
+                                                                title="{{ $responsable->empleado->name }}">
+                                                            
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </td>
@@ -9329,9 +9491,11 @@
                                             <td>
                                                 @foreach ($aprobadores as $aprobador)
                                                     @if ($aprobador->declaracion_id == $g182s->id)
+                                                        @if (!is_null($aprobador->empleado))
                                                         <img src="{{ asset('storage/empleados/imagenes') }}/{{ $aprobador->empleado->avatar }}"
                                                             class="img_empleado"
                                                             title="{{ $aprobador->empleado->name }}">
+                                                        @endif
                                                         {{-- {{$aprobador->aprobadores_id}} --}}
                                                     @endif
                                                 @endforeach

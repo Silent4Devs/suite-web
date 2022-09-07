@@ -105,9 +105,13 @@ class DeclaracionAplicabilidadController extends Controller
         $path = public_path($ISO27001_SoA_PATH);
         $lista_archivos_declaracion = glob($path . 'Analisis Inicial*.pdf');
         $empleados = Empleado::select('id', 'name', 'genero', 'foto')->alta()->get();
-        $responsables = DeclaracionAplicabilidadResponsable::orderBy('id')->get();
+        $responsables = DeclaracionAplicabilidadResponsable::with(['empleado' => function ($q) {
+            $q->select('id', 'name', 'foto','estatus')->where('estatus','alta');
+        }])->orderBy('id')->get();
         // dd($responsables);
-        $aprobadores = DeclaracionAplicabilidadAprobadores::get();
+        $aprobadores = DeclaracionAplicabilidadAprobadores::with(['empleado' => function ($q) {
+            $q->select('id', 'name', 'foto','estatus')->where('estatus','alta');
+        }])->get();
 
         // $empleados=Empleado::select('id','name','genero','foto')->get();
         // dd(DB::getQueryLog());
