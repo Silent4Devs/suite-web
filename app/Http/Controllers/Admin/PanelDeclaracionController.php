@@ -16,65 +16,30 @@ class PanelDeclaracionController extends Controller
 {
     public function index(Request $request)
     {
-
-        // dd(Empleado::select('id','name','genero','foto')->find(9)->declaraciones_responsable);
         $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
-        if ($request->ajax()) {
-            $query = DeclaracionAplicabilidad::with(['responsables', 'aprobadores'])->orderBy('id')->get();
-            $table = DataTables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'user_show';
-                $editGate = 'user_edit';
-                $deleteGate = 'user_delete';
-                $crudRoutePart = 'paneldeclaracion';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            // $table->editColumn('id', function ($row) {
-            //     return $row->id ? $row->id : '';
-            // });
-
-            $table->editColumn('controles', function ($row) {
-                return $row->anexo_indice ? $row->anexo_indice : '';
-            });
-            $table->editColumn('politica', function ($row) {
-                return $row->anexo_politica ? $row->anexo_politica : '';
-            });
-            $table->editColumn('responsable', function ($row) {
-                return $row->responsables ? $row->responsables : '';
-            });
-            $table->editColumn('aprobador', function ($row) {
-                return $row->aprobadores ? $row->aprobadores : '';
-            });
-            // $table->editColumn('empleados', function ($row) use ($empleados) {
-            //     return $empleados;
-            // });
-            $table->editColumn('notificar', function ($row) {
-                return $row->responsables ? $row->responsables : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'activo_id', 'controles']);
-
-            return $table->make(true);
-        }
-
         return view('admin.panelDeclaracion.index', compact('empleados'));
+    }
+
+    public function controles()
+    {
+        $query = DeclaracionAplicabilidad::select(
+            'id',
+            'control-uno',
+            'control-dos',
+            'anexo_politica',
+            'anexo_indice',
+        )->with(['responsables' => function ($q) {
+            $q->select('empleados.id', 'empleados.name', 'foto');
+        }, 'aprobadores' => function ($q) {
+            $q->select('empleados.id', 'empleados.name', 'foto');
+        }])->orderBy('id')->get();
+
+        return datatables()->of($query)->toJson();
     }
 
     public function create()
     {
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
         $controles = DeclaracionAplicabilidad::OrderBy('id')->get();
 
         return view('admin.panelDeclaracion.create', compact('empleados', 'controles'));
@@ -107,7 +72,7 @@ class PanelDeclaracionController extends Controller
 
     public function edit($id)
     {
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
         $controles = DeclaracionAplicabilidad::get();
 
         return view('admin.panelDeclaracion.edit', compact('empleados', 'controles'));
@@ -144,10 +109,11 @@ class PanelDeclaracionController extends Controller
                 $exists = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
                 if (!$exists) {
                     // dd($responsable);
-                    DeclaracionAplicabilidadResponsable::create([
+                    DeclaracionAplicabilidadResponsable::updateOrCreate([
                         'declaracion_id' => $declaracion,
                         'empleado_id' => $responsable,
-                        'esta_correo_enviado'=>false,
+                    ], [
+                        'esta_correo_enviado' => false,
 
                     ]);
 
@@ -157,7 +123,7 @@ class PanelDeclaracionController extends Controller
                 }
             } else {
                 if ($isReasignable) {
-                    DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->update(['empleado_id' => $responsable,  'esta_correo_enviado'=>false]);
+                    DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->update(['empleado_id' => $responsable,  'esta_correo_enviado' => false]);
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Responsable asignado'], 200);
                 } else {
@@ -176,7 +142,7 @@ class PanelDeclaracionController extends Controller
 
         $exists = $registro->exists();
         if ($exists) {
-            $registro = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->update(['empleado_id' => null, 'esta_correo_enviado'=>true]);
+            $registro = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->update(['empleado_id' => null, 'esta_correo_enviado' => true]);
 
             return response()->json(['message' => 'Responsable desasignado', 'request' => $request->all()], 200);
             // } else {
@@ -197,11 +163,15 @@ class PanelDeclaracionController extends Controller
             if (!$existAprobador) {
                 $exists = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $declaracion)->where('aprobadores_id', $aprobador)->exists();
                 if (!$exists) {
-                    DeclaracionAplicabilidadAprobadores::create([
-                        'declaracion_id' => $declaracion,
-                        'aprobadores_id' => $aprobador,
-                        'esta_correo_enviado'=>false,
-                    ]);
+                    DeclaracionAplicabilidadAprobadores::updateOrCreate(
+                        [
+                            'declaracion_id' => $declaracion,
+                            'aprobadores_id' => $aprobador,
+                        ],
+                        [
+                            'esta_correo_enviado' => false,
+                        ]
+                    );
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Aprobador asignado'], 200);
                 } else {
@@ -241,7 +211,7 @@ class PanelDeclaracionController extends Controller
             $destinatarios = DeclaracionAplicabilidadResponsable::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } elseif ($request->enviarNoNotificados) {
             $destinatarios = DeclaracionAplicabilidadResponsable::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
-        // dd($destinatarios);
+            // dd($destinatarios);
         } else {
             $destinatarios = json_decode($request->responsables);
         }
@@ -261,7 +231,7 @@ class PanelDeclaracionController extends Controller
             }
             Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
             $responsable = DeclaracionAplicabilidadResponsable::where('empleado_id', $destinatario)->first();
-            $responsable->update(['esta_correo_enviado'=>true]);
+            $responsable->update(['esta_correo_enviado' => true]);
         }
 
         return response()->json(['message' => 'Correo enviado'], 200);
