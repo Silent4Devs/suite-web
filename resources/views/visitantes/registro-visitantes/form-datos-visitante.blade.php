@@ -122,4 +122,11 @@
         <a href="{{ route('visitantes.presentacion') }}" class="btn btn-primary">Salir</a>
         <button class="btn btn-primary" wire:click.prevent="increaseStep()" type="submit">Siguiente</button>
     </div>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            Livewire.on('coincidenciasNombreVisitantes',()=>{
+
+            })
+        })
+    </script> --}}
 </div>
