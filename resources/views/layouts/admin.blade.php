@@ -1824,7 +1824,7 @@
             });
         }
     </script>
-    <script>
+    {{-- <script>
         $(function() {
             let idleTime = Number(@json(env('SESSION_LIFETIME')))*60*1000; // in milliseconds
             if (idleTime == 0) {
@@ -1841,7 +1841,7 @@
                 window.location.href = "/login"
             });
         });
-    </script>
+    </script> --}}
 
 </body>
 
