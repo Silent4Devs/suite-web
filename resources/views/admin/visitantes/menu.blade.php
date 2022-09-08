@@ -254,7 +254,7 @@
                         <li style="position: relative"><a href="{{ route('admin.visitantes.index') }}">
                                 <div>
                                     <i class="bi bi-clipboard-data"></i><br>
-                                    Bistácora de Accesos
+                                    Bitácora de Accesos
                                 </div>
                             </a>
                             @if (!$existsResponsable)
