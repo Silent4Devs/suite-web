@@ -86,6 +86,13 @@ class RegistroVisitantes extends Component
         ]);
     }
 
+    // public function updatedNombre($value)
+    // {
+    //TODO:Buscador de coincidencias
+    //     $coincidencias = RegistrarVisitante::where('nombre', 'ILIKE', "{$value}")->orWhere('apellidos', 'ILIKE', "{$value}")->get();
+    //     $this->emit('coincidenciasNombreVisitantes', $coincidencias);
+    // }
+
 
     public function removeInput($key)
     {
