@@ -240,17 +240,23 @@
                 <font class="letra_blanca"> Análisis de brechas</font>
             </a>
         </li> --}}
-
-        <li class="c-sidebar-nav-title">
-            <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
-        </li>
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.visitantes.menu') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/visitantes') || request()->is('admin/visitantes/*') ? 'active' : '' }}">
-                <i class="bi bi-person-bounding-box iconos_menu letra_blanca"></i>
-                <font class="letra_blanca">Visitantes</font>
-            </a>
-        </li>
+        @if (auth()->user()->can('visitantes_acceder') ||
+            auth()->user()->can('capital_humano_acceder') ||
+            auth()->user()->can('analisis_de_riesgo_integral_acceder') ||
+            auth()->user()->can('sistema_de_gestion_acceder'))
+            <li class="c-sidebar-nav-title">
+                <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
+            </li>
+        @endif
+        @can('visitantes_acceder')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.visitantes.menu') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/visitantes') || request()->is('admin/visitantes/*') ? 'active' : '' }}">
+                    <i class="bi bi-person-bounding-box iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">Visitantes</font>
+                </a>
+            </li>
+        @endcan
         @can('capital_humano_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.capital-humano.index') }}"
@@ -317,7 +323,8 @@
                             @can('configuracion_macroproceso_access')
                                 <li class="c-sidebar-nav-item">
                                     <a href="{{ asset('admin/categoria-capacitacion') }}">
-                                        <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca" style="font-size:12pt;"></i>
+                                        <i class="ml-2 fas fa-layer-group iconos_menu letra_blanca"
+                                            style="font-size:12pt;"></i>
                                         <font class="letra_blanca" style="margin-left:10px;"> Crear categorías</font>
                                     </a>
                                 </li>

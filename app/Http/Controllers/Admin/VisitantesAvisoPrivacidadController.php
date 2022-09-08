@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Visitantes\AvisoPrivacidadVisitante;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class VisitantesAvisoPrivacidadController extends Controller
 {
@@ -16,6 +18,7 @@ class VisitantesAvisoPrivacidadController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('visitantes_administrador'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if (AvisoPrivacidadVisitante::count() > 0) {
             $aviso_privacidad = AvisoPrivacidadVisitante::first();
         } else {
@@ -33,6 +36,7 @@ class VisitantesAvisoPrivacidadController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('visitantes_administrador'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'aviso_privacidad' => 'required',
         ]);
