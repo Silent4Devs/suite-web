@@ -2,8 +2,16 @@
 
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
+use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
+    Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
+    Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
+    Route::get('/salida/{registrarVisitante?}/registrar', [RegistroVisitantesController::class, 'registrarSalida'])->name('salida.registrar');
+    Route::resource('/', 'RegistroVisitantesController');
+});
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 Route::get('/usuario-bloqueado', 'UsuarioBloqueado@usuarioBloqueado')->name('users.usuario-bloqueado');
@@ -22,6 +30,16 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+    // Visitantes
+    Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
+    Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');
+    Route::get('visitantes/dashboard', 'VisitantesController@dashboard')->name('visitantes.dashboard');
+    Route::get('visitantes/menu', 'VisitantesController@menu')->name('visitantes.menu');
+    Route::resource('visitantes/aviso-privacidad', 'VisitantesAvisoPrivacidadController')->names('visitantes.aviso-privacidad');
+    Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');
+    Route::resource('visitantes', 'VisitantesController');
+    // Fin visitantes
+
     Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
     Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
     Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
@@ -1153,7 +1171,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('octave/graficas/{matriz}', 'MatrizRiesgosController@graficas')->name('octave-graficas');
 
     // Matriz de riesgos -- Sistema de Gestion
-    Route::post('matriz-seguridad/sistema-gestion/identificadorExist', 'MatrizRiesgosController@identificadorExist')->name('matriz-seguridad.sistema-gestion.identificadorExist');
     Route::get('matriz-seguridad/sistema-gestion', 'MatrizRiesgosController@SistemaGestion')->name('matriz-seguridad.sistema-gestion');
     Route::post('matriz-seguridad/sistema-gestion/data', 'MatrizRiesgosController@SistemaGestionData')->name('matriz-seguridad.sistema-gestion.data');
     Route::get('matriz-riesgos/sistema-gestion/create', 'MatrizRiesgosController@createSistemaGestion')->name('matriz-riesgos.sistema-gestion.create');

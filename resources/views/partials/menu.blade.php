@@ -244,6 +244,13 @@
         <li class="c-sidebar-nav-title">
             <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
         </li>
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.visitantes.menu') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/visitantes') || request()->is('admin/visitantes/*') ? 'active' : '' }}">
+                <i class="bi bi-person-bounding-box iconos_menu letra_blanca"></i>
+                <font class="letra_blanca">Visitantes</font>
+            </a>
+        </li>
         @can('capital_humano_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.capital-humano.index') }}"
