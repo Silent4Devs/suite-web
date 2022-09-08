@@ -243,12 +243,14 @@
                                     <span class="badge-danger">No se ha configurado el módulo de visitante</span>
                                 </div>
                             @else
-                                <span style="position: absolute;top:-8px;right: -9px;color: #345183;">
-                                    <i style="font-size: 25px !important;" class="far fa-bell"></i>
-                                </span>
-                                <span style="position: absolute;top:-8px;right: -3px;color: #345183;">
-                                    {{ $cantidadAutorizacion }}
-                                </span>
+                                @if ($cantidadAutorizacion)
+                                    <span style="position: absolute;top:-8px;right: -9px;color: #345183;">
+                                        <i style="font-size: 25px !important;" class="far fa-bell"></i>
+                                    </span>
+                                    <span style="position: absolute;top:-8px;right: -3px;color: #345183;">
+                                        {{ $cantidadAutorizacion }}
+                                    </span>
+                                @endif
                             @endif
                         </li>
                         <li style="position: relative"><a href="{{ route('admin.visitantes.index') }}">
