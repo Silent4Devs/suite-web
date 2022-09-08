@@ -376,45 +376,6 @@
     </div>
 
 
-
-    <div class="mt-2 form-group col-md-3 areas_multiselect">
-        <label class="form-label"><i class="bi bi-geo mr-2 iconos-crear"></i>Área(s)</label>
-        <select class="form-control" id="activos">
-            <option disabled selected>Seleccionar áreas</option>
-            @foreach ($areas as $area)
-                <option value="{{ $area->area }}">{{ $area->area }}
-                </option>
-            @endforeach
-        </select>
-        <textarea name="areas" class="form-control" id="texto_activos" required>{{ $accionCorrectiva->areas }}</textarea>
-    </div>
-
-    <div class="mt-3 form-group col-3 multiselect_empleados">
-        <label class="form-label"><i class="fas fa-user iconos-crear"></i>Colaborador(es)</label>
-        <select class="form-control">
-            <option disabled selected>Seleccionar colaborador</option>
-            @foreach ($empleados as $empleado)
-                <option value="{{ $empleado->name }}">
-                    {{ $empleado->name }}
-                </option>
-            @endforeach
-        </select>
-        <textarea name="colaborador_quejado" class="form-control">{{ $accionCorrectiva->colaboradores }}</textarea>
-    </div>
-
-    <div class="mt-3 form-group col-md-3 procesos_multiselect">
-        <label class="form-label"><i class="fas fa-dice-d20 iconos-crear"></i>Proceso(s)
-            afectado(s)</label>
-        <select class="form-control" id="activos">
-            <option disabled selected>Seleccionar procesos</option>
-            @foreach ($procesos as $proceso)
-                <option value="{{ $proceso->nombre }}">{{ $proceso->nombre }}
-                </option>
-            @endforeach
-        </select>
-        <textarea name="procesos" class="form-control" id="texto_activos">{{ $accionCorrectiva->procesos }}</textarea>
-    </div>
-
     @if ($accionCorrectiva->es_externo)
         <div class="mt-3 form-group col-3">
             <label class="form-label"><i class="fas fa-user-plus iconos-crear"></i>Otro(s)</label>
@@ -423,29 +384,7 @@
         </div>
     @endif
 
-    @if (!$accionCorrectiva->es_externo)
-
-        <div class="mt-2 form-group col-md-3 activos_multiselect">
-            <label class="form-label"><i class="fa-fw fas fa-laptop iconos-crear"></i>Activo(s)
-                afectado(s)</label>
-            <select class="form-control" id="activos">
-                <option disabled selected>Seleccionar afectados</option>
-                @foreach ($activos as $activo)
-                    <option value="{{ $activo->nombreactivo }}">{{ $activo->nombreactivo }}
-                    </option>
-                @endforeach
-            </select>
-            <textarea name="activos" class="form-control" id="texto_activos"
-                required>{{ $accionCorrectiva->activos }}</textarea>
-        </div>
-
-    @endif
-
-    <div class="mt-2 form-group col-md-12">
-        <label class="form-label"><i class="fas fa-comment-dots iconos-crear"></i>Comentarios</label>
-        <textarea name="comentarios" class="form-control" id="comentarios">{{ $accionCorrectiva->comentarios }}</textarea>
-    </div>
-
+  
     <div class="text-right form-group col-12">
         <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
         <button class="btn btn-danger" type="submit" id="btnGuardar" style="margin-top: 4px;">

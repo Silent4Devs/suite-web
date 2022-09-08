@@ -53,6 +53,9 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <style type="text/css">
+        .custom-file-input~.custom-file-label::after {
+            content: "Elegir";
+        }
         .printModal {
             font-family: sans-serif;
             display: flex;
@@ -1824,8 +1827,12 @@
     {{-- <script>
         $(function() {
             let idleTime = Number(@json(env('SESSION_LIFETIME')))*60*1000; // in milliseconds
+            if (idleTime == 0) {
+                idleTime = 120*60*1000;
+            }
+            console.log(idleTime);
             // Set idle time
-            $(document).idleTimer(idleTime); // in milliseconds
+            $(document).idleTimer(idleTime); // in milliseconds                
         });
 
         $(function() {

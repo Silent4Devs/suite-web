@@ -16,6 +16,138 @@
             border-radius: 50%;
             background: #ffffff;
         }
+
+        sup {
+            color: red;
+        }
+
+        ol.breadcrumb {
+            margin-bottom: 0px;
+        }
+
+        .select2-results__option {
+            position: relative;
+            padding-left: 30px !important;
+
+        }
+
+        .select2-selection__rendered {
+            padding-left: 30px !important;
+
+        }
+
+
+        .select2-selection__rendered[title*="Sin atender"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #FFCB63;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        #select2-opciones-results li[id*="Sin atender"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #FFCB63;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
+
+
+
+        .select2-selection__rendered[title*="En curso"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #AC84FF;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        #select2-opciones-results li[id*="En curso"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #AC84FF;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
+
+        .select2-selection__rendered[title*="En espera"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #6863FF;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        #select2-opciones-results li[id*="En espera"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #6863FF;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
+
+        .select2-selection__rendered[title*="Cerrado"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #6DC866;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        #select2-opciones-results li[id*="Cerrado"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #6DC866;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
+
+        .select2-selection__rendered[title*="No procedente"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #FF417B;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 11px;
+        }
+
+        #select2-opciones-results li[id*="No procedente"]::before {
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: #FF417B;
+            margin-left: -15px;
+            border-radius: 100px;
+            margin-top: 6px;
+        }
     </style>
 @endsection
 {{ Breadcrumbs::render('seguridad-edit', $incidentesSeguridad) }}
@@ -43,7 +175,7 @@
                 <section id="registro" class="caja_tab_reveldada">
                     <div class="seccion_div">
 
-                        <form class="row" method="POST"
+                        <form class="row" method="POST" enctype="multipart/form-data"
                             action="{{ route('admin.desk.seguridad-update', $incidentesSeguridad) }}">
                             @csrf
                             <div class="px-1 py-2 mx-3 mb-4 rounded shadow"
@@ -69,57 +201,52 @@
                                 <b>Datos generales:</b>
                             </div>
 
-                            <div class="mt-2 form-group col-md-2">
+                            <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i class="fas fa-ticket-alt iconos-crear"></i>Folio</label>
-                                <div class="form-control" id="input_folio">{{ $incidentesSeguridad->folio }}</div>
+                                <div class="form-control" id="input_folio" readonly>{{ $incidentesSeguridad->folio }}
+                                </div>
                             </div>
+
 
                             <div class="mt-2 form-group col-md-6">
-                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
-                                    corto
-                                    del incidente</label>
-                                <input type="" name="titulo" value="{{ $incidentesSeguridad->titulo }}"
-                                    class="form-control" required>
-                            </div>
-
-                            <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i
                                         class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
-                                <select name="estatus" class="form-control" id="opciones" onchange='cambioOpciones();'>
+                                <select name="estatus" class="estatus_campo form-control select2" id="opciones"
+                                    onchange='cambioOpciones();'>
                                     <option
-                                        {{ old('estatus', $incidentesSeguridad->estatus) == 'nuevo' ? 'selected' : '' }}
-                                        value="nuevo">Nuevo</option>
+                                        {{ old('estatus', $incidentesSeguridad->estatus) == 'Sin atender' ? 'selected' : '' }}
+                                        value="Sin atender">Sin atender</option>
                                     <option
-                                        {{ old('estatus', $incidentesSeguridad->estatus) == 'en curso' ? 'selected' : '' }}
-                                        value="en curso">En curso</option>
+                                        {{ old('estatus', $incidentesSeguridad->estatus) == 'En curso' ? 'selected' : '' }}
+                                        value="En curso">En curso</option>
                                     <option
-                                        {{ old('estatus', $incidentesSeguridad->estatus) == 'en espera' ? 'selected' : '' }}
-                                        value="en espera">En espera</option>
+                                        {{ old('estatus', $incidentesSeguridad->estatus) == 'En espera' ? 'selected' : '' }}
+                                        value="En espera">En espera</option>
                                     <option
-                                        {{ old('estatus', $incidentesSeguridad->estatus) == 'cerrado' ? 'selected' : '' }}
-                                        value="cerrado">Cerrado</option>
+                                        {{ old('estatus', $incidentesSeguridad->estatus) == 'Cerrado' ? 'selected' : '' }}
+                                        value="Cerrado">Cerrado</option>
                                     <option
-                                        {{ old('estatus', $incidentesSeguridad->estatus) == 'cancelado' ? 'selected' : '' }}
-                                        value="cancelado">Cancelado</option>
+                                        {{ old('estatus', $incidentesSeguridad->estatus) == 'No procedente' ? 'selected' : '' }}
+                                        value="No procedente">No procedente</option>
                                 </select>
                             </div>
 
-                            <div class="mt-2 form-group col-md-4">
-                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
-                                    hora
-                                    de ocurrencia del incidente</label>
-                                <input type="datetime" name="fecha" value="{{ $incidentesSeguridad->fecha }}"
-                                    class="form-control">
+
+                            <div class="col-12 d-none" id="campo_estatus">
+                                    <label class="form-label"><i
+                                            class="fas fa-comment-dots iconos-crear"></i>Justificación</label>
+                                    <textarea name="justificacion" class="form-control">{{ $incidentesSeguridad->justificacion }}</textarea>
                             </div>
 
-                            <div class="mt-2 form-group col-md-4">
+
+                            <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de recepción del reporte</label>
-                                <div class="form-control">{{ $incidentesSeguridad->created_at }}</div>
+                                <div class="form-control" readonly>{{ $incidentesSeguridad->created_at }}</div>
                             </div>
 
-                            <div class="mt-2 form-group col-md-4">
+                            <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha y
                                     hora
                                     de cierre del ticket</label>
@@ -143,17 +270,20 @@
                                     @endforeach
                                 </select>
                             </div> --}}
+                            <div class="form-group col-12">
+                                <b>Asignado:</b>
+                            </div>
 
                             <div class="form-group col-md-4">
                                 <label for="empleado_asignado_id"><i
-                                        class="fas fa-user-tie iconos-crear"></i>Asignado</label>
-                                <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}"
+                                        class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                                <select
+                                    class="form-control {{ $errors->has('empleado_asignado_id') ? 'is-invalid' : '' }}"
                                     name="empleado_asignado_id" id="empleado_asignado_id">
                                     <option value="" selected disabled>Selecciona una opción</option>
                                     @foreach ($empleados as $id => $empleado)
-                                        <option value="{{ $empleado->id }}"
+                                        <option value="{{ $empleado->id }}" data-puesto="{{ $empleado->puesto }}" data-area="{{ $empleado->area->area }}"
                                             {{ old('empleado_asignado_id', $incidentesSeguridad->empleado_asignado_id) == $empleado->id ? 'selected' : '' }}>
-
                                             {{ $empleado->name }}
                                         </option>
                                     @endforeach
@@ -164,60 +294,145 @@
                                     </div>
                                 @endif
                             </div>
-
-                            <div class="mt-2 form-group col-md-4">
-                                <label class="form-label"><i
-                                        class="fas fa-layer-group iconos-crear"></i>Categoría</label>
-                                <select id="select_categoria" class="form-control"
-                                    value="{{ $incidentesSeguridad->categoria }}" name="categoria">
-                                    <option selected disabled></option>
-                                    @foreach ($categorias as $categoria)
-                                        <option id="categoria{{ $categoria->id }}" value="{{ $categoria->id }}"
-                                            class="">{{ $categoria->categoria }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="form-group col-md-4">
+                                <label for="id_registro_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                                <div class="form-control" id="id_registro_puesto" readonly></div>
+            
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="id_registro_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
+                                <div class="form-control" id="id_registro_area" readonly></div>
                             </div>
 
-                            <div class="mt-2 form-group col-md-4">
-                                <label class="form-label"><i
-                                        class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
-                                <select id="select_subcategorias" class="form-control"
-                                    value="{{ $incidentesSeguridad->subcategoria }}" name="subcatgoría">
-                                    <option selected disabled class="option_vacio"></option>
-                                    @foreach ($subcategorias as $subcategoria)
-                                        <option class="d-none categoria{{ $subcategoria->categoria->id }}"
-                                            value="{{ $subcategoria->id }}">
-                                            {{ $subcategoria->subcategoria }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                            <div class="form-group col-12">
+                                <b>Descripción del incidente de seguridad:</b>
                             </div>
 
-                            <div class="mt-2 form-group col-md-4">
+                            <div class="mt-2 form-group col-md-7">
+                                <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
+                                    corto del incidente</label>
+                                <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                    title="Describa de forma breve y con palabras clave el motivo del incidente de seguridad."></i>
+                                <input type="" name="titulo" value="{{ $incidentesSeguridad->titulo }}"
+                                    class="form-control" required>
+                            </div>
+
+                            <div class="mt-2 form-group col-5">
+                                <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
+                                    y hora de ocurrencia</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                    title="Fecha y hora aproximada en la que ocurrió el evento que motivó el incidente de seguridad."></i>
+                                <input type="datetime-local" name="fecha" class="form-control"
+                                    value="{{ old('fecha', \Carbon\Carbon::parse($incidentesSeguridad->fecha)->format('Y-m-d\TH:i')) }}"
+                                    required>
+                                @if ($errors->has('fecha'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('fecha') }}
+                                    </div>
+                                @endif
+                                <span class="fecha_error text-danger errores"></span>
+                            </div>
+
+
+                            <div class="mt-2 form-group col-md-6">
+                                <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación
+                                    exacta</label>
+                                    <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                    title="Indique el lugar en el que ocurrió el evento que motivó el incidente."></i>
+                                <input type="" name="ubicacion" class="form-control"
+                                    value="{{ $incidentesSeguridad->ubicacion }}">
+                            </div>
+
+                            <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i>
                                     Sede</label>
                                 <select class="form-control" name="sede">
-                                    <option disabled>seleccione sede</option>
+                                    <option disabled>Seleccione sede</option>
                                     @foreach ($sedes as $sede)
                                         <option value="{{ $sede->sede }}">{{ $sede->sede }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            <div class="mt-2 form-group col-md-8">
-                                <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación
-                                    exacta</label>
-                                <input type="" name="ubicacion" class="form-control"
-                                    value="{{ $incidentesSeguridad->ubicacion }}">
+                            <div class="mt-2 form-group col-md-6">
+                                <label class="form-label"><i
+                                        class="fas fa-layer-group iconos-crear"></i>Categoría</label>
+                                <select  class="form-control"
+                                    value="{{ $incidentesSeguridad->categoria }}" name="categoria_id">
+                                    <option selected disabled>Seleccione categoría</option>
+                                    @foreach ($categorias as $categoria)
+                                        <option value="{{ $categoria->id }}"
+                                            {{ $incidentesSeguridad->categoria_id == $categoria->id ? 'selected' : '' }}>
+                                            {{ $categoria->categoria }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
+                            <div class="mt-2 form-group col-md-6">
+                                <label class="form-label"><i
+                                        class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
+                                <select  class="form-control"
+                                    value="{{ $incidentesSeguridad->subcategoria }}" name="subcategoria_id">
+                                    <option selected disabled >Seleccione subcategoría</option>
+                                    @foreach ($subcategorias as $subcategoria)
+                                        <option 
+                                            value="{{ $subcategoria->id }}"
+                                            {{ $incidentesSeguridad->subcategoria_id == $subcategoria->id ? 'selected' : '' }}>
+                                            {{ $subcategoria->subcategoria }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- <div class="mt-2 form-group col-md-6">
+                                <label class="form-label"><i
+                                        class="fas fa-layer-group iconos-crear"></i>Categoría</label>
+                                <select id="select_categoria" class="form-control"
+                                    value="{{ $incidentesSeguridad->categoria }}" name="categoria_id">
+                                    <option selected disabled>Seleccione categoría</option>
+                                    @foreach ($categorias as $categoria)
+                                        <option value="{{ $categoria->id }}"
+                                            {{ $incidentesSeguridad->categoria_id == $categoria->id ? 'selected' : '' }}>
+                                            {{ $categoria->categoria }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div> --}}
+
+                            {{-- <div class="mt-2 form-group col-md-6">
+                                <label class="form-label"><i
+                                        class="fas fa-adjust iconos-crear"></i>Subcategoría</label>
+                                <select id="select_subcategorias" class="form-control"
+                                    value="{{ $incidentesSeguridad->subcategoria }}" name="subcategoria_id">
+                                    <option selected disabled class="option_vacio">Seleccione subcategoría</option>
+                                    @foreach ($subcategorias as $subcategoria)
+                                        <option 
+                                            value="{{ $subcategoria->id }}"
+                                            {{ $incidentesSeguridad->subcategoria_id == $subcategoria->id ? 'selected' : '' }}>
+                                            {{ $subcategoria->subcategoria }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div> --}}
+
+                            
 
                             <div class="mt-2 form-group col-md-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción
-                                    del
-                                    incidente</label>
+                                    del incidente</label>
+                                <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                    title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
                                 <textarea name="descripcion" class="form-control" required>{{ $incidentesSeguridad->descripcion }}
                                     </textarea>
+                            </div>
+
+                            <div class="mt-2 form-group col-12">
+                                <label class="form-label"><i class="fas fa-file-import iconos-crear"></i>Adjuntar
+                                    evidencia(s)
+                                    del incidente</label><i class="fas fa-info-circle"
+                                    style="font-size:12pt; float: right;"
+                                    title="Adjunte la información que soporte la evidencia que se esta presentando, pueden ser documentos, fotografías, capturas de pantalla, etc."></i>
+                                <input type="file" name="evidencia[]" class="form-control" multiple="multiple">
                             </div>
 
                             <div class="mt-4 text-center form-group col-12">
@@ -253,7 +468,8 @@
                                                                     @if (pathinfo($evidencia->evidencia, PATHINFO_EXTENSION) == 'pdf')
                                                                         <div
                                                                             class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                                            <iframe style="width:100%;height:300px;" seamless class='img-size'
+                                                                            <iframe style="width:100%;height:300px;"
+                                                                                seamless class='img-size'
                                                                                 src='{{ asset('storage/evidencias_seguridad' . '/' . $evidencia->evidencia) }}'></iframe>
                                                                         </div>
                                                                     @else
@@ -348,44 +564,39 @@
 
                             <div class="mt-0 form-group col-md-4">
                                 <label class="form-label"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                                <div class="form-control">
+                                <div class="form-control" readonly>
                                     {{ Str::limit($incidentesSeguridad->reporto->name, 30, '...') }}</div>
                             </div>
 
                             <div class="mt-0 form-group col-md-4">
                                 <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
-                                <div class="form-control">{{ $incidentesSeguridad->reporto->puesto }}</div>
+                                <div class="form-control" readonly>{{ $incidentesSeguridad->reporto->puesto }}</div>
                             </div>
 
                             <div class="mt-0 form-group col-md-4">
                                 <label class="form-label"><i
                                         class="fas fa-puzzle-piece iconos-crear"></i></i>Área</label>
-                                <div class="form-control">{{ $incidentesSeguridad->reporto->area->area }}</div>
+                                <div class="form-control" readonly>{{ $incidentesSeguridad->reporto->area->area }}
+                                </div>
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i class="fas fa-envelope iconos-crear"></i>Correo
                                     electrónico</label>
-                                <div class="form-control">{{ $incidentesSeguridad->reporto->email }}</div>
+                                <div class="form-control" readonly>{{ $incidentesSeguridad->reporto->email }}</div>
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i class="fas fa-phone iconos-crear"></i>Teléfono</label>
-                                <div class="form-control">{{ $incidentesSeguridad->reporto->telefono }}</div>
+                                <div class="form-control" readonly>{{ $incidentesSeguridad->reporto->telefono }}</div>
                             </div>
 
 
-                            <div class="mt-4 form-group col-md-12">
+                            {{-- <div class="mt-4 form-group col-md-12">
                                 <b>Priorización del incidente:</b>
-                            </div>
+                            </div> --}}
 
-
-
-
-
-
-
-                            <div class="mt-2 form-group col-md-4 select_elegir_prioridad">
+                            {{-- <div class="mt-2 form-group col-md-4 select_elegir_prioridad">
                                 <label class="form-label"><i
                                         class="fas fa-chart-line iconos-crear"></i>Urgencia</label>
                                 <select class="form-control" name="urgencia" id="select_urgencia">
@@ -420,7 +631,7 @@
                             <div class="mt-2 form-group col-md-4">
                                 <label class="form-label"><i class="fas fa-flag iconos-crear"></i>Prioridad</label>
                                 <div class="form-control" id="prioridad"></div>
-                            </div>
+                            </div> --}}
 
 
 
@@ -428,7 +639,8 @@
 
                             <div class="mt-2 form-group col-md-12">
                                 <label class="form-label"><i
-                                        class="fas fa-comment-dots iconos-crear"></i>Comentarios</label>
+                                        class="fas fa-comment-dots iconos-crear"></i>Comentarios/lecciones
+                                    aprendidas</label>
                                 <textarea name="comentarios" class="form-control">{{ $incidentesSeguridad->comentarios }}</textarea>
                             </div>
 
@@ -488,13 +700,13 @@
                                     <div id="ideas" class="caja_oculta_dinamica row">
                                         <div class="form-group col-md-12">
                                             <label>Ideas</label>
-                                            <textarea class="form-control" name="ideas">{{ $analisis->ideas }}</textarea>
+                                            <textarea class="form-control" id="escritura_ideas" name="ideas">{{ $analisis->ideas }}</textarea>
                                         </div>
 
-                                        <div class="form-group col-md-12">
+                                        {{-- <div class="form-group col-md-12">
                                             <label>Causa Raíz</label>
                                             <textarea class="form-control" name="causa_ideas">{{ $analisis->causa_ideas }}</textarea>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
 
@@ -535,77 +747,77 @@
                                                 <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
                                                     style="width:190%; margin-top:20px;">
                                                 <div
-                                                    style="top:0px;left:170px; position: absolute;height:35px; width:150px;  background-color:#63e4e4; border-radius:15px;">
+                                                    style="top:0px;left:150px; position: absolute;height:35px; width:150px;  background-color:#63e4e4; border-radius:15px;">
                                                     <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
                                                             style="padding-top:6px; color:#1E3A8A;"></i></span><strong
                                                         style="color:#ffffff">Control</strong>
                                                 </div>
                                                 <div
-                                                    style="top:0px; left:780px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    style="top:0px; left:680px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
                                                     <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-balance-scale"
                                                             style="padding-top:6px; color:#1E3A8A;"></i></span><strong
                                                         style="color:#ffffff">Proceso</strong>
                                                 </div>
                                                 <div
-                                                    style="top:0px; left:1350px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    style="top:0px; left:1200px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
                                                     <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-users"
                                                             style="padding-top:6px; color:#1E3A8A;"></i></span><strong
                                                         style="color:#ffffff">Personas</strong>
                                                 </div>
                                                 <div
-                                                    style="buttom:0px; left:450px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    style="buttom:0px; left:410px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
                                                     <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card"
                                                             style="padding-top:6px; color:#1E3A8A;"></i></span><strong
                                                         style="color:#ffffff">Tecnología</strong>
                                                 </div>
                                                 <div
-                                                    style="buttom:0px; left:1050px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
+                                                    style="buttom:0px; left:920px; position: absolute;height:35px; width:150px;  background-color:#63e4e4;border-radius:15px;">
                                                     <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-sim-card"
                                                             style="padding-top:6px; color:#1E3A8A;"></i></span><strong
                                                         style="color:#ffffff">Métodos</strong>
                                                 </div>
                                                 <div
-                                                    style="buttom:0px;left:1670px; position: absolute;height:35px; width:150px; background-color:#63e4e4;border-radius:15px;">
+                                                    style="buttom:0px;left:1450px; position: absolute;height:35px; width:150px; background-color:#63e4e4;border-radius:15px;">
                                                     <span><i class="mt-1 ml-2 mr-2 circulo pl-1 fas fa-chalkboard"
                                                             style="padding-top:6px; color:#1E3A8A;"></i></span><strong
                                                         style="color:#ffffff">Recursos</strong>
                                                 </div>
                                                 {{-- <div> --}}
                                                 <div class="col-6"
-                                                    style="top:55px; left:290px; position: absolute; height:30px !important;">
+                                                    style="top:45px; left:290px; position: absolute; height:30px !important;">
                                                     <textarea style="top:20px;" name="control_a" id="analisisControl" class=" politicas_txtarea">{{ $analisis->control_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="control_b"
                                                     class="politicas_txtarea txt_obj_secundarios_a">{{ $analisis->control_b }}</textarea> --}}
                                                 <div class="col-6"
-                                                    style="top:55px; left:890px; position: absolute; height:30px !important;">
+                                                    style="top:45px; left:810px; position: absolute; height:30px !important;">
                                                     <textarea style="top:20px;" id="analisisProceso" name="proceso_a" class="procesos_txtarea">{{ $analisis->proceso_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="proceso_b" class="procesos_txtarea txt_obj_secundarios_a">{{ $analisis->proceso_b }}</textarea> --}}
                                                 <div class="col-6"
-                                                    style="top:55px; left:1480px; position: absolute; height:30px !important;">
+                                                    style="top:45px; left:1315px; position: absolute; height:30px !important;">
                                                     <textarea name="personas_a" id="analisisPersona" class="personas_txtarea">{{ $analisis->personas_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="personas_b" class="personas_txtarea txt_obj_secundarios_a">{{ $analisis->personas_b }}</textarea> --}}
                                                 {{-- </div> --}}
                                                 <div class="col-6"
-                                                    style="bottom:5px; right:590px; position: absolute;">
+                                                    style="bottom:5px; right:380px; position: absolute;">
                                                     <textarea style="margin-top:100px;" name="tecnologia_a" id="analisisTecnologia"
                                                         class="tecnologia_txtarea txt_obj_secundarios_b">{{ $analisis->tecnologia_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="tecnologia_b" class="tecnologia_txtarea ">{{ $analisis->tecnologia_b }}</textarea> --}}
                                                 <div class="col-6"
-                                                    style="bottom:5px; left:590px; position: absolute;">
+                                                    style="bottom:5px; left:540px; position: absolute;">
                                                     <textarea name="metodos_a" class="metodos_txtarea txt_obj_secundarios_b" id="analisisMetodos">{{ $analisis->metodos_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="metodos_b" class="metodos_txtarea ">{{ $analisis->metodos_b }}</textarea> --}}
                                                 <div class="col-6"
-                                                    style="bottom:5px; left:1200px; position: absolute;">
+                                                    style="bottom:5px; left:1060px; position: absolute;">
                                                     <textarea name="ambiente_a" class="ambiente_txtarea txt_obj_secundarios_b" id="analisisAmbiente">{{ $analisis->ambiente_a }}</textarea>
                                                 </div>
                                                 {{-- <textarea name="ambiente_b" class="ambiente_txtarea ">{{ $analisis->ambiente_b }}</textarea> --}}
                                                 <div class="col-6"
-                                                    style="bottom:5px; left:1800px; position: absolute;">
+                                                    style="bottom:5px; left:1600px; position: absolute;">
                                                     <textarea name="problema_diagrama" class="problemas_txtarea" id="analisisProblema">{{ $analisis->problema_diagrama }}</textarea>
                                                 </div>
                                             </div>
@@ -627,7 +839,7 @@
                             </div>
                         </div>
                         <div class="" style=" position: relative; ">
-                            <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
+                            <h5 style=" position: ;"><b>Acciones para la Atención del Incidente de Seguridad</b></h5>
                             <button style="position:absolute; right: 2px; top:2px;"
                                 class="btn btn-success btn_modal_form">Agregar actividad</button>
                             @if (count($incidentesSeguridad->planes))
@@ -903,6 +1115,25 @@
         });
     });
 
+    window.initSelect2 = () => {
+
+        $('.select2').select2({
+
+            'theme': 'bootstrap4'
+
+        });
+
+    }
+
+    initSelect2();
+
+
+
+    Livewire.on('select2', () => {
+
+        initSelect2();
+
+    });
 
     function limpiarCampos() {
 
@@ -1085,6 +1316,105 @@
                 items: ['Link', 'Unlink']
             }, ]
         });
+
+        CKEDITOR.replace('escritura_ideas', {
+            toolbar: [{
+                    name: 'styles',
+                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                },
+                {
+                    name: 'colors',
+                    items: ['TextColor', 'BGColor']
+                },
+                {
+                    name: 'editing',
+                    groups: ['find', 'selection', 'spellchecker'],
+                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                }, {
+                    name: 'clipboard',
+                    groups: ['undo'],
+                    items: ['Undo', 'Redo']
+                },
+                {
+                    name: 'tools',
+                    items: ['Maximize']
+                },
+                {
+                    name: 'basicstyles',
+                    groups: ['basicstyles', 'cleanup'],
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                        '-',
+                        'CopyFormatting', 'RemoveFormat'
+                    ]
+                },
+                {
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                        'Blockquote',
+                        '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                        'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'
+                    ]
+                },
+                {
+                    name: 'links',
+                    items: ['Link', 'Unlink']
+                },
+                {
+                    name: 'insert',
+                    items: ['Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                },
+                '/',
+            ]
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        let incidentesSeguridad = @json($incidentesSeguridad);
+        if (incidentesSeguridad.estatus == 'No procedente' || incidentesSeguridad.estatus == 'Cerrado') {
+            $('#campo_estatus').removeClass('d-none');
+        }
+    })
+    $(document).on('change', '.estatus_campo', function(event) {
+        if ($('.estatus_campo option:selected').attr('value') == 'No procedente' || $(
+                '.estatus_campo option:selected').attr('value') == 'Cerrado') {
+            console.log('ocultar');
+            $('#campo_estatus').removeClass('d-none');
+        } else {
+            $('#campo_estatus').addClass('d-none');
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        let registro = document.querySelector('#empleado_asignado_id');
+        let area = registro.options[registro.selectedIndex].getAttribute('data-area');
+        let puesto = registro.options[registro.selectedIndex].getAttribute('data-puesto');
+        document.getElementById('id_registro_puesto').innerHTML = recortarTexto(puesto)
+        document.getElementById('id_registro_area').innerHTML = recortarTexto(area)
+
+        registro.addEventListener('change', function(e) {
+            
+            e.preventDefault();
+
+            let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');
+            console.log(area);
+            let puesto = e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+
+            document.getElementById('id_registro_puesto').innerHTML = recortarTexto(puesto)
+            document.getElementById('id_registro_area').innerHTML = recortarTexto(area)
+        })
+
+        function recortarTexto(texto, length = 34) {
+            let trimmedString = texto?.length > length ?
+                texto.substring(0, length - 3) + "..." :
+                texto;
+            return trimmedString;
+        }
 
     });
 </script>

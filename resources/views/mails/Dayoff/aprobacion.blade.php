@@ -262,7 +262,7 @@
                                                            Respuesta: <strong>{{ $respuesta }}</strong> 
                                                         </li>
                                                         <li>
-                                                            Comentarios: <strong>{{ $solicitud->comentarios_aprobador }}</strong> 
+                                                            Comentarios del aprobador: <strong>{{ $solicitud->comentarios_aprobador }}</strong> 
                                                          </li>
                                                    
                                                 </ul>  

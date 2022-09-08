@@ -30,7 +30,7 @@ if ($dias_pendientes >= 1) {
                 <div class="col-11">
                     <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Considera...</p>
                     <p class="m-0" style="font-size: 14px; color:#1E3A8A "> Actualmente tienes
-                        <strong>{{ $dias_pendientes }} dias</strong> en estado de <strong>"Pendientes"</strong>, los
+                        <strong>{{ $dias_pendientes }} días</strong> en estado de <strong>"Pendientes"</strong>, los
                         cuales están descontados y en caso de ser rechazados estos serán reembolsados.
                     </p>
                 </div>
@@ -48,7 +48,7 @@ if ($dias_pendientes >= 1) {
     <div class="col-12 col-sm-12" x-show="open">
         <!-- Categoria Field -->
         <div class="row">
-            <div class="form-group col-sm-6 ">
+            <div class="form-group col-sm-6 mt-2">
                 <fieldset disabled>
                     <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Días
                         disponibles:</label>
@@ -58,10 +58,10 @@ if ($dias_pendientes >= 1) {
             </div>
             <div class="form-group col-sm-6 ">
                 <fieldset disabled>
-                    <label for="disabledTextInput"><i class="bi bi-calendar2-event-fill iconos-crear"></i>Validos
-                        hasta el:</label>
-                    <input type="text" id="validos_hasta" class="form-control"
-                        value="31-12-{{ $año_limite }}" style="text-align: center">
+                    <label for="disabledTextInput"><i class="bi bi-calendar2-event-fill iconos-crear"></i>Válidos hasta
+                        él:</label>
+                    <input type="text" id="validos_hasta" class="form-control" value="31-12-{{ $año }}"
+                        style="text-align: center">
                 </fieldset>
 
             </div>
@@ -108,6 +108,8 @@ if ($dias_pendientes >= 1) {
                 @enderror
             </div>
         </div>
+
+        <x-loading-indicator />
         <!-- Descripcion Field -->
         <div class="row">
             <div class="form-group col-sm-12">
@@ -125,7 +127,7 @@ if ($dias_pendientes >= 1) {
         <!-- Submit Field -->
         <div class="text-right form-group col-12">
             <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-            <button class="btn btn-danger" type="submit">
+            <button class="btn btn-danger" id="enviar" type="submit">
                 {{ trans('global.save') }}
             </button>
         </div>
@@ -184,7 +186,7 @@ if ($dias_pendientes >= 1) {
                         } else {
                             alert(
                                 "Los dias solicitados no pueden ser mayores a los disponibles, ¡Intentalo de nuevo!"
-                                );
+                            );
                             $("#dias_solicitados").attr("value", 0);
                             document.getElementById("fecha_inicio").value = "";
                         }
@@ -239,7 +241,8 @@ if ($dias_pendientes >= 1) {
                         }
                     } else {
                         alert(
-                            "Recuerda que solo podrás solicitar un dia a la vez de los dias disponibles ¡Intentalo de nuevo!");
+                            "Recuerda que solo podrás solicitar un dia a la vez de los dias disponibles ¡Intentalo de nuevo!"
+                            );
                         $("#dias_solicitados").attr("value", 0);
                         document.getElementById("fecha_fin").value = "";
                     }
@@ -250,6 +253,9 @@ if ($dias_pendientes >= 1) {
                     document.getElementById("fecha_fin").value = "";
                 }
             }
+        })
+        document.getElementById('enviar').addEventListener('click', (e) => {
+            document.getElementById('loaderComponent').style.display = 'block';
         })
     </script>
 @endsection

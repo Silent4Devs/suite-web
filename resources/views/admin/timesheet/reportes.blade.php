@@ -55,9 +55,9 @@
                     role="tab" aria-controls="nav-proyectos" aria-selected="false">
                     Proyectos
                 </a>
-                {{-- <a class="nav-link" id="nav-clientes-tab" data-type="clientes" data-toggle="tab"
-                    href="#nav-clientes" role="tab" aria-controls="nav-clientes" aria-selected="false">
-                    Clientes
+                {{-- <a class="nav-link" id="nav-semanas-tab" data-type="semanas" data-toggle="tab"
+                    href="#nav-semanas" role="tab" aria-controls="nav-semanas" aria-selected="false">
+                    Semanas
                 </a> --}}
             </div>
         </nav>
@@ -73,7 +73,8 @@
             <div class="tab-pane mb-4 fade p-4" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
                 @livewire('timesheet.reportes-proyectos')
             </div>
-            {{-- <div class="tab-pane mb-4 fade p-4" id="nav-clientes" role="tabpanel" aria-labelledby="nav-clientes-tab">
+            {{-- <div class="tab-pane mb-4 fade p-4" id="nav-semanas" role="tabpanel" aria-labelledby="nav-semanas-tab">
+                @livewire('timesheet.reportes-semanas')
             </div> --}}
         </div>
     </div>
@@ -109,6 +110,9 @@
         });
         $(".cde-estatus").mouseleave(function() {
             $(".cde-estatus").removeClass("ver");
+        });
+        $(".cde-fecha").mouseleave(function() {
+            $(".cde-fecha").removeClass("ver");
         });
 
         $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").mouseover(
@@ -273,7 +277,7 @@
                 "footerCallback": function(row, data, start, end, display) {
                     var api = this.api();
                     nb_cols = api.columns().nodes().length;
-                    var j = 5;
+                    var j = 6;
                     while (j < nb_cols) {
                         var pageTotal = api
                             .column(j, {
@@ -296,6 +300,14 @@
                 $('tfoot .cde-op').innerHTML = '';
                 $('tfoot .cde-semenasf').innerHTML = '';
                 $('tfoot .cde-totalh').innerHTML = '';
+            }
+
+            if (id_tabla == 'datatable_timesheet_proyectos') {
+                console.log('"bPaginate": false,');
+                dtOverrideGlobals.bPaginate = false;
+                dtOverrideGlobals.bFilter = false;
+                dtOverrideGlobals.info = false;
+                dtOverrideGlobals.buttons = []
             }
 
             let table = $('#' + id_tabla + cont).DataTable(dtOverrideGlobals);
@@ -337,7 +349,8 @@
                     weekdays: {
                         shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
                         longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes',
-                            'Sábado'],
+                            'Sábado'
+                        ],
                     },
                     months: {
                         shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct',
@@ -364,7 +377,8 @@
                     weekdays: {
                         shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
                         longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes',
-                            'Sábado'],
+                            'Sábado'
+                        ],
                     },
                     months: {
                         shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct',
@@ -389,7 +403,8 @@
                     weekdays: {
                         shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
                         longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes',
-                            'Sábado'],
+                            'Sábado'
+                        ],
                     },
                     months: {
                         shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct',
@@ -414,7 +429,8 @@
                     weekdays: {
                         shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
                         longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes',
-                            'Sábado'],
+                            'Sábado'
+                        ],
                     },
                     months: {
                         shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct',
@@ -439,7 +455,8 @@
                     weekdays: {
                         shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
                         longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes',
-                            'Sábado'],
+                            'Sábado'
+                        ],
                     },
                     months: {
                         shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct',

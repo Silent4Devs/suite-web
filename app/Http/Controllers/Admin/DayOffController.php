@@ -7,8 +7,8 @@ use App\Models\Area;
 use App\Models\DayOff;
 use App\Models\Organizacion;
 use App\Models\SolicitudDayOff;
-use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,7 +16,7 @@ class DayOffController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('reglas_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = DayOff::with('areas')->orderByDesc('id')->get();
             $table = datatables()::of($query);
@@ -82,6 +82,7 @@ class DayOffController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('reglas_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $areas = Area::get();
         $vacacion = new DayOff();
         $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
@@ -91,7 +92,7 @@ class DayOffController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');  
+        abort_if(Gate::denies('reglas_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string',
             'dias' => 'required|int',
@@ -118,6 +119,7 @@ class DayOffController extends Controller
 
     public function show($id)
     {
+        abort_if(Gate::denies('reglas_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = DayOff::with('areas')->find($id);
 
         return view('admin.dayOff.show', compact('vacacion'));
@@ -125,7 +127,7 @@ class DayOffController extends Controller
 
     public function edit($id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('reglas_dayoff_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $areas = Area::get();
         $vacacion = DayOff::with('areas')->find($id);
         if (empty($vacacion)) {
@@ -140,39 +142,40 @@ class DayOffController extends Controller
 
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('reglas_dayoff_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = DayOff::find($id);
-       
-        if ($request->afectados == 2){
 
+        if ($request->afectados == 2) {
             $vacacion->update($request->all());
             $areas = array_map(function ($value) {
                 return intval($value);
             }, $request->areas);
             $vacacion->areas()->sync($areas);
-        }else{
-
+        } else {
             $vacacion->update($request->all());
         }
 
         Flash::success('Regla Days Off´s actualizada.');
+
         return redirect(route('admin.dayOff.index'));
     }
 
-
     public function destroy($id)
     {
+        abort_if(Gate::denies('reglas_dayoff_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = DayOff::find($id);
         $vacaciones->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
-    public function vistaGlobal(Request $request){
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+    public function vistaGlobal(Request $request)
+    {
+        abort_if(Gate::denies('reglas_dayoff_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
         if ($request->ajax()) {
-            $query =SolicitudDayOff::with('empleado')->orderByDesc('id')->get();
+            $query = SolicitudDayOff::with('empleado')->orderByDesc('id')->get();
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -192,7 +195,7 @@ class DayOffController extends Controller
                 return $row->fecha_fin ? $row->fecha_fin : '';
             });
             $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion  : '';
+                return $row->aprobacion ? $row->aprobacion : '';
             });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
@@ -210,8 +213,7 @@ class DayOffController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
-        return view('admin.dayoff.solicitudes', compact('logo_actual', 'empresa_actual'));
-    }
-   
 
+        return view('admin.dayOff.solicitudes', compact('logo_actual', 'empresa_actual'));
+    }
 }

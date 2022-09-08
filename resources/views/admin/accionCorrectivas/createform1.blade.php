@@ -172,55 +172,6 @@
         <span class="help-block">{{ trans('cruds.accionCorrectiva.fields.descripcion_helper') }}</span>
     </div>
 
-    <div class="mt-2 form-group col-md-4 areas_multiselect">
-        <label class="form-label"><i class="fas fa-puzzle-piece iconos-crear"></i>Área(s)
-            afectada(s)</label>
-        <select class="form-control" id="activos">
-            <option disabled selected>Seleccionar áreas</option>
-            @foreach ($areas as $area)
-                <option value="{{ $area->area }}">{{ $area->area }}
-                </option>
-            @endforeach
-        </select>
-        <textarea name="areas" class="form-control" id="texto_activos"
-            required></textarea>
-    </div>
-
-    <div class="mt-2 form-group col-md-4 procesos_multiselect">
-        <label class="form-label"><i class="fas fa-dice-d20 iconos-crear"></i>Proceso(s)
-            afectado(s)</label>
-        <select class="form-control" id="activos">
-            <option disabled selected>Seleccionar procesos</option>
-            @foreach ($procesos as $proceso)
-                <option value="{{ $proceso->nombre }}">{{ $proceso->nombre }}
-                </option>
-            @endforeach
-        </select>
-        <textarea name="procesos" class="form-control" id="texto_activos"
-            required></textarea>
-    </div>
-
-    <div class="mt-2 form-group col-md-4 activos_multiselect">
-        <label class="form-label"><i class="fa-fw fas fa-laptop iconos-crear"></i>Activo(s)
-            afectado(s)</label>
-        <select class="form-control" id="activos">
-            <option disabled selected>Seleccionar afectados</option>
-            @foreach ($activos as $activo)
-                <option value="{{ $activo->tipo }}">{{ $activo->tipo }}
-                </option>
-            @endforeach
-        </select>
-        <textarea name="activos" class="form-control" id="texto_activos"
-            required></textarea>
-    </div>
-
-    <div class="mt-2 form-group col-md-12">
-        <label class="form-label"><i
-                class="fas fa-comment-dots iconos-crear"></i>Comentarios</label>
-        <textarea name="comentarios"
-            class="form-control"></textarea>
-    </div>
-
 
     <div class="text-right form-group col-12">
         <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>

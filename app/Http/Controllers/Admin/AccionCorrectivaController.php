@@ -6,7 +6,6 @@ use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAccionCorrectivaRequest;
-use App\Http\Requests\UpdateAccionCorrectivaRequest;
 use App\Mail\AprobacionAccionCorrectivaEmail;
 use App\Models\AccionCorrectiva;
 use App\Models\ActividadAccionCorrectiva;
@@ -48,8 +47,8 @@ class AccionCorrectivaController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate = 'accion_correctiva_show';
-                $editGate = 'accion_correctiva_edit';
-                $deleteGate = 'accion_correctiva_delete';
+                $editGate = 'accion_correctiva_show';
+                $deleteGate = 'accion_correctiva_show';
                 $crudRoutePart = 'accion-correctivas';
 
                 return view('partials.datatablesActions', compact(
@@ -203,7 +202,7 @@ class AccionCorrectivaController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('accion_correctiva_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        
         $accionCorrectiva = AccionCorrectiva::create([
             'tema' => $request->tema,
             'fecharegistro' => $request->fecharegistro,
@@ -214,7 +213,7 @@ class AccionCorrectivaController extends Controller
             'areas' => $request->areas,
             'procesos' => $request->procesos,
             'activos' => $request->activos,
-            'estatus' => 'Nuevo',
+            'estatus' => 'Sin atender',
         ]);
 
         // $accionCorrectiva = AccionCorrectiva::create($request->all());;
@@ -288,7 +287,7 @@ class AccionCorrectivaController extends Controller
     public function update(Request $request, AccionCorrectiva $accionCorrectiva)
     {
         abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+       
         $accionCorrectiva->update($request->all());
         if ($request->input('documentometodo', false)) {
             if (!$accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
@@ -329,7 +328,7 @@ class AccionCorrectivaController extends Controller
 
         $actividades = ActividadAccionCorrectiva::with('responsables')->where('accion_correctiva_id', $accionCorrectiva->id)->get();
         $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas', 'planes');
-        // dd($actividades);
+        // dd($accionCorrectiva->planes);
         return view('admin.accionCorrectivas.show', compact('accionCorrectiva', 'actividades'));
     }
 
@@ -379,7 +378,15 @@ class AccionCorrectivaController extends Controller
 
     public function storeAnalisis(Request $request, $accion)
     {
-        // dd($request->all());
+    $request->validate([
+            'control_a'=>'nullable|string|max:350',
+            'proceso_a'=>'nullable|string|max:350',
+            'personas_a'=>'nullable|string|max:350',
+            'tecnologia_a'=>'nullable|string|max:350',
+            'ambiente_a'=>'nullable|string|max:350',
+            'metodos_a'=>'nullable|string|max:350',
+            'problema_diagrama'=>'nullable|string|max:350',
+        ]);
         $exist_accion_id = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accion)->exists();
         if ($exist_accion_id) {
             $analisis = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accion)->first();

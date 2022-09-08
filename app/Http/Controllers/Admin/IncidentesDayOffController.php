@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Area;
-use App\Models\DayOff;
 use App\Models\Empleado;
 use App\Models\IncidentesDayoff;
 use App\Models\Organizacion;
+use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -15,10 +14,9 @@ use Illuminate\Support\Facades\Gate;
 
 class IncidentesDayOffController extends Controller
 {
-
     public function index(Request $request)
     {
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('incidentes_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = IncidentesDayoff::with('empleados')->orderByDesc('id')->get();
             $table = datatables()::of($query);
@@ -70,23 +68,23 @@ class IncidentesDayOffController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
-        return view('admin.incidentesDayOff.index', compact('logo_actual', 'empresa_actual'));
-    }
 
+        return view('admin.incidentesDayoff.index', compact('logo_actual', 'empresa_actual'));
+    }
 
     public function create()
     {
+        abort_if(Gate::denies('incidentes_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new IncidentesDayOff();
         $empleados = Empleado::get();
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
-
-        return view('admin.incidentesDayOff.create', compact('vacacion', 'empleados', 'empleados_seleccionados'));
+        $año = Carbon:: now()->format('Y');
+        return view('admin.incidentesDayoff.create', compact('vacacion', 'empleados', 'empleados_seleccionados','año'));
     }
-
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('incidentes_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string',
             'dias_aplicados' => 'required|int',
@@ -100,25 +98,22 @@ class IncidentesDayOffController extends Controller
         $vacacion = IncidentesDayOff::create($request->all());
         $vacacion->empleados()->sync($empleados);
 
-
         Flash::success('Incidencia añadida satisfactoriamente.');
 
         return redirect()->route('admin.incidentes-dayoff.index');
     }
 
-
     public function show($id)
     {
-        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('incidentes_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = IncidentesDayoff::with('empleados')->find($id);
 
-        return view('admin.incidentesDayOff.show', compact('vacacion'));
+        return view('admin.incidentesDayoff.show', compact('vacacion'));
     }
-
 
     public function edit($id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('incidentes_dayoff_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
         $vacacion = IncidentesDayoff::with('empleados')->find($id);
         if (empty($vacacion)) {
@@ -128,13 +123,12 @@ class IncidentesDayOffController extends Controller
         }
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
 
-        return view('admin.incidentesDayOff.edit', compact('vacacion', 'empleados', 'empleados_seleccionados'));
+        return view('admin.incidentesDayoff.edit', compact('vacacion', 'empleados', 'empleados_seleccionados'));
     }
-
 
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('incidentes_dayoff_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'nombre' => 'required|string',
             'dias_aplicados' => 'required|int',
@@ -155,9 +149,9 @@ class IncidentesDayOffController extends Controller
         return redirect(route('admin.incidentes-dayoff.index'));
     }
 
-
     public function destroy($id)
     {
+        abort_if(Gate::denies('incidentes_dayoff_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = IncidentesDayoff::find($id);
         $vacaciones->delete();
 

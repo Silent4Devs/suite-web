@@ -50,6 +50,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
 
         return $timeSheetEmpleados->flatten(1);
     }
+
     public function existsTask($timeSheetHorasCollection, $fecha, $proyecto_id, $tarea_id)
     {
         foreach ($timeSheetHorasCollection as $item) {
@@ -58,6 +59,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
             }
         }
     }
+
     public function pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas)
     {
         $timeSheetHorasCollection->push([
@@ -80,11 +82,12 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
             if (($item['proyecto_id'] == $horas->proyecto_id && $item['tarea_id'] == $horas->tarea_id && $item['timesheet_fin'] == $timesheet->fecha_dia)) {
                 $item['horas'] += $sumatoria;
             }
+
             return $item;
         });
+
         return $timeSheetHorasCollection->sortBy('timesheet_fin');
     }
-
 
     public function map($timeSheetEmpleados): array
     {
@@ -97,7 +100,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
             // $timeSheetEmpleados['tarea_descripcion'],
             $timeSheetEmpleados['horas'],
             '0',
-            $timeSheetEmpleados['horas']
+            $timeSheetEmpleados['horas'],
         ];
     }
 
@@ -112,7 +115,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
             // 'Task Description',
             'Billable',
             'Non Billable',
-            'Total'
+            'Total',
         ];
     }
 

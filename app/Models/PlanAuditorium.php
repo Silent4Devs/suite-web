@@ -13,10 +13,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class PlanAuditorium extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+   
     public $table = 'plan_auditoria';
 
     public static $searchable = [
@@ -24,7 +21,6 @@ class PlanAuditorium extends Model
     ];
 
     protected $dates = [
-        'fecha_auditoria',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -34,10 +30,13 @@ class PlanAuditorium extends Model
         'objetivo',
         'alcance',
         'criterios',
+        'id_auditoria',
+        'nombre_auditoria',
         'id_equipo_auditores',
         'documentoauditar',
         'fecha_auditoria',
-        'descripcion',
+        'fecha_inicio_auditoria',
+        'fecha_fin_auditoria',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -51,10 +50,6 @@ class PlanAuditorium extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    // public function fecha()
-    // {
-    //     return $this->belongsTo(AuditoriaAnual::class, 'fecha_id');
-    // }
 
     public function getFechaAuditoriaAttribute($value)
     {
@@ -94,5 +89,11 @@ class PlanAuditorium extends Model
     public function getDocumentoAuditarHtmlAttribute()
     {
         return html_entity_decode(strip_tags($this->documentoauditar), ENT_QUOTES, 'UTF-8');
+    }
+
+
+    public function actividadesPlan()
+    {
+        return $this->hasMany(PlanAuditoriaActividades::class, 'plan_auditoria_id', 'id');
     }
 }

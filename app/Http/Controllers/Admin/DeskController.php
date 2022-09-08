@@ -20,6 +20,7 @@ use App\Models\Denuncias;
 use App\Models\Empleado;
 use App\Models\EvidenciaQuejasClientes;
 use App\Models\EvidenciasQuejasClientesCerrado;
+use App\Models\EvidenciasSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
 use App\Models\Organizacion;
@@ -51,11 +52,11 @@ class DeskController extends Controller
         $sugerencias = Sugerencias::orderBy('id')->get();
 
         $total_seguridad = IncidentesSeguridad::get()->count();
-        $nuevos_seguridad = IncidentesSeguridad::where('estatus', 'nuevo')->get()->count();
-        $en_curso_seguridad = IncidentesSeguridad::where('estatus', 'en curso')->get()->count();
-        $en_espera_seguridad = IncidentesSeguridad::where('estatus', 'en espera')->get()->count();
-        $cerrados_seguridad = IncidentesSeguridad::where('estatus', 'cerrado')->get()->count();
-        $cancelados_seguridad = IncidentesSeguridad::where('estatus', 'cancelado')->get()->count();
+        $nuevos_seguridad = IncidentesSeguridad::where('estatus', 'Sin atender')->get()->count();
+        $en_curso_seguridad = IncidentesSeguridad::where('estatus', 'En curso')->get()->count();
+        $en_espera_seguridad = IncidentesSeguridad::where('estatus', 'En espera')->get()->count();
+        $cerrados_seguridad = IncidentesSeguridad::where('estatus', 'Cerrado')->get()->count();
+        $cancelados_seguridad = IncidentesSeguridad::where('estatus', 'No procedente')->get()->count();
 
         $total_riesgos = RiesgoIdentificado::get()->count();
         $nuevos_riesgos = RiesgoIdentificado::where('estatus', 'nuevo')->get()->count();
@@ -201,15 +202,14 @@ class DeskController extends Controller
     public function updateSeguridad(Request $request, $id_incidente)
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+    //    dd($request->all());
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
+        // dd( $incidentesSeguridad);
         $incidentesSeguridad->update([
             'titulo' => $request->titulo,
             'estatus' => $request->estatus,
             'fecha' => $request->fecha,
             'empleado_asignado_id' => $request->empleado_asignado_id,
-            'categoria' => $request->categoria,
-            'subcategoria' => $request->subcategoria,
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
@@ -217,14 +217,39 @@ class DeskController extends Controller
             'areas_afectados' => $request->areas_afectados,
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
-
             'empleado_reporto_id' => $incidentesSeguridad->empleado_reporto_id,
-
             'urgencia' => $request->urgencia,
             'impacto' => $request->impacto,
             'prioridad' => $request->prioridad,
             'comentarios' => $request->comentarios,
+            'justificacion' => $request->justificacion,
+            'categoria_id' => $request->categoria_id,
+            'subcategoria_id' => $request->subcategoria_id,
         ]);
+        // dd($incidentesSeguridad);
+        $documento = $incidentesSeguridad->evidencia;
+        // dd($documento);
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+            foreach ($request->file('evidencia') as $file) {
+                $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+
+                $new_name_documento = 'Seguridad_file_' . $incidentesSeguridad->id . '_' . $name_documento . '.' . $extension;
+
+                $route = 'public/evidencias_seguridad';
+
+                $documento = $new_name_documento;
+
+                $file->storeAs($route, $documento);
+
+                EvidenciasSeguridad::create([
+                    'evidencia' => $documento,
+                    'id_seguridad' => $incidentesSeguridad->id,
+                ]);
+            }
+        }
+
 
         return redirect()->route('admin.desk.index', $id_incidente)->with('success', 'Reporte actualizado');
     }
@@ -1004,7 +1029,6 @@ class DeskController extends Controller
             ]);
         }
 
-        // dd($request->all());
         $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas));
         $queja_procedente = intval($request->queja_procedente ? $request->queja_procedente : $quejasClientes->queja_procedente) == 1 ? true : false;
         $realizar_accion = intval($request->realizar_accion ? $request->realizar_accion : $quejasClientes->realizar_accion) == 1 ? true : false;
@@ -1063,11 +1087,11 @@ class DeskController extends Controller
             'porque_no_cumplio_responsable' => $request->porque_no_cumplio_responsable ? $request->porque_no_cumplio_responsable : $quejasClientes->porque_no_cumplio_responsable,
             'conforme_solucion' => $conforme_solucion,
             'cerrar_ticket' => $cerrar_ticket,
-            'cumplio_fecha'=>$cumplio_fecha,
-            'notificar_responsable'=>$notificar_responsable,
-            'notificar_registro_queja'=> $notificar_registro_queja,
+            'cumplio_fecha' => $cumplio_fecha,
+            'notificar_responsable' => $notificar_responsable,
+            'notificar_registro_queja' => $notificar_registro_queja,
             'porque_no_cierre_ticket' =>  $request->porque_no_cierre_ticket ? $request->porque_no_cierre_ticket : $quejasClientes->porque_no_cierre_ticket,
-            'notificar_atencion_queja_no_aprobada'=>$notificar_atencion_queja_no_aprobada,
+            'notificar_atencion_queja_no_aprobada' => $notificar_atencion_queja_no_aprobada,
         ]);
 
         $documento = null;
@@ -1159,8 +1183,8 @@ class DeskController extends Controller
             if (!is_null($quejasClientes->acciones_tomara_responsable)) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
-                    'email_realizara_accion_inmediata' => true,
-                ]);
+                        'email_realizara_accion_inmediata' => true,
+                    ]);
                     Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new AtencionQuejaAtendidaEmail($quejasClientes));
                 }
             }
@@ -1172,7 +1196,7 @@ class DeskController extends Controller
                     $quejasClientes->update([
                         'correo_enviado_registro' => true,
                     ]);
-                    Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes));
+                    Mail::to($quejasClientes->registro->email)->cc($quejasClientes->responsableAtencion->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes, $quejasClientes->responsableAtencion));
                 }
             }
         }
@@ -1184,31 +1208,36 @@ class DeskController extends Controller
             foreach ($evidencias as $evidencia) {
                 array_push($evidenciaArr, $evidencia->evidencia);
             }
-            $accion_correctiva = AccionCorrectiva::create([
-                'tema' => $request->titulo,
-                'causaorigen' => 'Queja de un cliente',
-                'descripcion' => $request->descripcion,
-                'estatus' => 'nuevo',
-                'fecharegistro' => Carbon::now(),
-                'areas' => $request->area_quejado,
-                'procesos' => $request->proceso_quejado,
-                'es_externo' => true,
-                'otro_categoria' => $request->otro_categoria,
-                'id_registro' => $request->responsable_sgi_id,
-                'estatus' => 'Sin atender',
-                'aprobada' => false,
-                'aprobacion_contestada' => false,
-                'id_reporto' => $request->empleado_reporto_id,
-                'otros' => $request->otro_quejado,
-                'colaborador_quejado' => $request->colaborador_quejado,
+            $existeAC = AccionCorrectiva::whereHas('deskQuejaCliente', function ($query) use ($quejasClientes) {
+                $query->where('acciones_correctivas_aprobacionables_id', $quejasClientes->id);
+            })->exists();
 
-            ]);
+            if (!$existeAC) {
+                $accion_correctiva = AccionCorrectiva::create([
+                    'tema' => $request->titulo,
+                    'causaorigen' => 'Queja de un cliente',
+                    'descripcion' => $request->descripcion,
+                    'estatus' => 'nuevo',
+                    'fecharegistro' => Carbon::now(),
+                    'areas' => $request->area_quejado,
+                    'procesos' => $request->proceso_quejado,
+                    'es_externo' => true,
+                    'otro_categoria' => $request->otro_categoria,
+                    'id_registro' => $request->responsable_sgi_id,
+                    'estatus' => 'Sin atender',
+                    'aprobada' => false,
+                    'aprobacion_contestada' => false,
+                    'id_reporto' => $request->empleado_reporto_id,
+                    'otros' => $request->otro_quejado,
+                    'colaborador_quejado' => $request->colaborador_quejado,
 
-            $quejasClientes->update([
-                'accion_correctiva_id' => $accion_correctiva->id,
+                ]);
+                $quejasClientes->update([
+                    'accion_correctiva_id' => $accion_correctiva->id,
 
-            ]);
-            $quejasClientes->accionCorrectivaAprobacional()->sync($accion_correctiva->id);
+                ]);
+                $quejasClientes->accionCorrectivaAprobacional()->sync($accion_correctiva->id);
+            }
 
             if (!$quejasClientes->correoEnviado) {
                 $quejasClientes->update([
@@ -1240,7 +1269,7 @@ class DeskController extends Controller
             Mail::to($empleado_email->email)->cc($empleado_copia->email)->send(new NotificacionResponsableQuejaEmail($quejasClientes, $empleado_email));
         }
 
-        return response()->json(['success' => true, 'request' => $request->all(), 'message'=>'Enviado con éxito']);
+        return response()->json(['success' => true, 'request' => $request->all(), 'message' => 'Enviado con éxito']);
     }
 
     public function correoSolicitarCierreQuejaCliente(Request $request)
@@ -1552,24 +1581,24 @@ class DeskController extends Controller
         // dd($request->all());
         $request->validate(
             [
-            'cliente_id' => 'required',
-            'proyectos_id' => 'required',
-            'nombre' => 'required',
-            'titulo' => 'required',
-            'fecha' => 'required',
-            'descripcion' => 'required',
-            'area_quejado' => 'required',
-            'canal' => 'required',
-        ],
+                'cliente_id' => 'required',
+                'proyectos_id' => 'required',
+                'nombre' => 'required',
+                'titulo' => 'required',
+                'fecha' => 'required',
+                'descripcion' => 'required',
+                'area_quejado' => 'required',
+                'canal' => 'required',
+            ],
             [
-            'cliente_id' => 'El campo cliente es obligatorio',
-            'proyectos_id' =>'El campo proyecto es obligatorio',
-            'titulo' => 'El campo título es obligatorio',
-            'fecha'=>'El campo fecha es obligatorio',
-            'descripcion'=>'El campo descripción es obligatorio',
-            'area_quejado'=> 'El campo area es obligatorio',
-            'canal' => 'El campo canal es obligatorio',
-        ]
+                'cliente_id' => 'El campo cliente es obligatorio',
+                'proyectos_id' => 'El campo proyecto es obligatorio',
+                'titulo' => 'El campo título es obligatorio',
+                'fecha' => 'El campo fecha es obligatorio',
+                'descripcion' => 'El campo descripción es obligatorio',
+                'area_quejado' => 'El campo area es obligatorio',
+                'canal' => 'El campo canal es obligatorio',
+            ]
         );
     }
 
@@ -1580,28 +1609,28 @@ class DeskController extends Controller
         if ($queja_procedente) {
             $request->validate(
                 [
-                'urgencia' => 'required',
-                'impacto'=>'required',
-                'categoria_queja' => 'required',
-                'responsable_atencion_queja_id'=>'required',
+                    'urgencia' => 'required',
+                    'impacto' => 'required',
+                    'categoria_queja' => 'required',
+                    'responsable_atencion_queja_id' => 'required',
 
-            ],
+                ],
                 [
-                'urgencia' => 'El campo urgencia es obligatorio',
-                'impacto'=>'El campo impacto es obligatorio',
-                'categoria_queja' => 'El campo categoria es obligatorio',
-                'responsable_atencion_queja_id'=>'El campo responsable de la atención es obligatorio',
-            ]
+                    'urgencia' => 'El campo urgencia es obligatorio',
+                    'impacto' => 'El campo impacto es obligatorio',
+                    'categoria_queja' => 'El campo categoria es obligatorio',
+                    'responsable_atencion_queja_id' => 'El campo responsable de la atención es obligatorio',
+                ]
             );
             // dd($request->all());
             if ($levantamiento_ac) {
                 $request->validate(
                     [
-                'responsable_sgi_id'=>'required',
-                ],
+                        'responsable_sgi_id' => 'required',
+                    ],
                     [
-                'responsable_sgi_id'=>'El campo responsable del SGI es obligatorio',
-                ]
+                        'responsable_sgi_id' => 'El campo responsable del SGI es obligatorio',
+                    ]
                 );
             }
         }
@@ -1611,14 +1640,14 @@ class DeskController extends Controller
     {
         $request->validate(
             [
-            'realizar_accion' => 'required',
-            'acciones_tomara_responsable' => 'required',
+                'realizar_accion' => 'required',
+                'acciones_tomara_responsable' => 'required',
 
-        ],
+            ],
             [
-            'realizar_accion' => 'El campo realiazar acción es obligatorio',
-            'acciones_tomara_responsable' => 'El campo acciones es obligatorio',
-        ]
+                'realizar_accion' => 'El campo realiazar acción es obligatorio',
+                'acciones_tomara_responsable' => 'El campo acciones es obligatorio',
+            ]
         );
     }
 
@@ -1626,14 +1655,14 @@ class DeskController extends Controller
     {
         $request->validate(
             [
-            'porque_no_cumplio_responsable' => 'required',
-            'porque_no_cierre_ticket'=>'required',
+                'porque_no_cumplio_responsable' => 'required',
+                'porque_no_cierre_ticket' => 'required',
 
-        ],
+            ],
             [
-            'porque_no_cumplio_responsable' =>  'El campo por qué no se cumplieron las acciones es obligatorio',
-            'porque_no_cierre_ticket'=>  'El campo por qué no se cierra el ticket es obligatorio',
-        ]
+                'porque_no_cumplio_responsable' =>  'El campo por qué no se cumplieron las acciones es obligatorio',
+                'porque_no_cierre_ticket' =>  'El campo por qué no se cierra el ticket es obligatorio',
+            ]
         );
     }
 

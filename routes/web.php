@@ -23,6 +23,7 @@ Route::get('/revisiones/{revisionDocumento}', 'RevisionDocumentoController@edit'
 Route::post('/minutas/revisiones/approve', 'RevisionMinutasController@approve')->name('minutas.revisiones.approve');
 Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->name('minutas.revisiones.reject');
 Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@edit')->name('minutas.revisiones.revisar');
+Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
 
 Auth::routes();
 
@@ -503,6 +504,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Declaracion de Aplicabilidad
     Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
+    Route::get('declaracion-aplicabilidad/tabla', 'DeclaracionAplicabilidadController@tabla')->name('declaracion-aplicabilidad.tabla');
+    Route::put('declaracion-aplicabilidad/tabla/{control}', 'DeclaracionAplicabilidadController@updateTabla')->name('declaracion-aplicabilidad.updateTabla');
     Route::get('declaracion-aplicabilidad/{id}', 'DeclaracionAplicabilidadController@index')->name('declaracion-aplicabilidad');
     Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
     Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
@@ -510,6 +513,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
 
     //Panel declaracion
+    Route::post('paneldeclaracion/controles', 'PanelDeclaracionController@controles')->name('paneldeclaracion.controles');
     Route::post('paneldeclaracion/responsables-quitar', 'PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
     Route::post('paneldeclaracion/responsables', 'PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
     Route::post('paneldeclaracion/enviar-correo', 'PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
@@ -551,6 +555,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
     // Empleados
+    Route::get('empleados/importar', 'EmpleadoController@importar')->name('empleado.importar');
     Route::post('empleados/list/get', 'EmpleadoController@getListaEmpleadosIndex')->name('empleado.getListaEmpleadosIndex');
     Route::post('empleado/buscar-empleado-por-correo', 'EmpleadoController@buscarEmpleadoPorCorreo')->name('empleado.buscarEmpleadoPorCorreo');
     Route::get('empleado/{empleado}/documentos', 'EmpleadoController@getDocumentos')->name('empleado.documentos');
@@ -857,6 +862,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('informacion-documetadas', 'InformacionDocumetadaController');
 
     // Planificacion Controls
+    Route::post('planificacion-controls/firma', 'PlanificacionControlController@guardarFirmaAprobacion')->name('planificacion-controls.firma-aprobacion');
     Route::delete('planificacion-controls/destroy', 'PlanificacionControlController@massDestroy')->name('planificacion-controls.massDestroy');
     Route::resource('planificacion-controls', 'PlanificacionControlController');
 
@@ -888,6 +894,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('modelos', 'ModeloController');
 
     // Tratamiento Riesgos
+    Route::post('tratamiento-riesgos/firma', 'TratamientoRiesgosController@guardarFirmaAprobacion')->name('tratamiento-riesgos.firma-aprobacion');
     Route::delete('tratamiento-riesgos/destroy', 'TratamientoRiesgosController@massDestroy')->name('tratamiento-riesgos.massDestroy');
     Route::resource('tratamiento-riesgos', 'TratamientoRiesgosController');
 
@@ -895,7 +902,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('auditoria-internas/destroy', 'AuditoriaInternaController@massDestroy')->name('auditoria-internas.massDestroy');
     Route::post('auditoria-internas/media', 'AuditoriaInternaController@storeMedia')->name('auditoria-internas.storeMedia');
     Route::post('auditoria-internas/ckmedia', 'AuditoriaInternaController@storeCKEditorImages')->name('auditoria-internas.storeCKEditorImages');
-    Route::resource('auditoria-internas', 'AuditoriaInternaController');
+    Route::get('auditoria-internas/{auditoriaInterna}/edit', 'AuditoriaInternaController@edit')->name('auditoria-internas.edit');
+    Route::resource('auditoria-internas', 'AuditoriaInternaController')->except('edit');
+
 
     // Revision Direccions
     Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
@@ -994,10 +1003,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Auditoria Anuals
     Route::delete('auditoria-anuals/destroy', 'AuditoriaAnualController@massDestroy')->name('auditoria-anuals.massDestroy');
     Route::resource('auditoria-anuals', 'AuditoriaAnualController');
+    Route::get('auditoria-anuals/{id}/programa', 'AuditoriaAnualController@programa')->name('auditoria-anuals-programa');
+    Route::post('auditoria-anuals/programa/documentos', 'AuditoriaAnualController@programaDocumentos')->name('auditoria-anuals.programaDocumentos');
 
     // Plan Auditoria
     Route::delete('plan-auditoria/destroy', 'PlanAuditoriaController@massDestroy')->name('plan-auditoria.massDestroy');
-    Route::resource('plan-auditoria', 'PlanAuditoriaController');
+    Route::get('plan-auditoria/{planAuditorium}/edit', 'PlanAuditoriaController@edit')->name('plan-auditoria.edit');
+    Route::resource('plan-auditoria', 'PlanAuditoriaController')->except('edit');
 
     // Accion Correctivas
     Route::get('accion-correctiva-actividades/{accion_correctiva_id}', 'ActividadAccionCorrectivaController@index')->name('accion-correctiva-actividades.index');
@@ -1101,6 +1113,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
     Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
 
+    Route::delete('analisis-impacto/destroy', 'AnalisisdeImpactoController@massDestroy')->name('analisis-impacto.massDestroy');
+    Route::get('analisis-impacto/{id}/edit', 'AnalisisdeImpactoController@edit')->name('analisis-impacto.edit');
+    Route::get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
+    Route::get('getEmployeeData', 'AnalisisdeImpactoController@getEmployeeData')->name('analisis-impacto.getEmployeeData');
+    Route::resource('analisis-impacto', 'AnalisisdeImpactoController')->names([
+        'index' => 'analisis-impacto.index',
+        'create' => 'analisis-impacto.create',
+        'store' => 'analisis-impacto.store',
+        'show' => 'analisis-impacto.show',
+        'update' => 'analisis-impacto.update',
+    ])->except(['edit']);;
+
+
     //Carta de Aceptación
     // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
     Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
@@ -1153,7 +1178,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('matriz-riesgos/sistema-gestion/edit/{id}', 'MatrizRiesgosController@editSistemaGestion')->name('matriz-riesgos.sistema-gestion.edit');
     Route::put('matriz-seguridad/sistema-gestion/update/{id}', 'MatrizRiesgosController@updateSistemaGestion')->name('matriz-riesgos.sistema-gestion.update');
     Route::get('matriz-seguridad/sistema-gestion/show/{id}', 'MatrizRiesgosController@showSistemaGestion')->name('matriz-riesgos.sistema-gestion.show');
-    Route::delete('matriz-seguridad/sistema-gestion/destroy/{id}', 'MatrizRiesgosController@destroySistemaGestion')->name('matriz-riesgos.sistema-gestion.destroy');
+    Route::delete('matriz-seguridad/sistema-gestion/{riesgo}', 'MatrizRiesgosController@destroySistemaGestion')->name('matriz-riesgos.sistema-gestion.destroy');
     Route::get('matriz-seguridad/sistema-gestion/seguridadMapa', 'MatrizRiesgosController@MapaCalorSistemaGestion')->name('matriz-mapa.SistemaGestion');
 
     //ProcesosOctave

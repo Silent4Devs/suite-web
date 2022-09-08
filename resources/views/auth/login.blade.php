@@ -32,7 +32,7 @@
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {
-                    $logotipo = 'silent4business.png';
+                    $logotipo = 'img/logo_monocromatico.png';
                 }
             @endphp
 

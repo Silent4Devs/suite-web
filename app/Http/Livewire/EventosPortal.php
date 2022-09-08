@@ -46,7 +46,12 @@ class EventosPortal extends Component
         $this->cumpleaños_contador_circulo = Empleado::alta()->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->count();
 
         $this->aniversarios = Empleado::alta()->whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->get();
-        $this->aniversarios_contador_circulo = Empleado::alta()->whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->count();
+        $this->aniversarios_contador_circulo = 0;
+        foreach ($this->aniversarios as $key => $aniv) {
+            if (Carbon::createFromTimeStamp(strtotime($aniv->antiguedad))->diffInYears() > 0){
+                $this->aniversarios_contador_circulo++;
+            }
+        }
 
         $this->politica_existe = PoliticaSgsi::count();
         $this->comite_existe = Comiteseguridad::count();

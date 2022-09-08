@@ -84,10 +84,10 @@ class OrganizacionController extends Controller
         }
     }
 
-    public function store(StoreOrganizacionRequest $request)
+    public function store(Request $request)
     {
         // dd($request->working);
-        abort_if(Gate::denies('mi_organizacion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('mi_organizacion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $organizacions = Organizacion::create([
             'empresa' => $request->empresa,

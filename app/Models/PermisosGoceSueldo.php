@@ -16,6 +16,7 @@ class PermisosGoceSueldo extends Model
         'nombre',
         'descripcion',
         'dias',
+        'tipo_permiso'
     ];
 
     protected $casts = [
@@ -23,6 +24,7 @@ class PermisosGoceSueldo extends Model
         'nombre' => 'string',
         'descripcion' => 'string',
         'dias' => 'integer',
+        'tipo_permiso'
     ];
 
     // public function areas()

@@ -2,7 +2,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Mostrar Lineamiento Permiso con Goce de Sueldo
+            Mostrar Lineamiento de Permiso
         </div>
 
         <div class="card-body">
@@ -16,13 +16,28 @@
                     <tbody>
                         <tr>
                             <th>
-                                Nombre
+                                Nombre del permiso
                             </th>
                             <td>
                                 @if ($vacacion->nombre)
                                     {{ $vacacion->nombre }}
                                 @else
                                     No se ha definido nombre
+                                @endif
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>
+                                Tipo de permiso
+                            </th>
+                            <td>
+                                @if ($vacacion->tipo_permiso == 1)
+                                Permisos conforme a la ley
+                                @elseif($vacacion->tipo_permiso == 2)
+                                2-	Permisos otorgados por la empresa
+                                @else
+                                No definido
                                 @endif
                             </td>
                         </tr>

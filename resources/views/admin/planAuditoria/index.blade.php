@@ -1,70 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <style>
-        .table tr td:nth-child(2) {
-            text-align: center !important;
-        }
 
-        .table tr th:nth-child(2) {
-            text-align: center !important;
-        }
-        .table tr th:nth-child(3) {
-            text-align: center !important;
-        }
-
-        .table tr td:nth-child(3) {
-
-            min-width: 600px !important;
-            text-align: justify !important;
-        }
-
-        .table tr td:nth-child(4) {
-
-            min-width: 600px !important;
-            text-align: justify !important;
-        }
-
-        .table tr th:nth-child(4) {
-
-        text-align: center !important;
-        }
-
-        .table tr td:nth-child(5) {
-
-            min-width: 600px !important;
-            text-align: justify !important;
-        }
-
-        .table tr th:nth-child(5) {
-
-        text-align: center !important;
-        }
-
-        .table tr td:nth-child(6) {
-
-        min-width: 600px !important;
-        text-align: justify !important;
-        }
-
-        .table tr th:nth-child(6) {
-
-        text-align: center !important;
-        }
-
-
-        .table tr td:nth-child(8) {
-
-        min-width: 600px !important;
-        text-align: justify !important;
-        }
-
-        .table tr th:nth-child(8) {
-
-        text-align: center !important;
-        }
-
-    </style>
 
     {{ Breadcrumbs::render('admin.plan-auditoria.index') }}
 
@@ -81,78 +18,32 @@
                             {{ trans('cruds.planAuditorium.fields.id') }}
                         </th>
                         <th>
+                            Nombre&nbsp;auditoría
+                        </th>
+                        <th>
                             Fecha&nbsp;auditoría
                         </th>
 
-                        <th>
+                        <th style="min-width: 600px;">
                             Objetivo&nbsp;de&nbsp;la&nbsp;auditoría
                         </th>
-                        <th>
+                        <th style="min-width: 600px;">
                             {{ trans('cruds.planAuditorium.fields.alcance') }}
                         </th>
-                        <th>
+                        <th style="min-width: 600px;">
                             Criterios&nbsp;de&nbsp;auditoría&nbsp;a&nbsp;utilizar
                         </th>
-                        <th>
+                        <th style="min-width: 600px;">
                             Procesos&nbsp;y&nbsp;documentos&nbsp;a&nbsp;auditar
                         </th>
                         <th>
                             Equipo&nbsp;auditor
                         </th>
                         <th>
-                            Descripción&nbsp;general&nbsp;de&nbsp;actividades
-                        </th>
-                        <th>
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($auditoria_anuals as $key => $item)
-                                    <option value="{{ $item->fechainicio }}">{{ $item->fechainicio }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+                   
                 </thead>
             </table>
         </div>
@@ -169,7 +60,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
                     }
                 },
                 {
@@ -179,7 +72,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
                     }
                 },
                 {
@@ -205,7 +100,9 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
+
                     }
                 },
                 {
@@ -285,8 +182,12 @@
                         name: 'id'
                     },
                     {
-                        data: 'fecha_auditoria',
-                        name: 'fecha_auditoria'
+                        data: 'nombre_auditoria',
+                        name: 'nombre_auditoria'
+                    },
+                    {
+                        data: 'fecha_inicio_auditoria',
+                        name: 'fecha_inicio_auditoria'
                     },
                     {
                         data: 'objetivo',
@@ -321,7 +222,16 @@
                         data: 'equipo_auditor',
                         render: function(data, type, row, meta){
                             let equipos = JSON.parse(data);
-                            let html = '<div class="d-flex">';
+                            if (type === "empleadoText") {
+                                let equiposTexto = "";
+                                equipos.forEach(equipo => {
+                                    equiposTexto += `
+                            ${equipo.name},
+                            `;
+                                });
+                                return equiposTexto.trim();
+                            }
+                            let html = '<div class="d-flex" style="flex-wrap:wrap">';
                             equipos.forEach(empleado=>{
                                 html += `
                                    <img src="{{ asset('storage/empleados/imagenes') }}/${empleado.avatar}" title="${empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
@@ -332,10 +242,6 @@
                             return html
                         },
                         width:'20%'
-                    },
-                    {
-                        data: 'descripcion',
-                        name: 'descripcion'
                     },
                     {
                         data: 'actions',

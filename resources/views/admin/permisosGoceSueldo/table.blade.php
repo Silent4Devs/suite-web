@@ -2,7 +2,10 @@
     <thead class="thead-dark">
         <tr>
             <th style="min-width: 200px;">
-                Nombre de la Regla
+                Nombre del permiso
+            </th>
+            <th style="min-width: 200px;">
+                Tipo de permiso
             </th>
             <th style="min-width: 90px;">
                 Días Otorgados

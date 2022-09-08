@@ -10,10 +10,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class PerfilEmpleado extends Model
 {
     use HasFactory, SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'perfil_empleados';
     // protected $guarded = ['id'];
 

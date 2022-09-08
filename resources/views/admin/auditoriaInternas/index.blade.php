@@ -1,12 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-
     {{ Breadcrumbs::render('admin.auditoria-internas.index') }}
 
     @can('auditoria_interna_create')
-
     @endcan
-    <h5 class="col-12 titulo_general_funcion">Auditoría Interna</h5>
+    <h5 class="col-12 titulo_general_funcion">Informe de Auditoría </h5>
     <div class="mt-5 card">
         {{-- <div style="margin-bottom: 10px; margin-left:10px;" class="ml-4 row">
         <div class="col-lg-12">
@@ -20,53 +18,32 @@
             <table class="table table-bordered w-100 datatable-AuditoriaInterna">
                 <thead class="thead-dark">
                     <tr>
-                        <th>
-                            {{ trans('cruds.auditoriaInterna.fields.id') }}
+                        <th style="min-width: 70px;">
+                            Id
                         </th>
-                        <th>
+                        <th style="min-width: 150px;">
+                            Nombre de auditoría
+                        </th>
+                        <th style="min-width: 300px;">
+                            Objetivo
+                        </th>
+                        <th style="min-width: 300px;">
                             Alcance&nbsp;auditoría
                         </th>
                         <th>
                             Fecha&nbsp;inicio
                         </th>
-                        <th>
-                            Fecha&nbsp;fin
-                        </th>
-                        <th>
-                            {{ trans('cruds.auditoriaInterna.fields.clausulas') }}
+                        <th style="min-width: 300px;">
+                            Críterio de auditoría
                         </th>
                         <th>
                             Auditor&nbsp;líder
                         </th>
                         <th>
+                            Auditor&nbsp;externo
+                        </th>
+                        <th>
                             Equipo&nbsp;auditoría
-                        </th>
-                        <th style="min-width: 500px;">
-                            {{ trans('cruds.auditoriaInterna.fields.hallazgos') }}
-                        </th>
-                        <th>
-                            No.&nbsp;conformidad&nbsp;menor
-                        </th>
-                        <th>
-                            Total&nbsp;No.&nbsp;conformidad&nbsp;menor
-                        </th>
-                        <th>
-                            No.&nbsp;conformidad&nbsp;mayor
-                        </th>
-                        <th>
-                            Total&nbsp;No.&nbsp;conformidad&nbsp;mayor
-                        </th>
-                        <th>
-                            {{ trans('cruds.auditoriaInterna.fields.checkobservacion') }}
-                        </th>
-                        <th>
-                            Total&nbsp;observación
-                        </th>
-                        <th>
-                            {{ trans('cruds.auditoriaInterna.fields.checkmejora') }}
-                        </th>
-                        <th>
-                            Total&nbsp;mejora
                         </th>
                         <th>
                             Opciones
@@ -77,9 +54,6 @@
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -92,7 +66,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -102,7 +77,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -113,7 +89,8 @@
                     titleAttr: 'Exportar PDF',
                     orientation: 'landscape',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [5, 20, 5, 20];
@@ -128,7 +105,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -154,43 +132,55 @@
             ];
             @can('auditoria_interna_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar auditoría interna',
-                url: "{{ route('admin.auditoria-internas.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar auditoría interna',
+                    url: "{{ route('admin.auditoria-internas.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 dtButtons.push(btnAgregar);
             @endcan
             @can('auditoria_interna_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.auditoria-internas.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.auditoria-internas.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 // dtButtons.push(deleteButton)
             @endcan
@@ -203,8 +193,16 @@
                 aaSorting: [],
                 ajax: "{{ route('admin.auditoria-internas.index') }}",
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'id_auditoria',
+                        name: 'id_auditoria'
+                    },
+                    {
+                        data: 'nombre_auditoria',
+                        name: 'nombre_auditoria'
+                    },
+                    {
+                        data: 'objetivo',
+                        name: 'objetivo'
                     },
                     {
                         data: 'alcance',
@@ -214,75 +212,71 @@
                         data: 'fecha_inicio',
                         name: 'fecha_inicio'
                     },
+                    // {
+                    //     data: 'clausulas',
+                    //     render: function(data, type, row, meta) {
+                    //         let html = '<ul>';
+                    //         data.forEach(clausula => {
+                    //             html += `
+                    //                 <li>${clausula.nombre}</li>
+                    //             `;
+                    //         })
+                    //         html += '</ul>';
+                    //         return html
+                    //     }
+                    // },
                     {
-                        data: 'fecha_fin',
-                        name: 'fecha_fin'
-                    },
-                    {
-                        data: 'clausulas',
-                        render: function(data, type, row, meta){
-                            let html = '<ul>';
-                            data.forEach(clausula=>{
-                                html += `
-                                    <li>${clausula.nombre}</li>
-                                `;
-                            })
-                            html += '</ul>';
-                            return html
-                        }
+                        data: 'criterios_auditoria',
+                        name: 'criterios_auditoria'
                     },
                     {
                         data: 'lider',
+                        name:'lider',
+                        render: function(data, type, row, meta) {
+                            let liderJson = JSON.parse(row.lider ? row.lider : '{}')
+                            if (type === "empleadoText") {
+                                return liderJson.name;
+                            }
+                            let lider = "";
+                            if (liderJson) {
+                                lider += `
+                            <img  src="{{ asset('storage/empleados/imagenes') }}/${liderJson.avatar}" title="${liderJson.name}" class="rounded-circle; ml-4" style="clip-path: circle(15px at 50% 50%);height: 30px; " />
+                            `;
+                            }
+                            return lider;
+                        }
+
+                    },
+                    {
+                        data: 'auditor_externo',
+                        name: 'auditor_externo',
+                        render: function(data, type, row, meta) {
+                                return `${row.auditor_externo?row.auditor_externo :'n/a'}`;
+                            }
                     },
                     {
                         data: 'equipo',
-                        render: function(data, type, row, meta){
+                        render: function(data, type, row, meta) {
                             let equipos = JSON.parse(data);
-                            let html = '<ul>';
-                            equipos.forEach(empleado=>{
+                            if (type === "empleadoText") {
+                                let equiposTexto = "";
+                                equipos.forEach(equipo => {
+                                    equiposTexto += `
+                            ${equipo.name},
+                            `;
+                                });
+                                return equiposTexto.trim();
+                            }
+                            let html = '<div class="d-flex" style="flex-wrap:wrap">';
+                            equipos.forEach(empleado => {
                                 html += `
-                                    <li>${empleado.name}</li>
-                                `;
+                                    <img src="{{ asset('storage/empleados/imagenes') }}/${empleado.avatar}" title="${empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+
+                            `;
                             })
-                            html += '</ul>';
+                            html += '</div>';
                             return html
                         }
-                    },
-                    {
-                        data: 'hallazgos',
-                        name: 'hallazgos'
-                    },
-                    {
-                        data: 'cheknoconformidadmenor',
-                        name: 'cheknoconformidadmenor'
-                    },
-                    {
-                        data: 'totalnoconformidadmenor',
-                        name: 'totalnoconformidadmenor'
-                    },
-                    {
-                        data: 'checknoconformidadmayor',
-                        name: 'checknoconformidadmayor'
-                    },
-                    {
-                        data: 'totalnoconformidadmayor',
-                        name: 'totalnoconformidadmayor'
-                    },
-                    {
-                        data: 'checkobservacion',
-                        name: 'checkobservacion'
-                    },
-                    {
-                        data: 'totalobservacion',
-                        name: 'totalobservacion'
-                    },
-                    {
-                        data: 'checkmejora',
-                        name: 'checkmejora'
-                    },
-                    {
-                        data: 'totalmejora',
-                        name: 'totalmejora'
                     },
                     {
                         data: 'actions',
@@ -308,6 +302,5 @@
             //         .draw()
             // });
         });
-
     </script>
 @endsection

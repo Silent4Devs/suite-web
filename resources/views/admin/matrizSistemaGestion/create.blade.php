@@ -574,7 +574,8 @@
                         <select class="responsableSelect form-control" name="id_responsable" id="id_responsable">
                             <option value="">Seleccione una opción</option>
                             @foreach ($responsables as $responsable)
-                                <option data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}"
+                                <option {{ old('id_responsable') == $responsable->id ? ' selected="selected"' : '' }} 
+                                data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}"
                                     data-area="{{ $responsable->area->area }}">{{ $responsable->name }}
                                 </option>
                             @endforeach
@@ -1374,6 +1375,8 @@
                             <option value="1">Aceptar</option>&gt;
                             <option value="0">Mitigar</option>&gt;
                             <option value="2">Transferir</option>&gt;
+                            <option value="3">Eliminar</option>&gt;
+                            <option value="4">Evitar</option>&gt;
                         </select>
                         <!-- Note, I changed hidden to text so you can see it<br/> -->
                     </div>

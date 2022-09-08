@@ -80,7 +80,13 @@
         @endif
 
     @endif
-
+    
+    @if (Request::route()->getName() == 'admin.auditoria-anuals.index')
+        <button  class="btn btn-sm" data-toggle="modal" data-auditoria-id="{{ $row->id }}"
+            data-target="#largeModal">
+            <i class="fas fa-file-alt" title="Abrir programa"></i>
+        </button>
+    @endif
 
     @if (Request::route()->getName() == 'admin.entendimiento-organizacions.index')
     @can('analisis_foda_duplicar')
@@ -121,7 +127,7 @@
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             @if (Request::route()->getName() == 'admin.roles.index')
-                @if ($row->id > 1)
+                @if ($row->id != 1 && $row->id != 4)
                     <div class="btn btn-sm text-danger {{ $row->id }} rounded">
                         {{-- {{ trans('global.delete') }} --}} <i class="fas fa-trash" data-toggle="tooltip" data-placement="top"
                             title="Eliminar"></i>

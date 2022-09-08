@@ -138,8 +138,8 @@ class PuestosController extends Controller
     public function store(StorePuestoRequest $request)
     {
         abort_if(Gate::denies('puestos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $val = $request->validate([
-            'puesto' => 'unique:puestos,puesto',
+        $request->validate([
+            'puesto' => 'required|unique:puestos,puesto',
         ]);
         $puesto = Puesto::create($request->all());
         if (array_key_exists('ajax', $request->all())) {
@@ -224,7 +224,9 @@ class PuestosController extends Controller
     {
         abort_if(Gate::denies('puestos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto->update($request->all());
-
+        $request->validate([
+            'puesto' => 'required|unique:puestos,puesto,' . $puesto->id,
+        ]);
         // $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
         // $this->saveOrUpdateLanguage($request, $puesto);
         $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);

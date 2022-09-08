@@ -67,9 +67,13 @@ class AuditoriaInterna extends Model implements HasMedia
 
     protected $fillable = [
         'alcance',
+        'auditor_externo',
+        'objetivo',
         'fecha_inicio',
-        'fecha_fin',
         'hallazgos',
+        'criterios_auditoria',
+        'id_auditoria',
+        'nombre_auditoria',
         'cheknoconformidadmenor',
         'totalnoconformidadmenor',
         'checknoconformidadmayor',
@@ -152,5 +156,10 @@ class AuditoriaInterna extends Model implements HasMedia
     public function clausulas()
     {
         return $this->belongsToMany(Clausula::class, 'auditoria_interno_clausula', 'auditoria_id', 'clausula_id');
+    }
+
+    public function auditoriaHallazgos()
+    {
+        return $this->hasMany(AuditoriaInternasHallazgos::class, 'auditoria_internas_id');
     }
 }

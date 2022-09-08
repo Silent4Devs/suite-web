@@ -1,12 +1,12 @@
 <!-- Categoria Field -->
 <div class="row">
     <div class="form-group col-sm-6">
-        <label for="inputState" class="required"><i class="bi bi-collection-fill iconos-crear"></i>Tipo de permiso a
+        <label for="inputState" class="required"><i class="bi bi-collection-fill iconos-crear"></i>Nombre del permiso a
             solicitar:</label>
         <select id="permiso_id" class="form-control" name="permiso_id">
             <option selected>Seleccione...</option>
             @foreach ($permisos as $permiso)
-                <option value="{{ $permiso->id }}" data-dias='{{ $permiso->dias }}'>{{ $permiso->nombre }}</option>
+                <option value="{{ $permiso->id }}" data-dias='{{ $permiso->dias }}'  data-tipo='{{ $permiso->tipo_permiso }}'>{{ $permiso->nombre }}</option>
             @endforeach
         </select>
         @error('permiso_id')
@@ -14,6 +14,19 @@
         @enderror
     </div>
     <div class="form-group col-sm-6">
+        <i class="bi bi-calendar-week-fill iconos-crear"></i>{!! Form::label('tipo_permiso', 'Tipo de permiso:') !!}
+        {!! Form::text('tipo_permiso', null, [
+            'class' => 'form-control',
+            'readonly',
+            'id' => 'tipo_permiso',
+            'style' => 'text-align:center',
+        ]) !!}
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-sm-12">
         <i class="bi bi-calendar-week-fill iconos-crear"></i>{!! Form::label('dias_solicitados', 'Días Otorgados:') !!}
         {!! Form::number('dias_solicitados', null, [
             'class' => 'form-control',
@@ -24,7 +37,6 @@
         ]) !!}
 
     </div>
-
 </div>
 
 <div class="row">
@@ -52,6 +64,8 @@
     </div>
 
 </div>
+<x-loading-indicator/>
+
 
 <!-- Descripcion Field -->
 <div class="row">
@@ -68,7 +82,7 @@
 <!-- Submit Field -->
 <div class="text-right form-group col-12">
     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-    <button class="btn btn-danger" type="submit">
+    <button class="btn btn-danger" id="enviar"  type="submit">
         {{ trans('global.save') }}
     </button>
 </div>
@@ -89,7 +103,16 @@
             permiso.addEventListener('change', (e) => {
                 let dias_init = e.target.options[e.target.selectedIndex].getAttribute('data-dias');
                 document.getElementById('dias_solicitados').value = dias_init;
-                console.log(inicio.value);
+                let tipo = e.target.options[e.target.selectedIndex].getAttribute('data-tipo');
+                if(tipo == 1){
+                    tipo="Permisos conforme a la ley";
+                }else if( tipo == 2){
+                    tipo="Permisos otorgados por la empresa";
+                }else{
+                    tipo="No definido";
+                }
+                document.getElementById('tipo_permiso').value = tipo;
+                console.log(tipo);
                 if (inicio.value != '') {
                     let dias = document.getElementById('dias_solicitados').value;
                     var d = new Date(inicio.value.replaceAll('-', '/'));
@@ -103,6 +126,9 @@
                 let sumar_dias = sumarDias(d, dias - 1);
                 document.getElementById('fecha_fin').value = sumar_dias;
 
+            })
+            document.getElementById('enviar').addEventListener('click',(e)=>{
+                document.getElementById('loaderComponent').style.display='block';
             })
         })
     </script>

@@ -28,7 +28,7 @@
     {{ Breadcrumbs::render('admin.paneldeclaracion.index') }}
 
     @include('partials.flashMessages')
-
+    <x-loading-indicator />
     <h5 class="col-12 titulo_general_funcion">Asignación Controles</h5>
     <div class="mt-5 card">
         <div id="loaderComponent" style="display:none">
@@ -75,7 +75,9 @@
                         <th>
                             Aprobador
                         </th>
+                        <th>
 
+                        </th>
                     </tr>
 
                 </thead>
@@ -151,7 +153,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "responsableText"
                     }
                 },
                 {
@@ -161,7 +164,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "responsableText"
                     }
                 },
                 {
@@ -172,12 +176,13 @@
                     titleAttr: 'Exportar PDF',
                     orientation: 'landscape',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "responsableText"
                     },
                     customize: function(doc) {
                         doc.pageMargins = [20, 60, 20, 30];
-                        doc.styles.tableHeader.fontSize = 7.5;
-                        doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
+                        // doc.styles.tableHeader.fontSize = 7.5;
+                        // doc.defaultStyle.fontSize = 7.5; //<-- set fontsize to 16 instead of 10
                     }
                 },
                 {
@@ -187,7 +192,8 @@
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "responsableText"
                     }
                 },
                 {
@@ -217,42 +223,6 @@
                 }
 
             ];
-            let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-            let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.paneldeclaracion.massDestroy') }}",
-                className: 'btn-danger',
-                action: function(e, dt, node, config) {
-                    var ids = $.map(dt.rows({
-                        selected: true
-                    }).data(), function(entry) {
-                        return entry.id
-                    });
-
-                    if (ids.length === 0) {
-                        alert('{{ trans('global.datatables.zero_selected') }}')
-
-                        return
-                    }
-
-                    if (confirm('{{ trans('global.areYouSure') }}')) {
-                        $.ajax({
-                                headers: {
-                                    'x-csrf-token': _token
-                                },
-                                method: 'POST',
-                                url: config.url,
-                                data: {
-                                    ids: ids,
-                                    _method: 'DELETE'
-                                }
-                            })
-                            .done(function() {
-                                location.reload()
-                            })
-                    }
-                }
-            }
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -263,42 +233,63 @@
                 dom: "<'row align-items-center justify-content-center'<'col-12 col-sm-12 col-md-3 col-lg-3 m-0'l><'text-center col-12 col-sm-12 col-md-6 col-lg-6'B><'col-md-3 col-12 col-sm-12 m-0'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row align-items-center justify-content-end'<'col-12 col-sm-12 col-md-6 col-lg-6'i><'col-12 col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end'p>>",
-                ajax: "{{ route('admin.paneldeclaracion.index') }}",
+                ajax: {
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('admin.paneldeclaracion.controles') }}",
+                    type: 'POST',
+                },
                 columns: [{
-                        data: 'controles',
-                        name: 'controles'
+                        data: 'anexo_indice',
+                        name: 'anexo_indice'
                     },
                     {
-                        data: 'politica',
-                        name: 'politica'
+                        data: 'anexo_politica',
+                        name: 'anexo_politica'
                     },
                     {
-                        data: 'responsable',
-                        name: 'responsable',
+                        data: 'id',
+                        name: 'id',
                         render: function(data, type, row, meta) {
+                            if (type === "responsableText") {
+                                console.log('hola');
+                                return data.name;
+                            }
                             let responsableselect = "";
                             let responsableselects = @json($empleados);
                             //  console.log(row.empleados.declaraciones_responsable);
                             responsableselect =
                                 `<select class="revisoresSelect responsables" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
-                                ${responsableselects?.map ((responsable,idx)=>{
-                                    return`<option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>${responsable.name }</option>`})}</select>`;
+                            ${responsableselects?.map ((responsable,idx)=>{
+                                return`<option ${responsable.declaraciones_responsable?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>${responsable.name }</option>`})}</select>`;
                             return responsableselect;
                         }
                     },
                     {
-                        data: 'aprobador',
-                        name: 'aprobador',
+                        data: 'id',
+                        name: 'id',
                         render: function(data, type, row, meta) {
+                            if (type === "responsableText") {
+                                console.log('hola');
+                                return data.name;
+                            }
                             let aprobadorselect = "";
                             let aprobadoreselects = @json($empleados);
                             aprobadorselect = `
-                        <select class="revisoresSelect aprobadores" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
-                            ${aprobadoreselects?.map ((aprobador,idx)=>{
-                                return`<option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-avatar='${aprobador.avatar}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>${aprobador.name }</option>`})}
-                                </select>`;
+                    <select class="revisoresSelect aprobadores" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
+                        ${aprobadoreselects?.map ((aprobador,idx)=>{
+                            return`<option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-avatar='${aprobador.avatar}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>${aprobador.name }</option>`})}
+                            </select>`;
 
                             return aprobadorselect;
+                        }
+                    },
+                    {
+                        data: 'id',
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                            return '';
                         }
                     }
                 ],
@@ -326,6 +317,8 @@
                     });
 
                     $(`select.aprobadores`).on('select2:select', function(e) {
+                        document.getElementById('loaderComponent').style.display =
+                            'block';
                         const declaracion = this.getAttribute('data-id');
                         const {
                             element
@@ -366,11 +359,18 @@
                                 $(`select.aprobadores`).trigger(
                                     'change.select2');
                             }
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
                             toastr.success(data.message);
                         }).
-                        catch(error => console.log)
+                        catch(error => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                        })
                     });
                     $(`select.aprobadores`).on('select2:unselect', function(e) {
+                        document.getElementById('loaderComponent').style.display =
+                            'block';
                         const declaracion = this.getAttribute('data-id');
                         const {
                             element
@@ -394,13 +394,20 @@
                         });
                         request.then(response => response.json()).
                         then(data => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
                             toastr.success(data.message);
                         }).
-                        catch(error => console.log)
+                        catch(error => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                        })
                         console.log(declaracion, aprobador);
                     });
 
                     $(`select.responsables`).on('select2:select', function(e) {
+                        document.getElementById('loaderComponent').style.display =
+                            'block';
                         const declaracion = this.getAttribute('data-id');
                         const {
                             element
@@ -441,11 +448,18 @@
                                 $(`.responsables`).trigger(
                                     'change.select2');
                             }
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
                             toastr.success(data.message);
                         }).
-                        catch(error => console.log)
+                        catch(error => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                        })
                     });
                     $(`select.responsables`).on('select2:unselect', function(e) {
+                        document.getElementById('loaderComponent').style.display =
+                            'block';
                         const declaracion = this.getAttribute('data-id');
                         const {
                             element
@@ -469,9 +483,14 @@
                         });
                         request.then(response => response.json()).
                         then(data => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
                             toastr.success(data.message);
                         }).
-                        catch(error => console.log)
+                        catch(error => {
+                            document.getElementById('loaderComponent').style.display =
+                                'none';
+                        })
 
                     });
                 }
@@ -531,7 +550,7 @@
 
                         $('.modal-backdrop').hide();
                     })
-                    .catch(error=>{
+                    .catch(error => {
                         document.getElementById('loaderComponent').style.display = 'none';
                         $('#ResponsablesModal').modal('hide');
 

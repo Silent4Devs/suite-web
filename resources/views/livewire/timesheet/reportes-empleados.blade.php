@@ -56,6 +56,12 @@
             z-index: 2;
         }
 
+        .cde-fecha {
+            position: sticky !important;
+            left: 300px;
+            z-index: 1;
+        }
+
         .cde-totalh {}
 
         .cde-semenasf {}
@@ -70,6 +76,7 @@
         .cde-puesto,
         .cde-area,
         .cde-estatus,
+        .cde-fecha,
         .cde-totalh,
         .cde-semenasf {
             transition: 0.3s;
@@ -79,7 +86,8 @@
         .cde-nombre::before,
         .cde-puesto::before,
         .cde-area::before,
-        .cde-estatus::before {
+        .cde-estatus::before,
+        .cde-fecha::before {
             content: "";
             position: absolute;
             width: 1px;
@@ -92,7 +100,8 @@
         tfoot .cde-nombre::before,
         tfoot .cde-puesto::before,
         tfoot .cde-area::before,
-        tfoot .cde-estatus::before {
+        tfoot .cde-estatus::before,
+        tfoot .cde-fecha::before {
             content: "";
             opacity: 0 !important;
         }
@@ -103,6 +112,7 @@
             .cde-puesto,
             .cde-area,
             .cde-estatus,
+            .cde-fecha,
             .cde-totalh,
             .cde-semenasf {
                 position: unset !important;
@@ -129,7 +139,7 @@
     <div class="row print-none" style="margin: 0 !important;">
         <x-loading-indicator />
         <div class="col-md-3 form-group" style="padding-left:0 !important;">
-            <label class="form-label">Área</label>
+            <label class="form-label">Colaboradores del Área: </label>
             <select class="form-control" wire:model="area_id">
                 <option selected value="0">Todas</option>
                 @foreach ($areas as $area)
@@ -169,8 +179,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9 form-group text-right">
-            <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar correo a colaboradores con horas faltantes de registrar</button>
+        <div class="col-md-9 form-group text-right d-flex" style="align-items: flex-end;">
+            <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar correo a todos los colaboradores con horas faltantes de registrar</button>
         </div>
         <div class="datatable-fix w-100 mt-4">
             <table id="timesheet_empleados_lista" class="table w-100 datatable_timesheet_empleados_reportes tabla-fixed"
@@ -182,6 +192,7 @@
                         <th class="cde-puesto" style="text-align: right;">Puesto</th>
                         <th class="cde-area" style="text-align: right;">Área</th>
                         <th class="cde-estatus" style="text-align: right;">Estatus</th>
+                        <th class="cde-fecha" style="text-align: right;">Fecha</th>
                         @foreach ($calendario_tabla as $calendar)
                             <th colspan="{{ $calendar['total_weeks'] }}" class="th-calendario th-año">
                                 <small>{{ $calendar['year'] }}</small>
@@ -197,6 +208,7 @@
                         <th class="cde-puesto"></th>
                         <th class="cde-area"></th>
                         <th class="cde-estatus"></th>
+                        <th class="cde-fecha"></th>
                         @foreach ($calendario_tabla as $calendar)
                             @foreach ($calendar['months'] as $key => $mes)
                                 @php
@@ -253,6 +265,7 @@
                         <th style="min-width: 150px;" class="cde-puesto"></th>
                         <th style="min-width: 150px;" class="cde-area"></th>
                         <th class="cde-estatus"></th>
+                        <th class="cde-fecha"></th>
                         @foreach ($calendario_tabla as $calendar)
                             @foreach ($calendar['months'] as $key => $mes)
                                 @foreach ($mes['weeks'] as $week)
@@ -287,6 +300,10 @@
                                 <span class="empleado_estatus_{{ $empleado_td['estatus'] }}">
                                     {{ $empleado_td['estatus'] }}</span>
                             </td>
+                            <td class="cde-fecha">
+                                <small style="color:#aaa;">Fecha&nbsp;de&nbsp;{{$empleado_td['estatus'] == 'alta' ? 'ingreso' : 'baja'}}: </small>
+                                {{ $empleado_td['fecha_alta_baja'] }}
+                            </td>
                             @foreach ($empleado_td['calendario'] as $index => $horas_calendar)
                                 <td style="font-size: 10px !important; text-align: center !important;">
                                     {!! $horas_calendar !!}</td>
@@ -318,10 +335,13 @@
                     <td class="cde-nombre"></td>
                     <td class="cde-puesto"></td>
                     <td class="cde-area"></td>
-                    <td class="cde-estatus">Total:</td>
-                    @foreach ($empleado_td['calendario'] as $index => $horas_calendar)
-                        <td></td>
-                    @endforeach
+                    <td class="cde-estatus"></td>
+                    <td class="cde-fecha">Total:</td>
+                    @if(isset($empleado_td))
+                        @foreach ($empleado_td['calendario'] as $index => $horas_calendar)
+                            <td></td>
+                        @endforeach
+                    @endif
                     <td class="cde-totalh"></td>
                     <td class="cde-semenasf"></td>
                     <td class="cde-op"></td>

@@ -7,7 +7,7 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.tratamiento-riesgos.store") }}" enctype="multipart/form-data" class="row">
             @csrf
-            <div class="form-group col-md-6">
+            {{-- <div class="form-group col-md-6">
                 <label for="nivelriesgo"><i class="fas fa-chart-bar iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgo') }}</label>
                 <input class="form-control {{ $errors->has('nivelriesgo') ? 'is-invalid' : '' }}" type="text" name="nivelriesgo" id="nivelriesgo" value="{{ old('nivelriesgo', '') }}">
                 @if($errors->has('nivelriesgo'))
@@ -16,6 +16,35 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.tratamientoRiesgo.fields.nivelriesgo_helper') }}</span>
+            </div> --}}
+            
+            <div class="row">
+                <div class="form-group col-md-12 mb-12">
+                    <label for="validationServer01"><i class="fas fa-barcode iconos-crear"></i>ID</label>
+                    <input type="number" class="form-control" name="identificador" id="identificador">
+                    <div id="identificadorDisponible">
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="col-md-12">
+                <label for="acciones_tratamiento"><i class="fas fa-chart-bar iconos-crear"></i>Acciones de Tratamiento</label> 
+                <textarea class="form-control"></textarea>
+                @if($errors->has('acciones_tratamiento'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('acciones_tratamiento') }}
+                </div>
+                @endif
+            </div>
+            <div class="col-md-12">
+                <label for="acciones_tratamiento"><i class="fas fa-chart-bar iconos-crear"></i>Proceso</label> 
+                <textarea class="form-control"></textarea>
+                @if($errors->has('acciones_tratamiento'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('acciones_tratamiento') }}
+                </div>
+                @endif
             </div>
             <div class="form-group col-md-6">
                 <label for="control_id"><i class="fas fa-chart-area iconos-crear"></i>{{ trans('cruds.tratamientoRiesgo.fields.control') }}</label>
