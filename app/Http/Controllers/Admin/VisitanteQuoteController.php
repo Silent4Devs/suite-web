@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Visitantes\VisitanteQuote;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class VisitanteQuoteController extends Controller
 {
@@ -16,6 +18,7 @@ class VisitanteQuoteController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('visitantes_administrador'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if (VisitanteQuote::count() > 0) {
             $quote = VisitanteQuote::first();
         } else {
@@ -32,6 +35,7 @@ class VisitanteQuoteController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('visitantes_administrador'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'quote' => 'required',
         ]);
