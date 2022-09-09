@@ -1,7 +1,10 @@
 @php
-if ($dias_disponibles == null) {
+if ($dias_disponibles == null and $leyenda_sin_beneficio == true) {
     $valor = 'no tienes dias disponibles';
     $mostrar = false;
+} elseif ($dias_disponibles == 0 and $año >= 1) {
+    $valor = 'no tienes dias disponibles';
+    $mostrar = true;
 } else {
     $valor = $dias_disponibles;
     $mostrar = true;
@@ -12,8 +15,9 @@ if ($dias_pendientes >= 1) {
 } else {
     $leyenda_dias_pendientes = false;
 }
-
 @endphp
+
+
 
 {{-- Leyenda dias Pendientes año pasado --}}
 <div class="row" x-data="{ open: @js($mostrar_reclamo) }">
@@ -72,8 +76,34 @@ if ($dias_pendientes >= 1) {
     </div>
 </div>
 
-{{-- Formulario Vacaciones --}}
+{{-- Leyenda dias sin beneficio --}}
+<div class="row" x-data="{ leyenda: {{ $leyenda_sin_beneficio }} }">
+    <div class="col-12 col-sm-12" x-show="leyenda">
+        <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
+            <div class="row w-100">
+                <div class="text-center col-1 align-items-center d-flex justify-content-center">
+                    <div class="w-100">
 
+                        <i class="fa-solid fa-calendar-xmark mr-3" style="color: #3B82F6; font-size: 30px"></i>
+                    </div>
+                </div>
+                <div class="col-11">
+                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Lo sentimos...</p>
+                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">"Aún no cuentas con días de vacaciones,
+                        su
+                        fecha de ingreso es el <b>{{ $no_vacaciones }}</b>, por política debes de cumplir un año en
+                        <b>
+                            {{ $organizacion->empresa }} </b>para poder gozar de este beneficio"</b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{{-- Formulario Vacaciones --}}
 
 <div class="row" x-data="{ open: @js($mostrar) }">
     <!-- Categoria Enabled-->
@@ -141,7 +171,7 @@ if ($dias_pendientes >= 1) {
             </div>
         </div>
 
-        <x-loading-indicator/>
+        <x-loading-indicator />
         <!-- Descripcion Field -->
         <div class="row">
             <div class="form-group col-sm-12">
@@ -167,25 +197,7 @@ if ($dias_pendientes >= 1) {
 
     <!-- Categoria Disabled-->
     <div class="col-12 col-sm-12" x-show="!open">
-        <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
-            <div class="row w-100">
-                <div class="text-center col-1 align-items-center d-flex justify-content-center">
-                    <div class="w-100">
 
-                        <i class="fa-solid fa-calendar-xmark mr-3" style="color: #3B82F6; font-size: 30px"></i>
-                    </div>
-                </div>
-                <div class="col-11">
-                    <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Lo sentimos...</p>
-                    <p class="m-0" style="font-size: 14px; color:#1E3A8A ">"Aún no cuentas con días de vacaciones,
-                        su
-                        fecha de ingreso es el <b>{{ $no_vacaciones }}</b>, por política debes de cumplir un año en
-                        <b>
-                            {{ $organizacion->empresa }} </b>para poder gozar de este beneficio"</b>
-                    </p>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <!-- Categoria Field -->
             <div class="form-group col-sm-6 offset-6">

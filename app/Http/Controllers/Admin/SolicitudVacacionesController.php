@@ -97,7 +97,7 @@ class SolicitudVacacionesController extends Controller
             } else {
                 $dias_disponibles = 0;
             }
-        } else {
+        }else{
             $dias_disponibles = 0;
         }
 
@@ -107,20 +107,24 @@ class SolicitudVacacionesController extends Controller
 
 
     public function create()
-    {
+    {   
         abort_if(Gate::denies('solicitud_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $ingreso = auth()->user()->empleado->antiguedad;
         $dia_hoy = Carbon::now();
         $no_vacaciones = $ingreso->format('d-m-Y');
         $año = Carbon::createFromDate($ingreso)->age;
         $seis_meses = ($dia_hoy->diffInMonths($ingreso));
-
-        if ($año == 0) {
-
+        
+        if ($año == 0 and $seis_meses >=6) {
+            $leyenda_sin_beneficio = false;
             $año = 1;
-        } else {
+        }elseif($año == 0 and $seis_meses < 6){
+            $leyenda_sin_beneficio = true;
+            $año = 1;
+        }else{
+            $leyenda_sin_beneficio = false;
         }
-
+       
 
         //  Determina si existe regla asociada
         $existe_regla_por_area = Vacaciones::where('inicio_conteo', '=', $año)->whereHas('areas', function ($q) {
@@ -140,7 +144,9 @@ class SolicitudVacacionesController extends Controller
                 return redirect(route('admin.solicitud-vacaciones.index'));
             }
             // Inician vacaciones a los 6 meses
-        } else {
+        }
+       
+        else {
             $tipo_conteo = null;
             $fecha_limite = Vacaciones::where('inicio_conteo', '=', $año)->pluck('fin_conteo')->first();
             $inicio_vacaciones = $ingreso->addYear();
@@ -155,8 +161,9 @@ class SolicitudVacacionesController extends Controller
             $año_pasado = 0;
             $periodo_vencido = 0;
             $finVacaciones_periodo_pasado = null;
+        
 
-            return view('admin.solicitudVacaciones.create', compact('finVacaciones_periodo_pasado', 'periodo_vencido', 'año_pasado', 'mostrar_reclamo', 'vacacion', 'dias_disponibles', 'año', 'autoriza', 'no_vacaciones', 'organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo'));
+            return view('admin.solicitudVacaciones.create', compact('leyenda_sin_beneficio','finVacaciones_periodo_pasado','periodo_vencido','año_pasado','mostrar_reclamo','vacacion', 'dias_disponibles', 'año', 'autoriza', 'no_vacaciones', 'organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo'));
         }
 
         $tipo_conteo = $regla_aplicada->tipo_conteo;
@@ -166,72 +173,72 @@ class SolicitudVacacionesController extends Controller
         $finVacaciones = $finVacaciones->format('d-m-Y');
         $autoriza = auth()->user()->empleado->supervisor_id;
         $vacacion = new SolicitudVacaciones();
-
+       
         $dias_disponibles = $this->diasDisponibles();
         $organizacion = Organizacion::first();
         $dias_pendientes = SolicitudVacaciones::where('empleado_id', '=', auth()->user()->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
 
-        // Funcion para dias dias disponibles año pasado
-        $año_pasado = $this->diasDisponiblesAñopasado();
-        if ($año_pasado == 0) {
-            $mostrar_reclamo = false;
-            $periodo_vencido = 0;
-            $finVacaciones_periodo_pasado = null;
-        } elseif ($año_pasado > 0) {
-
-            $periodo_vencido = $año - 1;
-            $finVacaciones_periodo_pasado = $inicio_vacaciones->addMonths(6);
-            $finVacaciones_periodo_pasado = $finVacaciones_periodo_pasado->subYear();
+           // Funcion para dias dias disponibles año pasado
+           $año_pasado = $this->diasDisponiblesAñopasado();
+           if($año_pasado == 0){
+               $mostrar_reclamo = false;
+               $periodo_vencido = 0;
+               $finVacaciones_periodo_pasado = null;
+           }elseif($año_pasado > 0){
+                    
+               $periodo_vencido = $año-1;
+               $finVacaciones_periodo_pasado = $inicio_vacaciones->addMonths(6);
+               $finVacaciones_periodo_pasado =$finVacaciones_periodo_pasado->subYear();
             //    $finVacaciones_periodo_pasado = $finVacaciones_periodo_pasado->format('d-m-Y');
 
             //    $mostrar_reclamo = true;
-
-
-            if ($finVacaciones_periodo_pasado >= $dia_hoy) {
+              
+            
+               if( $finVacaciones_periodo_pasado >= $dia_hoy){
                 $mostrar_reclamo = true;
                 $finVacaciones_periodo_pasado = $finVacaciones_periodo_pasado->format('d-m-Y');
-            } else {
+               }else{
                 $mostrar_reclamo = false;
-            }
+               }
             //    dd($mostrar_reclamo);
-        } else {
-            $mostrar_reclamo = false;
-            $periodo_vencido = 0;
-            $finVacaciones_periodo_pasado = null;
-        }
-
-
-        return view('admin.solicitudVacaciones.create', compact('vacacion', 'dias_disponibles', 'año', 'autoriza', 'no_vacaciones', 'organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo', 'mostrar_reclamo', 'periodo_vencido', 'año_pasado', 'finVacaciones_periodo_pasado'));
+           }else{
+               $mostrar_reclamo = false;
+               $periodo_vencido = 0;
+               $finVacaciones_periodo_pasado = null;
+           }
+         
+       
+        return view('admin.solicitudVacaciones.create', compact('leyenda_sin_beneficio','vacacion', 'dias_disponibles', 'año', 'autoriza', 'no_vacaciones', 'organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo','mostrar_reclamo','periodo_vencido','año_pasado','finVacaciones_periodo_pasado'));
     }
 
     public function periodoAdicional()
     {
-
+       
         $ingreso = auth()->user()->empleado->antiguedad;
         $dia_hoy = Carbon::now();
         $no_vacaciones = $ingreso->format('d-m-Y');
         $año = Carbon::createFromDate($ingreso)->age;
         $seis_meses = ($dia_hoy->diffInMonths($ingreso));
         // dd($seis_meses);
-        $año = $año - 1;
+        $año = $año-1;      
         //  Determina si existe regla asociada
         $existe_regla_por_area = Vacaciones::where('inicio_conteo', '=', $año)->whereHas('areas', function ($q) {
             $q->where('area_id', auth()->user()->empleado->area_id);
         })->select('dias', 'tipo_conteo')->exists();
         $existe_regla_toda_empresa = Vacaciones::where('inicio_conteo', $año)->where('afectados', 1)->select('dias', 'tipo_conteo')->exists();
 
-
-        if ($existe_regla_toda_empresa) {
-            $regla_aplicada = Vacaciones::where('inicio_conteo', $año)->where('afectados', 1)->select('dias', 'tipo_conteo')->first();
-        } elseif ($existe_regla_por_area) {
-            $regla_aplicada = Vacaciones::where('inicio_conteo', '=', $año)->whereHas('areas', function ($q) {
-                $q->where('area_id', auth()->user()->empleado->area_id);
-            })->select('dias', 'tipo_conteo')->first();
-        } else {
-            Flash::error('Regla de vacaciones no asociada');
-            return redirect(route('admin.solicitud-vacaciones.index'));
-        }
-
+        
+            if ($existe_regla_toda_empresa) {
+                $regla_aplicada = Vacaciones::where('inicio_conteo', $año)->where('afectados', 1)->select('dias', 'tipo_conteo')->first();
+            } elseif ($existe_regla_por_area) {
+                $regla_aplicada = Vacaciones::where('inicio_conteo', '=', $año)->whereHas('areas', function ($q) {
+                    $q->where('area_id', auth()->user()->empleado->area_id);
+                })->select('dias', 'tipo_conteo')->first();
+            } else {
+                Flash::error('Regla de vacaciones no asociada');
+                return redirect(route('admin.solicitud-vacaciones.index'));
+            }
+           
 
 
         $tipo_conteo = $regla_aplicada->tipo_conteo;
@@ -245,7 +252,7 @@ class SolicitudVacacionesController extends Controller
         $organizacion = Organizacion::first();
         $dias_pendientes = SolicitudVacaciones::where('empleado_id', '=', auth()->user()->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
 
-
+          
 
         return view('admin.solicitudVacaciones.periodoAdicional', compact('vacacion', 'dias_disponibles', 'año', 'autoriza', 'no_vacaciones', 'organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo'));
     }
@@ -350,8 +357,8 @@ class SolicitudVacacionesController extends Controller
         if ($año == 0) {
             $medio_año = true;
             $año = 1;
-        } else {
-            $medio_año = false;
+        }else{
+            $medio_año =false;
         }
 
         if ($año >= 1) {
@@ -368,8 +375,8 @@ class SolicitudVacacionesController extends Controller
                     ->orwhere('aprobacion', '=', 3);
             })->sum('dias_solicitados');
 
-            if ($medio_año == true) {
-                $dias_otorgados = $dias_otorgados / 2;
+            if($medio_año == true){
+                $dias_otorgados = $dias_otorgados/2;
             }
 
             $dias_disponibles = $dias_otorgados - $dias_gastados + $dias_extra - $dias_restados;
@@ -383,8 +390,8 @@ class SolicitudVacacionesController extends Controller
     {
         $ingreso = auth()->user()->empleado->antiguedad;
         $año_actual = Carbon::createFromDate($ingreso)->age;
-        $año = $año_actual - 1;
-
+        $año = $año_actual-1;
+ 
         if ($año >= 1) {
             $dias_otorgados = Vacaciones::where('inicio_conteo', '=', $año)->pluck('dias')->first();
             $dias_extra = IncidentesVacaciones::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) {
@@ -403,7 +410,10 @@ class SolicitudVacacionesController extends Controller
         } else {
             return null;
         }
+      
     }
+
+    
 
     public function aprobacionMenu(Request $request)
     {
@@ -559,7 +569,7 @@ class SolicitudVacacionesController extends Controller
 
     public function archivoShow($id)
     {
-
+        
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudVacaciones::with('empleado')->find($id);
 
