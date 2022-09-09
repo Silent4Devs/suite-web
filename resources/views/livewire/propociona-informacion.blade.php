@@ -10,19 +10,27 @@
     <table class="table">
         <thead class="head-light">
             <tr>
+                <th scope="col-6">Interno / Externo</th>
                 <th scope="col-6">Nombre</th>
                 <th scope="col-6">Puesto</th>
                 <th scope="col-6">Correo electrónico:</th>
                 <th scope="col-6">Ext.:</th>
                 <th scope="col-6">Ubicación</th>
                 <th scope="col-6">Opciones</th>
-
             </tr>
         </thead>
         <tbody>
             @foreach ($datas as $data)
                 <tr>
-
+                    <th style="min-width:130px;">
+                        @if ($data->interno_externo == 1 )
+                        <div style="text-align: left;">Interno</div>
+                        @elseif ($data->interno_externo == 2)
+                         <div style="text-align: left;">Externo</div>
+                        @else
+                         <div style="text-align: left;">No definido</div>
+                        @endif
+                    </th>
                     <th style="min-width:130px;">
                         <div style="text-align: left;">{{ $data->nombre }}</div>
                     </th>

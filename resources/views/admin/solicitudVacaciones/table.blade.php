@@ -9,10 +9,10 @@
                Periodo
             </th>
             <th style="min-width: 75px;">
-                Inicio
+                Fecha de inicio
             </th>
             <th style="min-width: 75px;">
-                Fin
+                Fecha de fin
             </th>
             <th style="min-width: 75px;">
                Estatus

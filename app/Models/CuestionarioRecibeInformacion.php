@@ -18,5 +18,6 @@ class CuestionarioRecibeInformacion extends Model
         'extencion',
         'ubicacion',
         'cuestionario_id',
+        'interno_externo'
     ];
 }

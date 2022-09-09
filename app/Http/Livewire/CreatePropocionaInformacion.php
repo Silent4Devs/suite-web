@@ -15,6 +15,7 @@ class CreatePropocionaInformacion extends Component
     public $extencion;
     public $ubicacion;
     public $cuestionario_id;
+    public $interno_externo;
 
     public $id_interesado;
     public $parteInteresadaIdEN;
@@ -30,6 +31,7 @@ class CreatePropocionaInformacion extends Component
             'nombre' => 'required|max:1250',
             'puesto' => 'required|max:1250',
             'correo_electronico' => 'required|max:1250',
+            'interno_externo' => 'required|int',
         ]);
     }
 
@@ -49,9 +51,10 @@ class CreatePropocionaInformacion extends Component
         'extencion'=> $this->extencion,
         'ubicacion'=> $this->ubicacion,
         'cuestionario_id' => $this->cuestionario_id,
+        'interno_externo' => $this->interno_externo,
         ]);
 
-        $this->reset('id','nombre','puesto','correo_electronico','extencion','ubicacion',);
+        $this->reset('id','nombre','puesto','correo_electronico','extencion','ubicacion','interno_externo');
         $this->emit('render');
         $this->emit('cerrar-modal', ['editar' => false]);
     }
@@ -67,6 +70,7 @@ class CreatePropocionaInformacion extends Component
         $this->extencion = $model->extencion;
         $this->ubicacion = $model->ubicacion;
         $this->cuestionario_id = $model->cuestionario_id;
+        $this->interno_externo = $model->interno_externo;
         $this->emit('abrir-modal');
 
     }
@@ -78,6 +82,7 @@ class CreatePropocionaInformacion extends Component
         $this->correo_electronico = '';
         $this->extencion = '';
         $this->ubicacion = '';
+        $this->interno_externo = '';
 
         $this->view = 'create';
     }
@@ -93,6 +98,7 @@ class CreatePropocionaInformacion extends Component
             'extencion'=> $this->extencion,
             'ubicacion'=> $this->ubicacion,
             'cuestionario_id' => $this->cuestionario_id,
+            'interno_externo' => $this->interno_externo,
         ]);
         $this->emit('cerrar-modal', ['editar' => true]);
         $this->default();

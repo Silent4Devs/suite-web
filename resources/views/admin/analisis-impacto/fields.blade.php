@@ -128,6 +128,26 @@
         ]) !!}
     </div>
 
+    <div class="form-group col-sm-6">
+        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('macroproceso', 'Macroproceso:', ['class' => 'required']) !!}
+        {!! Form::text('macroproceso', null, [
+            'class' => 'form-control',
+            'maxlength' => 255,
+            'maxlength' => 255,
+            'placeholder' => '...',
+        ]) !!}
+    </div>
+
+    <div class="form-group col-sm-6">
+        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('subproceso', 'Subproceso:', ['class' => 'required']) !!}
+        {!! Form::text('subproceso', null, [
+            'class' => 'form-control',
+            'maxlength' => 255,
+            'maxlength' => 255,
+            'placeholder' => '...',
+        ]) !!}
+    </div>
+
     <div class="form-group col-sm-12">
         <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('objetivo_proceso', 'Objetivo del Proceso:', ['class' => 'required']) !!}
         {!! Form::text('objetivo_proceso', null, [
