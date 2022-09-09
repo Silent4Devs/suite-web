@@ -39,6 +39,8 @@ class AnalisisImpacto extends Model
         'version',
         'tipo',
         'objetivo_proceso',
+        'macroproceso',
+        'subproceso',
         'periodicidad',
         'p_otro_txt',
         // RESPONSABLES DEL PROCESO
@@ -144,30 +146,30 @@ class AnalisisImpacto extends Model
         'd5',
         'd6',
         'd7',
-        'd8',
-        'd9',
-        'd10',
-        'd11',
-        'd12',
-        'd13',
-        'd14',
-        'd15',
-        'd16',
-        'd17',
-        'd18',
-        'd19',
-        'd20',
-        'd21',
-        'd22',
-        'd23',
-        'd24',
-        'd25',
-        'd26',
-        'd27',
-        'd28',
-        'd29',
-        'd30',
-        'd31',
+        // 'd8',
+        // 'd9',
+        // 'd10',
+        // 'd11',
+        // 'd12',
+        // 'd13',
+        // 'd14',
+        // 'd15',
+        // 'd16',
+        // 'd17',
+        // 'd18',
+        // 'd19',
+        // 'd20',
+        // 'd21',
+        // 'd22',
+        // 'd23',
+        // 'd24',
+        // 'd25',
+        // 'd26',
+        // 'd27',
+        // 'd28',
+        // 'd29',
+        // 'd30',
+        // 'd31',
         'h1',
         'h2',
         'h3',
@@ -192,5 +194,322 @@ class AnalisisImpacto extends Model
         'h22',
         'h23',
         'h24',
+        // TIEMPOS DE RECUPERACIÓN
+        'rpo_mes',
+        'rpo_semana',
+        'rpo_dia',
+        'rpo_hora',
+        'rto_mes',
+        'rto_semana',
+        'rto_dia',
+        'rto_hora',
+        'wrt_mes',
+        'wrt_semana',
+        'wrt_dia',
+        'wrt_hora',
+        'mtpd_mes',
+        'mtpd_semana',
+        'mtpd_dia',
+        'mtpd_hora',
     ];
+
+    protected $appends = [
+        'cantidad_total_personas_normal',
+        'cantidad_total_personas_contingencia',
+        'cantidad_equipo_computo_normal',
+        'cantidad_telefonia_normal',
+        'cantidad_impresora_normal',
+        'cantidad_otros_normal',
+        'cantidad_equipo_computo_contingencia',
+        'cantidad_telefonia_contingencia',
+        'cantidad_impresora_contingencia',
+        'cantidad_otros_contingencia',
+        'cantidad_proporciona_informacion',
+        'cantidad_recibe_informacion',
+        'diferencia_flujo_informacion',
+        'rpo_horas',
+        'rto_horas',
+        'wrt_horas',
+        'mtpd_horas',
+        'nivel_rto',
+        'operacion_promedio',
+        'regulatorio_promedio',
+        'reputacion_promedio',
+        'social_promedio',
+        'total_impactos',
+        'nivel_impacto',
+        'criticidad_proceso',
+    ];
+
+    // Appens 2.0 Matriz BIA
+    public function getRpoHorasAttribute()
+    {
+        $mese_rpo = $this->rpo_mes * 730;
+        $semana_rpo = $this->rpo_semana * 168;
+        $dia_rpo = $this->rpo_dia * 24;
+        $hora_rpo = $this->rpo_hora;
+        $total_horas = $mese_rpo + $semana_rpo + $dia_rpo + $hora_rpo;
+        return $total_horas;
+    }
+
+    public function getRtoHorasAttribute()
+    {
+        $mese_rto = $this->rto_mes * 730;
+        $semana_rto = $this->rto_semana * 168;
+        $dia_rto = $this->rto_dia * 24;
+        $hora_rto = $this->rto_hora;
+        $total_horas = $mese_rto + $semana_rto + $dia_rto + $hora_rto;
+        return $total_horas;
+    }
+
+    public function getWrtHorasAttribute()
+    {
+        $mese_wrt = $this->wrt_mes * 730;
+        $semana_wrt = $this->wrt_semana * 168;
+        $dia_wrt = $this->wrt_dia * 24;
+        $hora_wrt = $this->wrt_hora;
+        $total_horas = $mese_wrt + $semana_wrt + $dia_wrt + $hora_wrt;
+        return $total_horas;
+    }
+
+    public function getMtpdHorasAttribute()
+    {
+        $mese_mtpd = $this->mtpd_mes * 730;
+        $semana_mtpd = $this->mtpd_semana * 168;
+        $dia_mtpd = $this->mtpd_dia * 24;
+        $hora_mtpd = $this->mtpd_hora;
+        $total_horas = $mese_mtpd + $semana_mtpd + $dia_mtpd + $hora_mtpd;
+        return $total_horas;
+    }
+    public function getNivelRtoAttribute()
+    {
+        $parametro = $this->rto_horas;
+        if ($parametro <= 24) {
+            $color = '#FF3333';
+            $color_texto = '#FFFFFF';
+            $texto = 'Alto';
+        } elseif ($parametro <= 72) {
+            $color = '#FFC000';
+            $color_texto = '#000000';
+            $texto = 'Medio';
+        } elseif ($parametro > 72) {
+            $color = '#00B050';
+            $color_texto = '#000000';
+            $texto = 'Bajo';
+        } else {
+            $color = '#FFFFFF';
+            $color_texto = '#000000';
+            $texto = 'No definido';
+        }
+        return  [$color,  $color_texto, $texto];
+    }
+    public function getOperacionPromedioAttribute()
+    {
+        $parametro_1 = $this->operacion_q_1;
+        $parametro_2 = $this->operacion_q_2;
+        $parametro_3 = $this->operacion_q_3;
+        $promedio = ($parametro_1 + $parametro_2 + $parametro_3) / 3;
+        return round($promedio);
+    }
+
+    public function getRegulatorioPromedioAttribute()
+    {
+        $parametro_1 = $this->regulatorio_q_1;
+        $parametro_2 = $this->regulatorio_q_2;
+        $parametro_3 = $this->regulatorio_q_3;
+        $promedio = ($parametro_1 + $parametro_2 + $parametro_3) / 3;
+        return round($promedio);
+    }
+    public function getReputacionPromedioAttribute()
+    {
+        $parametro_1 = $this->reputacion_q_1;
+        $parametro_2 = $this->reputacion_q_2;
+        $parametro_3 = $this->reputacion_q_3;
+        $promedio = ($parametro_1 + $parametro_2 + $parametro_3) / 3;
+        return round($promedio);
+    }
+    public function getSocialPromedioAttribute()
+    {
+        $parametro_1 = $this->social_q_1;
+        $parametro_2 = $this->social_q_2;
+        $parametro_3 = $this->social_q_3;
+        $promedio = ($parametro_1 + $parametro_2 + $parametro_3) / 3;
+        return round($promedio);
+    }
+
+    public function getTotalImpactosAttribute()
+    {
+        $parametro_1 = $this->operacion_promedio * 5;
+        $parametro_2 = $this->regulatorio_promedio * 3;
+        $parametro_3 = $this->reputacion_promedio * 2;
+        $parametro_4 = $this->social_promedio * 1;
+        $promedio = ($parametro_1 + $parametro_2 + $parametro_3 + $parametro_4);
+        return round($promedio);
+    }
+
+    public function getNivelImpactoAttribute()
+    {
+        $parametro = $this->total_impactos;
+        if ($parametro <= 18) {
+            $color = '#00B050';
+            $color_texto = '#000000';
+            $texto = 'Bajo';
+        } elseif ($parametro <= 37) {
+            $color = '#FFC000';
+            $color_texto = '#000000';
+            $texto = 'Medio';
+        } elseif ($parametro <= 57) {
+
+            $color = '#FF3333';
+            $color_texto = '#FFFFFF';
+            $texto = 'Alto';
+        } else {
+            $color = '#FFFFFF';
+            $color_texto = '#000000';
+            $texto = 'No definido';
+        }
+        return  [$color,  $color_texto, $texto];
+    }
+
+    public function getCriticidadProcesoAttribute()
+    {
+        $nivel_rto = $this->nivel_rto[2];
+        $nivel_impacto = $this->nivel_impacto[2];
+        if ($nivel_impacto == 'Alto' and $nivel_rto == 'Alto') {
+            $color = '#FF3333';
+            $color_texto = '#FFFFFF';
+            $texto = '1.Crítico';
+        } elseif ($nivel_rto == 'Alto' and $nivel_impacto == 'Medio') {
+            $color = '#FF3333';
+            $color_texto = '#FFFFFF';
+            $texto = '1.Crítico';
+        } elseif ($nivel_rto == 'Alto' and $nivel_impacto == 'Bajo') {
+            $color = '#FFC000';
+            $color_texto = '#000000';
+            $texto = '2.Importante';
+        }elseif ($nivel_rto == 'Medio' and $nivel_impacto == 'Alto') {
+            $color = '#FF3333';
+            $color_texto = '#FFFFFF';
+            $texto = '1.Crítico';
+        }
+        elseif ($nivel_rto == 'Medio' and $nivel_impacto == 'Medio') {
+            $color = '#FFC000';
+            $color_texto = '#000000';
+            $texto = '2.Importante';
+        }
+        elseif ($nivel_rto == 'Medio' and $nivel_impacto == 'Bajo') {
+            $color = '#00B050';
+            $color_texto = '#000000';
+            $texto = '3.Necesario';
+        }
+        elseif ($nivel_rto == 'Bajo' and $nivel_impacto == 'Alto') {
+            $color = '#FFC000';
+            $color_texto = '#000000';
+            $texto = '2.Importante';
+        }
+        elseif ($nivel_rto == 'Bajo' and $nivel_impacto == 'Medio') {
+            $color = '#00B050';
+            $color_texto = '#000000';
+            $texto = '3.Necesario';
+        }
+        elseif ($nivel_rto == 'Bajo' and $nivel_impacto == 'Bajo') {
+            $color = '#00B050';
+            $color_texto = '#000000';
+            $texto = '3.Necesario';
+        }
+        
+        return  [$color,  $color_texto, $texto];
+    }
+
+
+
+    // Appens 3.0 Entradas y salidas
+    public function recibeInformacion()
+    {
+        return $this->hasMany(CuestionarioRecibeInformacion::class, 'cuestionario_id');
+    }
+    public function proporcionaInformacion()
+    {
+        return $this->hasMany(CuestionarioProporcionaInformacion::class, 'cuestionario_id');
+    }
+
+    public function getCantidadRecibeInformacionAttribute()
+    {
+        return $this->recibeInformacion()->count();
+    }
+
+    public function getCantidadProporcionaInformacionAttribute()
+    {
+        return $this->proporcionaInformacion()->count();
+    }
+
+    public function getDiferenciaFlujoInformacionAttribute()
+    {
+        $proporciona = $this->getCantidadProporcionaInformacionAttribute();
+        $recibe = $this->getCantidadRecibeInformacionAttribute();
+        if ($proporciona > $recibe) {
+            $rowspan = $proporciona;
+        } elseif ($recibe > $proporciona) {
+            $rowspan = $recibe;
+        } elseif ($recibe == $proporciona) {
+            $rowspan = $proporciona;
+        }
+        $diferencia =  $proporciona - $recibe;
+        return  [$diferencia, 1];
+    }
+
+    // Appens 5.0 Requerimientos minimos
+
+    public function recursosHumanos()
+    {
+        return $this->hasMany(CuestionarioRecursosHumanos::class, 'cuestionario_id');
+    }
+
+    public function getCantidadTotalPersonasNormalAttribute()
+    {
+        return $this->recursosHumanos()->where('escenario', '1')->count();
+    }
+
+    public function getCantidadTotalPersonasContingenciaAttribute()
+    {
+        return $this->recursosHumanos()->where('escenario', '2')->count();
+    }
+
+    public function recursosMateriales()
+    {
+        return $this->hasMany(CuestionarioRecursosMateriales::class, 'cuestionario_id');
+    }
+
+    public function getCantidadEquipoComputoNormalAttribute()
+    {
+        return $this->recursosMateriales()->where('escenario', '1')->pluck('equipos')->sum();
+    }
+    public function getCantidadTelefoniaNormalAttribute()
+    {
+        return $this->recursosMateriales()->where('escenario', '1')->pluck('telefono')->sum();
+    }
+    public function getCantidadImpresoraNormalAttribute()
+    {
+        return $this->recursosMateriales()->where('escenario', '1')->pluck('impresoras')->sum();
+    }
+    public function getCantidadOtrosNormalAttribute()
+    {
+        return $this->recursosMateriales()->where('escenario', '1')->pluck('otro')->first();
+    }
+    public function getCantidadEquipoComputoContingenciaAttribute()
+    {
+        return $this->recursosMateriales()->where('escenario', '2')->pluck('equipos')->sum();
+    }
+    public function getCantidadTelefoniaContingenciaAttribute()
+    {
+        return $this->recursosMateriales()->where('escenario', '2')->pluck('telefono')->sum();
+    }
+    public function getCantidadImpresoraContingenciaAttribute()
+    {
+        return $this->recursosMateriales()->where('escenario', '2')->pluck('impresoras')->sum();
+    }
+    public function getCantidadOtrosContingenciaAttribute()
+    {
+        return $this->recursosMateriales()->where('escenario', '2')->pluck('otro')->first();
+    }
 }

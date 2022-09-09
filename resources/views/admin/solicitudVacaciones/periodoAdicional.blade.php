@@ -54,7 +54,7 @@
                                 <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Importante ...
                                 </p>
                                 <p class="m-0" style="font-size: 14px; color:#1E3A8A "> Actualmente tienes
-                                    <strong>{{ $dias_pendientes }} dias</strong> en estado de <strong>"Pendientes"</strong>,
+                                    <strong>{{ $dias_pendientes }} día(s)</strong> en estado de <strong>"Pendientes"</strong>,
                                     los
                                     cuales están descontados y en caso de ser rechazados estos serán reembolsados.
                                 </p>
@@ -95,7 +95,7 @@
                     <!-- Categoria Field -->
                     <div class="row">
                         <div class="form-group col-sm-6">
-                            <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('fecha_inicio', 'Día de inicio:', ['class' => 'required']) !!}
+                            <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('fecha_inicio', 'Fecha de inicio:', ['class' => 'required']) !!}
                             {!! Form::date('fecha_inicio', null, [
                                 'class' => 'form-control',
                                 'placeholder' => 'Ingrese el la fecha en que inican su vacaciones...',
@@ -107,7 +107,7 @@
                         </div>
                         <!-- Categoria Field -->
                         <div class="form-group col-sm-6">
-                            <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('fecha_fin', 'Día de fin:', ['class' => 'required']) !!}
+                            <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('fecha_fin', 'Fecha de fin:', ['class' => 'required']) !!}
                             {!! Form::date('fecha_fin', null, [
                                 'class' => 'form-control',
                                 'placeholder' => 'Ingrese el la fecha en que terminan su vacaciones...',
@@ -138,7 +138,7 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="exampleFormControlTextarea1"> <i
-                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios del solicitante:') !!}</label>
+                                    class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios para el aprobador:') !!}</label>
                             <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
                         </div>
                     </div>
