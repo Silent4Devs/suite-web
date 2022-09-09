@@ -20,4 +20,9 @@ class CuestionarioInfraestructuraTecnologica extends Model
         'escenario',
         'cuestionario_id',
     ];
+
+    public function cuestionario()
+    {
+        return $this->belongsTo(AnalisisImpacto::class, 'cuestionario_id', 'id');
+    }
 }

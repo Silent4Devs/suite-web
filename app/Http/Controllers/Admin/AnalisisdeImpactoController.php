@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Livewire\InfraestructuraTecnologica;
 use App\Models\AnalisisImpacto;
+use App\Models\CuestionarioInfraestructuraTecnologica;
+use App\Models\CuestionarioRecursosHumanos;
 use App\Models\Organizacion;
 use Flash;
 use Illuminate\Http\Request;
@@ -162,5 +165,24 @@ class AnalisisdeImpactoController extends Controller
         $cuestionario->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
+    }
+
+    public function matriz()
+    {
+        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $cuestionario =AnalisisImpacto::with(['recursosHumanos','recibeInformacion','proporcionaInformacion'])->orderBy('id', 'DESC')->get();
+        $tecnologica =CuestionarioInfraestructuraTecnologica::with('cuestionario')->get();
+        $personas_contingencia =CuestionarioRecursosHumanos::with('cuestionario')->where('escenario','2')->get();
+       
+
+        // foreach($cuestionario as $persona){
+        //     dd($persona->diferencia_flujo_informacion[1]);
+        // }
+        // dd($cuestionario[1]->cantidad_proporciona_informacion);
+        
+        
+       
+    
+        return view('admin.analisis-impacto.matriz',compact('cuestionario','tecnologica','personas_contingencia'));
     }
 }

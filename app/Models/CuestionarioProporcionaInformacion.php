@@ -18,6 +18,7 @@ class CuestionarioProporcionaInformacion extends Model
         'extencion',
         'ubicacion',
         'cuestionario_id',
+        'interno_externo',
 
     ];
 }
