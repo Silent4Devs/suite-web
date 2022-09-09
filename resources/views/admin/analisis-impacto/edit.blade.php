@@ -601,7 +601,7 @@
                     <table class="table table_checkbox">
                         <TR style="color: rgb(0, 0, 0); text-align:center; height:65px;">
                             <TD>
-                                <label for="s1Checkbox">S1</label>
+                                <label for="s1Checkbox">SEMANA 1</label>
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="s1">
@@ -611,7 +611,7 @@
                             </TD>
                             <TD>
                                 <label for="s2Checkbox">
-                                    S2
+                                    SEMANA 2
                                 </label>
                                 <br>
                                 <div class="form-check">
@@ -621,7 +621,7 @@
                                 </div>
                             </TD>
                             <TD>
-                                <label for="s3Checkbox">S3</label>
+                                <label for="s3Checkbox">SEMANA 3</label>
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="s3">
@@ -630,7 +630,7 @@
                                 </div>
                             </TD>
                             <TD>
-                                <label for="s4Checkbox">S4</label>
+                                <label for="s4Checkbox">SEMANA 4</label>
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="s4">
@@ -648,10 +648,10 @@
                 </div>
 
                 <div class="text-center form-group col-12">
-                    <table class="table table-sm table_checkbox table-responsive">
-                        <TR style="color: rgb(0, 0, 0); text-align:center; font-size:10px; height:65px;">
+                    <table class="table table-sm table_checkbox">
+                        <TR style="color: rgb(0, 0, 0); text-align:center; height:65px;">
                             <TD>
-                                <label for="check_number_01">01</label>
+                                <label for="check_number_01">LUNES</label>
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d1">
@@ -660,7 +660,7 @@
                                 </div>
                             </TD>
                             <TD>
-                                <label for="check_number_02">02</label>
+                                <label for="check_number_02">MARTES</label>
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d2">
@@ -669,7 +669,7 @@
                                 </div>
                             </TD>
                             <TD>
-                                <label for="check_number_03">03</label>
+                                <label for="check_number_03">MIERCOLES</label>
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d3">
@@ -678,7 +678,7 @@
                                 </div>
                             </TD>
                             <TD>
-                                <label for="check_number_04">04</label>
+                                <label for="check_number_04">JUEVES</label>
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d4">
@@ -687,7 +687,7 @@
                                 </div>
                             </TD>
                             <TD>
-                                <label for="check_number_05">05</label>
+                                <label for="check_number_05">VIERNES</label>
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d5">
@@ -696,7 +696,7 @@
                                 </div>
                             </TD>
                             <TD>
-                                <label for="check_number_06">06</label>
+                                <label for="check_number_06">SABADO</label>
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d6">
@@ -705,7 +705,7 @@
                                 </div>
                             </TD>
                             <TD>
-                                <label for="check_number_07">07</label>
+                                <label for="check_number_07">DOMINGO</label>
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="d7">
@@ -713,7 +713,7 @@
                                         id="check_number_07" {{ old('d7', $cuestionario->d7) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
-                            <TD>
+                            {{-- <TD>
                                 <label for="check_number_08">08</label>
                                 <br>
                                 <div class="form-check">
@@ -929,7 +929,7 @@
                                         id="check_number_031" {{ old('d31', $cuestionario->d31) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
-                        </TR>
+                        </TR> --}}
                     </table>
                 </div>
 
@@ -1198,29 +1198,29 @@
                     <span class="badge badge-secondary mt-4" style="font-size: 21px">RPO:</span>
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_meses', 'Mes(es)') !!}
-                    {!! Form::number('flujo_meses', null, [
+                    {!! Form::label('rpo_mes', 'Mes(es)') !!}
+                    {!! Form::number('rpo_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_semanas', 'Semana(s)') !!}
-                    {!! Form::number('flujo_semanas', null, [
+                    {!! Form::label('rpo_semana', 'Semana(s)') !!}
+                    {!! Form::number('rpo_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_dias', 'Día(s)') !!}
-                    {!! Form::number('flujo_dias', null, [
+                    {!! Form::label('rpo_dia', 'Día(s)') !!}
+                    {!! Form::number('rpo_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_años', 'Horas(s)') !!}
-                    {!! Form::number('flujo_años', null, [
+                    {!! Form::label('rpo_hora', 'Horas(s)') !!}
+                    {!! Form::number('rpo_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
@@ -1234,29 +1234,29 @@
                     <span class="badge badge-secondary mt-4" style="font-size: 21px">RTO:</span>
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_meses', 'Mes(es)') !!}
-                    {!! Form::number('flujo_meses', null, [
+                    {!! Form::label('rto_mes', 'Mes(es)') !!}
+                    {!! Form::number('rto_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_semanas', 'Semana(s)') !!}
-                    {!! Form::number('flujo_semanas', null, [
+                    {!! Form::label('rto_semana', 'Semana(s)') !!}
+                    {!! Form::number('rto_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_dias', 'Día(s)') !!}
-                    {!! Form::number('flujo_dias', null, [
+                    {!! Form::label('rto_dia', 'Día(s)') !!}
+                    {!! Form::number('rto_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_años', 'Horas(s)') !!}
-                    {!! Form::number('flujo_años', null, [
+                    {!! Form::label('rto_hora', 'Horas(s)') !!}
+                    {!! Form::number('rto_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
@@ -1270,29 +1270,29 @@
                 </div>
 
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_meses', 'Mes(es)') !!}
-                    {!! Form::number('flujo_meses', null, [
+                    {!! Form::label('wrt_mes', 'Mes(es)') !!}
+                    {!! Form::number('wrt_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_semanas', 'Semana(s)') !!}
-                    {!! Form::number('flujo_semanas', null, [
+                    {!! Form::label('wrt_semana', 'Semana(s)') !!}
+                    {!! Form::number('wrt_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_dias', 'Día(s)') !!}
-                    {!! Form::number('flujo_dias', null, [
+                    {!! Form::label('wrt_dia', 'Día(s)') !!}
+                    {!! Form::number('wrt_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_años', 'Horas(s)') !!}
-                    {!! Form::number('flujo_años', null, [
+                    {!! Form::label('wrt_hora', 'Horas(s)') !!}
+                    {!! Form::number('wrt_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
@@ -1307,29 +1307,29 @@
                 </div>
 
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_meses', 'Mes(es)') !!}
-                    {!! Form::number('flujo_meses', null, [
+                    {!! Form::label('mtpd_mes', 'Mes(es)') !!}
+                    {!! Form::number('mtpd_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_semanas', 'Semana(s)') !!}
-                    {!! Form::number('flujo_semanas', null, [
+                    {!! Form::label('mtpd_semana', 'Semana(s)') !!}
+                    {!! Form::number('mtpd_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_dias', 'Día(s)') !!}
-                    {!! Form::number('flujo_dias', null, [
+                    {!! Form::label('mtpd_dia', 'Día(s)') !!}
+                    {!! Form::number('mtpd_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_años', 'Horas(s)') !!}
-                    {!! Form::number('flujo_años', null, [
+                    {!! Form::label('mtpd_hora', 'Horas(s)') !!}
+                    {!! Form::number('mtpd_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
                     ]) !!}

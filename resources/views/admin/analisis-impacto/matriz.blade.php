@@ -1,5 +1,14 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        .box_rotate {
+            transform: rotate(90deg);
+
+        }
+        .celdas_chicas{
+            padding: 2px !important;
+        }
+    </style>
     <div class="card">
         <div class="card-header">
             Mostrar Mátriz de Impacto
@@ -103,43 +112,354 @@
                     </div>
                 </div>
 
-                  <!-- Modal>2.0 2.0 Matriz BIA-->
-                  <div class="modal fade" id="matriz_bia" tabindex="-1" aria-labelledby="matriz_bia" aria-hidden="true">
+                <!-- Modal>2.0 2.0 Matriz BIA-->
+                <div class="modal fade" id="matriz_bia" tabindex="-1" aria-labelledby="matriz_bia" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">1.0 Procesos</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">2.0 Matriz BIA</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered table-responsive">
                                     <thead>
-                                        <tr style="background-color: #9C1A3B; font-size: 12px;">
-                                            <th colspan="7">Procesos</th>
+                                        <tr style="text-align:left !important; background-color: #9C1A3B; font-size: 11px;">
+                                            <th colspan="6">PROCESOS</th>
+                                            <th colspan="3">TITULAR DEL PROCESO</th>
+                                            <th colspan="1">PERIODICIDAD</th>
+                                            <th colspan="12">MESES</th>
+                                            <th colspan="4">SEMANAS</th>
+                                            <th colspan="7">DIAS</th>
+                                            <th colspan="24">HORAS</th>
+                                            <th colspan="5">TIEMPO DE EJECUCIÓN DEL PROCESO</th>
+                                            <th colspan="5">TIEMPOS DE RECUPERACIÓN</th>
+                                            <th colspan="4">IMPACTO OPERATIVO</th>
+                                            <th colspan="4">IMPACTO REGULATORIO</th>
+                                            <th colspan="4">IMPACTO EN LA REPUTACION / IMAGEN PÚBLICA O POLÍTICA</th>
+                                            <th colspan="4">IMPACTO SOCIAL</th>
+                                            <th colspan="3">VALORACIÓN DEL PROCESO</th>
                                         </tr>
-                                        <tr style="background-color: #8f8f8f; font-size: 12px;">
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Dirección</th>
-                                            <th scope="col">Área</th>
-                                            <th scope="col">Macroproceso</th>
-                                            <th scope="col">Proceso</th>
-                                            <th scope="col">Subproceso</th>
-                                            <th scope="col">CANTIDAD</th>
+                                        <tr
+                                            style="text-align:left !important; background-color: #8f8f8f; font-size: 11px;">
+                                            <th scope="col">#</th>
+                                            <th scope="col" style="min-width: 150px;">Dirección</th>
+                                            <th scope="col" style="min-width: 150px;">Área</th>
+                                            <th scope="col" style="min-width: 150px;">Nombre del Proceso</th>
+                                            <th scope="col" style="min-width: 150px;">Nombre del Subproceso</th>
+                                            <th scope="col" style="min-width: 200px;">Objetivo</th>
+                                            <th scope="col" style="min-width: 100px;">Nombre(s)</th>
+                                            <th scope="col" style="min-width: 100px;">Apellido Paterno</th>
+                                            <th scope="col" style="min-width: 100px;">Apellido Materno</th>
+                                            <th scope="col" style="min-width: 200px;">Periodicidad con que se genera el
+                                                proceso</th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">ENE</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">FEB</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">MAR</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">ABR</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">MAY</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">JUN</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">JUL</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">AGO</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">SEP</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">OCT</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">NOV</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">DIC</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">1a</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">2a</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">3a</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">4a</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">LUN</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">MAR</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">MIE</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">JUE</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">VIE</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">SAB</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">DOM</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">1</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">2</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">3</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">4</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">5</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">6</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">7</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">8</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">9</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">10</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">11</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">12</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">13</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">14</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">15</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">16</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">17</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">18</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">19</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">20</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">21</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">22</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">23</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">24</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">SEMANAS</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">DÍAS</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">HORAS</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">MINUTOS</div>
+                                            </th>
+                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">OTRO
+                                            </th>
+                                            <th scope="col">RPO (hrs)</th>
+                                            <th scope="col">RTO (hrs)</th>
+                                            <th scope="col">WRT(hrs)</th>
+                                            <th scope="col">MTPD(hrs)</th>
+                                            <th scope="col">Nivel RTO</th>
+                                            <th scope="col">
+                                                < 4 hrs</th>
+                                            <th scope="col">4-24 hrs</th>
+                                            <th scope="col">>24 hrs</th>
+                                            <th scope="col"  style="vertical-align:middle !important;">
+                                                <div class="box_rotate">Promedio</div>
+                                            </th>
+                                            <th scope="col">
+                                                < 4 hrs</th>
+                                            <th scope="col">4-24 hrs</th>
+                                            <th scope="col">>24 hrs</th>
+                                            <th scope="col" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">Promedio</div>
+                                            </th>
+                                            <th scope="col">
+                                                < 4 hrs</th>
+                                            <th scope="col">4-24 hrs</th>
+                                            <th scope="col">>24 hrs</th>
+                                            <th scope="col" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">Promedio</div>
+                                            </th>
+                                            <th scope="col">
+                                                < 4 hrs</th>
+                                            <th scope="col">4-24 hrs</th>
+                                            <th scope="col">>24 hrs</th>
+                                            <th scope="col" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">Promedio</div>
+                                            </th>
+                                            <th scope="col">Total de Impactos</th>
+                                            <th scope="col">Nivel de Impacto</th>
+                                            <th scope="col">Criticidad del proceso</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($cuestionario as $data)
-                                            <tr style="font-size: 11px;">
-                                                <th scope="row">{{ $data->id_proceso }}</th>
-                                                <td>{{ $data->direccion }}</td>
-                                                <td>{{ $data->area }}</td>
-                                                <td>{{ $data->macroproceso ?: 'N/A' }}</td>
-                                                <td>{{ $data->nombre_proceso }}</td>
-                                                <td>{{ $data->subproceso ?: 'N/A' }}</td>
-                                                <td>{{ $data->id ?: 'N/A' }}</td>
-                                            </tr>
+                                            <tr style="text-align:left !important;font-size: 11px;">
+                                                <th scope="row">P00{{ $data->id ?: 'No definido' }}</th>
+                                                <td>{{ $data->direccion ?: 'No definido' }}</td>
+                                                <td>{{ $data->area ?: 'No definido' }}</td>
+                                                <td style="text-align: left !important;">{{ $data->nombre_proceso ?: 'No definido' }}</td>
+                                                <td>{{ $data->subproceso ?: 'No definido' }}</td>
+                                                <td style="text-align: left !important;">{{ $data->objetivo_proceso ?: 'No definido' }}</td>
+                                                <td style="text-align: left !important;">{{ $data->titular_nombre ?: 'No definido' }}</td>
+                                                <td style="text-align: left !important;">{{ $data->titular_a_paterno ?: 'No definido' }}</td>
+                                                <td style="text-align: left !important;">{{ $data->titular_a_materno ?: 'No definido' }}</td>
+                                                <td>
+                                                    @if ($data->periodicidad == 1)
+                                                        Diario
+                                                    @elseif ($data->periodicidad == 2)
+                                                        Semanal
+                                                    @elseif ($data->periodicidad == 3)
+                                                        Mensual
+                                                    @elseif ($data->periodicidad == 4)
+                                                        Otro: {{ $data->p_otro_txt }}
+                                                    @else
+                                                        No definido
+                                                    @endif
+                                                </td>
+                                                <td style="text-align:center !important;">{{ $data->ene ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->feb ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->mar ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->abr ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->may ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->jun ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->jul ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->ago ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->sep ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->oct ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->nov ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->dic ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->s1 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->s2 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->s3 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->s4 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->d1 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->d2 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->d3 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->d4 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->d5 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->d6 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->d7 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h1 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h2 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h3 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h4 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h5 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h6 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h7 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h8 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h9 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h10 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h11 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h12 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h13 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h14 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h15 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h16 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h17 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h18 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h19 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h20 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h21 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h22 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h23 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->h24 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">
+                                                    {{ $data->periodicidad_diario ?: '-' }}</td>
+                                                <td style="text-align:center !important;">
+                                                    {{ $data->periodicidad_quincenal ?: '-' }}</td>
+                                                <td style="text-align:center !important;">
+                                                    {{ $data->periodicidad_mensual ?: '-' }}</td>
+                                                <td style="text-align:center !important;">
+                                                    {{ $data->periodicidad_otro ?: '-' }}</td>
+                                                <td style="text-align:center !important;">
+                                                    {{ $data->periodicidad_flujo_txt ?: '-' }}</td>
+                                                <td>{{ $data->rpo_horas ?: '-' }}</td>
+                                                <td>{{ $data->rto_horas ?: '-' }}</td>
+                                                <td>{{ $data->wrt_horas ?: '-' }}</td>
+                                                <td>{{ $data->mtpd_horas ?: '-' }}</td>
+                                                <td
+                                                    style="background-color:{{ $data->nivel_rto[0] }};color:{{ $data->nivel_rto[1] }}">
+                                                    {{ $data->nivel_rto[2] ?: '-' }}</td>
+                                                <td>{{ $data->operacion_q_1 ?: '-' }}</td>
+                                                <td>{{ $data->operacion_q_2 ?: '-' }}</td>
+                                                <td>{{ $data->operacion_q_3 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->operacion_promedio ?: '-' }}</td>
+                                                <td>{{ $data->regulatorio_q_1 ?: '-' }}</td>
+                                                <td>{{ $data->regulatorio_q_2 ?: '-' }}</td>
+                                                <td>{{ $data->regulatorio_q_3 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->regulatorio_promedio ?: '-' }}</td>
+                                                <td>{{ $data->reputacion_q_1 ?: '-' }}</td>
+                                                <td>{{ $data->reputacion_q_2 ?: '-' }}</td>
+                                                <td>{{ $data->reputacion_q_3 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->reputacion_promedio ?: '-' }}</td>
+                                                <td>{{ $data->social_q_1 ?: '-' }}</td>
+                                                <td>{{ $data->social_q_2 ?: '-' }}</td>
+                                                <td>{{ $data->social_q_3 ?: '-' }}</td>
+                                                <td style="text-align:center !important;">{{ $data->social_promedio ?: '-' }}</td>
+                                                <td>{{ $data->total_impactos ?: '-' }}</td>
+                                                <td
+                                                    style="background-color:{{ $data->nivel_impacto[0] }};color:{{ $data->nivel_impacto[1] }}">
+                                                    {{ $data->nivel_impacto[2] ?: '-' }}</td>
+                                                <td
+                                                    style="background-color:{{ $data->criticidad_proceso[0] }};color:{{ $data->criticidad_proceso[1] }}">
+                                                    {{ $data->criticidad_proceso[2] ?: '-' }}</td>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -219,11 +539,13 @@
                                                     <div style="text-align: left;">{{ $data->subproceso ?: 'N/A' }}</div>
                                                 </td>
                                                 <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">{{ $data->flujo_q_1 ?: 'No definido' }}
+                                                    <div style="text-align: left;">
+                                                        {{ $data->flujo_q_1 ?: 'No definido' }}
                                                     </div>
                                                 </td>
                                                 <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">{{ $data->flujo_q_2 ?: 'No definido' }}
+                                                    <div style="text-align: left;">
+                                                        {{ $data->flujo_q_2 ?: 'No definido' }}
                                                     </div>
                                                 </td>
                                                 <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
@@ -250,11 +572,13 @@
                                                 </td>
 
                                                 <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">{{ $data->flujo_q_4 ?: 'No definido' }}
+                                                    <div style="text-align: left;">
+                                                        {{ $data->flujo_q_4 ?: 'No definido' }}
                                                     </div>
                                                 </td>
                                                 <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">{{ $data->flujo_q_6 ?: 'No definido' }}
+                                                    <div style="text-align: left;">
+                                                        {{ $data->flujo_q_6 ?: 'No definido' }}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -283,9 +607,9 @@
                                             @php
                                                 $persona_proporciona_array = $data->proporcionaInformacion->shift();
                                             @endphp
-                                          
-                                                
-                                       
+
+
+
                                             <tr>
 
                                                 <td>
@@ -303,7 +627,7 @@
                                                 <td>
                                                     <div style="text-align: left;">Buscando..</div>
                                                 </td>
-                                                
+
                                                 <td>
                                                     <div style="text-align: left;">Buscando..</div>
                                                 </td>
@@ -386,7 +710,8 @@
                                                         {{ $data->cuestionario->subproceso ?: 'N/A' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->aplicativos ?: 'N/A' }}</div>
+                                                    <div style="text-align: left;">{{ $data->aplicativos ?: 'N/A' }}
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">{{ $data->sistemas ?: 'N/A' }}</div>
@@ -461,7 +786,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($personas_contingencia as $data)
-                                            <tr style="font-size: 11px;">
+                                            <tr style="font-size: 12px;">
                                                 <td scope="row">
                                                     <div style="text-align: left;">P00{{ $data->cuestionario->id }}</div>
                                                 </td>
@@ -490,7 +815,8 @@
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
-                                                        {{ $data->nombre }} {{ $data->a_paterno }} {{ $data->a_materno }}
+                                                        {{ $data->nombre }} {{ $data->a_paterno }}
+                                                        {{ $data->a_materno }}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -522,7 +848,8 @@
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_telefonia_normal ?: 'N/A' }}</div>
+                                                        {{ $data->cuestionario->cantidad_telefonia_normal ?: 'N/A' }}
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
@@ -531,7 +858,8 @@
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_impresora_normal ?: 'N/A' }}</div>
+                                                        {{ $data->cuestionario->cantidad_impresora_normal ?: 'N/A' }}
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
