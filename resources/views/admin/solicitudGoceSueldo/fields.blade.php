@@ -41,7 +41,7 @@
 
 <div class="row">
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('fecha_inicio', 'Día de inicio:', ['class' => 'required']) !!}
+        <i class="fa-solid fa-file-circle-check iconos-crear"></i>{!! Form::label('fecha_inicio', 'Fecha de inicio:', ['class' => 'required']) !!}
         {!! Form::date('fecha_inicio', null, [
             'class' => 'form-control',
             'placeholder' => 'Ingrese el la fecha en que inican su vacaciones...',
@@ -52,7 +52,7 @@
         @enderror
     </div>
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('fecha_fin', 'Día de fin:', ['class' => 'required']) !!}
+        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('fecha_fin', 'Fecha de fin:', ['class' => 'required']) !!}
         {!! Form::date('fecha_fin', null, [
             'class' => 'form-control',
             'placeholder' => 'Ingrese el la fecha en que terminan su vacaciones...',
@@ -71,7 +71,7 @@
 <div class="row">
     <div class="form-group col-sm-12">
         <label for="exampleFormControlTextarea1"> <i
-                class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios del solicitante:') !!}</label>
+                class="fas fa-file-alt iconos-crear"></i>{!! Form::label('descripcion', 'Comentarios para el aprobador:') !!}</label>
         <textarea class="form-control" id="edescripcion" name="descripcion" rows="2">{{ old('descripcion', $vacacion->descripcion) }}</textarea>
     </div>
 </div>
