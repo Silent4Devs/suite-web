@@ -102,13 +102,21 @@
                             <i class="bi bi-coin"></i><br><span>Permisos</span>
                         </a>
                     @endcan
+                    @php
+                        if ($solicitudes_pendientes == 0) {
+                            $mostrar_solicitudes = false;
+                        } else {
+                            $mostrar_solicitudes = true;
+                        }
+                    @endphp
                     @can('modulo_aprobacion_ausencia')
+                    <div  x-data="{ open: @js($mostrar_solicitudes) }">
                         <a href="{{ asset('admin/solicitud-vacaciones/menu') }}" class="btn_reporte"
                             style="position: relative; overflow: inherit !important">
                             <i class="bi bi-check-circle"></i><br>
                             Aprobaciones
                             <div id="circulo" style="display:inline-block;position:absolute; top:-60px; right:-13px;"
-                                class="offset-1 mt-5">
+                                class="offset-1 mt-5" x-show="open">
                                 <p> {{ $solicitudes_pendientes }}</p>
                             </div>
                         </a>

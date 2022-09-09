@@ -179,13 +179,24 @@
                             <i class="bi bi-clipboard-check"></i>
                             Reportes</a>
                     @endcan
+                    @php
+                        if($solicitudes_pendientes == 0){
+                            $mostrar_solicitudes = false;
+                        }else {
+                            $mostrar_solicitudes = true;
+                        }
+                    @endphp
                     @can('mi_perfil_modulo_solicitud_ausencia')
-                    <a href="#" id="b_solicitudes" onclick="almacenarMenuEnLocalStorage('solicitudes')" data-tabs="s_solicitudes">
-                        <i class="bi bi-clipboard-check"></i>
-                        Solicitudes
-                        <span class="indicador_numero" style=" background: rgb(100, 110, 220);">{{ $solicitudes_pendientes}}</span>
-                    </a>
-                @endcan
+                        <div  x-data="{ open: @js($mostrar_solicitudes) }">
+                            <a href="#" id="b_solicitudes" onclick="almacenarMenuEnLocalStorage('solicitudes')"
+                                data-tabs="s_solicitudes">
+                                <i class="bi bi-clipboard-check"></i>
+                                Solicitudes
+                                <span class="indicador_numero"
+                                    style=" background: rgb(100, 110, 220);" x-show="open">{{ $solicitudes_pendientes }}</span>
+                            </a>
+                        </div>
+                    @endcan
                 </div>
             @endif
             <div class="caja_caja_secciones">
@@ -231,12 +242,12 @@
                             </section>
                         @endcan
                         @can('mi_perfil_modulo_solicitud_ausencia')
-                        <section id="s_solicitudes" data-id="solicitudes">
-                            <div class="container">
-                                @include('admin.inicioUsuario.solicitudes')
-                            </div>
-                        </section>
-                    @endcan
+                            <section id="s_solicitudes" data-id="solicitudes">
+                                <div class="container">
+                                    @include('admin.inicioUsuario.solicitudes')
+                                </div>
+                            </section>
+                        @endcan
                     </div>
                 @else
                     @include('admin.inicioUsuario.agenda')
