@@ -4,8 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Livewire\InfraestructuraTecnologica;
+use App\Models\ajustesMatrizBIA;
 use App\Models\AnalisisImpacto;
 use App\Models\CuestionarioInfraestructuraTecnologica;
+use App\Models\CuestionarioProporcionaInformacion;
+use App\Models\CuestionarioRecibeInformacion;
 use App\Models\CuestionarioRecursosHumanos;
 use App\Models\Organizacion;
 use Flash;
@@ -16,14 +19,9 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisdeImpactoController extends Controller
 {
-    public function menu()
-    {
-        return view('admin.analisis-impacto.menu-buttons');
-    }
-
     public function index(Request $request)
     {
-        abort_if(Gate::denies('amenazas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_bia_cuestionario_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = AnalisisImpacto::orderByDesc('id')->get();
             $table = Datatables::of($query);
@@ -32,9 +30,9 @@ class AnalisisdeImpactoController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'amenazas_ver';
-                $editGate = 'amenazas_editar';
-                $deleteGate = 'amenazas_eliminar';
+                $viewGate = 'matriz_bia_cuestionario_ver_pendiente';
+                $editGate = 'matriz_bia_cuestionario_editar';
+                $deleteGate = 'matriz_bia_cuestionario_eliminar';
                 $crudRoutePart = 'analisis-impacto';
 
                 return view('partials.datatablesActions', compact(
@@ -95,6 +93,7 @@ class AnalisisdeImpactoController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cuestionario = new AnalisisImpacto();
 
         return view('admin.analisis-impacto.create', compact('cuestionario'));
@@ -102,29 +101,16 @@ class AnalisisdeImpactoController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('amenazas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        // $request->validate([
-        //     'nombre' => 'required|string',
-        //     'dias' => 'required|int',
-        //     'afectados' => 'required|int',
-        //     'tipo_conteo' => 'required|int',
-        //     'inicio_conteo' => 'required|int',
-        //     'incremento_dias' => 'required|int',
-        //     'periodo_corte' => 'required|int',
-        // ]);
-      
-
+        abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        
         $cuestionario = AnalisisImpacto::create($request->all());
-
-        // Flash::success('Cuestionario añadido satisfactoriamente.');
 
         return redirect()->route('admin.analisis-impacto.edit', ['id' => $cuestionario]);
     }
 
     public function show($id)
     {
-        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_bia_cuestionario_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cuestionario = AnalisisImpacto::find($id);
 
         return view('admin.analisis-impacto.show', compact('cuestionario'));
@@ -132,14 +118,12 @@ class AnalisisdeImpactoController extends Controller
 
     public function edit(Request $request, $id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_bia_cuestionario_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $cuestionario = AnalisisImpacto::find($id);
-        // dd($cuestionario);
 
         if (empty($cuestionario)) {
             Flash::error('Cuestionario no encontrado');
-
             return redirect(route('admin.analisis-impacto.index'));
         }
 
@@ -148,12 +132,10 @@ class AnalisisdeImpactoController extends Controller
 
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('amenazas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('matriz_bia_cuestionario_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $cuestionario = AnalisisImpacto::find($id);
-        // dd($request->all());
         $cuestionario->update($request->all());
-
         Flash::success('Cuestionario actualizado correctamente.');
 
         return redirect(route('admin.analisis-impacto.index'));
@@ -161,6 +143,7 @@ class AnalisisdeImpactoController extends Controller
 
     public function destroy($id)
     {
+        abort_if(Gate::denies('matriz_bia_cuestionario_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cuestionario = AnalisisImpacto::find($id);
         $cuestionario->delete();
 
@@ -169,20 +152,45 @@ class AnalisisdeImpactoController extends Controller
 
     public function matriz()
     {
-        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $cuestionario =AnalisisImpacto::with(['recursosHumanos','recibeInformacion','proporcionaInformacion'])->orderBy('id', 'DESC')->get();
-        $tecnologica =CuestionarioInfraestructuraTecnologica::with('cuestionario')->get();
-        $personas_contingencia =CuestionarioRecursosHumanos::with('cuestionario')->where('escenario','2')->get();
-       
+        abort_if(Gate::denies('matriz_bia_matriz'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $cuestionario = AnalisisImpacto::with(['recursosHumanos', 'recibeInformacion', 'proporcionaInformacion'])->orderBy('id', 'DESC')->get();
+        $tecnologica = CuestionarioInfraestructuraTecnologica::with('cuestionario')->get();
+        $personas_contingencia = CuestionarioRecursosHumanos::with('cuestionario')->where('escenario', '2')->get();
+        $proporciona_informacion =  CuestionarioProporcionaInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
+        $recibe_informacion =  CuestionarioRecibeInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
 
-        // foreach($cuestionario as $persona){
-        //     dd($persona->diferencia_flujo_informacion[1]);
-        // }
-        // dd($cuestionario[1]->cantidad_proporciona_informacion);
-        
-        
-       
-    
-        return view('admin.analisis-impacto.matriz',compact('cuestionario','tecnologica','personas_contingencia'));
+        return view('admin.analisis-impacto.matriz', compact('cuestionario', 'tecnologica', 'personas_contingencia','proporciona_informacion','recibe_informacion'));
+    }
+
+    public function menu()
+    {
+        abort_if(Gate::denies('matriz_bia_menu_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('admin.analisis-impacto.menu-buttons');
+    }
+
+    public function ajustes()
+    {
+      
+        abort_if(Gate::denies('matriz_bia_matriz_ajustes'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $id = 1;
+        $cuestionario =ajustesMatrizBIA::find($id);
+        if (empty($cuestionario)) {
+            Flash::error('Ajustes no encontrados');
+            return redirect(route('admin.analisis-impacto.matriz'));
+        }
+
+        return view('admin.analisis-impacto.ajustes', compact('cuestionario'));
+    }
+
+    public function updateAjustesBIA(Request $request, $id)
+    {
+        abort_if(Gate::denies('matriz_bia_matriz_ajustes_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+     
+        $cuestionario = ajustesMatrizBIA::find($id);
+        $cuestionario->update($request->all());
+        Flash::success('Ajustes aplicados satisfactoriamente.');
+
+        return redirect()->route('admin.analisis-impacto.matriz');
     }
 }

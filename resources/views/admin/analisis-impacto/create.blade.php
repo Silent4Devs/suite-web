@@ -3,7 +3,10 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario de Análisis de Impacto</a>
+            <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto (BIA)</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario</a>
         </li>
         <li class="breadcrumb-item active">Crear</li>
     </ol>

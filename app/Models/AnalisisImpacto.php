@@ -339,10 +339,14 @@ class AnalisisImpacto extends Model
 
     public function getTotalImpactosAttribute()
     {
-        $parametro_1 = $this->operacion_promedio * 5;
-        $parametro_2 = $this->regulatorio_promedio * 3;
-        $parametro_3 = $this->reputacion_promedio * 2;
-        $parametro_4 = $this->social_promedio * 1;
+        $impacto_operativo = ajustesMatrizBIA::pluck('impacto_operativo')->first();
+        $impacto_regulatorio = ajustesMatrizBIA::pluck('impacto_regulatorio')->first();
+        $impacto_reputacion = ajustesMatrizBIA::pluck('impacto_reputacion')->first();
+        $impacto_social = ajustesMatrizBIA::pluck('impacto_social')->first();
+        $parametro_1 = $this->operacion_promedio * $impacto_operativo;
+        $parametro_2 = $this->regulatorio_promedio * $impacto_regulatorio;
+        $parametro_3 = $this->reputacion_promedio * $impacto_reputacion;
+        $parametro_4 = $this->social_promedio * $impacto_social;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3 + $parametro_4);
         return round($promedio);
     }
@@ -455,7 +459,7 @@ class AnalisisImpacto extends Model
             $rowspan = $proporciona;
         }
         $diferencia =  $proporciona - $recibe;
-        return  [$diferencia, 1];
+        return  [$diferencia, 2];
     }
 
     // Appens 5.0 Requerimientos minimos
