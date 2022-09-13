@@ -243,7 +243,7 @@
         @if (auth()->user()->can('visitantes_acceder') ||
             auth()->user()->can('capital_humano_acceder') ||
             auth()->user()->can('analisis_de_riesgo_integral_acceder') ||
-            auth()->user()->can('sistema_de_gestion_acceder'))
+            auth()->user()->can('sistema_de_gestion_acceder')||auth()->user()->can('matriz_bia_menu_acceder'))
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
             </li>
