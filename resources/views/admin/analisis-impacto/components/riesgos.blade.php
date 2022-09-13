@@ -11,7 +11,7 @@
     @endcan
     @can('vulnerabilidades_acceder')
         <li>
-            <a href="{{ route('admin.vulnerabilidads.index') }}">
+            <a href="{{ route('admin.analisis-impacto.matriz') }}">
                 <div>
                     <i class="fas fa-border-none"></i><br>
                   Matriz BIA

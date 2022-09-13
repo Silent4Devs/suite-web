@@ -21,4 +21,9 @@ class CuestionarioProporcionaInformacion extends Model
         'interno_externo',
 
     ];
+
+    public function cuestionario()
+    {
+        return $this->belongsTo(AnalisisImpacto::class, 'cuestionario_id', 'id');
+    }
 }
