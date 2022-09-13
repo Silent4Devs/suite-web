@@ -156,13 +156,17 @@ Breadcrumbs::for('admin.analisis-riesgos.menu', function ($trail) {
     $trail->push('Menú');
 });
 Breadcrumbs::for('admin.analisis-impacto.menu', function ($trail) {
-    $trail->push('Análisis de de Impacto');
+    $trail->push('Análisis de Impacto (BIA)');
     $trail->push('Menú');
 });
 
 Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
-    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
-    $trail->push('Matriz de Riesgos', route('admin.analisis-riesgos.index'));
+    $trail->push('Análisis de Impacto (BIA)', route('admin.analisis-impacto.menu'));
+    $trail->push('Cuestionario', route('admin.analisis-impacto.index'));
+});
+Breadcrumbs::for('admin.BIA.Cuestionario.index', function ($trail) {
+    $trail->push('Análisis de ', route('admin.analisis-riesgos.menu'));
+    $trail->push('Amenazas', route('admin.amenazas.index'));
 });
 
 Breadcrumbs::for('admin.riesgosoportunidades.index', function ($trail) {

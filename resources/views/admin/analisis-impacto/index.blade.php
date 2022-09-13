@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    {{ Breadcrumbs::render('admin.amenazas.index') }}
+    {{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
 
     <style>
         .btn_cargar {
@@ -45,11 +45,7 @@
 
         {{-- <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
         href="{{ route('admin.matriz-mapa.SistemaGestion', ['idAnalisis' => $id_matriz]) }}">Gráfica</a> --}}
-        <div class="row">
-            <div class="col-sm-3 offset-9 mt-3" >
-            <a class="btn btn-success" href="{{ route('admin.analisis-impacto.matriz') }}"><i class="fas fa-border-none"></i> Matríz</a>
-            </div>
-        </div>
+     
 
         @can('amenazas_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
