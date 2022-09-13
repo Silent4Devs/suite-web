@@ -65,12 +65,15 @@
     }
 </style>
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario de Análisis de Impacto</a>
-        </li>
-        <li class="breadcrumb-item active">Editar</li>
-    </ol>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto (BIA)</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario</a>
+    </li>
+    <li class="breadcrumb-item active">Editar</li>
+</ol>
     <h5 class="col-12 titulo_general_funcion">Editar: Cuestionario de Análisis de Impacto</h5>
     <div class="mt-4 card">
         <div class="card-body">

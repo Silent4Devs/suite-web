@@ -1113,6 +1113,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
     Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
 
+    Route::get('analisis-impacto/ajustes', 'AnalisisdeImpactoController@ajustes')->name('analisis-impacto.ajustes');
+    Route::put('analisis-impacto/{id}/updateAjustesBIA', 'AnalisisdeImpactoController@updateAjustesBIA')->name('analisis-impacto.updateAjustesBIA');
     Route::get('analisis-impacto/matriz', 'AnalisisdeImpactoController@matriz')->name('analisis-impacto.matriz');
     Route::delete('analisis-impacto/destroy', 'AnalisisdeImpactoController@massDestroy')->name('analisis-impacto.massDestroy');
     Route::get('analisis-impacto/{id}/edit', 'AnalisisdeImpactoController@edit')->name('analisis-impacto.edit');

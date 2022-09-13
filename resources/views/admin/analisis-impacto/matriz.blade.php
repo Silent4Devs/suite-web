@@ -5,24 +5,177 @@
             transform: rotate(90deg);
 
         }
-        .celdas_chicas{
+
+        .celdas_chicas {
             padding: 2px !important;
         }
+
+        div.nav .nav-link {
+            color: #345183;
+        }
+
+        .nav-tabs .nav-link.active {
+            border-top: 2px solid #345183;
+        }
+
+        div.tab-pane ul {
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        div.tab-pane li {
+            list-style: none;
+            width: 150px;
+            height: 150px;
+            box-sizing: border-box;
+            position: relative;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        div.tab-pane li i {
+            font-size: 30pt;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        div.tab-pane a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #eee;
+            color: #345183;
+            border-radius: 6px;
+            box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
+            transition: 0.1s;
+            padding: 7px;
+        }
+
+        div.tab-pane a:hover {
+            text-decoration: none !important;
+            color: #345183;
+            border: 1px solid #345183;
+            box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
+            background-color: #fff;
+            +
+        }
+
+        a:hover {
+            text-decoration: none !important;
+        }
+
+        .ventana_menu {
+            width: calc(100% - 40px);
+            background-color: #fff;
+            position: absolute;
+            margin: auto;
+            display: none;
+            top: 35px;
+            z-index: 3;
+            height: calc(100% - 40px);
+
+        }
     </style>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto (BIA)</a>
+        </li>
+        <li class="breadcrumb-item active">Matriz</li>
+    </ol>
     <div class="card">
         <div class="card-header">
             Mostrar Mátriz de Impacto
+
         </div>
+        @include('flash::message')
+        <div class="row">
+            <div class="col-sm-3 offset-9 mt-3">
+                <a class="btn btn-success" href="{{ route('admin.analisis-impacto.ajustes') }}"><i class="bi bi-gear"></i>
+                    Ajustar parámetros </a>
+            </div>
+        </div>
+
 
         <div class="card-body">
             <div class="form-group">
-                <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.analisis-impacto.index') }}">
-                        {{ trans('global.back_to_list') }}
-                    </a>
+
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane mb-4 fade show active" id="nav-empleados" role="tabpanel"
+                        aria-labelledby="nav-empleados-tab">
+                        <ul class="mt-4">
+
+                            <li>
+                                <a data-toggle="modal" data-target="#procesos">
+                                    <div>
+                                        <i class="bi bi-bar-chart-steps"></i><br>
+                                        1.0
+                                        <br>Procesos
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="modal" data-target="#matriz_bia">
+                                    <div>
+                                        <i class="bi bi-bounding-box"></i><br>
+                                        2.0
+                                        <br>Matriz BIA
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="modal" data-target="#entradas_salidas">
+                                    <div>
+                                        <i class="bi bi-arrow-down-up"></i><br>
+                                        3.0
+                                        <br>Entradas y Salidas
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="modal" data-target="#tecnologica">
+                                    <div>
+                                        <i class="bi bi-cpu"></i><br>
+                                        4.0
+                                        <br>Inf. Tecnológica
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="modal" data-target="#requerimientos_minimos">
+                                    <div>
+                                        <i class="bi bi-clipboard-check"></i><br>
+                                        5.0
+                                        <br>Req. Minimos
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="modal" data-target="#respaldo">
+                                    <div>
+                                        <i class="bi bi-hdd-network"></i><br>
+                                        6.0
+                                        <br>Respaldo-Registros vitales
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
                 </div>
 
-                <div class="row">
+                {{-- <div class="row">
                     <!-- Button trigger modal -->
                     <div class="col-sm-2">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#procesos">
@@ -61,7 +214,7 @@
                             <br>Respaldo-registros vitales
                         </button>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Modal>1.0 Procesos-->
                 <div class="modal fade" id="procesos" tabindex="-1" aria-labelledby="procesos" aria-hidden="true">
@@ -154,160 +307,212 @@
                                             <th scope="col" style="min-width: 100px;">Apellido Materno</th>
                                             <th scope="col" style="min-width: 200px;">Periodicidad con que se genera el
                                                 proceso</th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">ENE</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">FEB</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">MAR</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">ABR</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">MAY</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">JUN</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">JUL</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">AGO</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">SEP</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">OCT</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">NOV</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">DIC</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">1a</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">2a</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">3a</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">4a</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">LUN</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">MAR</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">MIE</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">JUE</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">VIE</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">SAB</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">DOM</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">1</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">2</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">3</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">4</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">5</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">6</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">7</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">8</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">9</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">10</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">11</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">12</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">13</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">14</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">15</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">16</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">17</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">18</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">19</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">20</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">21</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">22</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">23</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas"  style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">24</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">SEMANAS</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">DÍAS</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">HORAS</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">MINUTOS</div>
                                             </th>
-                                            <th scope="col" class="celdas_chicas" style="vertical-align:middle !important;">
+                                            <th scope="col" class="celdas_chicas"
+                                                style="vertical-align:middle !important;">
                                                 <div class="box_rotate">OTRO
                                             </th>
                                             <th scope="col">RPO (hrs)</th>
@@ -317,28 +522,28 @@
                                             <th scope="col">Nivel RTO</th>
                                             <th scope="col">
                                                 < 4 hrs</th>
-                                            <th scope="col">4-24 hrs</th>
-                                            <th scope="col">>24 hrs</th>
-                                            <th scope="col"  style="vertical-align:middle !important;">
-                                                <div class="box_rotate">Promedio</div>
-                                            </th>
-                                            <th scope="col">
-                                                < 4 hrs</th>
-                                            <th scope="col">4-24 hrs</th>
+                                            <th scope="col" style="min-width: 60px;">4-24 hrs</th>
                                             <th scope="col">>24 hrs</th>
                                             <th scope="col" style="vertical-align:middle !important;">
                                                 <div class="box_rotate">Promedio</div>
                                             </th>
                                             <th scope="col">
                                                 < 4 hrs</th>
-                                            <th scope="col">4-24 hrs</th>
+                                            <th scope="col" style="min-width: 60px;">4-24 hrs</th>
                                             <th scope="col">>24 hrs</th>
                                             <th scope="col" style="vertical-align:middle !important;">
                                                 <div class="box_rotate">Promedio</div>
                                             </th>
                                             <th scope="col">
                                                 < 4 hrs</th>
-                                            <th scope="col">4-24 hrs</th>
+                                            <th scope="col" style="min-width: 60px;">4-24 hrs</th>
+                                            <th scope="col">>24 hrs</th>
+                                            <th scope="col" style="vertical-align:middle !important;">
+                                                <div class="box_rotate">Promedio</div>
+                                            </th>
+                                            <th scope="col">
+                                                < 4 hrs</th>
+                                            <th scope="col" style="min-width: 60px;">4-24 hrs</th>
                                             <th scope="col">>24 hrs</th>
                                             <th scope="col" style="vertical-align:middle !important;">
                                                 <div class="box_rotate">Promedio</div>
@@ -354,12 +559,17 @@
                                                 <th scope="row">P00{{ $data->id ?: 'No definido' }}</th>
                                                 <td>{{ $data->direccion ?: 'No definido' }}</td>
                                                 <td>{{ $data->area ?: 'No definido' }}</td>
-                                                <td style="text-align: left !important;">{{ $data->nombre_proceso ?: 'No definido' }}</td>
+                                                <td style="text-align: left !important;">
+                                                    {{ $data->nombre_proceso ?: 'No definido' }}</td>
                                                 <td>{{ $data->subproceso ?: 'No definido' }}</td>
-                                                <td style="text-align: left !important;">{{ $data->objetivo_proceso ?: 'No definido' }}</td>
-                                                <td style="text-align: left !important;">{{ $data->titular_nombre ?: 'No definido' }}</td>
-                                                <td style="text-align: left !important;">{{ $data->titular_a_paterno ?: 'No definido' }}</td>
-                                                <td style="text-align: left !important;">{{ $data->titular_a_materno ?: 'No definido' }}</td>
+                                                <td style="text-align: left !important;">
+                                                    {{ $data->objetivo_proceso ?: 'No definido' }}</td>
+                                                <td style="text-align: left !important;">
+                                                    {{ $data->titular_nombre ?: 'No definido' }}</td>
+                                                <td style="text-align: left !important;">
+                                                    {{ $data->titular_a_paterno ?: 'No definido' }}</td>
+                                                <td style="text-align: left !important;">
+                                                    {{ $data->titular_a_materno ?: 'No definido' }}</td>
                                                 <td>
                                                     @if ($data->periodicidad == 1)
                                                         Diario
@@ -438,21 +648,35 @@
                                                     style="background-color:{{ $data->nivel_rto[0] }};color:{{ $data->nivel_rto[1] }}">
                                                     {{ $data->nivel_rto[2] ?: '-' }}</td>
                                                 <td>{{ $data->operacion_q_1 ?: '-' }}</td>
-                                                <td>{{ $data->operacion_q_2 ?: '-' }}</td>
+                                                <td style="text-align: center !important;">
+                                                    {{ $data->operacion_q_2 ?: '-' }}</td>
                                                 <td>{{ $data->operacion_q_3 ?: '-' }}</td>
-                                                <td style="text-align:center !important;">{{ $data->operacion_promedio ?: '-' }}</td>
+                                                <td style="text-align:center !important;">
+                                                    {{ $data->operacion_promedio ?: '-' }}</td>
                                                 <td>{{ $data->regulatorio_q_1 ?: '-' }}</td>
-                                                <td>{{ $data->regulatorio_q_2 ?: '-' }}</td>
+                                                <td style="text-align: center !important;">
+                                                    {{ $data->regulatorio_q_2 ?: '-' }}</td>
                                                 <td>{{ $data->regulatorio_q_3 ?: '-' }}</td>
-                                                <td style="text-align:center !important;">{{ $data->regulatorio_promedio ?: '-' }}</td>
+                                                <td
+                                                    style="text-align:center
+                                                    !important;">
+                                                    {{ $data->regulatorio_promedio ?: '-' }}</td>
                                                 <td>{{ $data->reputacion_q_1 ?: '-' }}</td>
-                                                <td>{{ $data->reputacion_q_2 ?: '-' }}</td>
+                                                <td style="text-align: center !important;">
+                                                    {{ $data->reputacion_q_2 ?: '-' }}</td>
                                                 <td>{{ $data->reputacion_q_3 ?: '-' }}</td>
-                                                <td style="text-align:center !important;">{{ $data->reputacion_promedio ?: '-' }}</td>
+                                                <td
+                                                    style="text-align:center
+                                                    !important;">
+                                                    {{ $data->reputacion_promedio ?: '-' }}</td>
                                                 <td>{{ $data->social_q_1 ?: '-' }}</td>
-                                                <td>{{ $data->social_q_2 ?: '-' }}</td>
+                                                <td style="text-align: center !important;">{{ $data->social_q_2 ?: '-' }}
+                                                </td>
                                                 <td>{{ $data->social_q_3 ?: '-' }}</td>
-                                                <td style="text-align:center !important;">{{ $data->social_promedio ?: '-' }}</td>
+                                                <td
+                                                    style="text-align:center
+                                                    !important;">
+                                                    {{ $data->social_promedio ?: '-' }}</td>
                                                 <td>{{ $data->total_impactos ?: '-' }}</td>
                                                 <td
                                                     style="background-color:{{ $data->nivel_impacto[0] }};color:{{ $data->nivel_impacto[1] }}">
@@ -478,14 +702,18 @@
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">3.0 Entradas y salidas</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">3.0 Entradas y Salidas</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
+
                                 <table class="table table-bordered table-responsive">
                                     <thead>
+                                        <tr style="background-color: #9C1A3B; font-size: 12px;">
+                                            <th colspan="13">Propociona Información</th>
+                                        </tr>
                                         <tr style="background-color: #9C1A3B; font-size: 12px;">
                                             <th scope="col">#</th>
                                             <th scope="col" style="min-width: 200px;">Dirección</th>
@@ -497,20 +725,91 @@
                                             <th scope="col" style="min-width: 200px;">Empresa, Área, Sistema o Proceso
                                                 de
                                                 Origen</th>
-                                            <th scope="col">Interno / Externo</th>
-                                            <th scope="col">¿Quién le proporciona esta información?</th>
-                                            <th scope="col">Puesto</th>
+                                            <th scope="col" style="min-width: 100px;">Interno / Externo</th>
+                                            <th scope="col" style="min-width: 200px;">¿Quién le proporciona esta información?</th>
+                                            <th scope="col" style="min-width: 150px;">Puesto</th>
                                             <th scope="col">Correo electrónico</th>
                                             <th scope="col">Ext.</th>
                                             <th scope="col">Ubicación</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($proporciona_informacion as $data)
+                                            <tr style="font-size: 11px;">
+                                                <td>
+                                                    <div style="text-align: left;">P00{{ $data->cuestionario->id }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->direccion }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->area }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->nombre_proceso }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->subproceso ?: 'N/A' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->cuestionario->flujo_q_1 ?: 'No definido' }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->cuestionario->flujo_q_2 ?: 'No definido' }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->interno_externo ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->nombre ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->puesto ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->correo_electronico ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->extencion ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->ubicacion ?: 'No definido' }}</div>
+                                                </td>
+                                            </tr>
+                                         
+                                        @endforeach
+                                    </tbody>
+                                </table><br>
+
+
+                                <table class="table table-bordered table-responsive">
+                                    <thead>
+                                        <tr style="background-color: #9C1A3B; font-size: 12px;">
+                                            <th colspan="16">Recibe Información</th>
+                                        </tr>
+                                        <tr style="background-color: #9C1A3B; font-size: 12px;">
+                                            <th scope="col">#</th>
+                                            <th scope="col" style="min-width: 200px;">Dirección</th>
+                                            <th scope="col" style="min-width: 200px;">Área</th>
+                                            <th scope="col" style="min-width: 200px;">Proceso</th>
+                                            <th scope="col">Subproceso</th>
+                                            <th scope="col" style="min-width: 200px;">Insumo/ Entrada
+                                                (Documentos, Correo electrónico, Oficios, Reportes, etc.)</th>
+                                            <th scope="col" style="min-width: 200px;">Empresa, Área, Sistema o Proceso
+                                                de
+                                                Origen</th>
                                             <th scope="col" style="min-width: 200px;">De que manera se recibe la
                                                 información
                                                 (Entrega Física / Correo Electrónico / Consulta en Aplicativo o Base de
                                                 Datos / Consulta en Portal Web)</th>
                                             <th scope="col" style="min-width: 200px;">Salida
                                                 (Documentos, Correo electrónico, Oficios, Reportes, etc.)</th>
-                                            <th scope="col">Interno / Externo</th>
-                                            <th scope="col">Nombre</th>
+                                            <th scope="col" style="min-width: 100px;">Interno / Externo</th>
+                                            <th scope="col" style="min-width: 200px;">Nombre</th>
                                             <th scope="col">Puesto</th>
                                             <th scope="col">Correo electrónico:</th>
                                             <th scope="col">Ext.</th>
@@ -521,130 +820,63 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($cuestionario as $data)
+                                        @foreach ($recibe_informacion as $data)
                                             <tr style="font-size: 11px;">
-                                                <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">P00{{ $data->id }}</div>
-                                                </td>
-                                                <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">{{ $data->direccion }}</div>
-                                                </td>
-                                                <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">{{ $data->area }}</div>
-                                                </td>
-                                                <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">{{ $data->nombre_proceso }}</div>
-                                                </td>
-                                                <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">{{ $data->subproceso ?: 'N/A' }}</div>
-                                                </td>
-                                                <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">
-                                                        {{ $data->flujo_q_1 ?: 'No definido' }}
-                                                    </div>
-                                                </td>
-                                                <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">
-                                                        {{ $data->flujo_q_2 ?: 'No definido' }}
-                                                    </div>
-                                                </td>
-                                                <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">Interno</div>
-                                                </td>
-                                                @php
-                                                    $persona_proporciona = $data->proporcionaInformacion->first();
-                                                @endphp
                                                 <td>
-                                                    <div style="text-align: left;">{{ $persona_proporciona->nombre }}
+                                                    <div style="text-align: left;">P00{{ $data->cuestionario->id }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->direccion }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->area }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->nombre_proceso }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->subproceso ?: 'N/A' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->cuestionario->flujo_q_1 ?: 'No definido' }}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-
-                                                <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
                                                     <div style="text-align: left;">
-                                                        {{ $data->flujo_q_4 ?: 'No definido' }}
-                                                    </div>
-                                                </td>
-                                                <td rowspan="{{ $data->diferencia_flujo_informacion[1] }}">
-                                                    <div style="text-align: left;">
-                                                        {{ $data->flujo_q_6 ?: 'No definido' }}
+                                                        {{ $data->cuestionario->flujo_q_2 ?: 'No definido' }}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-                                                <td rowspan="2">
                                                     <div style="text-align: left;">
-                                                        {{ $data->flujo_q_10 ?: 'No definido' }}</div>
-                                                </td>
-                                            </tr>
-                                            @php
-                                                $persona_proporciona_array = $data->proporcionaInformacion->shift();
-                                            @endphp
-
-
-
-                                            <tr>
-
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
+                                                        {{ $data->cuestionario->flujo_q_4 ?: 'No definido' }}
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">Buscando..</div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->cuestionario->flujo_q_6 ?: 'No definido' }}
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">Buscando..</div>
+                                                    <div style="text-align: left;">{{ $data->interno_externo ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">Buscando..</div>
+                                                    <div style="text-align: left;">{{ $data->nombre ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
+                                                    <div style="text-align: left;">{{ $data->puesto ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">Buscando..</div>
+                                                    <div style="text-align: left;">{{ $data->correo_electronico ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">Buscando..</div>
+                                                    <div style="text-align: left;">{{ $data->extencion ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">Buscando..</div>
+                                                    <div style="text-align: left;">{{ $data->ubicacion ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">Buscando..</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">Buscando..</div>
+                                                    <div style="text-align: left;">{{ $data->cuestionario->flujo_q_10 ?: 'No definido' }}</div>
                                                 </td>
                                             </tr>
                                         @endforeach
