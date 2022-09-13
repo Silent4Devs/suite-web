@@ -243,7 +243,8 @@
         @if (auth()->user()->can('visitantes_acceder') ||
             auth()->user()->can('capital_humano_acceder') ||
             auth()->user()->can('analisis_de_riesgo_integral_acceder') ||
-            auth()->user()->can('sistema_de_gestion_acceder')||auth()->user()->can('matriz_bia_menu_acceder'))
+            auth()->user()->can('sistema_de_gestion_acceder') ||
+            auth()->user()->can('matriz_bia_menu_acceder'))
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
             </li>
@@ -393,10 +394,10 @@
                 </a>
             </li>
         @endcan
-        @can('analisis_de_riesgo_integral_acceder')
+        @can('matriz_bia_menu_acceder')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.analisis-impacto.menu') }}"
-                    class="c-sidebar-nav-link {{ request()->is('admin/matriz-riesgos') || request()->is('admin/matriz-riesgos*') ? 'active' : '' }}">
+                    class="c-sidebar-nav-link {{ request()->is('admin/analisis-impacto-menu/') || request()->is('admin/analisis-impacto/*') ? 'active' : '' }}">
                     <i class="fas fa-traffic-light iconos_menu letra_blanca"></i>
                     <font class="letra_blanca"> Análisis de Impacto (BIA) </font>
                 </a>
