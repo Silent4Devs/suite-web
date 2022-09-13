@@ -1,5 +1,5 @@
 <ul class="mt-2">
-    @can('amenazas_acceder')
+    @can('matriz_bia_cuestionario_acceder')
         <li>
             <a href="{{ route('admin.analisis-impacto.index') }}">
                 <div>
@@ -9,15 +9,15 @@
             </a>
         </li>
     @endcan
-    @can('vulnerabilidades_acceder')
+    @can('matriz_bia_matriz')
         <li>
             <a href="{{ route('admin.analisis-impacto.matriz') }}">
                 <div>
                     <i class="fas fa-border-none"></i><br>
-                  Matriz BIA
+                    Matriz BIA
                 </div>
             </a>
         </li>
     @endcan
-   
+
 </ul>
