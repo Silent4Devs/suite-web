@@ -22,6 +22,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RecursosController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait,ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -91,8 +92,12 @@ class RecursosController extends Controller
 
         $users = User::get();
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.recursos.index', compact('users', 'teams'));
+
+        return view('admin.recursos.index', compact('users', 'teams','organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()

@@ -10,11 +10,14 @@ use App\Models\PartesInteresada;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
+use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class PartesInteresadasController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('partes_interesadas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -51,8 +54,11 @@ class PartesInteresadasController extends Controller
         }
 
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.partesInteresadas.index', compact('teams'));
+        return view('admin.partesInteresadas.index', compact('teams','organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()

@@ -15,12 +15,13 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class ConcientizacionSgiController extends Controller
 {
-    use MediaUploadingTrait;
+    use ObtenerOrganizacion, MediaUploadingTrait;
 
     public function index(Request $request)
     {
@@ -80,8 +81,12 @@ class ConcientizacionSgiController extends Controller
 
         $areas = Area::get();
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.concientizacionSgis.index', compact('areas', 'teams'));
+
+        return view('admin.concientizacionSgis.index', compact('areas', 'teams','organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()

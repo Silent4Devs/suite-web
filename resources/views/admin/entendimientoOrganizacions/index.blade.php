@@ -1,39 +1,41 @@
 @extends('layouts.admin')
 @section('content')
     <style>
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
+
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
         .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
             color: #345183;
             text-align: center;
             padding: 0;
-            width: 45px;
-            height: 45px;
+            width: 35px;
+            height: 35px;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 0 !important;
-            margin-right: 10px !important;
+            margin-left: 5px !important;
         }
-
-        .btn_cargar:hover {
-            color: #fff;
-            background: #345183;
-        }
-
-        .btn_cargar i {
-            font-size: 15pt;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .agregar {
-            margin-right: 15px;
-        }
-
     </style>
 
 
@@ -123,22 +125,22 @@
                         columns: ['th:not(:last-child):visible']
                     }
                 },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Entendimiento a la Organizacion ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [5, 20, 5, 20];
-                        // doc.styles.tableHeader.fontSize = 6.5;
-                        // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
+                // {
+                //     extend: 'pdfHtml5',
+                //     title: `Entendimiento a la Organizacion ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar PDF',
+                //     orientation: 'portrait',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible']
+                //     },
+                //     customize: function(doc) {
+                //         doc.pageMargins = [5, 20, 5, 20];
+                //         // doc.styles.tableHeader.fontSize = 6.5;
+                //         // doc.defaultStyle.fontSize = 6.5; //<-- set fontsize to 16 instead of 10
+                //     }
+                // },
                 {
                     extend: 'print',
                     title: `Entendimiento a la Organizacion ${new Date().toLocaleDateString().trim()}`,
@@ -172,34 +174,36 @@
             ];
             @can('analisis_foda_agregar')
                 let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                titleAttr: 'Agregar enlace a ejecutar',
-                url: "{{ route('admin.entendimiento-organizacions.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config){
-                let {url} = config;
-                window.location.href = url;
-                }
+                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
+                    titleAttr: 'Agregar enlace a ejecutar',
+                    url: "{{ route('admin.entendimiento-organizacions.create') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnExport = {
-                text: '<i class="fas fa-download"></i>',
-                titleAttr: 'Descargar plantilla',
-                className: "btn btn_cargar" ,
-                url:"{{ route('descarga-foda') }}",
-                action: function(e, dt, node, config) {
-                let {
-                url
-                } = config;
-                window.location.href = url;
-                }
+                    text: '<i class="fas fa-download"></i>',
+                    titleAttr: 'Descargar plantilla',
+                    className: "btn btn_cargar",
+                    url: "{{ route('descarga-foda') }}",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
                 };
                 let btnImport = {
-                text: '<i class="fas fa-file-upload"></i>',
-                titleAttr: 'Importar datos',
-                className: "btn btn_cargar",
-                action: function(e, dt, node, config) {
-                $('#xslxImportModal').modal('show');
-                }
+                    text: '<i class="fas fa-file-upload"></i>',
+                    titleAttr: 'Importar datos',
+                    className: "btn btn_cargar",
+                    action: function(e, dt, node, config) {
+                        $('#xslxImportModal').modal('show');
+                    }
                 };
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
@@ -208,29 +212,39 @@
             @can('analisis_foda_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
-                text: deleteButtonTrans,
-                url: "{{ route('admin.entendimiento-organizacions.massDestroy') }}",
-                className: 'btn-danger',
-                action: function (e, dt, node, config) {
-                var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-                return entry.id
-                });
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.entendimiento-organizacions.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).data(), function(entry) {
+                            return entry.id
+                        });
 
-                if (ids.length === 0) {
-                alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-                return
-                }
+                            return
+                        }
 
-                if (confirm('{{ trans('global.areYouSure') }}')) {
-                $.ajax({
-                headers: {'x-csrf-token': _token},
-                method: 'POST',
-                url: config.url,
-                data: { ids: ids, _method: 'DELETE' }})
-                .done(function () { location.reload() })
-                }
-                }
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
                 }
                 //dtButtons.push(deleteButton)
             @endcan
@@ -272,7 +286,8 @@
             let table = $('.datatable-EntendimientoOrganizacion').DataTable(dtOverrideGlobals);
             document.querySelector('.dataTables_scrollBody').addEventListener('click', function(event) {
                 console.log(event.target);
-                if (event.target.tagName === 'I' && event.target.getAttribute('data-action') === 'copiaFoda') {
+                if (event.target.tagName === 'I' && event.target.getAttribute('data-action') ===
+                    'copiaFoda') {
                     let id = event.target.dataset.id;
                     let url = `{{ route('admin.entendimiento-organizacions.duplicarFoda') }}`;
                     Swal.fire({
@@ -280,11 +295,11 @@
                         text: "El análisis será copiado con el nombre ingresado",
                         icon: 'question',
                         input: 'text',
-                        inputAttributes:{
-                            autocapitalize:'off'
+                        inputAttributes: {
+                            autocapitalize: 'off'
                         },
                         inputValidator: (value) => {
-                            if(value.trim().length < 3){
+                            if (value.trim().length < 3) {
                                 return 'El nombre del análisis debe tener al menos 3 caracteres'
                             }
                         },
@@ -299,11 +314,11 @@
                                     headers: {
                                         'X-CSRF-TOKEN': _token,
                                         'Content-Type': 'application/json',
-                                         Accept: 'application/json'
+                                        Accept: 'application/json'
                                     },
                                     body: JSON.stringify({
                                         id,
-                                        nombreFoda:login
+                                        nombreFoda: login
                                     })
                                 })
                                 .then(response => {
