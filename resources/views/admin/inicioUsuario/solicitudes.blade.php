@@ -102,6 +102,11 @@
                             <i class="bi bi-coin"></i><br><span>Permisos</span>
                         </a>
                     @endcan
+                    {{-- @can('mi_perfil_modulo_solicitud_ausencia')
+                        <a href="{{ asset('admin/envio-documentos') }}" class="btn_reporte">
+                          <i class="bi bi-send"></i></><br><span>Mensajeria</span>
+                        </a>
+                    @endcan --}}
                     @php
                         if ($solicitudes_pendientes == 0) {
                             $mostrar_solicitudes = false;
@@ -110,38 +115,19 @@
                         }
                     @endphp
                     @can('modulo_aprobacion_ausencia')
-                    <div  x-data="{ open: @js($mostrar_solicitudes) }">
-                        <a href="{{ asset('admin/solicitud-vacaciones/menu') }}" class="btn_reporte"
-                            style="position: relative; overflow: inherit !important">
-                            <i class="bi bi-check-circle"></i><br>
-                            Aprobaciones
-                            <div id="circulo" style="display:inline-block;position:absolute; top:-60px; right:-13px;"
-                                class="offset-1 mt-5" x-show="open">
-                                <p> {{ $solicitudes_pendientes }}</p>
-                            </div>
-                        </a>
-                    @endcan
+                        <div x-data="{ open: @js($mostrar_solicitudes) }">
+                            <a href="{{ asset('admin/solicitud-vacaciones/menu') }}" class="btn_reporte"
+                                style="position: relative; overflow: inherit !important">
+                                <i class="bi bi-check-circle"></i><br>
+                                Aprobaciones
+                                <div id="circulo" style="display:inline-block;position:absolute; top:-60px; right:-13px;"
+                                    class="offset-1 mt-5" x-show="open">
+                                    <p> {{ $solicitudes_pendientes }}</p>
+                                </div>
+                            </a>
+                        @endcan
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {{-- <div style="text-align: center;" class="mt-5">
-    <a href="{{ asset('admin/inicioUsuario/reportes/seguridad') }}" class="cards_reportes">
-        <i class="fas fa-exclamation-triangle"></i> Incidentes de seguridad
-    </a>
-    <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}" class="cards_reportes">
-        <i class="fas fa-shield-virus"></i> Riesgo Identificado
-    </a>
-    <a href="{{ asset('admin/inicioUsuario/reportes/quejas') }}" class="cards_reportes">
-        <i class="fas fa-frown"></i> Realizar queja
-    </a>
-    <a href="{{ asset('admin/inicioUsuario/reportes/denuncias') }}" class="cards_reportes">
-        <i class="fas fa-hand-paper"></i> Realizar denuncia
-    </a>
-    <a href="{{ asset('admin/inicioUsuario/reportes/mejoras') }}" class="cards_reportes">
-        <i class="fas fa-rocket"></i> Reportar mejora
-    </a>
-    <a href="{{ asset('admin/inicioUsuario/reportes/sugerencias') }}" class="cards_reportes">
-        <i class="fas fa-lightbulb"></i> Realizar sugerencia
-    </a>
-</div> --}}
