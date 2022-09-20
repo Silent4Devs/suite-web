@@ -65,15 +65,15 @@
     }
 </style>
 @section('content')
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto (BIA)</a>
-    </li>
-    <li class="breadcrumb-item">
-        <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario</a>
-    </li>
-    <li class="breadcrumb-item active">Editar</li>
-</ol>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto (BIA)</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario</a>
+        </li>
+        <li class="breadcrumb-item active">Editar</li>
+    </ol>
     <h5 class="col-12 titulo_general_funcion">Editar: Cuestionario de Análisis de Impacto</h5>
     <div class="mt-4 card">
         <div class="card-body">
@@ -404,7 +404,7 @@
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
                     style="background-color:#345183; border-radius: 100px; color: white;">
-                    INFRAESTRUCTURA TECNOLÓGICA (inciso b Anexo 67)
+                    INFRAESTRUCTURA TECNOLÓGICA
                 </div>
             </div>
             <div class="row">
@@ -417,7 +417,7 @@
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
                     style="background-color:#345183; border-radius: 100px; color: white;">
-                    RECURSOS HUMANOS (inciso b Anexo67)
+                    RECURSOS HUMANOS
                 </div>
             </div>
             <div class="row">
@@ -431,7 +431,7 @@
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
                     style="background-color:#345183; border-radius: 100px; color: white;">
-                    RECURSOS MATERIALES (inciso b Anexo67)
+                    RECURSOS MATERIALES
                 </div>
             </div>
             <div class="row">
@@ -950,7 +950,7 @@
                                 <label for="check_no_01">01</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h1">
+                                    <input type="hidden" value="1" name="h1">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h1"
                                         id="check_no_01" {{ old('h1', $cuestionario->h1) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -959,7 +959,7 @@
                                 <label for="check_no_02">02</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h2">
+                                    <input type="hidden" value="1" name="h2">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h2"
                                         id="check_no_02" {{ old('h2', $cuestionario->h2) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -968,7 +968,7 @@
                                 <label for="check_no_03">03</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h3">
+                                    <input type="hidden" value="1" name="h3">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h3"
                                         id="check_no_03" {{ old('h3', $cuestionario->h3) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -977,7 +977,7 @@
                                 <label for="check_no_04">04</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h4">
+                                    <input type="hidden" value="1" name="h4">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h4"
                                         id="check_no_04" {{ old('h4', $cuestionario->h4) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -986,7 +986,7 @@
                                 <label for="check_no_05">05</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h5">
+                                    <input type="hidden" value="1" name="h5">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h5"
                                         id="check_no_05" {{ old('h5', $cuestionario->h5) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -995,7 +995,7 @@
                                 <label for="check_no_06">06</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h6">
+                                    <input type="hidden" value="1" name="h6">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h6"
                                         id="check_no_06" {{ old('h6', $cuestionario->h6) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -1004,7 +1004,7 @@
                                 <label for="check_no_07">07</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h7">
+                                    <input type="hidden" value="1" name="h7">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h7"
                                         id="check_no_07" {{ old('h7', $cuestionario->h7) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -1013,7 +1013,7 @@
                                 <label for="check_no_08">08</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h8">
+                                    <input type="hidden" value="1" name="h8">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h8"
                                         id="check_no_08" {{ old('h8', $cuestionario->h8) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -1022,7 +1022,7 @@
                                 <label for="check_no_09">09</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h9">
+                                    <input type="hidden" value="1" name="h9">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h9"
                                         id="check_no_09" {{ old('h9', $cuestionario->h9) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -1031,7 +1031,7 @@
                                 <label for="check_no_10">10</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h10">
+                                    <input type="hidden" value="1" name="h10">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h10"
                                         id="check_no_10" {{ old('h10', $cuestionario->h10) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -1040,7 +1040,7 @@
                                 <label for="check_no_11">11</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h11">
+                                    <input type="hidden" value="1" name="h11">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h11"
                                         id="check_no_11" {{ old('h11', $cuestionario->h11) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -1049,7 +1049,7 @@
                                 <label for="check_no_12">12</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h12">
+                                    <input type="hidden" value="1" name="h12">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h12"
                                         id="check_no_12" {{ old('h12', $cuestionario->h12) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -1058,7 +1058,7 @@
                                 <label for="check_no_13">13</label>
                                 <br>
                                 <div class="form-check">
-                                      <input type="hidden" value="1" name="h13">
+                                    <input type="hidden" value="1" name="h13">
                                     <input class="form-check-input d-none" type="checkbox" value="2" name="h13"
                                         id="check_no_13" {{ old('h13', $cuestionario->h13) == 2 ? 'checked' : '' }}>
                                 </div>
@@ -1630,18 +1630,15 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_1" placeholder="..."
-                        value="{{ old('meta', $cuestionario->operacion_q_1) }}">
+                        name="operacion_q_1" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_2" placeholder="..."
-                        value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                        name="operacion_q_2" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_3" placeholder="..."
-                        value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                        name="operacion_q_3" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <hr>
 
@@ -1750,11 +1747,36 @@
             </div>
 
             <div class="row">
-                @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Entrevistado'], key(1))
-                @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Jefe'], key(2))
+                @if ($cuestionario->firma_Entrevistado)
+                    <div class="form-group col-sm-6">
+                        <label>Eentrevistado</label><br>
+                        <img src="{{ asset('storage/' . $cuestionario->firma_Entrevistado) }}">
+                    </div>
+                @else
+                    @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Entrevistado'], key(1))
+                @endif
+
+                @if ($cuestionario->firma_Jefe)
+                    <div class="form-group col-sm-6">
+                        <label>Jefe</label><br>
+                        <img src="{{ asset('storage/' . $cuestionario->firma_Jefe) }}">
+                    </div>
+                @else
+                    @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Jefe'], key(2))
+                @endif
+
+
             </div>
             <div class="row offset-3">
-                @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Entrevistador'], key(3))
+                @if ($cuestionario->firma_Entrevistador)
+                    <div class="form-group col-sm-6">
+                        <label>Entrevistador</label><br>
+                        <img src="{{ asset('storage/' . $cuestionario->firma_Entrevistador) }}">
+                    </div>
+                @else
+                    @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Entrevistador'], key(3))
+                @endif
+
             </div>
 
             <div class="row">
