@@ -50,6 +50,7 @@
 <body>
 
 	<ul id="slider">
+		<li class=""><img src="{{ asset('img/Carrusel_inicio.png') }}"></li>
 		@forelse($comunicacionSgis_carrusel as $idx=>$carrusel)
             @php
                 if ($carrusel->first()->count()) {
@@ -59,15 +60,19 @@
                 } else {
                     $imagen = 'img/tabantaj_fondo_blanco.png';
                 }
-            @endphp
-			<li class=""><img src="{{ asset($imagen) }}"></li>
-		 @empty
-		 	{{-- <li class=""><img src="{{ asset('img/tabantaj_fondo_blanco.png') }}"></li> --}}
-		@endforelse
-		<li><img src="https://pbs.twimg.com/media/EnwoDevXYAAOMGq.jpg:large"></li>
-		<li><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbo13wXPYrnghuPhUyhjMhmTs17ao9zsQNdw&usqp=CAU"></li>
-		<li data-tipo="video"><video src="{{ asset('img/videos_guia/guia_general.mp4') }}" controls muted></video></li>
 
+                $tipo_archivo = $carrusel->imagenes_comunicacion->first() ?  $carrusel->imagenes_comunicacion->first()->tipo : '';
+            @endphp
+			<li class="" data-tipo="{{ $tipo_archivo }}">
+				@if($tipo_archivo == 'video')
+					<video muted controls src="{{ asset($imagen) }}"></video>
+				 @else
+				 	<img src="{{ asset($imagen) }}">
+				@endif
+			</li>
+		 @empty
+		 	<li class=""><img src="{{ asset('img/tabantaj_fondo_blanco.png') }}"></li>
+		@endforelse
 	</ul>
 
 	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
