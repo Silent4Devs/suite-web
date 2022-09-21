@@ -12,11 +12,14 @@ use App\Models\PoliticaSgsi;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
+use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class PoliticaSgsiController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('politica_sistema_gestion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -83,7 +86,11 @@ class PoliticaSgsiController extends Controller
 
         $empleados = Empleado::alta()->with('area')->get();
 
-        return view('admin.politicaSgsis.index', compact('politicaSgsis', 'teams', 'empleados'));
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.politicaSgsis.index', compact('politicaSgsis', 'teams', 'empleados','organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()

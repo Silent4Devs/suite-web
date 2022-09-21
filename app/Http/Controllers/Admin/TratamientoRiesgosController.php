@@ -16,6 +16,7 @@ use App\Models\TratamientoRiesgo;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class TratamientoRiesgosController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('tratamiento_de_los_riesgos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -100,8 +103,11 @@ class TratamientoRiesgosController extends Controller
         $controles = DeclaracionAplicabilidad::get();
         $users = User::get();
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.tratamientoRiesgos.index', compact('controles', 'users', 'teams'));
+        return view('admin.tratamientoRiesgos.index', compact('controles', 'users', 'teams','organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()

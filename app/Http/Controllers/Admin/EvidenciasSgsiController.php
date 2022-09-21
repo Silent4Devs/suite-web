@@ -15,6 +15,7 @@ use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class EvidenciasSgsiController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait,ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -82,8 +83,11 @@ class EvidenciasSgsiController extends Controller
 
         $users = User::get();
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.evidenciasSgsis.index', compact('users', 'teams'));
+        return view('admin.evidenciasSgsis.index', compact('users', 'teams', 'organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()

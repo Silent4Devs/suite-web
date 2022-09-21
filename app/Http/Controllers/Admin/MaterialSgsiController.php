@@ -13,13 +13,14 @@ use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\ObtenerOrganizacion;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class MaterialSgsiController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait,ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -82,8 +83,11 @@ class MaterialSgsiController extends Controller
 
         $areas = Area::get();
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.materialSgsis.index', compact('areas', 'teams'));
+        return view('admin.materialSgsis.index', compact('areas', 'teams','organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()

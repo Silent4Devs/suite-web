@@ -16,12 +16,14 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class DeclaracionAplicabilidadController extends Controller
 {
+    use ObtenerOrganizacion;
     /**
      * Display a listing of the resource.
      *
@@ -140,7 +142,11 @@ class DeclaracionAplicabilidadController extends Controller
             return datatables()->of($controles)->toJson();
         }
 
-        return view('admin.declaracionaplicabilidad.tabla');
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.declaracionaplicabilidad.tabla', compact('organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function edit(Request $request, $control)

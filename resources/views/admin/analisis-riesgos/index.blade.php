@@ -4,6 +4,41 @@
 
   
         <style>
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
+
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
             th {
                 background-color: #345183;
                 color: #ffff;
@@ -30,40 +65,6 @@
             .table tr td:nth-child(4) {
                 text-align: center !important;
             }
-
-            .btn_cargar {
-                border-radius: 100px !important;
-                border: 1px solid #345183;
-                color: #345183;
-                text-align: center;
-                padding: 0;
-                width: 45px;
-                height: 45px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 0 !important;
-                margin-right: 10px !important;
-            }
-
-            .btn_cargar:hover {
-                color: #fff;
-                background: #345183;
-            }
-
-            .btn_cargar i {
-                font-size: 15pt;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .agregar {
-                margin-right: 15px;
-            }
-
             .agregar {
                 margin-right: 15px;
             }

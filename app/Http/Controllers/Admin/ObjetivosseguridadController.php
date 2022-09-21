@@ -13,11 +13,14 @@ use App\Models\TiposObjetivosSistema;
 use App\Models\VariablesObjetivosseguridad;
 use Gate;
 use Illuminate\Http\Request;
+use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class ObjetivosseguridadController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('objetivos_del_sistema_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -81,8 +84,12 @@ class ObjetivosseguridadController extends Controller
         }
 
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.objetivosseguridads.index', compact('teams'));
+
+        return view('admin.objetivosseguridads.index', compact('teams','organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()
