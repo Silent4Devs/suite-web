@@ -26,39 +26,31 @@
 			align-items: center;
 			display: flex;
 			background-color: #000;
-			transition: 0.5s;
+			transition: 1.5s;
 			opacity: 0;
-			margin-left: 300px;
-			transform: scale(0.9);
+			margin-left: 80%;
+			transform: scale(0.65);
 		}
-		#slider li img{
+		#slider li img, #slider li video{
 			height: 100%;
 		}
-		#slider .active{
-			transition: 0;
+		#slider .actual{
 			opacity: 1;
-			margin-left: 0px;
+			margin-left: 0%;
 			transform: scale(1);
-			animation: 1s cambio;
+			/*animation: 1s cambio;*/
 		}
-
-		@keyframes cambio{
-			0%{
-				opacity: 0;
-				margin-left: -300px;
-				transform: scale(0.9);
-			}	
-			100%{
-				opacity: 1;
-				margin-left: 0px;
-				transform: scale(1);
-			}
-		} 
+		.siguiente{
+			opacity: 0;
+			margin-left: -80% !important;
+			transform: scale(0.65) !important;
+		}
 	</style>
 </head>
 <body>
 
 	<ul id="slider">
+		<li class=""><img src="{{ asset('img/Carrusel_inicio.png') }}"></li>
 		@forelse($comunicacionSgis_carrusel as $idx=>$carrusel)
             @php
                 if ($carrusel->first()->count()) {
@@ -69,8 +61,15 @@
                     $imagen = 'img/tabantaj_fondo_blanco.png';
                 }
 
+                $tipo_archivo = $carrusel->imagenes_comunicacion->first() ?  $carrusel->imagenes_comunicacion->first()->tipo : '';
             @endphp
-			<li class=""><img src="{{ asset($imagen) }}"></li>
+			<li class="" data-tipo="{{ $tipo_archivo }}">
+				@if($tipo_archivo == 'video')
+					<video muted controls src="{{ asset($imagen) }}"></video>
+				 @else
+				 	<img src="{{ asset($imagen) }}">
+				@endif
+			</li>
 		 @empty
 		 	<li class=""><img src="{{ asset('img/tabantaj_fondo_blanco.png') }}"></li>
 		@endforelse
@@ -78,27 +77,61 @@
 
 	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 	<script type="text/javascript">
-		$('#slider li:first-child').addClass('active');
-		function slider() {
-			let current = $('#slider li.active');
-			let next = $('#slider li.active + li');
+		$(document).click(function(){
+			// document.body.requestFullscreen();
+		});
+
+		$(document).ready(function(){
+			let duracion = Number(30000);
+			let video_duracion;
+
 			let first = $('#slider li:first-child'); 
 			let last = $('#slider li:last-child');
 
+			first.attr('data-n', 'primero');
 			last.attr('data-n', 'ultimo');
-			
-			if (current.attr('data-n') != 'ultimo') {
-				current.removeClass('active');	
-				next.addClass('active');	
-			}else{
-				current.removeClass('active');
-				first.addClass('active');
+
+			$('#slider li:last-child').addClass('anterior');
+			$('#slider li:first-child').addClass('actual');
+			$('#slider li:nth-child(2)').addClass('siguiente');
+
+			let previous = $('#slider li.anterior');;
+			let current = $('#slider li.actual');
+			let next = $('#slider li.siguiente');
+
+			previous.addClass('anterior');
+			current.addClass('actual');
+			next.addClass('siguiente');
+
+			function slider()
+			{	
+				previous.removeClass('anterior');
+				previous = current;
+				previous.addClass('anterior');
+
+				current.removeClass('actual');
+				current = next;
+				current.addClass('actual');
+
+				if (next.attr('data-n') != 'ultimo') {
+					next = $('#slider li.siguiente + li');
+				}else{
+					next = $('#slider li:first-child');
+				}
+				$('#slider li.siguiente').removeClass('siguiente');
+				next.addClass('siguiente');
+
+				if (current.attr('data-tipo') === 'video') {
+					document.querySelector('#slider li.actual video').play();
+					video_duration = (Number(document.querySelector('#slider li.actual video').duration)) * 1000;
+					setTimeout(slider, video_duration);
+				}else{
+					setTimeout(slider, duracion);
+				}
 			}
-			setTimeout(slider, 20000);
-		}
-		setTimeout(slider, 20000);
-		$(document).click(function(){
-			document.body.requestFullscreen();
+			if (current.attr('data-n') != 'ultimo') {
+				setTimeout(slider, duracion);
+			}
 		});
 	</script>
 </body>

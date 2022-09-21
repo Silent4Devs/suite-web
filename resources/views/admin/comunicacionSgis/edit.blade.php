@@ -51,7 +51,7 @@
 
                 <div class="form-group col-md-6">
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
-                    <input type="file" name="imagen" class="form-control" accept="image/*" value="{{ old('imagen') }}">
+                    <input type="file" name="imagen" class="form-control" accept="image/*, .mp4, .mov, .webm, .wmv, .avi" value="{{ old('imagen') }}">
                     @if (count($comunicacionSgi->imagenes_comunicacion) > 0)
                         <small>Imagen actual:{{ $comunicacionSgi->imagenes_comunicacion[0]->imagen }} </small><br>
                         <small>Tamaño recomendado de la imagen 500px por 300px</small>

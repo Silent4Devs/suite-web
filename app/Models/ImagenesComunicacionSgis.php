@@ -24,7 +24,7 @@ class ImagenesComunicacionSgis extends Model
     protected $fillable = [
         'comunicacion_id',
         'imagen',
-
+        'tipo',
     ];
 
     public function imagenes_comunicacion()

@@ -56,9 +56,8 @@
                 <div class="form-group col-md-6">
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
 
-                    <input type="file" name="imagen" class="form-control" accept="image/*" required
+                    <input type="file" name="imagen" class="form-control" accept="image/*, .mp4, .mov, .webm, .wmv, .avi" required
                         value="{{ old('imagen') }}">
-                    <small>Tamaño recomendado de la imagen 500px por 300px</small>
                     @if ($errors->has('imagen'))
                         <div class="invalid-feedback">
                             {{ $errors->first('imagen') }}
