@@ -64,6 +64,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('ajustes-permisos-goce-sueldo', 'AusenciasController@ajustesGoceSueldo')->name('ajustes-permisos-goce-sueldo');
     Route::resource('Ausencias', 'AusenciasController');
 
+    
+    Route::get('ajustes-envio-documentos', 'EnvioDocumentosController@ajustes')->name('ajustes-envio-documentos');
+    Route::put('ajustes-envio-documentos/{id}/update', 'EnvioDocumentosController@ajustesUpdate')->name('ajustes-envio-documentos-update');
+    Route::resource('envio-documentos', 'EnvioDocumentosController');
+
 
     //Control de Ausencias- Vacaciones
     Route::get('vista-global-vacaciones', 'VacacionesController@vistaGlobal')->name('vista-global-vacaciones');
