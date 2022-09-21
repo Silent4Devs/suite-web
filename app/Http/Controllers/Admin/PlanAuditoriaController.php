@@ -18,11 +18,14 @@ use App\Models\Team;
 use Gate;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class PlanAuditoriaController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('plan_de_auditoria_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -57,8 +60,8 @@ class PlanAuditoriaController extends Controller
                 return $row->nombre_auditoria ? $row->nombre_auditoria : '';
             });
 
-            $table->addColumn('fecha_auditoria', function ($row) {
-                return $row->fecha_auditoria ? $row->fecha_auditoria : '';
+            $table->addColumn('fecha_inicio_auditoria', function ($row) {
+                return $row->fecha_inicio_auditoria ? \Carbon\Carbon::parse($row->fecha_inicio_auditoria)->format('d-m-Y') : '';
             });
 
             $table->editColumn('objetivo', function ($row) {
@@ -84,8 +87,11 @@ class PlanAuditoriaController extends Controller
         }
 
         $auditoria_anuals = AuditoriaAnual::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.planAuditoria.index', compact('auditoria_anuals'));
+        return view('admin.planAuditoria.index', compact('auditoria_anuals','organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()

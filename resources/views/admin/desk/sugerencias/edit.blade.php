@@ -397,7 +397,7 @@
                             </div>
                         </div>
                         <div class="" style=" position: relative; ">
-                            <h5 style=" position: ;"><b>Acciones para la Atención de la Denuncia</b></h5>
+                            <h5 style=" position: ;"><b>Acciones para la Atención de la Sugerencia</b></h5>
                             <button style="position:absolute; right: 2px; top:2px;"
                                 class="btn btn-success btn_modal_form">Agregar actividad</button>
                             @if (count($sugerencias->planes))

@@ -8,6 +8,41 @@
     @endcan
 
     <style>
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border: none;
+        }
+
+        .btn-outline-success:focus {
+            border-color: #345183 !important;
+            box-shadow: none;
+        }
+
+        .btn-outline-success:active {
+            box-shadow: none !important;
+        }
+
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-right: 10px !important;
+        }
         .table tr th:nth-child(2) {
             width: 150px !important;
             max-width: 200px !important;
@@ -220,29 +255,46 @@
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
-                    title: `Indicadores SGSI ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [5, 20, 5, 20];
-                        doc.styles.tableHeader.fontSize = 7.1;
-                        doc.defaultStyle.fontSize = 7.1; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
                     extend: 'print',
                     title: `Indicadores SGSI ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
+                    customize: function(doc) {
+                        let logo_actual = @json($logo_actual);
+                        let empresa_actual = @json($empresa_actual);
+
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+                        $(doc.document.body).prepend(`
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                            <div class="col-2 p-2" style="border-right: 2px solid #ccc">
+                                    <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
+                                </div>
+                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
+                                    <p>${empresa_actual}</p>
+                                    <strong style="color:#345183">INDICADORES DEL SISTEMA DE GESTIÓN</strong>
+                                </div>
+                                <div class="col-3 p-2">
+                                    Fecha: ${jsDate}
+                                </div>
+                            </div>
+                        `);
+
+                        $(doc.document.body).find('table')
+                            .css('font-size', '12px')
+                            .css('margin-top', '15px')
+                        // .css('margin-bottom', '60px')
+                        $(doc.document.body).find('th').each(function(index) {
+                            $(this).css('font-size', '18px');
+                            $(this).css('color', '#fff');
+                            $(this).css('background-color', 'blue');
+                        });
+                    },
+                    title: '',
                     exportOptions: {
-                        columns: ['th:not(:last-child):visible']
+                        columns: ['th:not(:last-child):visible'],
+                        orthogonal: "empleadoText"
                     }
                 },
                 {
@@ -332,22 +384,18 @@
                     {
                         data: 'responsable_name',
                         render: function(data, type, row, meta) {
-                            if (row.id_empleado != null) {
-                                if(row.responsable_name.trim()!=""){
-                                    let empleado = JSON.parse(row.responsable_name);
-                                    if (type === "empleadoText") {
-                                        return empleado.name;
-                                    } else {
-                                        let html =
-                                            `<img class="img_empleado" src="{{ asset('storage/empleados/imagenes/') }}/${empleado?.avatar}" title="${empleado?.name}"></img>`;
-
-                                        return `${empleado ? html: ''}`;
-                                    }
-                                }
+                            let empleado = JSON.parse(row.responsable_name ? row.responsable_name : '{}');
+                            if (type === "empleadoText") {
+                                return empleado.name;
+                            }      
+                            let responsable_name = "";
+                            if (empleado) {
+                                responsable_name += `
+                            <img src="{{ asset('storage/empleados/imagenes') }}/${empleado.avatar}" title="${empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                            `;
                             }
-
-                            return `Sin dato`;
-                        }
+                            return responsable_name;
+                        }                        
                     },
                     {
                         data: 'año',

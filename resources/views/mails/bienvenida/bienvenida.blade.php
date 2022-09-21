@@ -25,6 +25,51 @@
         }
 
     </style>
+    <style>
+        /* Remove space around the email design. */
+    
+        html,
+    
+        body {
+    
+            margin: 0 auto !important;
+    
+            padding: 0 !important;
+    
+            height: 100% !important;
+    
+            width: 100% !important;
+        }
+    
+        /* Stop Outlook resizing small text. */
+        * {
+            -ms-text-size-adjust: 100%;
+        }
+    
+    
+        /* Stop Outlook from adding extra spacing to tables. */
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
+    
+        /* Use a better rendering method when resizing images in Outlook IE. */
+    
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+    
+    
+        /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+    
+        a {
+    
+            text-decoration: none;
+    
+        }
+    
+    </style>
 </head>
 
 <body style="margin:0;padding:0;">
@@ -50,9 +95,9 @@
                                     @endphp
                                     <h2 style="padding-top:3px; color:#153643; text-align:center">
                                         {{ $empresa }}</h2>
-                                    <div style="width: 100%; height:1.5px; background-color: #153643;">
-                                        &nbsp;
-                                    </div>
+                                    <hr style="margin:0;width: 100%; height:1.5px; background-color: #153643;">
+                                    &nbsp;
+                                    </hr>
 
                                     <td style="padding:0 0 36px 0;">
 
@@ -95,10 +140,9 @@
                                             </p>
                                             <br>
                                             <div style="text-align:center; margin-top:20px">
-                                                <span
-                                                    style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
-                                                    <a href="{{ config('app.url') }}"
-                                                        style="color:#fff">Comenzar</a></span>
+                                                <a href="{{ config('app.url') }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                                    Comenzar
+                                                </a>
                                             </div>
                                         </div>
                                     </td>
@@ -114,9 +158,9 @@
                                     <td style="padding:0;width:30%;" align="left">
                                         <p style="text-align:center; font-size:10pt; color:#153643;">Por favor no
                                             responda a este correo</p>
-                                        <div style="width: 100%; height: 1.5px; background-color: #153643;">
-                                            &nbsp;
-                                        </div>
+                                        <hr style="margin:0; width: 100%; height: 1.5px; background-color: #153643;">
+                                        &nbsp;
+                                        </hr>
 
                                         <p style="text-align:center;font-size:10pt;font-weight: normal;color:#153643;">
                                             SISTEMA INTEGRAL DE GESTIÓN EMPRESARIAL TABANTAJ</p>

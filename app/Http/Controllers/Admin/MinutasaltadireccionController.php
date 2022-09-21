@@ -22,6 +22,7 @@ use App\Rules\ParticipantesMinutasAltaDireccionRule;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -30,7 +31,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MinutasaltadireccionController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait,ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -43,8 +44,11 @@ class MinutasaltadireccionController extends Controller
 
         $users = User::get();
         $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.minutasaltadireccions.index', compact('users', 'teams'));
+        return view('admin.minutasaltadireccions.index', compact('users', 'teams','organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()

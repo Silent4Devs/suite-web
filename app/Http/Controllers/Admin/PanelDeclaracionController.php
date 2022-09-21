@@ -9,15 +9,22 @@ use App\Models\DeclaracionAplicabilidadAprobadores;
 use App\Models\DeclaracionAplicabilidadResponsable;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 
 class PanelDeclaracionController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
+
         $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
-        return view('admin.panelDeclaracion.index', compact('empleados'));
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+        return view('admin.panelDeclaracion.index', compact('empleados','organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function controles()
@@ -34,6 +41,7 @@ class PanelDeclaracionController extends Controller
             $q->select('empleados.id', 'empleados.name', 'foto');
         }])->orderBy('id')->get();
 
+        
         return datatables()->of($query)->toJson();
     }
 
