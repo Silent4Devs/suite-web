@@ -13,11 +13,14 @@ use App\Models\GapTre;
 use App\Models\GapUno;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisBrechaController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('analisis_de_brechas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -94,7 +97,11 @@ class AnalisisBrechaController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.analisisdebrechas.index');
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.analisisdebrechas.index',compact('organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()

@@ -3,6 +3,7 @@
 @section('content')
 
 <style>
+    
     @page{
         size:landscape;
     }

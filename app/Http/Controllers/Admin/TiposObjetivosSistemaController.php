@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\TiposObjetivosSistema;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class TiposObjetivosSistemaController extends Controller
 {
+    use ObtenerOrganizacion;
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +20,10 @@ class TiposObjetivosSistemaController extends Controller
     public function index()
     {
         // abort_if(Gate::denies('tipo_objetivo_sistema_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('admin.tipos_objetivos_sistema.index');
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+        return view('admin.tipos_objetivos_sistema.index',compact('organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function getDataForDataTable()

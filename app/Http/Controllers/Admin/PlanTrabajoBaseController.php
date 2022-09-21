@@ -8,11 +8,15 @@ use App\Models\PlanImplementacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PlanTrabajoBaseController extends Controller
 {
+    use ObtenerOrganizacion;
+
+    
     public function listaDataTables()
     {
         $planes = PlanImplementacion::where('es_plan_trabajo_base', true)->with('elaborador')->get();
@@ -40,7 +44,11 @@ class PlanTrabajoBaseController extends Controller
         //FIN REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
         $empleados = Empleado::alta()->select('name')->get();
 
-        return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.planTrabajoBase.index', compact('organizacion_actual','logo_actual','empresa_actual','archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
     }
 
     public function showTarea($texto)

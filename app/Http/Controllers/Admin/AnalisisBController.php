@@ -108,6 +108,8 @@ class AnalisisBController extends Controller
             ],
         ];
 
+
+        
         return view('dashboard.index', compact('gaptresVerif', 'gaptresAct'))
             ->with('gapunos', $gapuno)->with('gapda5s', $gapa5)->with('gapda6s', $gapa6)
             ->with('gapda62s', $gapa62)->with('gapda71s', $gapa71)->with('gapda72s', $gapa72)

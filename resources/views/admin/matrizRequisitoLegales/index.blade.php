@@ -41,7 +41,7 @@
                 top: 80px;
             } */
 
-        .btn_cargar {
+        /* .btn_cargar {
             border-radius: 100px !important;
             border: 1px solid #345183;
             color: #345183;
@@ -72,6 +72,40 @@
 
         .agregar {
             margin-right: 15px;
+        } */
+
+        .btn-outline-success {
+            background: #788bac !important;
+            color: white;
+            border:none;
+        }
+        .btn-outline-success:focus{
+            border-color:#345183 !important;
+            box-shadow:none;
+        }
+
+        .btn-outline-success:active{
+            box-shadow:none !important;
+        }
+        .btn-outline-success:hover {
+            background: #788bac;
+            color: white;
+
+        }
+
+        .btn_cargar {
+            border-radius: 100px !important;
+            border: 1px solid #345183;
+            color: #345183;
+            text-align: center;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            margin-left: 5px !important;
         }
 
     </style>
@@ -147,22 +181,22 @@
                         columns: ['th:not(:last-child):visible']
                     }
                 },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'landscape',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [20, 60, 20, 30];
-                        doc.styles.tableHeader.fontSize = 8.5;
-                        doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10
-                    }
-                },
+                // {
+                //     extend: 'pdfHtml5',
+                //     title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,
+                //     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
+                //     className: "btn-sm rounded pr-2",
+                //     titleAttr: 'Exportar PDF',
+                //     orientation: 'landscape',
+                //     exportOptions: {
+                //         columns: ['th:not(:last-child):visible']
+                //     },
+                //     customize: function(doc) {
+                //         doc.pageMargins = [20, 60, 20, 30];
+                //         doc.styles.tableHeader.fontSize = 8.5;
+                //         doc.defaultStyle.fontSize = 8.5; //<-- set fontsize to 16 instead of 10
+                //     }
+                // },
                 {
                     extend: 'print',
                     title: `Matríz de Requisitos Legales ${new Date().toLocaleDateString().trim()}`,

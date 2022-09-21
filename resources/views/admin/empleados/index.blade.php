@@ -2,15 +2,22 @@
 @section('content')
     <style>
         .btn-outline-success {
-            background: #788bac;
+            background: #788bac !important;
             color: white;
-            border: none;
+            border:none;
+        }
+        .btn-outline-success:focus{
+            border-color:#345183 !important;
+            box-shadow:none;
         }
 
+        .btn-outline-success:active{
+            box-shadow:none !important;
+        }
         .btn-outline-success:hover {
             background: #788bac;
             color: white;
-            border: none;
+
         }
 
         .btn_cargar {
@@ -19,31 +26,21 @@
             color: #345183;
             text-align: center;
             padding: 0;
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 0 !important;
             margin-right: 10px !important;
+
         }
 
-        .btn_cargar:hover {
-            color: #fff;
-            background: #345183;
-        }
-
-        .btn_cargar i {
-            font-size: 15pt;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+       
 
         .agregar {
             margin-right: 15px;
+
         }
 
     </style>
@@ -186,15 +183,15 @@
                         var now = new Date();
                         var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
                         $(doc.document.body).prepend(`
-                            <div class="row">
-                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                        <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px">
+                                <div class="col-2 p-2" style="border-right: 2px solid #ccc">
                                     <img class="img-fluid" style="max-width:120px" src="${logo_actual}"/>
                                 </div>
-                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
                                     <p>${empresa_actual}</p>
                                     <strong style="color:#345183">EMPLEADOS: LISTA DE EMPLEADOS DE LA EMPRESA</strong>
                                 </div>
-                                <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
+                                <div class="col-3 p-2">
                                     Fecha: ${jsDate}
                                 </div>
                             </div>

@@ -14,11 +14,14 @@ use App\Models\User;
 use App\Models\VariablesIndicador;
 use Gate;
 use Illuminate\Http\Request;
+use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class IndicadoresSgsiController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('indicadores_sgsi_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -106,8 +109,11 @@ class IndicadoresSgsiController extends Controller
 
         /*$users = User::get();
         $teams = Team::get();*/
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.indicadoresSgsis.index');
+        return view('admin.indicadoresSgsis.index', compact('organizacion_actual','logo_actual','empresa_actual'));
     }
 
     public function create()
