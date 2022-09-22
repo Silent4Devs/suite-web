@@ -666,6 +666,57 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
             Livewire.on('scriptTabla', () => {
+                $(".cde-nombre").mouseover(function() {
+            $(".cde-nombre").addClass("ver");
+        });
+        $(".cde-nombre").mouseleave(function() {
+            $(".cde-nombre").removeClass("ver");
+        });
+
+        $(".cde-puesto").mouseover(function() {
+            $(".cde-puesto").addClass("ver");
+        });
+        $(".cde-puesto").mouseleave(function() {
+            $(".cde-puesto").removeClass("ver");
+        });
+
+        $(".cde-area").mouseover(function() {
+            $(".cde-area").addClass("ver");
+        });
+        $(".cde-area").mouseleave(function() {
+            $(".cde-area").removeClass("ver");
+        });
+
+        $(".cde-estatus").mouseover(function() {
+            $(".cde-estatus").addClass("ver");
+        });
+        $(".cde-estatus").mouseleave(function() {
+            $(".cde-estatus").removeClass("ver");
+        });
+        $(".cde-fecha").mouseleave(function() {
+            $(".cde-fecha").removeClass("ver");
+        });
+
+        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").mouseover(
+            function() {
+                $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
+                    .addClass("ver");
+            });
+        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
+            .mouseleave(function() {
+                $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
+                    .removeClass("ver");
+            });
+        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").mouseover(
+            function() {
+                $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
+                    .addClass("ver");
+            });
+        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
+            .mouseleave(function() {
+                $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
+                    .removeClass("ver");
+            });
                 tablaLivewire('timesheet_empleados_lista');
                 tablaLivewire('datatable_timesheet_empleados');
                 tablaLivewire('table_horas_empleado_semanas');
