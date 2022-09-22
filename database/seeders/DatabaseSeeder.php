@@ -56,6 +56,10 @@ class DatabaseSeeder extends Seeder
             // // PlanBaseSeeder::class,
             // TablaImpactoSeeder::class,
             PermissionQuejasClientesSeeder::class,
+            AjustesEnvioDocumentosSeeder::class,
+            AjustesBIASeeder::class,
+            PermisosMensajeriaSeeder::class,
+
         ]);
     }
 }

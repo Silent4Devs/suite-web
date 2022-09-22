@@ -884,6 +884,12 @@ Breadcrumbs::for('Solicitud-Permiso-Goce', function ($trail) {
     $trail->push('Solicitar Permiso', route('admin.solicitud-permiso-goce-sueldo.index'));
 });
 
+Breadcrumbs::for('Solicitud-Mensajeria', function ($trail) {
+    $trail->parent('Mi-Perfil');
+    $trail->push('Solicitudes', route('admin.inicio-Usuario.index'));
+    $trail->push('Mensajería', route('admin.envio-documentos.index'));
+});
+
 Breadcrumbs::for('Solicitud-Dayoff', function ($trail) {
     $trail->parent('Mi-Perfil');
     $trail->push('Solicitudes', route('admin.inicio-Usuario.index'));
