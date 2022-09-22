@@ -3,10 +3,18 @@
 </div>
 <!-- Categoria Field -->
 <div class="row">
-    <div class="form-group col-sm-6 offset-6">
+    <div class="form-group col-sm-6">
+        <fieldset disabled>
+            <label for="disabledTextInput"><i
+                    class="fa-solid fa-calendar-check iconos-crear"></i>Estatus:</label>
+            <input type="text" class="form-control"  value="{{ $solicitud->status ?: 'Por asignar' }}"
+                style="text-align: center">
+        </fieldset>
+    </div>
+    <div class="form-group col-sm-6">
         <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Fecha de solicitud:</label>
         <input type="text" class="form-control" name="fecha_solicitud" style="text-align: center"
-            value="{{ $fecha_solicitud }}" readonly>
+            value="{{ $fecha_solicitud  }}" readonly>
     </div>
 
 </div>
@@ -68,8 +76,8 @@
         @enderror
     </div>
     <div class="form-group col-sm-6">
-        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('direccion', 'Dirección:', ['class' => 'required']) !!}
-        {!! Form::text('direccion', null, [
+        <i class="fa-solid fa-file-circle-xmark iconos-crear"></i>{!! Form::label('descripcion', 'Dirección:', ['class' => 'required']) !!}
+        {!! Form::text('descripcion', null, [
             'class' => 'form-control',
             'placeholder' => 'Ingrese direccion exacta',
         ]) !!}
@@ -93,11 +101,11 @@
     </div>
     <div class="form-group col-sm-3">
         <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Horario desde:</label>
-            <input type="time" class="form-control" name="hora_recepcion_inicio">
+            <input type="time" class="form-control" name="hora_recepcion_inicio"  value="{{ old('hora_recepcion_inicio', $solicitud->hora_recepcion_inicio) }}">
     </div>
     <div class="form-group col-sm-3">
         <label for="disabledTextInput"><i class="fa-solid fa-calendar-check iconos-crear"></i>Hasta:</label>
-            <input type="time" class="form-control" name="hora_recepcion_fin">
+            <input type="time" class="form-control" name="hora_recepcion_fin"  value="{{ old('hora_recepcion_fin', $solicitud->hora_recepcion_fin) }}">
     </div>
     
 

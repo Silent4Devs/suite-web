@@ -189,6 +189,16 @@
                 </a>
             </li>
         @endcan
+        @can('solicitud_mensajeria_atencion')
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('admin.envio-documentos.atencion') }}"
+                class="c-sidebar-nav-link {{ request()->is('admin/desk') || request()->is('admin/desk/*') ? 'active' : '' }}">
+                <i class="far fa-paper-plane iconos_menu letra_blanca"></i>
+                <font class="letra_blanca">Atención de Mensajería
+                </font>
+            </a>
+        </li>
+    @endcan
         {{-- @can('glosario_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.glosarios.render') }}"
