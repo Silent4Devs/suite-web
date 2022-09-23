@@ -121,7 +121,7 @@
                                 </a>
                             </li>
                         @endcan
-                        {{-- @can('reglas_goce_sueldo_acceder')
+                        @can('solicitud_mensajeria_ajustes')
                             <li>
                                 <a href="ajustes-envio-documentos">
                                     <div>
@@ -130,7 +130,7 @@
                                     </div>
                                 </a>
                             </li>
-                        @endcan --}}
+                        @endcan
                     </ul>
 
                 </div>

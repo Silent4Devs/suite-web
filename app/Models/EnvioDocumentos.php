@@ -33,6 +33,14 @@ class EnvioDocumentos extends Model
         'team_id',
     ];
 
+    const EstatusSelect = [
+        '1' => 'En recolección',
+        '2' => 'En camino',
+        '3' => 'Entregado',
+        '4' => 'Devolución',
+    ];
+
+
     public function solicita()
     {
         return $this->belongsTo(Empleado::class, 'id_solicita')->alta();

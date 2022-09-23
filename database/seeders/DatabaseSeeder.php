@@ -11,11 +11,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PermissionsTableSeeder::class,
             PermissionsVisitantesSeeder::class,
-            PermissionQuejasClientesSeeder::class,
             VacacionesPermisosSeeder::class,
             PermisosBIASeeder::class,
-            AjustesBIASeeder::class,
-            AjustesEnvioDocumentosSeeder::class,
             RolesTableSeeder::class,
             UsersTableSeeder::class,
             GapunoTableSeeder::class,
@@ -61,7 +58,10 @@ class DatabaseSeeder extends Seeder
             activosIntegridadSeeder::class,
             // // PlanBaseSeeder::class,
             // TablaImpactoSeeder::class,
-
+            PermissionQuejasClientesSeeder::class,
+            AjustesEnvioDocumentosSeeder::class,
+            AjustesBIASeeder::class,
+            PermisosMensajeriaSeeder::class,
         ]);
     }
 }

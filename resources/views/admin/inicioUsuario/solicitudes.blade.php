@@ -102,11 +102,11 @@
                             <i class="bi bi-coin"></i><br><span>Permisos</span>
                         </a>
                     @endcan
-                    {{-- @can('mi_perfil_modulo_solicitud_ausencia')
+                    @can('solicitud_mensajeria_acceder')
                         <a href="{{ asset('admin/envio-documentos') }}" class="btn_reporte">
-                          <i class="bi bi-send"></i></><br><span>Mensajeria</span>
+                          <i class="bi bi-send"></i></><br><span>Mensajería</span>
                         </a>
-                    @endcan --}}
+                    @endcan
                     @php
                         if ($solicitudes_pendientes == 0) {
                             $mostrar_solicitudes = false;
