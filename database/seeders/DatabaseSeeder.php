@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             // ControlDocumentosSeeder::class,
             EstadoincidentesTableSeeder::class,
             EstusplatrabajoTableSeeder::class,
-            Ev360RangosResultadoSeeder::class,
+            // Ev360RangosResultadoSeeder::class,
             // ActividadFaseSeeder::class,
             // OrganizacionSeeder::class,
             // SedeSeeder::class,
