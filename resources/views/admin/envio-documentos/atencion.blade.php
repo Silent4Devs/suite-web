@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="mt-3">
-        {{ Breadcrumbs::render('Solicitud-Mensajeria') }}
-    </div>
+   
 
     <style>
         .btn_cargar {
@@ -95,7 +93,32 @@
         @include('flash::message')
         @include('partials.flashMessages')
         <div class="card-body datatable-fix">
-            @include('admin.envio-documentos.table')
+            <table class="table table-bordered w-100 datatable datatable-envio-documentos tblCSV"
+            id="datatable-envio-documentos">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="min-width: 30px;">
+                        ID
+                    </th>
+                    <th style="min-width: 100px;">
+                        Fecha de la solicitud
+                    </th>
+                    <th style="min-width: 110px;">
+                       Soliciante
+                    </th>
+                    <th style="min-width: 75px;">
+                        Estatus
+                    </th>
+                    <th style="min-width: 100px;">
+                        Notas
+                    </th>
+                    <th style="min-width: 50px;">
+                        Opciones
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        
         </div>
     </div>
 @endsection
@@ -190,22 +213,8 @@
 
             ];
 
-            let btnAgregar = {
-                text: '<i class="pl-2 pr-3 fas fa-plus"></i>Nueva Solicitud',
-                titleAttr: 'Crear solicitud de mensajeria',
-                url: "{{ route('admin.envio-documentos.create') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                }
-            };
 
-            @can('solicitud_mensajeria_crear')
-                dtButtons.push(btnAgregar);
-            @endcan
+
 
 
             let dtOverrideGlobals = {
@@ -214,7 +223,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.envio-documentos.index') }}",
+                ajax: "{{ route('admin.envio-documentos.atencion') }}",
                 columns: [{
                         data: 'id',
                         name: 'id',
@@ -234,21 +243,14 @@
                         }
                     },
                     {
-                        data: 'coordinador',
-                        name: 'coordinador',
+                        data: 'solicita',
+                        name: 'solicita',
                         render: function(data, type, row) {
                             data = JSON.parse(data);
                             return `<div style="text-align:left">${data.name}</div>`;
                         }
                     },
-                    {
-                        data: 'mensajero',
-                        name: 'mensajero',
-                        render: function(data, type, row) {
-                            data = JSON.parse(data);
-                            return `<div style="text-align:left">${data.name}</div>`;
-                        }
-                    },
+                    
                     {
                         data: 'status',
                         name: 'status',
@@ -300,10 +302,24 @@
                         }
                     },
 
+
                     {
                         data: 'actions',
-                        name: '{{ trans('global.actions') }}'
-                    }
+                        name: 'actions',
+
+                        render: function(data, type, row, meta) {
+                            let aprobacion = row.aprobacion;
+                            let id = row.id;
+
+                            return `  
+                            <div style="text-aling:center">
+                            <a href="atencion/${row.id}/seguimiento"  title="Dar seguimiento"><i class="fas fa-mail-bulk text-align:center;"></i></a>
+                            </div>
+                           `;
+
+                        }
+                    },
+                    
                 ],
                 orderCellsTop: true,
                 order: [
@@ -321,41 +337,41 @@
             `;
                 imprimirTabla('datatable-envio-documentos', titulo_tabla);
             });
-            // window.eliminar = (url, id) => {
-            //     Swal.fire({
-            //         title: '¿Esta seguro de cancelar la solicitud?',
-            //         text: "Esta solicitud ya no será visible para el coordinador y/o mensajero.",
-            //         icon: 'warning',
-            //         showCancelButton: true,
-            //         confirmButtonColor: '#3085d6',
-            //         cancelButtonColor: '#d33',
-            //         confirmButtonText: '¡Sí estoy seguro!',
-            //         cancelButtonText: 'Cancelar',
-            //     }).then((result) => {
-            //         if (result.isConfirmed) {
-            //             $.ajax({
-            //                 type: "POST",
-            //                 headers: {
-            //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //                 },
-            //                 url: url,
-            //                 data: {
-            //                     id
-            //                 },
-            //                 dataType: "JSON",
-            //                 success: function(response) {
-            //                     if (response.status = 200) {
-            //                         table.ajax.reload();
-            //                     }
-            //                 },
-            //                 error: function(error) {
-            //                     toastr.error(error);
-            //                 }
-            //             });
-            //         }
-            //     })
+            window.eliminar = (url, id) => {
+                Swal.fire({
+                    title: '¿Esta seguro de cancelar la solicitud?',
+                    text: "Esta solicitud ya no será visible para el coordinador y/o mensajero.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí estoy seguro!',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: url,
+                            data: {
+                                id
+                            },
+                            dataType: "JSON",
+                            success: function(response) {
+                                if (response.status = 200) {
+                                    table.ajax.reload();
+                                }
+                            },
+                            error: function(error) {
+                                toastr.error(error);
+                            }
+                        });
+                    }
+                })
 
-            // }
+            }
         });
     </script>
 @endsection
