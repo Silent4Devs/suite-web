@@ -10,9 +10,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             PermissionsTableSeeder::class,
-            PermissionsVisitantesSeeder::class,
-            VacacionesPermisosSeeder::class,
-            PermisosBIASeeder::class,
             RolesTableSeeder::class,
             UsersTableSeeder::class,
             GapunoTableSeeder::class,
@@ -62,6 +59,9 @@ class DatabaseSeeder extends Seeder
             AjustesEnvioDocumentosSeeder::class,
             AjustesBIASeeder::class,
             PermisosMensajeriaSeeder::class,
+            PermissionsVisitantesSeeder::class,
+            VacacionesPermisosSeeder::class,
+            PermisosBIASeeder::class,
         ]);
     }
 }

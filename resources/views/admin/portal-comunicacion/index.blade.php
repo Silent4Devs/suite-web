@@ -491,14 +491,22 @@
                                             }
 
                                         @endphp
-                                        <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}" data-toggle="modal" data-target="#comunicado_carrusel_modal{{$idx}}" style="cursor: pointer;">
-                                            <div class="img_carrusel"
-                                                style="background-image: url('{{ asset($imagen) }}');">
+                                        @if($carrusel->imagenes_comunicacion->first()->tipo == 'video')
+                                            <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}" data-toggle="modal" data-target="#comunicado_carrusel_modal{{$idx}}" style="cursor: pointer;">
+                                                <div class="img_carrusel" style="display: flex; justify-content: center; align-items: center;">
+                                                    <video muted controls src="{{ asset($imagen) }}" width="100%"></video>
+                                                </div>
                                             </div>
-                                            <div class="carousel-caption d-none d-md-block">
-                                                <h5>{{ $carrusel->titulo }}</h5>
+                                         @else
+                                            <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}" data-toggle="modal" data-target="#comunicado_carrusel_modal{{$idx}}" style="cursor: pointer;">
+                                                <div class="img_carrusel"
+                                                    style="background-image: url('{{ asset($imagen) }}');">
+                                                </div>
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5>{{ $carrusel->titulo }}</h5>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     @empty
                                         <div class="carousel-item active">
                                             <div class="img_carrusel"
@@ -529,19 +537,35 @@
 
                         {{-- modal carrusel --}}
                         @foreach($comunicacionSgis_carrusel as $idx=>$carrusel)
-                            <div class="modal fade carrusel-modal" id="comunicado_carrusel_modal{{$idx}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document" style="max-width: 75% !important;">
-                                <div class="modal-content">
-                                  <div class="modal-body">
-                                    <a href="{{$carrusel->link}}">{{Str::limit($carrusel->link, 50, '...')}}</a>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <img src="{{asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen)}}" style="width: 100%;">
+                            @if($carrusel->imagenes_comunicacion->first()->tipo == 'video')
+                                <div class="modal fade carrusel-modal" id="comunicado_carrusel_modal{{$idx}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document" style="max-width: 75% !important;">
+                                    <div class="modal-content">
+                                      <div class="modal-body">
+                                        <a href="{{$carrusel->link}}">{{Str::limit($carrusel->link, 50, '...')}}</a>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                            <video muted controls src="{{asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen)}}" width="100%"></video>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
+                             @else
+                                <div class="modal fade carrusel-modal" id="comunicado_carrusel_modal{{$idx}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document" style="max-width: 75% !important;">
+                                    <div class="modal-content">
+                                      <div class="modal-body">
+                                        <a href="{{$carrusel->link}}">{{Str::limit($carrusel->link, 50, '...')}}</a>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <img src="{{asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen)}}" style="width: 100%;">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            @endif
                         @endforeach
 
                         <div class="col-lg-12">
@@ -563,11 +587,15 @@
                                             @endphp
 
                                             {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
-
-                                            <div class="img_comunicado"
-                                                style="background-image: url('{{ asset($imagen) }}');">
-                                            </div>
-                                            <div class="text_comunicado">
+                                            @if($comunicacionSgi->imagenes_comunicacion->first()->tipo == 'video')
+                                                <div class="img_comunicado" style="display:flex; justify-content: center; align-items:center;">
+                                                    <video autoplay muted controls src="{{ asset($imagen) }}" width="100%"></video>
+                                                </div>
+                                             @else
+                                                <div class="img_comunicado"
+                                                    style="background-image: url('{{ asset($imagen) }}');">
+                                                </div>
+                                            @endif                                            <div class="text_comunicado">
                                                 <h4 class="w-100 mb-4" style="font-size:16px;">
                                                     {{ $comunicacionSgi->titulo }}</h4>
 
