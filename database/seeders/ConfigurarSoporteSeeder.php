@@ -27,7 +27,7 @@ class ConfigurarSoporteSeeder extends Seeder
             ],
             [
                 'rol'               => 'Soporte técnico',
-                'puesto'            => 'Trainee Desarrollador Web',
+                'puesto'            => 'Líder Técnico de Desarrollo',
                 'telefono'          => '5578233000',
                 'extension'         => '',
                 'tel_celular'       => '',
@@ -37,7 +37,7 @@ class ConfigurarSoporteSeeder extends Seeder
             ],
             [
                 'rol'               => 'Soporte técnico',
-                'puesto'            => 'Trainee Desarrollador Web',
+                'puesto'            => 'Líder Técnico de Desarrollo',
                 'telefono'          => '5578233000',
                 'extension'         => '',
                 'tel_celular'       => '',
@@ -53,16 +53,6 @@ class ConfigurarSoporteSeeder extends Seeder
                 'tel_celular'       => '',
                 'correo'            => 'alejandro.pacheco@silent4business.com',
                 'id_elaboro'        => 18,
-
-            ],
-            [
-                'rol'               => 'Consultor',
-                'puesto'            => 'Consultor Estratégico Jr.',
-                'telefono'          => '5578233000',
-                'extension'         => '146',
-                'tel_celular'       => '',
-                'correo'            => 'yadiel.ceja@silent4business.com',
-                'id_elaboro'        => 17,
 
             ],
             [

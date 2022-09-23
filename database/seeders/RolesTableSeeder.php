@@ -14,14 +14,14 @@ class RolesTableSeeder extends Seeder
             [
                 'title' => 'Admin',
             ],
+            // [
+            //     'title' => 'Consultor',
+            // ],
+            // [
+            //     'title' => 'Consulta',
+            // ],
             [
-                'title' => 'Consultor',
-            ],
-            [
-                'title' => 'Consulta',
-            ],
-            [
-                'title'=> 'Colaborador',
+                'title' => 'Colaborador',
             ],
         ];
 
