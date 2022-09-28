@@ -12,7 +12,7 @@
             ])
 
         </div>
-        <div class="p-3 col-sm-12 col-lg-6 col-6 mb-3 text-center header-text rounded">
+        <div class="p-3 col-sm-12 col-md-12 col-lg-6 col-12 mb-3 text-center header-text rounded">
             <x-signature wire:model="firma" />
             {{-- <div x-data="signaturePad(@entangle('firma'))">
                 <div class="text-center" style="color: #1C274A">
