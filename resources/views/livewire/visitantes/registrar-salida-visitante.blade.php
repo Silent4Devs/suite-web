@@ -1,7 +1,7 @@
 <div class="row m-0">
     <x-loading-indicator />
     @if ($visitante)
-        <div class="p-3 col-sm-12 col-lg-6 col-6 mb-3 text-center header-text border border-3 rounded">
+        <div class="p-3 col-sm-12 col-md-12 col-lg-6 col-12 mb-3 text-center header-text border border-3 rounded">
             <h3 style="color: #3086AF">DATOS DE REGISTRO</h3>
             @include('visitantes.registro-visitantes._visitante-registrado', [
                 'visitante' => $visitante,
