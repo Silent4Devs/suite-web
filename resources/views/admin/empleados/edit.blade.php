@@ -461,7 +461,7 @@
     </script> --}}
     <script>
         $(document).ready(function() {
-           
+
             $('#nacionalidad').select2({
                 theme: 'bootstrap4',
                 templateResult: customizeNationalitySelect,
@@ -2871,8 +2871,8 @@
             toastr.success('Puesto de empleado creado con éxito');
         });
         $('.select2').select2({
-                'theme': 'bootstrap4'
-            });
+            'theme': 'bootstrap4'
+        });
         window.initSelect2 = () => {
             $('.areas').select2({
                 theme: 'bootstrap4',
@@ -2974,96 +2974,12 @@
 
     <script type="text/javascript">
         $(function() {
-            let dtButtons = [{
-                    extend: 'csvHtml5',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar CSV',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar Excel',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Exportar PDF',
-                    orientation: 'portrait',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    },
-                    customize: function(doc) {
-                        doc.pageMargins = [5, 20, 5, 20];
-                        doc.styles.tableHeader.fontSize = 10;
-                        doc.defaultStyle.fontSize = 10; //<-- set fontsize to 16 instead of 10
-                    }
-                },
-                {
-                    extend: 'print',
-                    title: `Inventario de Activos ${new Date().toLocaleDateString().trim()}`,
-                    text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Imprimir',
-                    exportOptions: {
-                        columns: ['th:not(:last-child):visible']
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Seleccionar Columnas',
-                },
-                {
-                    extend: 'colvisGroup',
-                    text: '<i class="fas fa-eye" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    show: ':hidden',
-                    titleAttr: 'Ver todo',
-                },
-                {
-                    extend: 'colvisRestore',
-                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
-                    className: "btn-sm rounded pr-2",
-                    titleAttr: 'Restaurar a estado anterior',
-                }
-
-            ];
-            // let btnAgregar = {
-            //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-            //     titleAttr: 'Agregar',
-            //     url: "#",
-            //     className: 'btn-xs btn-outline-success rounded ml-2 pr-3',
-            //     action: function(e, dt, node, config) {
-            //     let {
-            //     url
-            //     } = config;
-            //     window.location.href = url;
-            //     }
+            // var dtOverrideGlobals = {
+            //     buttons: [],
+            //     "bDestroy": true,
+            //     pageLength: 20,
             // };
-
-            // dtButtons.push(btnAgregar);
-
-            let dtOverrideGlobals = {
-                buttons: dtButtons,
-                order: [
-                    [0, 'desc']
-                ],
-                pageLength: 20,
-            };
-            let table = $('#tabla_docs').DataTable(dtOverrideGlobals);
+            // let table = $('#tabla_docs').DataTable(dtOverrideGlobals);
 
             document.getElementById('tabla_docs').addEventListener('keyup', async function(e) {
                 if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') {
@@ -3122,7 +3038,8 @@
                         if (data.status == 201) {
                             toastr.success(data.message);
                             setTimeout(() => {
-                                window.location.reload();
+                                renderTableExpediente();
+                                // window.location.reload();
                             }, 800);
                         }
                     } catch (error) {
@@ -3130,6 +3047,97 @@
                     }
                 }
             });
+            renderTableExpediente();
         });
+
+        function renderTableExpediente() {
+            let tbody = document.getElementById('tablaDocsTbody');
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.inicio-Usuario.expediente-getListaDocumentos', $empleado->id) }}",
+                // data: "JSON",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: "JSON",
+                success: function(response) {
+                    let listaDocs = response;
+                    let empleado = @json($empleado);
+                    let htmlTbodyInner = "";
+                    listaDocs.forEach(doc => {
+                        htmlTbodyInner += `
+                <tr>
+                    <td>
+                        <font class="${doc.tipo}">${doc.tipo}</font>
+                    </td>
+                    <td>${doc.documento}</td>
+                    <td>
+                        <input id="" data-id="${doc.id}" data-empleado="${empleado.id}"
+                            name="numero" class="form-control"
+                            value="${doc.empleado?((doc.empleado.numero==null||doc.empleado.numero=='null')?'':doc.empleado.numero):''}">
+                    </td>
+                    <td style=" display: flex;justify-content: center; position: relative;">`;
+                        if (doc.ruta_documento) {
+                            htmlTbodyInner += `
+                                <a target="_blank" href="${doc.ruta_documento}"
+                                    style="text-align:center; display:inline-block;">
+                                    <img src="{{ asset('img/pdf-file.png') }}" style="width:50px;"><br>
+                                    ${doc.nombre_doc}
+                                </a>
+                                <label for="documento${doc.id}" class="text-center"
+                                    style="position:absolute; right: 20px; top:20px;">
+                                    <i class="fa-solid fa-arrows-rotate btn" title="Actualizar Documento"></i>
+                                </label>
+                                <input type="file" class="form-control d-none" id="documento${doc.id}"
+                                    data-id="${doc.id}" data-empleado="${empleado.id}"
+                                    name="file" />
+
+                                <label class="text-center" style="position:absolute; right: 20px; top:50px;"
+                                    data-toggle="modal" data-target="#modal_docs_${doc.id}">
+                                    <i class="fa-solid fa-eye btn"></i>
+                                </label>
+                            `;
+                        } else {
+                            htmlTbodyInner += `
+                            <div class="text-center">
+                                <label for="documento${doc.id}" class="text-center">
+                                    <img src="{{ asset('img/upload-pdf.png') }}" style="width:40px" />
+                                    <p class="m-0 text-muted" style="font-size:10px">Subir Documento</p>
+                                </label>
+                            </div>
+                            <input type="file" class="form-control d-none" id="documento${doc.id}"
+                                data-id="${doc.id}" data-empleado="${empleado.id}"
+                                name="file" />
+                            <p class="m-0">
+                                <span class="errors documento_error text-danger"></span>
+                            </p>
+                            `;
+                        }
+                        htmlTbodyInner += `
+                    </td>                 
+                </tr>
+                `;
+                    });
+
+
+                    setTimeout(() => {
+                        var dtOverrideGlobals = {
+                            buttons: [],
+                            pageLength: 20,
+                            retrieve: true,
+                        };
+                        if ($.fn.DataTable.isDataTable('#tabla_docs')) {
+                            $('#tabla_docs').DataTable().destroy();
+                        }
+
+                        tbody.innerHTML = htmlTbodyInner;
+                        let table = $('#tabla_docs').DataTable(dtOverrideGlobals);
+                    }, 1000);
+
+                }
+
+            });
+        }
     </script>
 @endsection
