@@ -10,7 +10,7 @@
     <h5 class="col-12 titulo_general_funcion">Editar: Excepcion</h5>
     <div class="mt-4 card">
         <div class="card-body">
-            {!! Form::model($vacacion, ['route' => ['admin.vacaciones.update', $vacacion->id], 'method' => 'patch']) !!}
+            {!! Form::model($vacacion, ['route' => ['admin.incidentes-vacaciones.update', $vacacion->id], 'method' => 'patch']) !!}
 
             @include('admin.incidentesVacaciones.fields')
 

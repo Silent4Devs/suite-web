@@ -122,7 +122,7 @@ class IncidentesVacacionesController extends Controller
         }
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
 
-        return view('admin.vacaciones.edit', compact('vacacion', 'empleados', 'empleados_seleccionados'));
+        return view('admin.incidentesvacaciones.edit', compact('vacacion', 'empleados', 'empleados_seleccionados'));
     }
 
     public function update(Request $request, $id)

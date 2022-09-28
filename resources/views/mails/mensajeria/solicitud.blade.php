@@ -240,7 +240,7 @@
 
                                               
                                                 <li>
-                                                    Nombre de quien recibe
+                                                    Nombre de quien recibe: 
                                                     <strong>{{ $solicitud->destinatario }}</strong>
                                                 </li>
                                                 <li>

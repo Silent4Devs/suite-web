@@ -61,7 +61,6 @@
     #tabla_docs .aplica::before {
         content: "Solo si ";
     }
-
 </style>
 
 
@@ -109,17 +108,16 @@
                         <th style="max-width:350px; text-align: center;">Archivo</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($lista_docs as $doc)
+                <tbody id="tablaDocsTbody">
+                    {{-- @foreach ($lista_docs as $doc)
                         <tr>
                             <td>
                                 <font class="{{ $doc->tipo }}">{{ $doc->tipo }}</font>
                             </td>
                             <td>{{ $doc->documento }}</td>
                             <td>
-                                <input id="" data-id="{{ $doc->id }}"
-                                    data-empleado="{{ auth()->user()->empleado->id }}" name="numero"
-                                    class="form-control"
+                                <input id="" data-id="{{ $doc->id }}" data-empleado="{{ $empleado->id }}"
+                                    name="numero" class="form-control"
                                     value="{{ $doc->empleado ? $doc->empleado->numero : null }}">
                             </td>
                             <td style=" display: flex;justify-content: center; position: relative;">
@@ -134,8 +132,8 @@
                                         <i class="fa-solid fa-arrows-rotate btn" title="Actualizar Documento"></i>
                                     </label>
                                     <input type="file" class="form-control d-none" id="documento{{ $doc->id }}"
-                                        data-id="{{ $doc->id }}"
-                                        data-empleado="{{ auth()->user()->empleado->id }}" name="file" />
+                                        data-id="{{ $doc->id }}" data-empleado="{{ $empleado->id }}"
+                                        name="file" />
 
                                     <label class="text-center" style="position:absolute; right: 20px; top:50px;"
                                         data-toggle="modal" data-target="#modal_docs_{{ $doc->id }}">
@@ -149,23 +147,15 @@
                                         </label>
                                     </div>
                                     <input type="file" class="form-control d-none" id="documento{{ $doc->id }}"
-                                        data-id="{{ $doc->id }}"
-                                        data-empleado="{{ auth()->user()->empleado->id }}" name="file" />
+                                        data-id="{{ $doc->id }}" data-empleado="{{ $empleado->id }}"
+                                        name="file" />
                                     <p class="m-0">
                                         <span class="errors documento_error text-danger"></span>
                                     </p>
                                 @endif
-
-
-
                             </td>
-                            {{-- <td>
-                                    @if ($doc->archivado == false)
-                                        <font style="background-color:green;">Actual</font>
-                                    @endif
-                                </td> --}}
                         </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
         </div>

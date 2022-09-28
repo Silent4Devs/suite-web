@@ -104,7 +104,7 @@
                         Fecha de la solicitud
                     </th>
                     <th style="min-width: 110px;">
-                       Soliciante
+                       Solicitante
                     </th>
                     <th style="min-width: 75px;">
                         Estatus
