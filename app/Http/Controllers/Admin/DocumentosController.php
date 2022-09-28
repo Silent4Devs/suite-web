@@ -79,7 +79,7 @@ class DocumentosController extends Controller
             'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
             'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
             'fecha' => 'required|date',
-            'archivo' => 'required|mimetypes:application/pdf|max:10000',
+            'archivo' => 'required|mimes:application/pdf,doc,docx|max:10000',
             'elaboro_id' => 'required|exists:empleados,id',
             'aprobo_id' => 'required|exists:empleados,id',
             'reviso_id' => 'required|exists:empleados,id',
@@ -87,7 +87,7 @@ class DocumentosController extends Controller
             'version' => 'required|numeric',
         ], [
             'codigo.unique' => 'El código de documento ya ha sido tomado',
-            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
+            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF o Word',
         ]);
     }
 
@@ -120,6 +120,9 @@ class DocumentosController extends Controller
                 break;
             case 'proceso':
                 $path_documentos_aprobacion .= '/procesos';
+                break;
+            case 'formato':
+                $path_documentos_aprobacion .= '/formatos';
                 break;
             default:
                 $path_documentos_aprobacion .= '/procesos';
@@ -218,14 +221,14 @@ class DocumentosController extends Controller
             'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
             'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
             'fecha' => 'required|date',
-            'archivo' => 'required|mimetypes:application/pdf|max:10000',
+            'archivo' => 'required|mimetypes:application/pdf/doc,docx|max:10000',
             'elaboro_id' => 'required_if:elaboro_id,null|exists:empleados,id',
             'aprobo_id' => 'required_if:aprobo_id,null|exists:empleados,id',
             'reviso_id' => 'required_if:reviso_id,null|exists:empleados,id',
             'responsable_id' => 'required_if:responsable_id,null|exists:empleados,id',
         ], [
             'codigo.unique' => 'El código de documento ya ha sido tomado',
-            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
+            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF o WORD',
         ]);
     }
 
@@ -555,6 +558,9 @@ class DocumentosController extends Controller
             case 'proceso':
                 $path_documento .= '/procesos';
                 break;
+            case 'formato':
+                $path_documento .= '/formatos';
+                break;
             default:
                 $path_documento .= '/procesos';
                 break;
@@ -592,6 +598,9 @@ class DocumentosController extends Controller
         if (!Storage::exists('/public/Documentos en aprobacion/procesos')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/procesos', 0775, true);
         }
+        if (!Storage::exists('/public/Documentos en aprobacion/formatos')) {
+            Storage::makeDirectory('/public/Documentos en aprobacion/formatos', 0775, true);
+        }
     }
 
     public function createDocumentosObsoletosIfNotExists()
@@ -622,6 +631,9 @@ class DocumentosController extends Controller
         }
         if (!Storage::exists('/public/Documentos obsoletos/procesos')) {
             Storage::makeDirectory('/public/Documentos obsoletos/procesos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documentos obsoletos/formatos')) {
+            Storage::makeDirectory('/public/Documentos obsoletos/formatos', 0775, true);
         }
     }
 
