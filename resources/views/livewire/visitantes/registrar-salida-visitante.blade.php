@@ -13,7 +13,8 @@
 
         </div>
         <div class="p-3 col-sm-12 col-lg-6 col-6 mb-3 text-center header-text rounded">
-            <div x-data="signaturePad(@entangle('firma'))">
+            <x-signature wire:model="firma" />
+            {{-- <div x-data="signaturePad(@entangle('firma'))">
                 <div class="text-center" style="color: #1C274A">
                     <h3>REGISTRO DE SALIDA</h3>
                     <span style="font-size: 18px">Por favor,firma tu salida para
@@ -49,7 +50,7 @@
                         },
                     }))
                 })
-            </script>
+            </script> --}}
         </div>
     @endif
     <div class="d-flex" style="justify-content: end">
@@ -69,5 +70,4 @@
             });
         });
     </script>
-
 </div>
