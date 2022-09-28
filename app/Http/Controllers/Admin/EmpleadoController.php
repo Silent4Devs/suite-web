@@ -943,13 +943,20 @@ class EmpleadoController extends Controller
         $isEditAdmin = true;
         // dd($idiomas);
         // dd(Empleado::find(63));
-
-        // expediente ------------------------------------------------------------
         $id_empleado = $id;
         $empleado = Empleado::find($id_empleado);
-
+        $lista_docs = $this->getListaDocumentos($id_empleado);
         $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('archivado', false)->get();
+        // expediente ------------------------------------------------------------
 
+        $organizacion = Organizacion::first();
+        // $lista_docs = $lista_docs->sortBy('tipo');
+
+        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion'));
+    }
+
+    public function getListaDocumentos($id_empleado)
+    {
         $lista_docs_model = ListaDocumentoEmpleado::get();
         $lista_docs = collect();
         $documento_versiones = '';
@@ -982,15 +989,12 @@ class EmpleadoController extends Controller
                 'evidencia_viejo_id' => $doc_empleado_id,
             ]);
         }
-        $organizacion = Organizacion::first();
-        // dd($lista_docs);
-
-        return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion'));
+        return $lista_docs;
     }
 
     public function expedienteUpdate(Request $request)
     {
-        // dd($request->all());
+
         if ($request->name == 'file') {
             $fileName = time() . $request->file('value')->getClientOriginalName();
             // dd($request->file('value'));

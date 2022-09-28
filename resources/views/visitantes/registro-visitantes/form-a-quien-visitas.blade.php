@@ -1,4 +1,10 @@
 <div class="col-12">
+    <style>
+        .select2-dropdown {
+            top: -84px !important;
+            left: -59px !important;
+        }
+    </style>
     <div class="header-text text-center">
         <h3>¿A QUIÉN VISITAS?</h3>
         <p>Por favor, selecciona el área o la persona que vaya a visitar</p>

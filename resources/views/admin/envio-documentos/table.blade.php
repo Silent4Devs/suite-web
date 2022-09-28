@@ -15,7 +15,10 @@
                 Mensajero
             </th>
             <th style="min-width: 75px;">
-                Status
+                Estatus
+            </th>
+            <th style="min-width: 100px;">
+                Notas
             </th>
             <th style="min-width: 100px;">
                 Opciones

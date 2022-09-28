@@ -16,12 +16,28 @@ class NormasSeeder extends Seeder
     {
         $normas = [
             [
-                'norma' => 'iso27001',
-                'descripcion' => 'Modulo de iso27001',
+                'norma' => 'ISO27001',
+                'descripcion' => 'Módulo de ISO27001',
             ],
             [
-                'norma' => 'iso9001',
-                'descripcion' => 'Modulo de iso9001',
+                'norma' => 'ISO9001',
+                'descripcion' => 'Módulo de ISO9001',
+            ],
+            [
+                'norma' => 'ISO37000',
+                'descripcion' => 'Módulo de ISO37000',
+            ],
+            [
+                'norma' => 'ISO37001',
+                'descripcion' => 'Módulo de ISO37001',
+            ],
+            [
+                'norma' => 'ISO20000',
+                'descripcion' => 'Módulo de ISO20000',
+            ],
+            [
+                'norma' => 'ISO22301',
+                'descripcion' => 'Módulo de ISO22301',
             ],
         ];
 
