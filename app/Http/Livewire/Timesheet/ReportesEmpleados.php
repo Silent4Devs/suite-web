@@ -279,17 +279,34 @@ class ReportesEmpleados extends Component
             $semanas_empleado = intval(date_diff($fecha_inicio, $fecha_fin)->format('%R%a') / 7);
 
             // semanas faltantes
-            $antiguedad_y = Carbon::parse($fecha_inicio_timesheet_empleado)->format('Y');
-            $antiguedad_m = Carbon::parse($fecha_inicio_timesheet_empleado)->format('m');
-            $antiguedad_d = Carbon::parse($fecha_inicio_timesheet_empleado)->format('d');
+            $entro_esta_semana = false;
+            if(Carbon::parse($this->fecha_inicio)->lt(Carbon::parse($empleado_list->antiguedad))){
+                if(Carbon::parse($empleado_list->antiguedad)->startOfWeek(Carbon::MONDAY) >= Carbon::now()->startOfWeek(Carbon::MONDAY)){
+                    // concuerda la misma semana de ingreso y de la actual
+                    $entro_esta_semana = true;
+                }else{
+                    $fecha_inicio_timesheet_faltantes_empleado = Carbon::parse($empleado_list->antiguedad)->startOfWeek(Carbon::MONDAY);
+                }
+            }else{
+                $fecha_inicio_timesheet_faltantes_empleado = $fecha_inicio_timesheet_empleado;
+            }
+            $antiguedad_y = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('Y');
+            $antiguedad_m = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('m');
+            $antiguedad_d = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('d');
 
             foreach ($times_empleado_aprobados_pendientes_list as $time) {
                 $times_empleado_array[] = $time->semana_y;
             }
 
-            $this->times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array);
+            if($entro_esta_semana){
+                $this->times_faltantes_empleado = [];
 
-            $times_atrasados = count($this->times_faltantes_empleado);
+                $times_atrasados = 0;
+            }else{
+                $this->times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array);
+
+                $times_atrasados = count($this->times_faltantes_empleado);
+            }
 
             // registro de horas en calendario
             $calendario_tabla_empleado = [];
