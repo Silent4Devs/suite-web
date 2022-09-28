@@ -78,14 +78,14 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 	<script type="text/javascript">
 		$(document).click(function(){
-			// document.body.requestFullscreen();
+			document.body.requestFullscreen();
 		});
 
 		$(document).ready(function(){
 			let duracion = Number(30000);
 			let video_duracion;
 
-			let first = $('#slider li:first-child'); 
+			let first = $('#slider li:first-child');
 			let last = $('#slider li:last-child');
 
 			first.attr('data-n', 'primero');
@@ -104,7 +104,7 @@
 			next.addClass('siguiente');
 
 			function slider()
-			{	
+			{
 				previous.removeClass('anterior');
 				previous = current;
 				previous.addClass('anterior');
