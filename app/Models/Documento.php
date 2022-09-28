@@ -138,6 +138,9 @@ class Documento extends Model
             case 'proceso':
                 $path_documento .= '/procesos';
                 break;
+            case 'formato':
+                $path_documento .= '/formatos';
+                break;
             default:
                 $path_documento .= '/procesos';
                 break;

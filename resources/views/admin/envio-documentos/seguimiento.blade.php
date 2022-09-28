@@ -106,7 +106,7 @@
 
 
             <div class="text-center form-group" style="background-color:#345183; border-radius: 100px; color: white;">
-                Seguimiento
+                SEGUIMIENTO
             </div>
             <div class="row">
                 <label for="exampleFormControlTextarea1" class="col-sm-2"> <i
