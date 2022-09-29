@@ -21,10 +21,10 @@ class RegistrarSalidaVisitante extends Component
 
     protected $listeners = ['registrarSalida'];
 
-    protected $rules = [
-        'visitante' => 'nullable',
-        'firma' => 'required'
-    ];
+    // protected $rules = [
+    //     'visitante' => 'nullable',
+    //     'firma' => 'required'
+    // ];
 
     public function mount(?RegistrarVisitante $visitante, $tipo = null)
     {
@@ -51,7 +51,11 @@ class RegistrarSalidaVisitante extends Component
 
     public function registrarSalida()
     {
-        $this->validate();
+        $validateFirma = ResponsableVisitantes::first()->firma_requerida ? 'required' : 'nullable';
+        $this->validate([
+            'visitante' => 'nullable',
+            'firma' => $validateFirma
+        ]);
         $registroVisitante = RegistrarVisitante::find($this->visitante->id);
         $registroVisitante->update([
             'fecha_salida' => Carbon::now(),

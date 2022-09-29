@@ -12,6 +12,7 @@ class ConfiguracionVisitantes extends Component
     public $responsable = "";
     public $responsableVisitante;
     public $fotografiaRequerida = false;
+    public $firmaRequerida = true;
 
     protected $rules = [
         'responsable' => 'required|numeric'
@@ -35,6 +36,7 @@ class ConfiguracionVisitantes extends Component
         if ($this->responsableVisitante != null) {
             $this->responsable = $this->responsableVisitante->empleado_id;
             $this->fotografiaRequerida = $this->responsableVisitante->fotografia_requerida;
+            $this->firmaRequerida = $this->responsableVisitante->firma_requerida;
         }
         return view('livewire.visitantes.configuracion-visitantes');
     }
@@ -53,6 +55,14 @@ class ConfiguracionVisitantes extends Component
         ResponsableVisitantes::updateOrCreate(
             ['id' => ResponsableVisitantes::first()->id ?? 1],
             ['fotografia_requerida' => $value]
+        );
+    }
+    public function updatedfirmaRequerida($value)
+    {
+        $value = $value == 'true' ? true : false;
+        ResponsableVisitantes::updateOrCreate(
+            ['id' => ResponsableVisitantes::first()->id ?? 1],
+            ['firma_requerida' => $value]
         );
     }
 }
