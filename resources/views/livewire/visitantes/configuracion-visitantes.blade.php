@@ -40,6 +40,15 @@
 
             </select>
         </div>
+        <div class="mt-4">
+            <label for="firmaRequerida"><i class="bi bi-pen"></i>¿Es requerida la firma al momento de
+                salir de la organización?</label>
+            <select wire:model="firmaRequerida" class="custom-select">
+                <option value="false" {{ !$firmaRequerida ? 'selected' : '' }}>No</option>
+                <option value="true" {{ $firmaRequerida ? 'selected' : '' }}>Sí</option>
+
+            </select>
+        </div>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 initSelect2();
