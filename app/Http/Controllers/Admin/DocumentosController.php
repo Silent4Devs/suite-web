@@ -72,7 +72,7 @@ class DocumentosController extends Controller
 
     public function validateRequestStore(Request $request)
     {
-        if($request->tipo == "formato"){
+        if ($request->tipo == "formato") {
             $request->validate([
                 'codigo' => 'required|string|unique:documentos',
                 'nombre' => 'required|string',
@@ -80,7 +80,7 @@ class DocumentosController extends Controller
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
                 'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
                 'fecha' => 'required|date',
-                'archivo' => 'required|mimes:application/pdf,doc,docx|max:10000',
+                'archivo' => 'required|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:10000',
                 'elaboro_id' => 'required|exists:empleados,id',
                 'aprobo_id' => 'required|exists:empleados,id',
                 'reviso_id' => 'required|exists:empleados,id',
@@ -90,24 +90,24 @@ class DocumentosController extends Controller
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
                 'archivo.mimetypes' => 'El archivo debe ser de tipo PDF o Word',
             ]);
-        }else
-        $request->validate([
-            'codigo' => 'required|string|unique:documentos',
-            'nombre' => 'required|string',
-            'tipo' => 'required|string',
-            'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
-            'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
-            'fecha' => 'required|date',
-            'archivo' => 'required|mimetypes:application/pdf/|max:10000',
-            'elaboro_id' => 'required|exists:empleados,id',
-            'aprobo_id' => 'required|exists:empleados,id',
-            'reviso_id' => 'required|exists:empleados,id',
-            'responsable_id' => 'required|exists:empleados,id',
-            'version' => 'required|numeric',
-        ], [
-            'codigo.unique' => 'El código de documento ya ha sido tomado',
-            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
-        ]);
+        } else
+            $request->validate([
+                'codigo' => 'required|string|unique:documentos',
+                'nombre' => 'required|string',
+                'tipo' => 'required|string',
+                'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
+                'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
+                'fecha' => 'required|date',
+                'archivo' => 'required|mimetypes:application/pdf/|max:10000',
+                'elaboro_id' => 'required|exists:empleados,id',
+                'aprobo_id' => 'required|exists:empleados,id',
+                'reviso_id' => 'required|exists:empleados,id',
+                'responsable_id' => 'required|exists:empleados,id',
+                'version' => 'required|numeric',
+            ], [
+                'codigo.unique' => 'El código de documento ya ha sido tomado',
+                'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
+            ]);
     }
 
     public function storeDocument(Request $request, $estatus)
@@ -233,7 +233,7 @@ class DocumentosController extends Controller
 
     public function validateRequestUpdate(Request $request, Documento $documento)
     {
-        if($request->tipo == "formato"){
+        if ($request->tipo == "formato") {
             $request->validate([
                 'codigo' => 'required|string|unique:documentos',
                 'nombre' => 'required|string',
@@ -241,7 +241,7 @@ class DocumentosController extends Controller
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
                 'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
                 'fecha' => 'required|date',
-                'archivo' => 'required|mimes:application/pdf,doc,docx|max:10000',
+                'archivo' => 'required|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:10000',
                 'elaboro_id' => 'required|exists:empleados,id',
                 'aprobo_id' => 'required|exists:empleados,id',
                 'reviso_id' => 'required|exists:empleados,id',
@@ -251,24 +251,24 @@ class DocumentosController extends Controller
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
                 'archivo.mimetypes' => 'El archivo debe ser de tipo PDF o Word',
             ]);
-        }else
-        $request->validate([
-            'codigo' => 'required|string|unique:documentos',
-            'nombre' => 'required|string',
-            'tipo' => 'required|string',
-            'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
-            'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
-            'fecha' => 'required|date',
-            'archivo' => 'required|mimetypes:application/pdf/|max:10000',
-            'elaboro_id' => 'required|exists:empleados,id',
-            'aprobo_id' => 'required|exists:empleados,id',
-            'reviso_id' => 'required|exists:empleados,id',
-            'responsable_id' => 'required|exists:empleados,id',
-            'version' => 'required|numeric',
-        ], [
-            'codigo.unique' => 'El código de documento ya ha sido tomado',
-            'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
-        ]);
+        } else
+            $request->validate([
+                'codigo' => 'required|string|unique:documentos',
+                'nombre' => 'required|string',
+                'tipo' => 'required|string',
+                'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
+                'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
+                'fecha' => 'required|date',
+                'archivo' => 'required|mimetypes:application/pdf/|max:10000',
+                'elaboro_id' => 'required|exists:empleados,id',
+                'aprobo_id' => 'required|exists:empleados,id',
+                'reviso_id' => 'required|exists:empleados,id',
+                'responsable_id' => 'required|exists:empleados,id',
+                'version' => 'required|numeric',
+            ], [
+                'codigo.unique' => 'El código de documento ya ha sido tomado',
+                'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
+            ]);
     }
 
     public function updateDocument(Request $request, Documento $documento, $estatus)
