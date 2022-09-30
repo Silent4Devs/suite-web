@@ -73,12 +73,13 @@ class TimesheetController extends Controller
     public function actualizarDia(Request $request)
     {
         $organizacion = Organizacion::first();
-
+        $semanasAdicionales = $request->semanas_adicionales < 0 ? 0 : $request->semanas_adicionales;
         $organizacion->update([
             'dia_timesheet' => $request->dia_timesheet,
             'inicio_timesheet' => $request->inicio_timesheet,
             'fecha_registro_timesheet' => $request->fecha_registro_timesheet,
             'semanas_min_timesheet' => $request->semanas_min_timesheet,
+            'semanas_adicionales' => $semanasAdicionales,
         ]);
 
         $empleados = Empleado::get();
@@ -1004,8 +1005,8 @@ class TimesheetController extends Controller
         foreach ($tareas_obtenidas as $key => $tarea) {
             if (($tarea->todos == true) || ($tarea->area_id == auth()->user()->empleado->area_id)) {
                 $tareas_array->push([
-                    'id'=>$tarea->id,
-                    'tarea'=>$tarea->tarea,
+                    'id' => $tarea->id,
+                    'tarea' => $tarea->tarea,
                 ]);
             }
         }

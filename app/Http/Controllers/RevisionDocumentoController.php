@@ -121,7 +121,7 @@ class RevisionDocumentoController extends Controller
 
                         $documentoOriginal->update([
                             'estatus' => strval(Documento::PUBLICADO),
-                            'version' => ($documentoOriginal->version + 1),
+                            'version' => ($documentoOriginal->version),
                         ]);
 
                         $historialDocumento->update([
@@ -225,7 +225,7 @@ class RevisionDocumentoController extends Controller
 
                         $documentoOriginal->update([
                             'estatus' => strval(Documento::PUBLICADO),
-                            'version' => ($documentoOriginal->version + 1),
+                            'version' => ($documentoOriginal->version),
                         ]);
 
                         $historialDocumento->update([
