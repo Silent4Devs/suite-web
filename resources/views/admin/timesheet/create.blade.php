@@ -40,7 +40,7 @@
 
             $("#fecha_dia").flatpickr({
                 "minDate": "{{ auth()->user()->empleado->fecha_min_timesheet }}",
-                "maxDate": "{{ now()->endOfWeek()->format('Y-m-d') }}",
+                "maxDate": "{{ now()->addWeeks($organizacion->semanas_adicionales)->endOfWeek()->format('Y-m-d') }}",
                 "disable": [
                     function(date) {
 
@@ -83,7 +83,8 @@
                     weekdays: {
                         shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
                         longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes',
-                            'Sábado'],
+                            'Sábado'
+                        ],
                     },
                     months: {
                         shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct',
