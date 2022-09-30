@@ -28,7 +28,7 @@ class PrimerosPasos
         $existsOrganizacion = Organizacion::exists();
         $existsAreas = Area::exists();
         $existsPuesto = Puesto::exists();
-        $existsVinculoEmpleadoAdmin = User::first()->empleado_id != null ? true : false;
+        $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
         if (
             !$existsEmpleado ||
             !$existsOrganizacion ||
