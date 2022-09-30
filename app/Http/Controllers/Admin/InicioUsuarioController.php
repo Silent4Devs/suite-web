@@ -43,6 +43,7 @@ use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\SolicitudVacaciones;
 use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -272,9 +273,59 @@ class InicioUsuarioController extends Controller
             // $solicitudes_pendientes = 1;
         }
 
+        $existsEmpleado = Empleado::exists();
+        $existsOrganizacion = Organizacion::exists();
+        $existsAreas = Area::exists();
+        $existsPuesto = Puesto::exists();
+        $existsVinculoEmpleadoAdmin = User::first()->empleado_id != null ? true : false;
 
-
-        return view('admin.inicioUsuario.index', compact('solicitudes_pendientes', 'usuario', 'competencias', 'recursos', 'actividades', 'documentos_publicados', 'auditorias_anual', 'revisiones', 'mis_documentos', 'contador_actividades', 'contador_revisiones', 'contador_recursos', 'auditoria_internas', 'evaluaciones', 'oficiales', 'mis_evaluaciones', 'equipo_a_cargo', 'equipo_trabajo', 'supervisor', 'mis_objetivos', 'last_evaluacion', 'panel_rules', 'activos', 'eventos', 'cumpleaños_usuario', 'cumpleaños_felicitados_like_contador', 'cumpleaños_felicitados_comentarios', 'cumples_aniversarios', 'cumpleaños_felicitados_like_usuarios', 'esLider', 'organizacion', 'usuarioVinculadoConEmpleado', 'mis_quejas', 'mis_quejas_count', 'mis_denuncias', 'mis_denuncias_count', 'mis_propuestas', 'mis_propuestas_count', 'mis_sugerencias', 'mis_sugerencias_count'));
+        return view('admin.inicioUsuario.index', compact(
+            'solicitudes_pendientes',
+            'usuario',
+            'competencias',
+            'recursos',
+            'actividades',
+            'documentos_publicados',
+            'auditorias_anual',
+            'revisiones',
+            'mis_documentos',
+            'contador_actividades',
+            'contador_revisiones',
+            'contador_recursos',
+            'auditoria_internas',
+            'evaluaciones',
+            'oficiales',
+            'mis_evaluaciones',
+            'equipo_a_cargo',
+            'equipo_trabajo',
+            'supervisor',
+            'mis_objetivos',
+            'last_evaluacion',
+            'panel_rules',
+            'activos',
+            'eventos',
+            'cumpleaños_usuario',
+            'cumpleaños_felicitados_like_contador',
+            'cumpleaños_felicitados_comentarios',
+            'cumples_aniversarios',
+            'cumpleaños_felicitados_like_usuarios',
+            'esLider',
+            'organizacion',
+            'usuarioVinculadoConEmpleado',
+            'mis_quejas',
+            'mis_quejas_count',
+            'mis_denuncias',
+            'mis_denuncias_count',
+            'mis_propuestas',
+            'mis_propuestas_count',
+            'mis_sugerencias',
+            'mis_sugerencias_count',
+            'existsEmpleado',
+            'existsOrganizacion',
+            'existsVinculoEmpleadoAdmin',
+            'existsAreas',
+            'existsPuesto'
+        ));
     }
 
     // public function obtenerInformacionDeLaConsultaPorEvaluado($evaluacion, $evaluado)
@@ -679,7 +730,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-      
+
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
@@ -715,7 +766,7 @@ class InicioUsuarioController extends Controller
             'formulario' => 'mejora',
         ]);
 
-        
+
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
@@ -776,7 +827,7 @@ class InicioUsuarioController extends Controller
 
         $activos = Activo::get();
 
-        return view('admin.inicioUsuario.formularios.seguridad', compact('incidentes_seguridad','activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
+        return view('admin.inicioUsuario.formularios.seguridad', compact('incidentes_seguridad', 'activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
     }
 
     public function storeSeguridad(Request $request)
@@ -794,20 +845,20 @@ class InicioUsuarioController extends Controller
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
             'empleado_reporto_id' => auth()->user()->empleado->id,
-            'procedente'=>$incidente_procedente,
-            'justificacion'=>$request->justificacion,
+            'procedente' => $incidente_procedente,
+            'justificacion' => $request->justificacion,
         ]);
 
-        
-        if( $incidente_procedente){
+
+        if ($incidente_procedente) {
             $incidentes_seguridad->update([
-            'estatus'=>'Sin atender',
+                'estatus' => 'Sin atender',
 
             ]);
-        }else{
+        } else {
             $incidentes_seguridad->update([
-                'estatus'=>'No procedente',
-                ]);
+                'estatus' => 'No procedente',
+            ]);
         }
 
         AnalisisSeguridad::create([
