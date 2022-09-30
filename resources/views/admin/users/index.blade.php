@@ -14,6 +14,9 @@
     <h5 class="col-12 titulo_general_funcion">Usuarios</h5>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
+            @if (!$existsVinculoEmpleadoAdmin)
+                <h5>Por favor da clic en el icono <small class="p-1 border border-primary rounded"><i class="fas fa-user-tag"></i></small> de la fila del usuario Admin</h5>
+            @endif
             <table class="table table-bordered w-100 datatable-User">
                 <thead class="thead-dark">
                     <tr>
@@ -248,6 +251,7 @@
                             let urlButtonEdit = `/admin/users/${data}/edit`;
                             let urlButtonTwoFactor = `/admin/users/two-factor/${data}/change`;
                             let urlButtonBloquearUsuario = `/admin/users/bloqueo/${data}/change`;
+                            let existsVinculoEmpleadoAdmin = @json($existsVinculoEmpleadoAdmin);
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
@@ -258,7 +262,7 @@
                                     <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                                     @endcan
                                     @can('usuarios_vincular_empleados')
-                                    <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm" onclick="AbrirModal('${data}');">
+                                    <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm ${row.n_empleado?'':'border border-primary rounded'}" onclick="AbrirModal('${data}');">
                                         <i class="fas fa-user-tag"></i>
                                     </button>
                                     @endcan

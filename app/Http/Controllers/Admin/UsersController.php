@@ -34,8 +34,8 @@ class UsersController extends Controller
         //     return !User::where('n_empleado', $item->n_empleado)->exists();
         // })->values();
         $empleados = Empleado::alta()->get();
-
-        return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados'));
+        $existsVinculoEmpleadoAdmin = User::first()->empleado_id != null ? true : false;
+        return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados', 'existsVinculoEmpleadoAdmin'));
     }
 
     public function getUsersIndex(Request $request)
