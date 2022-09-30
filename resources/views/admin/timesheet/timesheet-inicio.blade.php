@@ -424,8 +424,12 @@
                 </div>
                 <div class="col-12 form-group">
                     <label>Establecer limite de semanas para registros atrasados de timesheet</label>
-                    <input id="" class="form-control" type="number" name="semanas_min_timesheet" value="{{ $organizacion->semanas_min_timesheet }}" min="0">
+                    <input id="semanas_min_timesheet" class="form-control" type="number" name="semanas_min_timesheet" value="{{ $organizacion->semanas_min_timesheet }}" min="0">
                     <small class="w-100 d-flex justify-content-between">Esta acción resetea el valor para toda la organización <a href="{{asset('admin/empleados')}}">Limite por empleado</a></small>
+                </div>
+                <div class="col-12 form-group">
+                    <label>Establecer limite de semanas que el colaborador puede adelantar</label>
+                    <input id="semanas_adicionales" class="form-control" type="number" name="semanas_adicionales" value="{{ $organizacion->semanas_adicionales }}" min="0" max="12">                
                 </div>
                 <div class="form-group col-12">
                     <label>Seleccione el día de inicio de la jornada laboral</label>
@@ -492,7 +496,7 @@
                             Domingo
                         </option>
                     </select>
-                </div>
+                </div>               
                 <div class="col-12 text-right">
                     <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
                     <button class="btn btn-success">Guardar</button>
@@ -520,6 +524,22 @@
         });
 
         document.addEventListener('DOMContentLoaded', ()=>{
+            document.querySelector("#semanas_adicionales").addEventListener("keypress", function (evt) {
+                if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+                {
+                    evt.preventDefault();
+                }
+            });
+
+            document.getElementById('semanas_adicionales').addEventListener('keyup',(e)=>{
+                if (e.target.value < 0) {
+                    e.target.value=0;
+                }
+                if (e.target.value > 12) {
+                    e.target.value=12;
+                }
+            });
+
             $(".date_librery").flatpickr({
                 locale: {
                     firstDayOfWeek: 1,

@@ -679,7 +679,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-      
+
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
@@ -715,7 +715,7 @@ class InicioUsuarioController extends Controller
             'formulario' => 'mejora',
         ]);
 
-        
+
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
@@ -776,7 +776,7 @@ class InicioUsuarioController extends Controller
 
         $activos = Activo::get();
 
-        return view('admin.inicioUsuario.formularios.seguridad', compact('incidentes_seguridad','activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
+        return view('admin.inicioUsuario.formularios.seguridad', compact('incidentes_seguridad', 'activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
     }
 
     public function storeSeguridad(Request $request)
@@ -794,20 +794,20 @@ class InicioUsuarioController extends Controller
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
             'empleado_reporto_id' => auth()->user()->empleado->id,
-            'procedente'=>$incidente_procedente,
-            'justificacion'=>$request->justificacion,
+            'procedente' => $incidente_procedente,
+            'justificacion' => $request->justificacion,
         ]);
 
-        
-        if( $incidente_procedente){
+
+        if ($incidente_procedente) {
             $incidentes_seguridad->update([
-            'estatus'=>'Sin atender',
+                'estatus' => 'Sin atender',
 
             ]);
-        }else{
+        } else {
             $incidentes_seguridad->update([
-                'estatus'=>'No procedente',
-                ]);
+                'estatus' => 'No procedente',
+            ]);
         }
 
         AnalisisSeguridad::create([

@@ -73,6 +73,7 @@ class Organizacion extends Model
         'fin_timesheet',
         'fecha_registro_timesheet',
         'semanas_min_timesheet',
+        'semanas_faltantes',
     ];
 
     public function getLogotipoAttribute($value)
