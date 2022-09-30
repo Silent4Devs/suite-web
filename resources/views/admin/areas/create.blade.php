@@ -89,8 +89,7 @@
                                     @endforelse
                                 </select>
                             </div>
-                            {{-- <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
-                    name="jefe" id="jefe" value="{{ old('jefe', '') }}" required> --}}
+
                             @if ($errors->has('id_reporta'))
                                 <span class="text-danger">
                                     {{ $errors->first('id_reporta') }}
