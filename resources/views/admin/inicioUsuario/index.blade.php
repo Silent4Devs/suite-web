@@ -130,6 +130,13 @@
             max-width: 1500px !important;
         }
     </style>
+    @include('components.primeros-pasos', [
+        'existsEmpleado',
+        'existsOrganizacion',
+        'existsVinculoEmpleadoAdmin',
+        'existsAreas',
+        'existsPuesto',
+    ])
     @include('partials.flashMessages')
     <div id="inicio_usuario" class="row" style="">
         <h5 class="col-12 titulo_general_funcion">Mi Perfil</h5>
@@ -180,20 +187,20 @@
                             Reportes</a>
                     @endcan
                     @php
-                        if($solicitudes_pendientes == 0){
+                        if ($solicitudes_pendientes == 0) {
                             $mostrar_solicitudes = false;
-                        }else {
+                        } else {
                             $mostrar_solicitudes = true;
                         }
                     @endphp
                     @can('mi_perfil_modulo_solicitud_ausencia')
-                        <div  x-data="{ open: @js($mostrar_solicitudes) }">
+                        <div x-data="{ open: @js($mostrar_solicitudes) }">
                             <a href="#" id="b_solicitudes" onclick="almacenarMenuEnLocalStorage('solicitudes')"
                                 data-tabs="s_solicitudes">
                                 <i class="bi bi-clipboard-check"></i>
                                 Solicitudes
-                                <span class="indicador_numero"
-                                    style=" background: rgb(100, 110, 220);" x-show="open">{{ $solicitudes_pendientes }}</span>
+                                <span class="indicador_numero" style=" background: rgb(100, 110, 220);"
+                                    x-show="open">{{ $solicitudes_pendientes }}</span>
                             </a>
                         </div>
                     @endcan

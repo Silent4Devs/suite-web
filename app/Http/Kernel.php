@@ -36,7 +36,6 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\SetLocale::class,
-
         ],
         'api' => [
             'throttle:60,1',
@@ -61,6 +60,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\IsAdmin::class,
         '2fa' => \App\Http\Middleware\TwoFactorMiddleware::class,
         'cors' => \App\Http\Middleware\Cors::class,
-
+        'primeros.pasos' => \App\Http\Middleware\PrimerosPasos::class,
     ];
 }
