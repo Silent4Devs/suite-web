@@ -96,13 +96,22 @@ class ReportesEmpleados extends Component
     public function updatedFechaFin($value)
     {
         $this->fecha_fin = $value;
-        if ($this->fecha_fin < $this->fecha_inicio) {
-            $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( ' . $this->fecha_inicio . ' )', [
+        if (intval(Carbon::parse($this->fecha_fin)->format('Y')) > intval(now()->format('Y'))) {
+            $this->alert('info', 'El año de la fecha fin no puede ser posterior al año actual ( ' . now()->format('Y') . ' )', [
                 'position' => 'top-end',
                 'timer' => 3000,
                 'toast' => true,
             ]);
             $this->fecha_fin = now()->format('Y-m-d');
+        } else {
+            if ($this->fecha_fin < $this->fecha_inicio) {
+                $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( ' . $this->fecha_inicio . ' )', [
+                    'position' => 'top-end',
+                    'timer' => 3000,
+                    'toast' => true,
+                ]);
+                $this->fecha_fin = now()->format('Y-m-d');
+            }
         }
         $this->empleado = null;
     }
@@ -143,13 +152,17 @@ class ReportesEmpleados extends Component
             $empleados_list = Empleado::get();
             $this->empleados_list_global = Empleado::get();
         }
+        // $empleados_list = Empleado::where('id', 222)->get();
 
         //calendario tabla
         $calendario_array = [];
+        // $this->fecha_inicio = "2022-08-31";
+        // $this->fecha_fin = "2023-01-29";
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
         $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null);
         $total_months = 0;
+
         foreach ($semanas_complit_timesheet as $semana) {
             $semana_array = explode('|', $semana);
             foreach ($semana_array as $semana_a) {
@@ -197,7 +210,6 @@ class ReportesEmpleados extends Component
                 }
             }
         }
-
         foreach ($calendario_array as $key => &$c_year) {
             $total_months = count($c_year['months']);
             $total_weeks_year = 0;
@@ -222,10 +234,12 @@ class ReportesEmpleados extends Component
                 $fecha_inicio_timesheet_empleado = $this->fecha_inicio;
             }
 
+
             if (($this->fecha_fin) && (Carbon::parse($this->fecha_fin)->lt($this->hoy))) {
                 $fecha_fin_timesheet_empleado = $this->fecha_fin;
             } else {
-                $fecha_fin_timesheet_empleado = $this->hoy->format('Y-m-d');
+                // $fecha_fin_timesheet_empleado = $this->hoy->format('Y-m-d');
+                $fecha_fin_timesheet_empleado = $this->fecha_fin;
             }
 
             $hoy_2 = now();
@@ -238,11 +252,11 @@ class ReportesEmpleados extends Component
 
             // horas totales por empleado
             $times_empleado_aprobados_pendientes_list = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->get();
-            // dd($fecha_fin_timesheet_empleado);
+
+
             $horas_semana = 0;
             $times_empleado_calendario_array = [];
             $times_empleado_array = [];
-
             foreach ($times_empleado_aprobados_pendientes_list as $time) {
                 $horas_semana = 0;
                 foreach ($time->horas as $hora) {
@@ -280,14 +294,14 @@ class ReportesEmpleados extends Component
 
             // semanas faltantes
             $entro_esta_semana = false;
-            if(Carbon::parse($this->fecha_inicio)->lt(Carbon::parse($empleado_list->antiguedad))){
-                if(Carbon::parse($empleado_list->antiguedad)->startOfWeek(Carbon::MONDAY) >= Carbon::now()->startOfWeek(Carbon::MONDAY)){
+            if (Carbon::parse($this->fecha_inicio)->lt(Carbon::parse($empleado_list->antiguedad))) {
+                if (Carbon::parse($empleado_list->antiguedad)->startOfWeek(Carbon::MONDAY) >= Carbon::now()->startOfWeek(Carbon::MONDAY)) {
                     // concuerda la misma semana de ingreso y de la actual
                     $entro_esta_semana = true;
-                }else{
+                } else {
                     $fecha_inicio_timesheet_faltantes_empleado = Carbon::parse($empleado_list->antiguedad)->startOfWeek(Carbon::MONDAY);
                 }
-            }else{
+            } else {
                 $fecha_inicio_timesheet_faltantes_empleado = $fecha_inicio_timesheet_empleado;
             }
             $antiguedad_y = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('Y');
@@ -298,17 +312,24 @@ class ReportesEmpleados extends Component
                 $times_empleado_array[] = $time->semana_y;
             }
 
-            if($entro_esta_semana){
+            if ($entro_esta_semana) {
                 $this->times_faltantes_empleado = [];
 
                 $times_atrasados = 0;
-            }else{
-                $this->times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array);
+            } else {
+                if ($this->fecha_fin == now()->format('Y-m-d')) {
+                    $fecha_finalizacion = null;
+                } else {
+                    $fecha_finalizacion = Carbon::parse($this->fecha_fin)->gt(now()) ? null : Carbon::parse($this->fecha_fin);
+                }
+
+                $this->times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array, 'monday', 'sunday', $fecha_finalizacion);
 
                 $times_atrasados = count($this->times_faltantes_empleado);
             }
-
             // registro de horas en calendario
+            // dd($times_empleado_array);
+
             $calendario_tabla_empleado = [];
             foreach ($calendario_array as $key => $año) {
                 foreach ($año['months'] as $key => $mes) {
@@ -357,7 +378,6 @@ class ReportesEmpleados extends Component
         // dump($times_empleado_aprobados_pendientes_list);
 
         $this->calendario_tabla = $calendario_array;
-
         $this->hoy_format = $this->hoy->format('d/m/Y');
 
         $this->emit('scriptTabla');
