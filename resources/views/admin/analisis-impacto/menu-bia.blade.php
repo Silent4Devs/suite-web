@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-   
+    {{ Breadcrumbs::render('BIA') }}
+    {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
             color: #345183;
@@ -73,44 +74,41 @@
             height: calc(100% - 40px);
 
         }
-
-        
     </style>
 
+    {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
     <div style="display:flex; justify-content:space-between;">
-        <h5 class="titulo_general_funcion">Análisis de Impacto</h5>
+        <h5 class="titulo_general_funcion">Análisis de Impacto BIA</h5>
+
     </div>
 
     <div class="mt-2 card">
         <div class="card-body">
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane mb-2 fade show active" id="nav-riesgo" role="tabpanel"
-                    aria-labelledby="nav-riesgo-tab">
+                <div class="tab-pane mb-2 fade show active" id="nav-riesgo" role="tabpanel" aria-labelledby="nav-riesgo-tab">
                     <ul class="mt-2">
                         @can('matriz_bia_cuestionario_acceder')
                             <li>
-                                <a href="{{ route('admin.analisis-impacto.menu-BIA') }}">
+                                <a href="{{ route('admin.analisis-impacto.index') }}">
                                     <div>
-                                        <i class="bi bi-currency-exchange"></i><br>
-                                        BIA
+                                        <i class="fas fa-clipboard-list"></i><br>
+                                        Cuestionarios
                                     </div>
                                 </a>
                             </li>
                         @endcan
                         @can('matriz_bia_matriz')
-                            <li disabled> <div disabled>
-                                <a href="{{ route('admin.analisis-impacto.menu-AIA') }}" style="pointer-events: none; background-color:rgb(218, 216, 216);">
+                            <li>
+                                <a href="{{ route('admin.analisis-impacto.matriz') }}">
                                     <div>
-                                        <i class="bi bi-bezier2" disabled></i><br>
-                                        AIA
+                                        <i class="fas fa-border-none"></i><br>
+                                        Matriz BIA
                                     </div>
-                                </a></div>
+                                </a>
                             </li>
                         @endcan
-
                     </ul>
-
                 </div>
             </div>
         </div>
