@@ -25,6 +25,11 @@ class TablaTareasTimesheet extends Component
 
     public $tarea_name_actualizada;
 
+    public function hydrate()
+    {
+        $this->emit('select2');
+    }
+
     public function mount($proyecto_id, $origen)
     {
         $this->origen = $origen;
@@ -46,7 +51,7 @@ class TablaTareasTimesheet extends Component
 
             if ($this->proyecto_filtro) {
                 $this->tareas = TimesheetTarea::where('proyecto_id', $this->proyecto_filtro)->orderByDesc('id')->get();
-            }else{
+            } else {
                 $this->tareas = TimesheetTarea::orderByDesc('id')->get();
             }
         }
