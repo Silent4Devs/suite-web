@@ -420,9 +420,15 @@ class AnalisisImpacto extends Model
             $color = '#00B050';
             $color_texto = '#000000';
             $texto = '3.Necesario';
+        }else{
+            $color = '#33A5FF';
+            $color_texto = '#000000';
+            $texto = 'Fuera de Rango';
         }
         
         return  [$color,  $color_texto, $texto];
+
+    
     }
 
 
