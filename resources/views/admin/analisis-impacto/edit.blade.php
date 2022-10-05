@@ -124,8 +124,8 @@
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('titular_extencion', 'Extensión') !!}
-                    {!! Form::text('titular_extencion', null, [
-                        'class' => 'form-control',
+                    {!! Form::number('titular_extencion', null, [
+                        'class' => 'form-control extencion',
                         'maxlength' => 255,
                         'maxlength' => 255,
                         'placeholder' => '...',
@@ -164,8 +164,8 @@
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('suplente_extencion', 'Extensión') !!}
-                    {!! Form::text('suplente_extencion', null, [
-                        'class' => 'form-control',
+                    {!! Form::number('suplente_extencion', null, [
+                        'class' => 'form-control extencion1',
                         'maxlength' => 255,
                         'maxlength' => 255,
                         'placeholder' => '...',
@@ -204,8 +204,8 @@
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('supervisor_extencion', 'Extensión') !!}
-                    {!! Form::text('supervisor_extencion', null, [
-                        'class' => 'form-control',
+                    {!! Form::number('supervisor_extencion', null, [
+                        'class' => 'form-control extencion2',
                         'maxlength' => 255,
                         'maxlength' => 255,
                         'placeholder' => '...',
@@ -256,7 +256,7 @@
                 <div class="form-group col-sm-12">
                     {!! Form::label(
                         'flujo_q_4',
-                        '4.	¿De qué manera recibe usted la información? (Entrega Física / Correo Electrónico / Consulta en Aplicativo o Base de Datos / Consulta en Portal Web)',
+                        '4. ¿De qué manera recibe usted la información? (Entrega Física / Correo Electrónico / Consulta en Aplicativo o Base de Datos / Consulta en Portal Web)',
                         ['class' => 'required'],
                     ) !!}
                     {!! Form::text('flujo_q_4', null, [
@@ -308,7 +308,7 @@
                 <div class="form-group col-sm-12">
                     {!! Form::label(
                         'flujo_q_6',
-                        '6.	¿Qué información obtiene al finalizar el proceso? (Documentos, Correo electrónico, Oficios, Reportes, etc.)',
+                        '6. ¿Qué información obtiene al finalizar el proceso? (Documentos, Correo electrónico, Oficios, Reportes, etc.)',
                         ['class' => 'required'],
                     ) !!}
                     {!! Form::text('flujo_q_6', null, [
@@ -319,7 +319,7 @@
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
-                    {!! Form::label('flujo_q_7', '7.	¿Este es un proceso final o genera información para iniciar otro proceso?', [
+                    {!! Form::label('flujo_q_7', '7.    ¿Este es un proceso final o genera información para iniciar otro proceso?', [
                         'class' => 'required',
                     ]) !!}
                     {!! Form::text('flujo_q_7', null, [
@@ -332,7 +332,7 @@
                 <div class="form-group col-sm-12">
                     {!! Form::label(
                         'flujo_q_8',
-                        '8.	¿A dónde envía la información generada en el proceso? (Nombre de la Empresa / Nombre del Área / Nombre del Proceso / Nombre del Sistema)',
+                        '8. ¿A dónde envía la información generada en el proceso? (Nombre de la Empresa / Nombre del Área / Nombre del Proceso / Nombre del Sistema)',
                         ['class' => 'required'],
                     ) !!}
                     {!! Form::text('flujo_q_8', null, [
@@ -350,7 +350,7 @@
                 <div class="form-group col-sm-12">
                     {!! Form::label(
                         'flujo_q_10',
-                        '10.	¿Cómo valida que el proceso se realizó correctamente? (Carta o firma de aceptación, Acuse de Recibido, Notificación, etc..)',
+                        '10.    ¿Cómo valida que el proceso se realizó correctamente? (Carta o firma de aceptación, Acuse de Recibido, Notificación, etc..)',
                         ['class' => 'required'],
                     ) !!}
                     {!! Form::text('flujo_q_10', null, [
@@ -1188,7 +1188,7 @@
                     </a>
                     {!! Form::label(
                         'respaldo_q_20',
-                        '19.	Tiempos de Respaldo (RPO), Recuperación (RTO), Trabajo en Contingencia (WRT) y Máximo Tiempo de Interrupción del Proceso (MTPD)',
+                        '19.    Tiempos de Respaldo (RPO), Recuperación (RTO), Trabajo en Contingencia (WRT) y Máximo Tiempo de Interrupción del Proceso (MTPD)',
                         ['class' => 'required'],
                     ) !!}
 
@@ -2394,6 +2394,24 @@
                 $('.table_checkbox th input[type=checkbox]:hover').parents('th').css('background-color', 'white');
                 $('.table_checkbox td input[type=checkbox]:hover').parents('td').css('background-color', 'white');
 
+            }
+        });
+
+        document.querySelector(".extencion").addEventListener("keypress", function(evt) {
+            if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
+                evt.preventDefault();
+            }
+        });
+
+        document.querySelector(".extencion1").addEventListener("keypress", function(evt) {
+            if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
+                evt.preventDefault();
+            }
+        });
+
+        document.querySelector(".extencion2").addEventListener("keypress", function(evt) {
+            if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
+                evt.preventDefault();
             }
         });
     </script>
