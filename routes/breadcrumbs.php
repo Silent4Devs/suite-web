@@ -162,10 +162,24 @@ Breadcrumbs::for('BIA', function ($trail) {
    
 });
 
+Breadcrumbs::for('AIA', function ($trail) {
+    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
+    $trail->push('AIA');
+   
+});
+
 Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
-    $trail->push('Análisis de Impacto (BIA)', route('admin.analisis-impacto.menu'));
+    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
+    $trail->push('BIA', route('admin.analisis-impacto.menu-BIA'));
     $trail->push('Cuestionario', route('admin.analisis-impacto.index'));
 });
+
+Breadcrumbs::for('cuestionario-AIA', function ($trail) {
+    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
+    $trail->push('AIA', route('admin.analisis-impacto.menu-AIA'));
+    $trail->push('Cuestionario', route('admin.analisis-impacto.index'));
+});
+
 Breadcrumbs::for('admin.BIA.Cuestionario.index', function ($trail) {
     $trail->push('Análisis de ', route('admin.analisis-riesgos.menu'));
     $trail->push('Amenazas', route('admin.amenazas.index'));

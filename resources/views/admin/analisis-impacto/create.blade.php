@@ -3,14 +3,14 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto (BIA)</a>
+            <a href="{!! route('admin.analisis-impacto.menu-BIA') !!}">BIA</a>
         </li>
         <li class="breadcrumb-item">
             <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario</a>
         </li>
         <li class="breadcrumb-item active">Crear</li>
     </ol>
-    <h5 class="col-12 titulo_general_funcion">Registrar: Cuestionario de Análisis de Impacto</h5>
+    <h5 class="col-12 titulo_general_funcion">Registrar: Cuestionario de Análisis de Impacto BIA</h5>
     <div class="mt-4 card">
         {{-- <div class="py-3 col-md-10 col-sm-9 card-body verde_silent align-self-center" style="margin-top: -40px;">
             <h3 class="mb-1 text-center text-white"><strong> Registrar: </strong> Amenaza</h3>

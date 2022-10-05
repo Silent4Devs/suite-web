@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-{{ Breadcrumbs::render('admin.analisis-impacto.menu') }}
+{{ Breadcrumbs::render('AIA') }}
     {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
@@ -81,7 +81,7 @@
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
     <div style="display:flex; justify-content:space-between;">
-        <h5 class="titulo_general_funcion">Análisis de Impacto</h5>
+        <h5 class="titulo_general_funcion">Análisis de Impacto AIA</h5>
         {{-- <a href="{{ route('admin.home') }}" class="btn btn-success">
             <i class="fas fa-chart-pie mr-2"></i>
             Dashboard

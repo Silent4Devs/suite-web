@@ -67,10 +67,10 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto (BIA)</a>
+            <a href="{!! route('admin.analisis-impacto.menu-AIA') !!}">AIA</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario</a>
+            <a href="{!! route('admin.analisis-aia.index') !!}">Cuestionario</a>
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
@@ -88,7 +88,7 @@
             <div class="row">
                 <div class="text-center form-group col-12"
                     style="background-color:#345183; border-radius: 100px; color: white;">
-                    RESPONSABLES
+                    RESPONSABLES DEL PROCESO
                 </div>
             </div>
             <div class="row">
@@ -124,8 +124,8 @@
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('titular_extencion', 'Extensión') !!}
-                    {!! Form::text('titular_extencion', null, [
-                        'class' => 'form-control',
+                    {!! Form::number('titular_extencion', null, [
+                        'class' => 'form-control extencion',
                         'maxlength' => 255,
                         'maxlength' => 255,
                         'placeholder' => '...',
@@ -164,8 +164,8 @@
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('suplente_extencion', 'Extensión') !!}
-                    {!! Form::text('suplente_extencion', null, [
-                        'class' => 'form-control',
+                    {!! Form::number('suplente_extencion', null, [
+                        'class' => 'form-control extencion1',
                         'maxlength' => 255,
                         'maxlength' => 255,
                         'placeholder' => '...',
@@ -204,15 +204,14 @@
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('supervisor_extencion', 'Extensión') !!}
-                    {!! Form::text('supervisor_extencion', null, [
-                        'class' => 'form-control',
+                    {!! Form::number('supervisor_extencion', null, [
+                        'class' => 'form-control extencion2',
                         'maxlength' => 255,
                         'maxlength' => 255,
                         'placeholder' => '...',
                     ]) !!}
                 </div>
             </div>
-
 
 
             <!-- FLUJO DEL PROCESO -->
@@ -253,15 +252,13 @@
                 @livewire('propociona-informacion', ['cuestionario_id' => $cuestionario->id])
                 {{-- Termina livewire --}}
 
-
-
                 <div class="form-group col-sm-12">
                     {!! Form::label(
-                        'flujo_q_10',
+                        'flujo_q_5',
                         '5.	¿Cómo valida que el proceso se realizó correctamente? (Carta o firma de aceptación, Acuse de Recibido, Notificación, etc..)',
                         ['class' => 'required'],
                     ) !!}
-                    {!! Form::text('flujo_q_10', null, [
+                    {!! Form::text('flujo_q_5', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
                         'maxlength' => 255,
@@ -269,18 +266,340 @@
                     ]) !!}
                 </div>
             </div>
-            <!-- INFRAESTRUCTURA TECNOLÓGICA (inciso b Anexo 67)-->
+
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
                     style="background-color:#345183; border-radius: 100px; color: white;">
                     INFRAESTRUCTURA TECNOLÓGICA
                 </div>
             </div>
+
+
+            <!-- INFRAESTRUCTURA TECNOLÓGICA (inciso b Anexo 67)-->
             <div class="row">
-                {{-- livewire  INFRAESTRUCTURA TECNOLÓGICA --}}
-                @livewire('infraestructura-tecnologica', ['cuestionario_id' => $cuestionario->id])
-                {{-- Termina livewire --}}
+                <label class="col-sm-3 col-form-label">Ubicación IP:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" name="app_ip"
+                        placeholder="..." value="{{ old('app_ip', $cuestionario->app_ip) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_ip" placeholder="..." value="{{ old('bd_ip', $cuestionario->bd_ip) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_ip" placeholder="..." value="{{ old('otro_ip', $cuestionario->otro_ip) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Hostname:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_host" placeholder="..." value="{{ old('app_host', $cuestionario->app_host) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_host" placeholder="..." value="{{ old('app_host', $cuestionario->bd_host) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_host" placeholder="..." value="{{ old('otro_host', $cuestionario->otro_host) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Instancias o Bases de Datos:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_base" placeholder="..." value="{{ old('app_base', $cuestionario->app_base) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_base" placeholder="..." value="{{ old('app_base', $cuestionario->bd_base) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_base" placeholder="..." value="{{ old('otro_base', $cuestionario->otro_base) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Puertos que utilizan:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_puerto" placeholder="..." value="{{ old('app_puerto', $cuestionario->app_puerto) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_puerto" placeholder="..." value="{{ old('app_puerto', $cuestionario->bd_puerto) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_puerto" placeholder="..."
+                        value="{{ old('otro_puerto', $cuestionario->otro_puerto) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Tipo de Servidor: (Físico / Virtual)</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_servidor">
+                        <option value disabled {{ old('app_servidor', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_servidor', $cuestionario->app_servidor) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_servidor">
+                        <option value disabled {{ old('bd_servidor', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_servidor', $cuestionario->bd_servidor) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_servidor">
+                        <option value disabled {{ old('otro_servidor', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_servidor', $cuestionario->otro_servidor) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Versión del S.O.:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_SO" placeholder="..." value="{{ old('app_SO', $cuestionario->app_SO) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_SO" placeholder="..." value="{{ old('app_SO', $cuestionario->bd_SO) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_SO" placeholder="..." value="{{ old('otro_SO', $cuestionario->otro_SO) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Tipo de Acceso al sistema:
+                    (WEB / Cliente-Servidor)
+                </label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_acceso">
+                        <option value disabled {{ old('app_acceso', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_acceso', $cuestionario->app_acceso) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_acceso">
+                        <option value disabled {{ old('bd_acceso', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_acceso', $cuestionario->bd_acceso) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_acceso">
+                        <option value disabled {{ old('otro_acceso', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_acceso', $cuestionario->otro_acceso) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">URL de Acceso:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_url" placeholder="..." value="{{ old('app_url', $cuestionario->app_url) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_url" placeholder="..." value="{{ old('app_url', $cuestionario->bd_url) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_url" placeholder="..." value="{{ old('otro_url', $cuestionario->otro_url) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">IP Pública:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_ip_publica" placeholder="..."
+                        value="{{ old('app_ip_publica', $cuestionario->app_ip_publica) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_ip_publica" placeholder="..."
+                        value="{{ old('app_ip_publica', $cuestionario->bd_ip_publica) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_ip_publica" placeholder="..."
+                        value="{{ old('otro_ip_publica', $cuestionario->otro_ip_publica) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Uso de Certificado: (SI / NO)</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_certificado">
+                        <option value disabled {{ old('app_certificado', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoCertificadoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_certificado', $cuestionario->app_certificado) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_certificado">
+                        <option value disabled {{ old('bd_certificado', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoCertificadoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_certificado', $cuestionario->bd_certificado) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_certificado">
+                        <option value disabled {{ old('otro_certificado', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoCertificadoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_certificado', $cuestionario->otro_certificado) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Datos del Certificado (tipo de cifrado, etc.).</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_tipo_cifrado" placeholder="..."
+                        value="{{ old('app_tipo_cifrado', $cuestionario->app_tipo_cifrado) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_tipo_cifrado" placeholder="..."
+                        value="{{ old('app_tipo_cifrado', $cuestionario->bd_tipo_cifrado) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_tipo_cifrado" placeholder="..."
+                        value="{{ old('otro_tipo_cifrado', $cuestionario->otro_tipo_cifrado) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Salida a Internet: (SI / NO)</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_internet">
+                        <option value disabled {{ old('app_internet', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_internet', $cuestionario->app_internet) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_internet">
+                        <option value disabled {{ old('bd_internet', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_internet', $cuestionario->bd_internet) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_internet">
+                        <option value disabled {{ old('otro_internet', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_internet', $cuestionario->otro_internet) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">IP Pública:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_ip_publica" placeholder="..."
+                        value="{{ old('app_ip_publica', $cuestionario->app_ip_publica) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_ip_publica" placeholder="..."
+                        value="{{ old('app_ip_publica', $cuestionario->bd_ip_publica) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_ip_publica" placeholder="..."
+                        value="{{ old('otro_ip_publica', $cuestionario->otro_ip_publica) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">IP Pública:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_ip_publica" placeholder="..."
+                        value="{{ old('app_ip_publica', $cuestionario->app_ip_publica) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_ip_publica" placeholder="..."
+                        value="{{ old('app_ip_publica', $cuestionario->bd_ip_publica) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_ip_publica" placeholder="..."
+                        value="{{ old('otro_ip_publica', $cuestionario->otro_ip_publica) }}">
+                </div>
+                <hr>
             </div>
+
+
 
             <!-- RECURSOS HUMANOS (inciso b Anexo67)-->
             <div class="row">
@@ -1283,15 +1602,18 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_1" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_1) }}">
+                        name="operacion_q_1" placeholder="..."
+                        value="{{ old('meta', $cuestionario->operacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_2" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                        name="operacion_q_2" placeholder="..."
+                        value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_3" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                        name="operacion_q_3" placeholder="..."
+                        value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <hr>
 
@@ -2047,6 +2369,24 @@
                 $('.table_checkbox th input[type=checkbox]:hover').parents('th').css('background-color', 'white');
                 $('.table_checkbox td input[type=checkbox]:hover').parents('td').css('background-color', 'white');
 
+            }
+        });
+
+        document.querySelector(".extencion").addEventListener("keypress", function(evt) {
+            if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
+                evt.preventDefault();
+            }
+        });
+
+        document.querySelector(".extencion1").addEventListener("keypress", function(evt) {
+            if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
+                evt.preventDefault();
+            }
+        });
+
+        document.querySelector(".extencion2").addEventListener("keypress", function(evt) {
+            if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
+                evt.preventDefault();
             }
         });
     </script>

@@ -37,7 +37,7 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Cuestionario de Análisis de Impacto</h5>
+    <h5 class="col-12 titulo_general_funcion">Cuestionario de Análisis de Impacto BIA</h5>
 
 
 

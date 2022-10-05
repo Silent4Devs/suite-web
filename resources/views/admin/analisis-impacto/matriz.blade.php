@@ -84,7 +84,10 @@
     </style>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto (BIA)</a>
+            <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{!! route('admin.analisis-impacto.menu-BIA') !!}">BIA</a>
         </li>
         <li class="breadcrumb-item active">Matriz</li>
     </ol>

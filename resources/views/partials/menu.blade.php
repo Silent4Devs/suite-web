@@ -409,7 +409,7 @@
                 <a href="{{ route('admin.analisis-impacto.menu') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/analisis-impacto-menu/') || request()->is('admin/analisis-impacto/*') ? 'active' : '' }}">
                     <i class="fas fa-traffic-light iconos_menu letra_blanca"></i>
-                    <font class="letra_blanca"> Análisis de Impacto (BIA) </font>
+                    <font class="letra_blanca"> Análisis de Impacto</font>
                 </a>
             </li>
         @endcan

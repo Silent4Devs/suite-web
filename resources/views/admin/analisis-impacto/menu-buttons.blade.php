@@ -100,7 +100,7 @@
                         @endcan
                         @can('matriz_bia_matriz')
                             <li disabled> <div disabled>
-                                <a href="{{ route('admin.analisis-impacto.menu-AIA') }}" style="pointer-events: none; background-color:rgb(218, 216, 216);">
+                                <a href="{{ route('admin.analisis-impacto.menu-AIA') }}">
                                     <div>
                                         <i class="bi bi-bezier2" disabled></i><br>
                                         AIA
