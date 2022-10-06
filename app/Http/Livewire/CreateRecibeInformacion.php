@@ -43,11 +43,12 @@ class CreateRecibeInformacion extends Component
     public function saveRecibe()
     {
         $this->validarMiembro();
+        $extencion = $this->extencion == "" ? 0: $this->extencion;
         $model = CuestionarioRecibeInformacion::create([
         'nombre'=> $this->nombre,
         'puesto'=> $this->puesto,
         'correo_electronico'=> $this->correo_electronico,
-        'extencion'=> $this->extencion,
+        'extencion'=> $extencion,
         'ubicacion'=> $this->ubicacion,
         'cuestionario_id' => $this->cuestionario_id,
         'interno_externo' => $this->interno_externo,
@@ -90,11 +91,12 @@ class CreateRecibeInformacion extends Component
     {
         $this->validarMiembro();
         $model = CuestionarioRecibeInformacion::find($this->miembroID);
+        $extencion = $this->extencion == "" ? 0: $this->extencion;
         $model->update([
             'nombre'=> $this->nombre,
             'puesto'=> $this->puesto,
             'correo_electronico'=> $this->correo_electronico,
-            'extencion'=> $this->extencion,
+            'extencion'=> $extencion,
             'ubicacion'=> $this->ubicacion,
             'cuestionario_id' => $this->cuestionario_id,
             'interno_externo' => $this->interno_externo,
