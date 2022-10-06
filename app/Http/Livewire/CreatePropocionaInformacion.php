@@ -44,11 +44,12 @@ class CreatePropocionaInformacion extends Component
     public function save()
     {
         $this->validarMiembro();
+        $extencion = $this->extencion == "" ? 0: $this->extencion;
         $model = CuestionarioProporcionaInformacion::create([
         'nombre'=> $this->nombre,
         'puesto'=> $this->puesto,
         'correo_electronico'=> $this->correo_electronico,
-        'extencion'=> $this->extencion,
+        'extencion'=> $extencion,
         'ubicacion'=> $this->ubicacion,
         'cuestionario_id' => $this->cuestionario_id,
         'interno_externo' => $this->interno_externo,
@@ -91,11 +92,12 @@ class CreatePropocionaInformacion extends Component
     {
         $this->validarMiembro();
         $model = CuestionarioProporcionaInformacion::find($this->miembroID);
+        $extencion = $this->extencion == "" ? 0: $this->extencion;
         $model->update([
             'nombre'=> $this->nombre,
             'puesto'=> $this->puesto,
             'correo_electronico'=> $this->correo_electronico,
-            'extencion'=> $this->extencion,
+            'extencion'=> $extencion,
             'ubicacion'=> $this->ubicacion,
             'cuestionario_id' => $this->cuestionario_id,
             'interno_externo' => $this->interno_externo,
