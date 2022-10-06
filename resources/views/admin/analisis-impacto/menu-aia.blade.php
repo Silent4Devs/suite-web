@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-   
+{{ Breadcrumbs::render('AIA') }}
+    {{-- menus horizontales --}}
     <style type="text/css">
         div.nav .nav-link {
             color: #345183;
@@ -60,6 +61,7 @@
         a:hover {
             text-decoration: none !important;
         }
+
     </style>
     <style>
         .ventana_menu {
@@ -74,45 +76,58 @@
 
         }
 
-        
     </style>
 
+    {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
 
     <div style="display:flex; justify-content:space-between;">
-        <h5 class="titulo_general_funcion">Análisis de Impacto</h5>
+        <h5 class="titulo_general_funcion">Análisis de Impacto AIA</h5>
+        {{-- <a href="{{ route('admin.home') }}" class="btn btn-success">
+            <i class="fas fa-chart-pie mr-2"></i>
+            Dashboard
+        </a> --}}
     </div>
 
     <div class="mt-2 card">
         <div class="card-body">
+            <nav>
+                <div class="nav nav-tabs" id="tabsAnalisisRiesgos" role="tablist">
+                    {{-- <a class="nav-link active" id="nav-riesgo-tab" data-type="riesgo" data-toggle="tab" href="#nav-riesgo"
+                        role="tab" aria-controls="nav-riesgo" aria-selected="true">
+                        <i class="mr-2 bi bi-exclamation-triangle" style="font-size:20px;" style="text-decoration:none;"></i>
+                        Riesgos
+                    </a> --}}
+                </div>
+            </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane mb-2 fade show active" id="nav-riesgo" role="tabpanel"
                     aria-labelledby="nav-riesgo-tab">
                     <ul class="mt-2">
                         @can('matriz_bia_cuestionario_acceder')
                             <li>
-                                <a href="{{ route('admin.analisis-impacto.menu-BIA') }}">
+                                <a href="{{ route('admin.analisis-aia.index') }}">
                                     <div>
-                                        <i class="bi bi-currency-exchange"></i><br>
-                                        BIA
+                                        <i class="fas fa-clipboard-list"></i><br>
+                                        Cuestionarios
                                     </div>
                                 </a>
                             </li>
                         @endcan
-                        @can('matriz_bia_matriz')
-                            <li disabled> <div disabled>
-                                <a href="{{ route('admin.analisis-impacto.menu-AIA') }}">
+                        {{-- @can('matriz_bia_matriz')
+                            <li>
+                                <a href="{{ route('admin.analisis-aia.matriz') }}">
                                     <div>
-                                        <i class="bi bi-bezier2" disabled></i><br>
-                                        AIA
+                                        <i class="fas fa-border-none"></i><br>
+                                        Matriz AIA
                                     </div>
-                                </a></div>
+                                </a>
                             </li>
-                        @endcan
-
+                        @endcan --}}
                     </ul>
-
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+

@@ -1,20 +1,20 @@
 <ul class="mt-2">
     @can('matriz_bia_cuestionario_acceder')
         <li>
-            <a href="{{ route('admin.analisis-impacto.index') }}">
+            <a href="{{ route('admin.analisis-impacto.menu-BIA') }}">
                 <div>
                     <i class="fas fa-clipboard-list"></i><br>
-                    Cuestionarios
+                   BIA
                 </div>
             </a>
         </li>
     @endcan
     @can('matriz_bia_matriz')
         <li>
-            <a href="{{ route('admin.analisis-impacto.matriz') }}">
+            <a href="{{ route('admin.analisis-impacto.menu-AIA') }}">
                 <div>
                     <i class="fas fa-border-none"></i><br>
-                    Matriz BIA
+                    AIA
                 </div>
             </a>
         </li>

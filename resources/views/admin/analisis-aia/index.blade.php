@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    {{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
+    {{ Breadcrumbs::render('cuestionario-AIA') }}
 
     <style>
         .btn_cargar {
@@ -37,7 +37,7 @@
         }
     </style>
 
-    <h5 class="col-12 titulo_general_funcion">Cuestionario de Análisis de Impacto BIA</h5>
+    <h5 class="col-12 titulo_general_funcion">Cuestionario de Análisis de Impacto AIA</h5>
 
 
 
@@ -199,7 +199,7 @@
             let btnAgregar = {
                 text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                 titleAttr: 'Agregar Cuestinoario',
-                url: "{{ route('admin.analisis-impacto.create') }}",
+                url: "{{ route('admin.analisis-aia.create') }}",
                 className: "btn-xs btn-outline-success rounded ml-2 pr-3 agregar",
                 action: function(e, dt, node, config) {
                     let {
@@ -240,7 +240,7 @@
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                     text: deleteButtonTrans,
-                    url: "{{ route('admin.analisis-impacto.massDestroy') }}",
+                    url: "{{ route('admin.analisis-aia.massDestroy') }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -281,7 +281,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.analisis-impacto.index') }}",
+                ajax: "{{ route('admin.analisis-aia.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id',
@@ -312,15 +312,15 @@
                         }
                     },
                     {
-                        data: 'id_proceso',
-                        name: 'id_proceso',
+                        data: 'id_aplicacion',
+                        name: 'id_aplicacion',
                         render: function(data, type, row) {
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
                     {
-                        data: 'nombre_proceso',
-                        name: 'nombre_proceso',
+                        data: 'nombre_aplicacion',
+                        name: 'nombre_aplicacion',
                         render: function(data, type, row) {
                             return `<div style="text-align:left">${data}</div>`;
                         }

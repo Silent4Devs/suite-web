@@ -68,11 +68,11 @@ class AnalisisdeImpactoController extends Controller
             $table->editColumn('correo', function ($row) {
                 return $row->correo ? $row->correo : '';
             });
-            $table->editColumn('id_proceso', function ($row) {
-                return $row->id_proceso ? $row->id_proceso : '';
+            $table->editColumn('id_aplicacion', function ($row) {
+                return $row->id_aplicacion ? $row->id_aplicacion : '';
             });
-            $table->editColumn('nombre_proceso', function ($row) {
-                return $row->nombre_proceso ? $row->nombre_proceso : '';
+            $table->editColumn('nombre_aplicacion', function ($row) {
+                return $row->nombre_aplicacion ? $row->nombre_aplicacion : '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -166,6 +166,18 @@ class AnalisisdeImpactoController extends Controller
     {
         abort_if(Gate::denies('matriz_bia_menu_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.analisis-impacto.menu-buttons');
+    }
+
+    public function menuBIA()
+    {
+        abort_if(Gate::denies('matriz_bia_menu_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('admin.analisis-impacto.menu-bia');
+    }
+
+    public function menuAIA()
+    {
+        abort_if(Gate::denies('matriz_bia_menu_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('admin.analisis-impacto.menu-aia');
     }
 
     public function ajustes()
