@@ -1638,7 +1638,7 @@
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_3" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                        name="operacion_q_3" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_3) }}">
                 </div>
                 <hr>
 
