@@ -29,23 +29,23 @@
         <div class="form-group col-sm-12">
             <label for="nombre"><i class="fas fa-id-card iconos-crear"></i>Nombre del
                 indicador</label>
-           <span class="ml-1"> {{ $indicadoresSgsis->nombre }}</span>
+            <span class="ml-1"> {{ $indicadoresSgsis->nombre }}</span>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-sm-12">
             <div class="form-group">
                 <label for="id_proceso"><i class="fas fa-cogs iconos-crear"></i>Proceso</label>
-                <span class="ml-1"> {{  $indicadoresSgsis->proceso->codigo }}/{{ $indicadoresSgsis->proceso->nombre}}</span>
+                <span class="ml-1">
+                    {{ $indicadoresSgsis->proceso->codigo }}/{{ $indicadoresSgsis->proceso->nombre }}</span>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="form-group col-sm-12">
-            <label for="formula"><i
-                    class="fas fa-square-root-alt iconos-crear"></i></i>Fórmula</label>
-                    <span class="ml-1"> {{ $indicadoresSgsis->formula }}</span>
+            <label for="formula"><i class="fas fa-square-root-alt iconos-crear"></i></i>Fórmula</label>
+            <span class="ml-1"> {{ $indicadoresSgsis->formula }}</span>
         </div>
     </div>
 

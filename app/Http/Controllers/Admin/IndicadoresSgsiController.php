@@ -221,18 +221,18 @@ class IndicadoresSgsiController extends Controller
 
         $finish_array = [];
 
+
         foreach ($formula_array as $result) {
             if (strstr($result, '$')) {
                 array_push($finish_array, $result);
             }
         }
-
         $remplazo_formula = str_replace('!', '', $indicadoresSgsis->formula);
-
         if ($remplazo_formula) {
             $up = $indicadoresSgsis
                 ->update(['formula' => $remplazo_formula, 'formula_raw' => $indicadoresSgsis->formula]);
         }
+
 
         foreach ($finish_array as $key => $value) {
             VariablesIndicador::create(['id_indicador' => $indicadoresSgsis->id, 'variable' => str_replace('.', '', $value)]);
@@ -240,7 +240,8 @@ class IndicadoresSgsiController extends Controller
 
         //dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);
 
-        return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesInsert', ['id' => $indicadoresSgsis->id]);
+        // return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesInsert', ['id' => $indicadoresSgsis->id]);
+        return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id]);
     }
 
     public function IndicadorUpdate(Request $request)
@@ -249,7 +250,7 @@ class IndicadoresSgsiController extends Controller
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
         $formula_array = explode('!', $indicadoresSgsis->formula);
-        dd($formula_array);
+
         $finish_array = [];
 
         foreach ($formula_array as $result) {
