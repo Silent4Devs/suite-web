@@ -78,8 +78,8 @@
                         Reglamento</option>
                     <option value="externo" {{ old('tipo', $documentoActual->tipo) == 'externo' ? 'selected' : '' }}>
                         Documento Externo</option>
-                    <option value="formato" {{ old('formato', $documentoActual->formato) == 'formato' ? 'selected' : '' }}>
-                       Formato</option>
+                    <option value="formato" {{ old('tipo', $documentoActual->tipo) == 'formato' ? 'selected' : '' }}>
+                        Formato</option>
                 @endif
             </select>
             @if ($errors->has('tipo'))
@@ -203,7 +203,8 @@
             style="cursor: pointer"><span>{{ $documentoActual->archivo != null ? 'Reemplazar' : 'Archivo' }}</span></label>
         <div class="mb-3 custom-file">
             <input type="file" class="custom-file-input" id="archivo"
-                {{ $documentoActual->archivo == null ? 'required' : '' }} name="archivo" accept="application/pdf, application/.doc,.docx">
+                {{ $documentoActual->archivo == null ? 'required' : '' }} name="archivo"
+                accept="application/pdf, application/.doc,.docx">
             <label class="custom-file-label"
                 for="archivo">{{ $documentoActual->archivo == null ? 'Selecciona un archivo' : $documentoActual->archivo }}</label>
             @if ($errors->has('archivo'))
@@ -213,6 +214,29 @@
             @endif
             <span class="text-danger archivo_error error-ajax"></span>
         </div>
+        @if ($documentoActual->archivo != null)
+            <!-- Button trigger modal -->
+            <a data-toggle="modal" data-target="#documentoCargado" style="color: #0f37e8">
+                Documento: {{ $documentoActual->archivo }} (Cargado Actualmente)
+            </a>
+            <div class="modal fade" id="documentoCargado" tabindex="-1" aria-labelledby="documentoCargadoLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="documentoCargadoLabel">{{ $documentoActual->archivo }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe style="width:100%;height: 100%;" src="{{ $documentoActual->archivo_actual }}"
+                                frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 </div>
 <div class="row">
