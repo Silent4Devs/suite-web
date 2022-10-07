@@ -80,7 +80,6 @@
         .select2-selection__choice__remove {
             display: none;
         }
-
     </style>
     <h5 class="col-12 titulo_general_funcion">Editar Documento</h5>
     <div class="card">
@@ -93,14 +92,18 @@
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.documentos.index') }}" class="btn_cancelar">Cancelar</a>
                     <input type="submit" class="btn btn-danger" value="Actualizar">
-                        <button id="publicar" class="btn btn-danger">Publicar</button>
-                    </div>
+                    <button id="publicar" class="btn btn-danger">Publicar</button>
+                </div>
             </form>
-
+            <style>
+                .modal {
+                    overflow-y: auto;
+                }
+            </style>
             <!-- Modal -->
             <div class="modal fade" id="modalPublicar" data-backdrop="static" data-keyboard="false" tabindex="-1"
                 aria-labelledby="modalPublicarLabel" aria-hidden="true" style="position: relative;">
-                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-dialog modal-lg ">
                     <div class="modal-content">
 
                         <div class="modal-body">
