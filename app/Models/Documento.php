@@ -112,6 +112,9 @@ class Documento extends Model
         if ($this->estatus == $this::EN_REVISION) {
             $path_documento = '/storage/Documentos en aprobacion';
         }
+        if ($this->estatus == $this::EN_ELABORACION) {
+            $path_documento = '/storage/Documentos en aprobacion';
+        }
 
         switch ($this->tipo) {
             case 'politica':
