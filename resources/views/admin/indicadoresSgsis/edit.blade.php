@@ -349,8 +349,16 @@
                     </div>
                 </div>
                 <h4 class="text-primary">Generación de formúla</h4>
+                @php
+                    $formula_r = $indicadoresSgsi->formula_raw;
+                    $chars = ["$", '/', '*', '-', '+'];
+                    $onlyconsonants = $formula_r;
+                    foreach ($chars as $key => $char) {
+                        $onlyconsonants = str_replace($char, '!' . $char, $onlyconsonants);
+                    }
+                @endphp
                 <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada"
-                    value="{{ old('formula', $indicadoresSgsi->formula) }}" required><br>
+                    value="{{ old('formula', $onlyconsonants) }}" required><br>
                 {{-- <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp; --}}
                 <hr>
 
@@ -546,7 +554,7 @@
             });
 
             $(".yearpicker").yearpicker({
-                year: {!! $indicadoresSgsi->ano !!},   
+                year: {!! $indicadoresSgsi->ano !!},
             })
 
         });

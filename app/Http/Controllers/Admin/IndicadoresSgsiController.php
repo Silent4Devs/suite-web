@@ -113,7 +113,7 @@ class IndicadoresSgsiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.indicadoresSgsis.index', compact('organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.indicadoresSgsis.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -158,7 +158,9 @@ class IndicadoresSgsiController extends Controller
         $responsables = Empleado::alta()->get();
         $areas = Area::get();
         $procesos = Proceso::get();
-
+        if ($indicadoresSgsi->formula_raw == null) {
+            $indicadoresSgsi->update(['formula_raw' => $indicadoresSgsi->formula]);
+        }
 
         return view('admin.indicadoresSgsis.edit', compact('areas', 'procesos', 'indicadoresSgsi', 'responsables'));
     }
@@ -219,18 +221,18 @@ class IndicadoresSgsiController extends Controller
 
         $finish_array = [];
 
+
         foreach ($formula_array as $result) {
             if (strstr($result, '$')) {
                 array_push($finish_array, $result);
             }
         }
-
         $remplazo_formula = str_replace('!', '', $indicadoresSgsis->formula);
-
         if ($remplazo_formula) {
             $up = $indicadoresSgsis
-                ->update(['formula' => $remplazo_formula]);
+                ->update(['formula' => $remplazo_formula, 'formula_raw' => $indicadoresSgsis->formula]);
         }
+
 
         foreach ($finish_array as $key => $value) {
             VariablesIndicador::create(['id_indicador' => $indicadoresSgsis->id, 'variable' => str_replace('.', '', $value)]);
@@ -238,7 +240,8 @@ class IndicadoresSgsiController extends Controller
 
         //dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);
 
-        return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesInsert', ['id' => $indicadoresSgsis->id]);
+        // return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesInsert', ['id' => $indicadoresSgsis->id]);
+        return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id]);
     }
 
     public function IndicadorUpdate(Request $request)
@@ -260,19 +263,20 @@ class IndicadoresSgsiController extends Controller
 
         if ($remplazo_formula) {
             $up = $indicadoresSgsis
-                ->update(['formula' => $remplazo_formula]);
+                ->update(['formula' => $remplazo_formula, 'formula_raw' => $indicadoresSgsis->formula]);
         }
 
         $variablesIndicadores = VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->get();
+        VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->delete();
+        foreach ($finish_array as $key => $value) {
 
-        /*foreach ($finish_array as $key => $value) {
-
-            VariablesIndicador::create([
-                'id_indicador' => $indicadoresSgsis->id,
-                'variable' => str_replace(".", "", $value),
-            ]);
-        }*/
-
+            VariablesIndicador::create(
+                [
+                    'id_indicador' => $indicadoresSgsis->id,
+                    'variable' => str_replace(".", "", $value),
+                ]
+            );
+        }
         return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id]);
     }
 
