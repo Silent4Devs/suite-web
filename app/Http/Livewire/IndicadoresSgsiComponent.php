@@ -38,20 +38,19 @@ class IndicadoresSgsiComponent extends Component
     protected $rules = [
         'evaluacion' => 'required',
         'fecha' => 'required',
-        'formSlugs.*.*'=>'required',
+        'formSlugs.*.*' => 'required',
     ];
 
     protected $mesages = [
         'evaluacion.required' => 'Debes de definir una evaluación',
-        'fecha.required'=> 'Debes seleccionar una fecha',
-        'formSlugs.*.*.required'=>'Agrega la evaluación'
+        'fecha.required' => 'Debes seleccionar una fecha',
+        'formSlugs.*.*.required' => 'Agrega la evaluación'
     ];
 
     public function mount($indicadoresSgsis)
     {
         $this->indicadoresSgsis = $indicadoresSgsis;
         $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->get();
-
         $data = [];
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
             $data[$value->variable] = '';
