@@ -233,19 +233,25 @@ class DocumentosController extends Controller
 
     public function validateRequestUpdate(Request $request, Documento $documento)
     {
+        $validateDocumento = $documento->archivo != null ? 'nullable' : 'required';
+        $elaboroId = $documento->elaboro_id != null ? 'nullable' : 'required';
+        $revisoId = $documento->reviso_id != null ? 'nullable' : 'required';
+        $aproboId = $documento->aprobo_id != null ? 'nullable' : 'required';
+        $responsableId = $documento->responsable_id != null ? 'nullable' : 'required';
+        $codigoDoc = $documento->codigo != null ? 'nullable' : 'required';
         if ($request->tipo == "formato") {
             $request->validate([
-                'codigo' => 'required|string|unique:documentos',
+                'codigo' => $codigoDoc . '|string|unique:documentos',
                 'nombre' => 'required|string',
                 'tipo' => 'required|string',
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
                 'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
                 'fecha' => 'required|date',
-                'archivo' => 'required|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:10000',
-                'elaboro_id' => 'required|exists:empleados,id',
-                'aprobo_id' => 'required|exists:empleados,id',
-                'reviso_id' => 'required|exists:empleados,id',
-                'responsable_id' => 'required|exists:empleados,id',
+                'archivo' => $validateDocumento . '|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:10000',
+                'elaboro_id' => $elaboroId . '|exists:empleados,id',
+                'aprobo_id' => $revisoId . '|exists:empleados,id',
+                'reviso_id' => $aproboId . '|exists:empleados,id',
+                'responsable_id' => $responsableId . '|exists:empleados,id',
                 'version' => 'required|numeric',
             ], [
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
@@ -253,17 +259,17 @@ class DocumentosController extends Controller
             ]);
         } else
             $request->validate([
-                'codigo' => 'required|string|unique:documentos',
+                'codigo' => $codigoDoc . '|string|unique:documentos',
                 'nombre' => 'required|string',
                 'tipo' => 'required|string',
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
                 'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
                 'fecha' => 'required|date',
-                'archivo' => 'required|mimetypes:application/pdf|max:10000',
-                'elaboro_id' => 'required|exists:empleados,id',
-                'aprobo_id' => 'required|exists:empleados,id',
-                'reviso_id' => 'required|exists:empleados,id',
-                'responsable_id' => 'required|exists:empleados,id',
+                'archivo' => $validateDocumento . '|mimetypes:application/pdf|max:10000',
+                'elaboro_id' => $elaboroId . '|exists:empleados,id',
+                'aprobo_id' => $revisoId . '|exists:empleados,id',
+                'reviso_id' => $aproboId . '|exists:empleados,id',
+                'responsable_id' => $responsableId . '|exists:empleados,id',
                 'version' => 'required|numeric',
             ], [
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
