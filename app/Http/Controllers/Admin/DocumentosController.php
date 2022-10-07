@@ -371,6 +371,9 @@ class DocumentosController extends Controller
             case 'proceso':
                 $path_documentos_aprobacion .= '/procesos';
                 break;
+            case 'formato':
+                $path_documentos_aprobacion .= '/formatos';
+                break;
             default:
                 $path_documentos_aprobacion .= '/procesos';
                 break;
@@ -555,6 +558,9 @@ class DocumentosController extends Controller
                 break;
             case 'proceso':
                 $path_documento .= '/procesos';
+                break;
+            case 'formato':
+                $path_documento .= '/formatos';
                 break;
             default:
                 $path_documento .= '/procesos';
