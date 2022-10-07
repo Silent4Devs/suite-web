@@ -51,6 +51,9 @@ class RevisionDocumentoController extends Controller
             case 'proceso':
                 $path_documentos_aprobacion .= '/procesos';
                 break;
+            case 'formato':
+                $path_documentos_aprobacion .= '/formatos';
+                break;
             default:
                 $path_documentos_aprobacion .= '/procesos';
                 break;
@@ -113,6 +116,8 @@ class RevisionDocumentoController extends Controller
                                 break;
                             case 'proceso':
                                 $path_documentos_aprobacion .= '/procesos';
+                            case 'formato':
+                                $path_documentos_aprobacion .= '/formatos';
                                 break;
                             default:
                                 $path_documentos_aprobacion .= '/procesos';
@@ -217,6 +222,9 @@ class RevisionDocumentoController extends Controller
                                 break;
                             case 'proceso':
                                 $path_documentos_aprobacion .= '/procesos';
+                                break;
+                            case 'formato':
+                                $path_documentos_aprobacion .= '/formatos';
                                 break;
                             default:
                                 $path_documentos_aprobacion .= '/procesos';
@@ -414,6 +422,9 @@ class RevisionDocumentoController extends Controller
             case 'proceso':
                 $path_documentos_publicados .= '/procesos';
                 break;
+            case 'formato':
+                $path_documentos_publicados .= '/formatos';
+                break;
             default:
                 $path_documentos_publicados .= '/procesos';
                 break;
@@ -467,6 +478,9 @@ class RevisionDocumentoController extends Controller
             case 'proceso':
                 $path_documentos_versiones_anteriores .= '/procesos';
                 break;
+            case 'formato':
+                $path_documentos_versiones_anteriores .= '/formatos';
+                break;
             default:
                 $path_documentos_versiones_anteriores .= '/procesos';
                 break;
@@ -510,6 +524,9 @@ class RevisionDocumentoController extends Controller
         if (!Storage::exists('/public/Documentos publicados/procesos')) {
             Storage::makeDirectory('/public/Documentos publicados/procesos', 0775, true);
         }
+        if (!Storage::exists('/public/Documentos publicados/formatos')) {
+            Storage::makeDirectory('/public/Documentos publicados/formatos', 0775, true);
+        }
     }
 
     public function createDocumentoVersionesAnterioresIfNotExists()
@@ -540,6 +557,9 @@ class RevisionDocumentoController extends Controller
         }
         if (!Storage::exists('/public/Documento versiones anteriores/procesos')) {
             Storage::makeDirectory('/public/Documento versiones anteriores/procesos', 0775, true);
+        }
+        if (!Storage::exists('/public/Documento versiones anteriores/formatos')) {
+            Storage::makeDirectory('/public/Documento versiones anteriores/formatos', 0775, true);
         }
     }
 }
