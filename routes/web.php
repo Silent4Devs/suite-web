@@ -1124,12 +1124,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
         Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
 
+
+        Route::get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
+        Route::get('analisis-impacto-menu-BIA', 'AnalisisdeImpactoController@menuBIA')->name('analisis-impacto.menu-BIA');
+        Route::get('analisis-impacto-menu-AIA', 'AnalisisdeImpactoController@menuAIA')->name('analisis-impacto.menu-AIA');
+
         Route::get('analisis-impacto/ajustes', 'AnalisisdeImpactoController@ajustes')->name('analisis-impacto.ajustes');
         Route::put('analisis-impacto/{id}/updateAjustesBIA', 'AnalisisdeImpactoController@updateAjustesBIA')->name('analisis-impacto.updateAjustesBIA');
         Route::get('analisis-impacto/matriz', 'AnalisisdeImpactoController@matriz')->name('analisis-impacto.matriz');
         Route::delete('analisis-impacto/destroy', 'AnalisisdeImpactoController@massDestroy')->name('analisis-impacto.massDestroy');
+
+        
         Route::get('analisis-impacto/{id}/edit', 'AnalisisdeImpactoController@edit')->name('analisis-impacto.edit');
-        Route::get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
         Route::get('getEmployeeData', 'AnalisisdeImpactoController@getEmployeeData')->name('analisis-impacto.getEmployeeData');
         Route::resource('analisis-impacto', 'AnalisisdeImpactoController')->names([
             'index' => 'analisis-impacto.index',
@@ -1137,6 +1143,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'store' => 'analisis-impacto.store',
             'show' => 'analisis-impacto.show',
             'update' => 'analisis-impacto.update',
+        ])->except(['edit']);
+        
+        Route::get('analisis-aia/{id}/edit', 'AnalisisAIAController@edit')->name('analisis-aia.edit');
+        Route::delete('analisis-aia/destroy', 'AnalisisdeAIAController@massDestroy')->name('analisis-aia.massDestroy');
+        Route::resource('analisis-aia', 'AnalisisAIAController')->names([
+            'index' => 'analisis-aia.index',
+            'create' => 'analisis-aia.create',
+            'store' => 'analisis-aia.store',
+            'show' => 'analisis-aia.show',
+            'update' => 'analisis-aia.update',
         ])->except(['edit']);;
 
 

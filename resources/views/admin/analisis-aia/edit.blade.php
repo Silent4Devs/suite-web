@@ -67,10 +67,10 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisis-impacto.menu') !!}">Análisis de Impacto (BIA)</a>
+            <a href="{!! route('admin.analisis-impacto.menu-AIA') !!}">AIA</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisis-impacto.index') !!}">Cuestionario</a>
+            <a href="{!! route('admin.analisis-aia.index') !!}">Cuestionario</a>
         </li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
@@ -78,11 +78,11 @@
     <div class="mt-4 card">
         <div class="card-body">
             {!! Form::model($cuestionario, [
-                'route' => ['admin.analisis-impacto.update', $cuestionario->id],
+                'route' => ['admin.analisis-aia.update', $cuestionario->id],
                 'method' => 'patch',
             ]) !!}
 
-            @include('admin.analisis-impacto.fields')
+            @include('admin.analisis-aia.fields')
 
             <!--  RESPONSABLES DEL PROCESO -->
             <div class="row">
@@ -214,12 +214,11 @@
             </div>
 
 
-
             <!-- FLUJO DEL PROCESO -->
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
                     style="background-color:#345183; border-radius: 100px; color: white;">
-                    FLUJO DEL PROCESO
+                    FLUJO DEL PROCESO DE SOPORTE A LA APLICACIÓN
                 </div>
             </div>
             <div class="row" x-data="{ periodicidad_flujo: false }">
@@ -250,168 +249,811 @@
                     ]) !!}
                 </div>
                 {{-- livewire 3.¿Quién le proporciona esta información? --}}
-                @livewire('propociona-informacion', ['cuestionario_id' => $cuestionario->id])
+                @livewire('proporciona-informacion-aia', ['cuestionario_id' => $cuestionario->id])
+                {{-- Termina livewire --}}
+                <hr>
+
+                {{-- livewire 4.¿Quién es responsable de liberar/aplicar los mantenimientos al aplicativo? --}}
+                @livewire('mantenimiento-aia', ['cuestionario_id' => $cuestionario->id])
                 {{-- Termina livewire --}}
 
                 <div class="form-group col-sm-12">
                     {!! Form::label(
-                        'flujo_q_4',
-                        '4. ¿De qué manera recibe usted la información? (Entrega Física / Correo Electrónico / Consulta en Aplicativo o Base de Datos / Consulta en Portal Web)',
+                        'flujo_q_5',
+                        '5.	¿Cómo valida que el proceso se realizó correctamente? (Carta o firma de aceptación, Acuse de Recibido, Notificación, etc..)',
                         ['class' => 'required'],
                     ) !!}
-                    {!! Form::text('flujo_q_4', null, [
+                    {!! Form::text('flujo_q_5', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
                         'maxlength' => 255,
                         'placeholder' => '...',
-                    ]) !!}
-                </div>
-                {{-- Alpine periodicidad flujo --}}
-                <div class="form-group col-sm-12">
-                    <label for="tipo_conteo" class="required">5.
-                        ¿Con
-                        que periodicidad recibe esta información para llevar a cabo el proceso?:</label>
-                </div>
-                <div class="form-group col-sm-12">
-                    <div class="col-sm-2 form-check form-check-inline">
-                        <input class="form-check-input" type="hidden" name="periodicidad_diario" value="0">
-                        <input class="form-check-input" type="checkbox" name="periodicidad_diario" value="1"
-                            {{ old('periodicidad_diario', $cuestionario->periodicidad_diario) == '1' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="inlineRadio1">Diario</label>
-                    </div>
-                    <div class="col-sm-2 form-check form-check-inline">
-                        <input class="form-check-input" type="hidden" name="periodicidad_quincenal" value="0">
-                        <input class="form-check-input" type="checkbox" name="periodicidad_quincenal" value="1"
-                            {{ old('periodicidad_quincenal', $cuestionario->periodicidad_quincenal) == '1' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="inlineRadio2">Quincenal</label>
-                    </div>
-                    <div class="col-sm-2 form-check form-check-inline">
-                        <input class="form-check-input" type="hidden" name="periodicidad_mensual" value="0">
-                        <input class="form-check-input" type="checkbox" name="periodicidad_mensual" value="1"
-                            {{ old('periodicidad_mensual', $cuestionario->periodicidad_mensual) == '1' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="inlineRadio3">Mensual</label>
-                    </div>
-                    <div class="col-sm-2 form-check form-check-inline">
-                        <input class="form-check-input" type="hidden" name="periodicidad_otro" value="0">
-                        <input class="form-check-input" type="checkbox" name="periodicidad_otro" value="1"
-                            x-model="periodicidad_flujo"
-                            {{ old('periodicidad_otro', $cuestionario->periodicidad_otro) == '1' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="inlineRadio3">Otro: </label>
-                    </div>
-                </div>
-                {{--  --}}
-                <div class="form-group col-sm-12" x-show="periodicidad_flujo">
-                    <input type="text" class="form-control" name="periodicidad_flujo_txt" placeholder="Defina"
-                        x-bind:disabled="!periodicidad_flujo">
-                </div>
-
-                <div class="form-group col-sm-12">
-                    {!! Form::label(
-                        'flujo_q_6',
-                        '6. ¿Qué información obtiene al finalizar el proceso? (Documentos, Correo electrónico, Oficios, Reportes, etc.)',
-                        ['class' => 'required'],
-                    ) !!}
-                    {!! Form::text('flujo_q_6', null, [
-                        'class' => 'form-control',
-                        'maxlength' => 255,
-                        'maxlength' => 255,
-                        'placeholder' => '...',
-                    ]) !!}
-                </div>
-                <div class="form-group col-sm-12">
-                    {!! Form::label('flujo_q_7', '7.    ¿Este es un proceso final o genera información para iniciar otro proceso?', [
-                        'class' => 'required',
-                    ]) !!}
-                    {!! Form::text('flujo_q_7', null, [
-                        'class' => 'form-control',
-                        'maxlength' => 255,
-                        'maxlength' => 255,
-                        'placeholder' => '...',
-                    ]) !!}
-                </div>
-                <div class="form-group col-sm-12">
-                    {!! Form::label(
-                        'flujo_q_8',
-                        '8. ¿A dónde envía la información generada en el proceso? (Nombre de la Empresa / Nombre del Área / Nombre del Proceso / Nombre del Sistema)',
-                        ['class' => 'required'],
-                    ) !!}
-                    {!! Form::text('flujo_q_8', null, [
-                        'class' => 'form-control',
-                        'maxlength' => 255,
-                        'maxlength' => 255,
-                        'placeholder' => '...',
-                    ]) !!}
-                </div>
-
-                {{-- livewire 9.¿Quién le recibe esta información? --}}
-                @livewire('recibe-informacion', ['cuestionario_id' => $cuestionario->id])
-                {{-- Termina livewire --}}
-
-                <div class="form-group col-sm-12">
-                    {!! Form::label(
-                        'flujo_q_10',
-                        '10.    ¿Cómo valida que el proceso se realizó correctamente? (Carta o firma de aceptación, Acuse de Recibido, Notificación, etc..)',
-                        ['class' => 'required'],
-                    ) !!}
-                    {!! Form::text('flujo_q_10', null, [
-                        'class' => 'form-control',
-                        'maxlength' => 255,
-                        'maxlength' => 255,
-                        'placeholder' => '...',
-                    ]) !!}
-                </div>
-                <div class="form-group col-sm-12"><label for="tipo_conteo" class="required">11. ¿Cuánto tiempo requiere
-                        para realizar el
-                        proceso de inicio a fin?</label> </div>
-                <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_años', 'Año(s)') !!}
-                    {!! Form::number('flujo_años', null, [
-                        'class' => 'form-control',
-                        'placeholder' => '...',
-                    ]) !!}
-                </div>
-
-                <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_meses', 'Mes(es)') !!}
-                    {!! Form::number('flujo_meses', null, [
-                        'class' => 'form-control',
-                        'placeholder' => '...',
-                    ]) !!}
-                </div>
-                <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_semanas', 'Semana(s)') !!}
-                    {!! Form::number('flujo_semanas', null, [
-                        'class' => 'form-control',
-                        'placeholder' => '...',
-                    ]) !!}
-                </div>
-                <div class="form-group col-sm-2">
-                    {!! Form::label('flujo_dias', 'Día(s)') !!}
-                    {!! Form::number('flujo_dias', null, [
-                        'class' => 'form-control',
-                        'placeholder' => '...',
-                    ]) !!}
-                </div>
-                <div class="form-group col-sm-4">
-                    {!! Form::label('flujo_otro_txt', 'Otro') !!}
-                    {!! Form::text('flujo_otro_txt', null, [
-                        'class' => 'form-control',
-                        'placeholder' => 'Defina..',
                     ]) !!}
                 </div>
             </div>
-            <!-- INFRAESTRUCTURA TECNOLÓGICA (inciso b Anexo 67)-->
+
             <div class="row">
                 <div class="text-center form-group col-12 mt-4"
                     style="background-color:#345183; border-radius: 100px; color: white;">
                     INFRAESTRUCTURA TECNOLÓGICA
                 </div>
             </div>
+
+
+            <!-- INFRAESTRUCTURA TECNOLÓGICA (inciso b Anexo 67)-->
+
+            {{-- Operacion Normal --}}
             <div class="row">
-                {{-- livewire  INFRAESTRUCTURA TECNOLÓGICA --}}
-                @livewire('infraestructura-tecnologica', ['cuestionario_id' => $cuestionario->id])
-                {{-- Termina livewire --}}
+
+                <div class="col-sm-12 form-group">
+                    <label>6. ¿Qué infraestructura, bases de datos o utilerías soportan la
+                        aplicación?</label>
+                </div>
+
+                <label class="col-sm-3 col-form-label">
+                    <h4><span class="badge badge-info">EN OPERACIÓN NORMAL</span></h4>
+                </label>
+                <div class="form-group col-sm-3">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        placeholder="Aplicación" disabled>
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        placeholder="Bases de Datos" disabled>
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        placeholder="Otro" disabled>
+                </div>
+                <hr>
             </div>
+
+            <div class="row">
+                <label class="col-sm-3 col-form-label">Ubicación IP:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_ip" placeholder="..." value="{{ old('app_ip', $cuestionario->app_ip) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_ip" placeholder="..." value="{{ old('bd_ip', $cuestionario->bd_ip) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_ip" placeholder="..." value="{{ old('otro_ip', $cuestionario->otro_ip) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Hostname:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_host" placeholder="..." value="{{ old('app_host', $cuestionario->app_host) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_host" placeholder="..." value="{{ old('app_host', $cuestionario->bd_host) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_host" placeholder="..." value="{{ old('otro_host', $cuestionario->otro_host) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Instancias o Bases de Datos:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_base" placeholder="..." value="{{ old('app_base', $cuestionario->app_base) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_base" placeholder="..." value="{{ old('app_base', $cuestionario->bd_base) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_base" placeholder="..." value="{{ old('otro_base', $cuestionario->otro_base) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Puertos que utilizan:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_puerto" placeholder="..." value="{{ old('app_puerto', $cuestionario->app_puerto) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_puerto" placeholder="..." value="{{ old('app_puerto', $cuestionario->bd_puerto) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_puerto" placeholder="..."
+                        value="{{ old('otro_puerto', $cuestionario->otro_puerto) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Tipo de Servidor: (Físico / Virtual)</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_servidor">
+                        <option value disabled {{ old('app_servidor', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_servidor', $cuestionario->app_servidor) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_servidor">
+                        <option value disabled {{ old('bd_servidor', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_servidor', $cuestionario->bd_servidor) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_servidor">
+                        <option value disabled {{ old('otro_servidor', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_servidor', $cuestionario->otro_servidor) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Versión del S.O.:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_SO" placeholder="..." value="{{ old('app_SO', $cuestionario->app_SO) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_SO" placeholder="..." value="{{ old('app_SO', $cuestionario->bd_SO) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_SO" placeholder="..." value="{{ old('otro_SO', $cuestionario->otro_SO) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Tipo de Acceso al sistema:
+                    (WEB / Cliente-Servidor)
+                </label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_acceso">
+                        <option value disabled {{ old('app_acceso', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_acceso', $cuestionario->app_acceso) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_acceso">
+                        <option value disabled {{ old('bd_acceso', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_acceso', $cuestionario->bd_acceso) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_acceso">
+                        <option value disabled {{ old('otro_acceso', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_acceso', $cuestionario->otro_acceso) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">URL de Acceso:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_url" placeholder="..." value="{{ old('app_url', $cuestionario->app_url) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_url" placeholder="..." value="{{ old('app_url', $cuestionario->bd_url) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_url" placeholder="..." value="{{ old('otro_url', $cuestionario->otro_url) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">IP Pública:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_ip_publica" placeholder="..."
+                        value="{{ old('app_ip_publica', $cuestionario->app_ip_publica) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_ip_publica" placeholder="..."
+                        value="{{ old('app_ip_publica', $cuestionario->bd_ip_publica) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_ip_publica" placeholder="..."
+                        value="{{ old('otro_ip_publica', $cuestionario->otro_ip_publica) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Uso de Certificado: (SI / NO)</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_certificado">
+                        <option value disabled {{ old('app_certificado', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoCertificadoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_certificado', $cuestionario->app_certificado) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_certificado">
+                        <option value disabled {{ old('bd_certificado', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoCertificadoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_certificado', $cuestionario->bd_certificado) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_certificado">
+                        <option value disabled {{ old('otro_certificado', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoCertificadoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_certificado', $cuestionario->otro_certificado) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Datos del Certificado (tipo de cifrado, etc.).</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_tipo_cifrado" placeholder="..."
+                        value="{{ old('app_tipo_cifrado', $cuestionario->app_tipo_cifrado) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_tipo_cifrado" placeholder="..."
+                        value="{{ old('app_tipo_cifrado', $cuestionario->bd_tipo_cifrado) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_tipo_cifrado" placeholder="..."
+                        value="{{ old('otro_tipo_cifrado', $cuestionario->otro_tipo_cifrado) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Salida a Internet: (SI / NO)</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_internet">
+                        <option value disabled {{ old('app_internet', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_internet', $cuestionario->app_internet) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_internet">
+                        <option value disabled {{ old('bd_internet', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_internet', $cuestionario->bd_internet) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_internet">
+                        <option value disabled {{ old('otro_internet', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_internet', $cuestionario->otro_internet) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Datos URL o tipo de enlace:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_datos_url" placeholder="..."
+                        value="{{ old('app_datos_url', $cuestionario->app_datos_url) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_datos_url" placeholder="..."
+                        value="{{ old('app_datos_url', $cuestionario->bd_datos_url) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_datos_url" placeholder="..."
+                        value="{{ old('otro_datos_url', $cuestionario->otro_datos_url) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Acceso a la aplicación desde dispositivos móviles: (SI / NO)</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_acceso_moviles">
+                        <option value disabled {{ old('app_acceso_moviles', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_acceso_moviles', $cuestionario->app_acceso_moviles) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_acceso_moviles">
+                        <option value disabled {{ old('bd_acceso_moviles', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_acceso_moviles', $cuestionario->bd_acceso_moviles) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_acceso_moviles">
+                        <option value disabled {{ old('otro_acceso_moviles', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_acceso_moviles', $cuestionario->otro_acceso_moviles) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Nombre de la aplicación móvil:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_nombre_app_movil" placeholder="..."
+                        value="{{ old('app_nombre_app_movil', $cuestionario->app_nombre_app_movil) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_nombre_app_movil" placeholder="..."
+                        value="{{ old('app_nombre_app_movil', $cuestionario->bd_nombre_app_movil) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_nombre_app_movil" placeholder="..."
+                        value="{{ old('otro_nombre_app_movil', $cuestionario->otro_nombre_app_movil) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Interacción con otras aplicaciones:</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_interaccion_otras_apps">
+                        <option value disabled {{ old('app_interaccion_otras_apps', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_interaccion_otras_apps', $cuestionario->app_interaccion_otras_apps) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_interaccion_otras_apps">
+                        <option value disabled {{ old('bd_interaccion_otras_apps', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_interaccion_otras_apps', $cuestionario->bd_interaccion_otras_apps) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_interaccion_otras_apps">
+                        <option value disabled {{ old('otro_interaccion_otras_apps', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_interaccion_otras_apps', $cuestionario->otro_interaccion_otras_apps) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Datos de la aplicación con la que interactúa y tipo de
+                    conectividad:</label>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                        name="app_datos_interactuan" placeholder="..." rows="2">{{ old('app_datos_interactuan', $cuestionario->app_datos_interactuan) }}</textarea>
+                </div>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_datos_interactuan" placeholder="..." rows="2">{{ old('bd_datos_interactuan', $cuestionario->bd_datos_interactuan) }}</textarea>
+                </div>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_datos_interactuan" placeholder="..." rows="2">{{ old('otro_datos_interactuan', $cuestionario->otro_datos_interactuan) }}</textarea>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Administración o Soporte por terceros:</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_soporte_terceros">
+                        <option value disabled {{ old('app_soporte_terceros', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_soporte_terceros', $cuestionario->app_soporte_terceros) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_soporte_terceros">
+                        <option value disabled {{ old('bd_soporte_terceros', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_soporte_terceros', $cuestionario->bd_soporte_terceros) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_soporte_terceros">
+                        <option value disabled {{ old('otro_soporte_terceros', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_soporte_terceros', $cuestionario->otro_soporte_terceros) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+
+                <label class="col-sm-3 col-form-label">Datos del tercero que administra o Soporta: (Nombre, Empresa,
+                    Contacto)</label>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                        name="app_datos_terceros" placeholder="..." rows="2">{{ old('app_datos_terceros', $cuestionario->app_datos_terceros) }}</textarea>
+                </div>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_datos_terceros" placeholder="..." rows="2">{{ old('bd_datos_terceros', $cuestionario->bd_datos_terceros) }}</textarea>
+                </div>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_datos_terceros" placeholder="..." rows="2">{{ old('otro_datos_terceros', $cuestionario->otro_datos_terceros) }}</textarea>
+                </div>
+                <hr>
+
+
+                <label class="col-sm-3 col-form-label">Instancia de balanceo:</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="app_instancia_balanceo">
+                        <option value disabled {{ old('app_instancia_balanceo', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('app_instancia_balanceo', $cuestionario->app_instancia_balanceo) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="bd_instancia_balanceo">
+                        <option value disabled {{ old('bd_instancia_balanceo', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('bd_instancia_balanceo', $cuestionario->bd_instancia_balanceo) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="otro_instancia_balanceo">
+                        <option value disabled {{ old('otro_instancia_balanceo', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('otro_instancia_balanceo', $cuestionario->otro_instancia_balanceo) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Tipo y características de instancia:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="app_datos_balanceo" placeholder="..."
+                        value="{{ old('app_datos_balanceo', $cuestionario->app_datos_balanceo) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_datos_balanceo" placeholder="..."
+                        value="{{ old('app_datos_balanceo', $cuestionario->bd_datos_balanceo) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_datos_balanceo" placeholder="..."
+                        value="{{ old('otro_datos_balanceo', $cuestionario->otro_datos_balanceo) }}">
+                </div>
+                <hr>
+
+
+                <label class="col-sm-3 col-form-label">Softwares adicionales, especificar versiones y puertos en caso de
+                    usarse. (java, glashfish, tomcat, etc):</label>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                        name="app_sofware_adicional" placeholder="..." rows="3">{{ old('app_sofware_adicional', $cuestionario->app_sofware_adicional) }}</textarea>
+                </div>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                        name="bd_sofware_adicional" placeholder="..." rows="3">{{ old('bd_sofware_adicional', $cuestionario->bd_sofware_adicional) }}</textarea>
+                </div>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                        name="otro_sofware_adicional" placeholder="..." rows="3">{{ old('otro_sofware_adicional', $cuestionario->otro_sofware_adicional) }}</textarea>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Lenguaje de desarrollo, especificar versiones y puertos en caso de
+                    usarse. (BDL), application Server (GAS), despliegue de apps (GDC):</label>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" name="app_lenguajes"
+                        placeholder="..." rows="3">{{ old('app_lenguajes', $cuestionario->app_lenguajes) }}</textarea>
+                </div>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" name="bd_lenguajes"
+                        placeholder="..." rows="3">{{ old('bd_lenguajes', $cuestionario->bd_lenguajes) }}</textarea>
+                </div>
+                <div class="form-group col-sm-3">
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" name="otro_lenguajes"
+                        placeholder="..." rows="3">{{ old('otro_lenguajes', $cuestionario->otro_lenguajes) }}</textarea>
+                </div>
+                <hr>
+            </div>
+
+            {{-- En contingencia --}}
+            <div class="row mt-3">
+                <div class="col-sm-12 form-group">
+                    <label>7. En caso de contingencia, ¿Qué infraestructura, bases de datos o utilerías serían los mínimos
+                        soportar la aplicación?</label>
+                </div>
+
+                <label class="col-sm-3 col-form-label">
+                    <h4><span class="badge badge-warning">EN CONTINGENCIA</span></h4>
+                </label>
+                <div class="form-group col-sm-3">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        placeholder="Aplicación" disabled>
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        placeholder="Bases de Datos" disabled>
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        placeholder="Otro" disabled>
+                </div>
+                <hr>
+            </div>
+
+            <div class="row">
+                <label class="col-sm-3 col-form-label">Ubicación IP:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_app_ip" placeholder="..."
+                        value="{{ old('contingencia_app_ip', $cuestionario->contingencia_app_ip) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_bd_ip" placeholder="..."
+                        value="{{ old('contingencia_bd_ip', $cuestionario->contingencia_bd_ip) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_otro_ip" placeholder="..."
+                        value="{{ old('contingencia_otro_ip', $cuestionario->contingencia_otro_ip) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Hostname:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_app_host" placeholder="..."
+                        value="{{ old('contingencia_app_host', $cuestionario->contingencia_app_host) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_bd_host" placeholder="..."
+                        value="{{ old('contingencia_bd_host', $cuestionario->contingencia_bd_host) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_otro_host" placeholder="..."
+                        value="{{ old('contingencia_otro_host', $cuestionario->contingencia_otro_host) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Tipo de Servidor: (Físico / Virtual)</label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="contingencia_app_servidor">
+                        <option value disabled {{ old('contingencia_app_servidor', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('contingencia_app_servidor', $cuestionario->contingencia_app_servidor) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="contingencia_bd_servidor">
+                        <option value disabled {{ old('contingencia_bd_servidor', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('contingencia_bd_servidor', $cuestionario->contingencia_bd_servidor) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="contingencia_otro_servidor">
+                        <option value disabled {{ old('contingencia_otro_servidor', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('contingencia_otro_servidor', $cuestionario->contingencia_otro_servidor) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Versión del S.O.:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_app_SO" placeholder="..."
+                        value="{{ old('contingencia_app_SO', $cuestionario->contingencia_app_SO) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_bd_SO" placeholder="..."
+                        value="{{ old('contingencia_bd_SO', $cuestionario->contingencia_bd_SO) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_otro_SO" placeholder="..."
+                        value="{{ old('contingencia_otro_SO', $cuestionario->contingencia_otro_SO) }}">
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">Tipo de Acceso al sistema:
+                    (WEB / Cliente-Servidor)
+                </label>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="contingencia_app_acceso">
+                        <option value disabled {{ old('contingencia_app_acceso', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('contingencia_app_acceso', $cuestionario->contingencia_app_acceso) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="contingencia_bd_acceso">
+                        <option value disabled {{ old('contingencia_bd_acceso', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('contingencia_bd_acceso', $cuestionario->contingencia_bd_acceso) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control form-control-sm" name="contingencia_otro_acceso">
+                        <option value disabled {{ old('contingencia_otro_acceso', null) === null ? 'selected' : '' }}>
+                            Selecciona una opción</option>
+                        @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
+                            <option value="{{ $key }}"
+                                {{ old('contingencia_otro_acceso', $cuestionario->contingencia_otro_acceso) === (int) $key ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <hr>
+
+                <label class="col-sm-3 col-form-label">URL de Acceso:</label>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_app_url" placeholder="..."
+                        value="{{ old('contingencia_app_url', $cuestionario->contingencia_app_url) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_bd_url" placeholder="..."
+                        value="{{ old('contingencia_bd_url', $cuestionario->contingencia_bd_url) }}">
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                        name="contingencia_otro_url" placeholder="..."
+                        value="{{ old('contingencia_otro_url', $cuestionario->contingencia_otro_url) }}">
+                </div>
+                <hr>
+
+
+            </div>
+
+
 
             <!-- RECURSOS HUMANOS (inciso b Anexo67)-->
             <div class="row">
@@ -448,7 +1090,12 @@
                 </div>
             </div>
             <div class="row">
-                <div class="text-center form-group col-12 mt-4"
+                <div class="col-sm-12 form-group">
+                    <label>12. ¿Cuál es el período más crítico o pico de ejecución de su proceso?</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center form-group col-12"
                     style="background-color:#9da0a6; border-radius: 100px; color: white;">
                     SEMESTRES
                 </div>
@@ -716,223 +1363,7 @@
                                         id="check_number_07" {{ old('d7', $cuestionario->d7) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
-                            {{-- <TD>
-                                <label for="check_number_08">08</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d8">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d8"
-                                        id="check_number_08" {{ old('d8', $cuestionario->d8) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_09">09</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d9">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d9"
-                                        id="check_number_09" {{ old('d9', $cuestionario->d9) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_010">10</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d10">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d10"
-                                        id="check_number_010" {{ old('d10', $cuestionario->d10) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_011">11</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d11">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d11"
-                                        id="check_number_011" {{ old('d11', $cuestionario->d11) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_012">12</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d12">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d12"
-                                        id="check_number_012" {{ old('d12', $cuestionario->d12) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_013">13</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d13">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d13"
-                                        id="check_number_013" {{ old('d13', $cuestionario->d13) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_014">14</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d14">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d14"
-                                        id="check_number_014" {{ old('d14', $cuestionario->d14) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_015">15</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d15">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d15"
-                                        id="check_number_015" {{ old('d15', $cuestionario->d15) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_016">16</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d16">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d16"
-                                        id="check_number_016" {{ old('d16', $cuestionario->d16) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_017">17</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d17">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d17"
-                                        id="check_number_017" {{ old('d17', $cuestionario->d17) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_018">18</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d18">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d18"
-                                        id="check_number_018" {{ old('d18', $cuestionario->d18) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_019">19</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d19">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d19"
-                                        id="check_number_019" {{ old('d19', $cuestionario->d19) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_020">20</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d20">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d20"
-                                        id="check_number_020" {{ old('d20', $cuestionario->d20) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_021">21</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d21">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d21"
-                                        id="check_number_021" {{ old('d21', $cuestionario->d21) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_022">22</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d22">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d22"
-                                        id="check_number_022" {{ old('d22', $cuestionario->d22) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_023">23</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d23">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d23"
-                                        id="check_number_023" {{ old('d23', $cuestionario->d23) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_024">24</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d24">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d24"
-                                        id="check_number_024" {{ old('d24', $cuestionario->d24) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_025">25</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d25">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d25"
-                                        id="check_number_025" {{ old('d25', $cuestionario->d25) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_026">26</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d26">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d26"
-                                        id="check_number_026" {{ old('d26', $cuestionario->d26) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_027">27</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d27">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d27"
-                                        id="check_number_027" {{ old('d27', $cuestionario->d27) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_028">28</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d28">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d28"
-                                        id="check_number_028" {{ old('d28', $cuestionario->d28) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_029">29</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d29">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d29"
-                                        id="check_number_029" {{ old('d29', $cuestionario->d29) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_030">30</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d30">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d30"
-                                        id="check_number_030" {{ old('d30', $cuestionario->d30) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                            <TD>
-                                <label for="check_number_031">31</label>
-                                <br>
-                                <div class="form-check">
-                                    <input type="hidden" value="1" name="d31">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="d31"
-                                        id="check_number_031" {{ old('d31', $cuestionario->d31) == 2 ? 'checked' : '' }}>
-                                </div>
-                            </TD>
-                        </TR> --}}
+
                     </table>
                 </div>
 
@@ -969,8 +1400,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h3">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h3"
-                                        id="check_no_03" {{ old('h3', $cuestionario->h3) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h3" id="check_no_03"
+                                        {{ old('h3', $cuestionario->h3) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -978,8 +1410,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h4">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h4"
-                                        id="check_no_04" {{ old('h4', $cuestionario->h4) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h4" id="check_no_04"
+                                        {{ old('h4', $cuestionario->h4) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -987,8 +1420,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h5">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h5"
-                                        id="check_no_05" {{ old('h5', $cuestionario->h5) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h5" id="check_no_05"
+                                        {{ old('h5', $cuestionario->h5) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -996,8 +1430,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h6">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h6"
-                                        id="check_no_06" {{ old('h6', $cuestionario->h6) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h6" id="check_no_06"
+                                        {{ old('h6', $cuestionario->h6) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1005,8 +1440,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h7">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h7"
-                                        id="check_no_07" {{ old('h7', $cuestionario->h7) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h7" id="check_no_07"
+                                        {{ old('h7', $cuestionario->h7) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1014,8 +1450,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h8">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h8"
-                                        id="check_no_08" {{ old('h8', $cuestionario->h8) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h8" id="check_no_08"
+                                        {{ old('h8', $cuestionario->h8) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1023,8 +1460,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h9">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h9"
-                                        id="check_no_09" {{ old('h9', $cuestionario->h9) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h9" id="check_no_09"
+                                        {{ old('h9', $cuestionario->h9) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1032,8 +1470,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h10">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h10"
-                                        id="check_no_10" {{ old('h10', $cuestionario->h10) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h10" id="check_no_10"
+                                        {{ old('h10', $cuestionario->h10) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1041,8 +1480,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h11">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h11"
-                                        id="check_no_11" {{ old('h11', $cuestionario->h11) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h11" id="check_no_11"
+                                        {{ old('h11', $cuestionario->h11) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1050,8 +1490,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h12">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h12"
-                                        id="check_no_12" {{ old('h12', $cuestionario->h12) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h12" id="check_no_12"
+                                        {{ old('h12', $cuestionario->h12) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1059,8 +1500,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h13">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h13"
-                                        id="check_no_13" {{ old('h13', $cuestionario->h13) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h13" id="check_no_13"
+                                        {{ old('h13', $cuestionario->h13) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1068,8 +1510,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h14">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h14"
-                                        id="check_no_14" {{ old('h14', $cuestionario->h14) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h14" id="check_no_14"
+                                        {{ old('h14', $cuestionario->h14) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1077,8 +1520,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h15">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h15"
-                                        id="check_no_15" {{ old('h15', $cuestionario->h15) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h15" id="check_no_15"
+                                        {{ old('h15', $cuestionario->h15) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1086,8 +1530,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h16">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h16"
-                                        id="check_no_16" {{ old('h16', $cuestionario->h16) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h16" id="check_no_16"
+                                        {{ old('h16', $cuestionario->h16) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1095,8 +1540,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h17">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h17"
-                                        id="check_no_17" {{ old('h17', $cuestionario->h17) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h17" id="check_no_17"
+                                        {{ old('h17', $cuestionario->h17) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1104,8 +1550,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h18">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h18"
-                                        id="check_no_18" {{ old('h18', $cuestionario->h18) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h18" id="check_no_18"
+                                        {{ old('h18', $cuestionario->h18) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1113,8 +1560,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h19">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h19"
-                                        id="check_no_19" {{ old('h19', $cuestionario->h19) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h19" id="check_no_19"
+                                        {{ old('h19', $cuestionario->h19) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1122,8 +1570,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h20">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h20"
-                                        id="check_no_20" {{ old('h20', $cuestionario->h20) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h20" id="check_no_20"
+                                        {{ old('h20', $cuestionario->h20) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1131,8 +1580,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h21">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h21"
-                                        id="check_no_21" {{ old('h21', $cuestionario->h21) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h21" id="check_no_21"
+                                        {{ old('h21', $cuestionario->h21) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1140,8 +1590,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h22">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h22"
-                                        id="check_no_22" {{ old('h22', $cuestionario->h22) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h22" id="check_no_22"
+                                        {{ old('h22', $cuestionario->h22) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1149,8 +1600,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h23">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h23"
-                                        id="check_no_23" {{ old('h23', $cuestionario->h23) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h23" id="check_no_23"
+                                        {{ old('h23', $cuestionario->h23) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                             <TD>
@@ -1158,8 +1610,9 @@
                                 <br>
                                 <div class="form-check">
                                     <input type="hidden" value="1" name="h24">
-                                    <input class="form-check-input d-none" type="checkbox" value="2" name="h24"
-                                        id="check_no_24" {{ old('h24', $cuestionario->h24) == 2 ? 'checked' : '' }}>
+                                    <input class="form-check-input d-none" type="checkbox" value="2"
+                                        name="h24" id="check_no_24"
+                                        {{ old('h24', $cuestionario->h24) == 2 ? 'checked' : '' }}>
                                 </div>
                             </TD>
                         </TR>
@@ -1188,7 +1641,7 @@
                     </a>
                     {!! Form::label(
                         'respaldo_q_20',
-                        '19.    Tiempos de Respaldo (RPO), Recuperación (RTO), Trabajo en Contingencia (WRT) y Máximo Tiempo de Interrupción del Proceso (MTPD)',
+                        '13. Tiempos de Respaldo (RPO), Recuperación (RTO), Trabajo en Contingencia (WRT) y Máximo Tiempo de Interrupción del Proceso (MTPD)',
                         ['class' => 'required'],
                     ) !!}
 
@@ -1351,12 +1804,10 @@
                 {{-- RESPALDOS DE INFORMACIÓN --}}
 
                 <div class="form-group col-sm-12">
-                    {!! Form::label(
-                        'respaldo_q_20',
-                        '20. ¿Cuáles son los archivos o registros vitales para el proceso? (Formatos, Registros, Directorios, Reportes, etc.)',
-                        ['class' => 'required'],
-                    ) !!}
-                    {!! Form::text('respaldo_q_20', null, [
+                    {!! Form::label('respaldo_q_14', '14. ¿Se tiene respaldo de base de datos, código fuente, scripts, etc.?', [
+                        'class' => 'required',
+                    ]) !!}
+                    {!! Form::text('respaldo_q_14', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
                         'maxlength' => 255,
@@ -1364,12 +1815,8 @@
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
-                    {!! Form::label(
-                        'respaldo_q_21',
-                        '21. ¿Tiene un respaldo fuera de su equipo de los archivos necesarios para ejecutar este proceso? (Registros vitales)',
-                        ['class' => 'required'],
-                    ) !!}
-                    {!! Form::text('respaldo_q_21', null, [
+                    {!! Form::label('respaldo_q_15', '15. ¿Cuál es la periodicidad del respaldo?', ['class' => 'required']) !!}
+                    {!! Form::text('respaldo_q_15', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
                         'maxlength' => 255,
@@ -1377,21 +1824,10 @@
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
-                    {!! Form::label('respaldo_q_22', '22. ¿Alguien más tiene acceso a este respaldo?', ['class' => 'required']) !!}
-                    {!! Form::text('respaldo_q_22', null, [
-                        'class' => 'form-control',
-                        'maxlength' => 255,
-                        'maxlength' => 255,
-                        'placeholder' => '...',
+                    {!! Form::label('respaldo_q_16', '16. ¿Qué tipo de respaldo se aplica? (Incremental, Full, etc.)', [
+                        'class' => 'required',
                     ]) !!}
-                </div>
-                <div class="form-group col-sm-12">
-                    {!! Form::label(
-                        'respaldo_q_23',
-                        '23. ¿De qué manera tiene resguardados los usuarios y contraseñas que utiliza para el acceso a los sistemas necesarios en este proceso?',
-                        ['class' => 'required'],
-                    ) !!}
-                    {!! Form::text('respaldo_q_23', null, [
+                    {!! Form::text('respaldo_q_16', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
                         'maxlength' => 255,
@@ -1414,7 +1850,8 @@
                         data-target="#probabilidad_incidentes_disruptivos" data-whatever="@mdo" data-whatever="@mdo"
                         title="Dar click"><i class="fas fa-info-circle"></i></a>
                     </a>
-                    <label>24. Por favor, indique los tipos de incidentes en los que el proceso se ha visto interrumpido y
+                    <label>17. Por favor, indique los tipos de incidentes en los que el proceso se ha visto interrumpido
+                        y
                         aproximadamente cada cuando ha ocurrido.</label>
                 </div>
                 <hr>
@@ -1600,7 +2037,8 @@
             </div>
             <div class="row">
                 <div class="form-group col-sm-12">
-                    <label>25. Por favor, indique el nivel de impacto en los que el proceso se ha visto involucrado.</label>
+                    <label>18. Por favor, indique el nivel de impacto en los que el proceso se ha visto
+                        involucrado.</label>
 
                 </div>
 
@@ -1630,15 +2068,18 @@
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_1" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_1) }}">
+                        name="operacion_q_1" placeholder="..."
+                        value="{{ old('operacion_q_1', $cuestionario->operacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_2" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                        name="operacion_q_2" placeholder="..."
+                        value="{{ old('operacion_q_2', $cuestionario->operacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_3" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_3) }}">
+                        name="operacion_q_3" placeholder="..."
+                        value="{{ old('operacion_q_3', $cuestionario->operacion_q_3) }}">
                 </div>
                 <hr>
 
@@ -1710,32 +2151,14 @@
                 <hr>
 
                 <div class="form-group col-sm-12">
-                    {!! Form::label(
-                        'incidentes_q_26',
-                        '26. En caso de que el proceso se interrumpiera, indique cuáles serían las acciones que tomaría.',
-                        ['class' => 'required'],
-                    ) !!}
-                    {!! Form::text('incidentes_q_26', null, [
-                        'class' => 'form-control',
-                        'maxlength' => 255,
-                        'maxlength' => 255,
-                        'placeholder' => '...',
-                    ]) !!}
+                    <label>19. En caso de que la aplicación presentara alguna falla o se detuviera su operación, indique
+                        cuáles serían las acciones que se tomarían</label>
+                    <input type="text" class="form-control form-control-sm" name="q_19" placeholder="..."
+                        value="{{ old('q_19', $cuestionario->q_19) }}">
                 </div>
+                <hr>
 
-                <div class="form-group col-sm-12">
-                    {!! Form::label(
-                        'incidentes_q_27',
-                        '27. ¿Se han realizado ejercicios o pruebas relacionadas a un Plan de Continuidad de las Operaciones (BCP)?',
-                        ['class' => 'required'],
-                    ) !!}
-                    {!! Form::text('incidentes_q_27', null, [
-                        'class' => 'form-control',
-                        'maxlength' => 255,
-                        'maxlength' => 255,
-                        'placeholder' => '...',
-                    ]) !!}
-                </div>
+
             </div>
 
             {{-- Firmas --}}
@@ -1791,7 +2214,8 @@
                 <table class="table table-border" style="font-size: 12px">
                     <tr>
                         <th class="col-sm-4" style="background-color:#345183; color: white;">Clasificación</th>
-                        <th class="col-sm-8" style="background-color:#345183; color: white;">Escenarios de Contingencia
+                        <th class="col-sm-8" style="background-color:#345183; color: white;">Escenarios de
+                            Contingencia
                         </th>
                     </tr>
                     <tr>
@@ -1861,7 +2285,8 @@
                         <td>Fallas en la infraestructura tecnológica (equipos, servidores, etc.).</td>
                     </tr>
                     <tr>
-                        <th rowspan="3" style="background-color:#ffffff;">Indisponibilidad del personal (Accidentes,
+                        <th rowspan="3" style="background-color:#ffffff;">Indisponibilidad del personal
+                            (Accidentes,
                             enfermedad, jubilación o fallecimiento del personal).</th>
                         <td>IIndisponibilidad del personal (Accidentes, enfermedad, jubilación o fallecimiento del
                             personal).</td>
@@ -1873,7 +2298,8 @@
                         <td>Daño en equipos (aire acondicionado).</td>
                     </tr>
                     <tr>
-                        <th style="background-color:#ffffff;">Interrupciones en el suministro de energía eléctrica.</th>
+                        <th style="background-color:#ffffff;">Interrupciones en el suministro de energía eléctrica.
+                        </th>
                         <td>Interrupciones en el suministro de energía eléctrica.</td>
                     </tr>
                     <tr>
@@ -1916,7 +2342,8 @@
                 <div class="modal-dialog  modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Detalle de la probabilidad
+                            <h5 class="modal-title" id="modelolec" id="exampleModalLabel">Detalle de la
+                                probabilidad
                                 de
                                 los incidentes disruptivos </h5>
                         </div>
@@ -1934,7 +2361,8 @@
                                     <strong style="color:#fff" class="text-center">5-Casi Cierto</strong>
                                 </div>
                                 <div class="col-8">
-                                    <span style="justify-content;">Cuenta con antecedentes de ocurrencia frecuentes; es
+                                    <span style="justify-content;">Cuenta con antecedentes de ocurrencia frecuentes;
+                                        es
                                         más
                                         probable que se presente a que no. Existen muchos factores y condiciones que
                                         propician su ocurrencia. <strong>(Cada semana).</strong> </span>
@@ -1945,7 +2373,8 @@
                                     <strong style="color:#fff" class="text-center">4-Muy probable</strong>
                                 </div>
                                 <div class="col-8">
-                                    <span style="justify-content;">Cuenta con antecedentes de ocurrencia; es más probable
+                                    <span style="justify-content;">Cuenta con antecedentes de ocurrencia; es más
+                                        probable
                                         que se presente a que no. Existen factores y condiciones que propician su
                                         ocurrencia. <strong>(Cada mes).</strong></span>
                                 </div>
@@ -1966,7 +2395,8 @@
                                 </div>
                                 <div class="col-8">
                                     <span style="justify-content;">No se tienen antecedentes de ocurrencia recientes o
-                                        Cuenta con antecedentes, pero su ocurrencia ha sido ocasional; Es igual de probable
+                                        Cuenta con antecedentes, pero su ocurrencia ha sido ocasional; Es igual de
+                                        probable
                                         se presente o no se presente. Las condiciones son mínimamente favorables para
                                         permitir su ocurrencia.<strong>(cada 6 meses).</strong> </span>
                                 </div>
@@ -1976,10 +2406,13 @@
                                     <strong style="color:#fff" class="text-center">1-Remoto</strong>
                                 </div>
                                 <div class="col-8">
-                                    <span style="justify-content;">No se tienen antecedentes de ocurrencia. Es probable
+                                    <span style="justify-content;">No se tienen antecedentes de ocurrencia. Es
+                                        probable
                                         que
-                                        no se presente (no se cuenta con elementos para determinar si es más probable que
-                                        suceda o que no suceda). Las condiciones son mínimamente favorables para permitir su
+                                        no se presente (no se cuenta con elementos para determinar si es más probable
+                                        que
+                                        suceda o que no suceda). Las condiciones son mínimamente favorables para
+                                        permitir su
                                         ocurrencia.<strong>(cada año).</strong></span>
                                 </div>
                             </div>
@@ -2027,7 +2460,8 @@
                                 <div class="col-10">
                                     <span style="justify-content;"><u>Tiempo Objetivo de Recuperación</u> <i>(Recovery
                                             Time
-                                            Objective)</i>, es el tiempo en el que los procesos deben ser recuperados antes
+                                            Objective)</i>, es el tiempo en el que los procesos deben ser recuperados
+                                        antes
                                         de generar un impacto relevante a la institución.</span>
                                 </div>
                             </div>
@@ -2038,8 +2472,10 @@
                                 <div class="col-10">
                                     <span style="justify-content;"><u>Tiempo de Trabajo en Recuperación </u> <i>(Work
                                             Recovery Time)</i>, es la cantidad de tiempo en el que los procesos son
-                                        ejecutados durante la recuperación con los recursos mínimos necesarios y determina
-                                        la cantidad máxima de tiempo requerido para verificar la integridad de los sistemas
+                                        ejecutados durante la recuperación con los recursos mínimos necesarios y
+                                        determina
+                                        la cantidad máxima de tiempo requerido para verificar la integridad de los
+                                        sistemas
                                         y de los datos.</span>
                                 </div>
                             </div>
@@ -2050,7 +2486,8 @@
                                 <div class="col-10">
                                     <span style="justify-content;"><u>áximo Tiempo de Interrupción Tolerable </u>
                                         <i>(Maximun Tolerable Period of Disruption)</i>, es la suma de RTO y WRT; y se
-                                        define como el periodo de tiempo de inactividad máximo tolerable en total que puede
+                                        define como el periodo de tiempo de inactividad máximo tolerable en total que
+                                        puede
                                         interrumpirse un proceso sin causar consecuencias inaceptables.</span>
                                 </div>
                             </div>
@@ -2086,7 +2523,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">5-MUY ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 2
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a
+                                        2
                                         días.</span>
                                 </div>
                             </div>
@@ -2095,7 +2533,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a
+                                        1
                                         día y hasta 2 días.</span>
                                 </div>
                             </div>
@@ -2104,7 +2543,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 4
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a
+                                        4
                                         horas y hasta 1 día.</span>
                                 </div>
                             </div>
@@ -2113,7 +2553,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a 1
+                                    <span style="justify-content;">Suspende la operación o genera reprocesos mayores a
+                                        1
                                         hora y hasta 4 horas.</span>
                                 </div>
                             </div>
@@ -2159,7 +2600,8 @@
                                 </div>
                                 <div class="col-9">
                                     <span style="justify-content;">Podrían generarse penalizaciones, y/o investigación
-                                        contra la institución por faltas a normatividad Nacional o Constitucional.</span>
+                                        contra la institución por faltas a normatividad Nacional o
+                                        Constitucional.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">
@@ -2168,7 +2610,8 @@
                                 </div>
                                 <div class="col-9">
                                     <span style="justify-content;">Podrían generarse penalizaciones y/o investigación
-                                        contra la institución por faltas a los organismos reguladores (ASF y Secretaria de
+                                        contra la institución por faltas a los organismos reguladores (ASF y Secretaria
+                                        de
                                         la Función Pública).</span>
                                 </div>
                             </div>
@@ -2186,7 +2629,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">2-BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Faltas a los procedimientos operativos internos.</span>
+                                    <span style="justify-content;">Faltas a los procedimientos operativos
+                                        internos.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:30px; border-bottom: 1px solid #ccc;">
@@ -2194,7 +2638,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">1-MUY BAJO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Sin afectación o incumplimientos regulatorios.</span>
+                                    <span style="justify-content;">Sin afectación o incumplimientos
+                                        regulatorios.</span>
                                 </div>
                             </div>
 
@@ -2229,7 +2674,8 @@
                                 </div>
                                 <div class="col-9">
                                     <span style="justify-content;">Cobertura mediática a escala nacional y limitada a
-                                        nivel internacional, investigación formal de organismos reguladores, implicación de
+                                        nivel internacional, investigación formal de organismos reguladores, implicación
+                                        de
                                         directivos del SENASICA.</span>
                                 </div>
                             </div>
@@ -2238,7 +2684,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">4-ALTO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Cobertura mediática a escala nacional, incremento en
+                                    <span style="justify-content;">Cobertura mediática a escala nacional, incremento
+                                        en
                                         reclamaciones de la ciudadanía, solicitud de organismos reguladores.</span>
                                 </div>
                             </div>
@@ -2247,7 +2694,8 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">3-MEDIO:</strong>
                                 </div>
                                 <div class="col-9">
-                                    <span style="justify-content;">Cobertura mediática local, incremento en reclamaciones
+                                    <span style="justify-content;">Cobertura mediática local, incremento en
+                                        reclamaciones
                                         de la ciudadanía.</span>
                                 </div>
                             </div>
@@ -2299,7 +2747,8 @@
                                 </div>
                                 <div class="col-9">
                                     <span style="justify-content;">Presenta afectación en los servicios brindados a la
-                                        ciudadanía a toda la República Mexicana o incluso a niveles Internacionales.</span>
+                                        ciudadanía a toda la República Mexicana o incluso a niveles
+                                        Internacionales.</span>
                                 </div>
                             </div>
                             <div class="row" style="height:50px; border-bottom: 1px solid #ccc;">

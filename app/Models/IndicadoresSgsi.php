@@ -43,9 +43,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class IndicadoresSgsi extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
 
-    
     protected $table = 'indicadores_sgsis';
 
     protected $casts = [
@@ -58,6 +56,7 @@ class IndicadoresSgsi extends Model
         'nombre',
         'descripcion',
         'formula',
+        'formula_raw',
         'frecuencia',
         'unidadmedida',
         'meta',

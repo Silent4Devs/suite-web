@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\CuestionarioProporcionaInformacion;
+use App\Models\CuestionarioProporcionaInformacionAIA;
 use Livewire\Component;
 
-class CreatePropocionaInformacion extends Component
+class CreateProporcionaInformacionAia extends Component
 {
+   
    
     public $miembroID;
     public $nombre;
@@ -45,7 +46,7 @@ class CreatePropocionaInformacion extends Component
     {
         $this->validarMiembro();
         $extencion = $this->extencion == "" ? 0: $this->extencion;
-        $model = CuestionarioProporcionaInformacion::create([
+        $model = CuestionarioProporcionaInformacionAIA::create([
         'nombre'=> $this->nombre,
         'puesto'=> $this->puesto,
         'correo_electronico'=> $this->correo_electronico,
@@ -63,7 +64,7 @@ class CreatePropocionaInformacion extends Component
     public function edit($id)
     {
         $this->view = 'edit';
-        $model = CuestionarioProporcionaInformacion::find($id);
+        $model = CuestionarioProporcionaInformacionAIA::find($id);
         $this->miembroID = $model->id;
         $this->nombre = $model->nombre;
         $this->puesto = $model->puesto;
@@ -91,13 +92,12 @@ class CreatePropocionaInformacion extends Component
     public function update()
     {
         $this->validarMiembro();
-        $model = CuestionarioProporcionaInformacion::find($this->miembroID);
-        $extencion = $this->extencion == "" ? 0: $this->extencion;
+        $model = CuestionarioProporcionaInformacionAIA::find($this->miembroID);
         $model->update([
             'nombre'=> $this->nombre,
             'puesto'=> $this->puesto,
             'correo_electronico'=> $this->correo_electronico,
-            'extencion'=> $extencion,
+            'extencion'=> $this->extencion,
             'ubicacion'=> $this->ubicacion,
             'cuestionario_id' => $this->cuestionario_id,
             'interno_externo' => $this->interno_externo,
@@ -109,13 +109,13 @@ class CreatePropocionaInformacion extends Component
 
     public function destroy($id)
     {
-        $model = CuestionarioProporcionaInformacion::find($id);
+        $model = CuestionarioProporcionaInformacionAIA::find($id);
         $model->delete();
         $this->emit('render');
     }
 
     public function render()
     {
-        return view('livewire.create-propociona-informacion');
+        return view('livewire.create-proporciona-informacion-aia');
     }
 }
