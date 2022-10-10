@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\CuestionarioProporcionaInformacionAIA;
+use App\Models\LiberaMantenimientoAIA;
 use Livewire\Component;
 
-class CreateProporcionaInformacionAia extends Component
+class CreateMantenimientoAia extends Component
 {
    
    
@@ -22,7 +22,7 @@ class CreateProporcionaInformacionAia extends Component
     public $parteInteresadaIdEN;
     public $view = 'create';
     public $normasModel = [];
-    protected $listeners = ['editarFuenteInformacionAia' => 'edit', 'eliminarFuenteInformacionAia' => 'destroy',];
+    protected $listeners = ['editarMantenimiento' => 'edit', 'eliminarMantenimiento' => 'destroy',];
 
   
 
@@ -39,14 +39,14 @@ class CreateProporcionaInformacionAia extends Component
     public function create()
     {
         $this->default();
-        $this->emit('abrir-modal');
+        $this->emit('abrir-modal-mantenimiento');
     }
 
     public function save()
     {
         $this->validarMiembro();
         $extencion = $this->extencion == "" ? 0: $this->extencion;
-        $model = CuestionarioProporcionaInformacionAIA::create([
+        $model = LiberaMantenimientoAIA::create([
         'nombre'=> $this->nombre,
         'puesto'=> $this->puesto,
         'correo_electronico'=> $this->correo_electronico,
@@ -58,13 +58,13 @@ class CreateProporcionaInformacionAia extends Component
 
         $this->reset('id','nombre','puesto','correo_electronico','extencion','ubicacion','interno_externo');
         $this->emit('render');
-        $this->emit('cerrar-modal', ['editar' => false]);
+        $this->emit('cerrar-modal-mantenimiento', ['editar' => false]);
     }
 
     public function edit($id)
     {
         $this->view = 'edit';
-        $model = CuestionarioProporcionaInformacionAIA::find($id);
+        $model = LiberaMantenimientoAIA::find($id);
         $this->miembroID = $model->id;
         $this->nombre = $model->nombre;
         $this->puesto = $model->puesto;
@@ -73,7 +73,7 @@ class CreateProporcionaInformacionAia extends Component
         $this->ubicacion = $model->ubicacion;
         $this->cuestionario_id = $model->cuestionario_id;
         $this->interno_externo = $model->interno_externo;
-        $this->emit('abrir-modal');
+        $this->emit('abrir-modal-mantenimiento');
 
     }
 
@@ -92,7 +92,7 @@ class CreateProporcionaInformacionAia extends Component
     public function update()
     {
         $this->validarMiembro();
-        $model = CuestionarioProporcionaInformacionAIA::find($this->miembroID);
+        $model = LiberaMantenimientoAIA::find($this->miembroID);
         $extencion = $this->extencion == "" ? 0: $this->extencion;
         $model->update([
             'nombre'=> $this->nombre,
@@ -103,21 +103,21 @@ class CreateProporcionaInformacionAia extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'interno_externo' => $this->interno_externo,
         ]);
-        $this->emit('cerrar-modal', ['editar' => true]);
+        $this->emit('cerrar-modal-mantenimiento', ['editar' => true]);
         $this->default();
         $this->emit('render');
     }
 
     public function destroy($id)
     {
-        $model = CuestionarioProporcionaInformacionAIA::find($id);
+        $model = LiberaMantenimientoAIA::find($id);
         $model->delete();
         $this->emit('render');
     }
 
     public function render()
     {
-        return view('livewire.create-proporciona-informacion-aia');
-
+        return view('livewire.create-mantenimiento-aia');
     }
 }
+
