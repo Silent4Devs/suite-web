@@ -30,13 +30,13 @@ class CreateRecursosHumanos extends Component
     {
         $this->validate([
             'escenario' => 'required',
-            'empresa' => 'required|max:50',
+            'empresa' => 'required|max:70',
             'nombre' => 'required|max:50',
             'a_paterno' => 'required|max:15',
             'a_materno' => 'required|max:15',
             'puesto' => 'required|max:60',
-            'rol' => 'required|max:12',
-            'tel' => 'required',
+            'rol' => 'required|max:30',
+            'tel' => 'required|max:16',
             'correo' => 'required|max:40',
         ]);
     }

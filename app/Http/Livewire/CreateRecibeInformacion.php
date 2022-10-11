@@ -27,10 +27,11 @@ class CreateRecibeInformacion extends Component
     public function validarMiembro()
     {
         $this->validate([
-            'nombre' => 'required|max:1250',
-            'puesto' => 'required|max:1250',
-            'correo_electronico' => 'required|max:1250',
-            'interno_externo' => 'required|int',
+            'nombre' => 'required|max:50',
+            'puesto' => 'required|max:75',
+            'correo_electronico' => 'required|max:50', 
+            'extencion' => 'max:16',
+            'ubicacion' => 'max:150',
         ]);
     }
 
