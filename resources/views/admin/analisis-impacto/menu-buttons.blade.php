@@ -73,6 +73,10 @@
             height: calc(100% - 40px);
 
         }
+        .not-active { 
+            pointer-events: none; 
+            cursor: default; 
+        } 
 
         
     </style>
@@ -99,13 +103,13 @@
                             </li>
                         @endcan
                         @can('matriz_bia_matriz')
-                            <li disabled> <div disabled>
-                                <a href="{{ route('admin.analisis-impacto.menu-AIA') }}">
+                            <li>
+                                <a href="{{ route('admin.analisis-impacto.menu-AIA') }}" class="not-active" style="background-color: rgb(214, 208, 208)">
                                     <div>
                                         <i class="bi bi-bezier2" disabled></i><br>
                                         AIA
                                     </div>
-                                </a></div>
+                                </a>
                             </li>
                         @endcan
 
