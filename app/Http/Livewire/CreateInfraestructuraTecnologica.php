@@ -27,6 +27,10 @@ class CreateInfraestructuraTecnologica extends Component
     {
         $this->validate([
             'escenario' => 'required',
+            'sistemas' => 'max:100',
+            'aplicativos' => 'max:100',
+            'base_datos' => 'max:100',
+            'otro' => 'max:100',
         ]);
     }
 
