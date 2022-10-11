@@ -93,7 +93,7 @@
                                 class="fas fa-user-tag iconos-crear"></i>Extención:</label>
                         <input class="form-control {{ $errors->has('extencion') ? 'is-invalid' : '' }}" type="number"
                             value="{{ old('extencion', '') }}"
-                            wire:model.defer="extencion" placeholder="...">
+                            wire:model.defer="extencion" placeholder="..." maxlength="16">
                         @if ($errors->has('extencion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('extencion') }}

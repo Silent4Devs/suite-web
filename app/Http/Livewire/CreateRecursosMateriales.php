@@ -27,10 +27,10 @@ class CreateRecursosMateriales extends Component
     {
         $this->validate([
             'escenario' => 'required',
-            // 'equipos' => 'required|max:50',
-            // 'impresoras' => 'required|max:50',
-            // 'telefono' => 'required|max:15',
-            // 'otro' => 'required|max:15',
+            'equipos' => 'max:999|int',
+            'impresoras' => 'max:999|int',
+            'telefono' => 'max:999|int',
+            'otro' => 'max:999|int',
         ]);
     }
 
