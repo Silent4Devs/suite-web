@@ -74,7 +74,7 @@ class DocumentosController extends Controller
     {
         if ($request->tipo == "formato") {
             $request->validate([
-                'codigo' => 'required|string|unique:documentos,deleted_at,NULL',
+                'codigo' => 'required|string|unique:documentos,codigo,NULL,id,deleted_at,NULL',
                 'nombre' => 'required|string',
                 'tipo' => 'required|string',
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
@@ -92,7 +92,7 @@ class DocumentosController extends Controller
             ]);
         } else
             $request->validate([
-                'codigo' => 'required|string|unique:documentos,deleted_at,NULL',
+                'codigo' => 'required|string|unique:documentos,codigo,NULL,id,deleted_at,NULL',
                 'nombre' => 'required|string',
                 'tipo' => 'required|string',
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
@@ -241,7 +241,7 @@ class DocumentosController extends Controller
         $codigoDoc = $documento->codigo != null ? 'nullable' : 'required';
         if ($request->tipo == "formato") {
             $request->validate([
-                'codigo' => $codigoDoc . '|string|unique:documentos,deleted_at,NULL',
+                'codigo' => $codigoDoc . '|string|unique:documentos,codigo,' . $documento->id . ',id,deleted_at,NULL',
                 'nombre' => 'required|string',
                 'tipo' => 'required|string',
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
@@ -259,7 +259,7 @@ class DocumentosController extends Controller
             ]);
         } else
             $request->validate([
-                'codigo' => $codigoDoc . '|string|unique:documentos,deleted_at,NULL',
+                'codigo' => $codigoDoc . '|string|unique:documentos,codigo,' . $documento->id . ',id,deleted_at,NULL',
                 'nombre' => 'required|string',
                 'tipo' => 'required|string',
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
