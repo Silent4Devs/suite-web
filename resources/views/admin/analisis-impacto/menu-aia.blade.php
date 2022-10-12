@@ -113,7 +113,7 @@
                                 </a>
                             </li>
                         @endcan
-                        {{-- @can('matriz_bia_matriz')
+                        @can('matriz_bia_matriz')
                             <li>
                                 <a href="{{ route('admin.analisis-aia.matriz') }}">
                                     <div>
@@ -122,7 +122,7 @@
                                     </div>
                                 </a>
                             </li>
-                        @endcan --}}
+                        @endcan
                     </ul>
                 </div>
             </div>

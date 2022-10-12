@@ -113,14 +113,14 @@
                             <li>
                                 <a data-toggle="modal" data-target="#procesos">
                                     <div>
-                                        <i class="bi bi-bar-chart-steps"></i><br>
+                                        <i class="fas fa-server"></i><br>
                                         1.0
-                                        <br>Procesos
+                                        <br>Aplicaciones
                                     </div>
                                 </a>
                             </li>
 
-                            <li>
+                            {{-- <li>
                                 <a data-toggle="modal" data-target="#matriz_bia">
                                     <div>
                                         <i class="bi bi-bounding-box"></i><br>
@@ -138,24 +138,25 @@
                                         <br>Entradas y Salidas
                                     </div>
                                 </a>
-                            </li>
+                            </li> --}}
 
                             <li>
                                 <a data-toggle="modal" data-target="#tecnologica">
                                     <div>
                                         <i class="bi bi-cpu"></i><br>
                                         4.0
-                                        <br>Inf. Tecnológica
+                                        <br>Respaldo
                                     </div>
                                 </a>
                             </li>
+                           
 
                             <li>
                                 <a data-toggle="modal" data-target="#requerimientos_minimos">
                                     <div>
                                         <i class="bi bi-clipboard-check"></i><br>
                                         5.0
-                                        <br>Req. Minimos
+                                        <br>Datos Técnicos
                                     </div>
                                 </a>
                             </li>
@@ -163,9 +164,9 @@
                             <li>
                                 <a data-toggle="modal" data-target="#respaldo">
                                     <div>
-                                        <i class="bi bi-hdd-network"></i><br>
+                                        <i class="fas fa-sync mt-3"></i><br>
                                         6.0
-                                        <br>Respaldo-Registros vitales
+                                        <br>Flujo de soporte a la aplicación
                                     </div>
                                 </a>
                             </li>
@@ -175,46 +176,6 @@
                     </div>
                 </div>
 
-                {{-- <div class="row">
-                    <!-- Button trigger modal -->
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#procesos">
-                            1.0
-                            <br>Procesos
-                        </button>
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#matriz_bia">
-                            2.0
-                            <br>Matriz BIA
-                        </button>
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#entradas_salidas">
-                            3.0
-                            <br>Entradas y Salidas
-                        </button>
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tecnologica">
-                            4.0
-                            <br>Inf. Tecnológica
-                        </button>
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#requerimientos_minimos">
-                            5.0
-                            <br>Requerimientos minimos
-                        </button>
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#respaldo">
-                            6.0
-                            <br>Respaldo-registros vitales
-                        </button>
-                    </div>
-                </div> --}}
 
                 <!-- Modal>1.0 Procesos-->
                 <div class="modal fade" id="procesos" tabindex="-1" aria-labelledby="procesos" aria-hidden="true">
@@ -230,28 +191,54 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr style="background-color: #9C1A3B; font-size: 12px;">
-                                            <th colspan="7">Procesos</th>
+                                            <th colspan="8">Procesos</th>
                                         </tr>
                                         <tr style="background-color: #8f8f8f; font-size: 12px;">
                                             <th scope="col">ID</th>
-                                            <th scope="col">Dirección</th>
-                                            <th scope="col">Área</th>
-                                            <th scope="col">Macroproceso</th>
-                                            <th scope="col">Proceso</th>
-                                            <th scope="col">Subproceso</th>
-                                            <th scope="col">CANTIDAD</th>
+                                            <th scope="col">ID Aplicación</th>
+                                            <th scope="col">Nombre de la Aplicación</th>
+                                            <th scope="col">Objetivo de la Aplicación</th>
+                                            <th scope="col">Área a la que pertenece la Aplicación</th>
+                                            <th scope="col">Área responsable del uso de la Aplicación:</th>
+                                            <th scope="col">Titular de la Aplicación:</th>
+                                            <th scope="col">Empresa o tercero que da soporte a la Aplicación</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($cuestionario as $data)
                                             <tr style="font-size: 11px;">
-                                                <th scope="row">{{ $data->id_proceso }}</th>
-                                                <td>{{ $data->direccion }}</td>
-                                                <td>{{ $data->area }}</td>
-                                                <td>{{ $data->macroproceso ?: 'N/A' }}</td>
-                                                <td>{{ $data->nombre_proceso }}</td>
-                                                <td>{{ $data->subproceso ?: 'N/A' }}</td>
-                                                <td>{{ $data->id ?: 'N/A' }}</td>
+                                                <th scope="row">
+                                                    <div style="text-align: left;">{{ $data->id_proceso }}</div>
+                                                </th>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->id_aplicacion ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->nombre_aplicacion ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->objetivo_aplicacion ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->area_pertenece_aplicacion ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->area_responsable_aplicacion ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->titular_nombre ?: '' }}
+                                                        {{ $data->titular_a_paterno ?: '' }}
+                                                        {{ $data->titular_a_paterno ?: '' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->app_datos_terceros ?: 'No definido' }}</div>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -266,7 +253,7 @@
                 </div>
 
                 <!-- Modal>2.0 2.0 Matriz BIA-->
-                <div class="modal fade" id="matriz_bia" tabindex="-1" aria-labelledby="matriz_bia" aria-hidden="true">
+                {{-- <div class="modal fade" id="matriz_bia" tabindex="-1" aria-labelledby="matriz_bia" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -694,10 +681,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Modal 3.0 Entradas y salidas-->
-                <div class="modal fade" id="entradas_salidas" tabindex="-1" aria-labelledby="entradas_salidas"
+                {{-- <div class="modal fade" id="entradas_salidas" tabindex="-1" aria-labelledby="entradas_salidas"
                     aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
@@ -889,7 +876,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Modal>4.0 Inf. Tecnológica-->
                 <div class="modal fade" id="tecnologica" tabindex="-1" aria-labelledby="tecnologica"
@@ -897,7 +884,7 @@
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">4.0 Información Tecnológica</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">4.0 Respaldo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -906,54 +893,39 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr style="background-color: #9C1A3B; font-size: 12px;">
-                                            <th colspan="9">Infraestructura Tecnológica</th>
+                                            <th colspan="5">Respaldo de Bases de Datos y Código Fuente</th>
                                         </tr>
                                         <tr style="background-color: #8f8f8f; font-size: 12px;">
                                             <th scope="col">#</th>
-                                            <th scope="col">Dirección</th>
-                                            <th scope="col">Área</th>
-                                            <th scope="col">Proceso</th>
-                                            <th scope="col">Subproceso</th>
-                                            <th scope="col">Aplicaciones</th>
-                                            <th scope="col">Herramientas</th>
-                                            <th scope="col">Base de Datos</th>
-                                            <th scope="col">Otros</th>
+                                            <th scope="col">Aplicación</th>
+                                            <th scope="col">¿Se tiene respaldo de base de datos, código fuente, scripts, etc.?</th>
+                                            <th scope="col">¿Cuál es la periodicidad del respaldo?</th>
+                                            <th scope="col">¿Qué tipo de respaldo se aplica? (Incremental, Full, etc.)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($tecnologica as $data)
+                                        @foreach ($cuestionario as $data)
                                             <tr style="font-size: 11px;">
                                                 <th scope="row">
-                                                    <div style="text-align: left;">P00{{ $data->cuestionario->id }}</div>
+                                                    <div style="text-align: left;">{{ $data->id }}</div>
                                                 </th>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->direccion }}
+                                                    <div style="text-align: left;">{{ $data->nombre_aplicacion ?: 'No definido' }}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->area }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->nombre_proceso }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->subproceso ?: 'N/A' }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">{{ $data->aplicativos ?: 'N/A' }}
+                                                    <div style="text-align: left;">{{ $data->respaldo_q_14 ?: 'No definido' }}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->sistemas ?: 'N/A' }}</div>
+                                                    <div style="text-align: left;">{{ $data->respaldo_q_15 ?: 'No definido' }}
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->base_datos ?: 'N/A' }}</div>
+                                                    <div style="text-align: left;">{{ $data->respaldo_q_16 ?: 'No definido' }}
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <div style="text-align: left;">{{ $data->otro ?: 'N/A' }}</div>
-                                                </td>
+                                                
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -967,13 +939,13 @@
                     </div>
                 </div>
 
-                <!-- Modal>5.0 Requerimientos minimos-->
-                <div class="modal fade" id="requerimientos_minimos" tabindex="-1"
-                    aria-labelledby="requerimientos_minimos" aria-hidden="true">
+                <!-- Modal>5.0 5.0 Datos Técnicos-->
+                <div class="modal fade" id="requerimientos_minimos" tabindex="-1" aria-labelledby="requerimientos_minimos"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">5.0 Requerimientos minimos</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">5.0 Datos Técnicos</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -981,132 +953,150 @@
                             <div class="modal-body">
                                 <table class="table table-bordered table-responsive">
                                     <thead>
-                                        <tr style="background-color: #9C1A3B; font-size: 12px;text-align:center;">
-                                            <th colspan="5">Información General</th>
-                                            <th colspan="15">REQUERIMIENTOS MINIMOS PARA LA OPERACIÓN Y RECUPERACIÓN</th>
+                                       <tr style="background-color: #9C1A3B; font-size: 12px;text-align:center;">
+                                            <th colspan="4">Información General</th>
+                                            <th colspan="13">Datos Técnicos</th>
                                         </tr>
-                                        <tr style="background-color: #8f8f8f; font-size: 12px; text-align:center;">
-                                            <th colspan="5" style="background-color: #9C1A3B;"></th>
-                                            <th colspan="7">Recursos Humanos</th>
-                                            <th colspan="2">EQUIPOS DE COMPUTO</th>
-                                            <th colspan="2">LINEAS TELEFONICAS</th>
-                                            <th colspan="2">IMPRESORA/MULTIFUNCIONAL</th>
-                                            <th colspan="2">OTROS</th>
-                                        </tr>
+                                        
                                         <tr style="background-color: #8f8f8f; font-size: 12px;">
                                             <th scope="col">#</th>
-                                            <th scope="col" style="min-width: 200px;">Dirección</th>
-                                            <th scope="col" style="min-width: 200px;">Área</th>
-                                            <th scope="col" style="min-width: 200px;">Proceso</th>
-                                            <th scope="col">Subproceso</th>
-                                            <th scope="col">#personas en Op. Normal</th>
-                                            <th scope="col" style="min-width: 100px;">Empresa/Área</th>
-                                            <th scope="col" style="min-width: 150px;">Nombre</th>
-                                            <th scope="col">Puesto</th>
-                                            <th scope="col">Rol</th>
-                                            <th scope="col">Ext.</th>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Op. Normal</th>
-                                            <th scope="col">En contingencia</th>
-                                            <th scope="col">Op. Normal</th>
-                                            <th scope="col">En contingencia</th>
-                                            <th scope="col">Op. Normal</th>
-                                            <th scope="col">En contingencia</th>
-                                            <th scope="col">Op. Normal</th>
-                                            <th scope="col">En contingencia</th>
+                                            <th scope="col" style="min-width: 200px;">Responsable</th>
+                                            <th scope="col" style="min-width: 200px;">Aplicación</th>
+                                            <th scope="col" style="min-width: 25px;">Versión</th>
+                                            <th scope="col" style="min-width: 25px;">Administración o Soporte por terceros: (SI / NO)</th>
+                                            <th scope="col" style="min-width: 200px;">Datos del tercero que administra o Soporta: (Nombre, Empresa,
+                                                Contacto)</th>
+                                            <th scope="col" style="min-width: 25px;">Interacción con otras aplicaciones:
+                                                (SI / NO)</th>
+                                            <th scope="col" style="min-width: 300px;">Datos de la aplicación con la que
+                                                interactúa y tipo de conectividad: </th>
+                                            <th scope="col" style="min-width: 50px;">SO</th>
+                                            <th scope="col" style="min-width: 75px;">Lenguaje de Desarrollo</th>
+                                            <th scope="col" style="min-width: 200px;">Softwares adicionales, especificar versiones y puertos en
+                                                caso de usarse. (java, glashfish, tomcat, etc)</th>
+                                            <th scope="col" style="min-width: 25px;">Utiliza certificados</th>
+                                            <th scope="col" style="min-width: 75px;">Datos de Certificados</th>
+                                            <th scope="col" style="min-width: 75px;">Nombre de instancias o bases de Datos</th>
+                                            <th scope="col" style="min-width: 200px;">Puertos que utiliza</th>
+                                            <th scope="col" style="min-width: 100px;">Tipo de Acceso al Sistema</th>
+                                            <th scope="col" style="min-width: 200px;">URL de Acceso</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($personas_contingencia as $data)
+                                        @foreach ($cuestionario as $data)
                                             <tr style="font-size: 12px;">
-                                                <td scope="row">
-                                                    <div style="text-align: left;">P00{{ $data->cuestionario->id }}</div>
+                                                <th scope="row">
+                                                    <div style="text-align: left;">{{ $data->id }}</div>
+                                                </th>
+                                                <td>
+                                                    <div style="text-align: left;">{{ $data->titular_nombre ?: '' }}
+                                                        {{ $data->titular_a_paterno ?: '' }}
+                                                        {{ $data->titular_a_paterno ?: '' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->direccion }}
+                                                    <div style="text-align: left;">
+                                                        {{ $data->nombre_aplicacion ?: 'No definido' }}</div>
+                                                </td>
+
+
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->version ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    @if ($data->app_soporte_terceros == 1)
+                                                        <div style="text-align: left;">
+                                                            Sí</div>
+                                                    @elseif ($data->app_soporte_terceros == 2)
+                                                        <div style="text-align: left;">
+                                                            No</div>
+                                                    @else
+                                                        <div style="text-align: left;">
+                                                            No definido</div>
+                                                    @endif
+
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->app_datos_terceros ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    @if ($data->app_interaccion_otras_apps == 1)
+                                                        <div style="text-align: left;">
+                                                            Sí</div>
+                                                    @elseif ($data->app_interaccion_otras_apps == 2)
+                                                        <div style="text-align: left;">
+                                                            No</div>
+                                                    @else
+                                                        <div style="text-align: left;">
+                                                            No definido</div>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->app_datos_interactuan ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->app_SO ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->app_lenguajes ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->sofware_adicional ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    @if ($data->app_certificado == 1)
+                                                        <div style="text-align: left;">
+                                                            Sí</div>
+                                                    @elseif ($data->app_certificado == 2)
+                                                        <div style="text-align: left;">
+                                                            No</div>
+                                                    @else
+                                                        <div style="text-align: left;">
+                                                            No definido</div>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->app_tipo_cifrado ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->bd_base ?: 'No definido' }}</div>
+                                                </td>
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        <strong>Aplicación</strong>
+                                                        {{ $data->app_puerto ?: 'No definido' }} |
+                                                        <strong>BD</strong> {{ $data->bd_puerto ?: 'No definido' }} |
+                                                        <strong>Otro</strong> {{ $data->otro_puerto ?: 'No definido' }}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->cuestionario->area }}</div>
+                                                    @if ($data->app_acceso == 1)
+                                                        <div style="text-align: left;">
+                                                            WEB</div>
+                                                    @elseif ($data->app_acceso == 2)
+                                                        <div style="text-align: left;">
+                                                            Cliente-Servidor</div>
+                                                    @elseif ($data->app_acceso == 3)
+                                                        <div style="text-align: left;">
+                                                            No aplica</div>
+                                                    @else
+                                                        <div style="text-align: left;">
+                                                            No definido</div>
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
-                                                        {{ $data->cuestionario->nombre_proceso }}</div>
+                                                        {{ $data->app_datos_url ?: 'No definido' }}</div>
                                                 </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->subproceso ?: 'N/A' }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_total_personas_normal }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->empresa }} </div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->nombre }} {{ $data->a_paterno }}
-                                                        {{ $data->a_materno }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->puesto }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->rol }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->tel }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_total_personas_contingencia }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_equipo_computo_normal ?: 'N/A' }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_equipo_computo_contingencia ?: 'N/A' }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_telefonia_normal ?: 'N/A' }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_telefonia_contingencia ?: 'N/A' }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_impresora_normal ?: 'N/A' }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_impresora_contingencia ?: 'N/A' }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_otros_normal ?: 'N/A' }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->cuestionario->cantidad_otros_contingencia ?: 'N/A' }}
-                                                    </div>
-                                                </td>
+
+
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -1120,12 +1110,13 @@
                     </div>
                 </div>
 
-                <!-- Modal>6.0 Respaldo-registros vitales-->
+                <!-- Modal>6.0FLUJO DEL PROCESO DE SOPORTE A LA APLICACIÓN-->
                 <div class="modal fade" id="respaldo" tabindex="-1" aria-labelledby="respaldo" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">6.0 Respaldo-registros vitales</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">6.0 FLUJO DEL PROCESO DE SOPORTE A LA
+                                    APLICACIÓN</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -1134,62 +1125,116 @@
                                 <table class="table table-bordered table-responsive">
                                     <thead>
                                         <tr style="background-color: #9C1A3B; font-size: 12px;">
-                                            <th colspan="5">Información General</th>
-                                            <th colspan="4">Respaldos de Información</th>
+                                            <th colspan="4">Información General</th>
+                                            <th colspan="5" style="text-align: center;">FLUJO DEL PROCESO DE SOPORTE A
+                                                LA
+                                                APLICACIÓN</th>
                                         </tr>
                                         <tr style="background-color: #8f8f8f; font-size: 12px;">
-                                            <th scope="col">#</th>
-                                            <th scope="col" style="min-width: 200px;">Dirección</th>
-                                            <th scope="col" style="min-width: 200px;">Área</th>
-                                            <th scope="col" style="min-width: 200px;">Proceso</th>
-                                            <th scope="col">Subproceso</th>
-                                            <th scope="col" style="min-width: 200px;">¿Se ejecutan respaldos fuera del
-                                                equipo de computo de los archivos necesarios para ejecutar el proceso?.</th>
-                                            <th scope="col" style="min-width: 200px;">Archivos o Registros
-                                                respaldados/Archivos o Registros que se deberían respaldar.</th>
-                                            <th scope="col" style="min-width: 200px;">¿Alguien mas tiene accesos al
-                                                respaldo?.</th>
-                                            <th scope="col" style="min-width: 200px;">¿De que manera se tienen
-                                                resguardados los usuarios y contraseñas que utiliza para el acceso a
-                                                sistemas necesarios en este proceso?.</th>
+                                            <th scope="col">ID</th>
+                                            <th scope="col" style="min-width: 200px;">Sistema </th>
+                                            <th scope="col" style="min-width: 200px;">Responsable </th>
+                                            <th scope="col" style="min-width: 200px;">Área Responsable del uso del
+                                                Sistema</th>
+                                            <th scope="col" style="min-width: 200px;">1. ¿Qué información se requiere
+                                                para iniciar el proceso de soporte o mantenimiento? (Documentos, Correo
+                                                electrónico, Oficios, Ticket, etc.)</th>
+                                            <th scope="col" style="min-width: 200px;">2. ¿De dónde proviene la
+                                                información?
+                                                (Nombre de la Empresa / Nombre del Área / Nombre del Proceso / Nombre del
+                                                Sistema)</th>
+                                            <th scope="col" style="min-width: 800px;">3. ¿Quién le proporciona esta
+                                                información?</th>
+                                            <th scope="col" style="min-width: 800px;">4. ¿Quién es responsable de
+                                                liberar/aplicar los mantenimientos al aplicativo?</th>
+                                            <th scope="col" style="min-width: 300px;">5. ¿Cómo valida que el proceso se
+                                                realizó correctamente? (Carta o firma de aceptación, Acuse de Recibido,
+                                                Notificación, etc..)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($cuestionario as $data)
                                             <tr style="font-size: 11px;">
                                                 <th scope="row">
-                                                    <div style="text-align: left;">P00{{ $data->id }}</div>
+                                                    <div style="text-align: left;">{{ $data->id }}</div>
                                                 </th>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->direccion }}
-                                                    </div>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->nombre_aplicacion ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
-                                                    <div style="text-align: left;">{{ $data->area }}</div>
+                                                    <div style="text-align: left;">{{ $data->titular_nombre ?: '' }}
+                                                        {{ $data->titular_a_paterno ?: '' }}
+                                                        {{ $data->titular_a_paterno ?: '' }}</div>
+                                                </td>
+
+                                                <td>
+                                                    <div style="text-align: left;">
+                                                        {{ $data->area_responsable_aplicacion ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
-                                                        {{ $data->nombre_proceso }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">{{ $data->subproceso ?: 'N/A' }}</div>
+                                                        {{ $data->flujo_q_1 ?: 'No definido' }}</div>
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
-                                                        {{ $data->respaldo_q_21 ?: 'No definido' }}</div>
+                                                        {{ $data->flujo_q_2 ?: 'No definido' }}</div>
+                                                </td>
+
+                                                <td>
+                                                    @if (count($data->proporcionaMantenimientos) >= 1)
+                                                        @foreach ($data->proporcionaInformacion as $proporciona)
+                                                            <div style="text-align: left;"><strong>Nombre:
+                                                                </strong>{{ $proporciona->nombre ?: 'No definido' }} |
+                                                                <strong>Puesto:
+                                                                </strong>{{ $proporciona->puesto ?: 'No definido' }} |
+                                                                <strong>Correo electrónico:
+                                                                </strong>{{ $proporciona->correo_electronico ?: 'No definido' }}
+                                                                | <strong>Puesto:
+                                                                </strong>{{ $proporciona->puesto ?: 'No definido' }} |
+                                                                <strong>Ext.:
+                                                                </strong>{{ $proporciona->extencion ?: 'No definido' }} |
+                                                                <strong>Ubicación.:
+                                                                </strong>{{ $proporciona->ubicacion ?: 'No definido' }}
+                                                            </div>
+                                                            <br>
+                                                            <hr>
+                                                        @endforeach
+                                                    @else
+                                                        <div style="text-align: center;">
+                                                            No definido</div>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if (count($data->proporcionaMantenimientos) >= 1)
+                                                        @foreach ($data->proporcionaMantenimientos as $proporciona)
+                                                            <div style="text-align: left;"><strong>Nombre:
+                                                                </strong>{{ $proporciona->nombre ?: 'No definido' }} |
+                                                                <strong>Puesto:
+                                                                </strong>{{ $proporciona->puesto ?: 'No definido' }} |
+                                                                <strong>Correo electrónico:
+                                                                </strong>{{ $proporciona->correo_electronico ?: 'No definido' }}
+                                                                | <strong>Puesto:
+                                                                </strong>{{ $proporciona->puesto ?: 'No definido' }} |
+                                                                <strong>Ext.:
+                                                                </strong>{{ $proporciona->extencion ?: 'No definido' }} |
+                                                                <strong>Ubicación.:
+                                                                </strong>{{ $proporciona->ubicacion ?: 'No definido' }}
+                                                            </div>
+                                                            <br>
+                                                            <hr>
+                                                        @endforeach
+                                                    @else
+                                                        <div style="text-align: center;">
+                                                            No definido</div>
+                                                    @endif
+
                                                 </td>
                                                 <td>
                                                     <div style="text-align: left;">
-                                                        {{ $data->respaldo_q_20 ?: 'No definido' }}</div>
+                                                        {{ $data->flujo_q_5 ?: 'No definido' }}</div>
                                                 </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->respaldo_q_22 ?: 'No definido' }}</div>
-                                                </td>
-                                                <td>
-                                                    <div style="text-align: left;">
-                                                        {{ $data->respaldo_q_23 ?: 'No definido' }}</div>
-                                                </td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>

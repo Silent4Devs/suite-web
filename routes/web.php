@@ -1146,6 +1146,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         ])->except(['edit']);
         
         Route::get('analisis-aia/{id}/edit', 'AnalisisAIAController@edit')->name('analisis-aia.edit');
+        Route::get('analisis-aia/matriz', 'AnalisisAIAController@matriz')->name('analisis-aia.matriz');
         Route::delete('analisis-aia/destroy', 'AnalisisdeAIAController@massDestroy')->name('analisis-aia.massDestroy');
         Route::resource('analisis-aia', 'AnalisisAIAController')->names([
             'index' => 'analisis-aia.index',

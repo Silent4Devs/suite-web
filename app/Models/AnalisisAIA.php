@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use AlterCuestionarioRecibeInformacionTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -304,4 +305,14 @@ class AnalisisAIA extends Model
         'exite_firma_Entrevistador',
 
     ];
+
+    public function proporcionaInformacion()
+    {
+        return $this->hasMany(CuestionarioProporcionaInformacionAIA::class, 'cuestionario_id');
+    }
+
+    public function proporcionaMantenimientos()
+    {
+        return $this->hasMany(LiberaMantenimientoAIA::class, 'cuestionario_id');
+    }
 }
