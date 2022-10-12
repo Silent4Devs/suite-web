@@ -31,9 +31,9 @@
              <label for="efecto" class="required"><i class="bi bi-file-diff-fill iconos-crear"></i>Acción</label><i class="fas fa-info-circle"
                  style="font-size:12pt; float: right;" title="Determine la naturaleza de la excepción"></i>
              <select id="efecto" name="efecto" class="form-control">
-                 <option value="1" {{ old('efecto') == $vacacion->efecto ? ' selected="selected"' : '' }}>
+                 <option value="1" {{ old('efecto',$vacacion->efecto) == 1 ? ' selected="selected"' : '' }}>
                      Sumar</option>
-                 <option value="2" {{ old('efecto') == $vacacion->efecto ? ' selected="selected"' : '' }}>
+                 <option value="2" {{ old('efecto',$vacacion->efecto) == 2 ? ' selected="selected"' : '' }}>
                      Restar</option>
                  <option disabled {{ old('efecto') == $vacacion->efecto ? ' selected="selected"' : '' }}>
                      Seleccione...</option>
