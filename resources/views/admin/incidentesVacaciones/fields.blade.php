@@ -40,10 +40,10 @@
                          title="Determine la naturaleza de la excepción"></i>
                  <select id="efecto" name="efecto" class="form-control">
                      <option value="1"
-                         {{ old('efecto') == $vacacion->efecto ? ' selected="selected"' : '' }}>
+                         {{ old('efecto',$vacacion->efecto) == 1 ? ' selected="selected"' : '' }}>
                          Sumar</option>
                      <option value="2"
-                         {{ old('efecto') == $vacacion->efecto ? ' selected="selected"' : '' }}>
+                         {{ old('efecto', $vacacion->efecto) == 2 ? ' selected="selected"' : '' }}>
                          Restar</option>
                      <option disabled
                          {{ old('efecto') == $vacacion->efecto ? ' selected="selected"' : '' }}>
