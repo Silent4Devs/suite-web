@@ -64,27 +64,6 @@ class IndicadoresSgsiComponent extends Component
         $responsables = Empleado::alta()->get();
         $procesos = Proceso::get();
         $evaluaciones = EvaluacionIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->get();
-        $formula = $this->indicadoresSgsis->formula;
-
-
-
-        // $fieldsCollect = collect();
-        // foreach ($this->customFields as $item) {
-        //     if ($item->variable != $formula) {
-        //         $fieldsCollect->push($item);
-        //     }
-        // }
-        // $fieldsSlugsCollect = [];
-        // foreach ($this->formSlugs as $items) {
-        //     foreach ($items as $key => $item) {
-        //         if ($key != $formula) {
-        //             $fieldsSlugsCollect[] = [$key => ""];
-        //         }
-        //     }
-        // }
-        // $this->formSlugs = $fieldsSlugsCollect;
-
-        // $this->customFields = $fieldsCollect;
 
         return view('livewire.indicadores-sgsi-component', [
             'responsables' => $responsables,
