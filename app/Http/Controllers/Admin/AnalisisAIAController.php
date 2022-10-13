@@ -42,8 +42,18 @@ class AnalisisAIAController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+           
+            $table->editColumn('area', function ($row) {
+                return $row->area ? $row->area : '';
+            });
             $table->editColumn('fecha_entrevista', function ($row) {
                 return $row->fecha_entrevista ? $row->fecha_entrevista : '';
+            });
+            $table->editColumn('id_aplicacion', function ($row) {
+                return $row->id_aplicacion ? $row->id_aplicacion : '';
+            });
+            $table->editColumn('nombre_aplicacion', function ($row) {
+                return $row->nombre_aplicacion ? $row->nombre_aplicacion : '';
             });
             $table->editColumn('entrevistado', function ($row) {
                 return $row->entrevistado ? $row->entrevistado : '';
@@ -51,25 +61,12 @@ class AnalisisAIAController extends Controller
             $table->editColumn('puesto', function ($row) {
                 return $row->puesto ? $row->puesto : '';
             });
-            $table->editColumn('area', function ($row) {
-                return $row->area ? $row->area : '';
-            });
-            $table->editColumn('direccion', function ($row) {
-                return $row->direccion ? $row->direccion : '';
+            $table->editColumn('correo', function ($row) {
+                return $row->correo ? $row->correo : '';
             });
             $table->editColumn('extencion', function ($row) {
                 return $row->extencion ? $row->extencion : '';
             });
-            $table->editColumn('correo', function ($row) {
-                return $row->correo ? $row->correo : '';
-            });
-            $table->editColumn('id_proceso', function ($row) {
-                return $row->id_proceso ? $row->id_proceso : '';
-            });
-            $table->editColumn('nombre_proceso', function ($row) {
-                return $row->nombre_proceso ? $row->nombre_proceso : '';
-            });
-
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
@@ -142,5 +139,18 @@ class AnalisisAIAController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function matriz()
+    {
+        abort_if(Gate::denies('matriz_bia_matriz'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $cuestionario = AnalisisAIA::with('proporcionaInformacion','proporcionaMantenimientos')->get();
+        // dd($cuestionario);
+        // $tecnologica = CuestionarioInfraestructuraTecnologica::with('cuestionario')->get();
+        // $personas_contingencia = CuestionarioRecursosHumanos::with('cuestionario')->where('escenario', '2')->get();
+        // $proporciona_informacion =  CuestionarioProporcionaInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
+        // $recibe_informacion =  CuestionarioRecibeInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
+
+        return view('admin.analisis-aia.matriz', compact('cuestionario'));
     }
 }

@@ -50,7 +50,7 @@ class IndicadoresSgsiComponent extends Component
     public function mount($indicadoresSgsis)
     {
         $this->indicadoresSgsis = $indicadoresSgsis;
-        $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->get();
+        $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
         $data = [];
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
             $data[$value->variable] = '';
@@ -88,8 +88,14 @@ class IndicadoresSgsiComponent extends Component
         }
 
         $formula_final = str_replace($variables, $valores, $formula_sustitucion);
-        //dd($this->formSlugs, $variables, $valores, str_replace(".", "",$formula_final));
-        $result = eval('return ' . $formula_final . ';');
+
+        try {
+            $result = eval('return ' . $formula_final . ';');
+        } catch (\Throwable $th) {
+            if ($th->getMessage() == 'Division by zero') {
+                $result = 0;
+            }
+        }
 
         $evaluaciones = EvaluacionIndicador::create([
             'evaluacion' => $this->evaluacion,
