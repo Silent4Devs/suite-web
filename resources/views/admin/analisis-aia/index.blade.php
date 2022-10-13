@@ -69,7 +69,10 @@
                             ID
                         </th>
                         <th style="min-width: 200px;">
-                            Dirección:
+                            ID de la Aplicación
+                        </th>
+                        <th style="min-width: 200px;">
+                            Nombre de la Aplicación:
                         </th>
                         <th style="min-width: 200px;">
                             Área:
@@ -77,12 +80,7 @@
                         <th style="min-width: 150px;">
                             Fecha de la entrevista:
                         </th>
-                        <th style="min-width: 200px;">
-                            ID del Proceso:
-                        </th>
-                        <th style="min-width: 200px;">
-                            Nombre del Proceso:
-                        </th>
+                       
                         <th style="min-width: 250px;">
                             Entrevistado:
                         </th>
@@ -290,13 +288,20 @@
                         }
                     },
                     {
-                        data: 'direccion',
-                        name: 'direccion',
+                        data: 'id_aplicacion',
+                        name: 'id_aplicacion',
                         render: function(data, type, row) {
                             return `<div style="text-align:left">${data}</div>`;
                         }
-
                     },
+                    {
+                        data: 'nombre_aplicacion',
+                        name: 'nombre_aplicacion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
+                    },
+                   
                     {
                         data: 'area',
                         name: 'area',
@@ -311,20 +316,7 @@
                             return `<div style="text-align:left">${data}</div>`;
                         }
                     },
-                    {
-                        data: 'id_aplicacion',
-                        name: 'id_aplicacion',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
-                    {
-                        data: 'nombre_aplicacion',
-                        name: 'nombre_aplicacion',
-                        render: function(data, type, row) {
-                            return `<div style="text-align:left">${data}</div>`;
-                        }
-                    },
+                    
                     {
                         data: 'entrevistado',
                         name: 'entrevistado',
@@ -368,7 +360,7 @@
                 let titulo_tabla = `
                     <h5>
                         <strong>
-                           Cuestionario Análisis de Impacto
+                           Cuestionario Análisis de Impacto AIA
                         </strong>
                     </h5>
                 `;

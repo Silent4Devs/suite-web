@@ -3,7 +3,7 @@
     <label for="exampleInputEmail1">4. ¿Quién es responsable de liberar/aplicar los mantenimientos al aplicativo?</label>
 
     <div class="row">
-        @livewire('create-propociona-informacion', ['cuestionario_id' => $cuestionario_id])
+        @livewire('create-mantenimiento-aia', ['cuestionario_id' => $cuestionario_id])
     </div>
 
     <table class="table">
@@ -47,12 +47,12 @@
                     </td>
                     <td style="min-width:40px;">
                         <i class="fas fa-edit"
-                            wire:click.prevent="$emit('editarFuenteInformacion',{{ $data->id }})">
+                            wire:click.prevent="$emit('editarMantenimiento',{{ $data->id }})">
                         </i>
                         {{-- <i class="fas fa-project-diagram"
                             wire:click.prevent="$emit('agregarNormas',{{ $data->id }})"> </i> --}}
                         <i class="fas fa-trash-alt text-danger"
-                            wire:click.prevent="$emit('eliminarFuenteInformacion',{{ $data->id }})"> </i>
+                            wire:click.prevent="$emit('eliminarMantenimiento',{{ $data->id }})"> </i>
                     </td>
                     {{-- <td> @livewire('edit-partes-interesadas',['id_requisito'=>$data->id])</td> --}}
                 </tr>
@@ -65,8 +65,8 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        Livewire.on('cerrar-modal', (event) => {
-            $('#exampleModal').modal('hide');
+        Livewire.on('cerrar-modal-mantenimiento', (event) => {
+            $('#mantenimientoModal').modal('hide');
             $('.modal-backdrop').hide();
             if (event.editar) {
                 toastr.success('Editado con éxito');
@@ -75,8 +75,8 @@
             }
 
         })
-        Livewire.on('abrir-modal', () => {
-            $('#exampleModal').modal('show');
+        Livewire.on('abrir-modal-mantenimiento', () => {
+            $('#mantenimientoModal').modal('show');
             $('.select2').select2({
                 theme: 'bootstrap4'
             });

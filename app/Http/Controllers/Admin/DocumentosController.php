@@ -417,6 +417,9 @@ class DocumentosController extends Controller
             $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento) . '/' . $nombre_documento;
 
             if (Storage::exists($ruta_documento)) {
+                if (Storage::exists($ruta_obsoleto)) {
+                    Storage::delete($ruta_obsoleto);
+                }
                 Storage::move($ruta_documento, $ruta_obsoleto);
             }
             $eliminar = $documento->delete();

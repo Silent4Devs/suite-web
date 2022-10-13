@@ -1064,7 +1064,7 @@
             </div>
             <div class="row">
                 {{-- livewire RECURSOS HUMANOS (inciso b Anexo67) --}}
-                @livewire('recursos-humanos', ['cuestionario_id' => $cuestionario->id])
+                @livewire('recursos-humanos-aia', ['cuestionario_id' => $cuestionario->id])
                 {{-- Termina livewire --}}
             </div>
 
@@ -1078,7 +1078,7 @@
             </div>
             <div class="row">
                 {{-- RECURSOS MATERIALES (inciso b Anexo67) --}}
-                @livewire('recursos-materiales', ['cuestionario_id' => $cuestionario->id])
+                @livewire('recursos-materiales-aia', ['cuestionario_id' => $cuestionario->id])
                 {{-- Termina livewire --}}
             </div>
 
@@ -2176,7 +2176,7 @@
                         <img src="{{ asset('storage/' . $cuestionario->firma_Entrevistado) }}">
                     </div>
                 @else
-                    @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Entrevistado'], key(1))
+                    @livewire('firma-aia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Entrevistado'], key(1))
                 @endif
 
                 @if ($cuestionario->firma_Jefe)
@@ -2185,7 +2185,7 @@
                         <img src="{{ asset('storage/' . $cuestionario->firma_Jefe) }}">
                     </div>
                 @else
-                    @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Jefe'], key(2))
+                    @livewire('firma-aia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Jefe'], key(2))
                 @endif
 
 
@@ -2197,7 +2197,7 @@
                         <img src="{{ asset('storage/' . $cuestionario->firma_Entrevistador) }}">
                     </div>
                 @else
-                    @livewire('firma-bia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Entrevistador'], key(3))
+                    @livewire('firma-aia', ['cuestionario_id' => $cuestionario->id, 'firmante' => 'Entrevistador'], key(3))
                 @endif
 
             </div>

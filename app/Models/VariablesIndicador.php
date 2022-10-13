@@ -27,10 +27,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class VariablesIndicador extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'variables_indicadors';
 
     protected $casts = [
