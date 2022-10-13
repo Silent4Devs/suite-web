@@ -104,7 +104,7 @@
                             </td>
                             <td>
                                 <div class="form-control caja-suma-horas-filas-time d-mobile-none">
-                                    <font class="d-mobile-inital" style="font-weight:bold;">Horas Totales:</font>
+                                    <font class="d-mobile-initial" style="font-weight:bold;">Horas Totales:</font>
                                     <label id="suma_horas_fila_{{ $i }}" class="total_filas"></label>
                                 </div>
                             </td>
