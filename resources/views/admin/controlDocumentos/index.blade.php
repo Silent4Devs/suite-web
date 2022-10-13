@@ -92,11 +92,12 @@
                         @switch($controlDocumento->nombre)
                             @case('Contexto de la organización')
                                 @php
-                                    $rutaFolder = 'http://tabantaj.test/admin/carpeta?leftPath=Normas/ISO27001';
+                                    $ruta = env('APP_URL');
+                                    $rutaFolder = $ruta.'/admin/carpeta?leftPath=Normas/ISO27001';
                                 @endphp
                             @break
                             @php
-                                $rutaFolder = 'http://tabantaj.test/admin/carpeta';
+                                $rutaFolder = $ruta.'/admin/carpeta';
                             @endphp
                             @default
 
