@@ -52,6 +52,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
     <style type="text/css">
         .custom-file-input~.custom-file-label::after {
             content: "Elegir";
@@ -333,8 +334,7 @@
         }
 
         .buscador-global:focus-visible {
-            all: unset;
-            border-bottom: 2px solid #fff;
+            outline: none;
         }
 
 
@@ -1044,7 +1044,7 @@
     @include('partials.menu')
     <div class="c-wrapper" id="contenido_body_general_wrapper">
         <header class="px-3 c-header c-header-fixed" style="border: none;">
-            <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
+            <button class="c-header-toggler c-class-toggler d-lg-none" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
                 <i class="fas fa-fw fa-bars iconos_cabecera" style="color:#fff;"></i>
             </button>
@@ -1075,7 +1075,7 @@
             </script>
 
 
-            <form class="form-inline col-sm-3" style="position: relative;">
+            <form class="form-inline col-sm-3 d-mobile-none" style="position: relative;">
 
                 {{-- <select class="form-control mr-sm-4 searchable-field "></select> --}}
                 <input class="buscador-global" type="search" id="buscador_global" placeholder="Buscador..."
@@ -1143,10 +1143,13 @@
                             aria-haspopup="true" aria-expanded="false">
                             <div style="width:100%; display: flex; align-items: center;">
                                 @if (auth()->user()->empleado)
-                                    <img class="img_empleado mr-2" style=""
-                                        src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
-                                        alt="{{ auth()->user()->empleado->name }}">
-                                    <div>
+                                    <div style="width: 40px; overflow:hidden;" class="mr-2">
+
+                                        <img class="img_empleado" style=""
+                                            src="{{ asset('storage/empleados/imagenes/' . '/' . auth()->user()->empleado->avatar) }}"
+                                            alt="{{ auth()->user()->empleado->name }}">
+                                    </div>
+                                    <div class="d-mobile-none">
                                         <span class="mr-2" style="font-weight: bold;">
                                             {{ auth()->user()->empleado ? explode(' ', auth()->user()->empleado->name)[0] : '' }}
                                         </span>
@@ -1378,7 +1381,7 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
@@ -1809,8 +1812,8 @@
             if (modalBackDrop) {
                 modalBackDrop.style.width="100%";
                 modalBackDrop.style.height="100%"
-            }   
-        })      
+            }
+        })
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
@@ -1832,7 +1835,7 @@
             }
             console.log(idleTime);
             // Set idle time
-            $(document).idleTimer(idleTime); // in milliseconds                
+            $(document).idleTimer(idleTime); // in milliseconds
         });
 
         $(function() {
