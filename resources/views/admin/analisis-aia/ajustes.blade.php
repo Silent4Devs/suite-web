@@ -3,7 +3,7 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{!! route('admin.analisis-impacto.matriz') !!}">Matriz de Análisis de Impacto</a>
+            <a href="{!! route('admin.analisis-aia.matriz') !!}">Matriz AIA</a>
         </li>
         <li class="breadcrumb-item active">Ajustar</li>
     </ol>
@@ -29,7 +29,7 @@
     <div class="mt-4 card">
         <div class="card-body">
             {!! Form::model($cuestionario, [
-                'route' => ['admin.analisis-impacto.updateAjustesBIA', $cuestionario->id],
+                'route' => ['admin.analisis-aia.updateAjustesAIA', $cuestionario->id],
                 'method' => 'put',
             ]) !!}
 

@@ -25,7 +25,7 @@
                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
                             <label class="required" for="escenario"><i class="bi bi-signpost-split-fill iconos-crear"></i>Escenario:</label>
                            
-                            <select name="escenario" class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}"  wire:model.defer="escenario" >
+                            <select class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}"  wire:model.defer="escenario" >
                                 <option selected>Seleccione</option>
                                 <option value="1">En Operación Normal</option>
                                 <option value="2">En Contingencia</option>
