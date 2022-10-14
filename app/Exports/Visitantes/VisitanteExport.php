@@ -2,17 +2,15 @@
 
 namespace App\Exports\Visitantes;
 
-use App\Models\Visitantes\RegistrarVisitante;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
-use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
-use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -32,10 +30,11 @@ class VisitanteExport implements FromCollection, WithHeadings, WithMapping, With
     {
         return $this->visitantes;
     }
+
     public function map($visitante): array
     {
-        $dispositivos = "";
-        $visitaA = "";
+        $dispositivos = '';
+        $visitaA = '';
         foreach ($visitante->dispositivos as $dispositivo) {
             $dispositivos .= "Dispositivo: {$dispositivo->dispositivo} Serie: {$dispositivo->serie} | ";
         }
@@ -44,6 +43,7 @@ class VisitanteExport implements FromCollection, WithHeadings, WithMapping, With
         } else {
             $visitaA = $visitante->empleado->name;
         }
+
         return [
             $visitante->nombre,
             $visitante->apellidos,
@@ -56,6 +56,7 @@ class VisitanteExport implements FromCollection, WithHeadings, WithMapping, With
             $this->obtenerFechaSalidaPorFormato($visitante, 'h:i A'),
         ];
     }
+
     public function headings(): array
     {
         return [
@@ -106,11 +107,11 @@ class VisitanteExport implements FromCollection, WithHeadings, WithMapping, With
     //     return $drawing;
     // }
 
-
     private function obtenerFechaIngresoPorFormato($visitante, $formato)
     {
         return $visitante->created_at->format($formato);
     }
+
     private function obtenerFechaSalidaPorFormato($visitante, $formato)
     {
         return $visitante->fecha_salida ? Carbon::parse($visitante->fecha_salida)->format($formato) : 'N/A';
