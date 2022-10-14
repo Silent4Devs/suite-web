@@ -2,20 +2,20 @@
     <x-loading-indicator />
     <form id="form_timesheet" action="{{ route('admin.timesheet.store') }}" method="POST">
         @csrf
-        <div class="form-group d-flex align-items-center" wire:ignore style="position: relative">
-            <label class="mr-3" style="margin-top: 5px;"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin de jornada laboral</label>
+        <div class="form-group d-flex align-items-center card-mobile caja-calendar-semana" wire:ignore style="position: relative">
+            <label class="mr-2" style="margin-top: 5px;"><i class="fas fa-calendar-alt iconos-crear"></i>Semana laboral</label>
 
             <input type="date" id="fecha_dia" name="fecha_dia" class="form-control" style="max-width:160px;">
             <small class="fecha_dia errores text-danger" style="margin-left: 15px;"></small>
 
-            <div style="position: absolute; bottom:0; left:0; margin-bottom:-15px;">
+            <div class="semanas-tras-time-text" style="position: absolute; bottom:0; left:0; margin-bottom:-15px;">
                 <small style="color:#aaa;">Tiene permitido registrar <strong>{{auth()->user()->empleado->semanas_min_timesheet}} </strong> semanas atras </small>
             </div>
         </div>
 
         <div class="datatable-fix">
             <table id="datatable_timesheet_create" class="table table-responsive dataTables_scrollBody tabla-llenar-horas">
-                <thead class="w-100">
+                <thead class="w-100 d-mobile-none">
                     <tr>
                         <th style="min-width:150px;">Proyecto </th>
                         <th style="min-width:150px;">Tarea</th>
@@ -36,8 +36,10 @@
                 <tbody>
                     {{-- {{ $contador }} --}}
                     @for($i=1; $i<=$contador; $i++)
-                        <tr id="tr_time_{{ $i }}" wire:ignore>
+                        <tr id="tr_time_{{ $i }}" wire:ignore class="card-mobile tr-time-actividad-mobile" data-title="Actividad {{ $i }}">
                             <td wire:ignore>
+                                <div class="area-click-acordeon-time-mobile" style="position:absolute; top:0; width: 100%; height:50px; z-index: 1; margin-left: -14px;"></div>
+                                <font class="d-mobile" style="font-weight: bold;">Proyecto: </font>
                                 <select id="select_proyectos{{ $i }}" data-contador="{{ $i }}" data-type="parent" name="timesheet[{{ $i }}][proyecto]" class="select2">
                                     <option selected disabled>Seleccione proyecto</option>
                                     @foreach($proyectos as $proyecto)
@@ -47,55 +49,68 @@
                                 <small class="timesheet_{{ $i }}_proyecto errores text-danger"></small>
                             </td>
                             <td>
+                                <font class="d-mobile mt-1" style="font-weight: bold;">Tarea: </font>
                                 <select id="select_tareas{{ $i }}" data-contador="{{ $i }}" name="timesheet[{{ $i }}][tarea]" class="select2 select_tareas" disabled>
                                     <option selected disabled>Seleccione tarea</option>
                                 </select>
                                 <small class="timesheet_{{ $i }}_tarea errores text-danger"></small>
                             </td>
-                            <td>
+                            <td class="td-facturable-time">
+                                <font class="d-mobile mt-1" style="font-weight: bold;">Facturable: </font>
                                 <input type="checkbox" checked name="timesheet[{{ $i }}][facturable]" style="min-width: 50px;">
+
+                                <font class="d-mobile mt-1" style="position: absolute; left:4px; bottom:0; margin-bottom:-35px; font-weight: bold;">Horas por actividad: </font>
                             </td>
-                            <td>
+                            <td class="td-date-time">
+                                <small class="d-mobile">Lunes </small>
                                 <input  type="number" name="timesheet[{{ $i }}][lunes]" data-dia="lunes" data-i="{{ $i }}" id="ingresar_hora_lunes_{{ $i }}" class="ingresar_horas  form-control" min="0" max="24">
                                  <small class="timesheet_{{ $i }}_horas errores text-danger" style="position:absolute; margin-top:3px;"></small>
                             </td>
-                            <td>
+                            <td class="td-date-time">
+                                <small class="d-mobile">Martes </small>
                                 <input  type="number" name="timesheet[{{ $i }}][martes]" data-dia="martes" data-i="{{ $i }}" id="ingresar_hora_martes_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>
-                            <td>
+                            <td class="td-date-time">
+                                <small class="d-mobile">Miercoles </small>
                                 <input type="number" name="timesheet[{{ $i }}][miercoles]" data-dia="miercoles" data-i="{{ $i }}" id="ingresar_hora_miercoles_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>
-                            <td>
+                            <td class="td-date-time">
+                                <small class="d-mobile">Jueves </small>
                                 <input  type="number" name="timesheet[{{ $i }}][jueves]" data-dia="jueves" data-i="{{ $i }}" id="ingresar_hora_jueves_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>
-                            <td>
+                            <td class="td-date-time">
+                                <small class="d-mobile">Viernes </small>
                                 <input  type="number" name="timesheet[{{ $i }}][viernes]" data-dia="viernes" data-i="{{ $i }}" id="ingresar_hora_viernes_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>
-                            <td>
+                            <td class="td-date-time">
+                                <small class="d-mobile">Sabado </small>
                                 <input  type="number" name="timesheet[{{ $i }}][sabado]" data-dia="sabado" data-i="{{ $i }}" id="ingresar_hora_sabado_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>
-                            <td>
+                            <td class="td-date-time">
+                                <small class="d-mobile">Domingo </small>
                                 <input  type="number" name="timesheet[{{ $i }}][domingo]" data-dia="domingo" data-i="{{ $i }}" id="ingresar_hora_domingo_{{ $i }}"  class="ingresar_horas  form-control" min="0" max="24">
                             </td>
                             <td>
+                                <font class="d-mobile mt-1" style="font-weight: bold;">Descripción: </font>
                                 <textarea name="timesheet[{{ $i }}][descripcion]" class="form-control" style="min-height:40px !important;"></textarea>
                             </td>
                             <td class="td_opciones">
                                  @if($i == 1)
-                                    <div class="btn btn_clear_tr" data-tr="tr_time_{{ $i }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i></div>
+                                   {{--  <div class="btn btn_clear_tr" data-tr="tr_time_{{ $i }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i> <small class="text-eliminar-actividad-mobile" style="margin-left: 10px;">Eliminar actividad</small></div> --}}
                                 @endif
                                 @if($i > 1)
-                                    <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i></div>
+                                    <div class="btn btn_destroy_tr" data-tr="tr_time_{{ $i }}" style="color:red; font-size:20px;" title="Eliminar fila"><i class="fa-solid fa-trash-can"></i> <small class="text-eliminar-actividad-mobile" style="margin-left: 10px;">Eliminar actividad</small></div>
                                 @endif
                             </td>
                             <td>
-                                <div class="form-control">
+                                <div class="form-control caja-suma-horas-filas-time d-mobile-none">
+                                    <font class="d-mobile-initial" style="font-weight:bold;">Horas Totales:</font>
                                     <label id="suma_horas_fila_{{ $i }}" class="total_filas"></label>
                                 </div>
                             </td>
                         </tr>
                     @endfor
-                    <tr wire:ignore.self>
+                    <tr wire:ignore.self class="tr-sumas-facturables-horas">
                         <td colspan="3">Toral horas facturables</td>
                         <td><label id="suma_dia_lunes"></label></td>
                         <td><label id="suma_dia_martes"></label></td>
@@ -108,7 +123,7 @@
                         <td></td>
                         <td><label id="total_horas_filas"></label></td>
                     </tr>
-                    <tr wire:ignore.self>
+                    <tr wire:ignore.self class="tr-sumas-facturables-horas">
                         <td colspan="3">Toral horas no facturables</td>
                         <td><label id="suma_dia_lunes_no_fact"></label></td>
                         <td><label id="suma_dia_martes_no_fact"></label></td>
@@ -127,17 +142,20 @@
 
 
 
-        <div class="mt-4" style="display:flex; justify-content:space-between;">
-            <button class="btn btn-secundario" wire:click.prevent="$set('contador', {{ $contador + 1 }})">Agregar fila</button>
-            <div>
-                <button class="btn btn_cancelar btn_enviar_formulario" style="position:relative;">
+        <div class="mt-4 caja-botones-time-acciones" style="display:flex; justify-content:space-between;">
+            <button class="btn btn-secundario btn-time-mas-fila" wire:click.prevent="$set('contador', {{ $contador + 1 }})">
+                <font class="d-mobile-none">Agregar fila</font>
+                <font class="d-mobile"><i class="fa-solid fa-plus mr-2"></i> Agregar actividad</font>
+            </button>
+            <div class="caja-botones-time-forms">
+                <button class="btn btn_cancelar btn_enviar_formulario btn-borrador-time" style="position:relative;">
                     <input id="estatus_papelera" type="radio" name="estatus" value="papelera" style="opacity:0; position: absolute;">
                     <label data-type="borrador"  for="estatus_papelera" style="width:100%; height: 100%; position:absolute; display:flex; justify-content: center; align-items: center; top:0; left:0;">
                         Guardar borrador
                     </label>
                 </button>
 
-                <div class="btn btn-success" style="position: relative;" data-toggle="modal" data-target="#modal_aprobar_">
+                <div class="btn btn-success btn-regisrtar-time" style="position: relative;" data-toggle="modal" data-target="#modal_aprobar_">
                     <input id="estatus_pendiente" type="radio" name="estatus" value="pendiente" style="opacity:0; position: absolute;">
                     <label for="estatus_pendiente" style="width:100%; height: 100%; position:absolute; display:flex; justify-content: center; align-items: center; top:0; left:0;">
                         Registrar
