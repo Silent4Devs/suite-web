@@ -33,7 +33,7 @@ class TablaProyectosTimesheet extends Component
 
     public function mount()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderBy('id')->get();
     }
 
     public function render()
