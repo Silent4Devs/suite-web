@@ -38,7 +38,7 @@ class CreateRecursosHumanosAia extends Component
             'a_materno' => 'required|max:15',
             'puesto' => 'required|max:60',
             'rol' => 'required|max:12',
-            'tel' => 'required',
+            'tel' => 'required|max:5',
             'correo' => 'required|max:40',
         ]);
     }

@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ajustesMatrizBIA extends Model
+class AjustesAIA extends Model
 {
-
     use SoftDeletes;
     
-    public $table = 'ajustes_matriz_bia';
+    public $table = 'ajustes_aia';
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
