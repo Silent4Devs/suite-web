@@ -7,7 +7,7 @@
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Registrar Jornada Laboral</font>
     </h5>
 
-    <div class="card card-body">
+    <div class="card card-body not-card-mobile time-responsivo">
         <div class="row">
             <x-loading-indicator />
             @livewire('timesheet.timesheet-horas-filas', ['origen' => 'create', 'timesheet_id' => null])
@@ -119,7 +119,7 @@
 
         document.querySelector('.tabla-llenar-horas').addEventListener('click', (e) => {
             let element = e.target;
-            if (e.target.tagName == 'I') {
+            if (e.target.tagName == 'I' || e.target.tagName == 'SMALL') {
                 element = e.target.closest('div');
             }
             if (element.classList.contains('btn_destroy_tr')) {
@@ -294,5 +294,28 @@
             });
             document.getElementById('total_horas_filas').innerText = total_horas_filas + ' h';
         }
+    </script>
+
+    <script type="text/javascript">
+        function responsiveTime() {
+            $('.tabla-llenar-horas').click(function(e){
+                if (e.target.className == 'area-click-acordeon-time-mobile') {
+                    $('.tr-time-actividad-mobile:not(.tr-time-actividad-mobile:hover)').removeClass('ver-tr-time-mobile');
+                    $('.tr-time-actividad-mobile:hover').toggleClass('ver-tr-time-mobile');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            if($(window).width() <= 800){
+                responsiveTime();
+            }
+        });
+        $(window).resize(function(){
+            if($(window).width() <= 800){
+                responsiveTime();
+            }
+        });
+
     </script>
 @endsection
