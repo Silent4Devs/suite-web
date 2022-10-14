@@ -1862,7 +1862,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_1">
                         <option value disabled {{ old('disruptivos_q_1', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_1', $cuestionario->disruptivos_q_1) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -1878,7 +1878,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_2">
                         <option value disabled {{ old('disruptivos_q_2', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_2', $cuestionario->disruptivos_q_2) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -1893,7 +1893,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_3">
                         <option value disabled {{ old('disruptivos_q_3', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_3', $cuestionario->disruptivos_q_3) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -1908,7 +1908,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_4">
                         <option value disabled {{ old('disruptivos_q_4', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_4', $cuestionario->disruptivos_q_4) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -1923,7 +1923,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_5">
                         <option value disabled {{ old('disruptivos_q_5', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_5', $cuestionario->disruptivos_q_5) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -1939,7 +1939,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_6">
                         <option value disabled {{ old('disruptivos_q_6', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_6', $cuestionario->disruptivos_q_6) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -1955,7 +1955,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_7">
                         <option value disabled {{ old('disruptivos_q_7', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_7', $cuestionario->disruptivos_q_7) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -1971,7 +1971,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_8">
                         <option value disabled {{ old('disruptivos_q_8', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_8', $cuestionario->disruptivos_q_8) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -1987,7 +1987,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_9">
                         <option value disabled {{ old('disruptivos_q_9', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_9', $cuestionario->disruptivos_q_9) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -2002,7 +2002,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_10">
                         <option value disabled {{ old('disruptivos_q_10', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_10', $cuestionario->disruptivos_q_10) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -2017,7 +2017,7 @@
                     <select class="form-control form-control-sm" name="disruptivos_q_11">
                         <option value disabled {{ old('disruptivos_q_11', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
-                        @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
+                        @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
                             <option value="{{ $key }}"
                                 {{ old('disruptivos_q_11', $cuestionario->disruptivos_q_11) === (int) $key ? 'selected' : '' }}>
                                 {{ $label }}
@@ -2043,10 +2043,10 @@
                 </div>
 
                 <label class="col-sm-6 col-form-label offset-6"><strong>NIVELES</strong></label>
-                <label class="col-sm-6 col-form-label"><strong>IMPACTOS</strong></label>
+                <label class="col-sm-4 col-form-label"><strong>IMPACTOS</strong></label>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        placeholder="< 4 hrs" disabled>
+                        placeholder="<4 hrs" disabled>
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
@@ -2054,12 +2054,16 @@
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        placeholder="> 24 hrs" disabled>
+                        placeholder="24-48 hrs" disabled>
+                </div>
+                <div class="form-group col-sm-2">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        placeholder="> 48 hrs" disabled>
                 </div>
                 <hr>
 
 
-                <label class="col-sm-6 col-form-label">
+                <label class="col-sm-4 col-form-label">
                     <a id="btnAgregarTipo" onclick="event.preventDefault();"
                         style="font-size:12pt; float: right;"data-toggle="modal" data-target="#afectacion_operacional"
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
@@ -2081,9 +2085,14 @@
                         name="operacion_q_3" placeholder="..."
                         value="{{ old('operacion_q_3', $cuestionario->operacion_q_3) }}">
                 </div>
+                <div class="form-group col-sm-2">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="operacion_q_4" placeholder="..."
+                        value="{{ old('operacion_q_4', $cuestionario->operacion_q_4) }}">
+                </div>
                 <hr>
 
-                <label class="col-sm-6 col-form-label">
+                <label class="col-sm-4 col-form-label">
                     <a id="btnAgregarTipo" onclick="event.preventDefault();"
                         style="font-size:12pt; float: right;"data-toggle="modal" data-target="#impacto_regulatorio"
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
@@ -2104,9 +2113,14 @@
                         name="regulatorio_q_3" placeholder="..."
                         value="{{ old('meta', $cuestionario->regulatorio_q_3) }}">
                 </div>
+                <div class="form-group col-sm-2">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="regulatorio_q_4" placeholder="..."
+                        value="{{ old('meta', $cuestionario->regulatorio_q_4) }}">
+                </div>
                 <hr>
 
-                <label class="col-sm-6 col-form-label">
+                <label class="col-sm-4 col-form-label">
                     <a id="btnAgregarTipo" onclick="event.preventDefault();"
                         style="font-size:12pt; float: right;"data-toggle="modal" data-target="#afectacion_reputacion"
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
@@ -2128,9 +2142,14 @@
                         name="reputacion_q_3" placeholder="..."
                         value="{{ old('meta', $cuestionario->reputacion_q_3) }}">
                 </div>
+                <div class="form-group col-sm-2">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="reputacion_q_4" placeholder="..."
+                        value="{{ old('meta', $cuestionario->reputacion_q_4) }}">
+                </div>
                 <hr>
 
-                <label class="col-sm-6 col-form-label">
+                <label class="col-sm-4 col-form-label">
                     <a id="btnAgregarTipo" onclick="event.preventDefault();"
                         style="font-size:12pt; float: right;"data-toggle="modal" data-target="#impacto_social"
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
@@ -2142,11 +2161,15 @@
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_2" pplaceholder="..." value="{{ old('meta', $cuestionario->social_q_2) }}">
+                        name="social_q_2" placeholder="..." value="{{ old('meta', $cuestionario->social_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_3" pplaceholder="..." value="{{ old('meta', $cuestionario->social_q_3) }}">
+                        name="social_q_3" placeholder="..." value="{{ old('meta', $cuestionario->social_q_3) }}">
+                </div>
+                <div class="form-group col-sm-2">
+                    <input type="number" style="text-align: center;" class="form-control form-control-sm"
+                        name="social_q_4" placeholder="..." value="{{ old('meta', $cuestionario->social_q_4) }}">
                 </div>
                 <hr>
 

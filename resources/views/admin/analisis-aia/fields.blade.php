@@ -78,7 +78,17 @@
 </div>
 
 <div class="row" x-data="{ periodicidad: false }">
-    <div class="form-group col-sm-8">
+
+    <div class="form-group col-sm-12">
+        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('nombre_aplicacion', 'Nombre de la Aplicación:', ['class' => 'required']) !!}
+        {!! Form::text('nombre_aplicacion', null, [
+            'class' => 'form-control',
+            'maxlength' => 255,
+            'maxlength' => 255,
+            'placeholder' => '...',
+        ]) !!}
+    </div>
+    <div class="form-group col-sm-6">
         <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('id_aplicacion', 'ID de la Aplicación:', ['class' => 'required']) !!}
         {!! Form::text('id_aplicacion', null, [
             'class' => 'form-control',
@@ -88,7 +98,7 @@
         ]) !!}
     </div>
 
-    <div class="form-group col-sm-4">
+    <div class="form-group col-sm-6">
         <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('version', 'Versión:', ['class' => 'required']) !!}
         {!! Form::text('version', null, [
             'class' => 'form-control',
@@ -98,15 +108,37 @@
         ]) !!}
     </div>
 
-    <div class="form-group col-sm-8">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('nombre_aplicacion', 'Nombre de la Aplicación:', ['class' => 'required']) !!}
-        {!! Form::text('nombre_aplicacion', null, [
-            'class' => 'form-control',
-            'maxlength' => 255,
-            'maxlength' => 255,
-            'placeholder' => '...',
-        ]) !!}
+    
+
+    <div class="form-group col-sm-6">
+        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('productivo_desarrollo', 'Estatus:', ['class' => 'required']) !!}
+        <select class="form-control" name="productivo_desarrollo">
+            <option value disabled {{ old('productivo_desarrollo', null) === null ? 'selected' : '' }}>
+                Selecciona una opción</option>
+            @foreach (App\Models\AnalisisAIA::AmbienteSelect as $key => $label)
+                <option value="{{ $key }}"
+                    {{ old('productivo_desarrollo', $cuestionario->productivo_desarrollo) === (int) $key ? 'selected' : '' }}>
+                    {{ $label }}
+                </option>
+            @endforeach
+        </select>
     </div>
+
+    <div class="form-group col-sm-6">
+        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('interno_externo', 'Publicación:', ['class' => 'required']) !!}
+        <select class="form-control" name="interno_externo">
+            <option value disabled {{ old('interno_externo', null) === null ? 'selected' : '' }}>
+                Selecciona una opción</option>
+            @foreach (App\Models\AnalisisAIA::PublicacionSelect as $key => $label)
+                <option value="{{ $key }}"
+                    {{ old('interno_externo', $cuestionario->interno_externo) === (int) $key ? 'selected' : '' }}>
+                    {{ $label }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+
 
 
     <div class="form-group col-sm-12">
@@ -126,26 +158,34 @@
     </div>
     <div class="form-group col-sm-12">
         <div class="col-sm-2 form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="periodicidad" value="1"  @click="periodicidad = false" {{ old('periodicidad_mensual',$cuestionario->periodicidad) == '1' ? 'checked' : '' }}>
+            <input class="form-check-input" type="radio" name="periodicidad" value="1"
+                @click="periodicidad = false"
+                {{ old('periodicidad_mensual', $cuestionario->periodicidad) == '1' ? 'checked' : '' }}>
             <label class="form-check-label" for="inlineRadio1">Diario</label>
         </div>
         <div class="col-sm-2 form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="periodicidad" value="2"  @click="periodicidad = false" {{ old('periodicidad_mensual',$cuestionario->periodicidad) == '2' ? 'checked' : '' }}>
+            <input class="form-check-input" type="radio" name="periodicidad" value="2"
+                @click="periodicidad = false"
+                {{ old('periodicidad_mensual', $cuestionario->periodicidad) == '2' ? 'checked' : '' }}>
             <label class="form-check-label" for="inlineRadio2">Semanal</label>
         </div>
         <div class="col-sm-2 form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="periodicidad" value="3"  @click="periodicidad = false" {{ old('periodicidad_mensual',$cuestionario->periodicidad) == '3' ? 'checked' : '' }}>
+            <input class="form-check-input" type="radio" name="periodicidad" value="3"
+                @click="periodicidad = false"
+                {{ old('periodicidad_mensual', $cuestionario->periodicidad) == '3' ? 'checked' : '' }}>
             <label class="form-check-label" for="inlineRadio3">Mensual</label>
         </div>
         <div class="col-sm-2 form-check form-check-inline">
             <input class="form-check-input" type="radio" name="periodicidad" value="4"
-                @click="periodicidad = true" {{ old('periodicidad_mensual',$cuestionario->periodicidad) == '4' ? 'checked' : '' }}>
+                @click="periodicidad = true"
+                {{ old('periodicidad_mensual', $cuestionario->periodicidad) == '4' ? 'checked' : '' }}>
             <label class="form-check-label" for="inlineRadio3">Otro: </label>
         </div>
     </div>
 
     <div class="form-group col-sm-12" x-show="periodicidad">
-        <input type="text" class="form-control" name="p_otro_txt" placeholder="Defina" x-bind:disabled="!periodicidad">
+        <input type="text" class="form-control" name="p_otro_txt" placeholder="Defina"
+            x-bind:disabled="!periodicidad">
     </div>
 
     <div class="form-group col-sm-12">
@@ -159,7 +199,9 @@
     </div>
 
     <div class="form-group col-sm-12">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('area_responsable_aplicacion', 'Área responsable del uso de la Aplicación:', ['class' => 'required']) !!}
+        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('area_responsable_aplicacion', 'Área responsable del uso de la Aplicación:', [
+            'class' => 'required',
+        ]) !!}
         {!! Form::text('area_responsable_aplicacion', null, [
             'class' => 'form-control',
             'maxlength' => 255,
@@ -168,4 +210,3 @@
         ]) !!}
     </div>
 </div>
-

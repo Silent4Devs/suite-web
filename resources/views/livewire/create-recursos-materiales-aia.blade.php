@@ -25,7 +25,7 @@
                         <div class="form-group col-sm-12 col-md-12 col-lg-12 ">
                             <label class="required" for="escenario"><i class="bi bi-signpost-split-fill iconos-crear"></i>Escenario:</label>
                            
-                            <select name="escenario" class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}"  wire:model.defer="escenario" >
+                            <select class="form-control {{ $errors->has('escenario') ? 'is-invalid' : '' }}"  wire:model.defer="escenario" >
                                 <option selected>Seleccione</option>
                                 <option value="1">En Operación Normal</option>
                                 <option value="2">En Contingencia</option>
@@ -67,7 +67,17 @@
                             @endif
                         </div>
                         <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                            <label class="required" for="otro"><i class="bi bi-ui-checks-grid iconos-crear"></i>Otro:</label>
+                            <label class="required" for="otro_numero"><i class="bi bi-ui-checks-grid iconos-crear"></i>Otro (Cantidad):</label>
+                            <input class="form-control {{ $errors->has('otro_numero') ? 'is-invalid' : '' }}" type="number"
+                                value="{{ old('otro_numero', '') }}" wire:model.defer="otro_numero" placeholder="...">
+                            @if ($errors->has('otro_numero'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('otro_numero') }}
+                                </div>
+                            @endif
+                        </div>  
+                        <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                            <label class="required" for="otro"><i class="bi bi-ui-checks-grid iconos-crear"></i>Otro (Descripción):</label>
                             <input class="form-control {{ $errors->has('otro') ? 'is-invalid' : '' }}" type="text"
                                 value="{{ old('otro', '') }}" wire:model.defer="otro" placeholder="...">
                             @if ($errors->has('otro'))
