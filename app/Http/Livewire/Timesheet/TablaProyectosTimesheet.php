@@ -33,7 +33,7 @@ class TablaProyectosTimesheet extends Component
 
     public function mount()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderBy('id')->get();
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderBy("proyecto")->get();
     }
 
     public function render()
@@ -60,7 +60,7 @@ class TablaProyectosTimesheet extends Component
         $this->validate(
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador',
-                'proyecto_name'=>'required',
+                'proyecto_name' => 'required',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
@@ -69,12 +69,12 @@ class TablaProyectosTimesheet extends Component
         if ($this->fecha_inicio && $this->fecha_fin) {
             $this->validate(
                 [
-                    'fecha_inicio'=>'before:fecha_fin',
-                    'fecha_fin'=>'after:fecha_inicio',
+                    'fecha_inicio' => 'before:fecha_fin',
+                    'fecha_fin' => 'after:fecha_inicio',
                 ],
                 [
-                    'fecha_inicio.before'=>'La fecha de incio debe ser anterior a la fecha de fin',
-                    'fecha_fin.after'=>'La fecha de fin debe ser posterior a la fecha de incio',
+                    'fecha_inicio.before' => 'La fecha de incio debe ser anterior a la fecha de fin',
+                    'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de incio',
                 ],
             );
         }
@@ -90,8 +90,8 @@ class TablaProyectosTimesheet extends Component
 
         foreach ($this->areas_seleccionadas as $key => $area_id) {
             TimesheetProyectoArea::create([
-                'proyecto_id'=>$nuevo_proyecto->id,
-                'area_id'=>$area_id,
+                'proyecto_id' => $nuevo_proyecto->id,
+                'area_id' => $area_id,
             ]);
         }
 
@@ -131,7 +131,7 @@ class TablaProyectosTimesheet extends Component
     {
         $proyecto = TimesheetProyecto::find($id);
         $proyecto->update([
-            'estatus'=>'terminado',
+            'estatus' => 'terminado',
         ]);
 
         $this->alert('success', 'Estatus actualizado!');
@@ -141,7 +141,7 @@ class TablaProyectosTimesheet extends Component
     {
         $proyecto = TimesheetProyecto::find($id);
         $proyecto->update([
-            'estatus'=>'cancelado',
+            'estatus' => 'cancelado',
         ]);
 
         $this->alert('success', 'Estatus actualizado!');
@@ -151,7 +151,7 @@ class TablaProyectosTimesheet extends Component
     {
         $proyecto = TimesheetProyecto::find($id);
         $proyecto->update([
-            'estatus'=>'proceso',
+            'estatus' => 'proceso',
         ]);
 
         $this->alert('success', 'Estatus actualizado!');
