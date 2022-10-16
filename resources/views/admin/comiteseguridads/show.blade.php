@@ -68,10 +68,18 @@
                         <tbody>
                             @foreach ($datas as $data)
                                 <tr>
-                                    <th scope="row"> {{ $data->nombrerol }}</th>
-                                    <td> {{ $data->asignacion->name }}</td>
-                                    <td>{{ $data->responsabilidades }}</td>
-                                    <td>{{ $data->fechavigor }}</td>
+                                    <th scope="row" style="text-align: left;"> {{ $data->nombrerol ?: 'No definido' }}</th>
+                                    @if (!empty($data->asignacion->name))
+                                        <td> {{ $data->asignacion->name}}</td>
+                                    @else
+                                        <td style="text-align: left;"> No definido </td>
+                                    @endif
+                                    @if ($data->responsabilidades)
+                                        <td style="text-align: left;">{!! $data->responsabilidades !!}</td>
+                                    @else
+                                        <td style="text-align: left;">No definido</td>
+                                    @endif
+                                    <td style="text-align: left;">{{ $data->fechavigor ?: 'No definido' }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
