@@ -121,44 +121,20 @@
             <table class="table table-bordered datatable-Comiteseguridad" style="width: 100%">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="min-width: 200px;">
+                        <th style="min-width: 150px;">
                             Nombre del comité
                         </th>
-                        <th style="min-width: 150px;">
+                        <th style="min-width: 200px;">
                             Miembros
                         </th>
                         <th style="min-width: 200px;">
                             Descripción
                         </th>
-                        <th>
+                        <th style="min-width: 25px;">
                             Opciones
                         </th>
                     </tr>
-                    {{-- <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <select class="search">
-                                <option value>{{ trans('global.all') }}</option>
-                                @foreach ($users as $key => $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr> --}}
+                    
                 </thead>
             </table>
         </div>
