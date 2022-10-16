@@ -148,8 +148,8 @@ class ComiteseguridadController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate = 'comformacion_comite_seguridad_ver';
-                $editGate = 'comformacion_comite_seguridad_editar';
-                $deleteGate = 'comformacion_comite_seguridad_eliminar';
+                $editGate = 'xx_no_permitido';
+                $deleteGate = 'xx_no_permitido';
                 $crudRoutePart = 'comiteseguridads';
 
                 return view('partials.datatablesActions', compact(

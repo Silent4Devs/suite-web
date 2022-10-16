@@ -139,7 +139,9 @@
                         <th style="min-width: 200px;">
                             Descripción
                         </th>
-                        
+                        <th style="min-width: 15px;">
+                            Ver
+                        </th>
                     </tr>
 
                 </thead>
@@ -285,7 +287,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('admin.comiteseguridads.index') }}",
+                ajax: "{{ route('admin.comiteseguridads.visualizacion') }}",
                 columns: [{
                         data: 'nombre_comite',
                         name: 'nombre_comite',
@@ -326,6 +328,10 @@
                             return `<div style="text-align:left"><p>${data}</p></div>`;
                         }
                     },
+                    {
+                        data: 'actions',
+                        name: '{{ trans('global.actions') }}'
+                    }
                     
                 ],
                 orderCellsTop: true,
