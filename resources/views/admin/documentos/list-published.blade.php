@@ -93,11 +93,11 @@
                             <th style="vertical-align: top">
                                 Responsable
                             </th>
-                            @can('documentos_show')
+                            {{-- @can('documentos_show') --}}
                                 <th style="vertical-align: top">
                                     Visualizar
                                 </th>
-                            @endcan
+                            {{-- @endcan --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -184,7 +184,7 @@
                                         <span class="badge badge-info">Sin Asignar</span>
                                     @endif
                                 </td>
-                                @can('documentos_show')
+                                {{-- @can('documentos_show') --}}
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic example">
 
@@ -194,7 +194,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                @endcan
+                                {{-- @endcan --}}
                             </tr>
                         @endforeach
                     </tbody>
