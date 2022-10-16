@@ -46,22 +46,20 @@
             max-width: 140px !important;
             min-width: 140px !important;
         }
-
     </style>
 @endsection
 {{ Breadcrumbs::render('admin.comiteseguridads.visualizacion') }}
 
- @php
-    use App\Models\Organizacion;
-    $organizacion = Organizacion::first();
-    if (!is_null($organizacion->empresa)) {
-        $nombre_organizacion = $organizacion->empresa;
-    }
-    else{
-        $nombre_organizacion = 'La Organizacion';
-    }
+@php
+use App\Models\Organizacion;
+$organizacion = Organizacion::first();
+if (!is_null($organizacion->empresa)) {
+    $nombre_organizacion = $organizacion->empresa;
+} else {
+    $nombre_organizacion = 'La Organizacion';
+}
 @endphp
-<h5 class="col-12 titulo_general_funcion">Comités de <strong>{{$nombre_organizacion}}</strong></h5>
+<h5 class="col-12 titulo_general_funcion">Comités de <strong>{{ $nombre_organizacion }}</strong></h5>
 <div class="card card-body">
     <div class="row" style="">
         <div class="card-body datatable-fix">
@@ -85,13 +83,17 @@
                 <tbody>
                     @forelse($comiteseguridads as $comiteseguridad)
                         <tr>
-                            <td>{{ $comiteseguridad->nombrerol }}</td>
+                            <td>{{ $comiteseguridad->nombrerol ?: 'No Definido' }}</td>
                             <td>
-                                <img src="{{ asset('storage/empleados/imagenes/'.$comiteseguridad->asignacion->foto)}}/{{ $comiteseguridad->asignacion->avatar }}"
-                                    class="img_empleado"> {{ $comiteseguridad->asignacion->name }}
+                                @if (!empty($comiteseguridad->asignacion->foto))
+                                    <img src="{{ asset('storage/empleados/imagenes/' . $comiteseguridad->asignacion->foto) }}/{{ $comiteseguridad->asignacion->avatar }}"
+                                        class="img_empleado"> {{ $comiteseguridad->asignacion->name }}
+                                @else
+                                    <img src="{{ asset('storage/empleados/imagenes/man.png') }}" class="img_empleado"> No definido
+                                @endif
                             </td>
-                            <td>{{ $comiteseguridad->fechavigor }}</td>
-                            <td>{{ $comiteseguridad->responsabilidades }}</td>
+                            <td>{{ $comiteseguridad->fechavigor ?: 'No Definido' }}</td>
+                            <td>{{ $comiteseguridad->responsabilidades ?: 'No Definido' }}</td>
                         </tr>
                     @empty
                         <tr>
