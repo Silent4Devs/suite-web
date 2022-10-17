@@ -297,8 +297,7 @@
                             @forelse($macro_map->procesos as $proceso_map)
                                     <div class="macro_a  {{ $proceso_map->documento_id == null ? 'not-active' : '' }}" style="{{ $proceso_map->estatus == '2' ? 'border:2px solid yellow; color:black !important;' : '' }} {{ $proceso_map->documento_id == null ? 'border:1px solid #aaa !important; color:black !important;' : '' }} border: 1px solid {{ $grupo_map->color }};">
                                         
-                                        <a class="{{ $proceso_map->estatus == '2' ? 'not-active' : '' }}"
-                                            href="{{ route('admin.procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
+                                        <a href="{{ route('admin.procesos.obtenerDocumentoProcesos', $proceso_map->documento_id) }}">
                                             {{ $proceso_map->nombre }}
                                         </a>
                                     </div>
