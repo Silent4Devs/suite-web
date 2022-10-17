@@ -37,6 +37,8 @@ class PlanImplementacion extends Model
         'ISO 27001' => 'ISO 27001',
         'ISO 31000' => 'ISO 31000',
         'ISO 9001' => 'ISO 9001',
+        'ISO 22301' => 'ISO 22301',
+        'ISO 37001' => 'ISO 37001',
     ];
 
     // public function tasks()
