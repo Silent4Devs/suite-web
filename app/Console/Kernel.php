@@ -38,6 +38,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('capacitacion:usuario')
             ->everyFiveMinutes();
         $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everySixHours();
+        $schedule->command('cache:clearall')->everyMinute();
     }
 
     /**
