@@ -3,8 +3,8 @@
     @include('partials.flashMessages')
     <div id="inicio_usuario" class="row" style="">
         <h5 class="col-12" style="color: #788BAC;margin-bottom: 30px">Planes de Acción</h5>
-        <div class="col-lg-12 card">
-            <div class="card-body">
+        <div class="col-lg-12 card p-0">
+            <div class="card-body p-0">
                 {{-- @livewire('plan-accion-kanban-form') --}}
                 @livewire('kanban-lienzo', ['planAccionId' => 1])
             </div>

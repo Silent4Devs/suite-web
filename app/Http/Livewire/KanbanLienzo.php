@@ -14,63 +14,21 @@ class KanbanLienzo extends Component
         'En Curso',
         'Listo'
     ];
-    // public $groups = '
-    //     {
-    //         "groups":[
-    //             {
-    //                 "id":1,
-    //                 "label":"Por Hacer",
-    //                 "tasks":[
-    //                     {
-    //                         "id":1,
-    //                         "title":"demo1"
-    //                     },
-    //                     {
-    //                         "id":2,
-    //                         "title":"demo2"
-    //                     },
-    //                     {
-    //                         "id":3,
-    //                         "title":"demo3"
-    //                     }
-    //                 ]
-    //             },
-    //             {
-    //                 "id":2,
-    //                 "label":"En Curso",
-    //                 "tasks":[]
-    //             },
-    //             {
-    //                 "id":3,
-    //                 "label":"Listo",
-    //                 "tasks":[
-    //                     {
-    //                         "id":1,
-    //                         "title":"demo1"
-    //                     },
-    //                     {
-    //                         "id":2,
-    //                         "title":"demo2"
-    //                     },
-    //                     {
-    //                         "id":3,
-    //                         "title":"demo3"
-    //                     }
-    //                 ]
-    //             }
-    //         ]
-    //     }    
-    // ';
+
+    protected $listeners = ['refreshPlanAccionK' => 'getGroups'];
 
     public $groups;
     public $planAccionId;
+    public $planAccionModel;
     public $newGroupLabel;
+    public $titleTask;
 
 
     public function mount($planAccionId)
     {
         $this->getGroups();
         $this->planAccionId = $planAccionId;
+        $this->planAccionModel = PlanAccionKanban::find($planAccionId);
     }
 
     public function render()
@@ -105,15 +63,28 @@ class KanbanLienzo extends Component
         $this->getGroups();
     }
 
-    public function addTask($groupId, $title)
+    public function addTask($groupId)
     {
+        $this->validate([
+            'titleTask' => 'required|max:255'
+        ], [
+            'titleTask.required' => 'Este campo es obligatorio',
+            'titleTask.max' => 'Este campo acepta como máximo 255 carácteres',
+        ]);
         TaskKanbanPA::create([
-            'title' => $title,
+            'title' => $this->titleTask,
             'order' => $this->getOrder($groupId),
             'group_kanban_p_a_s_id' => $groupId
         ]);
         $this->getGroups();
+        $this->titleTask = null;
     }
+
+    public function editTask($taskId)
+    {
+        $this->emit('openModalKanbanPA', $taskId);
+    }
+
     public function removeTask($taskId)
     {
         TaskKanbanPA::find($taskId)->delete();
@@ -144,12 +115,19 @@ class KanbanLienzo extends Component
 
     public function addGroup()
     {
+        $this->validate([
+            'newGroupLabel' => 'required|max:255'
+        ], [
+            'newGroupLabel.required' => 'Este campo es obligatorio',
+            'newGroupLabel.max' => 'Este campo acepta como máximo 255 carácteres',
+        ]);
         GroupKanbanPA::create([
             'label' => $this->newGroupLabel,
             'order' => $this->getOrderGroup($this->planAccionId),
             'planes_accion_kanban_id' => $this->planAccionId
         ]);
         $this->getGroups();
+        $this->newGroupLabel = null;
     }
 
     public function removeGroup($groupId)

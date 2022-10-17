@@ -13,6 +13,6 @@ class GroupKanbanPA extends Model
 
     public function tasks()
     {
-        return $this->hasMany(TaskKanbanPA::class, 'group_kanban_p_a_s_id', 'id')->orderBy('order');
+        return $this->hasMany(TaskKanbanPA::class, 'group_kanban_p_a_s_id', 'id')->with('empleados')->orderBy('order');
     }
 }
