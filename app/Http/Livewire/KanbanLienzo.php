@@ -22,12 +22,14 @@ class KanbanLienzo extends Component
     public $planAccionModel;
     public $newGroupLabel;
     public $titleTask;
+    public $onlyRead = false;
 
 
-    public function mount($planAccionId)
+    public function mount($planAccionId, $onlyRead)
     {
         $this->getGroups();
         $this->planAccionId = $planAccionId;
+        $this->onlyRead = $onlyRead;
         $this->planAccionModel = PlanAccionKanban::find($planAccionId);
     }
 

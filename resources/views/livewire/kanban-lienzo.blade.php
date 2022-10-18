@@ -1,7 +1,7 @@
-<div>
+<div style="zoom: 90%" class="p-4">
     <div class="p-2">
         <h4>
-            {{ $planAccionModel->title }}
+            Plan de Acción: {{ $planAccionModel->title }}
         </h4>
         <p>
             {{-- {{ $planAccionModel->description }} --}}
@@ -13,30 +13,41 @@
             <div class="border rounded p-3 mr-2" wire:key="group-{{ $group->id }}"
                 wire:sortable.item="{{ $group->id }}" style="background: #F4F5F7; min-width: 300px;">
                 <div style="display: flex; position: relative;">
-                    <h4 style="font-size: 16px; width: 100%; position: relative;">{{ $group->label }} <i
-                            class="fas fa-grip-vertical" style="position: absolute; right: 0; cursor: move"
-                            wire:sortable.handle></i>
+                    <h4 style="font-size: 16px; width: 100%; position: relative;">{{ $group->label }}
+                        @if (!$onlyRead)
+                            <i class="fas fa-grip-vertical" style="position: absolute; right: 0; cursor: move"
+                                wire:sortable.handle></i>
+                        @endif
                     </h4>
-                    <i style="cursor: pointer;position: absolute;right: 20px; top: 3px"
-                        class="fas fa-trash-alt text-danger" group-id={{ $group->id }}></i>
+                    @if (!$onlyRead)
+                        <i style="cursor: pointer;position: absolute;right: 20px; top: 3px"
+                            class="fas fa-trash-alt text-danger" group-id={{ $group->id }}></i>
+                    @endif
                 </div>
                 <div class="list-group" style="min-height: 50px" wire:sortable-group.item-group="{{ $group->id }}">
                     @forelse ($group->tasks as $task)
                         <div wire:key="task-{{ $task->id }}" wire:sortable-group.item="{{ $task->id }}"
                             class="list-group-item mb-3">
                             <div class="row">
-                                <div class="col-6"></div>
+                                <div class="col-6">
+                                    <span style="font-size: 17px;font-weight: bold;">{{ $task->title }} </span>
+                                </div>
                                 <div class="col-6" style="text-align: end; font-size: 12px">
-                                    <i style="cursor: pointer" class="fas fa-trash-alt text-danger mr-2"
-                                        task-id="{{ $task->id }}"></i>
-                                    <i style="cursor: pointer" class="fas fa-pen text-primary mr-2"
-                                        wire:click="editTask({{ $task->id }})"></i>
-                                    <i class="fas fa-grip-vertical" style="cursor: move" wire:sortable-group.handle></i>
+                                    @if (!$onlyRead)
+                                        <i style="cursor: pointer" class="fas fa-trash-alt text-danger mr-2"
+                                            task-id="{{ $task->id }}"></i>
+                                        <i style="cursor: pointer" class="fas fa-pen text-primary mr-2"
+                                            wire:click="editTask({{ $task->id }})"></i>
+                                        <i class="fas fa-grip-vertical" style="cursor: move"
+                                            wire:sortable-group.handle></i>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">{{ $task->title }} </h5>
-                                <small>{{ $task->created_at->diffForHumans() }}</small>
+                            <div class="row p-0 m-0">
+                                <div class="col-6 p-0"></div>
+                                <div class="col-6 p-0" style="text-align: end">
+                                    <small>{{ $task->created_at->diffForHumans() }}</small>
+                                </div>
                             </div>
                             <div>
                                 @forelse ($task->empleados as $empleado)
