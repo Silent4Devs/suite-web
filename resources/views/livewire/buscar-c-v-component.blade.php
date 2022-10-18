@@ -79,7 +79,7 @@
         }
 
     </style>
-
+    <x-loading-indicator/>
     @php
         use App\Models\Organizacion;
         $organizacion = Organizacion::first();
