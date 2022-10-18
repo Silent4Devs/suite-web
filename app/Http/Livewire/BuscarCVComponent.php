@@ -6,10 +6,14 @@ use App\Models\Empleado;
 use App\Models\ListaDocumentoEmpleado;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class BuscarCVComponent extends Component
 {
     use LivewireAlert;
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
 
     public $areas;
     public $empleado_id;
