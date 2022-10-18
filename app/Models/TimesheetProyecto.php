@@ -21,6 +21,12 @@ class TimesheetProyecto extends Model
         'fecha_inicio',
         'identificador',
         'sede_id',
+        'tipo',
+    ];
+
+    const TIPOS = [
+        'Interno' => 'Interno',
+        'Externo' => 'Externo',
     ];
 
     public function getAreasAttribute()
@@ -29,7 +35,7 @@ class TimesheetProyecto extends Model
 
         $areas = collect();
         foreach ($ids_areas as $key => $area_p) {
-            $areas->push(Area::select('id','area')->find($area_p->area_id));
+            $areas->push(Area::select('id', 'area')->find($area_p->area_id));
         }
 
         return $areas;
