@@ -28,6 +28,7 @@
                     <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="estatusSelect">
                         <option value="" disabled selected>--Seleccionar--</option>
                         <option value="Publicado">Publicado</option>
+                        <option value="Rechazado">Rechazado</option>
                         <option value="En Revisión">En Revisión</option>
                         <option value="">Todos</option>
                     </select>
