@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MinutasaltadireccionController extends Controller
 {
-    use MediaUploadingTrait,ObtenerOrganizacion;
+    use MediaUploadingTrait, ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -48,7 +48,7 @@ class MinutasaltadireccionController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.minutasaltadireccions.index', compact('users', 'teams','organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.minutasaltadireccions.index', compact('users', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
