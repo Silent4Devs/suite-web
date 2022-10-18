@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Artisan;
 
 class ClearCacheCommand extends Command
@@ -41,5 +42,6 @@ class ClearCacheCommand extends Command
         Artisan::call('optimize:clear');
         sleep(10);
         Artisan::call('cache:clear');
+        Log::info('Cache cleared on:' . now()->format('d-m-Y H:i'));
     }
 }
