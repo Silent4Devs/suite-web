@@ -23,16 +23,19 @@ class TablaProyectosTimesheet extends Component
     public $fecha_inicio;
     public $fecha_fin;
     public $sede_id;
+    public $tipo;
 
     public $proceso_count;
     public $cancelado_count;
     public $terminado_count;
-
+    public $tipos;
     public $sedes;
     public $areas;
 
     public function mount()
     {
+        $this->tipos = TimesheetProyecto::TIPOS;
+        $this->tipo = $this->tipos['Interno'];
         $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderBy("proyecto")->get();
     }
 
@@ -48,7 +51,7 @@ class TablaProyectosTimesheet extends Component
 
         $this->areas = Area::get();
 
-        $this->clientes = TimesheetCliente::get();
+        $this->clientes = TimesheetCliente::orderBy('nombre')->get();
 
         $this->emit('scriptTabla');
 
@@ -78,7 +81,6 @@ class TablaProyectosTimesheet extends Component
                 ],
             );
         }
-
         $nuevo_proyecto = TimesheetProyecto::create([
             'identificador' => $this->identificador,
             'proyecto' => $this->proyecto_name,
@@ -86,6 +88,7 @@ class TablaProyectosTimesheet extends Component
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,
             'sede_id' => $this->sede_id,
+            'tipo' => $this->tipo,
         ]);
 
         foreach ($this->areas_seleccionadas as $key => $area_id) {

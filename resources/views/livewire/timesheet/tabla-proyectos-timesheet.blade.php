@@ -49,9 +49,9 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
-                    <select name="area_id" wire:model="cliente_id" class="form-control">
+                    <select name="area_id" wire:model.defer="cliente_id" class="form-control">
                         <option selected value="">Seleccione cliente</option>
                         @foreach ($clientes as $cliente)
                             <option value="{{ $cliente->id }}">{{ $cliente->identificador }} - {{ $cliente->nombre }}
@@ -59,9 +59,9 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-4" wire:ignore id="caja_areas_seleccionadas_create">
+                <div class="form-group col-md-3" wire:ignore id="caja_areas_seleccionadas_create">
                     <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
-                    <select id="areas_seleccionadas" name="areas_seleccionadas" wire:model="areas_seleccionadas"
+                    <select id="areas_seleccionadas" name="areas_seleccionadas" wire:model.defer="areas_seleccionadas"
                         class="form-control select2" required multiple required>
                         @foreach ($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->area }}</option>
@@ -71,12 +71,21 @@
                         <input id="chkall" type="checkbox" > Seleccionar Todas
                     </div>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede</label>
-                    <select class="form-control" name="sede_id" wire:model="sede_id">
+                    <select class="form-control" name="sede_id" wire:model.defer="sede_id">
                         <option selected value="">Seleccione sede</option>
                         @foreach ($sedes as $sede)
                             <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-label"><i
+                            class="fa-solid fa-info-circle iconos-crear"></i>Tipo</label>
+                    <select class="form-control" name="tipo" wire:model.defer="tipo">     
+                        @foreach ($tipos as $tipo_it)
+                            <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it?'selected':'' }}>{{ $tipo_it }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -142,6 +151,7 @@
                     <th style="max-width: 250px !important;">Área(s)</th>
                     <th>Sede</th>
                     <th>Estatus</th>
+                    <th>Tipo</th>
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
             </thead>
@@ -163,6 +173,7 @@
                         </td>
                         <td>{{ $proyecto->sede_id ? $proyecto->sede->sede : '' }} </td>
                         <td>{{ $proyecto->estatus }} </td>
+                        <td>{{ $proyecto->tipo??'No Definido' }} </td>
                         <td>
                             @can('timesheet_administrador_proyectos_delete')
                                 @php
@@ -370,6 +381,18 @@
                                             {{ $proyecto->sede_id ? $proyecto->sede->sede : '' }}</option>
                                         @foreach ($sedes as $sede)
                                             <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label"><i
+                                            class="fa-solid fa-building iconos-crear"></i>Tipo</label>
+                                    <select class="form-control" name="tipo">
+                                        <option selected
+                                            value="{{ $proyecto->tipo ? $proyecto->tipo : '' }}">
+                                            {{ $proyecto->tipo ? $proyecto->tipo : '' }}</option>
+                                        @foreach ($tipos as $tipo)
+                                            <option value="{{ $tipo }}">{{ $tipo }}</option>
                                         @endforeach
                                     </select>
                                 </div>
