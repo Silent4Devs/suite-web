@@ -6,7 +6,13 @@
 
         <div class="card-body">
             Previsualizacion dla minuta: <strong>{{ $minutasaltadireccion->documento }}</strong>
-            <iframe src="{{ asset('storage/minutas/' . 'en aprobacion/' . $minutasaltadireccion->documento) }}" class="w-100"
+            @php
+                $path = 'en aprobacion/';
+                if ($minutasaltadireccion->estatus == 3) {
+                    $path = 'aprobadas/';
+                }
+            @endphp
+            <iframe src="{{ asset('storage/minutas/' . $path . $minutasaltadireccion->documento) }}" class="w-100"
                 style="height: 500px" frameborder="0"></iframe>
 
             <div class="form-group">
