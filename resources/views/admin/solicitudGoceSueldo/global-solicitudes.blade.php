@@ -42,7 +42,7 @@
     <h5 class="col-12 titulo_general_funcion">Aprobar: Permiso con Goce de Sueldo</h5>
 
     <div class="card">
-        @can('amenazas_agregar')
+        @can('modulo_aprobacion_ausencia')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [
