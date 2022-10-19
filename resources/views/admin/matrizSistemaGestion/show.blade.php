@@ -30,7 +30,7 @@
                                 {{ trans('cruds.matrizRiesgo.fields.id') }}
                             </th>
                             <td>
-                                {{ $matrizRiesgo->id }}
+                                {{ $matrizRiesgo->identificador ?: 'No definido' }}
                             </td>
                         </tr>
                         <tr>
@@ -54,7 +54,13 @@
                                 {{ trans('cruds.matrizRiesgo.fields.responsableproceso') }}
                             </th>
                             <td>
-                                {{ $matrizRiesgo->empleado->name }}
+                                @if (!empty($matrizRiesgo->empleado->name))
+                                    {{ $matrizRiesgo->empleado->name }}
+                                @else
+                                    No definido
+                                @endif
+
+
                             </td>
                         </tr>
                         <tr>

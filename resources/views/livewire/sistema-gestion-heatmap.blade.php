@@ -87,7 +87,6 @@
             width: 100%;
             display: flex;
         }
-
     </style>
 
 
@@ -97,9 +96,9 @@
                 <p class="text-xl text-gray-700">Análisis de riesgo:</p>
                 <select class="form-control" wire:model="id_analisis">
                     <option value="" selected disabled>Seleccione una opción</option>
-                        @foreach ($mapas as $mapa)
-                        <option value="{{ $mapa?$mapa['id']:0}}">{{ $mapa?$mapa['nombre']:'' }}</option>
-                        @endforeach
+                    @foreach ($mapas as $mapa)
+                        <option value="{{ $mapa ? $mapa['id'] : 0 }}">{{ $mapa ? $mapa['nombre'] : '' }}</option>
+                    @endforeach
                 </select>
             </div>
         @endif
@@ -121,7 +120,7 @@
                 @endforeach
             </select>
         </div>
-        @if(!count($mapas))
+        @if (!count($mapas))
             <div class="col-md-3">
                 <p class="text-xl text-gray-700">Proceso:</p>
                 <select class="form-control" wire:model="proceso_id">
@@ -146,6 +145,7 @@
                         <div class="numero"><i class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>
                             {{ $bajos }}</div>
                         <div>Bajo(s)</div>
+                   
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
@@ -155,6 +155,7 @@
                                 class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $medios }}
                         </div>
                         <div>Medio(s)</div>
+                     
                     </div>
                 </div>
                 <div class="col-6 col-md-3 ">
@@ -164,6 +165,7 @@
                                 class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $altos }}
                         </div>
                         <div>Alto(s)</div>
+                    
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
@@ -173,6 +175,7 @@
                                 class="fas fa-exclamation-triangle iconos_menu letra_blanca"></i>{{ $muy_altos }}
                         </div>
                         <div>Muy alto(s) </div>
+                     
                     </div>
                 </div>
             </div>
@@ -215,14 +218,18 @@
                                 <th scope="col">Probabilidad</th>
                                 <th scope="col">Impacto</th>
                                 <th scope="col">Nivel riesgo</th>
+                                <th scope="col">Ponderacion</th>
+                                <th scope="col">Riesgo Total</th>
                             </tr>
                         </thead>
                         @foreach ($listados as $listado)
                             <tr class="con">
-                                <td>{{ $listado->id }}</td>
+                                <td>{{ $listado->identificador ?: 'No definido' }}</td>
                                 <td data-toggle="tooltip" data-placement="top" title="Pulse aquí para más información">
-                                    <a target="_blank"
-                                        href="{{ route('admin.matriz-riesgos.sistema-gestion.show', [$listado->id]) }}">{{ wordwrap($listado->descripcionriesgo, 10, "\n", true) }}</a>
+                                    <div style="text-align: left">
+                                        <a target="_blank"
+                                            href="{{ route('admin.matriz-riesgos.sistema-gestion.show', [$listado->id]) }}">{{$listado->descripcionriesgo }}</a>
+                                    </div>
                                 </td>
                                 <td>{{ $listado->probabilidad }}</td>
                                 <td>{{ $listado->impacto }}</td>
@@ -231,30 +238,40 @@
                                         @case(0)
                                             <span class="text-green mayus">Baja ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @case(9)
                                             <span class="text-yellow mayus">Media ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @case(18)
                                             <span class="text-yellow mayus">Alta ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @case(27)
                                             <span class="text-orange mayus">Muy Alta
-                                                ({{ $listado->nivelriesgo }})</span>
+                                                ({{ $listado->nivelriesgo }})
+                                            </span>
                                         @break
+
                                         @case(36)
                                             <span class="text-danger mayus">Alta ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @case(54)
                                             <span class="text-danger mayus">Muy Alta
                                                 ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @case(81)
                                             <span class="text-danger mayus">Muy Alta
                                                 ({{ $listado->nivelriesgo }})</span>
                                         @break
+
                                         @default
                                     @endswitch
                                 </td>
+                                <td>{{ $listado->resultado_ponderacion }}</td>
+                                <td>{{ $listado->riesgo_total }}</td>
                             </tr>
                         @endforeach
                     </table>
@@ -266,29 +283,29 @@
                         </div>
                         <table>
                             <tr>
-                                <td>Muy Alto</td>
-                                <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQuery(0 , '1')">
+                                <td>Muy Alto (9)</td>
+                                <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQuery(0 , 9)">
                                     @if ($changer == '1')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_muyalto }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_media_p_muyAlta" wire:click="callQuery(27, '2')">
+                                <td class="naranja" id="s_media_p_muyAlta" wire:click="callQuery(3, 9)">
                                     @if ($changer == '2')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_muyalto }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQuery(54, '3')">
+                                <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQuery(6, 9)">
                                     @if ($changer == '3')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_muyalto }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQuery(81, '4')">
+                                <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQuery(9, 9)">
                                     @if ($changer == '4')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -297,29 +314,29 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Alto</td>
-                                <td class="amarillo" id="s_baja_p_alta" wire:click="callQuery(0, '5')">
+                                <td>Alto (6)</td>
+                                <td class="amarillo" id="s_baja_p_alta" wire:click="callQuery(0, 6)">
                                     @if ($changer == '5')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_alto }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_media_p_alta" wire:click="callQuery(18, '6')">
+                                <td class="amarillo" id="s_media_p_alta" wire:click="callQuery(3, 6)">
                                     @if ($changer == '6')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_alto }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_alta_p_alta" wire:click="callQuery(36, '7')">
+                                <td class="naranja" id="s_alta_p_alta" wire:click="callQuery(6, 6)">
                                     @if ($changer == '7')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_alto }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQuery(54, '8')">
+                                <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQuery(9, 6)">
                                     @if ($changer == '8')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -328,29 +345,29 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Medio</td>
-                                <td class="verde" id="s_baja_p_media" wire:click="callQuery(0, '9')">
+                                <td>Medio (3)</td>
+                                <td class="verde" id="s_baja_p_media" wire:click="callQuery(0, 3)">
                                     @if ($changer == '9')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_medio }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_media_p_media" wire:click="callQuery(9, '10')">
+                                <td class="amarillo" id="s_media_p_media" wire:click="callQuery(3, 3)">
                                     @if ($changer == '10')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_medio }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_alta_p_media" wire:click="callQuery(18, '11')">
+                                <td class="amarillo" id="s_alta_p_media" wire:click="callQuery(6, 3)">
                                     @if ($changer == '11')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_medio }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_muyAlta_p_media" wire:click="callQuery(27, '12')">
+                                <td class="naranja" id="s_muyAlta_p_media" wire:click="callQuery(9, 3)">
                                     @if ($changer == '12')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -359,29 +376,29 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Bajo</td>
-                                <td class="verde" id="s_baja_p_baja" wire:click="callQuery(0, '13')">
+                                <td>Bajo (0)</td>
+                                <td class="verde" id="s_baja_p_baja" wire:click="callQuery(0, 0)">
                                     @if ($changer == '13')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_bajo }}
                                     @endif
                                 </td>
-                                <td class="verde" id="s_media_p_baja" wire:click="callQuery(0, '14')">
+                                <td class="verde" id="s_media_p_baja" wire:click="callQuery(3, 0)">
                                     @if ($changer == '14')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_bajo }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_alta_p_baja" wire:click="callQuery(0, '15')">
+                                <td class="amarillo" id="s_alta_p_baja" wire:click="callQuery(6, 0)">
                                     @if ($changer == '15')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_bajo }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_muyAlta_p_baja" wire:click="callQuery(0, '16')">
+                                <td class="amarillo" id="s_muyAlta_p_baja" wire:click="callQuery(9, 0)">
                                     @if ($changer == '16')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -391,10 +408,10 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td>Bajo</td>
-                                <td>Medio</td>
-                                <td>Alto</td>
-                                <td>Muy Alto</td>
+                                <td>Nula (0)</td>
+                                <td>Baja (3)</td>
+                                <td>Media (6)</td>
+                                <td>Alta (9)</td>
                             </tr>
                         </table>
                         <div class="txtHorizontal text-primary font-weight-bold"
@@ -455,12 +472,15 @@
                                 <th scope="col">Probabilidad</th>
                                 <th scope="col">Impacto</th>
                                 <th scope="col">Nivel riesgo</th>
+                                <th scope="col">Ponderacion</th>
+                                <th scope="col">Riesgo Total</th>
                             </tr>
                         </thead>
                         @foreach ($listados_residual as $listado)
                             <tr class="con">
-                                <td>{{ $listado->id }}</td>
-                                <td data-toggle="tooltip" data-placement="top" title="Pulse aquí para más información">
+                                <td>{{ $listado->identificador }}</td>
+                                <td data-toggle="tooltip" data-placement="top"
+                                    title="Pulse aquí para más información">
                                     <a target="_blank"
                                         href="{{ route('admin.matriz-riesgos.sistema-gestion.show', [$listado->id]) }}">{{ wordwrap($listado->descripcionriesgo, 10, "\n", true) }}</a>
                                 </td>
@@ -470,35 +490,45 @@
                                     @switch($listado->nivelriesgo_residual)
                                         @case(0)
                                             <span class="text-green mayus">Baja
-                                                ({{ $listado->nivelriesgo_residual }})</span>
+                                                ({{ $listado->nivelriesgo_residual }})
+                                            </span>
                                         @break
+
                                         @case(9)
                                             <span class="text-yellow mayus">Media
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @case(18)
                                             <span class="text-yellow mayus">Alta
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @case(27)
                                             <span class="text-orange mayus">Muy Alta
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @case(36)
                                             <span class="text-danger mayus">Alta
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @case(54)
                                             <span class="text-danger mayus">Muy Alta
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @case(81)
                                             <span class="text-danger mayus">Muy Alta
                                                 ({{ $listado->nivelriesgo_residual }})</span>
                                         @break
+
                                         @default
                                     @endswitch
                                 </td>
+                                <td>{{ $listado->resultado_ponderacionRes }}</td>
+                                <td>{{ $listado->riesgo_residual }}</td>
                             </tr>
                         @endforeach
                     </table>
@@ -512,28 +542,28 @@
                         <table>
                             <tr>
                                 <td>Muy Alto</td>
-                                <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQueryResidual(0 , '1')">
+                                <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQueryResidual(0 , 9)">
                                     @if ($changer_residual == '1')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_muyalto_r }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_media_p_muyAlta" wire:click="callQueryResidual(27, '2')">
+                                <td class="naranja" id="s_media_p_muyAlta" wire:click="callQueryResidual(3,9)">
                                     @if ($changer_residual == '2')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_muyalto_r }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQueryResidual(54, '3')">
+                                <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQueryResidual(6,9)">
                                     @if ($changer_residual == '3')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_muyalto_r }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQueryResidual(81, '4')">
+                                <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQueryResidual(9,9)">
                                     @if ($changer_residual == '4')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -543,28 +573,28 @@
                             </tr>
                             <tr>
                                 <td>Alto</td>
-                                <td class="amarillo" id="s_baja_p_alta" wire:click="callQueryResidual(0, '5')">
+                                <td class="amarillo" id="s_baja_p_alta" wire:click="callQueryResidual(0,6)">
                                     @if ($changer_residual == '5')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_alto_r }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_media_p_alta" wire:click="callQueryResidual(18, '6')">
+                                <td class="amarillo" id="s_media_p_alta" wire:click="callQueryResidual(3,6)">
                                     @if ($changer_residual == '6')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_alto_r }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_alta_p_alta" wire:click="callQueryResidual(36, '7')">
+                                <td class="naranja" id="s_alta_p_alta" wire:click="callQueryResidual(6,6)">
                                     @if ($changer_residual == '7')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_alto_r }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQueryResidual(54, '8')">
+                                <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQueryResidual(9,6)">
                                     @if ($changer_residual == '8')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -574,28 +604,28 @@
                             </tr>
                             <tr>
                                 <td>Medio</td>
-                                <td class="verde" id="s_baja_p_media" wire:click="callQueryResidual(0, '9')">
+                                <td class="verde" id="s_baja_p_media" wire:click="callQueryResidual(0,3)">
                                     @if ($changer_residual == '9')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_medio_r }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_media_p_media" wire:click="callQueryResidual(9, '10')">
+                                <td class="amarillo" id="s_media_p_media" wire:click="callQueryResidual(3,3)">
                                     @if ($changer_residual == '10')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_medio_r }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_alta_p_media" wire:click="callQueryResidual(18, '11')">
+                                <td class="amarillo" id="s_alta_p_media" wire:click="callQueryResidual(6,3)">
                                     @if ($changer_residual == '11')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_medio_r }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_muyAlta_p_media" wire:click="callQueryResidual(27, '12')">
+                                <td class="naranja" id="s_muyAlta_p_media" wire:click="callQueryResidual(9,3)">
                                     @if ($changer_residual == '12')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -604,29 +634,29 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Bajo</td>
-                                <td class="verde" id="s_baja_p_baja" wire:click="callQueryResidual(0, '13')">
+                                <td>Bajo (0)</td>
+                                <td class="verde" id="s_baja_p_baja" wire:click="callQueryResidual(0,0)">
                                     @if ($changer_residual == '13')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_bajo_r }}
                                     @endif
                                 </td>
-                                <td class="verde" id="s_media_p_baja" wire:click="callQueryResidual(0, '14')">
+                                <td class="verde" id="s_media_p_baja" wire:click="callQueryResidual(3,0)">
                                     @if ($changer_residual == '14')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_bajo_r }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_alta_p_baja" wire:click="callQueryResidual(0, '15')">
+                                <td class="amarillo" id="s_alta_p_baja" wire:click="callQueryResidual(6,0)">
                                     @if ($changer_residual == '15')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_bajo_r }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_muyAlta_p_baja" wire:click="callQueryResidual(0, '16')">
+                                <td class="amarillo" id="s_muyAlta_p_baja" wire:click="callQueryResidual(9,0)">
                                     @if ($changer_residual == '16')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -636,10 +666,10 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td>Bajo</td>
-                                <td>Medio</td>
-                                <td>Alto</td>
-                                <td>Muy Alto</td>
+                                <td>Nula (0)</td>
+                                <td>Baja (3)</td>
+                                <td>Media (6)</td>
+                                <td>Alta (9)</td>
                             </tr>
                         </table>
                         <div class="txtHorizontal text-primary font-weight-bold"
@@ -649,7 +679,8 @@
             </div>
 
         </div>
-        <a href="{{ route('admin.matriz-seguridad.sistema-gestion', ['id' => $id_analisis]) }}" class="btn btn-danger">Cerrar</a>
+        <a href="{{ route('admin.matriz-seguridad.sistema-gestion', ['id' => $id_analisis]) }}"
+            class="btn btn-danger">Cerrar</a>
     </div>
 
 </div>

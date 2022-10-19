@@ -40,7 +40,7 @@ class MatrizRiesgosSistemaGestion extends Model
         'plan_de_accion' => 'string',
         'probabilidad_residual' => 'string',
         'impacto_residual' => 'string',
-        'nivelriesgo_residual' => 'string',
+        'nivelriesgo_residual' => 'integer',
         'riesgo_total_residual' => 'string',
         'nivelriesgo' => 'float',
         'riesgototal' => 'float',
