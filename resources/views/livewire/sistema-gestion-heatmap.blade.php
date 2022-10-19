@@ -284,28 +284,28 @@
                         <table>
                             <tr>
                                 <td>Muy Alto (9)</td>
-                                <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQuery(0 , 9)">
+                                <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQuery(0 , 9)"  style="color:black;">
                                     @if ($changer == '1')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_muyalto }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_media_p_muyAlta" wire:click="callQuery(3, 9)">
+                                <td class="naranja" id="s_media_p_muyAlta" wire:click="callQuery(3, 9)"  style="color:black;">
                                     @if ($changer == '2')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_muyalto }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQuery(6, 9)">
+                                <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQuery(6, 9)" style="color:white;">
                                     @if ($changer == '3')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_muyalto }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQuery(9, 9)">
+                                <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQuery(9, 9)" style="color:white;">
                                     @if ($changer == '4')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -315,28 +315,28 @@
                             </tr>
                             <tr>
                                 <td>Alto (6)</td>
-                                <td class="amarillo" id="s_baja_p_alta" wire:click="callQuery(0, 6)">
+                                <td class="amarillo" id="s_baja_p_alta" wire:click="callQuery(0, 6)" style="color:black;">
                                     @if ($changer == '5')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_alto }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_media_p_alta" wire:click="callQuery(3, 6)">
+                                <td class="amarillo" id="s_media_p_alta" wire:click="callQuery(3, 6)" style="color:black;">
                                     @if ($changer == '6')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_alto }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_alta_p_alta" wire:click="callQuery(6, 6)">
+                                <td class="naranja" id="s_alta_p_alta" wire:click="callQuery(6, 6)" style="color:black;">
                                     @if ($changer == '7')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_alto }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQuery(9, 6)">
+                                <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQuery(9, 6)" style="color:white;">
                                     @if ($changer == '8')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -346,28 +346,28 @@
                             </tr>
                             <tr>
                                 <td>Medio (3)</td>
-                                <td class="verde" id="s_baja_p_media" wire:click="callQuery(0, 3)">
+                                <td class="verde" id="s_baja_p_media" wire:click="callQuery(0, 3)" style="color:black;" >
                                     @if ($changer == '9')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_medio }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_media_p_media" wire:click="callQuery(3, 3)">
+                                <td class="amarillo" id="s_media_p_media" wire:click="callQuery(3, 3)" style="color:black;">
                                     @if ($changer == '10')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_medio }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_alta_p_media" wire:click="callQuery(6, 3)">
+                                <td class="amarillo" id="s_alta_p_media" wire:click="callQuery(6, 3)" style="color:black;">
                                     @if ($changer == '11')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_medio }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_muyAlta_p_media" wire:click="callQuery(9, 3)">
+                                <td class="naranja" id="s_muyAlta_p_media" wire:click="callQuery(9, 3)" style="color:black;">
                                     @if ($changer == '12')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -377,28 +377,28 @@
                             </tr>
                             <tr>
                                 <td>Bajo (0)</td>
-                                <td class="verde" id="s_baja_p_baja" wire:click="callQuery(0, 0)">
+                                <td class="verde" id="s_baja_p_baja" wire:click="callQuery(0, 0)" style="color:black;">
                                     @if ($changer == '13')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_bajo }}
                                     @endif
                                 </td>
-                                <td class="verde" id="s_media_p_baja" wire:click="callQuery(3, 0)">
+                                <td class="verde" id="s_media_p_baja" wire:click="callQuery(3, 0)" style="color:black;">
                                     @if ($changer == '14')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_bajo }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_alta_p_baja" wire:click="callQuery(6, 0)">
+                                <td class="amarillo" id="s_alta_p_baja" wire:click="callQuery(6, 0)" style="color:black;">
                                     @if ($changer == '15')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_bajo }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_muyAlta_p_baja" wire:click="callQuery(9, 0)">
+                                <td class="amarillo" id="s_muyAlta_p_baja" wire:click="callQuery(9, 0)" style="color:black;">
                                     @if ($changer == '16')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -542,28 +542,28 @@
                         <table>
                             <tr>
                                 <td>Muy Alto</td>
-                                <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQueryResidual(0 , 9)">
+                                <td class="amarillo" id="s_baja_p_muyAlta" wire:click="callQueryResidual(0 , 9)" style="color:rgb(0, 0, 0);">
                                     @if ($changer_residual == '1')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_muyalto_r }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_media_p_muyAlta" wire:click="callQueryResidual(3,9)">
+                                <td class="naranja" id="s_media_p_muyAlta" wire:click="callQueryResidual(3,9)" style="color:rgb(0, 0, 0);">
                                     @if ($changer_residual == '2')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_muyalto_r }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQueryResidual(6,9)">
+                                <td class="rojo" id="s_alta_p_muyAlta" wire:click="callQueryResidual(6,9)" style="color:rgb(255, 255, 255);">
                                     @if ($changer_residual == '3')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_muyalto_r }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQueryResidual(9,9)">
+                                <td class="rojo" id="s_muyAlta_p_muyAlta" wire:click="callQueryResidual(9,9)" style="color:rgb(255, 255, 255);">
                                     @if ($changer_residual == '4')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -573,28 +573,28 @@
                             </tr>
                             <tr>
                                 <td>Alto</td>
-                                <td class="amarillo" id="s_baja_p_alta" wire:click="callQueryResidual(0,6)">
+                                <td class="amarillo" id="s_baja_p_alta" wire:click="callQueryResidual(0,6)" style="color:black;">
                                     @if ($changer_residual == '5')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_alto_r }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_media_p_alta" wire:click="callQueryResidual(3,6)">
+                                <td class="amarillo" id="s_media_p_alta" wire:click="callQueryResidual(3,6)" style="color:black;">
                                     @if ($changer_residual == '6')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_alto_r }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_alta_p_alta" wire:click="callQueryResidual(6,6)">
+                                <td class="naranja" id="s_alta_p_alta" wire:click="callQueryResidual(6,6)" style="color:black;">
                                     @if ($changer_residual == '7')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_alto_r }}
                                     @endif
                                 </td>
-                                <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQueryResidual(9,6)">
+                                <td class="rojo" id="s_muyAlta_p_alta" wire:click="callQueryResidual(9,6)" style="color:rgb(255, 255, 255);">
                                     @if ($changer_residual == '8')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -604,28 +604,28 @@
                             </tr>
                             <tr>
                                 <td>Medio</td>
-                                <td class="verde" id="s_baja_p_media" wire:click="callQueryResidual(0,3)">
+                                <td class="verde" id="s_baja_p_media" wire:click="callQueryResidual(0,3)" style="color:black;">
                                     @if ($changer_residual == '9')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_medio_r }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_media_p_media" wire:click="callQueryResidual(3,3)">
+                                <td class="amarillo" id="s_media_p_media" wire:click="callQueryResidual(3,3)" style="color:black;">
                                     @if ($changer_residual == '10')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_medio_r }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_alta_p_media" wire:click="callQueryResidual(6,3)">
+                                <td class="amarillo" id="s_alta_p_media" wire:click="callQueryResidual(6,3)" style="color:black;">
                                     @if ($changer_residual == '11')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_medio_r }}
                                     @endif
                                 </td>
-                                <td class="naranja" id="s_muyAlta_p_media" wire:click="callQueryResidual(9,3)">
+                                <td class="naranja" id="s_muyAlta_p_media" wire:click="callQueryResidual(9,3)" style="color:black;">
                                     @if ($changer_residual == '12')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
@@ -635,28 +635,28 @@
                             </tr>
                             <tr>
                                 <td>Bajo (0)</td>
-                                <td class="verde" id="s_baja_p_baja" wire:click="callQueryResidual(0,0)">
+                                <td class="verde" id="s_baja_p_baja" wire:click="callQueryResidual(0,0)" style="color:black;">
                                     @if ($changer_residual == '13')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $nula_bajo_r }}
                                     @endif
                                 </td>
-                                <td class="verde" id="s_media_p_baja" wire:click="callQueryResidual(3,0)">
+                                <td class="verde" id="s_media_p_baja" wire:click="callQueryResidual(3,0)" style="color:black;">
                                     @if ($changer_residual == '14')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $baja_bajo_r }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_alta_p_baja" wire:click="callQueryResidual(6,0)">
+                                <td class="amarillo" id="s_alta_p_baja" wire:click="callQueryResidual(6,0)" style="color:black;">
                                     @if ($changer_residual == '15')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
                                         {{ $media_bajo_r }}
                                     @endif
                                 </td>
-                                <td class="amarillo" id="s_muyAlta_p_baja" wire:click="callQueryResidual(9,0)">
+                                <td class="amarillo" id="s_muyAlta_p_baja" wire:click="callQueryResidual(9,0)" style="color:black;">
                                     @if ($changer_residual == '16')
                                         <i class="fas fa-eye" id="eye"></i>
                                     @else
