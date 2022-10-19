@@ -156,7 +156,7 @@ class PoliticaSgsiController extends Controller
 
     public function visualizacion()
     {
-        $politicaSgsis = PoliticaSgsi::first();
+        $politicaSgsis = PoliticaSgsi::all();
 
         $organizacions = Organizacion::first();
 
