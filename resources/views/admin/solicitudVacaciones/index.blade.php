@@ -81,7 +81,7 @@
     <h5 class="col-12 titulo_general_funcion">Solicitud de Vacaciones</h5>
 
     <div class="card">
-        @can('amenazas_agregar')
+        @can('solicitud_vacaciones_crear')
         <div class="form-group row mt-4">
             <label for="inputEmail3" class="col-sm-2 col-form-label offset-8 ">Días disponibles:</label>
             <div class="col-sm-2 pr-5">
@@ -233,7 +233,7 @@
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
-            @can('amenazas_agregar')
+            @can('solicitud_vacaciones_crear')
                 dtButtons.push(btnAgregar);
             @endcan
 

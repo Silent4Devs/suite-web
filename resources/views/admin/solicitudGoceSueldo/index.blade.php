@@ -81,7 +81,7 @@
     <h5 class="col-12 titulo_general_funcion">Solicitud Permiso</h5>
 
     <div class="card">
-        @can('amenazas_agregar')
+        @can('solicitud_goce_sueldo_crear')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [
@@ -226,7 +226,7 @@
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
-            @can('amenazas_agregar')
+            @can('solicitud_goce_sueldo_crear')
                 dtButtons.push(btnAgregar);
             @endcan
 
