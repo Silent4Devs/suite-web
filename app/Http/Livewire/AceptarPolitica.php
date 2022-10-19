@@ -13,20 +13,26 @@ class AceptarPolitica extends Component
     public function mount($id_politica)
     {
         $this->id_politica = $id_politica;
+       
     }
 
     public function render()
     {
-        $this->acepto_politica = AceptoPolitica::where('id_empleado', auth()->user()->empleado->id)->where('acepto', true)->count();
+       
+        if(AceptoPolitica::where('id_empleado', auth()->user()->empleado->id)->where('id_politica',  $this->id_politica)->first()){
+            $this->acepto_politica = AceptoPolitica::where('id_empleado', auth()->user()->empleado->id)->where('id_politica',  $this->id_politica)->first()->acepto;
+        }else{
+            $this->acepto_politica = false;
+        }
 
         return view('livewire.aceptar-politica');
     }
 
     public function aceptar($id_politica)
     {
-        $aceptar = AceptoPolitica::create([
+        $aceptar = AceptoPolitica::updateOrCreate([
             'id_politica' => $id_politica,
             'id_empleado' => auth()->user()->empleado->id,
-        ]);
+        ],['aceptado'=>true]);
     }
 }
