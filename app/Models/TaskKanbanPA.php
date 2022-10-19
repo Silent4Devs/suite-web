@@ -14,4 +14,14 @@ class TaskKanbanPA extends Model
     {
         return $this->belongsToMany(Empleado::class, 'empleados_task_kanban_p_a_s', 'task_kanban_p_a_s_id', 'empleados_id');
     }
+
+    public function group()
+    {
+        return $this->belongsTo(GroupKanbanPA::class, 'group_kanban_p_a_s_id', 'id')->with('planAccion');
+    }
+
+    public function evidencias()
+    {
+        return $this->hasMany(EvidenciasTareasKanban::class, 'task_kanban_p_a_s_id', 'id');
+    }
 }

@@ -15,4 +15,9 @@ class GroupKanbanPA extends Model
     {
         return $this->hasMany(TaskKanbanPA::class, 'group_kanban_p_a_s_id', 'id')->with('empleados')->orderBy('order');
     }
+
+    public function planAccion()
+    {
+        return $this->belongsTo(PlanAccionKanban::class, 'planes_accion_kanban_id', 'id')->with('groups');
+    }
 }

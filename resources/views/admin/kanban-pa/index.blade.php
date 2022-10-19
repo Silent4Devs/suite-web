@@ -6,7 +6,8 @@
         <div class="col-lg-12 card p-0">
             <div class="card-body p-0">
                 {{-- @livewire('plan-accion-kanban-form') --}}
-                @livewire('kanban-lienzo', ['planAccionId' => 1, 'onlyRead' => true])
+                {{-- @livewire('kanban-tarea') --}}
+                @livewire('kanban-lienzo', ['planAccionId' => 1, 'onlyRead' => false, 'empleadoFiltro' => null])
             </div>
         </div>
     </div>

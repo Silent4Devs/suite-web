@@ -4,6 +4,7 @@
 /storage/framework
 /storage/app/public/BIA/signatures/
 /storage/app/public/tratamiento/firmas/
+/storage/app/public/planes-accion/
 /vendor
 .idea
 # /public/css/app.css

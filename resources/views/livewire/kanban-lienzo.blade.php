@@ -1,4 +1,4 @@
-<div style="zoom: 90%" class="p-4">
+<div class="p-4">
     <div class="p-2">
         <h4>
             Plan de Acción: {{ $planAccionModel->title }}
@@ -14,15 +14,11 @@
                 wire:sortable.item="{{ $group->id }}" style="background: #F4F5F7; min-width: 300px;">
                 <div style="display: flex; position: relative;">
                     <h4 style="font-size: 16px; width: 100%; position: relative;">{{ $group->label }}
-                        @if (!$onlyRead)
-                            <i class="fas fa-grip-vertical" style="position: absolute; right: 0; cursor: move"
-                                wire:sortable.handle></i>
-                        @endif
+                        <i class="fas fa-grip-vertical" style="position: absolute; right: 0; cursor: move"
+                            wire:sortable.handle></i>
                     </h4>
-                    @if (!$onlyRead)
-                        <i style="cursor: pointer;position: absolute;right: 20px; top: 3px"
-                            class="fas fa-trash-alt text-danger" group-id={{ $group->id }}></i>
-                    @endif
+                    <i style="cursor: pointer;position: absolute;right: 20px; top: 3px"
+                        class="fas fa-trash-alt text-danger" group-id={{ $group->id }}></i>
                 </div>
                 <div class="list-group" style="min-height: 50px" wire:sortable-group.item-group="{{ $group->id }}">
                     @forelse ($group->tasks as $task)
@@ -33,14 +29,12 @@
                                     <span style="font-size: 17px;font-weight: bold;">{{ $task->title }} </span>
                                 </div>
                                 <div class="col-6" style="text-align: end; font-size: 12px">
-                                    @if (!$onlyRead)
-                                        <i style="cursor: pointer" class="fas fa-trash-alt text-danger mr-2"
-                                            task-id="{{ $task->id }}"></i>
-                                        <i style="cursor: pointer" class="fas fa-pen text-primary mr-2"
-                                            wire:click="editTask({{ $task->id }})"></i>
-                                        <i class="fas fa-grip-vertical" style="cursor: move"
-                                            wire:sortable-group.handle></i>
-                                    @endif
+                                    @livewire('evidencia-task-kanban', ['taskId' => $task->id], key($task->id))
+                                    <i style="cursor: pointer" class="fas fa-trash-alt text-danger mr-2"
+                                        task-id="{{ $task->id }}"></i>
+                                    <i style="cursor: pointer" class="fas fa-pen text-primary mr-2"
+                                        wire:click="editTask({{ $task->id }})"></i>
+                                    <i class="fas fa-grip-vertical" style="cursor: move" wire:sortable-group.handle></i>
                                 </div>
                             </div>
                             <div class="row p-0 m-0">
@@ -101,6 +95,7 @@
                 </form>
             </div>
         @endforeach
+
         <form class="form-group" wire:submit.prevent="addGroup">
             <div style="width: 200px" class="d-flex">
                 <input type="text" class="form-control @error('newGroupLabel') is-invalid @enderror"
