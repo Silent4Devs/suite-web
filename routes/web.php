@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
-use App\Http\Controllers\KanbanPlanAccionController;
+
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -120,7 +120,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     ## LAS RUTAS NUEVAS SE DEBEN INGRESAR DENTRO DEL GRUPO QUE ESTÁ EN LA LINEA DE ABAJO
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
         // Kanban PA
-        Route::get('kanban-plan-accion', [KanbanPlanAccionController::class, 'index'])->name('kanbanpa.index');
+        Route::resource('kanban-plan-accion', 'KanbanPlanAccionController');
         // Visitantes
         Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
         Route::get('visitantes/configuracion', 'VisitantesController@configuracion')->name('visitantes.configuracion');

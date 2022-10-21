@@ -1,9 +1,9 @@
-<div class="w-100" id="contendor-principal-actividades" x-data="{show:false}">
+<div class="w-100" id="contendor-principal-actividades" x-data="{ show: false }">
     <div class="row mb-4 align-items-center">
-        <div class="col-12 pr-2" x-bind:class="show?'col-12':'col-12'" style="text-align:right;">
-            <span class="mr-2" x-bind:class="!show?'menu-active':''" title="Visualizar Tarjetas"
+        <div class="col-12 pr-2" x-bind:class="show ? 'col-12' : 'col-12'" style="text-align:right;">
+            <span class="mr-2" x-bind:class="!show ? 'menu-active' : ''" title="Visualizar Tarjetas"
                 style="font-size: 1.1rem;cursor: pointer;" x-on:click="show=false"><i class="fas fa-th"></i></span>
-            <span class="mr-2" style="font-size: 1.1rem;cursor: pointer;" x-bind:class="show?'menu-active':''"
+            <span class="mr-2" style="font-size: 1.1rem;cursor: pointer;" x-bind:class="show ? 'menu-active' : ''"
                 x-on:click="handdleClick" title="Visualizar Tabla"><i class="fas fa-th-list"></i></span>
         </div>
     </div>
@@ -178,7 +178,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($actividades as $task)
+                @forelse ($actividades as $task)
                     @php
                         if (isset($task->archivado)) {
                             $archivado = $task->archivado;
@@ -214,7 +214,8 @@
                             </td>
                             {{-- <td>Asignada por</td> --}}
                             <td>
-                                <select class="form-control" data-status="on" data-actividad-id="{{ $task->id }}"
+                                <select class="form-control" data-status="on"
+                                    data-actividad-id="{{ $task->id }}"
                                     data-last-selection="{{ $task->status }}"
                                     data-plan-implementacion="{{ $task->id_implementacion }}">
                                     <option value="STATUS_SUSPENDED"
@@ -264,9 +265,8 @@
                                 @endphp
                                 <a href="{{ asset($ruta) }}"><i class="far fas fa-stream" style="font-size:12pt"
                                         title="Abrir Plan de Implementación"></i></a>
-                                <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i
-                                        class="fas fa-eye" style="font-size:12pt"
-                                        title="Visualizar Actividad"></i></a>
+                                <a href="plantTrabajoBase/{{ $task->name }}" target="_blank"><i class="fas fa-eye"
+                                        style="font-size:12pt" title="Visualizar Actividad"></i></a>
                                 @if ($task->status == 'STATUS_DONE' or $task->status == 'STATUS_SUSPENDED')
                                     <button class="btn_archivar" title="Archivar" title="Archivar Actividad">
                                         <i class="fas fa-archive" data-archivar="true"
@@ -282,7 +282,13 @@
                             </td>
                         </tr>
                     @endif
-                @endforeach
+                @empty
+                    <div class="text-center">
+                        <p>NO TIENES ACTIVIDADES ASIGNADAS</p>
+                        <img src="{{ asset('img/empleados_no_encontrados.svg') }}" alt="" class="img-fluid"
+                            style="max-width: 350px">
+                    </div>
+                @endforelse
             </tbody>
         </table>
     </div>

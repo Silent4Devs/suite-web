@@ -16,4 +16,9 @@ class PlanAccionKanban extends Model
     {
         return $this->hasMany(GroupKanbanPA::class, 'planes_accion_kanban_id', 'id')->with('tasks')->orderBy('order');
     }
+
+    public function normas()
+    {
+        return $this->belongsToMany(Norma::class, 'normas_plan_accion_kanban', 'planes_accion_kanban_id', 'norma_id');
+    }
 }

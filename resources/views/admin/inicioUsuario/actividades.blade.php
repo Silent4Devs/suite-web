@@ -14,7 +14,6 @@
     .td_recursos {
         position: relative;
     }
-
 </style>
 <div class="card-body datatable-fix w-100">
     <div class="px-1 py-2 mb-4 rounded " style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
@@ -34,7 +33,14 @@
             </div>
         </div>
     </div>
-    @include('admin.inicioUsuario.actividades.index')
+    <div class="col-12">
+        <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #345183;">Mis actividades GANTT</h5>
+        @livewire('kanban-tarea')
+    </div>
+    <div class="col-12">
+        <h5 class="p-0 m-0 text-muted" style="border-bottom: solid 2px #345183;">Mis actividades GANTT</h5>
+        @include('admin.inicioUsuario.actividades.index')
+    </div>
 </div>
 
 {{-- <div>
