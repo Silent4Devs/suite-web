@@ -12,9 +12,6 @@ class ajustesMatrizBIA extends Model
 
     use SoftDeletes;
     
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'ajustes_matriz_bia';
 
     const CREATED_AT = 'created_at';

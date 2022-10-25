@@ -23,17 +23,20 @@ class TablaProyectosTimesheet extends Component
     public $fecha_inicio;
     public $fecha_fin;
     public $sede_id;
+    public $tipo;
 
     public $proceso_count;
     public $cancelado_count;
     public $terminado_count;
-
+    public $tipos;
     public $sedes;
     public $areas;
 
     public function mount()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
+        $this->tipos = TimesheetProyecto::TIPOS;
+        $this->tipo = $this->tipos['Interno'];
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderBy("proyecto")->get();
     }
 
     public function render()
@@ -48,7 +51,7 @@ class TablaProyectosTimesheet extends Component
 
         $this->areas = Area::get();
 
-        $this->clientes = TimesheetCliente::get();
+        $this->clientes = TimesheetCliente::orderBy('nombre')->get();
 
         $this->emit('scriptTabla');
 
@@ -60,7 +63,7 @@ class TablaProyectosTimesheet extends Component
         $this->validate(
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador',
-                'proyecto_name'=>'required',
+                'proyecto_name' => 'required',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
@@ -69,16 +72,15 @@ class TablaProyectosTimesheet extends Component
         if ($this->fecha_inicio && $this->fecha_fin) {
             $this->validate(
                 [
-                    'fecha_inicio'=>'before:fecha_fin',
-                    'fecha_fin'=>'after:fecha_inicio',
+                    'fecha_inicio' => 'before:fecha_fin',
+                    'fecha_fin' => 'after:fecha_inicio',
                 ],
                 [
-                    'fecha_inicio.before'=>'La fecha de incio debe ser anterior a la fecha de fin',
-                    'fecha_fin.after'=>'La fecha de fin debe ser posterior a la fecha de incio',
+                    'fecha_inicio.before' => 'La fecha de incio debe ser anterior a la fecha de fin',
+                    'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de incio',
                 ],
             );
         }
-
         $nuevo_proyecto = TimesheetProyecto::create([
             'identificador' => $this->identificador,
             'proyecto' => $this->proyecto_name,
@@ -86,12 +88,13 @@ class TablaProyectosTimesheet extends Component
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,
             'sede_id' => $this->sede_id,
+            'tipo' => $this->tipo,
         ]);
 
         foreach ($this->areas_seleccionadas as $key => $area_id) {
             TimesheetProyectoArea::create([
-                'proyecto_id'=>$nuevo_proyecto->id,
-                'area_id'=>$area_id,
+                'proyecto_id' => $nuevo_proyecto->id,
+                'area_id' => $area_id,
             ]);
         }
 
@@ -131,7 +134,7 @@ class TablaProyectosTimesheet extends Component
     {
         $proyecto = TimesheetProyecto::find($id);
         $proyecto->update([
-            'estatus'=>'terminado',
+            'estatus' => 'terminado',
         ]);
 
         $this->alert('success', 'Estatus actualizado!');
@@ -141,7 +144,7 @@ class TablaProyectosTimesheet extends Component
     {
         $proyecto = TimesheetProyecto::find($id);
         $proyecto->update([
-            'estatus'=>'cancelado',
+            'estatus' => 'cancelado',
         ]);
 
         $this->alert('success', 'Estatus actualizado!');
@@ -151,7 +154,7 @@ class TablaProyectosTimesheet extends Component
     {
         $proyecto = TimesheetProyecto::find($id);
         $proyecto->update([
-            'estatus'=>'proceso',
+            'estatus' => 'proceso',
         ]);
 
         $this->alert('success', 'Estatus actualizado!');

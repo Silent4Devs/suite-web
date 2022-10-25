@@ -23,15 +23,12 @@ class ComiteseguridadController extends Controller
 
     public function index(Request $request)
     {
-        // $query = Comiteseguridad::with(['personaasignada', 'team','asignacion'])->select(sprintf('%s.*', (new Comiteseguridad)->table))->get();
-        // dd($query[2]->asignacion->avatar);
+      
         abort_if(Gate::denies('comformacion_comite_seguridad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            // $query = Comiteseguridad::with(['personaasignada', 'team', 'asignacion'])->select(sprintf('%s.*', (new Comiteseguridad)->table))->orderByDesc('id');
             $query = Comiteseguridad::with('miembros')->orderByDesc('id')->get();
             $table = Datatables::of($query);
-
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
@@ -50,24 +47,13 @@ class ComiteseguridadController extends Controller
                 ));
             });
 
-            // $table->editColumn('id', function ($row) {
-            //     return $row->id ? $row->id : '';
-            // });
             $table->editColumn('nombre_comite', function ($row) {
                 return $row->nombre_comite ? $row->nombre_comite : '';
             });
             $table->addColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
             });
-            // $table->editColumn('responsabilidades', function ($row) {
-            //     return $row->responsabilidades ? $row->responsabilidades : '';
-            // });
-            // $table->editColumn('fechavigor', function ($row) {
-            //     return $row->fechavigor ? $row->fechavigor : '';
-            // });
-
             $table->rawColumns(['actions', 'placeholder', 'personaasignada']);
-
             return $table->make(true);
         }
 
@@ -152,13 +138,48 @@ class ComiteseguridadController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function visualizacion()
+    public function visualizacion(Request $request)
     {
-        $comiteseguridads = Comiteseguridad::get();
-        // dd($comiteseguridads);
+        if ($request->ajax()) {
+            $query = Comiteseguridad::with('miembros')->orderByDesc('id')->get();
+            $table = Datatables::of($query);
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
 
-        $organizacion = Organizacion::get();
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'comformacion_comite_seguridad_ver';
+                $editGate = 'xx_no_permitido';
+                $deleteGate = 'xx_no_permitido';
+                $crudRoutePart = 'comiteseguridads';
 
-        return view('admin.comiteseguridads.visualizacion', compact('comiteseguridads', 'organizacion'));
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('nombre_comite', function ($row) {
+                return $row->nombre_comite ? $row->nombre_comite : '';
+            });
+            $table->addColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : '';
+            });
+            $table->rawColumns(['actions', 'placeholder', 'personaasignada']);
+            return $table->make(true);
+        }
+
+        $users = User::get();
+        $teams = Team::get();
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+
+        return view('admin.comiteseguridads.visualizacion', compact('users', 'teams','organizacion_actual','logo_actual','empresa_actual'));
+
+      
     }
 }

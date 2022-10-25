@@ -16,6 +16,7 @@ class CuestionarioRecursosMaterialesAIA extends Model
         'impresoras',
         'telefono',
         'otro',
+        'otro_numero',
         'escenario',
         'cuestionario_id',
     ];

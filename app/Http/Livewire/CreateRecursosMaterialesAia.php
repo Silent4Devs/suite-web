@@ -14,6 +14,7 @@ class CreateRecursosMaterialesAia extends Component
     public $impresoras;
     public $telefono;
     public $otro;
+    public $otro_numero;
     public $escenario;
     public $cuestionario_id;
 
@@ -27,10 +28,11 @@ class CreateRecursosMaterialesAia extends Component
     {
         $this->validate([
             'escenario' => 'required',
-            // 'equipos' => 'required|max:50',
-            // 'impresoras' => 'required|max:50',
-            // 'telefono' => 'required|max:15',
-            // 'otro' => 'required|max:15',
+            'equipos' => 'max:999|int',
+            'impresoras' => 'max:999|int',
+            'telefono' => 'max:999|int',
+            'otro' => 'max:245|string',
+            'otro_numero' => 'max:999|int',
         ]);
     }
 
@@ -53,9 +55,10 @@ class CreateRecursosMaterialesAia extends Component
             'telefono' => $num_telefonos,
             'otro' => $this->otro,
             'cuestionario_id' => $this->cuestionario_id,
+            'otro_numero' => $this->otro_numero,
         ]);
        
-        $this->reset('id', 'escenario', 'impresoras', 'telefono', 'otro', 'equipos');
+        $this->reset('id', 'escenario', 'impresoras', 'telefono', 'otro', 'equipos','otro_numero');
         $this->emit('render');
         $this->emit('cerrar-modal-materiales', ['editarMateriales' => false]);
     }
@@ -70,6 +73,7 @@ class CreateRecursosMaterialesAia extends Component
         $this->impresoras = $model->impresoras;
         $this->telefono = $model->telefono;
         $this->otro = $model->otro;
+        $this->otro_numero= $model->otro_numero;
         
         $this->cuestionario_id = $model->cuestionario_id;
         $this->emit('abrir-modal-materiales');
@@ -82,7 +86,7 @@ class CreateRecursosMaterialesAia extends Component
         $this->impresoras = '';
         $this->telefono = '';
         $this->otro = '';
-      
+        $this->otro_numero = '';
         $this->view = 'create';
     }
 
@@ -100,6 +104,7 @@ class CreateRecursosMaterialesAia extends Component
             'telefono' => $num_telefonos,
             'otro' => $this->otro,
             'cuestionario_id' => $this->cuestionario_id,
+            'otro_numero' => $this->otro_numero,
         ]);
         $this->emit('cerrar-modal-materiales', ['editar' => true]);
         $this->default();

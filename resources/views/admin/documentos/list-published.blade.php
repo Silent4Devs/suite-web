@@ -3,13 +3,14 @@
 
 
     <style type="text/css">
-        .filtro_caja{
+        .filtro_caja {
             margin-bottom: -40px;
             position: relative;
             z-index: 2;
         }
-        @media(max-width:775px){
-            .filtro_caja{
+
+        @media(max-width:775px) {
+            .filtro_caja {
                 margin-bottom: 0px;
             }
         }
@@ -40,13 +41,13 @@
                             <option value="Instructivo">Instructivo</option>
                             <option value="Reglamento">Reglamento</option>
                             <option value="Externo">Documento Externo</option>
+                            <option value="Formato">Formato</option>
                             <option value="">Todos</option>
                         </select>
                     </div>
                     <div class="col-md-3 filtro_caja mt-2" style="">
                         <label for=""><i class="fas fa-filter"></i> Filtrar por Vínculo</label>
-                        <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}"
-                            id="vinculadoSelect">
+                        <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="vinculadoSelect">
                             <option value="" disabled selected>--Seleccionar--</option>
                             @foreach ($macroprocesosAndProcesos as $item)
                                 <option value="{{ $item }}">{{ $item }}</option>
@@ -93,11 +94,11 @@
                             <th style="vertical-align: top">
                                 Responsable
                             </th>
-                            @can('documentos_show')
-                                <th style="vertical-align: top">
-                                    Visualizar
-                                </th>
-                            @endcan
+                            {{-- @can('documentos_show') --}}
+                            <th style="vertical-align: top">
+                                Visualizar
+                            </th>
+                            {{-- @endcan --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -127,19 +128,22 @@
                                             @case(1)
                                                 <span class="badge badge-info">EN ELABORACIÓN</span>
                                             @break
+
                                             @case(2)
                                                 <span class="badge badge-primary">EN REVISIÓN</span>
                                             @break
+
                                             @case(3)
                                                 <span class="badge badge-success">PUBLICADO</span>
                                             @break
+
                                             @case(4)
                                                 <span class="badge badge-danger">RECHAZADO</span>
                                             @break
+
                                             @default
                                                 <span class="badge badge-info">EN ELABORACIÓN</span>
                                         @endswitch
-
                                     @endif
                                 </td>
                                 <td>
@@ -184,17 +188,17 @@
                                         <span class="badge badge-info">Sin Asignar</span>
                                     @endif
                                 </td>
-                                @can('documentos_show')
-                                    <td>
-                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                {{-- @can('documentos_show') --}}
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
 
-                                            <a class="btn btn-sm" title="Visualizar Documento"
-                                                href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                @endcan
+                                        <a class="btn btn-sm" title="Visualizar Documento"
+                                            href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                {{-- @endcan --}}
                             </tr>
                         @endforeach
                     </tbody>
@@ -216,10 +220,10 @@
             $('#tipoSelect').on('change', function() {
                 if (this.value != null && this.value != "") {
                     this.style.border = "2px solid #20a4a1";
-                    tblDocumentos.columns(3).search(this.value, true, false).draw();
+                    tblDocumentos.columns(2).search(this.value, true, false).draw();
                 } else {
                     this.style.border = "1px solid rgb(206 212 218)";
-                    tblDocumentos.columns(3).search(this.value).draw();
+                    tblDocumentos.columns(2).search(this.value).draw();
                 }
             });
             $('#estatusSelect').on('change', function() {

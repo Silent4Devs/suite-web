@@ -586,10 +586,12 @@ class InicioUsuarioController extends Controller
         $equipo_a_cargo = collect();
 
         foreach ($childrens as $evaluador) {
-            $equipo_a_cargo->push($evaluador->id);
+            if ($evaluador->estatus == 'alta') {
+                $equipo_a_cargo->push($evaluador->id);
 
-            if (count($evaluador->children)) {
-                $equipo_a_cargo->push($this->obtenerEquipo($evaluador->children));
+                if (count($evaluador->children)) {
+                    $equipo_a_cargo->push($this->obtenerEquipo($evaluador->children));
+                }
             }
         }
 

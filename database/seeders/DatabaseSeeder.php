@@ -62,6 +62,7 @@ class DatabaseSeeder extends Seeder
             PermissionsVisitantesSeeder::class,
             VacacionesPermisosSeeder::class,
             PermisosBIASeeder::class,
+            AjustesAIASeeder::class,
         ]);
     }
 }

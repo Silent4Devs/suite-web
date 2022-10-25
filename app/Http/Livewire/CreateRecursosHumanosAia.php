@@ -32,14 +32,14 @@ class CreateRecursosHumanosAia extends Component
     {
         $this->validate([
             'escenario' => 'required',
-            'empresa' => 'required|max:50',
-            'nombre' => 'required|max:50',
-            'a_paterno' => 'required|max:15',
-            'a_materno' => 'required|max:15',
-            'puesto' => 'required|max:60',
-            'rol' => 'required|max:12',
-            'tel' => 'required',
-            'correo' => 'required|max:40',
+            'empresa' => 'required|max:256',
+            'nombre' => 'required|max:256',
+            'a_paterno' => 'required|max:256',
+            'a_materno' => 'required|max:256',
+            'puesto' => 'required|max:256',
+            'rol' => 'required|max:256',
+            'tel' => 'required|max:8',
+            'correo' => 'required|max:256',
         ]);
     }
 

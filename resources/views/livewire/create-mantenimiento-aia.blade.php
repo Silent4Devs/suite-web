@@ -37,7 +37,7 @@
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
                         <label class="required" for="interno_externo"><i class="bi bi-signpost-split-fill iconos-crear"></i>Interno / Externo:</label>
                        
-                        <select name="interno_externo" class="form-control {{ $errors->has('interno_externo') ? 'is-invalid' : '' }}"  wire:model.defer="interno_externo" >
+                        <select class="form-control {{ $errors->has('interno_externo') ? 'is-invalid' : '' }}"  wire:model.defer="interno_externo" >
                             <option selected>Seleccione</option>
                             <option value="1">Interno</option>
                             <option value="2">Externo</option>

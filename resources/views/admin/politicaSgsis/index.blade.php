@@ -342,23 +342,38 @@
                 ajax: "{{ route('admin.politica-sgsis.index') }}",
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'nombre_politica',
-                        name: 'nombre_politica'
+                        name: 'nombre_politica',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'politicasgsi',
-                        name: 'politicasgsi'
+                        name: 'politicasgsi',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'fecha_publicacion',
-                        name: 'fecha_publicacion'
+                        name: 'fecha_publicacion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'fecha_entrada',
-                        name: 'fecha_entrada'
+                        name: 'fecha_entrada',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'reviso_politica',
@@ -375,15 +390,24 @@
                     },
                     {
                         data: 'puesto_reviso',
-                        name: 'puesto_reviso'
+                        name: 'puesto_reviso',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'area_reviso',
-                        name: 'area_reviso'
+                        name: 'area_reviso',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'fecha_revision',
-                        name: 'fecha_revision'
+                        name: 'fecha_revision',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'actions',

@@ -19,6 +19,7 @@
                         <option value="Instructivo">Instructivo</option>
                         <option value="Reglamento">Reglamento</option>
                         <option value="Externo">Documento Externo</option>
+                        <option value="Formato">Formato</option>
                         <option value="">Todos</option>
                     </select>
                 </div>
@@ -27,6 +28,7 @@
                     <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="estatusSelect">
                         <option value="" disabled selected>--Seleccionar--</option>
                         <option value="Publicado">Publicado</option>
+                        <option value="Rechazado">Rechazado</option>
                         <option value="En Revisión">En Revisión</option>
                         <option value="">Todos</option>
                     </select>
@@ -186,8 +188,8 @@
                                     @can('control_documentar_visualizar_documento')
                                         <a class="btn btn-sm" title="Visualizar Documento"
                                             href="{{ route('admin.documentos.renderViewDocument', $documento) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
                                                 <path
                                                     d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
                                                 <path
@@ -198,8 +200,8 @@
                                     @can('control_documentar_visualizar_revisiones')
                                         <a class="btn btn-sm " title="Visualizar revisiones"
                                             href="{{ route('admin.documentos.renderHistoryReview', $documento->id) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                class="bi bi-clock-history" viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
                                                 <path
                                                     d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z" />
                                                 <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z" />
@@ -224,8 +226,8 @@
                                         <button data-tipo="{{ $documento->tipo }}" title="Hacer obsoleto"
                                             onclick="hacerObsoleto(this,'{{ route('admin.documentos.destroy', $documento) }}','{{ $documento->id }}');return false;"
                                             class="btn btn-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                class="bi bi-trash" viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                 <path
                                                     d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                                 <path fill-rule="evenodd"
@@ -507,12 +509,13 @@
             });
 
             $('#tipoSelect').on('change', function() {
+                console.log(this.value);
                 if (this.value != null && this.value != "") {
                     this.style.border = "2px solid #20a4a1";
-                    tblDocumentos.columns(3).search(this.value, true, false).draw();
+                    tblDocumentos.columns(2).search(this.value, true, false).draw();
                 } else {
                     this.style.border = "1px solid rgb(206 212 218)";
-                    tblDocumentos.columns(3).search(this.value).draw();
+                    tblDocumentos.columns(2).search(this.value).draw();
                 }
             });
             $('#estatusSelect').on('change', function() {

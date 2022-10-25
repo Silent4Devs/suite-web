@@ -341,27 +341,45 @@
                     // },
                     {
                         data: 'folio',
-                        name: 'folio'
+                        name: 'folio',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'tema',
-                        name: 'tema'
+                        name: 'tema',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'fecharegistro',
-                        name: 'fecharegistro'
+                        name: 'fecharegistro',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'fecha_verificacion',
-                        name: 'fecha_verificacion'
+                        name: 'fecha_verificacion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'estatus',
-                        name: 'estatus'
+                        name: 'estatus',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'fecha_cierre',
-                        name: 'fecha_cierre'
+                        name: 'fecha_cierre',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'reporto',
@@ -383,11 +401,17 @@
                     },
                     {
                         data: 'reporto_puesto',
-                        name: 'reporto_puesto'
+                        name: 'reporto_puesto',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'reporto_area',
-                        name: 'reporto_area'
+                        name: 'reporto_area',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'empleados',
@@ -406,20 +430,32 @@
                     },
                     {
                         data: 'registro_puesto',
-                        name: 'registro_puesto'
+                        name: 'registro_puesto',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'registro_area',
-                        name: 'registro_area'
+                        name: 'registro_area',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'causaorigen',
-                        name: 'causaorigen'
+                        name: 'causaorigen',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     {
                         data: 'descripcion',
                         name: 'descripcion',
-                        className: 'descripcion'
+                        className: 'descripcion',
+                        render: function(data, type, row) {
+                            return `<div style="text-align:left">${data}</div>`;
+                        }
                     },
                     // {
                     //     data: 'metodo_causa',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AjustesAIA;
 use App\Models\AnalisisAIA;
 use Illuminate\Http\Request;
 use App\Models\Organizacion;
@@ -145,12 +146,28 @@ class AnalisisAIAController extends Controller
     {
         abort_if(Gate::denies('matriz_bia_matriz'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $cuestionario = AnalisisAIA::with('proporcionaInformacion','proporcionaMantenimientos')->get();
-        // dd($cuestionario);
-        // $tecnologica = CuestionarioInfraestructuraTecnologica::with('cuestionario')->get();
-        // $personas_contingencia = CuestionarioRecursosHumanos::with('cuestionario')->where('escenario', '2')->get();
-        // $proporciona_informacion =  CuestionarioProporcionaInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
-        // $recibe_informacion =  CuestionarioRecibeInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
-
         return view('admin.analisis-aia.matriz', compact('cuestionario'));
+    }
+
+    public function ajustes()
+    {
+        abort_if(Gate::denies('matriz_bia_matriz_ajustes'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $id = 1;
+        $cuestionario = AjustesAIA::find($id);
+        if (empty($cuestionario)) {
+            Flash::error('Ajustes no encontrados');
+            return redirect(route('admin.analisis-aia.matriz'));
+        }
+        return view('admin.analisis-aia.ajustes', compact('cuestionario'));
+    }
+
+    public function updateAjustesAIA(Request $request, $id)
+    {
+        abort_if(Gate::denies('matriz_bia_matriz_ajustes_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $cuestionario =  AjustesAIA::find($id);
+        $cuestionario->update($request->all());
+        Flash::success('Ajustes aplicados satisfactoriamente.');
+
+        return redirect()->route('admin.analisis-aia.matriz');
     }
 }
