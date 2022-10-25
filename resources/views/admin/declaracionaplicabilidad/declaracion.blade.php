@@ -967,12 +967,13 @@
                                             </td>
                                             <td>
                                                 @foreach ($responsables as $responsable)
-                                                    @if (!is_null($aprobador->empleado->avatar))
+                                                    @if (!is_null($responsable->empleado->avatar))
                                                         @if ($responsable->declaracion_id == $g71s->id)
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
                                                         @endif
+                                                        
                                                     @endif
                                                 @endforeach
                                             </td>
