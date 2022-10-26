@@ -107,7 +107,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    
                                     <tr class="negras">
                                         <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="10">
                                             A.5
@@ -967,13 +967,12 @@
                                             </td>
                                             <td>
                                                 @foreach ($responsables as $responsable)
-                                                    @if (!is_null($responsable->empleado->avatar))
-                                                        @if ($responsable->declaracion_id == $g71s->id)
+                                                @if ($responsable->declaracion_id == $g71s->id)
+                                                    @if (!is_null($responsable->empleado))
                                                             <img src="{{ asset('storage/empleados/imagenes') }}/{{ $responsable->empleado->avatar }}"
                                                                 class="img_empleado"
                                                                 title="{{ $responsable->empleado->name }}">
                                                         @endif
-                                                        
                                                     @endif
                                                 @endforeach
                                             </td>
