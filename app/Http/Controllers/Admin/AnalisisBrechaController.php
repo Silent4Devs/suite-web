@@ -7,6 +7,7 @@ use App\Functions\Porcentaje;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAnalisisBrechasRequest;
 use App\Models\AnalisisBrecha;
+use App\Models\DeclaracionAplicabilidad;
 use App\Models\Empleado;
 use App\Models\GapDo;
 use App\Models\GapTre;
@@ -108,8 +109,10 @@ class AnalisisBrechaController extends Controller
     {
         abort_if(Gate::denies('analisis_de_brechas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::alta()->get();
+        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-        return view('admin.analisisdebrechas.create', compact('empleados'));
+
+        return view('admin.analisisdebrechas.create', compact('empleados','controles'));
     }
 
     public function store(Request $request)
@@ -156,7 +159,9 @@ class AnalisisBrechaController extends Controller
         $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
         $cuentas = number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '');
         // dd( $analisisBrecha);
-        return view('admin.analisisdebrechas.edit', compact('empleados', 'analisisBrecha', 'gap1porcentaje', 'gap12porcentaje', 'gap2porcentaje', 'gap2satisfactorio', 'gap2parcialmente', 'gap3porcentaje', 'gap31porcentaje', 'gap2noaplica', 'total', 'gapunoPorc', 'porcentajeGap1', 'porcentajeGap2', 'porcentajeGap3', 'cuentas'));
+        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+
+        return view('admin.analisisdebrechas.edit', compact('empleados', 'analisisBrecha', 'gap1porcentaje', 'gap12porcentaje', 'gap2porcentaje', 'gap2satisfactorio', 'gap2parcialmente', 'gap3porcentaje', 'gap31porcentaje', 'gap2noaplica', 'total', 'gapunoPorc', 'porcentajeGap1', 'porcentajeGap2', 'porcentajeGap3', 'cuentas','controles'));
     }
 
     public function update(Request $request, $id)

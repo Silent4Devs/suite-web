@@ -62,6 +62,7 @@ class PanelDeclaracionController extends Controller
 
         $declaracion = DeclaracionAplicabilidad::find($id);
         //guarda lo que viene en el request
+      
         $responsables = $request->responsables;
         //sincroniza mi declaracion con lo que le voy a poner
         $declaracion->responsables()->sync($responsables);
@@ -106,7 +107,7 @@ class PanelDeclaracionController extends Controller
         $declaracion = $request->declaracion;
         $responsable = $request->responsable;
         $existResponsable = DeclaracionAplicabilidadResponsable::select('declaracion_id')->where('declaracion_id', $declaracion)->exists();
-
+       
         $isReasignable = DeclaracionAplicabilidadResponsable::select('declaracion_id')->where('declaracion_id', $declaracion)->whereNull('empleado_id')->exists();
         $readyExistResponsable = DeclaracionAplicabilidadAprobadores::select('declaracion_id')
             ->where('declaracion_id', $declaracion)->where('aprobadores_id', $responsable)->exists();
@@ -116,7 +117,7 @@ class PanelDeclaracionController extends Controller
             if (!$existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
                 if (!$exists) {
-                    // dd($responsable);
+                    // dd($declaracion);
                     DeclaracionAplicabilidadResponsable::updateOrCreate([
                         'declaracion_id' => $declaracion,
                         'empleado_id' => $responsable,
@@ -124,7 +125,6 @@ class PanelDeclaracionController extends Controller
                         'esta_correo_enviado' => false,
 
                     ]);
-
                     return response()->json(['estatus' => 'asignado', 'message' => 'Responsable asignado'], 200);
                 } else {
                     return response()->json(['estatus' => 'ya_asignado', 'message' => 'Este responsable ya ha sido asignado'], 200);

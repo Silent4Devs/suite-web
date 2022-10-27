@@ -33,6 +33,8 @@ class DeclaracionAplicabilidadController extends Controller
     {
         abort_if(Gate::denies('declaracion_de_aplicabilidad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gapa5 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-uno', '=', 'A5');
+        $esmgsi=$gapa5!=null?true:false;
+        $mgsirh= DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('anexo_descripcion', '=', 'Recursos Humanos');
         $gapa6 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A6.1');
         $gapa62 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A6.2');
         $gapa71 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A7.1');
@@ -71,6 +73,8 @@ class DeclaracionAplicabilidadController extends Controller
         $conteoAplica = DeclaracionAplicabilidad::get()->where('aplica', '=', '1')->count();
         $conteoNoaplica = DeclaracionAplicabilidad::get()->where('aplica', '=', '2')->count();
         $gap182total = $gapa182->count();
+        $RhControl= $mgsirh->where('aplica', '=', 1)->count();
+        $RhControlNo = $mgsirh->where('aplica', '=', 2)->count();
         $A5 = $gapa5->where('aplica', '=', 1)->count();
         $A5No = $gapa5->where('aplica', '=', 2)->count();
         $A6 = $gapa6->where('aplica', '=', 1)->count() + $gapa62->where('aplica', '=', 1)->count();
@@ -119,7 +123,7 @@ class DeclaracionAplicabilidadController extends Controller
         // dd(DB::getQueryLog());
         // dd($lista_archivos_declaracion);
 
-        return view('admin.declaracionaplicabilidad.index', compact('conteoAplica', 'conteoNoaplica', 'A5', 'A5No', 'A6', 'A6No', 'A7', 'A7No', 'A8', 'A8No', 'A9', 'A9No', 'A10', 'A10No', 'A11', 'A11No', 'A12', 'A12No', 'A13', 'A13No', 'A14', 'A14No', 'A15', 'A15No', 'A16', 'A16No', 'A17', 'A17No', 'A18', 'A18No'))
+        return view('admin.declaracionaplicabilidad.index', compact('conteoAplica', 'conteoNoaplica', 'A5', 'A5No', 'A6', 'A6No', 'A7', 'A7No', 'A8', 'A8No', 'A9', 'A9No', 'A10', 'A10No', 'A11', 'A11No', 'A12', 'A12No', 'A13', 'A13No', 'A14', 'A14No', 'A15', 'A15No', 'A16', 'A16No', 'A17', 'A17No', 'A18', 'A18No','esmgsi', 'RhControl','RhControlNo','mgsirh'))
             ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)
             ->with('gapda62s', $gapa62)->with('gapda71s', $gapa71)->with('gapda72s', $gapa72)
             ->with('gapda73s', $gapa73)->with('gapda81s', $gapa81)->with('gapda82s', $gapa82)->with('gapda83s', $gapa83)
@@ -319,6 +323,7 @@ class DeclaracionAplicabilidadController extends Controller
         $gapda172s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A17.2');
         $gapda181s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A18.1');
         $gapda182s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A18.2');
+
         $logo = DB::table('organizacions')
             ->select('logotipo')
             ->first();
