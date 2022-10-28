@@ -14,10 +14,12 @@
                             {{ number_format($porcentajeGap1, 2, '.', '') }}
                             %
                         </div>
+                      
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
+                      
                         <p>Definicion del Marco de Seguridad y
                             Privacidad de
                             la Organización. Tiene un peso del 30% del
