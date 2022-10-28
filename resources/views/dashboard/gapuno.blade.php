@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <div id="barraGap1" class="barraGap1">
-                    <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE SEGURIDAD Y PRIVACIDAD DE LA ORGANIZACIÓN
+                    <h6 align="center">GAP 01: MARCO DE GESTIÓN DE SEGURIDAD DE LA INFORMACIÓN
                         ({{ number_format($porcentajeGap1, 2, '.', '') }}%)</h6>
 
                     <div class="progress">
@@ -20,7 +20,7 @@
                 <div class="card">
                     <div class="card-body">
                       
-                        <p>Definicion del Marco de Seguridad y
+                        {{-- <p>Definicion del Marco de Seguridad y
                             Privacidad de
                             la Organización. Tiene un peso del 30% del
                             total
@@ -28,7 +28,7 @@
                             Seguridad y
                             Privacidad , 20% - Proposito de Seguridad y
                             Privacidad de la Informacion.
-                        </p>
+                        </p> --}}
                     </div>
                 </div>
                 <p><strong>INSTRUCCIONES: </strong>Por favor, conteste
@@ -36,35 +36,33 @@
                     siguiente cuestionario de acuerdo con los siguientes
                     parámetros:</p>
                 <div class="row">
-                    <div class="p-3 mb-2 text-white col-3 bg-success">
-                        Cumple
-                        satisfactoriamente
+                    <div class="p-3 mb-2 text-white col-3 " style="background-color:#6863FF">Inexistente
                     </div>
-                    <div class="col-9">Existe, es gestionado, se está
-                        cumpliendo con lo
-                        que la norma ISO 27001 solicita, está
-                        documentado, es conocido y
-                        aplicado por todos los involucrados en el SGSI.
-                        cumple 100%.
+                    <div class="col-9">Total falta de un proceso reconocible.
                     </div>
-                    <div class="w-100"></div>
-                    <div class="p-3 mb-2 text-white col-3 bg-warning">
-                        Cumple
-                        parcialmente
+                    <div class="p-3 mb-2 text-white col-3 " style="background-color:#f49c37">Repetible
                     </div>
-                    <div class="col-9">Lo que la norma requiere
-                        (ISO27001 versión 2013)
-                        se está haciendo de manera parcial, se está
-                        haciendo diferente,
-                        no está documentado, se definió y aprobó pero no
-                        se gestiona
+                    <div class="col-9">Procesos desarrollados hasta el punto en que diferentes personas lo siguen.
+                    </div>
+                    <div class="p-3 mb-2 text-white col-3 " style="background-color:#aaaaaa">Administrada
+                    </div>
+                    <div class="col-9">Posible monitorear y medir el cumplimiento de los procedimientos.
+                    </div>
+                    <div class="p-3 mb-2 text-white col-3 " style="background-color:#4A98FF">Definida 
+                    </div>
+                    <div class="col-9">Procesos estandarizados y documentados, y comunicados a traves de capacitaciones
                     </div>
                     <div class="w-100"></div>
-                    <div class="p-3 mb-2 text-white col-3 bg-danger">No
-                        cumple
+                    <div class="p-3 mb-2 text-white col-3 " style="background-color:#FFCB63">
+                        Inicial
                     </div>
-                    <div class="col-9">No existe y/o no se está
-                        haciendo.
+                    <div class="col-9">No hay procesos estandarizados, pero hay métodos ad hoc que tienden hacer aplicados.
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="p-3 mb-2 text-white col-3" style="background-color:#6DC866">
+                        Optimizada
+                    </div>
+                    <div class="col-9">Procesos refinados hasta un nivel de la mejora práctica, basada en los resultados.
                     </div>
 
                     <h5 class="p-3 mx-auto mb-2 bg-white text-dark">
@@ -167,15 +165,27 @@
             dataType: 'json',
                 source: [{
                 value: '1',
-                text: 'Cumple satisfactoriamente'
+                text: 'Inexistente'
                 },
                 {
                 value: '2',
-                text: 'Cumple parcialmente'
+                text: 'Repetible'
                 },
                 {
                 value: '3',
-                text: 'No cumple'
+                text: 'Administrada'
+                },
+                {
+                value: '4',
+                text: 'Inicial'
+                },
+                {
+                value: '5',
+                text: 'Definida'
+                },
+                {
+                value: '6',
+                text: 'Optimizada'
                 }
             ],
             success: function (response, newValue) {

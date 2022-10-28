@@ -274,9 +274,7 @@
             <div class="card">
                 <div class="card-body">
                     <div id="barraGap1_tablero" class="barraGap1_table">
-                        <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE
-                            SEGURIDAD
-                            Y PRIVACIDAD DE LA ORGANIZACIÓN ({{number_format($porcentajeGap1, 2, '.', '')}}%)</h6>
+                        <h6 align="center">GAP 01: MARCO DE GESTIÓN DE SEGURIDAD DE LA INFORMACIÓN  ({{number_format($porcentajeGap1, 2, '.', '')}}%)</h6>
                         <div class="progress">
                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                                 aria-valuenow="{{(number_format($porcentajeGap1, 2, '.', '') * 100) / 30}}" aria-valuemin="0"
