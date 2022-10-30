@@ -298,29 +298,50 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Cumple satisfactoriamente</td>
-                                    <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
-                                        {{$conteos['Gap1']['satisfactorio']}}
-                                    </td>
-                                    <td>{{number_format(($conteos['Gap1']['satisfactorio'] * 100) / 15), 2, '.', ''}}%</td>
-                                    {{-- <td>{{$conteos['Gap1']['satisfactorio']}}</td> --}}
-                                    {{-- <td>{{number_format($porcentajeGap1, 2, '.', '')}}%</td> --}}
-                                </tr>
-                                <tr>
-                                    <td>Cumple parcialmente</td>
-                                    <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
-                                        {{$conteos['Gap1']['parcialmente']}}
+                                    <td>Inexistente</td>
+                                    <td class="text-black" style="background-color: #6863FF; color:white">
+                                        {{$conteos['Gap1']['inexistente']}}
                                     </td>
                                     {{-- <td>{{number_format(($conteos['Gap1']['parcialmente'] * 30) / 15), 2, '.', ''}}%</td> --}}
-                                    <td>{{number_format(($conteos['Gap1']['parcialmente'] * 100) / 15), 2, '.', ''}}%</td>
+                                    <td >{{number_format(($conteos['Gap1']['inexistente'] * 100) / 15), 2, '.', ''}}%</td>
 
                                 </tr>
                                 <tr>
-                                    <td>No cumple</td>
-                                    <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
-                                        {{$conteos['Gap1']['nocumple']}}
+                                    <td>Inicial</td>
+                                    <td class="text-black" style="background-color: #f49c37;">
+                                        {{$conteos['Gap1']['inicial']}}
                                     </td>
-                                    <td>{{number_format(($conteos['Gap1']['nocumple'] * 100) / 15), 2, '.', ''}}%</td>
+                                    {{-- <td>{{number_format(($conteos['Gap1']['parcialmente'] * 30) / 15), 2, '.', ''}}%</td> --}}
+                                    <td>{{number_format(($conteos['Gap1']['inicial'] * 100) / 15), 2, '.', ''}}%</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Repetible</td>
+                                    <td class="text-black" style="background-color: #aaaaaa;">
+                                        {{$conteos['Gap1']['repetible']}}
+                                    </td>
+                                    <td>{{number_format(($conteos['Gap1']['repetible'] * 100) / 15), 2, '.', ''}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Definida</td>
+                                    <td class="text-black" style="background-color: #4A98FF; color:white">
+                                        {{$conteos['Gap1']['definida']}}
+                                    </td>
+                                    <td>{{number_format(($conteos['Gap1']['definida'] * 100) / 15), 2, '.', ''}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Administrada</td>
+                                    <td class="text-black" style="background-color: #FFCB63;">
+                                        {{$conteos['Gap1']['administrada']}}
+                                    </td>
+                                    <td>{{number_format(($conteos['Gap1']['administrada'] * 100) / 15), 2, '.', ''}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Optimizada</td>
+                                    <td class="text-black" style="background-color: #6DC866;">
+                                        {{$conteos['Gap1']['optimizada']}}
+                                    </td>
+                                    <td>{{number_format(($conteos['Gap1']['optimizada'] * 100) / 15), 2, '.', ''}}%</td>
                                 </tr>
                                 <!--<tr>
                                     <td>Autodiagnóstico</td>
@@ -335,7 +356,7 @@
                                 <tr>
                                     <td align="right">Total</td>
                                     <td>
-                                        {{$conteos['Gap1']['satisfactorio'] + $conteos['Gap1']['parcialmente'] + $conteos['Gap1']['nocumple']}}
+                                        {{$conteos['Gap1']['inexistente'] + $conteos['Gap1']['inicial'] + $conteos['Gap1']['repetible']+ $conteos['Gap1']['definida']+ $conteos['Gap1']['administrada']+ $conteos['Gap1']['optimizada']}}
                                     </td>
                                     <td>
                                         {{number_format($porcentajeGap1, 2, '.', '')}}%
@@ -651,21 +672,30 @@
         },
         data: {
             labels: [
-                "Satistactoriamente",
-                "Parcialmente",
-                "No cumple",
+                "Inexistente",
+                "Inicial",
+                "Repetible",
+                "Definida",
+                "Administrada",
+                "Optimizada",
             ],
             datasets: [{
                 label: '',
                 data: [
-                    {{$conteos['Gap1']['satisfactorio']}},
-                    {{$conteos['Gap1']['parcialmente']}},
-                    {{$conteos['Gap1']['nocumple']}}
+                    {{$conteos['Gap1']['inexistente']}},
+                    {{$conteos['Gap1']['inicial']}},
+                    {{$conteos['Gap1']['repetible']}},
+                    {{$conteos['Gap1']['definida']}},
+                    {{$conteos['Gap1']['administrada']}},
+                    {{$conteos['Gap1']['optimizada']}}
                 ],
                 backgroundColor: [
-                    'rgba(22, 160, 133, 0.6)',
-                    'rgba(244, 208, 63, 0.6)',
-                    'rgba(231, 76, 60, 0.6)',
+                    '#6863FF',
+                    '#f49c37',
+                    '#aaaaa',
+                    '#4A98FF',
+                    '#FFCB63',
+                    '#6DC866',
                 ]
             }]
         },
@@ -704,21 +734,30 @@
         type: 'doughnut',
         data: {
             labels: [
-                "Cumple satistactoriamente",
-                "Cumple parcialmente",
-                "No cumple",
+                "Inexistente",
+                "Inicial",
+                "Repetible",
+                "Definida",
+                "Administrada",
+                "Optimizada",
             ],
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap1']['satisfactorio']}},
-                    {{$conteos['Gap1']['parcialmente']}},
-                    {{$conteos['Gap1']['nocumple']}}
+                    {{$conteos['Gap1']['inexistente']}},
+                    {{$conteos['Gap1']['inicial']}},
+                    {{$conteos['Gap1']['repetible']}},
+                    {{$conteos['Gap1']['definida']}},
+                    {{$conteos['Gap1']['administrada']}},
+                    {{$conteos['Gap1']['optimizada']}}
                 ],
                 backgroundColor: [
-                    'rgba(22, 160, 133, 0.6)',
-                    'rgba(244, 208, 63, 0.6)',
-                    'rgba(231, 76, 60, 0.6)',
+                    '#6863FF',
+                    '#f49c37',
+                    '#aaaaaa',
+                    '#4A98FF',
+                    '#FFCB63',
+                    '#6DC866',
                 ]
             }]
         }

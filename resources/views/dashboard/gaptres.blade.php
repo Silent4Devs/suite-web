@@ -14,7 +14,7 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <p>Monitoreo y mejoramiento continuo. Tiene un peso del 30% del total del componente: 20% - Actividades de seguimiento, medicion, analisis y evaluacion. 10% - Revision e Implementacion de Acciones de Mejora.
+                            <p>{{$porcentajeGap3['porcentaje']}} Monitoreo y mejoramiento continuo. Tiene un peso del 30% del total del componente: 20% - Actividades de seguimiento, medicion, analisis y evaluacion. 10% - Revision e Implementacion de Acciones de Mejora.
 
                             </p>
                         </div>

@@ -164,8 +164,12 @@
 
             dataType: 'json',
                 source: [{
-                value: '1',
+                value: '0',
                 text: 'Inexistente'
+                },
+                {
+                value: '1',
+                text: 'Inicial'
                 },
                 {
                 value: '2',
@@ -173,18 +177,14 @@
                 },
                 {
                 value: '3',
-                text: 'Administrada'
-                },
-                {
-                value: '4',
-                text: 'Inicial'
-                },
-                {
-                value: '5',
                 text: 'Definida'
                 },
                 {
-                value: '6',
+                value: '4',
+                text: 'Administrada'
+                },
+                {
+                value: '5',
                 text: 'Optimizada'
                 }
             ],

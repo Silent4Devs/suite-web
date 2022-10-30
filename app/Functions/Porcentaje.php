@@ -8,10 +8,18 @@ class Porcentaje
     {
         $gap1cont = 0;
         foreach ($gap1porcentaje as $gap1) {
-            if ($gap1->valoracion == '1') {
-                $gap1cont += 5;
+            if ($gap1->valoracion == '0') {
+                $gap1cont += 0;
+            } elseif ($gap1->valoracion == '1') {
+                $gap1cont += 1;
             } elseif ($gap1->valoracion == '2') {
-                $gap1cont += 2.5;
+                $gap1cont += 2;
+            } elseif ($gap1->valoracion == '3') {
+                $gap1cont += 3;
+            } elseif ($gap1->valoracion == '4') {
+                $gap1cont += 4;
+            } elseif ($gap1->valoracion == '5') {
+                $gap1cont += 5;
             } else {
                 $gap1cont += 0;
             }
@@ -20,10 +28,18 @@ class Porcentaje
         //$porc1 = ($gap1cont * 20) / 13;
         $gap12cont = 0;
         foreach ($gap12porcentaje as $gap12) {
-            if ($gap12->valoracion == '1') {
-                $gap12cont += 1.538461538;
+            if ($gap12->valoracion == '0') {
+                $gap12cont += 0;
+            } elseif ($gap12->valoracion == '1') {
+                $gap12cont += 1;
             } elseif ($gap12->valoracion == '2') {
-                $gap12cont += 0.769230769;
+                $gap12cont += 2;
+            } elseif ($gap12->valoracion == '3') {
+                $gap12cont += 3;
+            } elseif ($gap12->valoracion == '4') {
+                $gap12cont += 4;
+            } elseif ($gap12->valoracion == '5') {
+                $gap12cont += 5;
             } else {
                 $gap12cont += 0;
             }
