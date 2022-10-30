@@ -8,64 +8,412 @@ class GenerateAnalisisB
     {
         return [
 
+                // [
+                //     'pregunta'               => '¿La entidad cuenta con un autodiagnóstico realizado para medir el avance en el establecimiento, implementación, mantenimiento y mejora continua de su SGSI (Sistema de Gestión de Seguridad de la información)?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad creó un caso de estudio o plan inicial del proyecto, donde se incluyen las prioridades y objetivos para la implementación del SGSI?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad contó con la aprobación de la dirección para iniciar el proyecto del SGSI?	',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad ha identificado los aspectos internos y externos que pueden afectar en el desarrollo del proyecto de implementación del sistema de gestión de seguridad de la información?	',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad ha identificado las partes interesadas, necesidades y expectativas de estas respecto al Sistema de Gestión de Seguridad de la Información?	',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad ha evaluado los objetivos y las necesidades respecto a la Seguridad de la Información?	',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿En la entidad se ha definido un Comité de Seguridad de la Información?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad cuenta con una definición del alcance y los límites del Sistema de Gestión de Seguridad de la Información?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => 'En la entidad existe un documento de política del Sistema de Gestión de Seguridad de la Información, el cual ha sido aprobado por la Dirección?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿En la entidad existe un documento de roles, responsabilidades y autoridades en seguridad de la información?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad tiene establecido algún proceso para identificar, analizar, valorar y tratar los riesgos de seguridad de la información?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad ha realizado una declaración de aplicabilidad que contenga los controles requeridos por la entidad?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad ha evaluado las competencias de las personas que realizan, bajo su control, un trabajo que afecta el desempeño de la seguridad de la Información?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad tiene definido un modelo de comunicaciones tanto internas como externas respecto a la seguridad de la información?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
+                // [
+                //     'pregunta'               => '¿La entidad tiene la información referente al Sistema de Gestión de Seguridad de la Información debidamente documentada y controlada?',
+                //     'analisis_brechas_id'    =>  $analisis_id,
+                // ],
                 [
-                    'pregunta'               => '¿La entidad cuenta con un autodiagnóstico realizado para medir el avance en el establecimiento, implementación, mantenimiento y mejora continua de su SGSI (Sistema de Gestión de Seguridad de la información)?',
+                    'pregunta'  => '¿Cuentan con acuerdos de confidencialidad y no divulgación de la información institucional?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad creó un caso de estudio o plan inicial del proyecto, donde se incluyen las prioridades y objetivos para la implementación del SGSI?',
+                    'pregunta'  => '¿Se tienen definidos y documentados roles y responsabilidades de seguridad de la información?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad contó con la aprobación de la dirección para iniciar el proyecto del SGSI?	',
+                    'pregunta'  => '¿Se cuenta con políticas, procedimientos y controles  definidos para un correcto uso del correo institucional?¿Me puede mostrar evidencia de ello?	',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad ha identificado los aspectos internos y externos que pueden afectar en el desarrollo del proyecto de implementación del sistema de gestión de seguridad de la información?	',
+                    'pregunta'  => '¿Cómo se realiza la gestión de los privilegios de acceso a los activos en materia de TIC?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad ha identificado las partes interesadas, necesidades y expectativas de estas respecto al Sistema de Gestión de Seguridad de la Información?	',
+                    'pregunta'  => '¿Cuentas con un programa de concienciación formalizado?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad ha evaluado los objetivos y las necesidades respecto a la Seguridad de la Información?	',
+                    'pregunta'  => '¿Cómo llevan acabo la concienciación, formación y educación sobre seguridad y el uso aceptable los equipos?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿En la entidad se ha definido un Comité de Seguridad de la Información?',
+                    'pregunta'  => '¿Se cuenta con algún procedimiento para el almacenamiento de datos, respaldo y copias de seguridad?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad cuenta con una definición del alcance y los límites del Sistema de Gestión de Seguridad de la Información?',
+                    'pregunta'  => '¿Se realizán campañas de concienciación de la exposición voluntaria e involuntaria de datos de la SEDATU?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => 'En la entidad existe un documento de política del Sistema de Gestión de Seguridad de la Información, el cual ha sido aprobado por la Dirección?',
+                    'pregunta'  => '¿El personal interno y externo de la Secretaria se encuentra advertido sobre los peligros del descuido sobre redes inseguras?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿En la entidad existe un documento de roles, responsabilidades y autoridades en seguridad de la información?',
+                    'pregunta'  => '¿Cómo administras las contraseñas?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad tiene establecido algún proceso para identificar, analizar, valorar y tratar los riesgos de seguridad de la información?',
+                    'pregunta'  => '¿Cuentas con métodos de autenticación?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad ha realizado una declaración de aplicabilidad que contenga los controles requeridos por la entidad?',
+                    'pregunta'  => '¿Cómo gestionas las credenciales de acceso?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad ha evaluado las competencias de las personas que realizan, bajo su control, un trabajo que afecta el desempeño de la seguridad de la Información?',
+                    'pregunta'  => '¿Cuentas con algún procedimiento para la administración de cuentas?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad tiene definido un modelo de comunicaciones tanto internas como externas respecto a la seguridad de la información?',
+                    'pregunta'  => '¿Cuentas con un proceso de accesos físicos a los activos de información?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
                 [
-                    'pregunta'               => '¿La entidad tiene la información referente al Sistema de Gestión de Seguridad de la Información debidamente documentada y controlada?',
+                    'pregunta'  => '¿Tienes permitido el uso de VPN?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con una responsiva de uso de VPN?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con un mecanismo de administración de accesos por VPN?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cómo restringes los acceso a nivel puerto o MAC?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con filtrado de navegación web?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cómo se encuentran configuradas las reglas de comunicación de envío y recepción de correo electrónico?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cómo se encuentran configuradas las medidas de seguridad de correo electrónico?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cómo se lleva a cabo el monitoreo de dispositivos al acceder a la red institucional?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con inventario de activos de información, así como de proveedores TI?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con una metodología de análisis de riesgos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con proceso de gestión de incidentes de seguridad?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con un Plan de Continuidad de Negocio?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con un plan de gestión de vulnerabilidades?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con una matriz de proveedores y servicios?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con un plan de Migración para las aplicaciones obsoletas?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con un plan de migración de software libre?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cuentas con inventario de activos físicos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con la actualización del firmware en los equipos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con una bitacora de control de mantenimiento fisico, cambio, remoción, o en su caso, destruccion de los equipos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con una bitácora al centro de datos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Cómo se lleva acabo el proceso de acceso físico a las instalaciones?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se Implementan bóvedas de medios, centros de datos alternos cuando sea posible, servicios en la nube, como alternativas para recuperar la operación de los Centros de Datos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se implementa en caso de requerirse  centros de datos alternos y bóvedas de medios, estos deberán estar localizados en distintos puntos geográficos ,geológicamente viables y dentro del territorio nacional?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se implementan mecanismos de cifrado en los medios de almacenamiento en Centros de Datos centralizados, determinando que la administración de dichos mecanismos de cifrado esté a cargo de servidores públicos y nunca bajo la responsabilidad de un proveedor?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿En el centro de datos se cumple con su diseño, estructura, desempeño, fiabilidad y medidas de seguridad equivalentes, como mínimo, el equivalente al estándar TIER II?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se establecen procesos o procedimientos formales para la administración del Centro de Datos, en cuanto a accesos, mantenimiento de equipos, supervisión de trabajos externos y otras actividades relacionadas?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se aplican políticas de firewall permitiendo sólo el tráfico válido para la Dependencia o Entidad por medio de los puertos TCP/IP necesarios y autorizados?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se utilizan redes abiertas únicamente al proporcionar servicios a la población, las cuales deberán estar separadas y aisladas de las redes de datos institucionales, como por ejemplo, LAN, DMZ, invitados y de control, en caso de existir?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se utilizan mecanismos de cifrado de llave pública y privada, canales cifrados de comunicación y, cuando corresponda, de firma electrónica avanzada, que permitan el acceso de la información únicamente al destinatario autorizado al que esté dirigida?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se implementan  controles de red como segmentación de redes, reglas de control de acceso, almacenamiento de bitácoras, seguridad de puertos, así como otras buenas prácticas con la finalidad de tener una mejor administración y seguridad en la red?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se desactiva el uso del protocolo RDP en general, en caso de ser necesario, se limita por velocidad con doble factor de autenticación?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se establecen accesos por VPN como único medio de acceso remoto a las redes internas de la Dependencia o Entidad, con autenticación separada a la de los servicios institucionales, sin tener permisos superiores a los que el usuario tiene en la red interna, y con la finalidad de que sólo usuarios autorizados puedan acceder a la red institucional desde sitios remotos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se establecen accesos restringidos a la red LAN para que sólo personal de la Dependencias o Entidad tenga acceso; y para usuarios externos, se es requerido contar con justificación, autorización y los registros correspondientes?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se implementa proxy en las redes Wireless y LAN, estableciendo políticas de uso de la red, es decir, autorización para navegar a sitios de la Internet y no permitiendo el acceso o salida directa hacia ésta; además, se detectan páginas fraudulentas o sospechosas por medio de direcciones IP o dominios?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con una bitácora con la justificación de cada regla configurada en los firewall?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se deshabilitan las reglas de acceso en el Firewall que no sean ocupadas, se verifican y actualizan periódicamente según las necesidades institucionales?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se establece una configuración base y se realiza periódicamente copias de seguridad de las configuraciones de dispositivos de telecomunicaciones?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se mantienen actualizado el firmware, el sistema operativo y el software instalado en los equipos, en su última versión estable, sin afectar la operación, así como aplicar los parches de seguridad recomendados por los fabricantes?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se realiza el monitoreo y análisis en el flujo de tráfico y dispositivos de red, para la detección oportuna de amenazas que puedan explotar vulnerabilidades de los activos de información en la Dependencia?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se encuentra implementado un mecanismo de revisión constante de la reputación del segmento de IP? Y en caso de estar en una lista negra, ¿Se identifican la(s) causa(s) por la(s) que la reputación del segmento decreció, se soluciona el problema y solicita la exclusión de la lista negra?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se utilizan los protocolos seguros HTTPS, SFTP y SSH, en lugar de HTTP, FTP y Telnet? ¿Se prioriza el uso de Let’s Encrypt e implementar Autoridades de Certificación internas de confianza?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se restringe el acceso a invitados a una red sólo con salida a internet, que no tenga acceso a la red interna de la Dependencia, estableciendo el tiempo máximo de autorización de los dispositivos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Si se cuenta con proveedores, el personal interno de la Dependencia tiene acceso a los equipos de telecomunicaciones, además de estos, con usuarios y con privilegios de lectura o monitoreo a los equipos de telecomunicaciones, que están autorizados y documentados?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con la creación de imágenes de instalación base con las aplicaciones permitidas al interior de cada Dependencia, de preferencia conformadas por software libre; la configuración de los sistemas operativos y habilitación de los usuarios estrictamente necesarios de acuerdo con el grupo o rol de la persona servidora pública y priorizando el principio de menor privilegio?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con procedimientos necesarios para la autorización, el ingreso, registro y la conexión de equipos de cómputo personales a las redes institucionales?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se implementan herramientas de monitoreo de aplicaciones instaladas y actividad no deseada en los equipos de cómputo?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se utilizan medidas necesarias para detectar y evitar la desinstalación o deshabilitación de las herramientas o los servicios de seguridad aplicados en la Dependencia?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se realiza el borrado seguro o destrucción de equipos que contengan información que esté clasificada como reservada o confidencial para la Dependencia y se mantiene evidencia auditable del proceso?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se realiza la instalación y actualización de software antimalware en los equipos de escritorio, portátiles y servidores para evitarla instalación, propagación y ejecución de malware en diversos puntos de la red interna de la Dependencia?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cierran puertos y deshabilitación servicios que no se utilizan en los servidores, aplicando las configuraciones recomendadas?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se implementa un mecanismo de aplicación de parches de seguridad indicados por los fabricantes de hardware y software?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se habilitan políticas de permisos de grupo para restringir el uso de herramientas de línea de comando(Powershell, Terminal, Shell) a cualquier usuario?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con la autorización previa y acceso a las redes de los dispositivos móviles, propiedad de terceros, además de conectarse a una red como invitado sin conectarse a los servicios internos de la dependencia?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se realiza la creación y actualización de un inventario de aplicaciones y sistemas de información en la Dependencia?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se implementa un repositorio del código fuente Institucional,  bajo control y administrado por la Dependencia e independiente a los contratos con fábricas de software?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con bitácoras y registros con fines de auditoría y trazabilidad de procesos de desarrollo de software?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se encuentran separados los sistemas esenciales de la red de datos interna y sólo se le permite el acceso o salida directa hacia la Internet, como mínimo, con una protección perimetral de red?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se encuentra la comunicación cifrada para las aplicaciones o servicios que estén expuestos en Internet y que manejen información sensible, como Información confidencial o reservada, datos personales y datos personales sensibles, con el fin de evitar que ésta sea modificada expuesta a personas no autorizadas?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Para el desarrollo de sistemas o aplicaciones, se rige bajo los principios de privilegio mínimo y funcionalidad mínima, validando cada operación que realiza el usuario a través de verificación explícita, todas las entradas, incluido el tamaño, el tipo de datos, los rangos o formatos aceptables y los posibles errores?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se encuentran separados los ambientes de desarrollo y pruebas entre ellos y de ambientes productivos, se siguen las medidas de seguridad que se implementan para un ambiente de producción con la finalidad de simular y validar los escenarios que expongan riesgos de seguridad?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se establecen los controles necesarios, así como los criterios y el perfil del usuario que tendrá acceso al código fuente para realizar cambios e implementaciones que requiera el sistema o aplicación, en horarios no hábiles para no afectar la disponibilidad del servicio?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con la actualización de las bibliotecas y lenguajes de programación utilizados en el desarrollo de aplicaciones y sistemas para minimizar la exposición a vulnerabilidades, en caso de que dicha actualización afecte la funcionalidad desempeño del sistema y/o aplicativo, se planifica y realiza la adecuación a los mismos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se realizan pruebas unitarias y de integridad a los sistemas desarrollados?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se realizan pruebas de estrés y carga masiva de datos a los sistemas y aplicaciones desarrollados antes de su implementación en ambientes productivos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se realiza un análisis de vulnerabilidades a los sistemas o aplicaciones, en particular las identificadas como esenciales para la Dependencia, con el fin de verificar que cumplan con los requisitos mínimos previo a su operación en producción?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se realizan pruebas de respaldo y restauración de los sistemas, aplicaciones y los servicios y de la información u otros activos de información relacionados con estos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con un marco de políticas del remitente (SPF), identificado de llaves de dominio (DKIM) y mensajes basados en el dominio (DMARC) para el servicio de correo electrónico?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se utiliza un mecanismo para realizar pruebas de respaldo y restauración de las bases de datos institucionales, y estas se encuentran cifradas?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con la definición de  usuarios, roles y permisos específicos para las diferentes operaciones en las bases de datos?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con un inventario de todas las bases de datos institucionales y su interoperabilidad con otros sistemas internos o externos y con otras Instituciones públicas?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se ofusca información de bases de datos que sea utilizada en ambientes de desarrollo?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se utiliza cifrado en reposo y en tránsito, cuando la base de datos contiene datos personales?',
+                    'analisis_brechas_id'    =>  $analisis_id,
+                ],
+                [
+                    'pregunta'  => '¿Se cuenta con bases de datos que contengan información confidencial, y el contenido de las tuplas esta cifrado utilizando llaves cuya posesión sea exclusivamente para personas autorizadas y nunca tengan acceso el administrador del sistema operativo ni el DBA?',
                     'analisis_brechas_id'    =>  $analisis_id,
                 ],
 
