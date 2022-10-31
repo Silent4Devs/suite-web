@@ -201,10 +201,12 @@ body::before{
         background-position: 200px -600px; 
     }
     70%{
-        background-position: 200px -600px; 
+        background-position: 200px -600px;
+        opacity: 0;
     }
     100%{
         background-position: -200px -200px; 
+        opacity: 1; 
     }
 }
 
@@ -221,9 +223,11 @@ body::after{
     }
     70%{
         background-position: calc(100% - 600px) 700px;  
+        opacity: 0;
     }
     100%{
         background-position: 100% 70px; 
+        opacity: 1;
     }
 }
 
