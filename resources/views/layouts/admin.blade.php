@@ -1637,6 +1637,23 @@
             $.fn.dataTable.ext.classes.sPageButton = '';
         });
     </script>
+
+    {{-- responsive --}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if($(window).width() <= 800){
+                $('body').addClass('body-responsive-mobile');
+            }
+        });
+        $(window).resize(function(){
+            if($(window).width() <= 800){
+                $('body').addClass('body-responsive-mobile');
+            }else{
+                $('body').removeClass('body-responsive-mobile');
+            }
+        });
+    </script>
+    
     <script>
         $(document).ready(function() {
             $(".notifications-menu").on('click', function() {
