@@ -20,6 +20,7 @@ class GapUno extends Model
     ];
 
     protected $fillable = [
+        'modulo',
         'pregunta',
         'valoracion',
         'evidencia',

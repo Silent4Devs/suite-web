@@ -71,7 +71,7 @@
                         <table class="table" style="font-size: 12px;">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col">NO</th>
+                                    <th scope="col">MÓDULO</th>
                                     <th scope="col">PREGUNTA</th>
                                     <th scope="col">VALORACIÓN</th>
                                     <th scope="col">EVIDENCIA DE
@@ -84,7 +84,7 @@
                                 @foreach ($gapunos as $gapuno)
                                     <tr>
                                         <th scope="row">
-                                            {{ $gapuno->id }}
+                                            {{ $gapuno->modulo }}
                                         </th>
                                         <td>
                                             {{ $gapuno->pregunta }}
