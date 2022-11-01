@@ -51,6 +51,10 @@
         margin: 0;
     }
 
+    /*login -----------------------------------*/
+    #layout-app-body .container-fluid{
+        padding-left: 0px !important;
+    }
 
     /* timesheet ------------------------------- */
     .caja-calendar-semana{
