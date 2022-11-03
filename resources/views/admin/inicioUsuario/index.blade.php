@@ -140,7 +140,7 @@
     @include('partials.flashMessages')
     <div id="inicio_usuario" class="row" style="">
         <h5 class="col-12 titulo_general_funcion">Mi Perfil</h5>
-        <div class="col-lg-12 row caja_botones_secciones">
+        <div class="col-lg-12 row caja_botones_secciones d-mobile-none">
             @if ($usuario->empleado)
                 <div class="col-12 caja_botones_menu" style="justify-content: center !important;">
                     @can('mi_perfil_mis_datos_acceder')
@@ -260,7 +260,62 @@
                     @include('admin.inicioUsuario.agenda')
                 @endif
             </div>
+        </div>
 
+        <div class="d-mobile w-100">
+            <div style="
+                    width: 90%;
+                    margin: auto;
+                    height: 180px;
+                    background-color: #788BAC;
+                    margin-top: -80px;
+                    border-bottom-left-radius: 60px;
+                    border-bottom-right-radius: 60px;
+            "></div>
+            <img class="img_empleado_presentacion_mis_datos" src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}">
+
+            <h3 style="color: #3086AF; margin-top:30px; text-align: center;">{{ $usuario->empleado->name }}</h3>
+            <h5 style="color: #000; margin-top:15px; text-align: center;">{{ $usuario->empleado->puesto }}</h5>
+            <h6 style="color: #788BAC; margin-top:15px; text-align: center;">{{ $usuario->empleado->area->area }}</h6>
+            <h6 style="color: #747474; margin-top:15px; text-align: center;"><strong style="color:#3086AF;">Empleado:</strong> {{ $usuario->empleado->n_empleado}}</h6>
+
+            <div class="caja-cards-mobile-datos mt-5">
+                <div class="card card-body">
+                    <i class="bi bi-file-text"></i>
+                    <h6>Mis datos</h6>
+                </div>
+                <div class="card card-body">
+                    <i class="bi bi-people" style="transform:scale(1.15);"></i>
+                    <h6>Mi equipo</h6>
+                </div>
+            </div>
+            <div class="caja-cards-mobile-datos">
+                <div class="card card-body">
+                    <i class="bi bi-laptop  "></i>
+                    <h6>Mis activos</h6>
+                </div>
+
+                <div class="card card-body">
+                    <i class="bi bi-bookmark-star"></i>
+                    <h6>Mis competencias</h6>
+                </div>
+            </div>
+            <div class="caja-cards-mobile-datos">
+                <div class="card card-body">
+                    <i class="bi bi-bullseye"></i>
+                    <h6>Mis objetivos</h6>
+                </div>
+                <div class="card card-body">
+                    <i class="bi bi-person-badge"></i>
+                    <h6>Mi autoevaluación</h6>
+                </div>
+            </div>
+            <div class="caja-cards-mobile-datos">
+                <div class="card card-body">
+                    <i class="bi bi-person-badge-fill mr-2"></i>
+                    <h6>Evaluaciones a realizar</h6>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

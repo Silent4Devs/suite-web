@@ -1327,6 +1327,25 @@
         </div>
     </div>
 
+    <div class="barra-herramientas-bottom-molbile">
+        <div class="btn-barra-bottom-mobile">
+            <i class="bi bi-file-person"></i>
+            <p>Perfil</p>
+        </div>
+        <div class="btn-barra-bottom-mobile">
+            <i class="bi bi-calendar3-range"></i>
+            <p>Timesheet</p>
+        </div>
+        <div class="btn-barra-bottom-mobile">
+            <i class="bi bi-calendar3"></i>
+            <p>Calendario</p>
+        </div>
+        <div class="btn-barra-bottom-mobile">
+            <i class="bi bi-newspaper"></i>
+            <p>Comunicación</p>
+        </div>
+    </div>
+
     <script>
         function imprimirElemento(elemento) {
             let elemento_seleccionado = document.getElementById(elemento);
