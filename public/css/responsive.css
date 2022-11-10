@@ -71,6 +71,7 @@
         width: 25%;
         text-align: center;
         padding-top: 3px;
+        color: #747474;
     }
     .btn-barra-bottom-mobile i{
         font-size: 17px;
@@ -80,6 +81,10 @@
         margin: 0;
         padding: 0;
         margin-top: -5px
+    }
+
+    .modal.fade.show{
+        padding-right: 0px !important;
     }
 
     /*login -----------------------------------*/

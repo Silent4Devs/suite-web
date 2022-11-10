@@ -1328,22 +1328,22 @@
     </div>
 
     <div class="barra-herramientas-bottom-molbile">
-        <div class="btn-barra-bottom-mobile">
+        <a href="{{ route('admin.inicio-Usuario.index') }}#datos" class="btn-barra-bottom-mobile" {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-file-person"></i>
             <p>Perfil</p>
-        </div>
-        <div class="btn-barra-bottom-mobile">
+        </a>
+        <a href="{{ route('admin.timesheet-inicio') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-calendar3-range"></i>
             <p>Timesheet</p>
-        </div>
-        <div class="btn-barra-bottom-mobile">
+        </a>
+        <a href="{{ route('admin.systemCalendar') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-calendar3"></i>
             <p>Calendario</p>
-        </div>
-        <div class="btn-barra-bottom-mobile">
+        </a>
+        <a href="{{ route('admin.portal-comunicacion.index') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-newspaper"></i>
             <p>Comunicación</p>
-        </div>
+        </a>
     </div>
 
     <script>
