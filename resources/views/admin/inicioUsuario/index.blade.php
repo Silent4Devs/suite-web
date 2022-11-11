@@ -140,7 +140,7 @@
     @include('partials.flashMessages')
     <div id="inicio_usuario" class="row" style="">
         <h5 class="col-12 titulo_general_funcion">Mi Perfil</h5>
-        <div class="col-lg-12 row caja_botones_secciones">
+        <div class="col-lg-12 row caja_botones_secciones d-mobile-none">
             @if ($usuario->empleado)
                 <div class="col-12 caja_botones_menu" style="justify-content: center !important;">
                     @can('mi_perfil_mis_datos_acceder')
@@ -260,7 +260,305 @@
                     @include('admin.inicioUsuario.agenda')
                 @endif
             </div>
+        </div>
 
+        <div class="d-mobile w-100">
+            <div style="
+                    width: 90%;
+                    margin: auto;
+                    height: 180px;
+                    background-color: #788BAC;
+                    margin-top: -80px;
+                    border-bottom-left-radius: 60px;
+                    border-bottom-right-radius: 60px;
+            "></div>
+            <img class="img_empleado_presentacion_mis_datos" src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}">
+
+            <h3 style="color: #3086AF; margin-top:30px; text-align: center;">{{ $usuario->empleado->name }}</h3>
+            <h5 style="color: #000; margin-top:15px; text-align: center;">{{ $usuario->empleado->puesto }}</h5>
+            <h6 style="color: #788BAC; margin-top:15px; text-align: center;">{{ $usuario->empleado->area->area }}</h6>
+            <h6 style="color: #747474; margin-top:15px; text-align: center;"><strong style="color:#3086AF;">Empleado:</strong> {{ $usuario->empleado->n_empleado}}</h6>
+
+            <div class="caja-cards-mobile-datos mt-5">
+                <div class="card card-body" data-toggle="modal" data-target="#mis_datos_mobile">
+                    <i class="bi bi-file-text"></i>
+                    <h6>Mis datos</h6>
+                </div>
+                <div class="card card-body" data-toggle="modal" data-target="#mi_equipo_mobile">
+                    <i class="bi bi-people" style="transform:scale(1.15);"></i>
+                    <h6>Mi equipo</h6>
+                </div>
+            </div>
+            <div class="caja-cards-mobile-datos">
+                <div class="card card-body" data-toggle="modal" data-target="#mis_activos_mobile">
+                    <i class="bi bi-laptop  "></i>
+                    <h6>Mis activos</h6>
+                </div>
+
+                <div class="card card-body" data-toggle="modal" data-target="#mis_competencias_mobile">
+                    <i class="bi bi-bookmark-star"></i>
+                    <h6>Mis competencias</h6>
+                </div>
+            </div>
+            <div class="caja-cards-mobile-datos">
+                <div class="card card-body">
+                    <i class="bi bi-bullseye"></i>
+                    <h6>Mis objetivos</h6>
+                </div>
+                <div class="card card-body">
+                    <i class="bi bi-person-badge"></i>
+                    <h6>Mi autoevaluación</h6>
+                </div>
+            </div>
+            <div class="caja-cards-mobile-datos">
+                <div class="card card-body">
+                    <i class="bi bi-person-badge-fill mr-2"></i>
+                    <h6>Evaluaciones a realizar</h6>
+                </div>
+            </div>
+        </div>
+
+        {{-- modal boile mis datos --}}
+        <div class="modal fade" id="mis_datos_mobile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" style="color: #3086AF;">Mis Datos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @if (!empty($panel_rules->n_empleado))
+                            @if ($panel_rules->n_empleado)
+                                <div class="form-group">
+                                    <label><i class="bi bi-person iconos-crear"></i>N° Empleado</label>
+                                    <div class="text-muted">
+                                        {{ $usuario->empleado->n_empleado }}
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($panel_rules->email)
+                                <div class="form-group">
+                                    <label><i class="bi bi-envelope iconos-crear"></i> Email</label>
+                                    <div class="text-muted">
+                                        {{ $usuario->empleado->email }}
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($panel_rules->fecha_ingreso)
+                                <div class="form-group">
+                                    <label><i class="bi bi-calendar2-event iconos-crear"></i> Fecha de ingreso</label>
+                                    <div class="text-muted">
+                                        {{ \Carbon\Carbon::parse($usuario->empleado->antiguedad)->format('d/m/Y') }}
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($panel_rules->jefe_inmediato)
+                                <div class="form-group">
+                                    <label><i class="bi bi-person iconos-crear"></i> Jefe inmediato</label>
+                                    <div class="text-muted">
+                                        {{ $usuario->empleado->supervisor ? $usuario->empleado->supervisor->name : 'Sin Jefe Inmediato' }}
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($panel_rules->area)
+                                <div class="form-group">
+                                    <label><i class="bi bi-diagram-3 iconos-crear"></i> Área</label>
+                                    <div class="text-muted">
+                                        {{ $usuario->empleado->area ? $usuario->empleado->area->area : 'Dato no registrado' }}
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($panel_rules->puesto)
+                                <div class="form-group">
+                                    <label><i class="bi bi-person-badge iconos-crear"></i> Puesto</label>
+                                    <div class="text-muted">
+                                        {{ $usuario->empleado->puesto ? $usuario->empleado->puesto : 'Dato no registrado' }}
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($panel_rules->sede)
+                                <div class="form-group">
+                                    <label><i class="bi bi-building iconos-crear"></i> Sede</label>
+                                    <div class="text-muted">
+                                        {{ $usuario->empleado->sede ? $usuario->empleado->sede->sede : 'Dato no registrado' }}
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($panel_rules->telefono)
+                                <div class="form-group">
+                                    <label><i class="bi bi-telephone iconos-crear"></i> Teléfono</label>
+                                    <div class="text-muted">
+                                        {{ $usuario->empleado->telefono ? $usuario->empleado->telefono : 'Dato no registrado' }}
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
+
+                        @if ($panel_rules->cumpleaños)
+                            <div class="form-group">
+                                <label><i class="bi bi-calendar4-event iconos-crear"></i> Cumpleaños</label>
+                                <div class="text-muted">
+                                    {{ \Carbon\Carbon::parse($usuario->empleado->cumpleaños)->format('d-m-Y') ?: 'Dato no registrado' }}
+                                </div>
+                            </div>
+                        @endif
+                        @if ($panel_rules->perfil)
+                            <div class="form-group">
+                                <label><i class="bi bi-person-badge iconos-crear"></i> Perfil</label>
+                                <div class="text-muted">
+                                    {{ $usuario->empleado->perfil ? $usuario->empleado->perfil->nombre : 'Dato no registrado' }}
+                                </div>
+                            </div>
+                        @endif
+                        @if ($panel_rules->genero)
+                            <div class="form-group">
+                                <label><i class="bi bi-person iconos-crear"></i> Genero</label>
+                                <div class="text-muted">
+                                    {{ $usuario->empleado->genero ? $usuario->empleado->genero : 'Dato no registrado' }}
+                                </div>
+                            </div>
+                        @endif
+                        @if ($panel_rules->estatus)
+                            <div class="form-group">
+                                <label><i class="bi bi-reception-3 iconos-crear"></i> Estatus</label>
+                                <div class="text-muted">
+                                    {{ $usuario->empleado->estatus ? $usuario->empleado->estatus : 'Dato no registrado' }}
+                                </div>
+                            </div>
+                        @endif
+                        @if ($panel_rules->direccion)
+                            <div class="form-group">
+                                <label><i class="bi bi-geo-alt iconos-crear"></i> Dirección</label>
+                                <div class="text-muted">
+                                    {{ $usuario->empleado->direccion ? $usuario->empleado->direccion : 'Dato no registrado' }}
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="text-right">
+                            <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- modal mi equipo mobile --}}
+        <div class="modal fade" id="mi_equipo_mobile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" style="color: #3086AF;">Mi Equipo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @forelse ($equipo_a_cargo as $empleado)
+                            <div class="caja-lis-mi-equipo-mobile">
+                                <div class="d-flex mt-4">
+                                    <img class="img_empleado" src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}">
+                                    <div class="w-100">
+                                        <h6 class="w-100 m-0" style="color: #3086AF;">{{ $empleado->name }}</h6>
+                                        <div class="d-flex mt-2">
+                                            <a class="mr-5" style="font-size:20px; color: #345183;" href="https://wa.me/{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                                            <a class="mr-5" style="font-size:20px; color: #345183;" href="tel:{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}"><i class="fas fa-mobile-alt"></i></a>
+                                            <a class="mr-5" style="font-size:20px; color: #345183;" href="mailto:{{ $empleado->email }}"><i class="fas fa-envelope"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        @empty
+                            @foreach ($equipo_trabajo as $empleado)
+                                <div class="caja-lis-mi-equipo-mobile">
+                                    <div class="d-flex mt-4">
+                                        <img class="img_empleado" src="{{ asset('storage/empleados/imagenes') }}/{{ $empleado->avatar }}">
+                                        <div class="w-100">
+                                            <h6 class="w-100 m-0" style="color: #3086AF;">{{ $empleado->name }}</h6>
+                                            <div class="d-flex mt-2">
+                                                <a class="mr-5" style="font-size:20px; color: #345183;" href="https://wa.me/{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                                                <a class="mr-5" style="font-size:20px; color: #345183;" href="tel:{{ $empleado->telefono_movil ? $empleado->telefono_movil : $empleado->telefono }}"><i class="fas fa-mobile-alt"></i></a>
+                                                <a class="mr-5" style="font-size:20px; color: #345183;" href="mailto:{{ $empleado->email }}"><i class="fas fa-envelope"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>    
+                            @endforeach
+                        @endforelse
+
+                        <div class="text-right mt-5">
+                            <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- modal mis activos mobile --}}
+        <div class="modal fade" id="mis_activos_mobile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" style="color: #3086AF;">Mis Activos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p style="color: #3086AF;">Estos son los activos que tienes a tu cargo en estos momentos.</p>
+
+                        @foreach ($activos as $activo)
+                            <div class="d-flex mt-4">
+                                <i class="bi bi-pc-display card card-body d-flex align-items-center justify-content-center" style="background-color: #F6F6F6; font-size: 30px; max-width:30px; max-height: 30px; border-radius:100px;"></i>
+                                <div class="ml-3">
+                                    <h6 class="m-0">ACT-{{ $activo->id }}</h6>
+                                    <p class="m-0">{{ $activo->nombreactivo }}</p>
+                                    <p class="m-0"><small>{{ $activo->descripcion }}</small></p>
+                                </div>
+                            </div>
+                            <hr>
+                        @endforeach
+
+                        <div class="text-right mt-5">
+                            <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- modal mis competencias mobile --}}
+        <div class="modal fade" id="mis_competencias_mobile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" style="color: #3086AF;">Mis Competencias</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        @foreach ($competencias as $competencia)
+                            @if ($competencia->competencia)
+                                <div class="item-competencia">
+                                    <img class="img_empleado" style="transform: scale(0.7);" src="{{ $competencia->competencia->imagen_ruta }}">
+                                    <h6 class="ml-2 w-100" style="margin: 0;">{{ $competencia->competencia->nombre }}</h6>
+                                    <small class="ml-2">{{ $competencia->nivel_esperado }}</small>
+                                </div>
+                            @endif
+                        @endforeach
+
+                        <div class="text-right mt-5">
+                            <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

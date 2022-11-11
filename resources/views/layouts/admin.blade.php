@@ -1327,6 +1327,25 @@
         </div>
     </div>
 
+    <div class="barra-herramientas-bottom-molbile">
+        <a href="{{ route('admin.inicio-Usuario.index') }}#datos" class="btn-barra-bottom-mobile" {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'style=color:#3086AF !important;"' : '' }}>
+            <i class="bi bi-file-person"></i>
+            <p>Perfil</p>
+        </a>
+        <a href="{{ route('admin.timesheet-inicio') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'style=color:#3086AF !important;"' : '' }}>
+            <i class="bi bi-calendar3-range"></i>
+            <p>Timesheet</p>
+        </a>
+        <a href="{{ route('admin.systemCalendar') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'style=color:#3086AF !important;"' : '' }}>
+            <i class="bi bi-calendar3"></i>
+            <p>Calendario</p>
+        </a>
+        <a href="{{ route('admin.portal-comunicacion.index') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'style=color:#3086AF !important;"' : '' }}>
+            <i class="bi bi-newspaper"></i>
+            <p>Comunicación</p>
+        </a>
+    </div>
+
     <script>
         function imprimirElemento(elemento) {
             let elemento_seleccionado = document.getElementById(elemento);
