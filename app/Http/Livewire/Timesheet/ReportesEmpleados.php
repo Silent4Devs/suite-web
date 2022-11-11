@@ -201,7 +201,10 @@ class ReportesEmpleados extends Component
                     } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
                             if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
+                                $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks'][] = $semana;
+                            }else{
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
+                                array_pop($calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']);
                             }
                         } else {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
@@ -210,6 +213,7 @@ class ReportesEmpleados extends Component
                 }
             }
         }
+        
         foreach ($calendario_array as $key => &$c_year) {
             $total_months = count($c_year['months']);
             $total_weeks_year = 0;

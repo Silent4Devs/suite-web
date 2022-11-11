@@ -19,6 +19,7 @@
     header.c-header-fixed{
         display: flex !important;
         justify-content: space-between !important;
+        position: fixed !important;
     }
 
     header.c-header-fixed .c-header-nav{
@@ -32,6 +33,10 @@
 
     header.c-header-fixed form.form-inline{
         width: auto !important;
+    }
+    main.c-main{
+        margin-top: 56px;
+        margin-bottom: 40px;
     }
 
     .titulo_general_funcion{
@@ -51,9 +56,74 @@
         margin: 0;
     }
 
+    .barra-herramientas-bottom-molbile{
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        height: 40px;
+        background-color: #fff;
+        box-shadow: -3px 0px 6px 0px #00000029;
+        z-index: 10;
+        display: flex;
+    }
+    .btn-barra-bottom-mobile{
+        width: 25%;
+        text-align: center;
+        padding-top: 3px;
+        color: #747474;
+    }
+    .btn-barra-bottom-mobile i{
+        font-size: 17px;
+    }
+    .btn-barra-bottom-mobile p{
+        font-size: 9px;
+        margin: 0;
+        padding: 0;
+        margin-top: -5px
+    }
+
+    .modal.fade.show{
+        padding-right: 0px !important;
+    }
+
     /*login -----------------------------------*/
+    body::before, body::after{
+        content: "";
+        display: none !important;
+    }
     #layout-app-body .container-fluid{
         padding-left: 0px !important;
+    }
+    #layout-app-body .caja_marca{
+        background: linear-gradient(0deg, rgba(48,133,174,1) 0%, rgba(51,99,146,1) 30%, rgba(52,82,132,1) 100%);
+    }
+    #layout-app-body .caja_marca .marca{
+        display: flex;
+        align-items: center;
+    }
+    .tabantaj-logo-mobile-login{
+        min-height: 85vh;
+        width: auto !important;
+        filter: grayscale(500%) brightness(10) opacity(10%);
+        margin-left: -30px;
+    }
+    #layout-app-body .caja_form{
+        background-color: rgba(0, 0, 0, 0);
+        top: 0;  
+    }
+    #layout-app-body .caja_form .btn_enviar{
+        margin-bottom: 50px;
+    }
+    #layout-app-body .caja_form a{
+        color: #fff !important;
+    }
+    #layout-app-body .caja_form h3{
+        color: #fff !important;
+    }
+
+    #layout-app-body form img.logo_silent{
+        filter: grayscale(100%) brightness(1.2) opacity(0.8);
     }
 
     /* timesheet ------------------------------- */
@@ -206,6 +276,53 @@
         color: #345183 !important;
         border: 1px solid #345183 !important;
     }
+
+    /*inicio usuario --------------------------------------------------*/
+    #inicio_usuario .titulo_general_funcion{
+        color: #fff !important;
+    }
+
+    #inicio_usuario .img_empleado_presentacion_mis_datos{
+        margin-left: 50%;
+        margin-top: -90px;
+        transform: translate(-50%);   
+    }
+
+    .caja-cards-mobile-datos{
+        width: 100%;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .caja-cards-mobile-datos .card{
+        max-width: 48% !important;
+        padding: 10px 8px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+    .caja-cards-mobile-datos .card i{
+        margin: 0px !important;
+        padding: 0 !important;
+        width: 20%;
+        font-size: 20px;
+        color: #345183;
+    }
+    .caja-cards-mobile-datos .card h6{
+        margin: 0px !important;
+        padding: 0 !important;
+        width: 80%;
+    }
+    .item-competencia{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between !important;
+        padding: 15px 0px;
+    }
+
 }
 
 /* tablet ------------------------------------------------------------------ */
