@@ -289,13 +289,13 @@
                     <h6>Mi equipo</h6>
                 </div>
             </div>
-            <div class="caja-cards-mobile-datos" data-toggle="modal" data-target="#mis_activos_mobile">
-                <div class="card card-body">
+            <div class="caja-cards-mobile-datos">
+                <div class="card card-body" data-toggle="modal" data-target="#mis_activos_mobile">
                     <i class="bi bi-laptop  "></i>
                     <h6>Mis activos</h6>
                 </div>
 
-                <div class="card card-body">
+                <div class="card card-body" data-toggle="modal" data-target="#mis_competencias_mobile">
                     <i class="bi bi-bookmark-star"></i>
                     <h6>Mis competencias</h6>
                 </div>
@@ -545,21 +545,11 @@
 
                         @foreach ($competencias as $competencia)
                             @if ($competencia->competencia)
-                                <tr data-toggle="modal"
-                                    data-target="#modal_competencia{{ $competencia->competencia->id }}"
-                                    style="cursor: pointer;">
-                                    <td style="vertical-align: middle;"><img
-                                            class="img_empleado"
-                                            style="transform: scale(0.7);"
-                                            src="{{ $competencia->competencia->imagen_ruta }}">
-                                    </td>
-                                    <td
-                                        style="vertical-align: middle; text-align: left !important;">
-                                        {{ $competencia->competencia->nombre }}</td>
-                                    <td
-                                        style="text-align: center !important; vertical-align: middle;">
-                                        {{ $competencia->nivel_esperado }}</td>
-                                </tr>
+                                <div class="item-competencia">
+                                    <img class="img_empleado" style="transform: scale(0.7);" src="{{ $competencia->competencia->imagen_ruta }}">
+                                    <h6 class="ml-2 w-100" style="margin: 0;">{{ $competencia->competencia->nombre }}</h6>
+                                    <small class="ml-2">{{ $competencia->nivel_esperado }}</small>
+                                </div>
                             @endif
                         @endforeach
 

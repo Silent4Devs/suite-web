@@ -315,6 +315,13 @@
         padding: 0 !important;
         width: 80%;
     }
+    .item-competencia{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between !important;
+        padding: 15px 0px;
+    }
 
 }
 
