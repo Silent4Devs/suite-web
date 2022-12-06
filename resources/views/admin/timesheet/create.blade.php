@@ -297,24 +297,14 @@
     </script>
 
     <script type="text/javascript">
-        function responsiveTime() {
-            $('.tabla-llenar-horas').click(function(e){
-                if (e.target.className == 'area-click-acordeon-time-mobile') {
+        $(document).ready(function(){
+
+            $('.tabla-llenar-horas tbody').click(function(e){
+                if (e.target.className == 'area-click-acordeon-time-mobile' && document.body.classList.contains('body-responsive-mobile')) {
                     $('.tr-time-actividad-mobile:not(.tr-time-actividad-mobile:hover)').removeClass('ver-tr-time-mobile');
                     $('.tr-time-actividad-mobile:hover').toggleClass('ver-tr-time-mobile');
                 }
             });
-        }
-
-        $(document).ready(function() {
-            if($(window).width() <= 800){
-                responsiveTime();
-            }
-        });
-        $(window).resize(function(){
-            if($(window).width() <= 800){
-                responsiveTime();
-            }
         });
 
     </script>
