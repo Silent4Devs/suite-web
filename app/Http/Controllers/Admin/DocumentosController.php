@@ -535,7 +535,6 @@ class DocumentosController extends Controller
         }
 
         $empleados_vistas = VistaDocumento::with('empleados')->where('documento_id', $documento->id)->get();
-
         return view('admin.documentos.view-document-file', compact('documento', 'path_documento', 'empleados_vistas'));
     }
 
