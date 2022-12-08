@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        @can('amenazas_agregar')
+        @can('incidentes_vacaciones_crear')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [
@@ -199,7 +199,7 @@
             //     }
             // };
 
-            @can('amenazas_agregar')
+            @can('incidentes_vacaciones_crear')
                 dtButtons.push(btnAgregar);
             @endcan
 

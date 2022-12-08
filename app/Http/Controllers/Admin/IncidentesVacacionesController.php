@@ -24,9 +24,9 @@ class IncidentesVacacionesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'amenazas_ver';
-                $editGate = 'amenazas_editar';
-                $deleteGate = 'amenazas_eliminar';
+                $viewGate = 'incidentes_vacaciones_crear';
+                $editGate = 'incidentes_vacaciones_editar';
+                $deleteGate = 'incidentes_vacaciones_eliminar';
                 $crudRoutePart = 'incidentes-vacaciones';
 
                 return view('partials.datatablesActions', compact(
@@ -151,7 +151,7 @@ class IncidentesVacacionesController extends Controller
 
     public function destroy($id)
     {
-        abort_if(Gate::denies('incidentes_vacaciones_elimiar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('incidentes_vacaciones_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacaciones = IncidentesVacaciones::find($id);
         $vacaciones->delete();
 
