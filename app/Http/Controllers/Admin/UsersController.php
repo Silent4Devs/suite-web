@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Rules\EmpleadoNoVinculado;
 use Gate;
 use Illuminate\Http\Request;
+use Flash;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
@@ -199,5 +200,13 @@ class UsersController extends Controller
         $user->save();
 
         return redirect()->route('admin.users.index')->with('success', $message);
+    }
+
+    // Funcion para restablecer usuario eliminado
+    public function restablecerUsuario($id)
+    {
+       $usuario = User::withTrashed()->find($id)->restore();
+       Flash::success('Usuario restablecido satisfactoriamente.');
+       return redirect()->route('admin.users.index');
     }
 }
