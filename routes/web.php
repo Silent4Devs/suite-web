@@ -31,11 +31,13 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
     // Users
+    Route::get('users/{id}/restablecer', 'UsersController@restablecerUsuario')->name('users.restablecer');
     Route::get('users/two-factor/{user}/change', 'UsersController@cambiarVerificacion')->name('users.two-factor-change');
     Route::get('users/bloqueo/{user}/change', 'UsersController@toogleBloqueo')->name('users.toogle-bloqueo');
     Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
     Route::post('users/list/get', 'UsersController@getUsersIndex')->name('users.getUsersIndex');
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+ 
     Route::resource('users', 'UsersController');
 
     // Empleados
