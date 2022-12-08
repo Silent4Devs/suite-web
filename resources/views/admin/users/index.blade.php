@@ -10,7 +10,8 @@
         }
 
     </style>
-    @include('partials.flashMessages')
+     @include('flash::message')
+     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Usuarios</h5>
     <div class="mt-5 card">
         <div class="card-body datatable-fix">
