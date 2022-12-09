@@ -13,16 +13,16 @@
       <div class="row">
           <div class="col-12 col-md-12 col-sm-12">
               <div class="text-white card-header font-weight-bold" style="text-align:center; background-color:#048c74; margin-top:-30px;" align="justify">
-                  GAP 01: DEFINICIÓN DE MARCO DE SEGURIDAD Y PRIVACIDAD DE LA ORGANIZACIÓN (30%)
-              </div>
+                GAP 01: MARCO DE GESTIÓN DE SEGURIDAD DE LA INFORMACIÓN 
+            </div>
 
               <!-- Card -->
               <div class="card" style= "border:none; margin-left:10px; margin-right:10px;">
                   <!-- Card content -->
                   <div class="card-body">
                       <!-- Text -->
-                      <p class="card-text" align="justify">Definicion del Marco de Seguridad y Privacidad de la Organización. Tiene un peso del 30% del total del componente: 10% - Diagnostico de Seguridad y Privacidad , 20% - Proposito de Seguridad y Privacidad de la Informacion.
-                      </p>
+                      {{-- <p class="card-text" align="justify">Definicion del Marco de Seguridad y Privacidad de la Organización. Tiene un peso del 30% del total del componente: 10% - Diagnostico de Seguridad y Privacidad , 20% - Proposito de Seguridad y Privacidad de la Informacion.
+                      </p> --}}
                       <p>
                        <strong>INSTRUCCIONES:</strong> Por favor, conteste el siguiente cuestionario de acuerdo con los siguientes parámetros:
                       </p>
@@ -30,19 +30,18 @@
                       <table cellspacing="0" cellpadding="15px" style="margin-top: 50px; margin-bottom: 25px;">
                         <tr>
                             <td class="bg-success">
-                                Cumple satisfactoriamente
+                                Optimizada
                             </td>
                             <td>
-                              Existe, es gestionado, se está cumpliendo con lo que la norma ISO 27001  solicita, está documentado,  es conocido y aplicado por todos los involucrados en el SGSI.  cumple 100%.
+                                Procesos refinados hasta un nivel de la mejora práctica basado en los resultados.
                             </td>
                         </tr>
                         <tr>
                             <td class="bg-warning">
-                                "Cumple
-                                parcialmente"
+                                Definida 
                             </td>
                             <td>
-                                Lo que la norma requiere  (ISO27001 versión 2013)  se está haciendo de manera parcial, se está haciendo diferente, no está documentado, se definió y aprobó pero no se gestiona
+                                Procesos estandarizados y documentos, y comunicados a través de capacitación.
                             </td>
                         </tr>
                          <tr>

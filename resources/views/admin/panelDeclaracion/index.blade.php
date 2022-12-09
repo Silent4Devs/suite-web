@@ -16,7 +16,9 @@
             font-weight: normal !important;
         }
 
-
+        .table tr td:nth-child(2) {
+            text-align: justify !important;
+        }
         .table tr td:nth-child(3) {
             min-width: 300px !important;
         }

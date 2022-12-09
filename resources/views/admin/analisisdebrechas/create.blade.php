@@ -6,7 +6,8 @@
             <form method="POST" action="{{ route('admin.analisisdebrechas.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <div class="py-1 text-center form-group col-12" style="background-color:#345183; border-radius:100px; color: white;">DATOS GENERALES</div>
+                <div class="py-1 text-center form-group col-12"
+                    style="background-color:#345183; border-radius:100px; color: white;">DATOS GENERALES</div>
 
                 <div class="form-group">
                     <p class="font-weight-bold" style="font-size:11pt;">Llene los siguientes campos según corresponda:</p>
@@ -63,8 +64,8 @@
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4">
                         <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
-                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
-                            name="id_elaboro" id="id_elaboro">
+                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}" name="id_elaboro"
+                            id="id_elaboro">
                             <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($empleados as $key => $label)
@@ -100,14 +101,17 @@
                             </div>
                         @endif
                     </div>
+
                 </div>
+
+               
 
 
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                            <button class="btn btn-danger" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
+                    <button class="btn btn-danger" type="submit">
+                        {{ trans('global.save') }}
+                    </button>
                 </div>
             </form>
         </div>

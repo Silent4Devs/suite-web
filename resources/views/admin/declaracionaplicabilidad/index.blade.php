@@ -5,7 +5,11 @@
 
     {{ Breadcrumbs::render('admin.declaracion-aplicabilidad.index') }}
     <h5 class="col-12 titulo_general_funcion">Declaración de Aplicabilidad</h5>
+
     <div class="mt-5 card" id="d-aplicabilidad">
+        @if (!$esmgsi)
+            
+       
         <div class="caja_botones_menu">
             <a class="btn_activo" href="#" data-tabs="declaracion">
                 Declaración Aplicabilidad
@@ -34,7 +38,12 @@
             </div>
         </div>
 
+        @else<strong>MSGI no es compatible con asignación de controles.</strong>
 
+        @include('admin.declaracionaplicabilidad.controlesmgsi')
+        
+        @endif
+    
     </div>
 
 
