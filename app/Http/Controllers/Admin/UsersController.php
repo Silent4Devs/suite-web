@@ -14,9 +14,9 @@ use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use App\Rules\EmpleadoNoVinculado;
+use Flash;
 use Gate;
 use Illuminate\Http\Request;
-use Flash;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
@@ -36,6 +36,7 @@ class UsersController extends Controller
         // })->values();
         $empleados = Empleado::alta()->get();
         $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
+
         return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados', 'existsVinculoEmpleadoAdmin'));
     }
 
@@ -158,7 +159,7 @@ class UsersController extends Controller
             $tipo = $identificador[0];
             $numero = $identificador[1];
 
-            if ($tipo == "NEMPLEADO") {
+            if ($tipo == 'NEMPLEADO') {
                 $usuario->update([
                     'n_empleado' => $numero,
                 ]);
@@ -205,8 +206,24 @@ class UsersController extends Controller
     // Funcion para restablecer usuario eliminado
     public function restablecerUsuario($id)
     {
-       $usuario = User::withTrashed()->find($id)->restore();
-       Flash::success('Usuario restablecido satisfactoriamente.');
-       return redirect()->route('admin.users.index');
+        $usuario = User::withTrashed()->find($id);
+
+        if ($usuario != null) {
+            $usuario = User::withTrashed()->find($id)->restore();
+            Flash::success('Usuario restablecido satisfactoriamente.');
+            return redirect()->route('admin.users.index');
+        } else {
+            Flash::error('Usuario no encontrado');
+
+            return redirect(route('admin.users.index'));
+        }
+
+       
+    }
+
+    public function vistaEliminados()
+    {
+        $usuarios = User::withTrashed()->where('deleted_at', '<>', null)->get();
+        return view('admin.users.eliminados', compact('usuarios'));
     }
 }
