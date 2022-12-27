@@ -403,14 +403,14 @@
                     <br>
                     <div class="row">
                         <div class="col-sm" align="center">
-                            <div class="input-group">
+                            {{-- <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" style="background-color: black; color: white;">No. Controles que aplican</span>
                                 </div>
                                 <input type="text" value="{{$total = 114 - $conteos['Gap2']['noaplica']}}"
                                        class="form-control"
                                        disabled style="color: black;">
-                            </div>
+                            </div> --}}
                             <span>HACER</span>
                             <table class="table table-responsive-sm letras-dashboard">
                                 <thead>
@@ -422,44 +422,53 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Cumple satisfactoriamente</td>
-                                    <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
-                                        {{$conteos['Gap2']['satisfactorio']}}
+                                    <td>Inexistente</td>
+                                    <td class="text-black" style="background-color: #6863FF; color:white">
+                                        {{$conteos['Gap2']['inexistente']}}
                                     </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap2']['satisfactorio'] * 40) / $total), 2, '.', ''}}%
-                                    </td>
+                                    <td >{{number_format(($conteos['Gap2']['inexistente'] * 100) / 15), 2, '.', ''}}%</td>
                                 </tr>
                                 <tr>
-                                    <td>Cumple parcialmente</td>
-                                    <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
-                                        {{$conteos['Gap2']['parcialmente']}}
+                                    <td>Inicial</td>
+                                    <td class="text-black" style="background-color: #f49c37;">
+                                        {{$conteos['Gap2']['inicial']}}
                                     </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap2']['parcialmente'] * 40) / $total), 2, '.', ''}}%
-                                    </td>
+                                    <td>{{number_format(($conteos['Gap2']['inicial'] * 100) / 15), 2, '.', ''}}%</td>
                                 </tr>
                                 <tr>
-                                    <td>No cumple</td>
-                                    <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
-                                        {{$conteos['Gap2']['nocumple']}}
+                                    <td>Repetible</td>
+                                    <td class="text-black" style="background-color: #aaaaaa;">
+                                        {{$conteos['Gap2']['repetible']}}
                                     </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap2']['nocumple'] * 40) / $total), 2, '.', ''}}%
-                                    </td>
+                                    <td>{{number_format(($conteos['Gap2']['repetible'] * 100) / 15), 2, '.', ''}}%</td>
                                 </tr>
                                 <tr>
-                                    <td>No aplica</td>
-                                    <td class="text-black" style="background-color: rgba(133, 193, 233 , 0.6);">
-                                        {{$conteos['Gap2']['noaplica']}}
+                                    <td>Definida</td>
+                                    <td class="text-black" style="background-color: #4A98FF; color:white">
+                                        {{$conteos['Gap2']['definida']}}
                                     </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap2']['noaplica'] * 100) / $total), 2, '.', ''}}%
+                                    <td>{{number_format(($conteos['Gap2']['definida'] * 100) / 15), 2, '.', ''}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Administrada</td>
+                                    <td class="text-black" style="background-color: #FFCB63;">
+                                        {{$conteos['Gap2']['administrada']}}
                                     </td>
+                                    <td>{{number_format(($conteos['Gap2']['administrada'] * 100) / 15), 2, '.', ''}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Optimizada</td>
+                                    <td class="text-black" style="background-color: #6DC866;">
+                                        {{$conteos['Gap2']['optimizada']}}
+                                    </td>
+                                    <td>{{number_format(($conteos['Gap2']['optimizada'] * 100) / 15), 2, '.', ''}}%</td>
                                 </tr>
                                 <tr>
                                     <td align="right">Total</td>
-                                    <td>{{114 - $conteos['Gap2']['noaplica']}}</td>
+                                    <td>
+                                        {{$conteos['Gap2']['inexistente'] + $conteos['Gap2']['inicial'] + $conteos['Gap2']['repetible']+ $conteos['Gap2']['definida']+ $conteos['Gap2']['administrada']+ $conteos['Gap2']['optimizada']}}
+
+                                    </td>
                                     <td>
                                         {{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%
                                     </td>
@@ -470,12 +479,12 @@
                         <div class="col-sm" align="center">
                             <h6>Controles GAP 02 - Hacer</h6>
                             <canvas id="popChart3" width="800" height="750"></canvas>
-                            <p>{{114 - $conteos['Gap2']['noaplica']}} controles</p>
+                            {{-- <p>{{114 - $conteos['Gap2']['noaplica']}} controles</p> --}}
                         </div>
                         <div class="col-sm" align="center">
                             <h6>% Cumplimiento GAP 02 - Hacer</h6>
                             <canvas id="popChart4" width="800" height="750"></canvas>
-                            <h6>{{number_format($porcentajeGap2['Avance'], 2, '.', '')}}% Cumplimiento</h6>
+                            {{-- <h6>{{number_format($porcentajeGap2['Avance'], 2, '.', '')}}% Cumplimiento</h6> --}}
                         </div>
                     </div>
                 </div>
@@ -768,24 +777,30 @@
         type: 'horizontalBar',
         data: {
             labels: [
-                "Satistactoriamente",
-                "Parcialmente",
-                "No cumple",
-                "No aplica"
+                "Inexistente",
+                "Inicial",
+                "Repetible",
+                "Definida",
+                "Administrada",
+                "Optimizada",
             ],
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap2']['satisfactorio']}},
-                    {{$conteos['Gap2']['parcialmente']}},
-                    {{$conteos['Gap2']['nocumple']}},
-                    {{$conteos['Gap2']['noaplica']}}
+                    {{$conteos['Gap1']['inexistente']}},
+                    {{$conteos['Gap1']['inicial']}},
+                    {{$conteos['Gap1']['repetible']}},
+                    {{$conteos['Gap1']['definida']}},
+                    {{$conteos['Gap1']['administrada']}},
+                    {{$conteos['Gap1']['optimizada']}}
                 ],
                 backgroundColor: [
-                    'rgba(22, 160, 133, 0.6)',
-                    'rgba(244, 208, 63, 0.6)',
-                    'rgba(231, 76, 60, 0.6)',
-                    'rgba(133, 193, 233 , 0.6)',
+                    '#6863FF',
+                    '#f49c37',
+                    '#aaaaa',
+                    '#4A98FF',
+                    '#FFCB63',
+                    '#6DC866',
                 ]
             }]
         },
@@ -824,24 +839,30 @@
         type: 'doughnut',
         data: {
             labels: [
-                "Cumple satistactoriamente",
-                "Cumple parcialmente",
-                "No cumple",
-                "No aplica"
+                "Inexistente",
+                "Inicial",
+                "Repetible",
+                "Definida",
+                "Administrada",
+                "Optimizada",
             ],
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap2']['satisfactorio']}},
-                    {{$conteos['Gap2']['parcialmente']}},
-                    {{$conteos['Gap2']['nocumple']}},
-                    {{$conteos['Gap2']['noaplica']}}
+                    {{$conteos['Gap1']['inexistente']}},
+                    {{$conteos['Gap1']['inicial']}},
+                    {{$conteos['Gap1']['repetible']}},
+                    {{$conteos['Gap1']['definida']}},
+                    {{$conteos['Gap1']['administrada']}},
+                    {{$conteos['Gap1']['optimizada']}}
                 ],
                 backgroundColor: [
-                    'rgba(22, 160, 133, 0.6)',
-                    'rgba(244, 208, 63, 0.6)',
-                    'rgba(231, 76, 60, 0.6)',
-                    'rgba(133, 193, 233 , 0.6)',
+                    '#6863FF',
+                    '#f49c37',
+                    '#aaaaa',
+                    '#4A98FF',
+                    '#FFCB63',
+                    '#6DC866',
                 ]
             }]
         }
