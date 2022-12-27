@@ -50,17 +50,25 @@ class Porcentaje
         return $resultado;
     }//termina func
 
-    public function GapDosPorc($gap1porcentaje, $total, $gap2satisfactorio, $gap2parcialmente)
+    public function GapDosPorc($total,  $gap2inexistente,$gap2inicial,$gap2repetible,  $gap2definida, $gap2administrada, $gap2optimizada)
     {
-        $valor = 40 / $total;
-        $satisfactoriamente = $gap2satisfactorio * $valor;
-        $parcialmenteValor = $gap2parcialmente * ($valor / 2);
-        $porcentaje = ($satisfactoriamente + $parcialmenteValor) * (100) / 40;
-        $avance = $satisfactoriamente + $parcialmenteValor;
-
+        $valor = 40/$total;
+        $inexistente=  $gap2inexistente * $valor;
+        $inicial= $gap2inicial * $valor;
+        $repetible= $gap2repetible * $valor;
+        $definida=  $gap2definida * $valor;
+        $administrada= $gap2administrada * $valor;
+        $optimizada= $gap2optimizada * $valor;
+        // dd($gap2satisfactorio);
+        //$parcialmenteValor = $gap2parcialmente * ($valor / 2);
+        $porcentaje = $inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada * (100) / 40;
+        // dd($porcentaje);
+        $avance = (($inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada) *$porcentaje) /100;
+    //   dd($avance);
+        // $avance= 68;
         return [
-            'Gap2Satis' => $satisfactoriamente,
-            'Gap2Parcial' => $parcialmenteValor,
+            // 'Gap2Satis' => $satisfactoriamente,
+           // 'Gap2Parcial' => $parcialmenteValor,
             'Porcentaje' => $porcentaje,
             'Avance' => $avance,
         ];

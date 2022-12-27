@@ -201,22 +201,30 @@
         $(".valoracionGap2").editable({
         dataType: 'json',
         source: [{
-        value: '1',
-        text: 'Cumple satisfactoriamente'
-        },
-        {
-        value: '2',
-        text: 'Cumple parcialmente'
-        },
-        {
-        value: '3',
-        text: 'No cumple'
-        },
-        {
-        value: '4',
-        text: 'No aplica'
-        }
-        ],
+                value: '0',
+                text: 'Inexistente'
+                },
+                {
+                value: '1',
+                text: 'Inicial'
+                },
+                {
+                value: '2',
+                text: 'Repetible'
+                },
+                {
+                value: '3',
+                text: 'Definida'
+                },
+                {
+                value: '4',
+                text: 'Administrada'
+                },
+                {
+                value: '5',
+                text: 'Optimizada'
+                }
+            ],
         success: function (response, newValue) {
         // $(".barraGap2").empty();
         $(".barraGap2").load(location.href + " .barraGap2 > *");
