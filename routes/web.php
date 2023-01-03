@@ -31,11 +31,14 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
     // Users
+    Route::get('users/{id}/restablecer', 'UsersController@restablecerUsuario')->name('users.restablecer');
+    Route::get('users/eliminados', 'UsersController@vistaEliminados')->name('users.eliminados');
     Route::get('users/two-factor/{user}/change', 'UsersController@cambiarVerificacion')->name('users.two-factor-change');
     Route::get('users/bloqueo/{user}/change', 'UsersController@toogleBloqueo')->name('users.toogle-bloqueo');
     Route::post('users/vincular', 'UsersController@vincularEmpleado')->name('users.vincular');
     Route::post('users/list/get', 'UsersController@getUsersIndex')->name('users.getUsersIndex');
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+
     Route::resource('users', 'UsersController');
 
     // Empleados
@@ -159,7 +162,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::put('ajustes-envio-documentos/{id}/update', 'EnvioDocumentosController@ajustesUpdate')->name('ajustes-envio-documentos-update');
         Route::resource('envio-documentos', 'EnvioDocumentosController');
 
-
         //Control de Ausencias- Vacaciones
         Route::get('vista-global-vacaciones', 'VacacionesController@vistaGlobal')->name('vista-global-vacaciones');
         Route::delete('vacaciones/destroy', 'VacacionesController@massDestroy')->name('vacaciones.massDestroy');
@@ -182,7 +184,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'edit' => 'dayOff.edit',
             'update' => 'dayOff.update',
             'destroy' => 'dayOff.destroy',
-        ]);;
+        ]);
 
         Route::get('vista-global-permisos-goce-sueldo', 'PermisosGoceSueldoController@vistaGlobal')->name('vista-global-permisos-goce-sueldo');
         Route::delete('permisos-goce-sueldo/destroy', 'PermisosGoceSueldoController@massDestroy')->name('permisos-goce-sueldo.massDestroy');
@@ -193,7 +195,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'edit' => 'permisos-goce-sueldo.edit',
             'update' => 'permisos-goce-sueldo.update',
             'destroy' => 'permisos-goce-sueldo.destroy',
-        ]);;
+        ]);
 
         //Control de Solicitud- Vacaciones
         Route::get('solicitud-vacaciones/perido-adicional/create', 'SolicitudVacacionesController@periodoAdicional')->name('solicitud-vacaciones.periodoAdicional');
@@ -212,7 +214,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'edit' => 'solicitud-vacaciones.edit',
             'update' => 'solicitud-vacaciones.update',
             'destroy' => 'solicitud-vacaciones.destroy',
-        ])->except(['show', 'destroy']);;
+        ])->except(['show', 'destroy']);
 
         Route::get('solicitud-dayoff/{id}/showArchivo', 'SolicitudDayOffController@showArchivo')->name('solicitud-dayoff.showArchivo');
         Route::get('solicitud-dayoff/{id}/vistaGlobal', 'SolicitudDayOffController@showVistaGlobal')->name('solicitud-dayoff.vistaGlobal');
@@ -229,7 +231,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'edit' => 'solicitud-dayoff.edit',
             'update' => 'solicitud-dayoff.update',
             'destroy' => 'solicitud-dayoff.destroy',
-        ])->except(['show', 'destroy']);;
+        ])->except(['show', 'destroy']);
 
         Route::get('solicitud-permiso-goce-sueldo/{id}/showArchivo', 'SolicitudPermisoGoceSueldoController@showArchivo')->name('solicitud-permiso-goce-sueldo.showArchivo');
         Route::get('solicitud-permiso-goce-sueldo/{id}/vistaGlobal', 'SolicitudPermisoGoceSueldoController@showVistaGlobal')->name('solicitud-permiso-goce-sueldo.vistaGlobal');
@@ -246,7 +248,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'edit' => 'solicitud-permiso-goce-sueldo.edit',
             'update' => 'solicitud-permiso-goce-sueldo.update',
             'destroy' => 'solicitud-permiso-goce-sueldo.destroy',
-        ])->except(['show', 'destroy']);;
+        ])->except(['show', 'destroy']);
 
         Route::resource('incidentes-vacaciones', 'IncidentesVacacionesController')->names([
             'create' => 'incidentes-vacaciones.create',
@@ -255,7 +257,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'edit' => 'incidentes-vacaciones.edit',
             'update' => 'incidentes-vacaciones.update',
             'destroy' => 'incidentes-vacaciones.destroy',
-        ]);;
+        ]);
 
         Route::resource('incidentes-dayoff', 'IncidentesDayOffController')->names([
             'create' => 'incidentes-dayoff.create',
@@ -264,7 +266,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'edit' => 'incidentes-dayoff.edit',
             'update' => 'incidentes-dayoff.update',
             'destroy' => 'incidentes-dayoff.destroy',
-        ]);;
+        ]);
 
         //Tipos de contratos
         Route::resource('recursos-humanos/tipos-contratos-empleados', 'RH\TipoContratoEmpleadoController');
@@ -681,7 +683,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('Tipo/edit/{tipo}', 'RH\TipoCompetenciaController@edit')->name('tipo.edit');
         Route::resource('Tipo', 'RH\TipoCompetenciaController', ['except' => ['edit']]);
 
-
         Route::get('organigrama/exportar', 'OrganigramaController@exportTo')->name('organigrama.exportar');
         Route::get('organigrama', 'OrganigramaController@index')->name('organigrama.index');
 
@@ -934,7 +935,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('auditoria-internas/{auditoriaInterna}/edit', 'AuditoriaInternaController@edit')->name('auditoria-internas.edit');
         Route::resource('auditoria-internas', 'AuditoriaInternaController')->except('edit');
 
-
         // Revision Direccions
         Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
         Route::resource('revision-direccions', 'RevisionDireccionController');
@@ -1124,7 +1124,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('analisis-riesgos', 'AnalisisdeRiesgosController');
         Route::get('getEmployeeData', 'AnalisisdeRiesgosController@getEmployeeData')->name('getEmployeeData');
 
-
         Route::get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
         Route::get('analisis-impacto-menu-BIA', 'AnalisisdeImpactoController@menuBIA')->name('analisis-impacto.menu-BIA');
         Route::get('analisis-impacto-menu-AIA', 'AnalisisdeImpactoController@menuAIA')->name('analisis-impacto.menu-AIA');
@@ -1134,7 +1133,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('analisis-impacto/matriz', 'AnalisisdeImpactoController@matriz')->name('analisis-impacto.matriz');
         Route::delete('analisis-impacto/destroy', 'AnalisisdeImpactoController@massDestroy')->name('analisis-impacto.massDestroy');
 
-        
         Route::get('analisis-impacto/{id}/edit', 'AnalisisdeImpactoController@edit')->name('analisis-impacto.edit');
         Route::get('getEmployeeData', 'AnalisisdeImpactoController@getEmployeeData')->name('analisis-impacto.getEmployeeData');
         Route::resource('analisis-impacto', 'AnalisisdeImpactoController')->names([
@@ -1144,7 +1142,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'show' => 'analisis-impacto.show',
             'update' => 'analisis-impacto.update',
         ])->except(['edit']);
-        
 
         Route::get('analisis-aia/ajustes', 'AnalisisAIAController@ajustes')->name('analisis-aia.ajustes');
         Route::put('analisis-aia/{id}/updateAjustesBIA', 'AnalisisAIAController@updateAjustesAIA')->name('analisis-aia.updateAjustesAIA');
@@ -1157,8 +1154,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'store' => 'analisis-aia.store',
             'show' => 'analisis-aia.show',
             'update' => 'analisis-aia.update',
-        ])->except(['edit']);;
-
+        ])->except(['edit']);
 
         //Carta de Aceptación
         // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
