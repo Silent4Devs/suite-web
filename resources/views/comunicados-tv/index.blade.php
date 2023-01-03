@@ -65,7 +65,9 @@
             @endphp
 			<li class="" data-tipo="{{ $tipo_archivo }}">
 				@if($tipo_archivo == 'video')
-					<video muted controls src="{{ asset($imagen) }}"></video>
+					<video muted controls src="{{ asset($imagen) }}">
+						<source src="{{ asset($imagen) }}" type="video">
+					</video>
 				 @else
 				 	<img src="{{ asset($imagen) }}">
 				@endif
