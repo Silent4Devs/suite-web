@@ -57,7 +57,7 @@
                         <table class="table" style="font-size: 12px;">
                             <thead class="thead-dark">
                                 <tr>
-                                    {{-- <th scope="col">NO</th> --}}
+                                    <th scope="col">ESTADO</th>
                                     <th scope="col">PREGUNTA</th>
                                     <th scope="col">VALORACIÓN</th>
                                     <th scope="col">EVIDENCIA DE
@@ -69,9 +69,9 @@
                             <tbody>
                                 @foreach ($gaptresVerif as $verificar)
                                     <tr>
-                                        {{-- <th scope="row">
-                                            {{ $verificar->id }}
-                                        </th> --}}
+                                        <th scope="row">
+                                            {{ $verificar->estado }}
+                                        </th>
                                         <td>
                                             {{ $verificar->pregunta }}
                                         </td>
