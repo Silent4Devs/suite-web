@@ -23,8 +23,9 @@ class AnalisisBController extends Controller
     {
         abort_if(Gate::denies('analisis_de_brechas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gapuno = GapUno::orderBy('id', 'ASC')->get()->where('analisis_brechas_id', '=', request()->id);
+        // dd($gapuno);
         $gaptresVerif = GapTre::orderBy('id', 'ASC')->get()->where('analisis_brechas_id', '=', request()->id);
-        $gaptresAct = GapTre::get()->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', request()->id);
+        $gaptresAct = GapTre::get()->where('analisis_brechas_id', '=', request()->id);
         $gapa5 = GapDo::orderBy('id', 'ASC')->get()->where('analisis_brechas_id', '=', request()->id);
         $gapa6 = GapDo::orderBy('id', 'ASC')->get()->where('analisis_brechas_id', '=', request()->id);
         $gapa62 = GapDo::get()->where('control-dos', '=', 'A6.2')->where('analisis_brechas_id', '=', request()->id);

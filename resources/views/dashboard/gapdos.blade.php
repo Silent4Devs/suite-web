@@ -14,8 +14,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
+                
+                   
                         <p><strong>INSTRUCCIONES: </strong>Por favor, conteste
                             el
                             siguiente cuestionario de acuerdo con los siguientes
@@ -109,8 +109,8 @@
                             </div>
 
                         </div>
-                    </div>
-                </div>
+                    
+               
             </div>
         </div>
     </div>
