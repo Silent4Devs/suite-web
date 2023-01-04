@@ -72,14 +72,14 @@
                                         GAP03
                                     </th>
                                     <td>Verificar</td>
-                                    <td>15%</td>
-                                    <td>{{number_format($porcentajeGap3['verificar'], 2, '.', '')}}%</td>
+                                    <td>30%</td>
+                                    <td>{{number_format($porcentajeGap3['porcentaje'], 2, '.', '')}}%</td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <td>Actuar</td>
                                     <td>15%</td>
                                     <td>{{number_format($porcentajeGap3['actuar'], 2, '.', '')}}%</td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <th scope="row"></th>
                                     <td>Total</td>
@@ -523,38 +523,53 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Cumple satisfactoriamente</td>
-                                    <td class="text-black" style="background-color: rgba(22, 160, 133, 0.6);">
-                                        {{$conteos['Gap3verif']['satisfactorio']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap3verif']['satisfactorio'] * 100) / 6), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Cumple parcialmente</td>
-                                    <td class="text-black" style="background-color: rgba(244, 208, 63, 0.6);">
-                                        {{$conteos['Gap3verif']['parcialmente']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap3verif']['parcialmente'] * 100) / 6), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>No cumple</td>
-                                    <td class="text-black" style="background-color: rgba(231, 76, 60, 0.6);">
-                                        {{$conteos['Gap3verif']['nocumple']}}
-                                    </td>
-                                    <td>
-                                        {{number_format(($conteos['Gap3verif']['nocumple'] * 100) / 6), 2, '.', ''}}%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">Total</td>
-                                    <td>6</td>
-                                    <td>{{number_format($porcentajeGap3['verificar'], 2, '.', '')}}%</td>
-                                </tr>
+                                    <tr>
+                                        <td>Inexistente</td>
+                                        <td class="text-black" style="background-color: #6863FF; color:white">
+                                            {{$conteos['Gap3verif']['inexistente']}}
+                                        </td>
+                                        <td >{{number_format(($conteos['Gap3verif']['inexistente'] * 100) / 15), 2, '.', ''}}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Inicial</td>
+                                        <td class="text-black" style="background-color: #f49c37;">
+                                            {{$conteos['Gap3verif']['inicial']}}
+                                        </td>
+                                        <td>{{number_format(($conteos['Gap3verif']['inicial'] * 100) / 15), 2, '.', ''}}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Repetible</td>
+                                        <td class="text-black" style="background-color: #aaaaaa;">
+                                            {{$conteos['Gap3verif']['repetible']}}
+                                        </td>
+                                        <td>{{number_format(($conteos['Gap3verif']['repetible'] * 100) / 15), 2, '.', ''}}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Definida</td>
+                                        <td class="text-black" style="background-color: #4A98FF; color:white">
+                                            {{$conteos['Gap3verif']['definida']}}
+                                        </td>
+                                        <td>{{number_format(($conteos['Gap3verif']['definida'] * 100) / 15), 2, '.', ''}}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Administrada</td>
+                                        <td class="text-black" style="background-color: #FFCB63;">
+                                            {{$conteos['Gap3verif']['administrada']}}
+                                        </td>
+                                        <td>{{number_format(($conteos['Gap3verif']['administrada'] * 100) / 15), 2, '.', ''}}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Optimizada</td>
+                                        <td class="text-black" style="background-color: #6DC866;">
+                                            {{$conteos['Gap3verif']['optimizada']}}
+                                        </td>
+                                        <td>{{number_format(($conteos['Gap3verif']['optimizada'] * 100) / 15), 2, '.', ''}}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">Total</td>
+                                        <td>6</td>
+                                        <td>{{number_format($porcentajeGap3['porcentaje'], 2, '.', '')}}%</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -571,7 +586,7 @@
                     </div>
                     <hr>
                     <!--segunda-->
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-sm" align="center">
                             <span>ACTUAR</span>
                             <table class="table table-responsive-sm letras-dashboard">
@@ -635,7 +650,7 @@
                             <canvas id="popChart8" width="800" height="750"></canvas>
                             <h6>{{number_format($porcentajeGap3['actuar'], 2, '.', '')}}% Cumplimiento</h6>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -649,14 +664,14 @@
     var barChart = new Chart(popCanvas, {
         type: 'bar',
         data: {
-            labels: ["Planear", "Hacer", "Verificar", "Actuar"],
+            labels: ["Planear", "Hacer", "Verificar"],
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
                     {!! number_format($porcentajeGap1) !!},
                     {!! number_format($porcentajeGap2['Avance']) !!},
                     {!! number_format($porcentajeGap3['verificar']) !!},
-                    {{number_format($porcentajeGap3['actuar'], 2, '.', '')}}],
+                    ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
                     'rgba(54, 162, 235, 0.6)',
@@ -873,21 +888,30 @@
         type: 'horizontalBar',
         data: {
             labels: [
-                "Satistactoriamente",
-                "Parcialmente",
-                "No cumple",
+                "Inexistente",
+                "Inicial",
+                "Repetible",
+                "Definida",
+                "Administrada",
+                "Optimizada",
             ],
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap3verif']['satisfactorio']}},
-                    {{$conteos['Gap3verif']['parcialmente']}},
-                    {{$conteos['Gap3verif']['nocumple']}},
+                    {{$conteos['Gap3verif']['inexistente']}},
+                    {{$conteos['Gap3verif']['inicial']}},
+                    {{$conteos['Gap3verif']['repetible']}},
+                    {{$conteos['Gap3verif']['definida']}},
+                    {{$conteos['Gap3verif']['administrada']}},
+                    {{$conteos['Gap3verif']['optimizada']}},
                 ],
                 backgroundColor: [
-                    'rgba(22, 160, 133, 0.6)',
-                    'rgba(244, 208, 63, 0.6)',
-                    'rgba(231, 76, 60, 0.6)',
+                    '#6863FF',
+                    '#f49c37',
+                    '#aaaaa',
+                    '#4A98FF',
+                    '#FFCB63',
+                    '#6DC866',
                 ]
             }]
         },
@@ -926,21 +950,30 @@
         type: 'doughnut',
         data: {
             labels: [
-                "Cumple satistactoriamente",
-                "Cumple parcialmente",
-                "No cumple",
+                "Inexistente",
+                "Inicial",
+                "Repetible",
+                "Definida",
+                "Administrada",
+                "Optimizada",
             ],
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap3verif']['satisfactorio']}},
-                    {{$conteos['Gap3verif']['parcialmente']}},
-                    {{$conteos['Gap3verif']['nocumple']}},
+                    {{$conteos['Gap3verif']['inexistente']}},
+                    {{$conteos['Gap3verif']['inicial']}},
+                    {{$conteos['Gap3verif']['repetible']}},
+                    {{$conteos['Gap3verif']['definida']}},
+                    {{$conteos['Gap3verif']['administrada']}},
+                    {{$conteos['Gap3verif']['optimizada']}},
                 ],
                 backgroundColor: [
-                    'rgba(22, 160, 133, 0.6)',
-                    'rgba(244, 208, 63, 0.6)',
-                    'rgba(231, 76, 60, 0.6)',
+                    '#6863FF',
+                    '#f49c37',
+                    '#aaaaa',
+                    '#4A98FF',
+                    '#FFCB63',
+                    '#6DC866',
                 ]
             }]
         }
@@ -951,21 +984,30 @@
         type: 'horizontalBar',
         data: {
             labels: [
-                "Satistactoriamente",
-                "Parcialmente",
-                "No cumple",
+                "Inexistente",
+                "Inicial",
+                "Repetible",
+                "Definida",
+                "Administrada",
+                "Optimizada",
             ],
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap3actuar']['satisfactorio']}},
-                    {{$conteos['Gap3actuar']['parcialmente']}},
-                    {{$conteos['Gap3actuar']['nocumple']}},
+                    {{$conteos['Gap3actuar']['inexistente']}},
+                    {{$conteos['Gap3actuar']['inicial']}},
+                    {{$conteos['Gap3actuar']['repetible']}},
+                    {{$conteos['Gap3actuar']['definida']}},
+                    {{$conteos['Gap3actuar']['administrada']}},
+                    {{$conteos['Gap3actuar']['optimizada']}},
                 ],
                 backgroundColor: [
-                    'rgba(22, 160, 133, 0.6)',
-                    'rgba(244, 208, 63, 0.6)',
-                    'rgba(231, 76, 60, 0.6)',
+                    '#6863FF',
+                    '#f49c37',
+                    '#aaaaa',
+                    '#4A98FF',
+                    '#FFCB63',
+                    '#6DC866',
                 ]
             }]
         },
@@ -1004,21 +1046,30 @@
         type: 'doughnut',
         data: {
             labels: [
-                "Cumple satistactoriamente",
-                "Cumple parcialmente",
-                "No cumple",
+                "Inexistente",
+                "Inicial",
+                "Repetible",
+                "Definida",
+                "Administrada",
+                "Optimizada",
             ],
             datasets: [{
                 label: '% Implementación por fase',
                 data: [
-                    {{$conteos['Gap3actuar']['satisfactorio']}},
-                    {{$conteos['Gap3actuar']['parcialmente']}},
-                    {{$conteos['Gap3actuar']['nocumple']}},
+                    {{$conteos['Gap3actuar']['inexistente']}},
+                    {{$conteos['Gap3actuar']['inicial']}},
+                    {{$conteos['Gap3actuar']['repetible']}},
+                    {{$conteos['Gap3actuar']['definida']}},
+                    {{$conteos['Gap3actuar']['administrada']}},
+                    {{$conteos['Gap3actuar']['optimizada']}},
                 ],
                 backgroundColor: [
-                    'rgba(22, 160, 133, 0.6)',
-                    'rgba(244, 208, 63, 0.6)',
-                    'rgba(231, 76, 60, 0.6)',
+                    '#6863FF',
+                    '#f49c37',
+                    '#aaaaa',
+                    '#4A98FF',
+                    '#FFCB63',
+                    '#6DC866',
                 ]
             }]
         }

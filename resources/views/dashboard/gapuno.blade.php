@@ -245,16 +245,28 @@
         $(".valoracionGap3").editable({
             dataType: 'json',
             source: [{
-                value: '1',
-                text: 'Cumple satisfactoriamente'
+                value: '0',
+                text: 'Inexistente'
             },
                 {
+                    value: '1',
+                    text: 'Repetible'
+                },
+                {
                     value: '2',
-                    text: 'Cumple parcialmente'
+                    text: 'Administrada'
                 },
                 {
                     value: '3',
-                    text: 'No cumple'
+                    text: 'Definida'
+                },
+                {
+                    value: '4',
+                    text: 'Inicial'
+                },
+                {
+                    value: '5',
+                    text: 'Optimizada'
                 }
             ],
             success: function(response, newValue) {

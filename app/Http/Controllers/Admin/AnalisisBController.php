@@ -23,7 +23,7 @@ class AnalisisBController extends Controller
     {
         abort_if(Gate::denies('analisis_de_brechas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $gapuno = GapUno::orderBy('id', 'ASC')->get()->where('analisis_brechas_id', '=', request()->id);
-        $gaptresVerif = GapTre::get()->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id);
+        $gaptresVerif = GapTre::orderBy('id', 'ASC')->get()->where('analisis_brechas_id', '=', request()->id);
         $gaptresAct = GapTre::get()->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', request()->id);
         $gapa5 = GapDo::orderBy('id', 'ASC')->get()->where('analisis_brechas_id', '=', request()->id);
         $gapa6 = GapDo::orderBy('id', 'ASC')->get()->where('analisis_brechas_id', '=', request()->id);
@@ -77,13 +77,23 @@ class AnalisisBController extends Controller
         $gap2administrada = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap2optimizada = GapDo::select('id')->where('valoracion', '=', '5')->where('analisis_brechas_id', '=', request()->id)->count();
 
+        $gap3inexistente = GapTre::select('id')->where('valoracion', '=', '0')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap3inicial = GapTre::select('id')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap3repetible = GapTre::select('id')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap3definida = GapTre::select('id')->where('valoracion', '=', '3')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap3administrada = GapTre::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap3optimizada = GapTre::select('id')->where('valoracion', '=', '5')->where('analisis_brechas_id', '=', request()->id)->count();
 
         // $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', request()->id)->count();
         // $gap2satisfactorio = GapDo::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', request()->id)->count();
         // $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', request()->id)->count();
         // $gap2nocumple = GapDo::select('id', 'valoracion')->where('valoracion', '=', '3')->where('analisis_brechas_id', '=', request()->id)->count();
         // $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->get();
+        // $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->get();
+          $gap3porcentaje = GapTre::select('id', 'valoracion')->where('analisis_brechas_id', '=', request()->id)->get();
+        // $gap1porcentaje = GapUno::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', request()->id)->skip(3)->take(91);
+
+        
         $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', request()->id)->get();
         $gap3satisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap3parcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
@@ -99,7 +109,8 @@ class AnalisisBController extends Controller
         $porcentajeGap1=(($porcentajeGap1 * 100)/455);
         $porcentajeGap1=(($porcentajeGap1*30)/100);
         $porcentajeGap2 = $gapunoPorc->GapDosPorc($total,$gap2inexistente, $gap2inicial, $gap2repetible,$gap2definida, $gap2administrada,$gap2optimizada);
-        $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
+        $totaltres = GapTre::select('id')->where('analisis_brechas_id','=', request()->id)->get()->count();
+        $porcentajeGap3 = $gapunoPorc->GapTresPorc($totaltres,$gap3porcentaje, $gap31porcentaje,$gap3optimizada,$gap3administrada, $gap3definida, $gap3repetible, $gap3inicial,$gap3inexistente);
 
         $conteos = [
             'Gap1' => [
@@ -119,14 +130,20 @@ class AnalisisBController extends Controller
                 'optimizada' => $gap2optimizada,
             ],
             'Gap3verif' => [
-                'satisfactorio' => $gap3satisfactorios,
-                'parcialmente' => $gap3parcialmente,
-                'nocumple' => $gap3nocumple,
+                'inexistente' => $gap3inexistente,
+                'inicial' => $gap3inicial,
+                'repetible' => $gap3repetible,
+                'definida' => $gap3definida,
+                'administrada' => $gap3administrada,
+                'optimizada' => $gap3optimizada,
             ],
             'Gap3actuar' => [
-                'satisfactorio' => $gap3asatisfactorios,
-                'parcialmente' => $gap3aparcialmente,
-                'nocumple' => $gap3anocumple,
+                'inexistente' => $gap3inexistente,
+                'inicial' => $gap3inicial,
+                'repetible' => $gap3repetible,
+                'definida' => $gap3definida,
+                'administrada' => $gap3administrada,
+                'optimizada' => $gap3optimizada,
             ],
         ];
 

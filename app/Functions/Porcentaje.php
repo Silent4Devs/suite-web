@@ -53,6 +53,7 @@ class Porcentaje
     public function GapDosPorc($total,  $gap2inexistente,$gap2inicial,$gap2repetible,  $gap2definida, $gap2administrada, $gap2optimizada)
     {
         $valor = 40/$total;
+       
         $inexistente=  $gap2inexistente * $valor;
         $inicial= $gap2inicial * $valor;
         $repetible= $gap2repetible * $valor;
@@ -62,48 +63,41 @@ class Porcentaje
         // dd($gap2satisfactorio);
         //$parcialmenteValor = $gap2parcialmente * ($valor / 2);
         $porcentaje = $inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada * (100) / 40;
-        // dd($porcentaje);
+        
         $avance = (($inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada) *$porcentaje) /100;
-    //   dd($avance);
+        // dd($valor, $total, $inexistente, $inicial,  $repetible,$definida,$administrada, $optimizada);
         // $avance= 68;
+        
         return [
             // 'Gap2Satis' => $satisfactoriamente,
            // 'Gap2Parcial' => $parcialmenteValor,
             'Porcentaje' => $porcentaje,
             'Avance' => $avance,
+            
         ];
     }//termina func
 
-    public function GapTresPorc($gap3porcentaje, $gap32porcentaje)
+    public function GapTresPorc($totaltres,$gap3porcentaje, $gap32porcentaje, $gap3optimizada,$gap3administrada, $gap3definida, $gap3repetible, $gap3inicial,$gap3inexistente)
     {
-        $gap1cont = 0;
-        foreach ($gap3porcentaje as $gap1) {
-            if ($gap1->valoracion == '1') {
-                $gap1cont += 2.5;
-            } elseif ($gap1->valoracion == '2') {
-                $gap1cont += 1.25;
-            } else {
-                $gap1cont += 0;
-            }
-        }
-        //$porc1 = ($gap1cont * 20) / 13;
-        $gap12cont = 0;
-        foreach ($gap32porcentaje as $gap12) {
-            if ($gap12->valoracion == '1') {
-                $gap12cont += 2.5;
-            } elseif ($gap12->valoracion == '2') {
-                $gap12cont += 1.25;
-            } else {
-                $gap12cont += 0;
-            }
-        }
+       
 
-        $resultado = $gap1cont + $gap12cont;
+        $valor = 30/$totaltres;
+        $inexistente=  $gap3inexistente * $valor;
+        $inicial= $gap3inicial * $valor;
+        $repetible= $gap3repetible * $valor;
+        $definida=  $gap3definida * $valor;
+        $administrada= $gap3administrada * $valor;
+        $optimizada= $gap3optimizada * $valor;
+        $resultado = ($inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada * 100) / 30 ;
+        $avance = (($inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada) *$resultado) /100;
+        $resultadoporcentaje=round($resultado *(30)/100);
+        // dd($resultadoporcentaje, $avance, $resultado);
+
         //$porc2 = (round($gap12cont) * 20) / 100;
         return [
-            'porcentaje' => $resultado,
-            'verificar' => $gap1cont,
-            'actuar' => $gap12cont,
+            'porcentaje' => round($resultado *(30)/100),
+            'verificar' => $resultado,
+
         ];
     }//termina func
 }
