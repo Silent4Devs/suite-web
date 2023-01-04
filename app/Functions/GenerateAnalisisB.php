@@ -1324,63 +1324,537 @@ class GenerateAnalisisB
     {
         return [
                 [
-                    'pregunta' => '¿La entidad tiene una metodología para realizar seguimiento, medición y análisis permanente al desempeño de la Seguridad de laInformación?',
-                    'estado' => 'verificar',
+                    'estado' => 'Recursos Humanos',
+                    'pregunta' =>  '¿Se cuentan con acuerdos de confidencialidad y no divulgación de la información institucional? En caso de que sí, ¿cómo se gestiona el consentimiento del personal? ¿Quién es el responsable del resguardo?',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿La entidad ha realizado auditorías internas al Sistema de Gestión de Seguridad de la Información?',
-                    'estado' => 'verificar',
+                    'estado' => 'Recursos Humanos',
+                    'pregunta' =>  '¿Se tienen definidos y documentados roles y responsabilidades de seguridad de la información?,¿cómo se asignan? ¿quién los revisa y autoriza?',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿La entidad cuenta con programas de auditorias aplicables al SGSI donde se incluye frecuencia, métodos, responsabilidades, elaboración de informes?',
-                    'estado' => 'verificar',
+                    'estado' => 'Recursos Humanos',
+                    'pregunta' =>  '¿Se cuenta con políticas, procedimientos y controles  definidos para un correcto uso del correo institucional?, ¿Me puede mostrar evidencia de ello?, ¿Cómo se hacen de conocimiento al personal?',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿La alta dirección realiza revisiones periodicas al Sistema de Gestión de Seguridad de la Información?',
-                    'estado' => 'verificar',
+                    'pregunta' => '¿Como se realiza la gestión de los privilegios de acceso a los activos en materia de TIC? ¿Aplica para personal interno y externo?
+                    ¿Con qué periodicidad se les da seguimiento? (altas, bajas, cambios)',
+                    'estado' => 'Recursos Humanos',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿En las revisiones realizadas al sistema por la Dirección, se realizan procesos de retroalimentación sobre el desempeño de la seguridad de la información?',
-                    'estado' => 'verificar',
+                    'pregunta' => '¿Se cuenta con el procedimiento de desvinculación del personal internos y externos?
+                    ¿Podríamos contar con evidencia de una baja reciente?',
+                    'estado' => 'Recursos Humanos',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿Las revisiones realizadas por la Dirección al Sistema de Gestión de Seguridad de la Información, están debidamente documentadas?',
-                    'estado' => 'verificar',
+                    'pregunta' => '¿Se cuenta con un proceso donde se mencionen las sanciones administrativas o legales, en caso de que el personal interno y externo incumpla con lo definido en materia de seguridad de la información? 
+                    En caso de que sí, ¿cómo se hace de conocimiento al personal?',
+                    'estado' => 'Recursos Humanos',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿La entidad da respuesta a las no conformidades referentes a la seguridad de la información presentadas en los planes de auditoria?',
-                    'estado' => 'actuar',
+                    'pregunta' => '¿Se cuentan con políticas y procedimientos para realizar los respaldos de información y pruebas de restauración?,¿Se realizan respaldos de información? En caso de que sí, ¿con qué periodicidad se realizan?,¿Se realizan pruebas de restauración? En caso de que sí, ¿con qué periodicidad se realizan?
+                    ¿Podemos visualizar cuándo fue el último respaldo realizado?',
+                    'estado' => 'Gestión',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿La entidad ha implementado acciones a las no conformidades de seguridad de la información presentadas?',
-                    'estado' => 'actuar',
+                    'pregunta' => '¿Se cuenta con un programa de concienciación formalizado?
+                    ¿Como llevan acabo la concienciación, formación y educación sobre seguridad y el uso aceptable los equipos?
+                    ¿Con qué periodicidad se realizan? ¿Podemos visualizar evidencia de la última capacitación?',
+                    'estado' => 'Gestión',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿La entidad revisa la eficacia de las acciones correctivas tomadas por la presencia de una no conformidad de seguridad de la información?',
-                    'estado' => 'actuar',
+                    'pregunta' => '¿Se cuenta con algún procedimiento para el almacenamiento de datos, respaldo y copias de seguridad?',
+                    'estado' => 'Gestión',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿La entidad realiza cambios al Sistema de Gestión de Seguridad de la Información después de las acciones tomadas?',
-                    'estado' => 'actuar',
+                    'pregunta' => '¿Se realizán campañas de concienciación de la exposición voluntaria e involuntaria de datos de la SEDATU? Algún ejemplo es la ingeniería social y el phishing, composición de contraseñas, administración de credenciales, etc... 
+                    Cuando llega a pasar algún evento de este tipo, ¿se realiza un reforzamiento de concienciación?',
+                    'estado' => 'Gestión',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿La entidad documenta la información referente a las acciones correctivas que toma respecto a la seguridad de la información?',
-                    'estado' => 'actuar',
+                    'pregunta' => '¿El personal interno y externo de la SEDATU se encuentra advertido sobre los peligros del descuido sobre redes inseguras? ¿De qué manera se realiza? ¿Con qué periodicidad?',
+                    'estado' => 'Gestión',
                     'analisis_brechas_id' => $analisis_id,
                 ],
                 [
-                    'pregunta' => '¿La entidad realiza procesos de mejora continua para el Sistema de Gestión de Seguridad de la Información?',
-                    'estado' => 'actuar',
+                    'pregunta' => '¿Como administras las contraseñas? ¿Se encuentra documentado?',
+                    'estado' => 'Gestión',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Cuentas con métodos de autenticación? En caso de que sí, ¿podemos visualizar evidencia?',
+                    'estado' => 'Gestión',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Cómo gestionas las credenciales de acceso? ¿en dónde se encuentra documentado? ¿Con qué periodicidad se realiza la revisión? ¿Podemos visualizar evidencia de la última revisión?',
+                    'estado' => 'Gestión',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con algún procedimiento para la administración de cuentas?¿Se encuentran rastreadas? ¿Se lleva seguimiento de las cuentas de administrador? ',
+                    'estado' => 'Gestión',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con algún procedimiento para la administración de cuentas? En caso de utilizar cuentas predeterminadas o genéricas, ¿se tiene documentado la justificación y aprobación?',
+                    'estado' => 'Gestión',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Cuentas con un proceso de accesos físicos a los activos de información? ¿Se cuenta con bitácoras de acceso de personal interno y externo?',
+                    'estado' => 'Gestión',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Cómo se encuentran configuradas las reglas de comunicación de envío y recepción de correo electrónico? ¿Quién es el personal facultado para la configuración?',
+                    'estado' => 'Gestión',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Cómo se encuentran configuradas las medidas de seguridad de correo electrónico?',
+                    'estado' => 'Gestión',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Cómo se lleva a cabo el monitoreo de dispositivos al acceder a la red institucional? En caso de alguna anomalía, ¿cómo se notifica la alerta?',
+                    'estado' => 'Gestión',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con inventario de activos de información, así como de proveedores TI? ¿Quién es el personal facultado para modificarlo? ¿Se lleva seguimiento de vigencia de licencias, contratos, etc?',
+                    'estado' => 'Gestión',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con una metodología de análisis de riesgos? ¿Cuándo fue el último análisis de riesgo realizado? ¿Se cuenta con plan de tratamiento de riesgos?',
+                    'estado' => 'Planeación',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con un plan de gestión de incidentes de seguridad? En caso de que sí, ¿se realizan pruebas al plan? En caso de que sí, ¿con qué periodicidad se realizan? ¿Se ha presentado algún incidente? En caso de que si, ¿podemos visualizar evidencia de la respuesta que se brindó?',
+                    'estado' => 'Planeación',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con un Plan de Continuidad de Negocio?En caso de que sí, ¿realizan pruebas al Plan? ¿con qué periodicidad se realizan? ¿Se cuenta con sitios alternos?',
+                    'estado' => 'Planeación',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con un plan de gestión de vulnerabilidades? ¿Se realizan pruebas al Plan? En caso de que sí, ¿con qué periodidad se realizan?
+                    En este año, ¿se han realizado pruebas de penetración y análisis de vulnerabilidades? En caso de que sí, ¿podríamos visualizar el informe y remediación de hallazgos?',
+                    'estado' => 'Planeación',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con una matriz de proveedores y servicios? ¿Quién es el personal responsable de la gestión de dicha matriz? ¿Con qué periodicidad se le da seguimiento?',
+                    'estado' => 'Planeación',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con un plan de migración para las aplicaciones obsoletas? En caso de que sí, ¿realizan pruebas al plan? ¿con qué periodicidad se realizan?',
+                    'estado' => 'Planeación',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Cuentas con un plan de migración de software libre?',
+                    'estado' => 'Planeación',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con inventario de activos físicos? En caso de que sí, ¿quién es el personal responsable de su gestión?',
+                    'estado' => 'Equipo Físicos',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con la actualización del firmware en los equipos? ¿Cómo se gestionan las actualizaciones?',
+                    'estado' => 'Equipo Físicos',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con una bitácora de control de mantenimiento físico, cambio, remoción, o en su caso, destrucción de los equipos? En caso de que sí, ¿quién es el responsable del registro o actualización de la información de la bitácora?',
+                    'estado' => 'Equipo Físicos',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se cuenta con una bitácora al centro de datos? ¿Podemos ingresar al centro de datos?',
+                    'estado' => 'Centro de Datos',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Cómo se lleva acabo el proceso de acceso físico a las instalaciones?',
+                    'estado' => 'Centro de Datos',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se Implementan bóvedas de medios, centros de datos alternos cuando sea posible, servicios en la nube, como alternativas para recuperar la operación de los Centros de Datos?',
+                    'estado' => 'Centro de Datos',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => 'En caso de requerirse  centros de datos alternos y bóvedas de medios, ¿dónde se encuentran ubicados?',
+                    'estado' => 'Centro de Datos',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se implementan mecanismos de cifrado en los medios de almacenamiento en Centros de Datos centralizados? En caso de que sí, ¿quién es el responsable de la administración de dichos mecanismos de cifrado?',
+                    'estado' => 'Centro de Datos',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿En el centro de datos se cumple con su diseño, estructura, desempeño, fiabilidad y medidas de seguridad equivalentes, como mínimo, el equivalente al estándar TIER II?',
+                    'estado' => 'Centro de Datos',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se establecen procesos o procedimientos formales para la administración del Centro de Datos, en cuanto a accesos, mantenimiento de equipos, supervisión de trabajos externos y otras actividades relacionadas?',
+                    'estado' => 'Centro de Datos',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se aplican políticas de firewall permitiendo sólo el tráfico válido para la SEDATU por medio de los puertos TCP/IP necesarios y autorizados?',
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se utilizan redes abiertas únicamente al proporcionar servicios a la población, las cuales deberán estar separadas y aisladas de las redes de datos institucionales, como por ejemplo, LAN, DMZ, invitados y de control, en caso de existir?',
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se utilizan mecanismos de cifrado de llave pública y privada, canales cifrados de comunicación y, cuando corresponda, de firma electrónica avanzada, que permitan el acceso de la información únicamente al destinatario autorizado al que esté dirigida?',
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se implementan controles de red como segmentación de redes, reglas de control de acceso, almacenamiento de bitácoras, seguridad de puertos, así como otras buenas prácticas con la finalidad de tener una mejor administración y seguridad en la red?
+                    ¿Se cuenta con diagrama de red?',
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se desactiva el uso del protocolo RDP en general? En caso de ser necesario, ¿se limita por velocidad con doble factor de autenticación?',
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se establecen accesos por VPN como único medio de acceso remoto a las redes internas de la SEDATU, con autenticación separada a la de los servicios institucionales, sin tener permisos superiores a los que el usuario tiene en la red interna, y con la finalidad de que sólo usuarios autorizados puedan acceder a la red institucional desde sitios remotos?',
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se establecen accesos restringidos a la red LAN para que sólo personal de la SEDATU tenga acceso; y para usuarios externos, se es requerido contar con justificación, autorización y los registros correspondientes?
+                    ¿Cómo se gestiona el acceso para usuarios externos?',
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                    'pregunta' => '¿Se implementa proxy en las redes Wireless y LAN, estableciendo políticas de uso de la red, es decir, autorización para navegar a sitios de la Internet y no permitiendo el acceso o salida directa hacia ésta; además, se detectan páginas fraudulentas o sospechosas por medio de direcciones IP o dominios?
+                    ¿Quién lo gestiona? Si es desde una consola, ¿podríamos visualizar los accesos?',
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'pregunta' => '¿Se cuenta con una bitácora con la justificación de cada regla configurada en los firewall? ¿Quién es el personal facultado para realizar modificaciones? ¿Se revisa y autoriza?',
+                    'analisis_brechas_id' => $analisis_id,
+    
+                ],
+                [
+                   
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'pregunta' => '¿Se deshabilitan las reglas de acceso en el Firewall que no sean ocupadas, se verifican y actualizan periódicamente según las necesidades institucionales?
+                    ¿Con qué periodicidad se revisan y actualizan?',
+                    'analisis_brechas_id' => $analisis_id,
+    
+                ],
+                [
+                   
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'pregunta' => '¿Se establece una configuración base y se realiza periódicamente copias de seguridad de las configuraciones de dispositivos de telecomunicaciones?
+                    ¿Con qué periodicidad se realizan? ¿Quién es el personal facultado para realizar estas actividades?',
+                    'analisis_brechas_id' => $analisis_id,
+    
+                ],
+                [
+                   
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'pregunta' => '¿Se mantienen actualizados el firmware, el sistema operativo y el software instalado en los equipos, en su última versión estable, sin afectar la operación, así como aplicar los parches de seguridad recomendados por los fabricantes?
+                    ¿Cómo se gestionan las actualizaciones? ¿Quién es el personal facultado para realizar las actualizaciones e instalación de parches? ¿Cómo se asegura que la instalación no vulnera la operación?',
+                    'analisis_brechas_id' => $analisis_id,
+    
+                ],
+                [
+                   
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'pregunta' => '¿Se realiza el monitoreo y análisis en el flujo de tráfico y dispositivos de red, para la detección oportuna de amenazas que puedan explotar vulnerabilidades de los activos de información en la SEDATU?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'pregunta' => '¿Se encuentra implementado un mecanismo de revisión constante de la reputación del segmento de IP? Y en caso de estar en una lista negra, ¿Se identifican la(s) causa(s) por la(s) que la reputación del segmento decreció, se soluciona el problema y solicita la exclusión de la lista negra? ¿Quién es el personal factultado para realizar esta actividad?',
+                    'analisis_brechas_id' => $analisis_id,
+    
+                ],
+                [
+                   
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'pregunta' => '¿Se utilizan los protocolos seguros HTTPS, SFTP y SSH, en lugar de HTTP, FTP y Telnet? ¿Se prioriza el uso de Let’s Encrypt e implementar Autoridades de Certificación internas de confianza?',
+                    'analisis_brechas_id' => $analisis_id,
+    
+                ],
+                [
+                   
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'pregunta' => '¿Se restringe el acceso a invitados a una red sólo con salida a internet, que no tenga acceso a la red interna de la Dependencia, estableciendo el tiempo máximo de autorización de los dispositivos?',
+                    'analisis_brechas_id' => $analisis_id,
+    
+                ],
+                [
+                   
+                    'estado' => 'Redes y Telecomunicaciones',
+                    'pregunta' => 'En caso de contar con proveedores, ¿el personal interno de la SEDATU tiene acceso a los equipos de telecomunicaciones, además de estos, con usuarios y con privilegios de lectura o monitoreo a los equipos de telecomunicaciones, ¿Se encuentran autorizados y documentados? ¿Cómo se gestionan las altas, cambios o bajas de los accesos? ¿Quién es el personal facultado para la la solicitud y autorización?',
+                    'analisis_brechas_id' => $analisis_id,
+    
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se cuenta con la creación de imágenes de instalación base con las aplicaciones permitidas al interior de cada Dependencia, de preferencia conformadas por software libre; la configuración de los sistemas operativos y habilitación de los usuarios estrictamente necesarios de acuerdo con el grupo o rol de la persona servidora pública y priorizando el principio de menor privilegio?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se cuenta con procedimientos necesarios para la autorización, el ingreso, registro y la conexión de equipos de cómputo personales a las redes institucionales?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se implementan herramientas de monitoreo de aplicaciones instaladas y actividad no deseada en los equipos de cómputo? ¿Quién es el personal facultado para realizar el monitoreo? En caso de alguna anomalía, ¿cómo se gestiona?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se utilizan medidas necesarias para detectar y evitar la desinstalación o deshabilitación de las herramientas o los servicios de seguridad aplicados en la SEDATU? En caso de alguna anomalía, ¿cómo se gestiona?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se realiza el borrado seguro o destrucción de equipos que contengan información que esté clasificada como reservada o confidencial para la SEDATU y se mantiene evidencia auditable del proceso? ¿Cómo se identifica que es información reservada o confidencial? ¿Quién es el personal facultado para la solicitud y autorización? ¿Podemos visualizar evidencia de la última destrucción? ¿Quién es el personal facultado para el resguardo de dicha evidencia?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se realiza la instalación y actualización de software antimalware en los equipos de escritorio, portátiles y servidores para evitarla instalación, propagación y ejecución de malware en diversos puntos de la red interna de la SEDATU?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se cierran puertos y deshabilitación servicios que no se utilizan en los servidores, aplicando las configuraciones recomendadas? ¿Se cuenta con guías de configuración dependiendo del Sistema Operativo? En caso de que sí, ¿en qué se basan dichas configuraciones?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se implementa un mecanismo de aplicación de parches de seguridad indicados por los fabricantes de hardware y software?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se habilitan políticas de permisos de grupo para restringir el uso de herramientas de línea de comando(Powershell, Terminal, Shell) a cualquier usuario? ¿Podemos visualizar algún ejemplo?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se cuenta con la habilitación y configuración en el firewall de cada equipo terminal para bloquear todo el tráfico entrante, permitiendo sólo el tráfico autorizado y únicamente podrá deshabilitar el firewall la persona servidora pública facultada y con la autorización correspondiente? ¿Podemos visualizar algún ejemplo?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Los firewalls de cada servidor se encuentran activados y configurados de acuerdo con las necesidades del servicio requerido en todo momento? En caso de requerir que esté deshabilitado, ¿se autoriza y asigna un responsable?¿Quién es el personal facultado para la solicitud y autorización de deshabilitación?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => '¿Se registra, monitorea y analizan los eventos de seguridad de los equipos de cómputo, dispositivos de red, servidores, aplicaciones institucionales y otro software o activo de información que se considere importante para la SEDATU, que ayude a detectar posibles incidentes de seguridad?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Equipo de Computo',
+                    'pregunta' => 'En caso de contar con proveedores, ¿el personal interno de la SEDATU tiene acceso a los equipos de cómputo, además del proveedor, incluyendo accesos, y estos están autorizados y documentados?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Tecnología Móvil',
+                    'pregunta' => '¿Se cuenta con un procedimiento para la autorización, el ingreso, registro y la conexión de dispositivos móviles personales a las redes institucionales? ¿Cómo se realiza el monitoreo? ¿Quién es el personal facultado para la solicitud y autorización? En caso de baja, ¿cómo se gestina la revocación del equipo y de los accesos?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Tecnología Móvil',
+                    'pregunta' => '¿Se cuenta con la autorización previa y acceso a las redes de los dispositivos móviles, propiedad de terceros, además de conectarse a una red como invitado sin conectarse a los servicios internos de la dependencia? ¿Quién es el personal facultado para realizar la solicitud y autorización de accesos? ¿Quién realiza el monitoreo de los equipos, así como la asignación y revocación de los accesos?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Tecnología Móvil',
+                    'pregunta' => '¿Se tienen instalados mecanismos de cifrado de datos en los dispositivos electrónicos?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se realiza la creación y actualización de un inventario de aplicaciones y sistemas de información en la SEDATU? ¿Con qué periodicidad se revisa y/o actualiza?¿Quién es el personal facultado las la moficiación de información?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se implementa un repositorio del código fuente Institucional,  bajo control y administrado por la SEDATU e independiente a los contratos con fábricas de software?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se cuenta con bitácoras y registros con fines de auditoría y trazabilidad de procesos de desarrollo de software?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se encuentran separados los sistemas esenciales de la red de datos interna y sólo se le permite el acceso o salida directa hacia la Internet, como mínimo, con una protección perimetral de red? ¿Podemos visualizar evidencia de la segmentación? ¿Se cuenta con diagrama?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se encuentra la comunicación cifrada para las aplicaciones o servicios que estén expuestos en Internet y que manejen información sensible, como Información confidencial o reservada, datos personales y datos personales sensibles, con el fin de evitar que ésta sea modificada expuesta a personas no autorizadas? ¿Cuál es el protocolo que se utiliza? ¿Podemos visualizar evidencia del cifrado?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Para el desarrollo de sistemas o aplicaciones, se rige bajo los principios de privilegio mínimo y funcionalidad mínima, validando cada operación que realiza el usuario a través de verificación explícita, todas las entradas, incluido el tamaño, el tipo de datos, los rangos o formatos aceptables y los posibles errores?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se encuentran separados los ambientes de desarrollo y pruebas entre ellos y de ambientes productivos, se siguen las medidas de seguridad que se implementan para un ambiente de producción con la finalidad de simular y validar los escenarios que expongan riesgos de seguridad? ¿Se cuenta con diagrama? ¿Podemos visualizar evidencia de la segmentación?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se establecen los controles necesarios, así como los criterios y el perfil del usuario que tendrá acceso al código fuente para realizar cambios e implementaciones que requiera el sistema o aplicación? ¿Cómo se gestionan los cambios e implementaciones?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se cuenta con la actualización de las bibliotecas y lenguajes de programación utilizados en el desarrollo de aplicaciones y sistemas para minimizar la exposición a vulnerabilidades, en caso de que dicha actualización afecte la funcionalidad desempeño del sistema y/o aplicativo, ¿cómo se gestiona?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se realizan pruebas unitarias y de integridad a los sistemas desarrollados? Compartir evidencia de las pruebas realizadas',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se realizan pruebas de estrés y carga masiva de datos a los sistemas y aplicaciones desarrollados antes de su implementación en ambientes productivos? Compartir evidencia de las pruebas realizadas',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se realiza un análisis de vulnerabilidades a los sistemas o aplicaciones, en particular las identificadas como esenciales para la SEDATU, con el fin de verificar que cumplan con los requisitos mínimos previo a su operación en producción? En caso de identificar alguna anomalía, ¿cómo se gestiona?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se realizan pruebas de respaldo y restauración de los sistemas, aplicaciones y los servicios y de la información u otros activos de información relacionados con estos?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se cuenta con un marco de políticas del remitente (SPF), identificado de llaves de dominio (DKIM) y mensajes basados en el dominio (DMARC) para el servicio de correo electrónico? ',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se realiza la protección de datos personales que son utilizados por las aplicaciones web y móviles contra las posibles amenazas?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Sistemas, Aplicaciones y Servicios',
+                    'pregunta' => '¿Se supervisa el efectivo cumplimiento de las actividades y acuerdos efectuados con proveedores de los bienes y servicios? ¿Quién es el personal facultado para supervisar dicho cumplimiento? En caso de alguna desviación, ¿cómo se gestiona?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Base de datos',
+                    'pregunta' => '¿Se utiliza un mecanismo para realizar pruebas de respaldo y restauración de las bases de datos institucionales, y estas se encuentran cifradas?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Base de datos',
+                    'pregunta' => '¿Se cuenta con la definición de  usuarios, roles y permisos específicos para las diferentes operaciones en las bases de datos?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Base de datos',
+                    'pregunta' => '¿Se cuenta con un inventario de todas las bases de datos institucionales y su interoperabilidad con otros sistemas internos o externos y con otras Instituciones públicas?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Base de datos',
+                    'pregunta' => '¿Se ofusca información de bases de datos que sea utilizada en ambientes de desarrollo?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Base de datos',
+                    'pregunta' => '¿Se utiliza cifrado en reposo y en tránsito, cuando la base de datos contiene datos personales?',
+                    'analisis_brechas_id' => $analisis_id,
+                ],
+                [
+                   
+                    'estado' => 'Base de datos',
+                    'pregunta' => '¿Se cuenta con bases de datos que contengan información confidencial, y el contenido de las tuplas esta cifrado utilizando llaves cuya posesión sea exclusivamente para personas autorizadas y nunca tengan acceso el administrador del sistema operativo ni el DBA?',
                     'analisis_brechas_id' => $analisis_id,
                 ],
             ];
