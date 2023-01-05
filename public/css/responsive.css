@@ -123,7 +123,7 @@
     }
 
     #layout-app-body form img.logo_silent{
-        filter: grayscale(100%) brightness(1.2) opacity(0.8);
+        filter: grayscale(100%) brightness(10) opacity(0.8);
     }
 
     /* timesheet ------------------------------- */

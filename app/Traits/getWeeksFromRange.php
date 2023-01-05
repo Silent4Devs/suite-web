@@ -8,20 +8,24 @@ use Carbon\Carbon;
 
 trait getWeeksFromRange
 {
-    public function getWeeksFromRange(int $year, String $month, String $day, array $employeeWeksTimesheet, $startWeek = 'monday', $endWeek = 'sunday', $fecha_fin = null)
+    public function getWeeksFromRange(int $year, String $month, String $day, array $employeeWeksTimesheet, $startWeek = 'monday', $endWeek = 'sunday', $fecha_fin = null, $fecha_fin_extern, $faltantes = null)
     {
         $rangeArray = [];
         $now = Carbon::now();
         $actualYear = $now->year;
-        $cycles = ($actualYear - $year) + 1;
+        if ($faltantes) {
+            $cycles = $fecha_fin_extern->year - $year;
+        }else{
+            $cycles = ($fecha_fin_extern->year - $year) + 1;
+        }
         $lastYear = $year;
         if ($fecha_fin != null) {
             $endActualWeek = $fecha_fin->endOfWeek(Carbon::SUNDAY)->format('Y-m-d');
             $startActualWeek = $fecha_fin->startOfWeek(Carbon::MONDAY)->format('Y-m-d');
             $actualWeek = $startActualWeek . '|' . $endActualWeek;
         } else {
-            $startActualWeek = $now->startOfWeek(Carbon::MONDAY)->subDays(7)->format('Y-m-d');
-            $endActualWeek = $now->endOfWeek(Carbon::SUNDAY)->format('Y-m-d');
+            $startActualWeek = $fecha_fin_extern->startOfWeek(Carbon::MONDAY)->subDays(7)->format('Y-m-d');
+            $endActualWeek = $fecha_fin_extern->endOfWeek(Carbon::SUNDAY)->format('Y-m-d');
             $actualWeek = $startActualWeek . '|' . $endActualWeek;
         }
         for ($i = 1; $i <= $cycles; $i++) {
