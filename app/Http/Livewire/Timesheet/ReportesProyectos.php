@@ -150,7 +150,7 @@ class ReportesProyectos extends Component
 
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
         $fecha_fin_complit_timesheet = Carbon::parse($fecha_fin_complit_timesheet);
-        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $fecha_fin_complit_timesheet);
+        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $fecha_fin_complit_timesheet, $fecha_fin_complit_timesheet);
         $total_months = 0;
         foreach ($semanas_complit_timesheet as $semana) {
             $semana_array = explode('|', $semana);
