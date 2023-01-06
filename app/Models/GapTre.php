@@ -24,6 +24,7 @@ class GapTre extends Model
         'pregunta',
         'valoracion',
         'evidencia',
+        'contexto',
         'recomendacion',
         'created_at',
         'updated_at',

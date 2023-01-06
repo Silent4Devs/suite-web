@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <div id="barraGap2" class="barraGap2">
-                    <h6 align="center">GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN ({{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%)
+                    <h6 align="center">GAP 02: MARCO DE GESTIÓN DE SEGURIDAD DE LA INFORMACIÓN ({{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%)
                     </h6>
                     <div class="progress">
                         <div
@@ -58,7 +58,8 @@
                                     <thead class="thead-dark" align="center">
                                     <tr>
                                         <th scope="col">INDICE</th>
-                                        <th COLSPAN="2">CONTROL</th>
+                                        <th COLSPAN="col">CONTROL</th>
+                                        <th COLSPAN="col">PREGUNTA</th>
                                         <th scope="col">VALORACIÓN</th>
                                         <th scope="col">EVIDENCIA DE
                                             CUMPLIMIENTO</th>

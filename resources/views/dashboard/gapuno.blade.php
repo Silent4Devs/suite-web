@@ -247,26 +247,26 @@
             source: [{
                 value: '0',
                 text: 'Inexistente'
-            },
-                {
-                    value: '1',
-                    text: 'Repetible'
                 },
                 {
-                    value: '2',
-                    text: 'Administrada'
+                value: '1',
+                text: 'Inicial'
                 },
                 {
-                    value: '3',
-                    text: 'Definida'
+                value: '2',
+                text: 'Repetible'
                 },
                 {
-                    value: '4',
-                    text: 'Inicial'
+                value: '3',
+                text: 'Definida'
                 },
                 {
-                    value: '5',
-                    text: 'Optimizada'
+                value: '4',
+                text: 'Administrada'
+                },
+                {
+                value: '5',
+                text: 'Optimizada'
                 }
             ],
             success: function(response, newValue) {

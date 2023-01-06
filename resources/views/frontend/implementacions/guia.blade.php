@@ -151,13 +151,13 @@ Objetivo del SGSI.
 
                                 <p>
                                     <h6>ANÁLISIS DE BRECHAS ISO 27001 (GAP ANALYSIS) </h6>
-                                    Antes de iniciar con la implementación del Sistema de Gestión de Seguridad de la Información (SGSI) en la Organizacion, es necesario realizar un diagnóstico inicial para determinar el grado de cumplimiento tanto de los requisitos de la norma ISO 27001 como de sus controles. Para lograr este objetivo emplearemos el Análisis de Brechas (Gap Analysis).
+                                     Para lograr este objetivo emplearemos el Análisis de Brechas (Gap Analysis).
                                 </p>
                                 <p>
                                     Un análisis de brechas GAP es un método para evaluar las diferencias de rendimiento entre los sistemas de información de una empresa o las aplicaciones de software para determinar si se cumplen los requisitos del negocio y, de no ser así, qué pasos se deben tomar para garantizar que se cumplan con éxito. Gap se refiere al espacio entre "donde estamos" (el presente) y "donde queremos estar" (el objetivo a alcanzar). Un análisis de deficiencias también puede denominarse análisis de necesidades, permitiéndonos determinar lo que nos falta y los recursos necesarios para alcanzar los objetivos.
                                 </p>
                                 <p>
-                                    Por lo tanto, este análisis nos permitirá determinar el nivel de madurez que presenta la Organización respecto a los temas relacionados con Seguridad de la Información y establecer el punto de partida para implementar la norma y evaluar el esfuerzo necesario, así como tener una herramienta fiable para elaborar un plan de implementación de ISO 27001.
+                                    Por lo tanto, este análisis nos permitirá determinar el nivel de madurez que presenta la Organización respecto a los temas relacionados con Seguridad de la Información y establecer el punto de partida para implementar la norma y evaluar el esfuerzo necesario, así como tener una herramienta fiable para elaborar un plan de implementación.
                                 </p>
                                 <p>
                                     Así mismo, podrá utilizar esta herramienta después de la ejecución del plan de implementación para evaluar el grado de avance del proyecto.
