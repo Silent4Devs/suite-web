@@ -3,11 +3,9 @@
         <div class="card">
             <div class="card-body">
                 <p class="card-text">
-                    Antes de iniciar con la implementación del Sistema de
-                    Gestión de Seguridad de la Información (SGSI) en la
-                    Organizacion, es necesario realizar un diagnóstico
+                    Es necesario realizar un diagnóstico
                     inicial para determinar el grado de cumplimiento tanto
-                    de los requisitos de la norma ISO 27001 como de sus
+                    de los requisitos de la norma como de sus
                     controles. Para lograr este objetivo emplearemos el
                     Análisis de Brechas (Gap Analysis).
                 </p>

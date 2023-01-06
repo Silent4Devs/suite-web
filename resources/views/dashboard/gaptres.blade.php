@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <div id="barraGap3" class="barraGap3">
-                    <h6 align="center">GAP 03: MONITOREO Y MEJORA CONTINUA ({{ $porcentajeGap3['porcentaje'] }}%)
+                    <h6 align="center">GAP 03: MARCO DE GESTIÓN DE SEGURIDAD DE LA INFORMACIÓN ({{ $porcentajeGap3['porcentaje'] }}%)
                     </h6>
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
@@ -58,6 +58,7 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">ESTADO</th>
+                                    <th scope="col">CONTROL</th>
                                     <th scope="col">PREGUNTA</th>
                                     <th scope="col">VALORACIÓN</th>
                                     <th scope="col">EVIDENCIA DE
@@ -72,6 +73,9 @@
                                         <th scope="row">
                                             {{ $verificar->estado }}
                                         </th>
+                                        <td>
+                                            {{ $verificar->contexto ? $verificar->contexto : 'Sin registro'  }}
+                                        </td>
                                         <td>
                                             {{ $verificar->pregunta }}
                                         </td>
