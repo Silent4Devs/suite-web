@@ -4,9 +4,7 @@
             <div class="card-body">
                 <p class="card-text">
                     Es necesario realizar un diagnóstico
-                    inicial para determinar el grado de cumplimiento tanto
-                    de los requisitos de la norma como de sus
-                    controles. Para lograr este objetivo emplearemos el
+                    inicial para determinar el grado de cumplimiento de los controles del marco de gestión de seguridad de la información. Para lograr este objetivo emplearemos el
                     Análisis de Brechas (Gap Analysis).
                 </p>
                 <button type="button" id="btn_ejecutar" class="btn btn-success float-right"><font style="color: #fff;">Ejecutar

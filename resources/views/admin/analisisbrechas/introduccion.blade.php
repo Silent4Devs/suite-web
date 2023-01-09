@@ -1,4 +1,4 @@
-      <div class="row">
+          <div class="row">
           <div class="col-6 col-md-6 col-sm-12">
 
               <h3 class="text-center indigo-text" class="mb-0">Introducción</h3>
