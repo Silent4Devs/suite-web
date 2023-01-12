@@ -9,7 +9,7 @@ class UpdateMatrizRiesgoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('matriz_riesgo_edit');
+        return Gate::allows('iso_27001_editar');
     }
 
     public function rules()
