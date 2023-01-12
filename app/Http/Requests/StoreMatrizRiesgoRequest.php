@@ -9,7 +9,7 @@ class StoreMatrizRiesgoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('matriz_riesgo_create');
+        return Gate::allows('iso_27001_agregar');
     }
 
     public function rules()

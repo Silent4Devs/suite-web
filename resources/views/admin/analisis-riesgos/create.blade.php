@@ -168,4 +168,25 @@
             }
         });
     </script>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let elaboro = document.querySelector('#id_elaboro');
+            let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
+            let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');
+
+            document.getElementById('id_puesto').innerHTML = puesto_init;
+            document.getElementById('id_area').innerHTML = area_init;
+            elaboro.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('id_puesto').innerHTML = puesto;
+                document.getElementById('id_area').innerHTML = area;
+            })
+        });
+    </script>
+
+
+  
 @endsection
