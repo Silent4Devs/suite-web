@@ -1089,7 +1089,7 @@ class MatrizRiesgosController extends Controller
 
     public function ISO31000(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizIso31000::get();
             $table = Datatables::of($query);
@@ -1223,7 +1223,7 @@ class MatrizRiesgosController extends Controller
 
     public function NIST(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizNist::get();
             $table = Datatables::of($query);
