@@ -16,12 +16,7 @@ trait getWeeksFromRange
         if ($faltantes) {
             $cycles = $fecha_fin_extern->year - $year;
         }else{
-            $cycles = ($fecha_fin_extern->year - $year) + 1;
-            if ($cycles == 1) {
-                $cycles = $fecha_fin_extern->year - $year;
-            }else{
                 $cycles = ($fecha_fin_extern->year - $year) + 1;
-            }
         }
         $lastYear = $year;
         if ($fecha_fin != null) {
