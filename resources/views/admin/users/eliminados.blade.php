@@ -1,10 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="card">
-        <div class="card-header">
-            {{ trans('global.show') }} {{ trans('cruds.user.title') }}
-        </div>
 
+    <div >
+    <h5 class="titulo_general_funcion">
+        {{ trans('global.show') }} {{ trans('cruds.user.title') }} Eliminados
+    </h5>
+    <div class="card">
         <div class="card-body">
             <div class="form-group">
                 <table class="table">
@@ -35,4 +36,6 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
+

@@ -3,7 +3,7 @@
 
     {{ Breadcrumbs::render('admin.analisis-riesgos.index') }}
 
-    @can('matriz_riesgo_create')
+    @can('iso_27001_agregar')
 
         <style>
             th {
