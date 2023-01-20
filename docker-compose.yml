@@ -1,5 +1,5 @@
 version: "3.7"
-services: 
+services:
   nginx-tabantaj:
     image: nginx:stable-alpine
     container_name: nginx-tabantaj
@@ -14,30 +14,30 @@ services:
     networks:
       - tabantajnetwork
 
-  pgadmin-tabantaj:
-    image: dpage/pgadmin4
-    container_name: pgadmin-tabantaj
-    restart: unless-stopped
-    tty: true 
-    ports:
-      - "5050:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "luis.vargas@silent4business.com"
-      PGADMIN_DEFAULT_PASSWORD: "Administrador1"
-    depends_on:
-      - php-tabantaj
-      - postgres-tabantaj
-    volumes:
-      - ./pgadmin_data:/var/lib/pgadmin
-    networks:
-      - tabantajnetwork
-      
+  # pgadmin-tabantaj:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "5050:80"
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: "luis.vargas@silent4business.com"
+  #     PGADMIN_DEFAULT_PASSWORD: "Administrador1"
+  #   depends_on:
+  #     - php-tabantaj
+  #     - postgres-tabantaj
+  #   volumes:
+  #     - ./pgadmin_data:/var/lib/pgadmin
+  #   networks:
+  #     - tabantajnetwork
+
   postgres-tabantaj:
     image: postgres:latest
     container_name: postgres-tabantaj
     restart: unless-stopped
     tty: true
-    ports: 
+    ports:
       - 5432:5432
     volumes:
       - ./postgres:/var/lib/postgresql/data
