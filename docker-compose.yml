@@ -1,22 +1,22 @@
 version: "3.7"
 services: 
-  nginx:
+  nginx-tabantaj:
     image: nginx:stable-alpine
-    container_name: nginx
+    container_name: nginx-tabantaj
     ports:
       - 80:80
     volumes:
-      - ./src:/var/www/html
+      - .:/var/www/html
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - php
-      - postgres
+      - php-tabantaj
+      - postgres-tabantaj
     networks:
-      - tannetwork
+      - tabantajnetwork
 
-  pgadmin:
+  pgadmin-tabantaj:
     image: dpage/pgadmin4
-    container_name: pgadmin
+    container_name: pgadmin-tabantaj
     restart: unless-stopped
     tty: true 
     ports:
@@ -25,16 +25,16 @@ services:
       PGADMIN_DEFAULT_EMAIL: "luis.vargas@silent4business.com"
       PGADMIN_DEFAULT_PASSWORD: "Administrador1"
     depends_on:
-      - php
-      - postgres
+      - php-tabantaj
+      - postgres-tabantaj
     volumes:
       - ./pgadmin_data:/var/lib/pgadmin
     networks:
-      - tannetwork
+      - tabantajnetwork
       
-  postgres:
+  postgres-tabantaj:
     image: postgres:latest
-    container_name: postgres
+    container_name: postgres-tabantaj
     restart: unless-stopped
     tty: true
     ports: 
@@ -49,19 +49,19 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: postgres
     networks:
-      - tannetwork
+      - tabantajnetwork
 
-  php:
+  php-tabantaj:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: php
+    container_name: php-tabantaj
     volumes:
-      - ./src:/var/www/html
+      - .:/var/www/html
     ports:
       - 9000:80
     networks:
-      - tannetwork
+      - tabantajnetwork
 
 networks:
-  tannetwork:
+  tabantajnetwork:

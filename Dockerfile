@@ -1,7 +1,9 @@
 FROM php:8.1-fpm-alpine
 
 RUN apk add postgresql-dev \
-    && docker-php-ext-install pdo pdo_pgsql pdo_mysql
+    libzip-dev \
+    curl-dev \
+    && docker-php-ext-install curl zip pdo pdo_pgsql pdo_mysql
 
 # COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

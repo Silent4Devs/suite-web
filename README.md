@@ -54,3 +54,13 @@ Ojo: si te sale algún error es porque no tienes permisos root en las carpetas d
  <br>
  mkdir storage/framework/{views, testing, sessions, cache/data}
 
+# mysql
+
+#Enter to the running container
+docker-compose exec mysql /bin/bash
+
+#Backup
+docker-compose exec mysql /usr/bin/mysqldump -u homestead --password=secret homestead > backup.sql
+
+#Restore
+cat backup.sql | docker exec -i mysql /usr/bin/mysql -u homestead --password=secret homestead
