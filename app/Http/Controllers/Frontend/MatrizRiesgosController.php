@@ -95,7 +95,7 @@ class MatrizRiesgosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('matriz_riesgo_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sedes = Sede::get();
         $areas = Area::get();
@@ -115,7 +115,7 @@ class MatrizRiesgosController extends Controller
         //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
 
         $matrizRiesgo = MatrizRiesgo::create($request->all());
-
+        dd($matrizRiesgo);
         foreach ($request->controles_id as $item) {
             $control = new MatrizRiesgosControlesPivot();
             // $control->matriz_id = 2;
