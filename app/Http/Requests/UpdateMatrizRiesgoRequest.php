@@ -9,56 +9,56 @@ class UpdateMatrizRiesgoRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('matriz_riesgo_edit');
+        return Gate::allows('iso_27001_editar');
     }
 
     public function rules()
     {
         return [
-            'proceso'              => [
-                'string',
-                'nullable',
+            'id_sede' => [
+                'required',
+                'int',
             ],
-            'responsableproceso'   => [
-                'string',
-                'nullable',
+            'id_proceso' => [
+                'required',
+                'int',
             ],
-            'amenaza'              => [
-                'string',
-                'nullable',
+            'activo_id' => [
+                'required',
+                'int',
             ],
-            'vulnerabilidad'       => [
-                'string',
-                'nullable',
+            'id_responsable' => [
+                'required',
+                'int',
             ],
-            'descripcionriesgo'    => [
-                'string',
-                'nullable',
+            'id_amenaza'=> [
+                'required',
+                'int',
             ],
-            'confidencialidad'     => [
-                'string',
+            'id_vulnerabilidad'=> [
+                'required',
+                'int',
             ],
-            'integridad'           => [
-                'string',
+            'controles_id'=> [
+                'required',
+                'array',
             ],
-            'disponibilidad'       => [
-                'string',
+            'confidencialidad'=> [
+                'required',
             ],
-            'nivelriesgo'          => [
-                'numeric',
+            'integridad'=> [
+                'required',
             ],
-            'riesgototal'          => [
-                'numeric',
+            'disponibilidad'=> [
+                'required',
             ],
-            'resultadoponderacion' => [
-                'numeric',
+            'probabilidad'=> [
+                'required',
+                'int',
             ],
-            'riesgoresidual'       => [
-                'numeric',
-            ],
-            'justificacion'        => [
-                'string',
-                'nullable',
+            'impacto'=> [
+                'required',
+                'int',
             ],
         ];
     }
