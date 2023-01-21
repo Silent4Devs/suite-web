@@ -1,6 +1,6 @@
 <p align="center"><img src="public/img/Silent4Business-Logo-Color.png" width="400"></p>
 
-# tabantaj S4B
+# Gestión normativa S4B
 
 El proyecto se tiene que clonar dentro de la carpeta raiz en donde se publiquen las URL
 
@@ -12,8 +12,6 @@ Una vez descargado se deben correr los siguientes comandos en este orden:
  1. composer install
  2. npm install
  3. npm run dev
- 4. php artisan migrate --seed
- 5. cargar triggers de la carpeta trigger
 
 ## ¡Alerta!
 

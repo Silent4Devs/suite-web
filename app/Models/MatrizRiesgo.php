@@ -102,7 +102,7 @@ class MatrizRiesgo extends Model
     ];
 
     const EV_INICIAL_SELECT = [
-        '11.1' => 'Sí',
+        '33.3' => 'Sí',
         '0'     => 'No',
     ];
 

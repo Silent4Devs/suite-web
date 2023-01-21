@@ -56,8 +56,8 @@
                             href="{{ route('admin.matriz-riesgos.create', ['idAnalisis' => $id_matriz]) }}" type="submit"
                             name="action">Agregar nuevo</a>
                     @endcan
-                        <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
-                            href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a>
+                        {{-- <a class="pr-3 ml-2 rounded btn btn-success" style=" margin: 13px 12px 12px 10px;"
+                            href="{{ route('admin.matriz-mapa', ['idAnalisis' => $id_matriz]) }}">Gráfica</a> --}}
                 </div>
                 <table class="table table-bordered w-100 datatable datatable-Matriz" id="datatable-Matriz">
                     <thead class="thead-dark">
@@ -120,7 +120,7 @@
                             <!--<th>
                                                                                                                                     Riesgo total
                                                                                                                                 </th>-->
-                            <th>
+                            <th style="min-width:800px;">
                                 Control
                             </th>
                             <th>
@@ -459,18 +459,21 @@
                         }
                     },
                     {
-                        data: 'nivelriesgo',
-                        name: 'nivelriesgo',
+                        data: 'riesgototal',
+                        name: 'riesgototal',
                         render: function(data) {
                             switch (true) {
-                                case data >= 54 && data <= 81:
+                                case data >= 158 && data <= 200:
                                     return `<div style="text-align:center"><div>${data} - MUY ALTO</div></div>`;
                                     break;
-                                case data >= 27 && data <= 36:
+                                case data >= 114 && data <= 157:
                                     return `<div style="text-align:center"><div>${data} - ALTO</div></div>`;
                                     break;
-                                case data >= 9 && data <= 18:
+                                    case data >= 69 && data <= 113:
                                     return `<div style="text-align:center"><div>${data} - MEDIO</div></div>`;
+                                    break;
+                                case data >= 9 && data <= 68:
+                                    return `<div style="text-align:center"><div>${data} - BAJO</div></div>`;
                                     break;
                                 case data == 0:
                                     return `<div style="text-align:center"><div>0 - BAJO</div></div>`;
@@ -590,26 +593,27 @@
                         }
                     },
                     {
-                        data: 'nivelriesgo_residual',
-                        name: 'nivelriesgo_residual',
+                        data: 'riesgoresidual',
+                        name: 'riesgoresidual',
                         render: function(data) {
                             switch (true) {
-                                case data >= 54 && data <= 81:
+                                case data >= 158 && data <= 200:
                                     return `<div style="text-align:center"><div>${data} - MUY ALTO</div></div>`;
                                     break;
-                                case data >= 27 && data <= 36:
+                                case data >= 114 && data <= 157:
                                     return `<div style="text-align:center"><div>${data} - ALTO</div></div>`;
                                     break;
-                                case data >= 9 && data <= 18:
+                                case data >= 69 && data <= 113:
                                     return `<div style="text-align:center"><div>${data} - MEDIO</div></div>`;
+                                    break;
+                                case data >= 9 && data <= 68:
+                                    return `<div style="text-align:center"><div>${data} - BAJO</div></div>`;
                                     break;
                                 case data == 0:
                                     return `<div style="text-align:center"><div> 0 - BAJO</div></div>`;
                                     break;
-                                case data == null:
-                                    return `<div style="text-align:center"><div>0 - BAJO</div></div>`;
-                                    break;
                                 default:
+                                    return `<div style="text-align:center"><div>No evaluado</div></div>`;
                                     break;
                             }
                         }
@@ -632,148 +636,144 @@
                     let background2 = '';
                     let color2 = '';
                     switch (true) {
-                        case data.nivelriesgo >= 54 && data.nivelriesgo <= 81:
-                            background = '#FF0000';
+                        case data.riesgototal >= 158 && data.riesgototal <= 200:
+                            background = '#FF417B';
                             color = "#000000";
                             break;
-                        case data.nivelriesgo >= 27 && data.nivelriesgo <= 36:
-                            background = '#FF7800';
+                        case data.riesgototal >= 114 && data.riesgototal <= 157:
+                            background = '#FF7355';
                             color = "#000000";
                             break;
-                        case data.nivelriesgo >= 9 && data.nivelriesgo <= 18:
-                            background = '#FFFB00';
+                        case data.riesgototal >= 69 && data.riesgototal <= 113:
+                            background = '#FFCB63';
                             color = "#000000";
                             break;
-                        case data.nivelriesgo == 0:
-                            background = '#00FF04';
-                            color = "#000000";
-                            break;
-                        case data.nivelriesgo == null:
-                            background = '#00FF04';
+                        case data.riesgototal >= 9 && data.riesgototal <= 68:
+                        background = '#6DC866';
+                        color = "#000000";
+                        break;
+                        case data.riesgototal == 0:
+                            background = '#6DC866';
                             color = "#000000";
                             break;
                         default:
+                            background = '#ccc';
+                            color = "#000000";
                             break;
                     }
 
                     switch (true) {
-                        case data.nivelriesgo_residual >= 54 && data.nivelriesgo_residual <= 81:
-                            background2 = '#FF0000';
+                        case data.riesgoresidual >= 158 && data.riesgoresidual <= 200:
+                            background2 = '#FF417B';
                             color2 = "#000000";
                             break;
-                        case data.nivelriesgo_residual >= 27 && data.nivelriesgo_residual <= 36:
-                            background2 = '#FF7800';
+                        case data.riesgoresidual >= 114 && data.riesgoresidual <= 157:
+                            background2 = '#FF7355';
                             color2 = "#000000";
                             break;
-                        case data.nivelriesgo_residual >= 9 && data.nivelriesgo_residual <= 18:
-                            background2 = '#FFFB00';
+                        case data.riesgoresidual >= 69 && data.riesgoresidual <= 113:
+                            background2 = '#FFCB63';
                             color2 = "#000000";
                             break;
-                        case data.nivelriesgo_residual == 0:
-                            background2 = '#00FF04';
+                        case data.riesgoresidual >= 9 && data.riesgoresidual <= 68:
+                            background2 = '#6DC866';
                             color2 = "#000000";
                             break;
-                        case data.nivelriesgo_residual == null:
-                            background2 = '#00FF04';
+                        case data.riesgoresidual == 0:
+                            background2 = '#6DC866';
                             color2 = "#000000";
                             break;
                         default:
+                            background2 = '#ccc';
+                            color2 = "#000000";
                             break;
                     }
                     switch (true) {
                         case data.probabilidad == 9:
-                            background3 = '#FF0000';
+                            background3 = '#FF417B';
                             color3 = "#000000";
                             break;
                         case data.probabilidad == 6:
-                            background3 = '#FF7800';
+                            background3 = '#FF7355';
                             color3 = "#000000";
                             break;
                         case data.probabilidad == 3:
-                            background3 = '#FFFB00';
+                            background3 = '#FFCB63';
                             color3 = "#000000";
                             break;
                         case data.probabilidad == 0:
-                            background3 = '#00FF04';
-                            color3 = "#000000";
-                            break;
-                        case data.probabilidad == null:
-                            background3 = '#00FF04';
+                            background3 = '#6DC866';
                             color3 = "#000000";
                             break;
                         default:
+                            background3 = '#ccc';
+                            color3 = "#000000";
                             break;
                     }
                     switch (true) {
                         case data.impacto == 9:
-                            background4 = '#FF0000';
+                            background4 = '#FF417B';
                             color4 = "#000000";
                             break;
                         case data.impacto == 6:
-                            background4 = '#FF7800';
+                            background4 = '#FF7355';
                             color4 = "#000000";
                             break;
                         case data.impacto == 3:
-                            background4 = '#FFFB00';
+                            background4 = '#FFCB63';
                             color4 = "#000000";
                             break;
                         case data.impacto == 0:
-                            background4 = '#00FF04';
-                            color4 = "#000000";
-                            break;
-                        case data.impacto == null:
-                            background4 = '#00FF04';
+                            background4 = '#6DC866';
                             color4 = "#000000";
                             break;
                         default:
+                            background4 = '#ccc';
+                            color4 = "#000000";
                             break;
                     }
                     switch (true) {
                         case data.probabilidad_residual == 9:
-                            background5 = '#FF0000';
+                            background5 = '#FF417B';
                             color5 = "#000000";
                             break;
                         case data.probabilidad_residual == 6:
-                            background5 = '#FF7800';
+                            background5 = '#FF7355';
                             color5 = "#000000";
                             break;
                         case data.probabilidad_residual == 3:
-                            background5 = '#FFFB00';
+                            background5 = '#FFCB63';
                             color5 = "#000000";
                             break;
                         case data.probabilidad_residual == 0:
-                            background5 = '#00FF04';
+                            background5 = '#6DC866';
                             color5 = "#000000";
                             break;
-                        case data.probabilidad_residual == null:
-                            background5 = '#00FF04';
+                            default:
+                        background5 = '#ccc';
                             color5 = "#000000";
-                            break;
-                        default:
                             break;
                     }
                     switch (true) {
                         case data.impacto_residual == 9:
-                            background6 = '#FF0000';
+                            background6 = '#FF417B';
                             color6 = "#000000";
                             break;
                         case data.impacto_residual == 6:
-                            background6 = '#FF7800';
+                            background6 = '#FF7355';
                             color6 = "#000000";
                             break;
                         case data.impacto_residual == 3:
-                            background6 = '#FFFB00';
+                            background6 = '#FFCB63';
                             color6 = "#000000";
                             break;
                         case data.impacto_residual == 0:
-                            background6 = '#00FF04';
-                            color6 = "#000000";
-                            break;
-                        case data.impacto_residual == null:
-                            background6 = '#00FF04';
+                            background6 = '#6DC866';
                             color6 = "#000000";
                             break;
                         default:
+                        background6 = '#ccc';
+                            color6 = "#000000";
                             break;
                     }
                     $(cells[12]).css('background-color', background3)
