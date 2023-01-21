@@ -274,10 +274,10 @@
             "></div>
             <img class="img_empleado_presentacion_mis_datos" src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}">
 
-            <h3 style="color: #3086AF; margin-top:30px; text-align: center;">{{ $usuario->empleado->name }}</h3>
-            <h5 style="color: #000; margin-top:15px; text-align: center;">{{ $usuario->empleado->puesto }}</h5>
-            <h6 style="color: #788BAC; margin-top:15px; text-align: center;">{{ $usuario->empleado->area->area }}</h6>
-            <h6 style="color: #747474; margin-top:15px; text-align: center;"><strong style="color:#3086AF;">Empleado:</strong> {{ $usuario->empleado->n_empleado}}</h6>
+            <h3 style="color: #3086AF; margin-top:30px; text-align: center;">{{ $usuario->empleado->name ?? 'No definido'}}</h3>
+            <h5 style="color: #000; margin-top:15px; text-align: center;">{{ $usuario->empleado->puesto ?? 'No definido' }}</h5>
+            <h6 style="color: #788BAC; margin-top:15px; text-align: center;">{{ $usuario->empleado->area->area ?? 'No definido'}}</h6>
+            <h6 style="color: #747474; margin-top:15px; text-align: center;"><strong style="color:#3086AF;">Empleado:</strong> {{ $usuario->empleado->n_empleado ?? 'No definido'}}</h6>
 
             <div class="caja-cards-mobile-datos mt-5">
                 <div class="card card-body" data-toggle="modal" data-target="#mis_datos_mobile">
@@ -510,7 +510,7 @@
                     </div>
                     <div class="modal-body">
                         <p style="color: #3086AF;">Estos son los activos que tienes a tu cargo en estos momentos.</p>
-
+                        @if($activos)
                         @foreach ($activos as $activo)
                             <div class="d-flex mt-4">
                                 <i class="bi bi-pc-display card card-body d-flex align-items-center justify-content-center" style="background-color: #F6F6F6; font-size: 30px; max-width:30px; max-height: 30px; border-radius:100px;"></i>
@@ -522,6 +522,15 @@
                             </div>
                             <hr>
                         @endforeach
+                        @else
+                        <div class="d-flex mt-4">
+                                <i class="bi bi-pc-display card card-body d-flex align-items-center justify-content-center" style="background-color: #F6F6F6; font-size: 30px; max-width:30px; max-height: 30px; border-radius:100px;"></i>
+                                <div class="ml-3">
+                                    NA
+                                </div>
+                            </div>
+                            <hr>
+                        @endif
 
                         <div class="text-right mt-5">
                             <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
