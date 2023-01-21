@@ -1,7 +1,18 @@
 FROM php:8.1-fpm-alpine
 
 RUN apk add postgresql-dev \
-    && docker-php-ext-install pdo pdo_pgsql pdo_mysql
+    oniguruma-dev \
+    libzip-dev \
+    curl-dev \
+    libxml2-dev \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    libwebp-dev \
+    freetype-dev \
+    libxpm-dev \
+    libmcrypt-dev \
+    && docker-php-ext-install soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath \
+    && docker-php-ext-enable soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath
 
 # COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

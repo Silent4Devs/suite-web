@@ -20,3 +20,45 @@ Si vas  a constribuir dentro del proyecto recuerda que cada cambio que se realic
 ## Si has sido invitado a este proyecto
 
 Si has sido invitado a este repositorio recuerda que no puedes hacer un push o merge directamente a otra rama, siempre debera realizarse un pull request
+
+<br>
+
+# En caso de usar Docker
+
+Para usarlo debes tener instalado Docker previamente.
+
+Corriendo el proyecto:
+
+1. docker-compose build
+2. docker-compose up -d
+
+
+Instalación:
+
+1. docker-compose exec php composer install --ignore-platform-reqs
+2. docker-compose exec php cp .env.example .env
+3. docker-compose exec php php artisan key:generate
+4. docker-compose exec php php artisan migrate
+5. docker-compose exec php chmod 777 -R storage
+6. docker-compose exec php php artisan optimize:clear
+
+Ojo: si te sale algún error es porque no tienes permisos root en las carpetas de tu proyecto o que no existen las carpetas de caché, para esto tengo 2 comandos para ti.
+
+# para obtener permisos dentro del servicio php
+ docker-compose exec php chown -R www-data: /var/www/html
+
+# para crear las carpetas del proyecto de php desde la carpeta src
+ pwd# debe decir que estas enla carpeta src
+ <br>
+ mkdir storage/framework/{views, testing, sessions, cache/data}
+
+# mysql
+
+#Enter to the running container
+docker-compose exec mysql /bin/bash
+
+#Backup
+docker-compose exec mysql /usr/bin/mysqldump -u homestead --password=secret homestead > backup.sql
+
+#Restore
+cat backup.sql | docker exec -i mysql /usr/bin/mysql -u homestead --password=secret homestead
