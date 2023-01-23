@@ -29,8 +29,8 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
-                        <label for="nombre"><i class="fas fa-table iconos-crear"></i>Nombre</label>
-                        <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                        <label for="nombre" class="required"><i class="fas fa-table iconos-crear"></i>Nombre</label>
+                        <input required class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre', $analisisBrecha->nombre) }}">
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
@@ -42,7 +42,7 @@
 
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="fecha"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha</label>
-                        <input class="form-control {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
+                        <input required class="form-control {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
                             id="fecha" value="{{ date('d-m-Y') }}" disabled>
                         @if ($errors->has('fecha'))
                             <div class="invalid-feedback">
@@ -53,9 +53,9 @@
                     {{ Form::hidden('fecha', date('Y-m-d')) }}
 
                     <div class="form-group col-md-4 col-sm-4">
-                        <label for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
+                        <label class="required" for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                         <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
-                            id="estatus">
+                            id="estatus" required>
                             <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
@@ -75,8 +75,9 @@
 
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
-                        <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
+                        <label for="id_elaboro" class="required">
+                            <i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
+                        <select required class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}"
                             name="id_elaboro" id="id_elaboro">
                             <option value="">Seleccione una opción</option>
                             @foreach ($empleados as $id => $empleado)
@@ -117,7 +118,7 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.analisisdebrechas.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

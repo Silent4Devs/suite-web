@@ -14,9 +14,9 @@
                 @csrf
                 @method('PATCH')
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="fechareunion"><i
+                    <label class="required" for="fechareunion"><i
                             class="fas fa-calendar-alt iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}</label>
-                    <input class="form-control date" type="date" name="fechareunion" id="fechareunion"
+                    <input required class="form-control date" type="date" name="fechareunion" id="fechareunion"
                         value="{{ old('fechareunion', \Carbon\Carbon::parse($minutasaltadireccion->fechareunion)->format('Y-m-d')) }}">
                     @if ($errors->has('fechareunion'))
                         <span class="text-danger">
@@ -26,8 +26,8 @@
                     <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
                 </div>
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="hora_inicio"><i class="fas fa-clock iconos-crear"></i>Horario de inicio</label>
-                    <input class="form-control date" type="time" name="hora_inicio" id="hora_inicio"
+                    <label class="required" for="hora_inicio"><i class="fas fa-clock iconos-crear"></i>Horario de inicio</label>
+                    <input required class="form-control date" type="time" name="hora_inicio" id="hora_inicio"
                         value="{{ old('hora_inicio', $minutasaltadireccion->hora_inicio) }}">
                     @if ($errors->has('hora_inicio'))
                         <span class="text-danger">
@@ -37,8 +37,8 @@
                     <span class="help-block">{{ trans('cruds.minutasaltadireccion.fields.fechareunion_helper') }}</span>
                 </div>
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="responsable_id"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
-                    <select class="form-control select2" name="responsable_id" id="responsable_id">
+                    <label class="required" for="responsable_id"><i class="fas fa-user-tie iconos-crear"></i>Elaboró</label>
+                    <select required class="form-control select2" name="responsable_id" id="responsable_id">
                         @foreach ($responsablereunions as $responsablereunion)
                             <option value="{{ $responsablereunion->id }}"
                                 {{ old('responsable_id', $minutasaltadireccion->responsable_id) == $responsablereunion->id ? 'selected' : '' }}>
@@ -46,17 +46,17 @@
                             </option>
                         @endforeach
                     </select>
-                    @if ($errors->has('responsablereunion'))
+                    @if ($errors->has('responsable_id'))
                         <span class="text-danger">
-                            {{ $errors->first('responsablereunion') }}
+                            {{ $errors->first('responsable_id') }}
                         </span>
                     @endif
                     <span
                         class="help-block">{{ trans('cruds.minutasaltadireccion.fields.responsablereunion_helper') }}</span>
                 </div>
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="hora_termino"><i class="fas fa-clock iconos-crear"></i>Horario de término</label>
-                    <input class="form-control date" type="time" name="hora_termino" id="hora_termino"
+                    <label class="required" for="hora_termino"><i class="fas fa-clock iconos-crear"></i>Horario de término</label>
+                    <input required class="form-control date" type="time" name="hora_termino" id="hora_termino"
                         value="{{ old('hora_termino', $minutasaltadireccion->hora_termino) }}">
                     @if ($errors->has('hora_termino'))
                         <span class="text-danger">
@@ -65,8 +65,8 @@
                     @endif
                 </div>
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label for="tema_reunion"><i class="fas fa-file-alt iconos-crear"></i>Tema de la reunión</label>
-                    <input data-vincular-nombre='true' class="form-control date" type="text" name="tema_reunion"
+                    <label class="required" for="tema_reunion"><i class="fas fa-file-alt iconos-crear"></i>Tema de la reunión</label>
+                    <input required data-vincular-nombre='true' class="form-control date" type="text" name="tema_reunion"
                         id="tema_reunion" value="{{ old('tema_reunion', $minutasaltadireccion->tema_reunion) }}">
                     @if ($errors->has('tema_reunion'))
                         <span class="text-danger">
@@ -75,9 +75,9 @@
                     @endif
                 </div>
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label for="objetivoreunion"><i
+                    <label class="required" for="objetivoreunion"><i
                             class="fas fa-bullseye iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.objetivoreunion') }}</label>
-                    <textarea class="form-control" name="objetivoreunion" id="objetivoreunion">{{ old('objetivoreunion', $minutasaltadireccion->objetivoreunion) }}</textarea>
+                    <textarea required class="form-control" name="objetivoreunion" id="objetivoreunion">{{ old('objetivoreunion', $minutasaltadireccion->objetivoreunion) }}</textarea>
                     @if ($errors->has('objetivoreunion'))
                         <span class="text-danger">
                             {{ $errors->first('objetivoreunion') }}
@@ -99,7 +99,7 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                                <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
+                                <label class="required" for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
                                     participante</label>
                                 <input type="hidden" id="id_empleado">
                                 <input class="form-control" type="text" id="participantes_search"
@@ -230,8 +230,8 @@
                     </div>
                 </div> --}}
                 <div class="form-group col-sm-12 col-md-12 col-lg-12 mt-4">
-                    <label for="tema_tratado"><i class="fas fa-file-alt iconos-crear"></i>Temas tratados</label>
-                    <textarea class="form-control date" type="text" name="tema_tratado" id="temas">{{ old('tema_tratado', $minutasaltadireccion->tema_tratado) }}</textarea>
+                    <label class="required" for="tema_tratado"><i class="fas fa-file-alt iconos-crear"></i>Temas tratados</label>
+                    <textarea required class="form-control date" type="text" name="tema_tratado" id="temas">{{ old('tema_tratado', $minutasaltadireccion->tema_tratado) }}</textarea>
                     @if ($errors->has('tema_tratado'))
                         <span class="text-danger">
                             {{ $errors->first('tema_tratado') }}

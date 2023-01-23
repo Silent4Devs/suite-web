@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <label for="fechavigor"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de entrada
+                        <label class="required" for="fechavigor"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de entrada
                             en vigor</label>
                         <input class="form-control date {{ $errors->has('fecha_vigor') ? 'is-invalid' : '' }}"
                             type="date" name="fechavigor" id="fechavigor" value="{{ $fecha_vigor }}"
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                        <label for="id_asignada"><i class="fas fa-user-tie iconos-crear"></i>Colaborador(a)
+                        <label class="required" for="id_asignada"><i class="fas fa-user-tie iconos-crear"></i>Colaborador(a)
                             asignado</label>
                         <select class="form-control  {{ $errors->has('colaborador') ? 'is-invalid' : '' }}"
                             name="id_asignada" id="id_asignada" wire:model.defer="colaborador">
@@ -79,7 +79,7 @@
                         <div class="form-control" id="area_asignada" readonly></div>
                     </div>
                     <div class="form-group col-sm-12" wire:ignore>
-                        <label for="responsabilidades"> <i class="fas fa-business-time iconos-crear"></i>
+                        <label class="required" for="responsabilidades"> <i class="fas fa-business-time iconos-crear"></i>
                             {{ trans('cruds.comiteseguridad.fields.responsabilidades') }}</label>
                         <textarea class="form-control {{ $errors->has('responsabilidades') ? 'is-invalid' : '' }}" name="responsabilidades"
                             id="responsabilidades" wire:model.defer="responsabilidades">{{ old('responsabilidades') }}</textarea>
