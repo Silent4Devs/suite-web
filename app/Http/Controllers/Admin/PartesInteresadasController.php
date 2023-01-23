@@ -72,6 +72,11 @@ class PartesInteresadasController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('partes_interesadas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'parteinteresada' => ['required'],
+        ]);
+
         $partes = PartesInteresada::create($request->all());
         if (array_key_exists('ajax', $request->all())) {
             return response()->json(['success' => true, 'activo' => $partes]);
@@ -93,6 +98,11 @@ class PartesInteresadasController extends Controller
     public function update(Request $request, $partesInteresada)
     {
         abort_if(Gate::denies('partes_interesadas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'parteinteresada' => ['required'],
+        ]);
+
         $partesInteresada = PartesInteresada::find($partesInteresada);
         $partesInteresada->update($request->all());
         $clausulas = Clausula::get();

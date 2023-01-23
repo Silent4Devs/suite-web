@@ -13,10 +13,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class MatrizRequisitoLegale extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'matriz_requisito_legales';
 
     public static $searchable = [
@@ -90,30 +87,30 @@ class MatrizRequisitoLegale extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function getFechaexpedicionAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
+    // public function getFechaexpedicionAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
     // public function setFechaexpedicionAttribute($value)
     // {
     //     $this->attributes['fechaexpedicion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     // }
 
-    public function getFechavigorAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
+    // public function getFechavigorAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
     // public function setFechavigorAttribute($value)
     // {
     //     $this->attributes['fechavigor'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     // }
 
-    public function getFechaverificacionAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d-m-Y') : null;
-    }
+    // public function getFechaverificacionAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d-m-Y') : null;
+    // }
 
     // public function setFechaverificacionAttribute($value)
     // {

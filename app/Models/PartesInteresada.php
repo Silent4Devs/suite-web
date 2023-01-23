@@ -28,10 +28,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class PartesInteresada extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'partes_interesadas';
 
     protected $casts = [
