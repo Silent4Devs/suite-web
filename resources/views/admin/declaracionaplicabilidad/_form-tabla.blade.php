@@ -21,7 +21,7 @@
         <label class="required" for="anexo_politica"><i class="fas fa-pencil-alt iconos-crear"></i>Anexo
             Política</label>
         <textarea class="form-control {{ $errors->has('anexo_politica') ? 'is-invalid' : '' }}" type="text"
-            name="anexo_politica" id="anexo_politica">{{ old('anexo_politica', $control['anexo_politica']) }}</textarea>
+            name="anexo_politica" id="anexo_politica" required>{{ old('anexo_politica', $control['anexo_politica']) }}</textarea>
         @if ($errors->has('anexo_politica'))
             <div class="invalid-feedback">
                 {{ $errors->first('anexo_politica') }}
@@ -33,7 +33,7 @@
         <label class="required" for="anexo_descripcion"><i class="fas fa-pencil-alt iconos-crear"></i>Anexo
             Descripción</label>
         <textarea class="form-control {{ $errors->has('anexo_descripcion') ? 'is-invalid' : '' }}" type="text"
-            name="anexo_descripcion" id="anexo_descripcion">{{ old('anexo_descripcion', $control['anexo_descripcion']) }}</textarea>
+            name="anexo_descripcion" id="anexo_descripcion" required>{{ old('anexo_descripcion', $control['anexo_descripcion']) }}</textarea>
         @if ($errors->has('anexo_descripcion'))
             <div class="invalid-feedback">
                 {{ $errors->first('anexo_descripcion') }}

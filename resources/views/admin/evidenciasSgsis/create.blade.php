@@ -9,7 +9,8 @@
             @csrf
             <div class="form-group col-md-12">
                 <label class="required" for="nombredocumento"><i class="fas fa-file iconos-crear"></i>Nombre del documento</label>
-                <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}" type="text" name="nombredocumento" id="nombredocumento" value="{{ old('nombredocumento', '') }}" required>
+                <input class="form-control {{ $errors->has('nombredocumento') ? 'is-invalid' : '' }}" type="text"
+                name="nombredocumento" id="nombredocumento" value="{{ old('nombredocumento', '') }}" required>
                 @if($errors->has('nombredocumento'))
                     <div class="invalid-feedback">
                         {{ $errors->first('nombredocumento') }}
@@ -19,7 +20,8 @@
             </div>
             <div class="form-group col-md-12">
                 <label class="required" for="objetivodocumento"><i class="fas fa-file-alt iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento') }}</label>
-                <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" type="text" name="objetivodocumento" id="objetivodocumento" value="{{ old('objetivodocumento', '') }}" required></textarea>
+                <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" type="text"
+                    name="objetivodocumento" id="objetivodocumento" value="{{ old('objetivodocumento', '') }}" required></textarea>
                 @if($errors->has('objetivodocumento'))
                     <div class="invalid-feedback">
                         {{ $errors->first('objetivodocumento') }}
@@ -28,7 +30,7 @@
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento_helper') }}</span>
             </div>
             <div class="form-group col-md-4">
-                <label for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
+                <label class="required" for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Responsable del documento</label>
                 <select class="form-control {{ $errors->has('empleados') ? 'is-invalid' : '' }}" name="responsable_evidencia_id" id="responsable_evidencia_id">
                     <option value="">Seleccione una opción</option>
                     @foreach ($empleados as $empleado)
@@ -38,7 +40,7 @@
 
                     @endforeach
                 </select>
-                @if ($errors->has('empleados'))
+                @if ($errors->has('responsable_evidencia_id'))
                 <div class="invalid-feedback">
                     {{ $errors->first('responsable_evidencia_id') }}
                 </div>
@@ -67,8 +69,8 @@
 
 
             <div class="form-group col-md-12 col-sm-12 col-lg-6">
-                <label for="area_id"><i class="fas fa-user-tie iconos-crear"></i>Área reponsable del documento</label>
-                <select class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}" name="area_id" id="area_id">
+                <label class="required" for="area_id"><i class="fas fa-user-tie iconos-crear"></i>Área reponsable del documento</label>
+                <select required class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}" name="area_id" id="area_id">
                     @foreach ($areas as $area)
                     <option value="{{ $area->id }}">
                         {{ $area->area}}
@@ -84,8 +86,8 @@
             </div>
 
             <div class="form-group col-md-6">
-                <label for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del documento</label>
-                <input class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date" name="fechadocumento" id="fechadocumento" value="{{ old('fechadocumento') }}">
+                <label class="required" for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del documento</label>
+                <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date" name="fechadocumento" id="fechadocumento" value="{{ old('fechadocumento') }}">
                 @if($errors->has('fechadocumento'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechadocumento') }}

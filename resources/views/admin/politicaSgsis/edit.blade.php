@@ -10,9 +10,9 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="nombre_politica"><i class="fas fa-file-invoice iconos-crear"></i>Nombre de la política</label>
+                    <label class="required" for="nombre_politica"><i class="fas fa-file-invoice iconos-crear"></i>Nombre de la política</label>
                     <input class="form-control {{ $errors->has('nombre_politica') ? 'is-invalid' : '' }}"
-                        name="nombre_politica" value="{{ old('nombre_politica', $politicaSgsi->nombre_politica) }}">
+                        name="nombre_politica" value="{{ old('nombre_politica', $politicaSgsi->nombre_politica) }}" required>
                     @if ($errors->has('nombre_politica'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombre_politica') }}
@@ -21,10 +21,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="politicasgsi"><i class="fas fa-landmark iconos-crear"></i>Política del Sistema de
+                    <label class="required" for="politicasgsi"><i class="fas fa-landmark iconos-crear"></i>Política del Sistema de
                         Gestión</label>
                     <textarea class="form-control {{ $errors->has('politicasgsi') ? 'is-invalid' : '' }}" name="politicasgsi"
-                        id="politicasgsi">{{ old('politicasgsi', $politicaSgsi->politicasgsi) }}</textarea>
+                        id="politicasgsi" required>{{ old('politicasgsi', $politicaSgsi->politicasgsi) }}</textarea>
                     @if ($errors->has('politicasgsi'))
                         <div class="invalid-feedback">
                             {{ $errors->first('politicasgsi') }}
@@ -35,10 +35,10 @@
 
                 <div class="row">
                     <div class="form-group col-sm-4">
-                        <label for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+                        <label class="required" for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                             publicación</label>
-                        <input class="form-control date  {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_publicacion" id="fecha_publicacion"
+                        <input required class="form-control date  {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
+                            type="date" {{--name="fecha_publicacion" id="fecha_publicacion"--}}
                             value="{{ old('fecha_publicacion', \Carbon\Carbon::parse($politicaSgsi->fecha_publicacion))->format('Y-m-d') }}">
                         @if ($errors->has('fecha_publicacion'))
                             <div class="invalid-feedback">
@@ -48,10 +48,10 @@
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label for="fecha_entrada"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+                        <label class="required" for="fecha_entrada"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                             verificación</label>
-                        <input class="form-control date {{ $errors->has('fecha_entrada') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_entrada" id="fecha_entrada"
+                        <input required class="form-control date {{ $errors->has('fecha_entrada') ? 'is-invalid' : '' }}"
+                            type="date" {{--name="fecha_entrada" id="fecha_entrada"--}}
                             value="{{ old('fecha_entrada', \Carbon\Carbon::parse($politicaSgsi->fecha_entrada))->format('Y-m-d') }}">
                         @if ($errors->has('fecha_entrada'))
                             <div class="invalid-feedback">
@@ -61,10 +61,10 @@
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+                        <label class="required" for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                             revisión</label>
-                        <input class="form-control date {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_revision" id="fecha_revision"
+                        <input required class="form-control date {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
+                            type="date" {{--name="fecha_revision" id="fecha_revision"--}}
                             value="{{ old('fecha_revision', \Carbon\Carbon::parse($politicaSgsi->fecha_revision))->format('Y-m-d') }}">
                         @if ($errors->has('fecha_revision'))
                             <div class="invalid-feedback">
@@ -83,9 +83,9 @@
 
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="id_reviso_politica"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                        <label class="required" for="id_reviso_politica"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
                         <select class="form-control select2 {{ $errors->has('id_reviso_politica') ? 'is-invalid' : '' }}"
-                            name="id_reviso_politica" id="id_reviso_politica">
+                            name="id_reviso_politica" id="id_reviso_politica" required>
                             <option value="">Seleccione una opción</option>
                             @foreach ($empleados as $empleado)
                                 <option

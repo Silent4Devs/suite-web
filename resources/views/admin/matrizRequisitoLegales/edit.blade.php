@@ -11,13 +11,13 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group col-12">
-                    <label class="required" for="nombrerequisito"><i
+                    <label class=" " for="nombrerequisito"><i
                             class="fas fa-clipboard-list iconos-crear"></i>Fundamento</label><i class="fas fa-info-circle"
                         style="font-size:12pt; float: right;"
                         title="Nombre de la ley,norma,reglamento o documento donde se encuentra el requisito"></i>
                     <input class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }}" type="text"
                         name="nombrerequisito" id="nombrerequisito"
-                        value="{{ old('nombrerequisito', $matrizRequisitoLegale->nombrerequisito) }}" required>
+                        value="{{ old('nombrerequisito', $matrizRequisitoLegale->nombrerequisito) }}"  >
                     @if ($errors->has('nombrerequisito'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombrerequisito') }}
@@ -73,13 +73,13 @@
                         </div>
                     @endif
                 </div>
-
+{{-- Las fechas causan problemas en el edit al enviarlos como valor, por lo que solo los mostramos--}}
                 <div class="form-group col-sm-4">
                     <label for="fechaexpedicion"><i
                             class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion') }}</label>
                     <input class="form-control date {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}"
                         type="date" name="fechaexpedicion" id="fechaexpedicion"
-                        value="{{ old('fechaexpedicion', \Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion))->format('Y-m-d') }}">
+                        value="{{ old('fechaexpedicion', $matrizRequisitoLegale->fechaexpedicion ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion)->format('Y-m-d'): null) }}">
                     @if ($errors->has('fechaexpedicion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechaexpedicion') }}
@@ -107,9 +107,16 @@
                 <div class="form-group col-sm-4">
                     <label for="periodicidad_cumplimiento"><i class="far fa-clock iconos-crear"></i> Periodicidad de
                         verificación</label>
-                    <input class="form-control {{ $errors->has('periodicidad_cumplimiento') ? 'is-invalid' : '' }}"
-                        type="text" name="periodicidad_cumplimiento" id="periodicidad_cumplimiento"
-                        value="{{ old('periodicidad_cumplimiento', $matrizRequisitoLegale->periodicidad_cumplimiento) }}">
+                    <select   class="form-control {{ $errors->has('periodicidad_cumplimiento') ? 'is-invalid' : '' }}"
+                        type="text" name="periodicidad_cumplimiento" id="periodicidad_cumplimiento">
+                    <option disabled value="{{ old('periodicidad_cumplimiento', $matrizRequisitoLegale->periodicidad_cumplimiento) }}">
+                    </option>
+                    @foreach (App\Models\MatrizRequisitoLegale::PERIODICIDAD_SELECT as $key => $label)
+                        <option value="{{ $key }}"
+                            {{ old('periodicidad_cumplimiento', '') === (string) $key ? 'selected' : '' }}>
+                            {{ $label }}</option>
+                    @endforeach
+                    </select>
                     @if ($errors->has('periodicidad_cumplimiento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('periodicidad_cumplimiento') }}
@@ -159,7 +166,7 @@
                     @endif
                 </div>
 
-{{-- 
+{{--
                 <div class="form-group" style="margin-top:15px; width:100%; height:25px; background-color:#345183">
                     <p class="text-center text-light" style="font-size:11pt; width:100%; margin-left:370px; color:#ffffff;">
                         Verificación del Requisito</p>
@@ -229,7 +236,7 @@
                 </div>
 
 
-              
+
                 <div class="row w-100 align-items-center" style="margin-left: 1px;">
                     @livewire('planes-implementacion-select',['planes_seleccionados'=>$planes_seleccionados])
                     <div class="pl-0 ml-0 col-2">
@@ -241,7 +248,7 @@
                     @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de Requisitos
                     Legales'])
                 </div>
-             
+
 
 
                 <div class="mb-3 col-sm-12">

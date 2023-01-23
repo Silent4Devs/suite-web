@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-lg-6">
                             <div class="form-group">
-                                <label for="parent">Nombre:</label>
+                                <label for="parent" class="required">Nombre:</label>
                                 <input type="text" class="form-control {{ $errors->has('parent') ? 'is-invalid' : '' }}"
                                     id="parent" aria-describedby="parent" name="parent"
                                     value="{{ $referencia ? $referencia : old('parent', $planImplementacion->parent) }}"
@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-sm-12 col-lg-6">
                             <div class="form-group">
-                                <label for="norma">Norma:</label>
+                                <label for="norma" class="required">Norma:</label>
                                 <select class="custom-select {{ $errors->has('norma') ? 'is-invalid' : '' }}" id="norma"
                                     name="norma" required>
                                     <option selected disabled value="">-- Selecciona una Norma --</option>
@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-lg-6">
                             <div class="form-group">
-                                <label for="objetivo">Objetivo:</label>
+                                <label for="objetivo" class="required">Objetivo:</label>
                                 <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" id="objetivo" name="objetivo"
                                     required>{{ old('objetivo', $planImplementacion->objetivo) }}</textarea>
                                 @if ($errors->has('objetivo'))

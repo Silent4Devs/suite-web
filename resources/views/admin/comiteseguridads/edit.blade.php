@@ -25,9 +25,9 @@
             <div class="form-group col-sm-12 col-md-12 col-lg-12">
                 <label for="descripcion"><i class="fas fa-align-justify iconos-crear"></i>Descripción</label>
                 <textarea class="form-control" id="descripcion" name="descripcion" rows="4">{{ old('descripcion',  $comiteseguridad->descripcion) }}</textarea>
-                @if ($errors->has('nombre_comite'))
+                @if ($errors->has('descripcion'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('nombre_comite') }}
+                        {{ $errors->first('descripcion') }}
                     </div>
                 @endif
 

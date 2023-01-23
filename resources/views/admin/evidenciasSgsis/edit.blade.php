@@ -30,7 +30,7 @@
                             class="fas fa-file-alt iconos-crear"></i>{{ trans('cruds.evidenciasSgsi.fields.objetivodocumento') }}</label>
                     <textarea class="form-control {{ $errors->has('objetivodocumento') ? 'is-invalid' : '' }}" type="text"
                         name="objetivodocumento"
-                        id="objetivodocumento">{{ old('objetivodocumento', $evidenciasSgsi->objetivodocumento) }}</textarea>
+                        id="objetivodocumento" required>{{ old('objetivodocumento', $evidenciasSgsi->objetivodocumento) }}</textarea>
                     @if ($errors->has('objetivodocumento'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivodocumento') }}
@@ -43,8 +43,8 @@
 
 
                 <div class="form-group col-md-4">
-                    <label for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
-                    <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}"
+                    <label class="required" for="responsable_evidencia_id"><i class="fas fa-user-tie iconos-crear"></i>Revisó</label>
+                    <select required class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}"
                         name="responsable_evidencia_id" id="responsable_evidencia_id">
                         <option value="">Seleccione una opción</option>
                         @foreach ($empleados as $id => $empleado)
@@ -131,7 +131,7 @@
 
 
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-                    <label for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del
+                    <label class="required" for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del
                         documento</label>
                     <input class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date"
                         name="fechadocumento" id="fechadocumento"

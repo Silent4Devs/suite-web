@@ -14,6 +14,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Correo</th>
+                            <th scope="col">Restablecer usuario</th>
 
                         </tr>
                     </thead>
@@ -23,7 +24,11 @@
                                 <th scope="row">{{ $usuario->id ? $usuario->id : 'Sin definir' }}</th>
                                 <td>{{ $usuario->name ? $usuario->name : 'Sin definir' }}</td>
                                 <td>{{ $usuario->email ? $usuario->email : 'Sin definir' }}</td>
-
+                                <td><a class="btn btn-xs btn-outline-primary rounded ml-2 pr-3"
+                                    href="{{ url('admin/users/'.$usuario->id.'/restablecer') }}">
+                                    <i class="fas fa-user-plus"></i>
+                                    _Restaurar Usuario
+                                    </a></td>
                             </tr>
                         @endforeach
                     </tbody>

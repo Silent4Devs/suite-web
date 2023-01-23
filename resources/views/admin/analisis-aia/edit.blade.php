@@ -94,121 +94,192 @@
             <div class="row">
                 <div class="input-group col-12">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><strong>Titular</strong></span>
+                        <span class="input-group-text"><strong>Titular *</strong></span>
                     </div>
                     <input type="text" name="titular_nombre" aria-label="First name" class="form-control"
-                        placeholder="Nombre(s)" value="{{ old('titular_nombre', $cuestionario->titular_nombre) }}">
+                        placeholder="Nombre(s)" required
+                        value="{{ old('titular_nombre', $cuestionario->titular_nombre) }}">
                     <input type="text" name="titular_a_paterno" aria-label="Last name" class="form-control"
-                        placeholder="A. Paterno" value="{{ old('titular_a_paterno', $cuestionario->titular_a_paterno) }}">
+                        placeholder="A. Paterno" required
+                        value="{{ old('titular_a_paterno', $cuestionario->titular_a_paterno) }}">
                     <input type="text" name="titular_a_materno" aria-label="Last name" class="form-control"
-                        placeholder="A. Materno"
+                        placeholder="A. Materno" required
                         value="{{ old('titular_a_materno', $cuestionario->titular_a_materno) }}"><br>
+                        @error('titular_nombre')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
+                    @error('titular_a_paterno')
+                    <small style="color: red">{{$message}}</small>
+                        @enderror
+                    @error('titular_a_materno')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                 </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('titular_puesto', 'Puesto', ['class' => 'required']) !!}
+                    @error('titular_puesto')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('titular_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('titular_correo', 'Correo electrónico:', ['class' => 'required']) !!}
+                    @error('titular_correo')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('titular_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('titular_extencion', 'Extensión') !!}
+                    @error('titular_extencion')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('titular_extencion', null, [
                         'class' => 'form-control extencion',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'min=0',
+                        'max=9999',
                     ]) !!}
                 </div>
                 <hr>
                 <div class="input-group col-12">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><strong>Suplente</strong></span>
+                        <span class="input-group-text"><strong>Suplente *</strong></span>
                     </div>
                     <input type="text" name="suplente_nombre" aria-label="First name" class="form-control"
-                        placeholder="Nombre(s)" value="{{ old('suplente_nombre', $cuestionario->suplente_nombre) }}">
+                        placeholder="Nombre(s)" required
+                        value="{{ old('suplente_nombre', $cuestionario->suplente_nombre) }}">
                     <input type="text" name="suplente_a_paterno" aria-label="Last name" class="form-control"
-                        placeholder="A. Paterno" value="{{ old('suplente_a_paterno', $cuestionario->suplente_a_paterno) }}">
+                        placeholder="A. Paterno" required
+                        value="{{ old('suplente_a_paterno', $cuestionario->suplente_a_paterno) }}">
                     <input type="text" name="suplente_a_materno" aria-label="Last name" class="form-control"
-                        placeholder="A. Materno"
+                        placeholder="A. Materno" required
                         value="{{ old('suplente_a_materno', $cuestionario->suplente_a_materno) }}"><br>
+                    @error('suplente_nombre')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
+                    @error('suplente_a_paterno')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
+                    @error('suplente_a_materno')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                 </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('suplente_puesto', 'Puesto', ['class' => 'required']) !!}
+                    @error('suplente_puesto')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('suplente_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('suplente_correo', 'Correo electrónico:', ['class' => 'required']) !!}
+                    @error('suplente_correo')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('suplente_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('suplente_extencion', 'Extensión') !!}
+                    @error('suplente_extencion')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('suplente_extencion', null, [
                         'class' => 'form-control extencion1',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'min=0',
+                        'max=9999',
                     ]) !!}
                 </div>
                 <div class="input-group col-12">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><strong>Supervisor</strong></span>
+                        <span class="input-group-text"><strong>Supervisor *</strong></span>
                     </div>
                     <input type="text" name="supervisor_nombre" aria-label="First name" class="form-control"
-                        placeholder="Nombre(s)" value="{{ old('supervisor_nombre', $cuestionario->supervisor_nombre) }}">
+                        placeholder="Nombre(s)" required
+                        value="{{ old('supervisor_nombre', $cuestionario->supervisor_nombre) }}">
                     <input type="text" name="supervisor_a_paterno" aria-label="Last name" class="form-control"
-                        placeholder="A. Paterno"
+                        placeholder="A. Paterno" required
                         value="{{ old('supervisor_a_paterno', $cuestionario->supervisor_a_paterno) }}">
                     <input type="text" name="supervisor_a_materno" aria-label="Last name" class="form-control"
-                        placeholder="A. Materno"
+                        placeholder="A. Materno" required
                         value="{{ old('supervisor_a_materno', $cuestionario->supervisor_a_materno) }}"><br>
+                    @error('supervisor_nombre')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
+                    @error('supervisor_a_paterno')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
+                    @error('supervisor_a_materno')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                 </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('supervisor_puesto', 'Puesto', ['class' => 'required']) !!}
+                    @error('supervisor_puesto')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('supervisor_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('supervisor_correo', 'Correo electrónico:', ['class' => 'required']) !!}
+                    @error('supervisor_correo')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('supervisor_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('supervisor_extencion', 'Extensión') !!}
+                    @error('supervisor_extencion')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('supervisor_extencion', null, [
                         'class' => 'form-control extencion2',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'min=0',
+                        'max=9999',
                     ]) !!}
                 </div>
             </div>
@@ -228,11 +299,15 @@
                         '1. ¿Qué información se requiere para iniciar el proceso?  (Documentos, Correo electrónico, Oficios, Reportes, etc.)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('flujo_q_1')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('flujo_q_1', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
@@ -241,11 +316,15 @@
                         '2. ¿De dónde proviene la información? (Nombre de la Empresa / Nombre del Área / Nombre del Proceso / Nombre del Sistema)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('flujo_q_2')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('flujo_q_2', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 {{-- livewire 3.¿Quién le proporciona esta información? --}}
@@ -263,11 +342,15 @@
                         '5.	¿Cómo valida que el proceso se realizó correctamente? (Carta o firma de aceptación, Acuse de Recibido, Notificación, etc..)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('flujo_q_5')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('flujo_q_5', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
             </div>
@@ -286,7 +369,7 @@
             <div class="row">
 
                 <div class="col-sm-12 form-group">
-                    <label>6. ¿Qué infraestructura, bases de datos o utilerías soportan la
+                    <label class="required">¿Qué infraestructura, bases de datos o utilerías soportan la
                         aplicación?</label>
                 </div>
 
@@ -310,13 +393,24 @@
 
             <div class="row">
                 <label class="col-sm-3 col-form-label">Ubicación IP:</label>
+
+                @error('app_ip')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_ip')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_ip')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="app_ip" placeholder="..." value="{{ old('app_ip', $cuestionario->app_ip) }}">
+                        required name="app_ip" placeholder="..." value="{{ old('app_ip', $cuestionario->app_ip) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_ip" placeholder="..." value="{{ old('bd_ip', $cuestionario->bd_ip) }}">
+                        required name="bd_ip" placeholder="..." value="{{ old('bd_ip', $cuestionario->bd_ip) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -325,13 +419,24 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Hostname:</label>
+
+                @error('app_host')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_host')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_host')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="app_host" placeholder="..." value="{{ old('app_host', $cuestionario->app_host) }}">
+                        required name="app_host" placeholder="..." value="{{ old('app_host', $cuestionario->app_host) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_host" placeholder="..." value="{{ old('app_host', $cuestionario->bd_host) }}">
+                        required name="bd_host" placeholder="..." value="{{ old('bd_host', $cuestionario->bd_host) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -340,13 +445,24 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Instancias o Bases de Datos:</label>
+
+                @error('app_base')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_base')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_base')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="app_base" placeholder="..." value="{{ old('app_base', $cuestionario->app_base) }}">
+                        required name="app_base" placeholder="..." value="{{ old('app_base', $cuestionario->app_base) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_base" placeholder="..." value="{{ old('app_base', $cuestionario->bd_base) }}">
+                        required name="bd_base" placeholder="..." value="{{ old('bd_base', $cuestionario->bd_base) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -355,24 +471,45 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Puertos que utilizan:</label>
+
+                @error('app_puerto')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_puerto')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_puerto')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="app_puerto" placeholder="..." value="{{ old('app_puerto', $cuestionario->app_puerto) }}">
+                        required name="app_puerto" placeholder="..." value="{{ old('app_puerto', $cuestionario->app_puerto) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_puerto" placeholder="..." value="{{ old('app_puerto', $cuestionario->bd_puerto) }}">
+                        required name="bd_puerto" placeholder="..." value="{{ old('bd_puerto', $cuestionario->bd_puerto) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="otro_puerto" placeholder="..."
-                        value="{{ old('otro_puerto', $cuestionario->otro_puerto) }}">
+                        name="otro_puerto" placeholder="..." value="{{ old('otro_puerto', $cuestionario->otro_puerto) }}">
                 </div>
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Tipo de Servidor: (Físico / Virtual)</label>
+
+                @error('app_servidor')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_servidor')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_servidor')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="app_servidor">
+                    <select class="form-control form-control-sm" name="app_servidor" required>
                         <option value disabled {{ old('app_servidor', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
@@ -384,7 +521,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="bd_servidor">
+                    <select class="form-control form-control-sm" name="bd_servidor" required>
                         <option value disabled {{ old('bd_servidor', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
@@ -410,13 +547,24 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Versión del S.O.:</label>
+
+                @error('app_SO')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_SO')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_SO')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
                         name="app_SO" placeholder="..." value="{{ old('app_SO', $cuestionario->app_SO) }}">
                 </div>
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_SO" placeholder="..." value="{{ old('app_SO', $cuestionario->bd_SO) }}">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
+                        name="bd_SO" placeholder="..." value="{{ old('bd_SO', $cuestionario->bd_SO) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -427,8 +575,19 @@
                 <label class="col-sm-3 col-form-label">Tipo de Acceso al sistema:
                     (WEB / Cliente-Servidor)
                 </label>
+
+                @error('app_acceso')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_acceso')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_acceso')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="app_acceso">
+                    <select class="form-control form-control-sm" name="app_acceso" required>
                         <option value disabled {{ old('app_acceso', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
@@ -440,7 +599,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="bd_acceso">
+                    <select class="form-control form-control-sm" name="bd_acceso" required>
                         <option value disabled {{ old('bd_acceso', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
@@ -466,13 +625,24 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">URL de Acceso:</label>
+
+                @error('app_url')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_url')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_url')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
                         name="app_url" placeholder="..." value="{{ old('app_url', $cuestionario->app_url) }}">
                 </div>
                 <div class="form-group col-sm-3">
-                    <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_url" placeholder="..." value="{{ old('app_url', $cuestionario->bd_url) }}">
+                    <input type="text" style="text-align: center;" class="form-control form-control-sm" required
+                        name="bd_url" placeholder="..." value="{{ old('bd_url', $cuestionario->bd_url) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -481,15 +651,26 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">IP Pública:</label>
+
+                @error('app_ip_publica')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_ip_publica')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_ip_publica')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="app_ip_publica" placeholder="..."
+                        name="app_ip_publica" placeholder="..." required
                         value="{{ old('app_ip_publica', $cuestionario->app_ip_publica) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_ip_publica" placeholder="..."
-                        value="{{ old('app_ip_publica', $cuestionario->bd_ip_publica) }}">
+                        name="bd_ip_publica" placeholder="..." required
+                        value="{{ old('bd_ip_publica', $cuestionario->bd_ip_publica) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -499,8 +680,19 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Uso de Certificado: (SI / NO)</label>
+
+                @error('app_certificado')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_certificado')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_certificado')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="app_certificado">
+                    <select class="form-control form-control-sm" name="app_certificado" required>
                         <option value disabled {{ old('app_certificado', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoCertificadoSelect as $key => $label)
@@ -512,7 +704,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="bd_certificado">
+                    <select class="form-control form-control-sm" name="bd_certificado" required>
                         <option value disabled {{ old('bd_certificado', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoCertificadoSelect as $key => $label)
@@ -538,15 +730,26 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Datos del Certificado (tipo de cifrado, etc.).</label>
+
+                @error('app_tipo_cifrado')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_tipo_cifrado')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_tipo_cifrado')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="app_tipo_cifrado" placeholder="..."
+                        name="app_tipo_cifrado" placeholder="..." required
                         value="{{ old('app_tipo_cifrado', $cuestionario->app_tipo_cifrado) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_tipo_cifrado" placeholder="..."
-                        value="{{ old('app_tipo_cifrado', $cuestionario->bd_tipo_cifrado) }}">
+                        name="bd_tipo_cifrado" placeholder="..." required
+                        value="{{ old('bd_tipo_cifrado', $cuestionario->bd_tipo_cifrado) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -556,8 +759,19 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Salida a Internet: (SI / NO)</label>
+
+                @error('app_internet')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_internet')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_internet')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="app_internet">
+                    <select class="form-control form-control-sm" name="app_internet" required>
                         <option value disabled {{ old('app_internet', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
@@ -569,7 +783,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="bd_internet">
+                    <select class="form-control form-control-sm" name="bd_internet" required>
                         <option value disabled {{ old('bd_internet', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
@@ -595,15 +809,26 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Datos URL o tipo de enlace:</label>
+
+                @error('app_datos_url')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_datos_url')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_datos_url')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="app_datos_url" placeholder="..."
+                        name="app_datos_url" placeholder="..." required
                         value="{{ old('app_datos_url', $cuestionario->app_datos_url) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_datos_url" placeholder="..."
-                        value="{{ old('app_datos_url', $cuestionario->bd_datos_url) }}">
+                        name="bd_datos_url" placeholder="..." required
+                        value="{{ old('bd_datos_url', $cuestionario->bd_datos_url) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -613,8 +838,19 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Acceso a la aplicación desde dispositivos móviles: (SI / NO)</label>
+
+                @error('app_acceso_moviles')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_acceso_moviles')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_acceso_moviles')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="app_acceso_moviles">
+                    <select class="form-control form-control-sm" name="app_acceso_moviles" required>
                         <option value disabled {{ old('app_acceso_moviles', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
@@ -626,7 +862,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="bd_acceso_moviles">
+                    <select class="form-control form-control-sm" name="bd_acceso_moviles" required>
                         <option value disabled {{ old('bd_acceso_moviles', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
@@ -652,15 +888,26 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Nombre de la aplicación móvil:</label>
+
+                @error('app_nombre_app_movil')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_nombre_app_movil')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_nombre_app_movil')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="app_nombre_app_movil" placeholder="..."
+                        name="app_nombre_app_movil" placeholder="..." required
                         value="{{ old('app_nombre_app_movil', $cuestionario->app_nombre_app_movil) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_nombre_app_movil" placeholder="..."
-                        value="{{ old('app_nombre_app_movil', $cuestionario->bd_nombre_app_movil) }}">
+                        name="bd_nombre_app_movil" placeholder="..." required
+                        value="{{ old('bd_nombre_app_movil', $cuestionario->bd_nombre_app_movil) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -670,8 +917,19 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Interacción con otras aplicaciones:</label>
+
+                @error('app_interaccion_otras_apps')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_interaccion_otras_apps')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_interaccion_otras_apps')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="app_interaccion_otras_apps">
+                    <select class="form-control form-control-sm" name="app_interaccion_otras_apps" required>
                         <option value disabled {{ old('app_interaccion_otras_apps', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
@@ -683,7 +941,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="bd_interaccion_otras_apps">
+                    <select class="form-control form-control-sm" name="bd_interaccion_otras_apps" required>
                         <option value disabled {{ old('bd_interaccion_otras_apps', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
@@ -710,12 +968,23 @@
 
                 <label class="col-sm-3 col-form-label">Datos de la aplicación con la que interactúa y tipo de
                     conectividad:</label>
+
+                @error('app_datos_interactuan')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_datos_interactuan')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_datos_interactuan')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" required
                         name="app_datos_interactuan" placeholder="..." rows="2">{{ old('app_datos_interactuan', $cuestionario->app_datos_interactuan) }}</textarea>
                 </div>
                 <div class="form-group col-sm-3">
-                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" required
                         name="bd_datos_interactuan" placeholder="..." rows="2">{{ old('bd_datos_interactuan', $cuestionario->bd_datos_interactuan) }}</textarea>
                 </div>
                 <div class="form-group col-sm-3">
@@ -725,8 +994,19 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Administración o Soporte por terceros:</label>
+
+                @error('app_soporte_terceros')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_soporte_terceros')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_soporte_terceros')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="app_soporte_terceros">
+                    <select class="form-control form-control-sm" name="app_soporte_terceros" required>
                         <option value disabled {{ old('app_soporte_terceros', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
@@ -738,7 +1018,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="bd_soporte_terceros">
+                    <select class="form-control form-control-sm" name="bd_soporte_terceros" required>
                         <option value disabled {{ old('bd_soporte_terceros', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
@@ -766,12 +1046,23 @@
 
                 <label class="col-sm-3 col-form-label">Datos del tercero que administra o Soporta: (Nombre, Empresa,
                     Contacto)</label>
+
+                @error('app_datos_terceros')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_datos_terceros')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_datos_terceros')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" required
                         name="app_datos_terceros" placeholder="..." rows="2">{{ old('app_datos_terceros', $cuestionario->app_datos_terceros) }}</textarea>
                 </div>
                 <div class="form-group col-sm-3">
-                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" required
                         name="bd_datos_terceros" placeholder="..." rows="2">{{ old('bd_datos_terceros', $cuestionario->bd_datos_terceros) }}</textarea>
                 </div>
                 <div class="form-group col-sm-3">
@@ -782,8 +1073,19 @@
 
 
                 <label class="col-sm-3 col-form-label">Instancia de balanceo:</label>
+
+                @error('app_instancia_balanceo')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_instancia_balanceo')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_instancia_balanceo')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="app_instancia_balanceo">
+                    <select class="form-control form-control-sm" name="app_instancia_balanceo" required>
                         <option value disabled {{ old('app_instancia_balanceo', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
@@ -795,7 +1097,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="bd_instancia_balanceo">
+                    <select class="form-control form-control-sm" name="bd_instancia_balanceo" required>
                         <option value disabled {{ old('bd_instancia_balanceo', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoInternetSelect as $key => $label)
@@ -821,15 +1123,26 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Tipo y características de instancia:</label>
+
+                @error('app_datos_balanceo')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_datos_balanceo')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_datos_balanceo')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="app_datos_balanceo" placeholder="..."
+                        name="app_datos_balanceo" placeholder="..." required
                         value="{{ old('app_datos_balanceo', $cuestionario->app_datos_balanceo) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="bd_datos_balanceo" placeholder="..."
-                        value="{{ old('app_datos_balanceo', $cuestionario->bd_datos_balanceo) }}">
+                        name="bd_datos_balanceo" placeholder="..." required
+                        value="{{ old('bd_datos_balanceo', $cuestionario->bd_datos_balanceo) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
@@ -841,12 +1154,23 @@
 
                 <label class="col-sm-3 col-form-label">Softwares adicionales, especificar versiones y puertos en caso de
                     usarse. (java, glashfish, tomcat, etc):</label>
+
+                @error('app_sofware_adicional')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_sofware_adicional')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_sofware_adicional')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" required
                         name="app_sofware_adicional" placeholder="..." rows="3">{{ old('app_sofware_adicional', $cuestionario->app_sofware_adicional) }}</textarea>
                 </div>
                 <div class="form-group col-sm-3">
-                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm"
+                    <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" required
                         name="bd_sofware_adicional" placeholder="..." rows="3">{{ old('bd_sofware_adicional', $cuestionario->bd_sofware_adicional) }}</textarea>
                 </div>
                 <div class="form-group col-sm-3">
@@ -857,13 +1181,24 @@
 
                 <label class="col-sm-3 col-form-label">Lenguaje de desarrollo, especificar versiones y puertos en caso de
                     usarse. (BDL), application Server (GAS), despliegue de apps (GDC):</label>
+
+                @error('app_lenguajes')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('bd_lenguajes')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('otro_lenguajes')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" name="app_lenguajes"
-                        placeholder="..." rows="3">{{ old('app_lenguajes', $cuestionario->app_lenguajes) }}</textarea>
+                        required placeholder="..." rows="3">{{ old('app_lenguajes', $cuestionario->app_lenguajes) }}</textarea>
                 </div>
                 <div class="form-group col-sm-3">
                     <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" name="bd_lenguajes"
-                        placeholder="..." rows="3">{{ old('bd_lenguajes', $cuestionario->bd_lenguajes) }}</textarea>
+                        required placeholder="..." rows="3">{{ old('bd_lenguajes', $cuestionario->bd_lenguajes) }}</textarea>
                 </div>
                 <div class="form-group col-sm-3">
                     <textarea class="form-control"style="text-align: center;" class="form-control form-control-sm" name="otro_lenguajes"
@@ -899,14 +1234,25 @@
 
             <div class="row">
                 <label class="col-sm-3 col-form-label">Ubicación IP:</label>
+
+                @error('contingencia_app_ip')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_bd_ip')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_otro_ip')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="contingencia_app_ip" placeholder="..."
+                        name="contingencia_app_ip" placeholder="..." required
                         value="{{ old('contingencia_app_ip', $cuestionario->contingencia_app_ip) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="contingencia_bd_ip" placeholder="..."
+                        name="contingencia_bd_ip" placeholder="..." required
                         value="{{ old('contingencia_bd_ip', $cuestionario->contingencia_bd_ip) }}">
                 </div>
                 <div class="form-group col-sm-3">
@@ -917,14 +1263,25 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Hostname:</label>
+
+                @error('contingencia_app_host')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_bd_host')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_otro_host')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="contingencia_app_host" placeholder="..."
+                        name="contingencia_app_host" placeholder="..." required
                         value="{{ old('contingencia_app_host', $cuestionario->contingencia_app_host) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="contingencia_bd_host" placeholder="..."
+                        name="contingencia_bd_host" placeholder="..." required
                         value="{{ old('contingencia_bd_host', $cuestionario->contingencia_bd_host) }}">
                 </div>
                 <div class="form-group col-sm-3">
@@ -935,8 +1292,19 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Tipo de Servidor: (Físico / Virtual)</label>
+
+                @error('contingencia_app_servidor')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_bd_servidor')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_otro_servidor')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="contingencia_app_servidor">
+                    <select class="form-control form-control-sm" name="contingencia_app_servidor" required>
                         <option value disabled {{ old('contingencia_app_servidor', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
@@ -948,7 +1316,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="contingencia_bd_servidor">
+                    <select class="form-control form-control-sm" name="contingencia_bd_servidor" required>
                         <option value disabled {{ old('contingencia_bd_servidor', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoServerSelect as $key => $label)
@@ -974,6 +1342,17 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">Versión del S.O.:</label>
+
+                @error('contingencia_app_SO')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_bd_SO')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_otro_SO')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
                         name="contingencia_app_SO" placeholder="..."
@@ -994,8 +1373,19 @@
                 <label class="col-sm-3 col-form-label">Tipo de Acceso al sistema:
                     (WEB / Cliente-Servidor)
                 </label>
+
+                @error('contingencia_app_acceso')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_bd_acceso')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_otro_acceso')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="contingencia_app_acceso">
+                    <select class="form-control form-control-sm" name="contingencia_app_acceso" required>
                         <option value disabled {{ old('contingencia_app_acceso', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
@@ -1007,7 +1397,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control form-control-sm" name="contingencia_bd_acceso">
+                    <select class="form-control form-control-sm" name="contingencia_bd_acceso" required>
                         <option value disabled {{ old('contingencia_bd_acceso', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::TipoAccesoSelect as $key => $label)
@@ -1033,14 +1423,25 @@
                 <hr>
 
                 <label class="col-sm-3 col-form-label">URL de Acceso:</label>
+
+                @error('contingencia_app_url')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_bd_url')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('contingencia_otro_url')
+                        <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="contingencia_app_url" placeholder="..."
+                        name="contingencia_app_url" placeholder="..." required
                         value="{{ old('contingencia_app_url', $cuestionario->contingencia_app_url) }}">
                 </div>
                 <div class="form-group col-sm-3">
                     <input type="text" style="text-align: center;" class="form-control form-control-sm"
-                        name="contingencia_bd_url" placeholder="..."
+                        name="contingencia_bd_url" placeholder="..." required
                         value="{{ old('contingencia_bd_url', $cuestionario->contingencia_bd_url) }}">
                 </div>
                 <div class="form-group col-sm-3">
@@ -1655,30 +2056,54 @@
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_mes', 'Mes(es)') !!}
+                    @error('rpo_mes')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rpo_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=120',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_semana', 'Semana(s)') !!}
+                    @error('rpo_semana')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rpo_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=52',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_dia', 'Día(s)') !!}
+                    @error('rpo_dia')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rpo_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=365',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_hora', 'Horas(s)') !!}
+                    @error('rpo_hora')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rpo_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=120',
                     ]) !!}
                 </div>
 
@@ -1691,30 +2116,54 @@
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_mes', 'Mes(es)') !!}
+                    @error('rto_mes')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rto_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=120',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_semana', 'Semana(s)') !!}
+                    @error('rto_semana')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rto_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=52',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_dia', 'Día(s)') !!}
+                    @error('rto_dia')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rto_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=365',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_hora', 'Horas(s)') !!}
+                    @error('rto_hora')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rto_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=120',
                     ]) !!}
                 </div>
             </div>
@@ -1727,30 +2176,54 @@
 
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_mes', 'Mes(es)') !!}
+                    @error('wrt_mes')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('wrt_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=120',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_semana', 'Semana(s)') !!}
+                    @error('wrt_semana')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('wrt_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=52',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_dia', 'Día(s)') !!}
+                    @error('wrt_dia')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('wrt_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=365',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_hora', 'Horas(s)') !!}
+                    @error('wrt_hora')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('wrt_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=120',
                     ]) !!}
                 </div>
 
@@ -1764,30 +2237,54 @@
 
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_mes', 'Mes(es)') !!}
+                    @error('mtpd_mes')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('mtpd_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=120',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_semana', 'Semana(s)') !!}
+                    @error('mtpd_semana')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('mtpd_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=52',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_dia', 'Día(s)') !!}
+                    @error('mtpd_dia')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('mtpd_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=365',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_hora', 'Horas(s)') !!}
+                    @error('mtpd_hora')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('mtpd_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'required',
+                        'min=0',
+                        'max=120',
                     ]) !!}
                 </div>
 
@@ -1807,31 +2304,43 @@
                     {!! Form::label('respaldo_q_14', '14. ¿Se tiene respaldo de base de datos, código fuente, scripts, etc.?', [
                         'class' => 'required',
                     ]) !!}
+                    @error('respaldo_q_14')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('respaldo_q_14', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
                     {!! Form::label('respaldo_q_15', '15. ¿Cuál es la periodicidad del respaldo?', ['class' => 'required']) !!}
+                    @error('respaldo_q_15')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('respaldo_q_15', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
                     {!! Form::label('respaldo_q_16', '16. ¿Qué tipo de respaldo se aplica? (Incremental, Full, etc.)', [
                         'class' => 'required',
                     ]) !!}
+                    @error('respaldo_q_16')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('respaldo_q_16', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
             </div>
@@ -1850,7 +2359,7 @@
                         data-target="#probabilidad_incidentes_disruptivos" data-whatever="@mdo" data-whatever="@mdo"
                         title="Dar click"><i class="fas fa-info-circle"></i></a>
                     </a>
-                    <label>17. Por favor, indique los tipos de incidentes en los que el proceso se ha visto interrumpido
+                    <label class="required">17. Por favor, indique los tipos de incidentes en los que el proceso se ha visto interrumpido
                         y
                         aproximadamente cada cuando ha ocurrido.</label>
                 </div>
@@ -1858,8 +2367,11 @@
                 {{-- PROBABILIDAD DE INCIDENTES DISRUPTIVOS --}}
                 <label class="col-sm-8 col-form-label">Indisponibilidad de las instalaciones
                     (oficinas), por bloqueo de acceso, manifestaciones.</label>
+                @error('disruptivos_q_1')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_1">
+                    <select class="form-control form-control-sm" name="disruptivos_q_1" required>
                         <option value disabled {{ old('disruptivos_q_1', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -1874,8 +2386,11 @@
 
                 <label class="col-sm-8 col-form-label">Ataques cibernéticos o a la actividad
                     informática.</label>
+                @error('disruptivos_q_2')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_2">
+                    <select class="form-control form-control-sm" name="disruptivos_q_2" required>
                         <option value disabled {{ old('disruptivos_q_2', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -1889,8 +2404,11 @@
                 <hr>
 
                 <label class="col-sm-8 col-form-label">Desastres naturales y ambientales.</label>
+                @error('disruptivos_q_3')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_3">
+                    <select class="form-control form-control-sm" name="disruptivos_q_3" required>
                         <option value disabled {{ old('disruptivos_q_3', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -1904,8 +2422,11 @@
                 <hr>
 
                 <label class="col-sm-8 col-form-label">Enfermedades infecciosas.</label>
+                @error('disruptivos_q_4')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_4">
+                    <select class="form-control form-control-sm" name="disruptivos_q_4" required>
                         <option value disabled {{ old('disruptivos_q_4', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -1919,8 +2440,11 @@
                 <hr>
 
                 <label class="col-sm-8 col-form-label">Error Humano.</label>
+                @error('disruptivos_q_5')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_5">
+                    <select class="form-control form-control-sm" name="disruptivos_q_5" required>
                         <option value disabled {{ old('disruptivos_q_5', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -1935,8 +2459,11 @@
 
                 <label class="col-sm-8 col-form-label">Fallas o indisponibilidad en la infraestructura
                     tecnológica (telecomunicaciones, procesamiento de información y redes).</label>
+                @error('disruptivos_q_6')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_6">
+                    <select class="form-control form-control-sm" name="disruptivos_q_6" required>
                         <option value disabled {{ old('disruptivos_q_6', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -1951,8 +2478,11 @@
 
                 <label class="col-sm-8 col-form-label">Indisponibilidad de recursos humanos,
                     materiales o técnicos.</label>
+                @error('disruptivos_q_7')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_7">
+                    <select class="form-control form-control-sm" name="disruptivos_q_7" required>
                         <option value disabled {{ old('disruptivos_q_7', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -1967,8 +2497,11 @@
 
                 <label class="col-sm-8 col-form-label">Interrupciones en el suministro de
                     energía.</label>
+                @error('disruptivos_q_8')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_8">
+                    <select class="form-control form-control-sm" name="disruptivos_q_8" required>
                         <option value disabled {{ old('disruptivos_q_8', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -1983,8 +2516,11 @@
 
                 <label class="col-sm-8 col-form-label">Interrupciones ocurridas en servicios prestados
                     por terceros.</label>
+                @error('disruptivos_q_9')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_9">
+                    <select class="form-control form-control-sm" name="disruptivos_q_9" required>
                         <option value disabled {{ old('disruptivos_q_9', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -1998,8 +2534,11 @@
                 <hr>
 
                 <label class="col-sm-8 col-form-label">Sabotaje.</label>
+                @error('disruptivos_q_10')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_10">
+                    <select class="form-control form-control-sm" name="disruptivos_q_10" required>
                         <option value disabled {{ old('disruptivos_q_10', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -2013,8 +2552,11 @@
                 <hr>
 
                 <label class="col-sm-8 col-form-label">Terrorismo.</label>
+                @error('disruptivos_q_11')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_11">
+                    <select class="form-control form-control-sm" name="disruptivos_q_11" required>
                         <option value disabled {{ old('disruptivos_q_11', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisAIA::DisruptivoSelect as $key => $label)
@@ -2037,7 +2579,7 @@
             </div>
             <div class="row">
                 <div class="form-group col-sm-12">
-                    <label>18. Por favor, indique el nivel de impacto en los que el proceso se ha visto
+                    <label class="required">18. Por favor, indique el nivel de impacto en los que el proceso se ha visto
                         involucrado.</label>
 
                 </div>
@@ -2069,25 +2611,34 @@
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
                             class="fas fa-info-circle"></i></a>
                     Afectación operacional (IO) </label>
+                @error('operacion_q_1')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('operacion_q_2')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('operacion_q_3')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_1" placeholder="..."
+                        name="operacion_q_1" placeholder="..." min="1" max="5"
                         value="{{ old('operacion_q_1', $cuestionario->operacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_2" placeholder="..."
+                        name="operacion_q_2" placeholder="..." min="1" max="5"
                         value="{{ old('operacion_q_2', $cuestionario->operacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_3" placeholder="..."
+                        name="operacion_q_3" placeholder="..." min="1" max="5"
                         value="{{ old('operacion_q_3', $cuestionario->operacion_q_3) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_4" placeholder="..."
+                        name="operacion_q_4" placeholder="..." min="1" max="5"
                         value="{{ old('operacion_q_4', $cuestionario->operacion_q_4) }}">
                 </div>
                 <hr>
@@ -2098,24 +2649,33 @@
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
                             class="fas fa-info-circle"></i></a>
                     Impacto Regulatorio (IR)</label>
+                @error('regulatorio_q_1')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('regulatorio_q_2')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('regulatorio_q_3')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_1" placeholder="..."
+                        name="regulatorio_q_1" placeholder="..." min="1" max="5"
                         value="{{ old('meta', $cuestionario->regulatorio_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_2" placeholder="..."
+                        name="regulatorio_q_2" placeholder="..." min="1" max="5"
                         value="{{ old('meta', $cuestionario->regulatorio_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_3" placeholder="..."
+                        name="regulatorio_q_3" placeholder="..." min="1" max="5"
                         value="{{ old('meta', $cuestionario->regulatorio_q_3) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_4" placeholder="..."
+                        name="regulatorio_q_4" placeholder="..." min="1" max="5"
                         value="{{ old('meta', $cuestionario->regulatorio_q_4) }}">
                 </div>
                 <hr>
@@ -2127,24 +2687,34 @@
                             class="fas fa-info-circle"></i></a>
                     Afectación en la Reputación / Imagen Pública o Política
                     (IIR)</label>
+                @error('reputacion_q_1')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('reputacion_q_2')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('reputacion_q_3')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_1" placeholder="..."
+                        name="reputacion_q_1" placeholder="..." min="1" max="5"
                         value="{{ old('meta', $cuestionario->reputacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_2" placeholder="..."
+                        name="reputacion_q_2" placeholder="..." min="1" max="5"
                         value="{{ old('meta', $cuestionario->reputacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_3" placeholder="..."
+                        name="reputacion_q_3" placeholder="..." min="1" max="5"
                         value="{{ old('meta', $cuestionario->reputacion_q_3) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_4" placeholder="..."
+                        name="reputacion_q_4" placeholder="..." min="1" max="5"
                         value="{{ old('meta', $cuestionario->reputacion_q_4) }}">
                 </div>
                 <hr>
@@ -2155,27 +2725,39 @@
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
                             class="fas fa-info-circle"></i></a>
                     Impacto Social (IS)</label>
+                @error('social_q_1')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('social_q_2')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('social_q_3')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_1" placeholder="..." value="{{ old('meta', $cuestionario->social_q_1) }}">
+                        name="social_q_1" min="1" max="5" placeholder="..." value="{{ old('meta', $cuestionario->social_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_2" placeholder="..." value="{{ old('meta', $cuestionario->social_q_2) }}">
+                        name="social_q_2" min="1" max="5" placeholder="..." value="{{ old('meta', $cuestionario->social_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_3" placeholder="..." value="{{ old('meta', $cuestionario->social_q_3) }}">
+                        name="social_q_3" min="1" max="5" placeholder="..." value="{{ old('meta', $cuestionario->social_q_3) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_4" placeholder="..." value="{{ old('meta', $cuestionario->social_q_4) }}">
+                        name="social_q_4" min="1" max="5" placeholder="..." value="{{ old('meta', $cuestionario->social_q_4) }}">
                 </div>
                 <hr>
 
                 <div class="form-group col-sm-12">
-                    <label>19. En caso de que la aplicación presentara alguna falla o se detuviera su operación, indique
+                    <label class="required">19. En caso de que la aplicación presentara alguna falla o se detuviera su operación, indique
                         cuáles serían las acciones que se tomarían</label>
+                    @error('q_19')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     <input type="text" class="form-control form-control-sm" name="q_19" placeholder="..."
                         value="{{ old('q_19', $cuestionario->q_19) }}">
                 </div>

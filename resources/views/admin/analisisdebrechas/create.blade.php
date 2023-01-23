@@ -14,9 +14,9 @@
 
                 <div class="row">
                     <div class="form-group col-md-4 col-lg-4 col-sm-12">
-                        <label for="nombre"><i class="fas fa-table iconos-crear"></i>Nombre</label>
+                        <label for="nombre" class="required"><i class="fas fa-table iconos-crear"></i>Nombre</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
-                            name="nombre" id="nombre" value="{{ old('nombre', '') }}">
+                            name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
                         @if ($errors->has('nombre'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('nombre') }}
@@ -41,7 +41,7 @@
                     <div class="form-group col-md-4 col-lg-4 col-sm-12">
                         <label for="estatus"><i class="fas fa-traffic-light iconos-crear"></i>Estatus</label>
                         <select class="form-control {{ $errors->has('estatus') ? 'is-invalid' : '' }}" name="estatus"
-                            id="estatus">
+                            id="estatus" required>
                             <option value disabled {{ old('estatus', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach (App\Models\AnalisisDeRiesgo::EstatusSelect as $key => $label)
@@ -68,7 +68,9 @@
                             <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($empleados as $key => $label)
-                                <option value="{{ $label->id }}">{{ $label->name }}
+                                <option data-puesto="{{ $label->puesto }}" data-area="{{ $label->area->area}}"
+                                    value="{{ $label->id }}">
+                                    {{ $label->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -79,32 +81,32 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto </label>
-                        <input class="form-control {{ $errors->has('id_puesto') ? 'is-invalid' : '' }}" type="text"
-                            id="id_puesto" value="" disabled>
+                    <div class="form-group col-md-4 col-sm-12 col-lg-4">
+                        <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="id_puesto" readonly></div>
+                    </div>
                         @if ($errors->has('id_puesto'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('id_puesto') }}
                             </div>
                         @endif
-                    </div>
 
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área </label>
-                        <input class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}" type="text"
-                            id="id_area" value="" disabled>
+
+                    <div class="form-group col-md-4 col-sm-12 col-lg-4">
+                        <label for="id_area"><i class="fas fa-street-viewa iconos-crear"></i>Área</label>
+                        <div class="form-control" id="id_area" readonly></div>
+                    </div>
                         @if ($errors->has('id_area'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('id_area') }}
                             </div>
                         @endif
-                    </div>
+
                 </div>
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.analisisdebrechas.index') }}" class="btn_cancelar">Cancelar</a>
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -138,6 +140,23 @@
                 $("#id_puesto").empty();
                 $("#id_area").empty();
             }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let elaboro = document.querySelector('#id_elaboro');
+            let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
+            let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');
+
+            document.getElementById('id_puesto').innerHTML = puesto_init;
+            document.getElementById('id_area').innerHTML = area_init;
+            elaboro.addEventListener('change', function(e) {
+                e.preventDefault();
+                let area = this.options[this.selectedIndex].getAttribute('data-area');
+                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+                document.getElementById('id_puesto').innerHTML = puesto;
+                document.getElementById('id_area').innerHTML = area;
+            })
         });
     </script>
 @endsection

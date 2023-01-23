@@ -23,16 +23,16 @@
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
                     <label for="descripcion"><i class="fas fa-align-justify iconos-crear"></i>Descripción</label>
-                    <textarea class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
-                    @if ($errors->has('nombre_comite'))
+                    <textarea required class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
+                    @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('nombre_comite') }}
+                            {{ $errors->first('descripcion') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.comiteseguridad.fields.nombrerol_helper') }}</span>
                 </div>
 
-               
+
 
                 <div class="text-right form-group col-12">
                     <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
