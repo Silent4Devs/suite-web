@@ -9,18 +9,27 @@ class UpdateEvidenciasSgsiRequest extends FormRequest
     public function rules()
     {
         return [
+
+            'nombredocumento' => [
+                'string',
+                'required',
+            ],
             'objetivodocumento' => [
+                'string',
+                'required',
+            ],
+            'responsable_evidencia_id' => [
                 'string',
                 'required',
             ],
             'arearesponsable'   => [
                 'string',
-                'nullable',
+                'required',
             ],
             'fechadocumento'    => [
                 // 'date_format:' . config('panel.date_format'),
                 'date',
-                'nullable',
+                'required',
             ],
         ];
     }

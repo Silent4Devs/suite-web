@@ -105,6 +105,12 @@ class AlcanceSgsiController extends Controller
     {
         abort_if(Gate::denies('determinacion_alcance_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
+            'nombre' => 'required|string',
+            'alcancesgsi' => 'required|string',
+            'fecha_publicacion' => 'required|date',
+            'fecha_entrada' => 'required|date',
+            'fecha_revision' => 'required|date',
+            'id_reviso_alcance' => 'required',
             'normas' => 'required|array',
         ]);
 
@@ -134,6 +140,12 @@ class AlcanceSgsiController extends Controller
     {
         abort_if(Gate::denies('determinacion_alcance_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
+            'nombre' => 'required|string',
+            'alcancesgsi' => 'required|string',
+            'fecha_publicacion' => 'required|date',
+            'fecha_entrada' => 'required|date',
+            'fecha_revision' => 'required|date',
+            'id_reviso_alcance' => 'required',
             'normas' => 'required|array',
         ]);
 

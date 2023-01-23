@@ -12,10 +12,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class PlanImplementacion extends Model
 {
     use HasFactory, SoftDeletes;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'plan_implementacion_9001';
     protected $appends = ['roles', 'resources'];
     protected $fillable = [

@@ -105,6 +105,16 @@ class PoliticaSgsiController extends Controller
     public function store(StorePoliticaSgsiRequest $request)
     {
         abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request -> validate([
+            'nombre_politica' => 'required',
+            'politicasgsi' => 'required',
+            'fecha_publicacion' => 'required|date',
+            'fecha_entrada' => 'required|date',
+            'fecha_revision' => 'required|date',
+            'id_reviso_politica' => 'required',
+        ]);
+
         $politicaSgsi = PoliticaSgsi::create($request->all());
 
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Guardado con éxito');
@@ -124,6 +134,16 @@ class PoliticaSgsiController extends Controller
     public function update(UpdatePoliticaSgsiRequest $request, PoliticaSgsi $politicaSgsi)
     {
         abort_if(Gate::denies('politica_sistema_gestion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+         $request -> validate([
+             'nombre_politica' => 'required',
+             'politicasgsi' => 'required',
+/*            'fecha_publicacion' => 'required|date',
+            'fecha_entrada' => 'required|date',
+            'fecha_revision' => 'required|date',*/
+             'id_reviso_politica' => 'required',
+         ]);
+
         $politicaSgsi->update($request->all());
 
         return redirect()->route('admin.politica-sgsis.index')->with('success', 'Editado con éxito');

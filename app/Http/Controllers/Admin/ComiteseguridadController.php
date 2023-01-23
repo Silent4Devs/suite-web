@@ -23,7 +23,7 @@ class ComiteseguridadController extends Controller
 
     public function index(Request $request)
     {
-      
+
         abort_if(Gate::denies('comformacion_comite_seguridad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
@@ -84,6 +84,10 @@ class ComiteseguridadController extends Controller
         // $comiteseguridad = Comiteseguridad::create($request->all());
         // // dd($comiteseguridad);
         // return redirect()->route('admin.comiteseguridads.index')->with('success', 'Guardado con éxito');
+        $request -> validate([
+            'nombre_comite' => 'required',
+            'descripcion' => 'required',
+        ]);
 
         $comiteseguridad = Comiteseguridad::create($request->all());
         // $id = $request->id;
@@ -106,6 +110,12 @@ class ComiteseguridadController extends Controller
     public function update(UpdateComiteseguridadRequest $request, Comiteseguridad $comiteseguridad)
     {
         abort_if(Gate::denies('comformacion_comite_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request -> validate([
+            'nombre_comite' => 'required',
+            'descripcion' => 'required',
+        ]);
+
         $comiteseguridad->update($request->all());
 
         return redirect()->route('admin.comiteseguridads.index')->with('success', 'Editado con éxito');
@@ -180,6 +190,6 @@ class ComiteseguridadController extends Controller
 
         return view('admin.comiteseguridads.visualizacion', compact('users', 'teams','organizacion_actual','logo_actual','empresa_actual'));
 
-      
+
     }
 }
