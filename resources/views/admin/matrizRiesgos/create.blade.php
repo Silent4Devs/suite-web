@@ -820,7 +820,7 @@
                         </div>
 
                         <div class="form-group col-sm-4 col-lg-4 col-md-4" style="text-align:center;">
-                            <label for="riesgototal"><i class="fas fa-exclamation-circle iconos-crear"></i>Riesgo Total
+                            <label for="riesgototal"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
                             </label>
                             <div class="mb-3 input-group" style="pointer-events: none;">
                                 <div class="input-group-prepend">
@@ -1075,8 +1075,7 @@
                         </div>
 
                         <div class="form-group col-sm-4 col-md-4" style="text-align:center;">
-                            <label><i class="fas fa-exclamation-circle iconos-crear"></i>Riesgo
-                                Total Residual
+                            <label><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
                             </label>
                             <div class="mb-3 input-group" style="pointer-events: none;">
                                 <div class="input-group-prepend">
