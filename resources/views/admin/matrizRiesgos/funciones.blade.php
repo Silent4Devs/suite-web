@@ -1,21 +1,28 @@
-
-
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    if (document.querySelector('#id_responsable') != null) {
+
         let responsable = document.querySelector('#id_responsable');
         let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
         let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
+        document.getElementById('id_puesto').innerHTML = recortarTexto(puesto_init);
+        document.getElementById('id_area').innerHTML = recortarTexto(area_init);
 
-        document.getElementById('id_puesto').innerHTML = puesto_init;
-        document.getElementById('id_area').innerHTML = area_init;
         responsable.addEventListener('change', function(e) {
             e.preventDefault();
-            let area = this.options[this.selectedIndex].getAttribute('data-area');
-            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-            document.getElementById('id_puesto').innerHTML = puesto;
-            document.getElementById('id_area').innerHTML = area;
+            let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');
+            let puesto = e.target.options[e.target.selectedIndex].getAttribute('data-puesto');
+            console.log(e.target.options[e.target.selectedIndex]);
+            document.getElementById('id_puesto').innerHTML = recortarTexto(puesto)
+            document.getElementById('id_area').innerHTML = recortarTexto(area)
         })
-    });
+    }
+
+    function recortarTexto(texto, length = 30) {
+        let trimmedString = texto?.length > length ?
+            texto.substring(0, length - 3) + "..." :
+            texto;
+        return trimmedString;
+    }
 </script>
 
 <script>
@@ -29,8 +36,6 @@
 </script>
 
 <script type=text/javascript>
-
-
     $('.sumaFactores').change(function() {
         var riesgo = document.getElementById("nivelriesgo").value;
         var confidencialidadMatrizRiesgos = document.getElementById("confidencialidad").value;
@@ -38,11 +43,11 @@
         var disponibilidadMatrizRiesgos = document.getElementById("disponibilidad").value;
         let result = Number(confidencialidadMatrizRiesgos) + Number(integridadMatrizRiesgos) + Number(
             disponibilidadMatrizRiesgos);
-      
-        $("#resultadoponderacion").attr("value", Math.round(result * 10)/10);
+
+        $("#resultadoponderacion").attr("value", Math.round(result * 10) / 10);
 
         let RiesgoTotal = Number(riesgo) + Number(result);
-        $("#riesgo_total").attr("value", Math.round(RiesgoTotal * 10)/10);
+        $("#riesgo_total").attr("value", Math.round(RiesgoTotal * 10) / 10);
         switch (true) {
             case RiesgoTotal <= 68:
                 $('#nivelriesgo_total').text('Bajo');
@@ -84,103 +89,103 @@
 
     $('.sumaFactoresResiduales').change(function() {
         console.log('hola');
-            var riesgoCid = document.getElementById("nivelriesgo_residual").value;
-            var confidencialidadCid = document.getElementById("confidencialidad_cid").value;
-            var integridadCid = document.getElementById("integridad_cid").value;
-            var disponibilidadCid = document.getElementById("disponibilidad_cid").value;
-            let resultCid = Number(confidencialidadCid) + Number(integridadCid) + Number(
-                disponibilidadCid);
-            $("#resultadoponderacionRes").attr("value", Math.round(resultCid* 10)/10);
-            
-            let RiesgoTotalCid = Number(riesgoCid) + Number(resultCid);
-            $("#riesgo_total_residual").attr("value",  Math.round(RiesgoTotalCid * 10)/10);
-            switch (true) {
-                case RiesgoTotalCid <= 68:
-                    $('#nivel_riesgo_total_residual').text('Bajo');
-                    $('#nivel_riesgo_total_residual').removeClass("text-dark");
-                    $('#nivel_riesgo_total_residual').removeClass("text-orange");
-                    $('#nivel_riesgo_total_residual').removeClass("text-yellow");
-                    $('#nivel_riesgo_total_residual').removeClass("text-danger");
-                    $('#nivel_riesgo_total_residual').addClass('text-success');
-                    break;
-                case RiesgoTotalCid <= 113:
-                    $('#nivel_riesgo_total_residual').text('Medio');
-                    $('#nivel_riesgo_total_residual').removeClass("text-dark");
-                    $('#nivel_riesgo_total_residual').removeClass("text-orange");
-                    $('#nivel_riesgo_total_residual').removeClass("text-success");
-                    $('#nivel_riesgo_total_residual').removeClass("text-danger");
-                    $('#nivel_riesgo_total_residual').addClass('text-yellow');
-                    break;
-                    case RiesgoTotalCid <= 157:
-                    $('#nivel_riesgo_total_residual').text('Alto');
-                    $('#nivel_riesgo_total_residual').removeClass("text-dark");
-                    $('#nivel_riesgo_total_residual').removeClass("text-orange");
-                    $('#nivel_riesgo_total_residual').removeClass("text-success");
-                    $('#nivel_riesgo_total_residual').removeClass("text-danger");
-                    $('#nivel_riesgo_total_residual').addClass('text-orange');
-                    break;
-                    case RiesgoTotalCid <= 200:
-                    $('#nivel_riesgo_total_residual').text('Muy alto');
-                    $('#nivel_riesgo_total_residual').removeClass("text-dark");
-                    $('#nivel_riesgo_total_residual').removeClass("text-yellow");
-                    $('#nivel_riesgo_total_residual').removeClass("text-success");
-                    $('#nivel_riesgo_total_residual').removeClass("text-danger");
-                    $('#nivel_riesgo_total_residual').addClass('text-danger');
-                    break;
-                default:
-                    alert("Rango no encontrado, ¡Intentalo de nuevo!");
-                    break;
-            }
+        var riesgoCid = document.getElementById("nivelriesgo_residual").value;
+        var confidencialidadCid = document.getElementById("confidencialidad_cid").value;
+        var integridadCid = document.getElementById("integridad_cid").value;
+        var disponibilidadCid = document.getElementById("disponibilidad_cid").value;
+        let resultCid = Number(confidencialidadCid) + Number(integridadCid) + Number(
+            disponibilidadCid);
+        $("#resultadoponderacionRes").attr("value", Math.round(resultCid * 10) / 10);
 
-        });
+        let RiesgoTotalCid = Number(riesgoCid) + Number(resultCid);
+        $("#riesgo_total_residual").attr("value", Math.round(RiesgoTotalCid * 10) / 10);
+        switch (true) {
+            case RiesgoTotalCid <= 68:
+                $('#nivel_riesgo_total_residual').text('Bajo');
+                $('#nivel_riesgo_total_residual').removeClass("text-dark");
+                $('#nivel_riesgo_total_residual').removeClass("text-orange");
+                $('#nivel_riesgo_total_residual').removeClass("text-yellow");
+                $('#nivel_riesgo_total_residual').removeClass("text-danger");
+                $('#nivel_riesgo_total_residual').addClass('text-success');
+                break;
+            case RiesgoTotalCid <= 113:
+                $('#nivel_riesgo_total_residual').text('Medio');
+                $('#nivel_riesgo_total_residual').removeClass("text-dark");
+                $('#nivel_riesgo_total_residual').removeClass("text-orange");
+                $('#nivel_riesgo_total_residual').removeClass("text-success");
+                $('#nivel_riesgo_total_residual').removeClass("text-danger");
+                $('#nivel_riesgo_total_residual').addClass('text-yellow');
+                break;
+            case RiesgoTotalCid <= 157:
+                $('#nivel_riesgo_total_residual').text('Alto');
+                $('#nivel_riesgo_total_residual').removeClass("text-dark");
+                $('#nivel_riesgo_total_residual').removeClass("text-orange");
+                $('#nivel_riesgo_total_residual').removeClass("text-success");
+                $('#nivel_riesgo_total_residual').removeClass("text-danger");
+                $('#nivel_riesgo_total_residual').addClass('text-orange');
+                break;
+            case RiesgoTotalCid <= 200:
+                $('#nivel_riesgo_total_residual').text('Muy alto');
+                $('#nivel_riesgo_total_residual').removeClass("text-dark");
+                $('#nivel_riesgo_total_residual').removeClass("text-yellow");
+                $('#nivel_riesgo_total_residual').removeClass("text-success");
+                $('#nivel_riesgo_total_residual').removeClass("text-danger");
+                $('#nivel_riesgo_total_residual').addClass('text-danger');
+                break;
+            default:
+                alert("Rango no encontrado, ¡Intentalo de nuevo!");
+                break;
+        }
+
+    });
 </script>
 
 <script type=text/javascript>
-        $('#probabilidad').change(function() {
-            var impactoID = document.getElementById("impacto").value;
-            // var ponderacion = document.getElementById("resultadoponderacion").value;
-            let probabilidadID = $(this).val();
-            let result = Number(probabilidadID) * Number(impactoID);
-            document.getElementById("nivelriesgo").value = result;
-            switch (true) {
-                case result == 0:
-                    $('#nivelriesgo_pre').text('Bajo');
-                    $('#nivelriesgo_pre').removeClass("text-dark");
-                    $('#nivelriesgo_pre').removeClass("text-orange");
-                    $('#nivelriesgo_pre').removeClass("text-yellow");
-                    $('#nivelriesgo_pre').removeClass("text-danger");
-                    $('#nivelriesgo_pre').addClass('text-success');
-                    break;
-                case result >= 9 && result <= 18:
-                    $('#nivelriesgo_pre').text('Medio');
-                    $('#nivelriesgo_pre').removeClass("text-dark");
-                    $('#nivelriesgo_pre').removeClass("text-orange");
-                    $('#nivelriesgo_pre').removeClass("text-yellow");
-                    $('#nivelriesgo_pre').removeClass("text-danger");
-                    $('#nivelriesgo_pre').addClass('text-yellow');
-                    break;
-                case result >= 27 && result <= 36:
-                    $('#nivelriesgo_pre').text('Alto');
-                    $('#nivelriesgo_pre').removeClass("text-dark");
-                    $('#nivelriesgo_pre').removeClass("text-orange");
-                    $('#nivelriesgo_pre').removeClass("text-success");
-                    $('#nivelriesgo_pre').removeClass("text-danger");
-                    $('#nivelriesgo_pre').addClass('text-orange');
-                    break;
-                case result >= 54 && result <= 81:
-                    $('#nivelriesgo_pre').text('Muy Alto');
-                    $('#nivelriesgo_pre').removeClass("text-dark");
-                    $('#nivelriesgo_pre').removeClass("text-orange");
-                    $('#nivelriesgo_pre').removeClass("text-success");
-                    $('#nivelriesgo_pre').removeClass("text-danger");
-                    $('#nivelriesgo_pre').addClass('text-danger');
-                    break;
-                default:
-                    alert("Rango no encontrado, ¡Intentalo de nuevo!");
-                    break;
-            }
+    $('#probabilidad').change(function() {
+        var impactoID = document.getElementById("impacto").value;
+        // var ponderacion = document.getElementById("resultadoponderacion").value;
+        let probabilidadID = $(this).val();
+        let result = Number(probabilidadID) * Number(impactoID);
+        document.getElementById("nivelriesgo").value = result;
+        switch (true) {
+            case result == 0:
+                $('#nivelriesgo_pre').text('Bajo');
+                $('#nivelriesgo_pre').removeClass("text-dark");
+                $('#nivelriesgo_pre').removeClass("text-orange");
+                $('#nivelriesgo_pre').removeClass("text-yellow");
+                $('#nivelriesgo_pre').removeClass("text-danger");
+                $('#nivelriesgo_pre').addClass('text-success');
+                break;
+            case result >= 9 && result <= 18:
+                $('#nivelriesgo_pre').text('Medio');
+                $('#nivelriesgo_pre').removeClass("text-dark");
+                $('#nivelriesgo_pre').removeClass("text-orange");
+                $('#nivelriesgo_pre').removeClass("text-yellow");
+                $('#nivelriesgo_pre').removeClass("text-danger");
+                $('#nivelriesgo_pre').addClass('text-yellow');
+                break;
+            case result >= 27 && result <= 36:
+                $('#nivelriesgo_pre').text('Alto');
+                $('#nivelriesgo_pre').removeClass("text-dark");
+                $('#nivelriesgo_pre').removeClass("text-orange");
+                $('#nivelriesgo_pre').removeClass("text-success");
+                $('#nivelriesgo_pre').removeClass("text-danger");
+                $('#nivelriesgo_pre').addClass('text-orange');
+                break;
+            case result >= 54 && result <= 81:
+                $('#nivelriesgo_pre').text('Muy Alto');
+                $('#nivelriesgo_pre').removeClass("text-dark");
+                $('#nivelriesgo_pre').removeClass("text-orange");
+                $('#nivelriesgo_pre').removeClass("text-success");
+                $('#nivelriesgo_pre').removeClass("text-danger");
+                $('#nivelriesgo_pre').addClass('text-danger');
+                break;
+            default:
+                alert("Rango no encontrado, ¡Intentalo de nuevo!");
+                break;
+        }
 
-        });
+    });
 
     $('#impacto').change(function() {
         var probabilidadID = document.getElementById("probabilidad").value;
@@ -283,7 +288,7 @@
         //$("#nivelriesgo_residual").attr("value", Number(probabilidadID_residual) * Number(impactoID_residual));
         document.getElementById("nivelriesgo_residual").value = result1;
         switch (true) {
-            case result1 == 0 :
+            case result1 == 0:
                 $('#nivelriesgo_residual_pre').text('Bajo');
                 $('#nivelriesgo_residual_pre').removeClass("text-dark");
                 $('#nivelriesgo_residual_pre').removeClass("text-orange");
@@ -380,5 +385,3 @@
 
     document.writeln(suma);
 </script>
-
-

@@ -801,7 +801,7 @@
                             <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
                         </div>
 
-                        <div class="form-group col-sm-4">
+                        <div class="form-group" style="display:none">
                             <label for="nivelriesgo"><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
                             </label>
                             <div class="mb-3 input-group" style="pointer-events: none;">
@@ -819,7 +819,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-sm-12 col-12" style="text-align:center;">
+                        <div class="form-group col-sm-4 col-lg-4 col-md-4" style="text-align:center;">
                             <label for="riesgototal"><i class="fas fa-exclamation-circle iconos-crear"></i>Riesgo Total
                             </label>
                             <div class="mb-3 input-group" style="pointer-events: none;">
@@ -1055,7 +1055,7 @@
                         </div>
 
 
-                        <div class="form-group col-sm-4">
+                        <div class="form-group" style="display:none">
                             <label><i class="fas fa-exclamation-circle iconos-crear"></i>Nivel Riesgo:
                             </label>
                             <div class="mb-3 input-group" style="pointer-events: none;">
@@ -1074,7 +1074,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-sm-12 col-12" style="text-align:center;">
+                        <div class="form-group col-sm-4 col-md-4" style="text-align:center;">
                             <label><i class="fas fa-exclamation-circle iconos-crear"></i>Riesgo
                                 Total Residual
                             </label>
