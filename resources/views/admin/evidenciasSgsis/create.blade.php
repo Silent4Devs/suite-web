@@ -70,7 +70,8 @@
 
             <div class="form-group col-md-12 col-sm-12 col-lg-6">
                 <label class="required" for="area_id"><i class="fas fa-user-tie iconos-crear"></i>Área reponsable del documento</label>
-                <select required class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}" name="area_id" id="area_id">
+                <select required class="form-control {{ $errors->has('area_id') ? 'is-invalid' : '' }}"
+                    name="area_id" id="area_id">
                     @foreach ($areas as $area)
                     <option value="{{ $area->id }}">
                         {{ $area->area}}
@@ -87,7 +88,9 @@
 
             <div class="form-group col-md-6">
                 <label class="required" for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del documento</label>
-                <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date" name="fechadocumento" id="fechadocumento" value="{{ old('fechadocumento') }}">
+                <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date"
+                name="fechadocumento" id="fechadocumento" min="1945-01-01"
+                value="{{ old('fechadocumento') }}">
                 @if($errors->has('fechadocumento'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechadocumento') }}
@@ -114,7 +117,7 @@
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.archivopdf_helper') }}</span>
             </div> --}}
             <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route("admin.evidencias-sgsis.index") }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

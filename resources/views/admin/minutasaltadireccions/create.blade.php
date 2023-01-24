@@ -17,8 +17,8 @@
                     <label for="fechareunion"><i
                             class="fas fa-calendar-alt iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}<span
                             class="text-danger">*</span></label>
-                    <input required class="form-control date" type="date" name="fechareunion" id="fechareunion"
-                        value="{{ old('fechareunion') }}">
+                    <input required class="form-control date" type="date" min="1945-01-01"
+                    name="fechareunion" id="fechareunion" value="{{ old('fechareunion') }}">
                     @if ($errors->has('fechareunion'))
                         <span class="text-danger">
                             {{ $errors->first('fechareunion') }}
@@ -252,7 +252,7 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" id="btnGuardar" type="submit">
                         {{ trans('global.save') }}
                     </button>

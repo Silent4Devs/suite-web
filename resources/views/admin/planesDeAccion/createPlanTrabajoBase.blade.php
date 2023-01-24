@@ -56,7 +56,7 @@
                     </div>
             </div>
             <div class="text-right form-group col-12" style="margin-left:-5px;">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route('admin.planTrabajoBase.index') }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

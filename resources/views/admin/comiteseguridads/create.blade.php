@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label for="descripcion"><i class="fas fa-align-justify iconos-crear"></i>Descripción</label>
+                    <label class="required" for="descripcion"><i class="fas fa-align-justify iconos-crear"></i>Descripción</label>
                     <textarea required class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
@@ -35,7 +35,7 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

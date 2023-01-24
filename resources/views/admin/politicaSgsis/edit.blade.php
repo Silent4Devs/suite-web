@@ -12,7 +12,8 @@
                 <div class="form-group">
                     <label class="required" for="nombre_politica"><i class="fas fa-file-invoice iconos-crear"></i>Nombre de la política</label>
                     <input class="form-control {{ $errors->has('nombre_politica') ? 'is-invalid' : '' }}"
-                        name="nombre_politica" value="{{ old('nombre_politica', $politicaSgsi->nombre_politica) }}" required>
+                        name="nombre_politica" id="nombre_politica"
+                        value="{{ old('nombre_politica', $politicaSgsi->nombre_politica) }}" required>
                     @if ($errors->has('nombre_politica'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombre_politica') }}
@@ -38,7 +39,7 @@
                         <label class="required" for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                             publicación</label>
                         <input required class="form-control date  {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
-                            type="date" {{--name="fecha_publicacion" id="fecha_publicacion"--}}
+                            type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
                             value="{{ old('fecha_publicacion', \Carbon\Carbon::parse($politicaSgsi->fecha_publicacion))->format('Y-m-d') }}">
                         @if ($errors->has('fecha_publicacion'))
                             <div class="invalid-feedback">
@@ -51,7 +52,7 @@
                         <label class="required" for="fecha_entrada"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                             verificación</label>
                         <input required class="form-control date {{ $errors->has('fecha_entrada') ? 'is-invalid' : '' }}"
-                            type="date" {{--name="fecha_entrada" id="fecha_entrada"--}}
+                            type="date" name="fecha_entrada" id="fecha_entrada" min="1945-01-01"
                             value="{{ old('fecha_entrada', \Carbon\Carbon::parse($politicaSgsi->fecha_entrada))->format('Y-m-d') }}">
                         @if ($errors->has('fecha_entrada'))
                             <div class="invalid-feedback">
@@ -64,7 +65,7 @@
                         <label class="required" for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                             revisión</label>
                         <input required class="form-control date {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}"
-                            type="date" {{--name="fecha_revision" id="fecha_revision"--}}
+                            type="date" name="fecha_revision" id="fecha_revision" min="1945-01-01"
                             value="{{ old('fecha_revision', \Carbon\Carbon::parse($politicaSgsi->fecha_revision))->format('Y-m-d') }}">
                         @if ($errors->has('fecha_revision'))
                             <div class="invalid-feedback">
@@ -122,7 +123,7 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.politica-sgsis.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

@@ -28,7 +28,7 @@
                     <div class="form-group col-md-4 col-lg-4 col-sm-12">
                         <label for="fecha"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha</label>
                         <input class="form-control {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="text"
-                            id="fecha" value="{{ date('d-m-Y') }}" disabled>
+                            id="fecha" value="{{ date('d-m-Y') }}" min="1945-01-01" disabled>
                         @if ($errors->has('fecha'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha') }}
