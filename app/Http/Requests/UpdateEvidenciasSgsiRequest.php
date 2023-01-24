@@ -22,7 +22,7 @@ class UpdateEvidenciasSgsiRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'arearesponsable'   => [
+            'area_id'   => [
                 'string',
                 'required',
             ],
