@@ -109,7 +109,7 @@
                     <label class="required" for="arearesponsable"><i
                             class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="mb-3 input-group">
-                        <select class="custom-select areas" id="inputGroupSelect01" name="arearesponsable">
+                        <select class="custom-select areas" id="inputGroupSelect01" name="arearesponsable" required>
                             <option selected disabled value="null">-- Seleccion un área --</option>
                             @forelse ($areas as $area)
                                 <option value="{{ $area->id }}"
@@ -133,8 +133,8 @@
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label class="required" for="fechadocumento"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de emisión del
                         documento</label>
-                    <input class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date"
-                        name="fechadocumento" id="fechadocumento"
+                    <input required class="form-control {{ $errors->has('fechadocumento') ? 'is-invalid' : '' }}" type="date"
+                        name="fechadocumento" id="fechadocumento" min="1945-01-01"
                         value="{{ old('fechadocumento', \Carbon\Carbon::parse($evidenciasSgsi->fechadocumento))->format('Y-m-d') }}">
                     @if ($errors->has('fechadocumento'))
                         <div class="invalid-feedback">
@@ -170,7 +170,7 @@
                 <span class="help-block">{{ trans('cruds.evidenciasSgsi.fields.archivopdf_helper') }}</span>
             </div> --}}
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route("admin.evidencias-sgsis.index") }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

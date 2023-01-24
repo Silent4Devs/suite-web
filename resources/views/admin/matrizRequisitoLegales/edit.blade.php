@@ -11,13 +11,13 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group col-12">
-                    <label class=" " for="nombrerequisito"><i
+                    <label class="required" for="nombrerequisito"><i
                             class="fas fa-clipboard-list iconos-crear"></i>Fundamento</label><i class="fas fa-info-circle"
                         style="font-size:12pt; float: right;"
                         title="Nombre de la ley,norma,reglamento o documento donde se encuentra el requisito"></i>
                     <input class="form-control {{ $errors->has('nombrerequisito') ? 'is-invalid' : '' }}" type="text"
                         name="nombrerequisito" id="nombrerequisito"
-                        value="{{ old('nombrerequisito', $matrizRequisitoLegale->nombrerequisito) }}"  >
+                        value="{{ old('nombrerequisito', $matrizRequisitoLegale->nombrerequisito) }}" required>
                     @if ($errors->has('nombrerequisito'))
                         <div class="invalid-feedback">
                             {{ $errors->first('nombrerequisito') }}
@@ -42,10 +42,10 @@
                 </div>
 
                 <div class="form-group col-sm-4">
-                    <label> <i class="fas fa-question-circle iconos-crear"></i>Tipo</label><i class="fas fa-info-circle"
+                    <label class="required"> <i class="fas fa-question-circle iconos-crear"></i>Tipo</label><i class="fas fa-info-circle"
                         style="font-size:12pt; float: right;"
                         title="Seleccionar el tipo de requisito según el origen de la obligación"></i>
-                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo">
+                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="tipo" id="tipo" required>
                         <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
                         @foreach (App\Models\MatrizRequisitoLegale::TIPO_SELECT as $key => $label)
@@ -73,12 +73,12 @@
                         </div>
                     @endif
                 </div>
-{{-- Las fechas causan problemas en el edit al enviarlos como valor, por lo que solo los mostramos--}}
+
                 <div class="form-group col-sm-4">
                     <label for="fechaexpedicion"><i
                             class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechaexpedicion') }}</label>
                     <input class="form-control date {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}"
-                        type="date" name="fechaexpedicion" id="fechaexpedicion"
+                        type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
                         value="{{ old('fechaexpedicion', $matrizRequisitoLegale->fechaexpedicion ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechaexpedicion)->format('Y-m-d'): null) }}">
                     @if ($errors->has('fechaexpedicion'))
                         <div class="invalid-feedback">
@@ -93,8 +93,8 @@
                     <label for="fechavigor"> <i
                             class="far fa-calendar-alt iconos-crear"></i>{{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
                     <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
-                        name="fechavigor" id="fechavigor"
-                        value="{{ old('fechavigor', \Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor))->format('Y-m-d') }}">
+                        name="fechavigor" id="fechavigor" min="1945-01-01"
+                        value="{{ old('fechavigor', $matrizRequisitoLegale->fechavigor ? \Carbon\Carbon::parse($matrizRequisitoLegale->fechavigor)->format('Y-m-d'):null) }}">
                     @if ($errors->has('fechavigor'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechavigor') }}
@@ -105,10 +105,10 @@
                 </div>
 
                 <div class="form-group col-sm-4">
-                    <label for="periodicidad_cumplimiento"><i class="far fa-clock iconos-crear"></i> Periodicidad de
+                    <label class="required" for="periodicidad_cumplimiento"><i class="far fa-clock iconos-crear"></i> Periodicidad de
                         verificación</label>
                     <select   class="form-control {{ $errors->has('periodicidad_cumplimiento') ? 'is-invalid' : '' }}"
-                        type="text" name="periodicidad_cumplimiento" id="periodicidad_cumplimiento">
+                        type="text" name="periodicidad_cumplimiento" id="periodicidad_cumplimiento" required>
                     <option disabled value="{{ old('periodicidad_cumplimiento', $matrizRequisitoLegale->periodicidad_cumplimiento) }}">
                     </option>
                     @foreach (App\Models\MatrizRequisitoLegale::PERIODICIDAD_SELECT as $key => $label)
@@ -127,11 +127,11 @@
                 </div>
 
                 <div class="form-group col-sm-12">
-                    <label for="requisitoacumplir"> <i class="fas fa-clipboard-list iconos-crear"></i>Requisito(s) a
+                    <label class="required" for="requisitoacumplir"> <i class="fas fa-clipboard-list iconos-crear"></i>Requisito(s) a
                         cumplir</label>
                     <textarea class="form-control {{ $errors->has('requisitoacumplir') ? 'is-invalid' : '' }}"
                         type="text" name="requisitoacumplir"
-                        id="requisitoacumplir">{{ old('requisitoacumplir', $matrizRequisitoLegale->requisitoacumplir) }}</textarea>
+                        id="requisitoacumplir" required>{{ old('requisitoacumplir', $matrizRequisitoLegale->requisitoacumplir) }}</textarea>
                     @if ($errors->has('requisitoacumplir'))
                         <div class="invalid-feedback">
                             {{ $errors->first('requisitoacumplir') }}
@@ -325,7 +325,7 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

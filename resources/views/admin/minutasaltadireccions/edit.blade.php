@@ -16,7 +16,8 @@
                 <div class="form-group col-sm-12 col-md-6 col-lg-6">
                     <label class="required" for="fechareunion"><i
                             class="fas fa-calendar-alt iconos-crear"></i>{{ trans('cruds.minutasaltadireccion.fields.fechareunion') }}</label>
-                    <input required class="form-control date" type="date" name="fechareunion" id="fechareunion"
+                    <input required class="form-control date" type="date" min="1945-01-01"
+                    name="fechareunion" id="fechareunion"
                         value="{{ old('fechareunion', \Carbon\Carbon::parse($minutasaltadireccion->fechareunion)->format('Y-m-d')) }}">
                     @if ($errors->has('fechareunion'))
                         <span class="text-danger">
@@ -253,7 +254,7 @@
                 {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.minutasaltadireccions.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" id="btnGuardar" type="submit">
                         Actualizar
                     </button>

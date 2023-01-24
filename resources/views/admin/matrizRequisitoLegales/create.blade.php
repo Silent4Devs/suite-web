@@ -88,7 +88,8 @@
                     <label for="fechaexpedicion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de
                         publicación</label>
                     <input class="form-control {{ $errors->has('fechaexpedicion') ? 'is-invalid' : '' }}"
-                        type="date" name="fechaexpedicion" id="fechaexpedicion" value="{{ old('fechaexpedicion') }}">
+                        type="date" name="fechaexpedicion" id="fechaexpedicion" min="1945-01-01"
+                        value="{{ old('fechaexpedicion') }}">
                     @if ($errors->has('fechaexpedicion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechaexpedicion') }}
@@ -101,7 +102,8 @@
                     <label for="fechavigor"> <i class="far fa-calendar-alt iconos-crear"></i>
                         {{ trans('cruds.matrizRequisitoLegale.fields.fechavigor') }}</label>
                     <input class="form-control date {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
-                        name="fechavigor" id="fechavigor" value="{{ old('fechavigor') }}">
+                        name="fechavigor" id="fechavigor" min="1945-01-01"
+                        value="{{ old('fechavigor') }}">
                     @if ($errors->has('fechavigor'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fechavigor') }}
@@ -174,7 +176,7 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
