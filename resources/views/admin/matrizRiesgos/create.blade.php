@@ -613,7 +613,7 @@
                             name="tipo_riesgo" id="tipo_riesgo">
                             <option value disabled {{ old('tipo_riesgo', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::TIPO_RIESGO_SELECT as $key => $label)
+                            @foreach (/*App\Models\MatrizRiesgo::TIPO_RIESGO_SELECT*/ $tipo_riesgo as $key => $label)
                                 <option value="{{ $key }}"
                                     {{ old('tipo_riesgo', '') === (string) $key ? 'selected' : '' }}>
                                     {{ $label }}
@@ -650,7 +650,7 @@
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
 
-                <input type="hidden" id="resultadoponderacion" name="resultadoponderacion">
+                <input type="hidden" id="resultadoponderacion" name="resultadoponderacion" value="0">
                 <div class="py-2 row">
                     <div class="form-group col-sm-3">
                         <div class="custom-control custom-checkbox">
@@ -708,7 +708,7 @@
                             name="probabilidad" id="probabilidad">
                             <option value disabled {{ old('probabilidad', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::PROBABILIDAD_SELECT as $key => $label)
+                            @foreach (/*App\Models\MatrizRiesgo::PROBABILIDAD_SELECT*/ $probabilidad as $key => $label)
                                 <option value="{{ $key }}"
                                     {{ old('probabilidad', '') === (string) $key ? 'selected' : '' }}>
                                     {{ $label }}
@@ -729,7 +729,7 @@
                             id="impacto">
                             <option value disabled {{ old('impacto', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::IMPACTO_SELECT as $key => $label)
+                            @foreach (/*App\Models\MatrizRiesgo::IMPACTO_SELECT*/ $impacto as $key => $label)
                                 <option value="{{ $key }}"
                                     {{ old('impacto', '') === (string) $key ? 'selected' : '' }}>
                                     {{ $label }}
@@ -827,6 +827,8 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span> --}}
                         {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
+
+
                         <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
                             @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
@@ -852,7 +854,7 @@
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
                 <input type="hidden" id="resultadoponderacionRes" name="resultadoponderacionRes">
-              
+
                 <div class="py-2 row">
                     <div class="form-group col-sm-3">
                         <div class="custom-control custom-checkbox">
@@ -908,7 +910,7 @@
                             name="probabilidad_residual" id="probabilidad_residual">
                             <option value disabled {{ old('probabilidad_residual', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::PROBABILIDAD_SELECT as $key => $label)
+                            @foreach (/*App\Models\MatrizRiesgo::PROBABILIDAD_SELECT*/ $probabilidad as $key => $label)
                                 <option value="{{ $key }}"
                                     {{ old('probabilidad_residual', '') === (string) $key ? 'selected' : '' }}>
                                     {{ $label }}
@@ -929,7 +931,7 @@
                             name="impacto_residual" id="impacto_residual">
                             <option value disabled {{ old('impacto_residual', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::IMPACTO_SELECT as $key => $label)
+                            @foreach (/*App\Models\MatrizRiesgo::IMPACTO_SELECT*/ $impacto as $key => $label)
                                 <option value="{{ $key }}"
                                     {{ old('impacto_residual', '') === (string) $key ? 'selected' : '' }}>
                                     {{ $label }}
@@ -964,9 +966,9 @@
                     </div>
 
                 </div>
-             
 
-                
+
+
                 <hr>
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad', ['id' => $id_analisis]) }}"
