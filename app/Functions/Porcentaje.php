@@ -67,6 +67,7 @@ class Porcentaje
         $avance = (($inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada) *$porcentaje) /100;
         // dd($valor, $total, $inexistente, $inicial,  $repetible,$definida,$administrada, $optimizada);
         // $avance= 68;
+       
         
         return [
             // 'Gap2Satis' => $satisfactoriamente,
@@ -88,11 +89,11 @@ class Porcentaje
         $definida=  $gap3definida * $valor;
         $administrada= $gap3administrada * $valor;
         $optimizada= $gap3optimizada * $valor;
-        $resultado = ($inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada * 100) / 30 ;
+        $resultado = $inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada * (100) / 30 ;
         $avance = (($inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada) *$resultado) /100;
         $resultadoporcentaje=round($resultado *(30)/100);
-        // dd($resultadoporcentaje, $avance, $resultado);
-
+        // dd($valor, $totaltres, $inexistente, $inicial, $repetible, $resultadoporcentaje, $avance, $resultado);
+        // dd($resultado);
         //$porc2 = (round($gap12cont) * 20) / 100;
         return [
             'porcentaje' => round($resultado *(30)/100),

@@ -9,7 +9,7 @@
                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                             aria-valuenow="30"
                             aria-valuemin="0" aria-valuemax="100"
-                            style="width: {{ (number_format($porcentajeGap3['verificar'], 2, '.', ''))}}%">
+                            style="width: {{ (number_format($porcentajeGap3['porcentaje'], 2, '.', ''))}}%">
                             {{ $porcentajeGap3['porcentaje'] }} %</div>
                     </div>
                 </div>
