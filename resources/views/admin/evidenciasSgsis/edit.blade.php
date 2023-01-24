@@ -109,7 +109,7 @@
                     <label class="required" for="arearesponsable"><i
                             class="fas fa-street-view iconos-crear"></i>Área</label>
                     <div class="mb-3 input-group">
-                        <select class="custom-select areas" id="inputGroupSelect01" name="arearesponsable" required>
+                        <select class="custom-select areas" id="inputGroupSelect01" name="area_id" required>
                             <option selected disabled value="null">-- Seleccion un área --</option>
                             @forelse ($areas as $area)
                                 <option value="{{ $area->id }}"
@@ -120,9 +120,9 @@
                             @endforelse
                         </select>
                     </div>
-                    @if ($errors->has('arearesponsable'))
+                    @if ($errors->has('area'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('arearesponsable') }}
+                            {{ $errors->first('area') }}
                         </div>
                     @endif
                 </div>
