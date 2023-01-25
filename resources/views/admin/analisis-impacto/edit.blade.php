@@ -94,121 +94,186 @@
             <div class="row">
                 <div class="input-group col-12">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><strong>Titular</strong></span>
+                        <span class="input-group-text"><strong>Titular *</strong></span>
                     </div>
                     <input type="text" name="titular_nombre" aria-label="First name" class="form-control"
-                        placeholder="Nombre(s)" value="{{ old('titular_nombre', $cuestionario->titular_nombre) }}">
-                    <input type="text" name="titular_a_paterno" aria-label="Last name" class="form-control"
-                        placeholder="A. Paterno" value="{{ old('titular_a_paterno', $cuestionario->titular_a_paterno) }}">
-                    <input type="text" name="titular_a_materno" aria-label="Last name" class="form-control"
-                        placeholder="A. Materno"
+                        placeholder="Nombre(s)" required
+                        value="{{ old('titular_nombre', $cuestionario->titular_nombre) }}">
+                        <input type="text" name="titular_a_paterno" aria-label="Last name" class="form-control"
+                        placeholder="A. Paterno" required
+                        value="{{ old('titular_a_paterno', $cuestionario->titular_a_paterno) }}">
+                        <input type="text" name="titular_a_materno" aria-label="Last name" class="form-control"
+                        placeholder="A. Materno" required
                         value="{{ old('titular_a_materno', $cuestionario->titular_a_materno) }}"><br>
-                </div>
+                    @error('titular_nombre')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
+                    @error('titular_a_paterno')
+                    <small style="color: red">{{$message}}</small>
+                        @enderror
+                    @error('titular_a_materno')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
+                    </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('titular_puesto', 'Puesto', ['class' => 'required']) !!}
+                    @error('titular_puesto')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('titular_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('titular_correo', 'Correo electrónico:', ['class' => 'required']) !!}
+                    @error('titular_correo')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('titular_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('titular_extencion', 'Extensión') !!}
+                    @error('titular_extencion')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('titular_extencion', null, [
                         'class' => 'form-control extencion',
-                        'maxlength' => 255,
-                        'maxlength' => 255,
+                        'maxlength' => 4,
+//                        'maxlength' => 255,
+                        'min=0',
+                        'max=9999',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <hr>
                 <div class="input-group col-12">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><strong>Suplente</strong></span>
+                        <span class="input-group-text"><strong>Suplente *</strong></span>
                     </div>
                     <input type="text" name="suplente_nombre" aria-label="First name" class="form-control"
-                        placeholder="Nombre(s)" value="{{ old('suplente_nombre', $cuestionario->suplente_nombre) }}">
-                    <input type="text" name="suplente_a_paterno" aria-label="Last name" class="form-control"
-                        placeholder="A. Paterno" value="{{ old('suplente_a_paterno', $cuestionario->suplente_a_paterno) }}">
-                    <input type="text" name="suplente_a_materno" aria-label="Last name" class="form-control"
-                        placeholder="A. Materno"
+                        placeholder="Nombre(s)" required
+                        value="{{ old('suplente_nombre', $cuestionario->suplente_nombre) }}">
+                        <input type="text" name="suplente_a_paterno" aria-label="Last name" class="form-control"
+                        placeholder="A. Paterno" required
+                        value="{{ old('suplente_a_paterno', $cuestionario->suplente_a_paterno) }}">
+                        <input type="text" name="suplente_a_materno" aria-label="Last name" class="form-control"
+                        placeholder="A. Materno" required
                         value="{{ old('suplente_a_materno', $cuestionario->suplente_a_materno) }}"><br>
-                </div>
+                        @error('suplente_nombre')
+                            <small style="color: red">{{$message}}</small>
+                        @enderror
+                        @error('suplente_a_paterno')
+                            <small style="color: red">{{$message}}</small>
+                        @enderror
+                        @error('suplente_a_materno')
+                            <small style="color: red">{{$message}}</small>
+                        @enderror
+                    </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('suplente_puesto', 'Puesto', ['class' => 'required']) !!}
+                    @error('suplente_puesto')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('suplente_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('suplente_correo', 'Correo electrónico:', ['class' => 'required']) !!}
+                    @error('suplente_correo')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('suplente_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('suplente_extencion', 'Extensión') !!}
                     {!! Form::number('suplente_extencion', null, [
                         'class' => 'form-control extencion1',
-                        'maxlength' => 255,
-                        'maxlength' => 255,
+                        'maxlength' => 4,
+//                        'maxlength' => 255,
+                        'min=0',
+                        'max=9999',
                         'placeholder' => '...',
                     ]) !!}
                 </div>
                 <div class="input-group col-12">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><strong>Supervisor</strong></span>
+                        <span class="input-group-text"><strong>Supervisor *</strong></span>
                     </div>
                     <input type="text" name="supervisor_nombre" aria-label="First name" class="form-control"
-                        placeholder="Nombre(s)" value="{{ old('supervisor_nombre', $cuestionario->supervisor_nombre) }}">
+                        placeholder="Nombre(s)" required
+                        value="{{ old('supervisor_nombre', $cuestionario->supervisor_nombre) }}">
                     <input type="text" name="supervisor_a_paterno" aria-label="Last name" class="form-control"
-                        placeholder="A. Paterno"
+                        placeholder="A. Paterno" required
                         value="{{ old('supervisor_a_paterno', $cuestionario->supervisor_a_paterno) }}">
                     <input type="text" name="supervisor_a_materno" aria-label="Last name" class="form-control"
-                        placeholder="A. Materno"
+                        placeholder="A. Materno" required
                         value="{{ old('supervisor_a_materno', $cuestionario->supervisor_a_materno) }}"><br>
+                    @error('supervisor_nombre')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
+                    @error('supervisor_a_paterno')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
+                    @error('supervisor_a_materno')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                 </div>
                 <div class="form-group col-sm-12 mt-3">
                     {!! Form::label('supervisor_puesto', 'Puesto', ['class' => 'required']) !!}
+                    @error('supervisor_puesto')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('supervisor_puesto', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('supervisor_correo', 'Correo electrónico:', ['class' => 'required']) !!}
+                    @error('supervisor_correo')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('supervisor_correo', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-6">
                     {!! Form::label('supervisor_extencion', 'Extensión') !!}
                     {!! Form::number('supervisor_extencion', null, [
                         'class' => 'form-control extencion2',
-                        'maxlength' => 255,
-                        'maxlength' => 255,
+                        'maxlength' => 4,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'min=0',
+                        'max=9999',
                     ]) !!}
                 </div>
             </div>
@@ -229,11 +294,15 @@
                         '1. ¿Qué información se requiere para iniciar el proceso?  (Documentos, Correo electrónico, Oficios, Reportes, etc.)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('flujo_q_1')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('flujo_q_1', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
@@ -242,11 +311,15 @@
                         '2. ¿De dónde proviene la información? (Nombre de la Empresa / Nombre del Área / Nombre del Proceso / Nombre del Sistema)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('flujo_q_2')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('flujo_q_2', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 {{-- livewire 3.¿Quién le proporciona esta información? --}}
@@ -259,11 +332,15 @@
                         '4. ¿De qué manera recibe usted la información? (Entrega Física / Correo Electrónico / Consulta en Aplicativo o Base de Datos / Consulta en Portal Web)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('flujo_q_4')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('flujo_q_4', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 {{-- Alpine periodicidad flujo --}}
@@ -311,22 +388,30 @@
                         '6. ¿Qué información obtiene al finalizar el proceso? (Documentos, Correo electrónico, Oficios, Reportes, etc.)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('flujo_q_6')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('flujo_q_6', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
                     {!! Form::label('flujo_q_7', '7.    ¿Este es un proceso final o genera información para iniciar otro proceso?', [
                         'class' => 'required',
                     ]) !!}
+                    @error('flujo_q_7')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('flujo_q_7', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
@@ -335,11 +420,15 @@
                         '8. ¿A dónde envía la información generada en el proceso? (Nombre de la Empresa / Nombre del Área / Nombre del Proceso / Nombre del Sistema)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('flujo_q_8')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('flujo_q_8', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
 
@@ -353,11 +442,15 @@
                         '10.    ¿Cómo valida que el proceso se realizó correctamente? (Carta o firma de aceptación, Acuse de Recibido, Notificación, etc..)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('flujo_q_10')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('flujo_q_10', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12"><label for="tipo_conteo" class="required">11. ¿Cuánto tiempo requiere
@@ -365,31 +458,55 @@
                         proceso de inicio a fin?</label> </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('flujo_años', 'Año(s)') !!}
+                    @error('flujo_años')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('flujo_años', null, [
                         'class' => 'form-control',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=50',
+                        'required',
                     ]) !!}
                 </div>
 
                 <div class="form-group col-sm-2">
                     {!! Form::label('flujo_meses', 'Mes(es)') !!}
+                    @error('flujo_meses')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('flujo_meses', null, [
                         'class' => 'form-control',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=12',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('flujo_semanas', 'Semana(s)') !!}
+                    @error('flujo_semanas')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('flujo_semanas', null, [
                         'class' => 'form-control',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=52',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('flujo_dias', 'Día(s)') !!}
+                    @error('flujo_dias')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('flujo_dias', null, [
                         'class' => 'form-control',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=365',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-4">
@@ -1202,31 +1319,55 @@
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_mes', 'Mes(es)') !!}
+                    @error('rpo_mes')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rpo_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=120',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_semana', 'Semana(s)') !!}
+                    @error('rpo_semana')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rpo_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
-                    ]) !!}
+                        'min=0',
+                        'max=52',
+                        'required',
+                        ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_dia', 'Día(s)') !!}
+                    @error('rpo_dia')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rpo_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
-                    ]) !!}
+                        'min=0',
+                        'max=365',
+                        'required',
+                        ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rpo_hora', 'Horas(s)') !!}
+                    @error('rpo_hora')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rpo_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
-                    ]) !!}
+                        'min=0',
+                        'max=120',
+                        'required',
+                        ]) !!}
                 </div>
 
             </div>
@@ -1238,30 +1379,54 @@
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_mes', 'Mes(es)') !!}
+                    @error('rto_mes')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rto_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=120',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_semana', 'Semana(s)') !!}
+                    @error('rto_semana')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rto_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=52',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_dia', 'Día(s)') !!}
+                    @error('rto_dia')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rto_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=365',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('rto_hora', 'Horas(s)') !!}
+                    @error('rto_hora')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('rto_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=120',
+                        'required',
                     ]) !!}
                 </div>
             </div>
@@ -1274,30 +1439,54 @@
 
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_mes', 'Mes(es)') !!}
+                    @error('wrt_mes')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('wrt_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=120',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_semana', 'Semana(s)') !!}
+                    @error('wrt_semana')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('wrt_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=52',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_dia', 'Día(s)') !!}
+                    @error('wrt_dia')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('wrt_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=365',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('wrt_hora', 'Horas(s)') !!}
+                    @error('wrt_hora')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('wrt_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=120',
+                        'required',
                     ]) !!}
                 </div>
 
@@ -1311,30 +1500,54 @@
 
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_mes', 'Mes(es)') !!}
+                    @error('mtpd_mes')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('mtpd_mes', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=120',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_semana', 'Semana(s)') !!}
+                    @error('mtpd_semana')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('mtpd_semana', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=52',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_dia', 'Día(s)') !!}
+                    @error('mtpd_dia')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('mtpd_dia', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=365',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-2">
                     {!! Form::label('mtpd_hora', 'Horas(s)') !!}
+                    @error('mtpd_hora')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::number('mtpd_hora', null, [
                         'class' => 'form-control form-control-sm',
                         'placeholder' => '...',
+                        'min=0',
+                        'max=120',
+                        'required',
                     ]) !!}
                 </div>
 
@@ -1356,11 +1569,15 @@
                         '20. ¿Cuáles son los archivos o registros vitales para el proceso? (Formatos, Registros, Directorios, Reportes, etc.)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('respaldo_q_20')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('respaldo_q_20', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
@@ -1369,20 +1586,29 @@
                         '21. ¿Tiene un respaldo fuera de su equipo de los archivos necesarios para ejecutar este proceso? (Registros vitales)',
                         ['class' => 'required'],
                     ) !!}
+                    @error('respaldo_q_21')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('respaldo_q_21', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
-                    {!! Form::label('respaldo_q_22', '22. ¿Alguien más tiene acceso a este respaldo?', ['class' => 'required']) !!}
+                    {!! Form::label('respaldo_q_22', '22. ¿Alguien más tiene acceso a este respaldo?',
+                    ['class' => 'required']) !!}
+                    @error('respaldo_q_22')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('respaldo_q_22', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
                 <div class="form-group col-sm-12">
@@ -1391,11 +1617,15 @@
                         '23. ¿De qué manera tiene resguardados los usuarios y contraseñas que utiliza para el acceso a los sistemas necesarios en este proceso?',
                         ['class' => 'required'],
                     ) !!}
+                    @error('respaldo_q_23')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('respaldo_q_23', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
             </div>
@@ -1414,15 +1644,18 @@
                         data-target="#probabilidad_incidentes_disruptivos" data-whatever="@mdo" data-whatever="@mdo"
                         title="Dar click"><i class="fas fa-info-circle"></i></a>
                     </a>
-                    <label>24. Por favor, indique los tipos de incidentes en los que el proceso se ha visto interrumpido y
+                    <label class="required">24. Por favor, indique los tipos de incidentes en los que el proceso se ha visto interrumpido y
                         aproximadamente cada cuando ha ocurrido.</label>
                 </div>
                 <hr>
                 {{-- PROBABILIDAD DE INCIDENTES DISRUPTIVOS --}}
                 <label class="col-sm-8 col-form-label">Indisponibilidad de las instalaciones
                     (oficinas), por bloqueo de acceso, manifestaciones.</label>
+                @error('disruptivos_q_1')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_1">
+                    <select class="form-control form-control-sm" name="disruptivos_q_1" required>
                         <option value disabled {{ old('disruptivos_q_1', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1437,8 +1670,11 @@
 
                 <label class="col-sm-8 col-form-label">Ataques cibernéticos o a la actividad
                     informática.</label>
+                @error('disruptivos_q_2')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_2">
+                    <select class="form-control form-control-sm" name="disruptivos_q_2" required>
                         <option value disabled {{ old('disruptivos_q_2', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1452,8 +1688,11 @@
                 <hr>
 
                 <label class="col-sm-8 col-form-label">Desastres naturales y ambientales.</label>
+                @error('disruptivos_q_3')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_3">
+                    <select class="form-control form-control-sm" name="disruptivos_q_3" required>
                         <option value disabled {{ old('disruptivos_q_3', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1467,8 +1706,11 @@
                 <hr>
 
                 <label class="col-sm-8 col-form-label">Enfermedades infecciosas.</label>
+                @error('disruptivos_q_4')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_4">
+                    <select class="form-control form-control-sm" name="disruptivos_q_4" required>
                         <option value disabled {{ old('disruptivos_q_4', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1482,8 +1724,11 @@
                 <hr>
 
                 <label class="col-sm-8 col-form-label">Error Humano.</label>
+                @error('disruptivos_q_5')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_5">
+                    <select class="form-control form-control-sm" name="disruptivos_q_5" required>
                         <option value disabled {{ old('disruptivos_q_5', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1498,8 +1743,11 @@
 
                 <label class="col-sm-8 col-form-label">Fallas o indisponibilidad en la infraestructura
                     tecnológica (telecomunicaciones, procesamiento de información y redes).</label>
+                @error('disruptivos_q_6')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_6">
+                    <select class="form-control form-control-sm" name="disruptivos_q_6" required>
                         <option value disabled {{ old('disruptivos_q_6', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1514,8 +1762,11 @@
 
                 <label class="col-sm-8 col-form-label">Indisponibilidad de recursos humanos,
                     materiales o técnicos.</label>
+                @error('disruptivos_q_7')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_7">
+                    <select class="form-control form-control-sm" name="disruptivos_q_7" required>
                         <option value disabled {{ old('disruptivos_q_7', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1530,8 +1781,11 @@
 
                 <label class="col-sm-8 col-form-label">Interrupciones en el suministro de
                     energía.</label>
+                @error('disruptivos_q_8')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_8">
+                    <select class="form-control form-control-sm" name="disruptivos_q_8" required>
                         <option value disabled {{ old('disruptivos_q_8', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1546,8 +1800,11 @@
 
                 <label class="col-sm-8 col-form-label">Interrupciones ocurridas en servicios prestados
                     por terceros.</label>
+                @error('disruptivos_q_9')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_9">
+                    <select class="form-control form-control-sm" name="disruptivos_q_9" required>
                         <option value disabled {{ old('disruptivos_q_9', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1561,8 +1818,11 @@
                 <hr>
 
                 <label class="col-sm-8 col-form-label">Sabotaje.</label>
+                @error('disruptivos_q_10')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_10">
+                    <select class="form-control form-control-sm" name="disruptivos_q_10" required>
                         <option value disabled {{ old('disruptivos_q_10', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1576,8 +1836,11 @@
                 <hr>
 
                 <label class="col-sm-8 col-form-label">Terrorismo.</label>
+                @error('disruptivos_q_11')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
                 <div class="form-group col-sm-4">
-                    <select class="form-control form-control-sm" name="disruptivos_q_11">
+                    <select class="form-control form-control-sm" name="disruptivos_q_11" required>
                         <option value disabled {{ old('disruptivos_q_11', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
                         @foreach (App\Models\AnalisisImpacto::DisruptivoSelect as $key => $label)
@@ -1600,8 +1863,7 @@
             </div>
             <div class="row">
                 <div class="form-group col-sm-12">
-                    <label>25. Por favor, indique el nivel de impacto en los que el proceso se ha visto involucrado.</label>
-
+                    <label class="required">25. Por favor, indique el nivel de impacto en los que el proceso se ha visto involucrado.</label>
                 </div>
 
                 <label class="col-sm-6 col-form-label offset-6"><strong>NIVELES</strong></label>
@@ -1627,18 +1889,30 @@
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
                             class="fas fa-info-circle"></i></a>
                     Afectación operacional (IO) </label>
+                @error('operacion_q_1')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('operacion_q_2')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('operacion_q_3')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
 
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_1" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_1) }}">
+                        name="operacion_q_1" min="1" max="5" placeholder="..." required
+                        value="{{ old('meta', $cuestionario->operacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_2" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_2) }}">
+                        name="operacion_q_2" min="1" max="5" placeholder="..." required
+                        value="{{ old('meta', $cuestionario->operacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="operacion_q_3" placeholder="..." value="{{ old('meta', $cuestionario->operacion_q_3) }}">
+                        name="operacion_q_3" min="1" max="5" placeholder="..." required
+                        value="{{ old('meta', $cuestionario->operacion_q_3) }}">
                 </div>
                 <hr>
 
@@ -1648,19 +1922,29 @@
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
                             class="fas fa-info-circle"></i></a>
                     Impacto Regulatorio (IR)</label>
+                @error('regulatorio_q_1')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('regulatorio_q_2')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('regulatorio_q_3')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_1" placeholder="..."
+                        name="regulatorio_q_1" min="1" max="5" placeholder="..." required
                         value="{{ old('meta', $cuestionario->regulatorio_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_2" placeholder="..."
+                        name="regulatorio_q_2" min="1" max="5" placeholder="..." required
                         value="{{ old('meta', $cuestionario->regulatorio_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="regulatorio_q_3" placeholder="..."
+                        name="regulatorio_q_3" min="1" max="5" placeholder="..." required
                         value="{{ old('meta', $cuestionario->regulatorio_q_3) }}">
                 </div>
                 <hr>
@@ -1672,19 +1956,29 @@
                             class="fas fa-info-circle"></i></a>
                     Afectación en la Reputación / Imagen Pública o Política
                     (IIR)</label>
+                @error('reputacion_q_1')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('reputacion_q_2')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('reputacion_q_3')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_1" placeholder="..."
+                        name="reputacion_q_1" min="1" max="5" placeholder="..." required
                         value="{{ old('meta', $cuestionario->reputacion_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_2" placeholder="..."
+                        name="reputacion_q_2" min="1" max="5" placeholder="..." required
                         value="{{ old('meta', $cuestionario->reputacion_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="reputacion_q_3" placeholder="..."
+                        name="reputacion_q_3" min="1" max="5" placeholder="..." required
                         value="{{ old('meta', $cuestionario->reputacion_q_3) }}">
                 </div>
                 <hr>
@@ -1695,17 +1989,30 @@
                         data-whatever="@mdo" data-whatever="@mdo" title="Dar click"><i
                             class="fas fa-info-circle"></i></a>
                     Impacto Social (IS)</label>
+                @error('social_q_1')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('social_q_2')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+                @error('social_q_3')
+                    <small style="color: red">{{$message}}</small>
+                @enderror
+
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_1" placeholder="..." value="{{ old('meta', $cuestionario->social_q_1) }}">
+                        name="social_q_1" min="1" max="5" placeholder="..." required
+                        value="{{ old('meta', $cuestionario->social_q_1) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_2" pplaceholder="..." value="{{ old('meta', $cuestionario->social_q_2) }}">
+                        name="social_q_2" min="1" max="5" placeholder="..." required
+                        value="{{ old('meta', $cuestionario->social_q_2) }}">
                 </div>
                 <div class="form-group col-sm-2">
                     <input type="number" style="text-align: center;" class="form-control form-control-sm"
-                        name="social_q_3" pplaceholder="..." value="{{ old('meta', $cuestionario->social_q_3) }}">
+                        name="social_q_3" min="1" max="5" placeholder="..." required
+                        value="{{ old('meta', $cuestionario->social_q_3) }}">
                 </div>
                 <hr>
 
@@ -1715,11 +2022,15 @@
                         '26. En caso de que el proceso se interrumpiera, indique cuáles serían las acciones que tomaría.',
                         ['class' => 'required'],
                     ) !!}
+                    @error('incidentes_q_26')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('incidentes_q_26', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
 
@@ -1729,11 +2040,15 @@
                         '27. ¿Se han realizado ejercicios o pruebas relacionadas a un Plan de Continuidad de las Operaciones (BCP)?',
                         ['class' => 'required'],
                     ) !!}
+                    @error('incidentes_q_27')
+                        <small style="color: red">{{$message}}</small>
+                    @enderror
                     {!! Form::text('incidentes_q_27', null, [
                         'class' => 'form-control',
                         'maxlength' => 255,
-                        'maxlength' => 255,
+//                        'maxlength' => 255,
                         'placeholder' => '...',
+                        'required',
                     ]) !!}
                 </div>
             </div>
@@ -1749,7 +2064,7 @@
             <div class="row">
                 @if ($cuestionario->firma_Entrevistado)
                     <div class="form-group col-sm-6">
-                        <label>Eentrevistado</label><br>
+                        <label>Entrevistado</label><br>
                         <img src="{{ asset('storage/' . $cuestionario->firma_Entrevistado) }}">
                     </div>
                 @else
@@ -2048,7 +2363,7 @@
                                     <strong style="color:rgb(0, 0, 0)" class="text-center">MTPD:</strong>
                                 </div>
                                 <div class="col-10">
-                                    <span style="justify-content;"><u>áximo Tiempo de Interrupción Tolerable </u>
+                                    <span style="justify-content;"><u>Máximo Tiempo de Interrupción Tolerable </u>
                                         <i>(Maximun Tolerable Period of Disruption)</i>, es la suma de RTO y WRT; y se
                                         define como el periodo de tiempo de inactividad máximo tolerable en total que puede
                                         interrumpirse un proceso sin causar consecuencias inaceptables.</span>
@@ -2351,8 +2666,8 @@
             <!-- Submit Field -->
             <div class="row">
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
-                    <button class="btn btn-danger" type="submit">
+                    <a href="{{ route('admin.analisis-impacto.index') }}" class="btn_cancelar">Cancelar</a>
+                    <button type="submit" class="btn btn-danger">
                         {{ trans('global.save') }}
                     </button>
                 </div>

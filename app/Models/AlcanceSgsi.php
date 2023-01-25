@@ -30,10 +30,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class AlcanceSgsi extends Model
 {
     use SoftDeletes, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'alcance_sgsis';
 
     public static $searchable = [
