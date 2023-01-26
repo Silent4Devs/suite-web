@@ -49,7 +49,7 @@
     </div>
 </div>
 <div class="text-right form-group col-12">
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+    <a href="{{ route('admin.recursos.index') }}" class="btn_cancelar">Cancelar</a>
     <button class="btn btn-danger btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
         Borrador
     </button>

@@ -55,9 +55,8 @@
 
                 <div class="form-group col-md-6">
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
-
-                    <input type="file" name="imagen" class="form-control" accept="image/*, .mp4, .mov, .webm, .wmv, .avi" required
-                        value="{{ old('imagen') }}">
+                    <input type="file" name="imagen" class="form-control" accept="image/*, .mp4, .mov, .webm, .wmv, .avi"
+                    required value="{{ old('imagen') }}">
                     @if ($errors->has('imagen'))
                         <div class="invalid-feedback">
                             {{ $errors->first('imagen') }}
@@ -117,7 +116,8 @@
                     <label class="required"><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de inicio
                         de publicación</label>
                     <input class="form-control date {{ $errors->has('fecha_programable') ? 'is-invalid' : '' }}"
-                        type="date" name="fecha_programable" value="{{ old('fecha_programable') }}" required>
+                        type="date" id="fecha_programable" name="fecha_programable"
+                        value="{{ old('fecha_programable') }}" min="1945-01-01" required>
                     @if ($errors->has('fecha_programable'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_programable') }}
@@ -129,7 +129,8 @@
                 <div class="col-sm-12 col-md-6 form-group">
                     <label><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de fin de publicación</label>
                     <input class="form-control date {{ $errors->has('fecha_programable_fin') ? 'is-invalid' : '' }}"
-                        type="date" name="fecha_programable_fin" value="{{ old('fecha_programable_fin') }}">
+                        type="date" id="fecha_programable_fin" name="fecha_programable_fin"
+                        value="{{ old('fecha_programable_fin') }}" min="1945-01-01">
                     @if ($errors->has('fecha_programable_fin'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_programable_fin') }}
@@ -139,7 +140,7 @@
 
 
                 <div class="text-right form-group col-12"><br>
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.comunicacion-sgis.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

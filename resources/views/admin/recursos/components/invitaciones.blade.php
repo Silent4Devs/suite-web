@@ -40,11 +40,11 @@
         </div>
         <div class="col-6" id="participantes_invitaciones" style="max-height: 500px;overflow: auto;"></div>
         <div class="col-12">
-            <label for="enviarInvitacionAhora"><i class="fas fa-calendar-day mr-1 iconos-crear"></i>Fecha Limite
+            <label class="required" for="enviarInvitacionAhora"><i class="fas fa-calendar-day mr-1 iconos-crear"></i>Fecha Limite
                 para confirmar asistencia</label>
         </div>
         <div class="col-6 form-group">
-            <input class="form-control" type="datetime-local" id="fechaLimite" name="fecha_limite"
+            <input required class="form-control" type="datetime-local" id="fechaLimite" name="fecha_limite"
                 value="{{ old('fechaLimite', \Carbon\Carbon::parse($recurso->fecha_limite)->format('Y-m-d\TH:i')) }}">
             <small class="text-muted">Debe ser una fecha anterior o igual a la fecha de inicio de la
                 capacitación</small>
@@ -70,7 +70,7 @@
     </div>
 </div>
 <div class="text-right form-group col-12">
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+    <a href="{{ route('admin.recursos.index') }}" class="btn_cancelar">Cancelar</a>
     <button class="btn btn-danger btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
         Borrador
     </button>
