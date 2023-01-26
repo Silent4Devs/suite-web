@@ -21,7 +21,7 @@ class PlanaccionCorrectivaController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('planaccion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+//        abort_if(Gate::denies('planaccion_correctiva_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = PlanaccionCorrectiva::with(['accioncorrectiva', 'responsable', 'team'])->select(sprintf('%s.*', (new PlanaccionCorrectiva)->table));
@@ -80,7 +80,7 @@ class PlanaccionCorrectivaController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('planaccion_correctiva_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+//        abort_if(Gate::denies('planaccion_correctiva_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $accioncorrectivas = AccionCorrectiva::all()->pluck('tema', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -134,7 +134,7 @@ class PlanaccionCorrectivaController extends Controller
 
     public function edit(PlanaccionCorrectiva $planaccionCorrectiva)
     {
-        abort_if(Gate::denies('planaccion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+//        abort_if(Gate::denies('planaccion_correctiva_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $accioncorrectivas = AccionCorrectiva::all()->pluck('tema', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -189,7 +189,7 @@ class PlanaccionCorrectivaController extends Controller
 
     public function show(PlanaccionCorrectiva $planaccionCorrectiva)
     {
-        abort_if(Gate::denies('planaccion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+//        abort_if(Gate::denies('planaccion_correctiva_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planaccionCorrectiva->load('accioncorrectiva', 'responsable', 'team');
 
@@ -198,7 +198,7 @@ class PlanaccionCorrectivaController extends Controller
 
     public function destroy(PlanaccionCorrectiva $planaccionCorrectiva)
     {
-        abort_if(Gate::denies('planaccion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+//        abort_if(Gate::denies('planaccion_correctiva_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planaccionCorrectiva->delete();
 

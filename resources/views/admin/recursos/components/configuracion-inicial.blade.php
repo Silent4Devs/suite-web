@@ -1,10 +1,10 @@
 <div class="mt-3">
     <div class="row">
         <div class="form-group col-sm-12 col-md-12 col-lg-12">
-            <label for="cursoscapacitaciones">
+            <label class="required" for="cursoscapacitaciones">
                 <i class="fab fa-discourse iconos-crear"></i> Título
             </label>
-            <input class="form-control {{ $errors->has('cursoscapacitaciones') ? 'is-invalid' : '' }}" type="text"
+            <input required class="form-control {{ $errors->has('cursoscapacitaciones') ? 'is-invalid' : '' }}" type="text"
                 name="cursoscapacitaciones" id="cursoscapacitaciones"
                 value="{{ old('cursoscapacitaciones', $recurso->cursoscapacitaciones) }}" autocomplete="off">
             <span class="cursoscapacitaciones_error text-danger errores"></span>
@@ -20,7 +20,7 @@
         <div class="form-group col-sm-12 col-md-12 col-lg-6">
             <div class="row">
                 <div class="col-12">
-                    <label for="categoria_capacitacion_id"><i class="fab fa-discourse iconos-crear"></i>
+                    <label class="required" for="categoria_capacitacion_id"><i class="fab fa-discourse iconos-crear"></i>
                         Categoría
                     </label>
                 </div>
@@ -45,9 +45,9 @@
             <span class="help-block">{{ trans('cruds.recurso.fields.cursoscapacitaciones_helper') }}</span>
         </div>
         <div class="form-group col-sm-12 col-md-12 col-lg-6">
-            <label for="tipo"><i class="fab fa-discourse iconos-crear"></i> Tipo</label>
+            <label class="required" for="tipo"><i class="fab fa-discourse iconos-crear"></i> Tipo</label>
 
-            <select name="tipo" id="tipo" class="form-control">
+            <select required name="tipo" id="tipo" class="form-control">
                 <option value="" selected disabled>-- Selecciona una opción --</option>
                 @foreach (\App\Models\Recurso::TIPOS as $tipo)
                     <option value="{{ $tipo }}" {{ old('tipo', $recurso->tipo) == $tipo ? 'selected' : '' }}>
@@ -66,8 +66,8 @@
     </div>
     <div class="row">
         <div class="form-group col-sm-12 col-md-12 col-lg-6">
-            <label for=""> <i class="fas fa-laptop iconos-crear"></i>Modalidad</label>
-            <select name="modalidad" class="form-control" id="select_modalidad">
+            <label class="required" for="modalidad"> <i class="fas fa-laptop iconos-crear"></i>Modalidad</label>
+            <select required name="modalidad" class="form-control" id="select_modalidad">
                 <option selected value="">-- Seleccionar modalidad --</option>
                 <option value="presencial"
                     {{ old('modalidad', $recurso->modalidad) == 'presencial' ? ' selected="selected"' : '' }}>
@@ -82,7 +82,7 @@
         <input type="checkbox" class="form-control d-none" id="isElearning" name="isElearning">
         <div id="contenedorSeleccionModalidad" class="col-sm-12 col-md-12 col-lg-6">
             <div class="form-group">
-                <label for=""> <i class="fas fa-map-marker-alt iconos-crear"></i>
+                <label class="required" for="ubicacion"> <i class="fas fa-map-marker-alt iconos-crear"></i>
                     @php
                         $modalidad = 'Ubicación';
                         if ($recurso->modalidad == 'linea') {
@@ -92,7 +92,7 @@
                     <font id="font_modalidad_seleccionada">{{ $modalidad }}</font>
                     </font>
                 </label>
-                <input type="text" name="ubicacion" class="form-control"
+                <input required type="text" name="ubicacion" class="form-control"
                     value="{{ old('ubicacion', $recurso->ubicacion) }}" id="ubicacionConfInicial">
                 <span class="ubicacion_error text-danger errores"></span>
             </div>
@@ -100,9 +100,9 @@
     </div>
     <div class="row">
         <div class="form-group col-sm-12 col-md-12 col-lg-6">
-            <label for="fecha_curso"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
+            <label class="required" for="fecha_curso"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
                 Inicio</label>
-            <input class="form-control" type="datetime-local" id="fecha_curso" name="fecha_curso"
+            <input required class="form-control" type="datetime-local" id="fecha_curso" name="fecha_curso" min="1945-01-01T00:00"
                 value="{{ old('fecha_curso', \Carbon\Carbon::parse($recurso->fecha_curso)->format('Y-m-d\TH:i')) }}">
             <span class="fecha_curso_error text-danger errores"></span>
             @if ($errors->has('fecha_curso'))
@@ -112,11 +112,11 @@
             @endif
         </div>
         <div class="form-group col-sm-12 col-md-12 col-lg-6">
-            <label for="fecha_fin">
+            <label class="required" for="fecha_fin">
                 <i class="fas fa-calendar-alt iconos-crear"></i>
                 Fecha Fin
             </label>
-            <input class="form-control" type="datetime-local" id="fecha_fin" name="fecha_fin"
+            <input required class="form-control" type="datetime-local" id="fecha_fin" name="fecha_fin" min="1945-01-01T00:00"
                 value="{{ old('fecha_fin', \Carbon\Carbon::parse($recurso->fecha_fin)->format('Y-m-d\TH:i')) }}">
             <span class="fecha_fin_error text-danger errores"></span>
             @if ($errors->has('fecha_fin'))
@@ -128,9 +128,9 @@
     </div>
     <div class="row">
         <div class="form-group col-12">
-            <label for="instructor"><i
+            <label class="required" for="instructor"><i
                     class="fas fa-user iconos-crear"></i>{{ trans('cruds.recurso.fields.instructor') }}</label>
-            <input class="form-control {{ $errors->has('instructor') ? 'is-invalid' : '' }}" type="text"
+            <input required class="form-control {{ $errors->has('instructor') ? 'is-invalid' : '' }}" type="text"
                 name="instructor" id="instructor" value="{{ old('instructor', $recurso->instructor) }}">
             <span class="instructor_error text-danger errores"></span>
             @if ($errors->has('instructor'))
@@ -161,7 +161,7 @@
     </div>
 </div>
 <div class="text-right form-group col-12">
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+    <a href="{{ route('admin.recursos.index') }}" class="btn_cancelar">Cancelar</a>
     <button class="btn btn-danger btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
         Borrador
     </button>

@@ -9,7 +9,8 @@
             @csrf
             <div class="form-group col-12">
                 <label class="required" for="nombre"><i class="fas fa-file  iconos-crear"></i>Nombre del material de capacitación</label>
-                <input class="form-control{{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
+                <input class="form-control{{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
+                name="nombre" id="nombre" value="{{ old('nombre', '') }}" required>
                 @if($errors->has('nombre'))
                     <div class="invalid-feedback">
                         {{ $errors->first('nombre') }}
@@ -18,8 +19,9 @@
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
             </div>
             <div class="form-group col-12">
-                <label class="form-label"><i class="fas fa-bullseye  iconos-crear"></i>Objetivo</label>
-                <textarea class="form-control{{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo" id="objetivo" value="{{ old('objetivo', '') }}" required></textarea>
+                <label class="required" for="objetivo"><i class="fas fa-bullseye  iconos-crear"></i>Objetivo</label>
+                <textarea class="form-control{{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
+                    name="objetivo" id="objetivo" value="{{ old('objetivo', '') }}" required></textarea>
                 @if($errors->has('objetivo'))
                     <div class="invalid-feedback">
                         {{ $errors->first('objetivo') }}
@@ -28,8 +30,9 @@
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.personalobjetivo') }}</label>
-                <select class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}" name="personalobjetivo" id="personalobjetivo">
+                <label class="required"><i class="fas fa-users iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.personalobjetivo') }}</label>
+                <select required class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}"
+                    name="personalobjetivo" id="personalobjetivo">
                     <option value disabled {{ old('personalobjetivo', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\MaterialSgsi::PERSONALOBJETIVO_SELECT as $key => $label)
                         <option value="{{ $key }}" {{ old('personalobjetivo', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
@@ -43,8 +46,8 @@
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.personalobjetivo_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label for="arearesponsable_id"><i class="fas fa-street-view iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.arearesponsable') }}</label>
-                <select class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" name="arearesponsable_id" id="arearesponsable_id">
+                <label class="required" for="arearesponsable_id"><i class="fas fa-street-view iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.arearesponsable') }}</label>
+                <select required class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}" name="arearesponsable_id" id="arearesponsable_id">
                     @foreach($arearesponsables as $id => $arearesponsable)
                         <option value="{{ $id }}" {{ old('arearesponsable_id') == $id ? 'selected' : '' }}>{{ $arearesponsable }}</option>
                     @endforeach
@@ -57,8 +60,9 @@
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.arearesponsable_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label><i class="fas fa-clipboard-check iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.tipoimparticion') }}</label>
-                <select class="form-control {{ $errors->has('tipoimparticion') ? 'is-invalid' : '' }}" name="tipoimparticion" id="tipoimparticion">
+                <label class="required"><i class="fas fa-clipboard-check iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.tipoimparticion') }}</label>
+                <select required class="form-control {{ $errors->has('tipoimparticion') ? 'is-invalid' : '' }}"
+                    name="tipoimparticion" id="tipoimparticion">
                     <option value disabled {{ old('tipoimparticion', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\MaterialSgsi::TIPOIMPARTICION_SELECT as $key => $label)
                         <option value="{{ $key }}" {{ old('tipoimparticion', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
@@ -72,8 +76,9 @@
                 <span class="help-block">{{ trans('cruds.materialSgsi.fields.tipoimparticion_helper') }}</span>
             </div>
             <div class="form-group col-md-6">
-                <label for="fechacreacion_actualizacion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha de creación</label>
-                <input class="form-control {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}" type="date" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion" value="{{ old('fechacreacion_actualizacion') }}">
+                <label class="required" for="fechacreacion_actualizacion"> <i class="far fa-calendar-alt iconos-crear"></i>Fecha de creación</label>
+                <input class="form-control {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
+                name="fechacreacion_actualizacion" id="fechacreacion_actualizacion" value="{{ old('fechacreacion_actualizacion') }}" required>
                 @if($errors->has('fechacreacion_actualizacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fechacreacion_actualizacion') }}
@@ -110,7 +115,7 @@
 
 
             <div class="form-group col-12 text-right">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route("admin.material-sgsis.index") }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
