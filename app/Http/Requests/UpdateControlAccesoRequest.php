@@ -14,6 +14,8 @@ class UpdateControlAccesoRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+            'descripcion' => ['required', 'string'],
+        ];
     }
 }

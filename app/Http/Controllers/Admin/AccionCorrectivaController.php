@@ -203,6 +203,15 @@ class AccionCorrectivaController extends Controller
     {
         abort_if(Gate::denies('accion_correctiva_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $request->validate([
+            'tema' => 'required|string',
+            'fecharegistro' => 'required',
+            'id_reporto' => 'required',
+            'id_registro' => 'required',
+            'causaorigen' => 'required',
+            'descripcion' => 'required|string',
+        ]);
+
         $accionCorrectiva = AccionCorrectiva::create([
             'tema' => $request->tema,
             'fecharegistro' => $request->fecharegistro,
@@ -287,6 +296,15 @@ class AccionCorrectivaController extends Controller
     public function update(Request $request, AccionCorrectiva $accionCorrectiva)
     {
         abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request->validate([
+            'tema' => 'required|string',
+            'fecharegistro' => 'required',
+            'id_reporto' => 'required',
+            'id_registro' => 'required',
+            'causaorigen' => 'required',
+            'descripcion' => 'required|string',
+        ]);
 
         $accionCorrectiva->update($request->all());
         if ($request->input('documentometodo', false)) {
