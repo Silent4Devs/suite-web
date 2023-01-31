@@ -297,7 +297,7 @@
                             <div class="form-group col-md-4">
                                 <label for="id_registro_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
                                 <div class="form-control" id="id_registro_puesto" readonly></div>
-            
+
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="id_registro_area"><i class="fas fa-street-view iconos-crear"></i>Área</label>
@@ -310,18 +310,18 @@
 
                             <div class="mt-2 form-group col-md-7">
                                 <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
-                                    corto del incidente</label>
+                                    corto del incidente</label><sup>*</sup>
                                 <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                     title="Describa de forma breve y con palabras clave el motivo del incidente de seguridad."></i>
-                                <input type="" name="titulo" value="{{ $incidentesSeguridad->titulo }}"
+                                <input type="text" name="titulo" maxlength="255" value="{{ $incidentesSeguridad->titulo }}"
                                     class="form-control" required>
                             </div>
 
                             <div class="mt-2 form-group col-5">
                                 <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
-                                    y hora de ocurrencia</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
+                                    y hora de ocurrencia</label><sup>*</sup><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                     title="Fecha y hora aproximada en la que ocurrió el evento que motivó el incidente de seguridad."></i>
-                                <input type="datetime-local" name="fecha" class="form-control"
+                                <input type="datetime-local" min="1-45-01-01T00:00" name="fecha" class="form-control"
                                     value="{{ old('fecha', \Carbon\Carbon::parse($incidentesSeguridad->fecha)->format('Y-m-d\TH:i')) }}"
                                     required>
                                 @if ($errors->has('fecha'))
@@ -332,6 +332,16 @@
                                 <span class="fecha_error text-danger errores"></span>
                             </div>
 
+                            <div class="mt-2 form-group col-md-6">
+                                <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i>
+                                    Sede</label><sup>*</sup>
+                                <select class="form-control" name="sede" required>
+                                    <option disabled>Seleccione sede</option>
+                                    @foreach ($sedes as $sede)
+                                        <option value="{{ $sede->sede }}">{{ $sede->sede }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             <div class="mt-2 form-group col-md-6">
                                 <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación
@@ -340,17 +350,6 @@
                                     title="Indique el lugar en el que ocurrió el evento que motivó el incidente."></i>
                                 <input type="" name="ubicacion" class="form-control"
                                     value="{{ $incidentesSeguridad->ubicacion }}">
-                            </div>
-
-                            <div class="mt-2 form-group col-md-6">
-                                <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i>
-                                    Sede</label>
-                                <select class="form-control" name="sede">
-                                    <option disabled>Seleccione sede</option>
-                                    @foreach ($sedes as $sede)
-                                        <option value="{{ $sede->sede }}">{{ $sede->sede }}</option>
-                                    @endforeach
-                                </select>
                             </div>
 
                             <div class="mt-2 form-group col-md-6">
@@ -375,7 +374,7 @@
                                     value="{{ $incidentesSeguridad->subcategoria }}" name="subcategoria_id">
                                     <option selected disabled >Seleccione subcategoría</option>
                                     @foreach ($subcategorias as $subcategoria)
-                                        <option 
+                                        <option
                                             value="{{ $subcategoria->id }}"
                                             {{ $incidentesSeguridad->subcategoria_id == $subcategoria->id ? 'selected' : '' }}>
                                             {{ $subcategoria->subcategoria }}
@@ -406,7 +405,7 @@
                                     value="{{ $incidentesSeguridad->subcategoria }}" name="subcategoria_id">
                                     <option selected disabled class="option_vacio">Seleccione subcategoría</option>
                                     @foreach ($subcategorias as $subcategoria)
-                                        <option 
+                                        <option
                                             value="{{ $subcategoria->id }}"
                                             {{ $incidentesSeguridad->subcategoria_id == $subcategoria->id ? 'selected' : '' }}>
                                             {{ $subcategoria->subcategoria }}
@@ -415,11 +414,11 @@
                                 </select>
                             </div> --}}
 
-                            
+
 
                             <div class="mt-2 form-group col-md-12">
                                 <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Descripción
-                                    del incidente</label>
+                                    del incidente</label><sup>*</sup>
                                 <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                     title="Detallar lo sucedido, es muy importante ser lo más objetivo posible y plasmar únicamente hechos evitando juicios de percepción o desvirtuar la información. Asegúrese de que su relato pueda responder a las siguientes preguntas: ¿Qué?. ¿Quién?, ¿Cómo?,¿Cuándo?, ¿Dónde?."></i>
                                 <textarea name="descripcion" class="form-control" required>{{ $incidentesSeguridad->descripcion }}
@@ -1398,7 +1397,7 @@
         document.getElementById('id_registro_area').innerHTML = recortarTexto(area)
 
         registro.addEventListener('change', function(e) {
-            
+
             e.preventDefault();
 
             let area = e.target.options[e.target.selectedIndex].getAttribute('data-area');

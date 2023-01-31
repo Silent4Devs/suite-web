@@ -25,16 +25,17 @@
 
                 <div class="form-group col-sm-4 mt-3">
                     <div class="form-group">
-                        <label for='responsable_id'><i
+                        <label class="required" for='responsable_id'><i
                                 class="fas fa-user-tie iconos-crear"></i>Responsable</label>
                         <select
                             class="form-control select2 {{ $errors->has('responsable_id') ? 'is-invalid' : '' }}"
-                            name='responsable_id' id='responsable_id'>
+                            name='responsable_id' id='responsable_id' required>
                             <option value="">Seleccione un responsable</option>
                             @foreach ($responsables as $responsable)
                                 <option value="{{ $responsable->id }}"
                                     data-area="{{ $responsable->area->area }}"
-                                    data-puesto="{{ $responsable->puesto }}">
+                                    data-puesto="{{ $responsable->puesto }}"
+                                    {{ old('responsable_id') == $responsable->id ? 'selected' : '' }}>
                                     {{ $responsable->name }}</option>
                             @endforeach
                         </select>
@@ -63,12 +64,12 @@
             </div>
 
             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                <label for="fecha_inicio">
+                <label class="required" for="fecha_inicio">
                     <i class="fas fa-calendar-alt iconos-crear"></i>
-                    Fecha Fin
+                    Fecha Inicio
                 </label>
-                <input class="form-control" type="date" id="fecha_inicio" name="fecha_inicio"
-                    value="{{ old('fecha_inicio')}}">
+                <input required class="form-control" type="date" min="1945-01-01"
+                id="fecha_inicio" name="fecha_inicio" value="{{ old('fecha_inicio')}}">
                 <span class="fecha_inicio_error text-danger errores"></span>
                 @if ($errors->has('fecha_inicio'))
                     <div class="invalid-feedback">
@@ -78,12 +79,12 @@
             </div>
 
             <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                <label for="fecha_fin">
+                <label class="required" for="fecha_fin">
                     <i class="fas fa-calendar-alt iconos-crear"></i>
                     Fecha Fin
                 </label>
-                <input class="form-control" type="date" id="fecha_fin" name="fecha_fin"
-                    value="{{ old('fecha_fin') }}">
+                <input required class="form-control" type="date" min="1945-01-01"
+                id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin') }}">
                 <span class="fecha_fin_error text-danger errores"></span>
                 @if ($errors->has('fecha_fin'))
                     <div class="invalid-feedback">
@@ -92,8 +93,9 @@
                 @endif
             </div>
             <div class="form-group col-md-12">
-                <label><i class="fas fa-align-left iconos-crear"></i>Justificación</label>
-                <textarea class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}" name="justificacion" id="justificacion">{{ old('justificacion') }}</textarea>
+                <label class="required"><i class="fas fa-align-left iconos-crear"></i>Justificación</label>
+                <textarea required class="form-control {{ $errors->has('justificacion') ? 'is-invalid' : '' }}"
+                    name="justificacion" id="justificacion">{{ old('justificacion') }}</textarea>
                 @if($errors->has('justificacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('justificacion') }}
@@ -103,8 +105,9 @@
             </div>
 
             <div class="form-group col-md-12">
-                <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
-                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+                <label class="required" for="descripcion"><i class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
+                <textarea required class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
+                    name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
                 @if($errors->has('descripcion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('descripcion') }}
@@ -133,7 +136,7 @@
 
 
             <div class="form-group col-12 text-right">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route("admin.control-accesos.index") }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

@@ -108,13 +108,14 @@
                     <div class="mt-1 form-group col-12">
                         <label class="form-label"><i class="fas fa-text-width iconos-crear"></i>Título corto de la
                             mejora<sup>*</sup></label>
-                        <input type="" name="titulo" class="form-control" required>
+                        <input type="text" name="titulo" class="form-control" maxlength="255" required>
                     </div>
 
                     <div class="mt-2 form-group col-12 select_tipo">
                         <label class="form-label"><i class="fas fa-rocket iconos-crear"></i>Propuesta de mejora para un:
                         </label>
-                        <select name="tipo" class="form-control">
+                        <select name="tipo" class="form-control" required>
+                            <option value="" disabled selected>--Seleccione una opcion--</option>
                             <option>Proceso interno/externo</option>
                             <option>Producto</option>
                             <option>Servicio</option>
