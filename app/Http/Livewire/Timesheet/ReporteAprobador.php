@@ -291,7 +291,7 @@ class ReporteAprobador extends Component
                 $times_empleado_array[] = $time->semana_y;
             }
 
-            $this->times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array);
+            $this->times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array, 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null, $this->fecha_fin ? Carbon::parse($this->fecha_fin) : Carbon::now(), false);
 
             $times_atrasados = count($this->times_faltantes_empleado);
 
