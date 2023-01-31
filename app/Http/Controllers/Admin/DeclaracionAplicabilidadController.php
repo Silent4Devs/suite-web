@@ -157,6 +157,11 @@ class DeclaracionAplicabilidadController extends Controller
 
     public function updateTabla(Request $request, $control)
     {
+        $request-> validate([
+            'anexo_politica' => 'required',
+            'anexo_descripcion' => 'required',
+        ]);
+
         $control = DeclaracionAplicabilidad::find($control);
         $control->update([
             'anexo_politica' => $request->anexo_politica,

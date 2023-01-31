@@ -13,13 +13,9 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class PlanificacionControl extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
-
 
     public $table = 'planificacion_controls';
 
-   
-   
     protected $fillable = [
         'folio_cambio',
         'fecha_registro',
@@ -48,7 +44,7 @@ class PlanificacionControl extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-    
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');

@@ -29,10 +29,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class AnalisisBrecha extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'analisis_brechas';
 
     protected $casts = [

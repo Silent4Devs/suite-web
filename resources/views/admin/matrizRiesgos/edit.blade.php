@@ -222,7 +222,7 @@
 
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
-                <input type="hidden" id="resultadoponderacion" name="resultadoponderacion" value="{{ old('resultadoponderacion', $matrizRiesgo->resultadoponderacion) }}">
+                <input type="hidden"  id="resultadoponderacion" name="resultadoponderacion" value="{{ old('resultadoponderacion', $matrizRiesgo->resultadoponderacion) }}">
 
                 <div class="py-2 row">
                     <div class="form-group col-sm-3">
@@ -594,8 +594,8 @@
                 </div>
                 <hr>
 
-             
-              
+
+
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad', ['id' => $matrizRiesgo->id_analisis]) }}"
                         class="btn_cancelar">Cancelar</a>

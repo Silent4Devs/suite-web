@@ -313,8 +313,6 @@ class AnalisisAIA extends Model
         'social_q_2',
         'social_q_3',
         'social_q_4',
-        'incidentes_q_26',
-        'incidentes_q_27',
         'q_19',
         // Firmas
         'firma_Entrevistado',

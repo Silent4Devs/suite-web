@@ -15,17 +15,26 @@ class StoreEvidenciasSgsiRequest extends FormRequest
     public function rules()
     {
         return [
+
+            'nombredocumento' => [
+                'string',
+                'required',
+            ],
             'objetivodocumento' => [
                 'string',
                 'required',
             ],
-            'arearesponsable'   => [
+            'responsable_evidencia_id' => [
                 'string',
-                'nullable',
+                'required',
+            ],
+            'area_id'   => [
+                'string',
+                'required',
             ],
             'fechadocumento'    => [
                 'date',
-                'nullable',
+                'required',
             ],
         ];
     }

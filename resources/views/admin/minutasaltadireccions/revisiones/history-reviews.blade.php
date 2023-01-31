@@ -281,7 +281,7 @@
     </style>
     <div class="mt-5 card">
         <div class="py-3 col-md-10 col-sm-9 card card-body bg-primary align-self-center " style="margin-top:-40px; ">
-            <h3 class="mb-2 text-center text-white"><strong>Historial del aprobación de la Minuta:
+            <h3 class="mb-2 text-center text-white"><strong>Historial de aprobación de la Minuta:
                     {{ $minuta->nombre }}</strong></h3>
         </div>
         <div class="container">
@@ -357,6 +357,11 @@
 
                 @endforeach
 
+            </div>
+            <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.minutasaltadireccions.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
             </div>
         </div>
     </div>

@@ -21,7 +21,17 @@ class StoreConcientizacionSgiRequest extends FormRequest
             ],
             'fecha_publicacion'  => [
                 'date',
-                'nullable',
+                'required',
+            ],
+            'personalobjetivo' => [
+                'string',
+                'required',
+            ],
+            'arearesponsable_id' => [
+                'required',
+            ],
+            'medio_envio' => [
+                'required',
             ],
         ];
     }
