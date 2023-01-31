@@ -79,7 +79,7 @@ class PlanAuditoriaController extends Controller
             $table->editColumn('equipo_auditor', function ($row) {
                 return $row->auditados ? $row->auditados : '';
             });
-          
+
 
             $table->rawColumns(['actions', 'placeholder', 'auditados']);
 
@@ -116,11 +116,11 @@ class PlanAuditoriaController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('plan_de_auditoria_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
+
         $request->validate([
-            'fecha_inicio_auditoria' => 'required',
-            'nombre_auditoria'=>'required',
-            'fecha_fin_auditoria' => 'required',
+            'fecha_inicio_auditoria' => 'required|date',
+            'nombre_auditoria'=>'required|string',
+            'fecha_fin_auditoria' => 'required|date',
             'objetivo' => 'required',
             'alcance' => 'required',
             'criterios'=> 'required',
@@ -130,7 +130,7 @@ class PlanAuditoriaController extends Controller
 
         $planAuditorium=PlanAuditorium::create($request->all());
 
-     
+
         $planAuditorium->auditados()->sync($request->equipo);
         $this->saveUpdateAuditados($request->auditados, $planAuditorium);
 
@@ -159,14 +159,14 @@ class PlanAuditoriaController extends Controller
     {
         abort_if(Gate::denies('plan_de_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        
+
         $request->validate([
-            'fecha_inicio_auditoria' => 'required',
-            'fecha_fin_auditoria' => 'required',
+            'fecha_inicio_auditoria' => 'required|date',
+            'nombre_auditoria'=>'required|string',
+            'fecha_fin_auditoria' => 'required|date',
             'objetivo' => 'required',
             'alcance' => 'required',
             'criterios'=> 'required',
-            'nombre_auditoria'=>'required',
             'id_auditoria' => 'nullable|unique:plan_auditoria,id_auditoria,'.$planAuditorium->id.',id,deleted_at,NULL',
 
         ]);
@@ -180,7 +180,7 @@ class PlanAuditoriaController extends Controller
             'documentoauditar' => $request->documentoauditar,
             'nombre_auditoria'=>$request->nombre_auditoria,
             'id_auditoria'=>$request->id_auditoria,
-           
+
         ]);
 
          // $planAuditorium->auditados()->sync($request->input('auditados', []));
@@ -195,7 +195,7 @@ class PlanAuditoriaController extends Controller
         abort_if(Gate::denies('plan_de_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planAuditorium->load('auditados', 'team', 'actividadesPlan');
-        
+
 
 
         return view('admin.planAuditoria.show', compact('planAuditorium'));

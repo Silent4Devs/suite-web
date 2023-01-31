@@ -131,19 +131,20 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required',
+            'nombre' => 'required|string',
+            'id_area' => 'required',
+            'id_empleado' => 'required',
+            'id_proceso' => 'required',
+            'descripcion' => 'nullable|string',
+            'rojo' => 'required|numeric',
+            'amarillo' => 'required|numeric',
+            'verde' => 'required|numeric',
             'formula' => 'required',
             'frecuencia' => 'required',
             'unidadmedida' => 'required',
             'meta' => 'required',
             'no_revisiones' => 'required',
-            'id_proceso' => 'required',
-            'id_empleado' => 'required',
-            'verde' => 'required',
-            'amarillo' => 'required',
-            'rojo' => 'required',
             'ano' => 'required',
-            'id_area' => 'required',
         ]);
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
         //return redirect()->route('admin.indicadores-sgsis.index');
@@ -169,19 +170,20 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required',
+            'nombre' => 'required|string',
+            'id_area' => 'required',
+            'id_empleado' => 'required',
+            'id_proceso' => 'required',
+            'descripcion' => 'nullable|string',
+            'rojo' => 'required|numeric',
+            'amarillo' => 'required|numeric',
+            'verde' => 'required|numeric',
             'formula' => 'required',
             'frecuencia' => 'required',
             'unidadmedida' => 'required',
             'meta' => 'required',
             'no_revisiones' => 'required',
-            'id_proceso' => 'required',
-            'id_empleado' => 'required',
-            'verde' => 'required',
-            'amarillo' => 'required',
-            'rojo' => 'required',
             'ano' => 'required',
-            'id_area' => 'required',
         ]);
         $indicadoresSgsi->update($request->all());
 

@@ -205,6 +205,16 @@ class DeskController extends Controller
     //    dd($request->all());
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
         // dd( $incidentesSeguridad);
+
+        $request->validate([
+            'titulo' => 'required|string',
+            'fecha' => 'required',
+            'sede' => 'required',
+            'ubicacion' => 'nullable|string',
+            'descripcion' => 'required',
+            'estatus' => 'required',
+        ]);
+
         $incidentesSeguridad->update([
             'titulo' => $request->titulo,
             'estatus' => $request->estatus,
@@ -713,6 +723,15 @@ class DeskController extends Controller
     public function updateMejoras(Request $request, $id_mejoras)
     {
         abort_if(Gate::denies('centro_atencion_mejoras_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request ->validate([
+            'area_mejora' => 'nullable|string',
+            'proceso_mejora' => 'nullable|string',
+            'titulo' => 'required',
+            'tipo' => 'required',
+            'descripcion' => 'required',
+            'beneficios' => 'required',
+        ]);
 
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
         $mejoras->update([

@@ -70,7 +70,7 @@
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
-
+                    <a href="{{ route('admin.accion-correctivas.index') }}" class="btn_cancelar">Regresar</a>
                     <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
@@ -298,7 +298,7 @@
                                     <div class="p-2" style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:90px; right:-30px; position: absolute; height:95px !important; width:150px;">
                                         <span style="font-size:5pt;">{!! $analisis->problema_diagrama ? $analisis->problema_diagrama : 'Sin registro' !!}</span>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         @endif
@@ -311,7 +311,7 @@
                     </div>
 
                     <div class="row medidas d-flex" style="justify-content: space-between;">
-                        
+
                         @if($accionCorrectiva->planes->count()>0)
                         <div class="mt-2 mb-3 ">
                            <div class="datatable-fix" style="width: 100%;">
@@ -334,42 +334,42 @@
                                             @foreach($actividades as $actividad)
                                             <tr>
                                                 <td>
-                                               <span style="color:#18183c">{{ $actividad->name ? $actividad->name : 'Sin registro' }}</span>     
+                                               <span style="color:#18183c">{{ $actividad->name ? $actividad->name : 'Sin registro' }}</span>
                                                 </td>
                                                 <td>
-                                                    <span style="color:#18183c">{{ Carbon\Carbon::parse($actividad->start)->format('d-m-Y')}}</span> 
-                                                    
+                                                    <span style="color:#18183c">{{ Carbon\Carbon::parse($actividad->start)->format('d-m-Y')}}</span>
+
                                                 </td>
                                                 <td>
                                                     <span style="color:#18183c" >{{ Carbon\Carbon::parse($actividad->end)->format('d-m-Y')}}</span>
-                                                    
+
                                                 </td>
                                                 <td>
-                                                    @if ($actividad->status  == 'STATUS_UNDEFINED') 
-                                                        
+                                                    @if ($actividad->status  == 'STATUS_UNDEFINED')
+
                                                             <span  class="badge badge-primary">Sin iniciar</span>
-                                                       
-                                                   @elseif ($actividad->status  == 'STATUS_ACTIVE') 
-                                                        
+
+                                                   @elseif ($actividad->status  == 'STATUS_ACTIVE')
+
                                                             <span class="badge badge-warning">En proceso</span>
-                                                       
-                    
-                                                   @elseif ($actividad->status  == 'STATUS_DONE') 
-                                                        
+
+
+                                                   @elseif ($actividad->status  == 'STATUS_DONE')
+
                                                             <span class="badge badge-success">Completado</span>
-                                                       
-                    
-                                                   @elseif ($actividad->status  == 'STATUS_FAILED') 
-                                                        
+
+
+                                                   @elseif ($actividad->status  == 'STATUS_FAILED')
+
                                                             <span class="badge badge-danger">Retraso</span>
-                                                       
-                    
-                                                   @elseif ($actividad->status  == 'STATUS_SUSPENDED') 
-                                                        
+
+
+                                                   @elseif ($actividad->status  == 'STATUS_SUSPENDED')
+
                                                             <span class="badge badge-secondary">Suspendido</span>
-                                                       
+
                                                     @endif
-                                                
+
                                                 </td>
                                                 <td>
                                                     <ul>
