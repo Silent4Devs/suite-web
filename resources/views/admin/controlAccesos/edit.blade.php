@@ -9,9 +9,9 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group col-md-12">
-                    <label for="descripcion"><i
+                    <label class="required" for="descripcion"><i
                             class="fas fa-align-left iconos-crear"></i>{{ trans('cruds.controlAcceso.fields.descripcion') }}</label>
-                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
+                    <textarea required class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
                         id="descripcion">{{ old('descripcion', $controlAcceso->descripcion) }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
@@ -57,7 +57,7 @@
                 {{-- editar --}}
 
                 <div class="form-group col-12 text-right">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route("admin.control-accesos.index") }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

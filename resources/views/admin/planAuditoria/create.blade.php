@@ -13,7 +13,7 @@
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label><i class="fas fa-ticket-alt iconos-crear"></i>Id</label>
                     <input class="form-control {{ $errors->has('id_auditoria') ? 'is-invalid' : '' }}" type="text" name="id_auditoria"
-                        id="id_auditoria"  value="{{ old('id_auditoria', '') }}" >
+                        id="id_auditoria"  value="{{ old('id_auditoria', '') }}" maxlength="255">
                     @if ($errors->has('id_auditoria'))
                         <div class="text-danger">
                             {{ $errors->first('id_auditoria') }}
@@ -23,8 +23,8 @@
                 </div>
                 <div class="form-group col-sm-12 col-md-8 col-lg-8">
                     <label class="required"><i class="fas fa-clipboard-list iconos-crear"></i>Nombre de auditoría</label>
-                    <input class="form-control {{ $errors->has('nombre_auditoria') ? 'is-invalid' : '' }}" type="text" name="nombre_auditoria"
-                        id="nombre_auditoria" value="{{ old('nombre_auditoria', '') }}" required>
+                    <input class="form-control {{ $errors->has('nombre_auditoria') ? 'is-invalid' : '' }}" type="text" maxlength="255"
+                    name="nombre_auditoria" id="nombre_auditoria" value="{{ old('nombre_auditoria', '') }}" required>
                     @if ($errors->has('nombre_auditoria'))
                         <div class="text-danger">
                             {{ $errors->first('nombre_auditoria') }}
@@ -36,7 +36,8 @@
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="fecha_inicio_auditoria" class="required"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de inicio</label>
                     <input class=" mt-2 form-control  {{ $errors->has('fecha_inicio_auditoria') ? 'is-invalid' : '' }}"
-                        name="fecha_inicio_auditoria" type="date" id="fecha_inicio_auditoria" value="{{ old('fecha_inicio_auditoria') }}">
+                        name="fecha_inicio_auditoria" type="date" id="fecha_inicio_auditoria"
+                        min="1945-01-01" value="{{ old('fecha_inicio_auditoria') }}" required>
                     @if ($errors->has('fecha_inicio_auditoria'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_inicio_auditoria') }}
@@ -47,7 +48,8 @@
                 <div class="form-group col-sm-12 col-md-4 col-lg-4">
                     <label for="fecha_fin_auditoria" class="required"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha fin</label>
                     <input class=" mt-2 form-control  {{ $errors->has('fecha_fin_auditoria') ? 'is-invalid' : '' }}" type="date"
-                        name="fecha_fin_auditoria" id="fecha_fin_auditoria" value="{{ old('fecha_fin_auditoria') }}">
+                        name="fecha_fin_auditoria" id="fecha_fin_auditoria"
+                        min="1945-01-01" value="{{ old('fecha_fin_auditoria') }}" required>
                     @if ($errors->has('fecha_fin_auditoria'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_fin_auditoria') }}
@@ -79,7 +81,7 @@
                     <label for="objetivo" class="required"><i
                             class="fas fa-bullseye iconos-crear"></i>Objetivo de la auditoría</label>
                     <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo"
-                        id="objetivo">{{ old('objetivo') }}</textarea>
+                        id="objetivo" required>{{ old('objetivo') }}</textarea>
                     @if ($errors->has('objetivo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivo') }}
@@ -91,7 +93,7 @@
                     <label for="alcance" class="required"><i
                             class="fas fa-chart-line iconos-crear"></i>{{ trans('cruds.planAuditorium.fields.alcance') }}</label>
                     <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}" name="alcance"
-                        id="alcance">{{ old('alcance') }}</textarea>
+                        id="alcance" required>{{ old('alcance') }}</textarea>
                     @if ($errors->has('alcance'))
                         <div class="invalid-feedback">
                             {{ $errors->first('alcance') }}
@@ -103,7 +105,7 @@
                     <label for="criterios" class="required"><i
                             class="fas fa-clipboard-list iconos-crear"></i>{{ trans('cruds.planAuditorium.fields.criterios') }}</label>
                     <textarea class="form-control {{ $errors->has('criterios') ? 'is-invalid' : '' }}" name="criterios"
-                        id="criterios">{{ old('criterios') }}</textarea>
+                        id="criterios" required>{{ old('criterios') }}</textarea>
                     @if ($errors->has('criterios'))
                         <div class="invalid-feedback">
                             {{ $errors->first('criterios') }}
@@ -124,11 +126,11 @@
                     <span
                         class="help-block">{{ trans('cruds.planAuditorium.fields.documentoauditar_helper') }}</span>
                 </div>
-              
+
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.plan-auditoria.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
