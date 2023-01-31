@@ -22,9 +22,9 @@
                 <input type="hidden" name="id_matriz" value="{{ $requisito->id }}" />
                 <div class="row col-12">
                     <div class="col-sm-6 form-group ">
-                        <label for="cumplerequisito"> <i class="fas fa-question-circle iconos-crear"></i> ¿En
+                        <label class="required" for="cumplerequisito"> <i class="fas fa-question-circle iconos-crear"></i> ¿En
                             cumplimiento?</label>
-                        <select class="form-control {{ $errors->has('cumplerequisito') ? 'is-invalid' : '' }}"
+                        <select required class="form-control {{ $errors->has('cumplerequisito') ? 'is-invalid' : '' }}"
                             name="cumplerequisito" id="cumplerequisito">
                             <option value disabled {{ old('cumplerequisito', null) === null ? 'selected' : '' }}>
                                 {{ trans('global.pleaseSelect') }}</option>
@@ -45,9 +45,9 @@
                     </div>
 
                     <div class="col-sm-6 form-group ">
-                        <label for="fechaverificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de
+                        <label class="required" for="fechaverificacion"> <i class="far fa-calendar-alt iconos-crear"></i> Fecha de
                             verificación</label>
-                        <input class="form-control date {{ $errors->has('fechaverificacion') ? 'is-invalid' : '' }}"
+                        <input required class="form-control date {{ $errors->has('fechaverificacion') ? 'is-invalid' : '' }}"
                             type="date" name="fechaverificacion" id="fechaverificacion"
                             value="{{ old('fechaverificacion') }}">
                         @if ($errors->has('fechaverificacion'))
@@ -59,9 +59,9 @@
                 </div>
 
                 <div class="form-group col-sm-12">
-                    <label for="metodo"> <i class="fab fa-searchengin iconos-crear"></i> Método utilizado de
+                    <label class="required" for="metodo"> <i class="fab fa-searchengin iconos-crear"></i> Método utilizado de
                         verificación</label>
-                    <textarea class="form-control {{ $errors->has('metodo') ? 'is-invalid' : '' }}" name="metodo"
+                    <textarea required class="form-control {{ $errors->has('metodo') ? 'is-invalid' : '' }}" name="metodo"
                         id="metodo">{{ old('metodo') }}</textarea>
                     @if ($errors->has('metodo'))
                         <div class="invalid-feedback">
@@ -72,11 +72,11 @@
 
 
                 <div class="form-group col-sm-12">
-                    <label for="descripcion_cumplimiento"> <i class="fas fa-clipboard-list iconos-crear"></i> Descripción
+                    <label class="required" for="descripcion_cumplimiento"> <i class="fas fa-clipboard-list iconos-crear"></i> Descripción
                         del cumplimiento / incumplimiento</label><i class="fas fa-info-circle"
                         style="font-size:12pt; float: right;"
                         title="Describir de que forma la organización está cumpliendo/incumpliendo este requisito."></i>
-                    <textarea class="form-control {{ $errors->has('descripcion_cumplimiento') ? 'is-invalid' : '' }}"
+                    <textarea required class="form-control {{ $errors->has('descripcion_cumplimiento') ? 'is-invalid' : '' }}"
                         name="descripcion_cumplimiento"
                         id="descripcion_cumplimiento">{{ old('descripcion_cumplimiento') }}</textarea>
                     @if ($errors->has('descripcion_cumplimiento'))
@@ -122,8 +122,8 @@
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                    <select class="form-control {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="id_reviso"
+                    <label class="required" for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                    <select required class="form-control {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="id_reviso"
                         id="id_reviso">
                         @foreach ($empleados as $empleado)
                             <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
@@ -171,7 +171,7 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.matriz-requisito-legales.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

@@ -16,10 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class MaterialSgsi extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'material_sgsis';
 
     // protected $appends = [

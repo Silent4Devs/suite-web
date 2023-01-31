@@ -27,7 +27,7 @@
                     <label class="required" for="descripcion"><i class="fas fa-pencil-ruler iconos-crear"></i></i>
                         Contenido</label>
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion"
-                        id="descripcion">{{ old('descripcion', $comunicacionSgi->descripcion) }}</textarea>
+                        id="descripcion" required>{{ old('descripcion', $comunicacionSgi->descripcion) }}</textarea>
                     @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -51,7 +51,8 @@
 
                 <div class="form-group col-md-6">
                     <label class="required" for="imagen"> <i class="fas fa-image iconos-crear"></i>Imagen</label>
-                    <input type="file" name="imagen" class="form-control" accept="image/*, .mp4, .mov, .webm, .wmv, .avi" value="{{ old('imagen') }}">
+                    <input type="file" name="imagen" class="form-control" accept="image/*, .mp4, .mov, .webm, .wmv, .avi"
+                    value="{{ old('imagen') }}" required>
                     @if (count($comunicacionSgi->imagenes_comunicacion) > 0)
                         <small>Imagen actual:{{ $comunicacionSgi->imagenes_comunicacion[0]->imagen }} </small><br>
                         <small>Tamaño recomendado de la imagen 500px por 300px</small>
@@ -76,9 +77,9 @@
 
 
                 <div class="form-group col-md-6 col-sm-12">
-                    <label for="tipo"><i class="fab fa-elementor iconos-crear"></i>Publicar en </label>
-                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}" name="publicar_en"
-                        id="publicar_en">
+                    <label class="required" for="publicar_en"><i class="fab fa-elementor iconos-crear"></i>Publicar en </label>
+                    <select class="form-control {{ $errors->has('tipo') ? 'is-invalid' : '' }}"
+                        name="publicar_en" id="publicar_en" required>
                         <option value disabled {{ old('tipo', null) === null ? 'selected' : '' }}>
                             Selecciona una opción
                         </option>
@@ -132,7 +133,8 @@
                     <label class="required"><i class="far fa-calendar-alt iconos-crear"></i> Programar fecha de inicio
                         de publicación</label>
                     <input class="form-control date {{ $errors->has('fecha_programable') ? 'is-invalid' : '' }}"
-                        type="date" name="fecha_programable" value="{{ $comunicacionSgi->fecha_programable }}" required>
+                        type="date" id="fecha_programable" name="fecha_programable"
+                        value="{{ $comunicacionSgi->fecha_programable }}" min="1945-01-01" required>
                     @if ($errors->has('fecha_programable'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_programable') }}
@@ -144,8 +146,8 @@
                 <div class="col-sm-12 col-md-6 form-group">
                     <label><i class="far fa-calendar-alt iconos-crear"></i>Programar fecha de fin de publicación</label>
                     <input class="form-control date {{ $errors->has('fecha_programable_fin') ? 'is-invalid' : '' }}"
-                        type="date" name="fecha_programable_fin" value="{{ $comunicacionSgi->fecha_programable_fin }}"
-                        required>
+                        type="date" id="fecha_programable_fin" name="fecha_programable_fin"
+                        value="{{ $comunicacionSgi->fecha_programable_fin }}" min="1945-01-01">
                     @if ($errors->has('fecha_programable_fin'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_programable_fin') }}
@@ -154,7 +156,7 @@
                 </div>
 
                 <div class="text-right form-group col-12"><br>
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.comunicacion-sgis.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

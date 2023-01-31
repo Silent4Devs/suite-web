@@ -28,7 +28,7 @@
                         </div> --}}
                         <div class="form-group">
                             <label for="necesidades" class="required">Necesidad</label>
-                            <textarea class="form-control" id="necesidades" id="necesidades" rows="4" wire:model.defer="necesidades"></textarea>
+                            <textarea required class="form-control" id="necesidades" id="necesidades" rows="4" wire:model.defer="necesidades"></textarea>
                             @error('necesidades')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -41,15 +41,15 @@
                         </div> --}}
                         <div class="form-group">
                             <label for="expectativas" class="required">Expectativa</label>
-                            <textarea class="form-control" id="expectativas" name="expectativas" rows="4"
+                            <textarea required class="form-control" id="expectativas" name="expectativas" rows="4"
                                 wire:model.defer="expectativas"></textarea>
                             @error('expectativas')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="expectativas" class="required">Norma(s)</label>
-                            <select multiple wire:model.defer="normasModel" class="select2">
+                            <label for="normasModel" class="required">Norma(s)</label>
+                            <select required multiple wire:model.defer="normasModel" class="select2">
                                 @foreach ($normas as $norma)
                                     <option value="{{ $norma->id }}"
                                         {{ in_array($norma->id, $normasModel) ? 'selected' : '' }}>
@@ -57,6 +57,9 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('normasModel')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                     </form>

@@ -115,6 +115,14 @@ class AnalisisBrechaController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('analisis_de_brechas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request -> validate([
+            'nombre' => ['required'],
+            'fecha' => ['required'],
+            'id_elaboro' => ['required'],
+            'estatus' => ['required'],
+        ]);
+
         $analisisBrecha = AnalisisBrecha::create($request->all());
 
         $dataCieCont = new GenerateAnalisisB();
@@ -162,6 +170,14 @@ class AnalisisBrechaController extends Controller
     public function update(Request $request, $id)
     {
         abort_if(Gate::denies('analisis_de_brechas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $request -> validate([
+            'nombre' => ['required'],
+            'fecha' => ['required'],
+            'porcentaje_implementacion' => ['nullable'],
+            'id_elaboro' => ['required'],
+            'estatus' => ['required'],
+        ]);
 
         $analisisBrecha = AnalisisBrecha::find($id);
 

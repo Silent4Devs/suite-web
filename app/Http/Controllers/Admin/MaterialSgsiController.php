@@ -104,6 +104,31 @@ class MaterialSgsiController extends Controller
     {
         abort_if(Gate::denies('material_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $request -> validate([
+            'nombre' => [
+                'string',
+                'required',
+            ],
+            'objetivo' => [
+                'string',
+                'required',
+            ],
+            'fechacreacion_actualizacion' => [
+                'date',
+                'required',
+            ],
+            'material_id',
+            'personalobjetivo' => [
+                'required',
+            ],
+            'arearesponsable_id' => [
+                'required',
+            ],
+            'tipoimparticion' => [
+                'required',
+            ],
+        ]);
+
         $materialSgsi = MaterialSgsi::create($request->all());
         if ($request->hasFile('files')) {
             $files = $request->file('files');

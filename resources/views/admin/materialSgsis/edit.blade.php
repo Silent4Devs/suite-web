@@ -34,9 +34,9 @@
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.objetivo_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label><i
+                    <label class="required"><i
                             class="fas fa-users iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.personalobjetivo') }}</label>
-                    <select class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}"
+                    <select required class="form-control {{ $errors->has('personalobjetivo') ? 'is-invalid' : '' }}"
                         name="personalobjetivo" id="personalobjetivo">
                         <option value disabled {{ old('personalobjetivo', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
@@ -54,9 +54,9 @@
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.personalobjetivo_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="arearesponsable_id"><i
+                    <label class="required" for="arearesponsable_id"><i
                             class="fas fa-users iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.arearesponsable') }}</label>
-                    <select class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}"
+                    <select required class="form-control select2 {{ $errors->has('arearesponsable') ? 'is-invalid' : '' }}"
                         name="arearesponsable_id" id="arearesponsable_id">
                         @foreach ($arearesponsables as $id => $arearesponsable)
                             <option value="{{ $id }}"
@@ -72,9 +72,9 @@
                     <span class="help-block">{{ trans('cruds.materialSgsi.fields.arearesponsable_helper') }}</span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label><i
+                    <label class="required"><i
                             class="fas fa-clipboard-check iconos-crear"></i>{{ trans('cruds.materialSgsi.fields.tipoimparticion') }}</label>
-                    <select class="form-control {{ $errors->has('tipoimparticion') ? 'is-invalid' : '' }}"
+                    <select required class="form-control {{ $errors->has('tipoimparticion') ? 'is-invalid' : '' }}"
                         name="tipoimparticion" id="tipoimparticion">
                         <option value disabled {{ old('tipoimparticion', null) === null ? 'selected' : '' }}>
                             {{ trans('global.pleaseSelect') }}</option>
@@ -103,11 +103,11 @@
             </div> --}}
 
                 <div class="form-group col-sm-6">
-                    <label for="fechacreacion_actualizacion"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+                    <label class="required" for="fechacreacion_actualizacion"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                         creación</label>
-                    <input
+                    <input required
                         class="form-control date  {{ $errors->has('fechacreacion_actualizacion') ? 'is-invalid' : '' }}"
-                        type="date" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion"
+                        type="date" min="1945-01-01" name="fechacreacion_actualizacion" id="fechacreacion_actualizacion"
                         value="{{ old('fechacreacion_actualizacion', \Carbon\Carbon::parse($materialSgsi->fechacreacion_actualizacion))->format('Y-m-d') }}">
                     @if ($errors->has('fechacreacion_actualizacion'))
                         <div class="invalid-feedback">
@@ -151,7 +151,7 @@
                 </div>
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.material-sgsis.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
