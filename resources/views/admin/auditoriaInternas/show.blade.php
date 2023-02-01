@@ -109,7 +109,7 @@
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
-
+                    <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Regresar</a>
                     <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
@@ -235,7 +235,7 @@
                         </thead>
                         <tbody>
                                 @forelse($auditoriaInterna->auditoriaHallazgos as $hallazgo)
-                                
+
                                     <tr>
                                         <td style="min-width:130px;">{{ $hallazgo->incumplimiento_requisito?$hallazgo->incumplimiento_requisito:'Sin registro' }}</td>
                                         <td style="min-width:100px;">{{ $hallazgo->descripcion?$hallazgo->descripcion:'Sin registro' }}</td>

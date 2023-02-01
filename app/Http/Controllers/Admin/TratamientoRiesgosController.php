@@ -36,7 +36,7 @@ class TratamientoRiesgosController extends Controller
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
-           
+
             $table->editColumn('actions', function ($row) {
                 $viewGate = 'tratamiento_de_los_riesgos_ver';
                 $editGate = 'tratamiento_de_los_riesgos_editar';
@@ -51,7 +51,7 @@ class TratamientoRiesgosController extends Controller
                     'row'
                 ));
             });
-            
+
             // $table->editColumn('id', function ($row) {
             //     return $row->id ? $row->id : '';
             // });
@@ -76,12 +76,12 @@ class TratamientoRiesgosController extends Controller
             $table->editColumn('acciones', function ($row) {
                 return $row->acciones ? html_entity_decode(strip_tags($row->acciones), ENT_QUOTES, 'UTF-8') : 'n/a';
             });
-           
+
             $table->editColumn('proceso', function ($row) {
                 return $row->proceso ? $row->proceso->nombre : '';
 
             });
-                     
+
             $table->addColumn('responsable', function ($row) {
                 return $row->responsable ? $row->responsable : '';
             });
@@ -138,7 +138,7 @@ class TratamientoRiesgosController extends Controller
             return intval($valor);
         }, $arrstrParticipantes);
         $planificacionControl->participantes()->sync($participantes);
-        
+
     }
 
     public function edit($tratamientos)
@@ -152,9 +152,9 @@ class TratamientoRiesgosController extends Controller
         $registros = Empleado::alta()->with('area')->get();
         $procesos = Proceso::get();
 
-        
 
-   
+
+
         return view('admin.tratamientoRiesgos.edit', compact('registros','procesos','tratamientos', 'controls', 'responsables', 'empleados'));
     }
 
@@ -162,10 +162,13 @@ class TratamientoRiesgosController extends Controller
     {
         abort_if(Gate::denies('tratamiento_de_los_riesgos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
+            'descripcionriesgo' => 'required|string',
+            'acciones' => 'required|string',
             'id_dueno' => 'required',
             'id_registro' => 'required',
-            'acciones' => 'required',
-            'fechacompromiso'=>'required',
+            'id_proceso' => 'required',
+            'fechacompromiso' => 'required|date',
+            'inversion_requerida' => 'required',
         ]);
 
         $tratamientoRiesgo = TratamientoRiesgo::find($tratamientoRiesgo);
@@ -178,9 +181,9 @@ class TratamientoRiesgosController extends Controller
             'fechacompromiso' => $request->fechacompromiso,
             'inversion_requerida' => $request->inversion_requerida,
         ]);
-       
+
         if($tratamientoRiesgo->es_aprobado == 'pendiente'){
-           
+
             $empleado_email = Empleado::select('name', 'email')->find($request->id_dueno);
             $empleado_copia = auth()->user()->empleado;
             Mail::to($empleado_email->email)->cc($tratamientoRiesgo->registro->email)->send(new SolicitudAceptacionTratamientoRiesgo($tratamientoRiesgo, $empleado_email));
@@ -195,14 +198,11 @@ class TratamientoRiesgosController extends Controller
             $empleado_copia = auth()->user()->empleado;
             Mail::to($empleado_email->email)->cc($tratamientoRiesgo->registro->email)->send(new SolicitudAceptacionTratamientoRiesgo($tratamientoRiesgo, $empleado_email));
         }
-       
-       
-        
-          
+
     if($request->participantes){
         $this->vincularParticipantes($request, $tratamientoRiesgo);
         }
-            
+
 
         return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Editado con éxito');
     }
@@ -250,22 +250,22 @@ class TratamientoRiesgosController extends Controller
             $route = 'public/tratamiento/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_',  $tratamientoRiesgo->id) . '/' . $new_name_image;
             Storage::put($route, $value);
             // dd($request->aprobado);
-            
+
             if($request->tipo == 'responsable_aprobador' ){
                 $tratamientoRiesgo->update([
                     'firma_'.$request->tipo => $image,
-                   
+
                 ]);
             }else{
                 $tratamientoRiesgo->update([
                     'firma_'.$request->tipo => $image,
-    
+
                 ]);
             }
-            
 
-            
-            
+
+
+
         }
 
         if($request->aprobado  != null){
@@ -274,14 +274,14 @@ class TratamientoRiesgosController extends Controller
                 'comentarios'=>$request->comentarios,
             ]);
 
-      
+
         }
 
-        
-        // dd($tratamientoRiesgo);
-        Mail::to($tratamientoRiesgo->responsable->email)->send(new RiesgoAceptadoRechazado($tratamientoRiesgo));   
 
-       
+        // dd($tratamientoRiesgo);
+        Mail::to($tratamientoRiesgo->responsable->email)->send(new RiesgoAceptadoRechazado($tratamientoRiesgo));
+
+
 
         return response()->json(['success'=>true]);
 

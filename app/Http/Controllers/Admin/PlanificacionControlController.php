@@ -106,9 +106,9 @@ class PlanificacionControlController extends Controller
         abort_if(Gate::denies('planificacion_y_control_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
+
         $empleados = Empleado::alta()->with('area')->get();
-        
+
         $responsables = Empleado::alta()->with('area')->get();
 
         $aprobadores = Empleado::alta()->with('area')->get();
@@ -126,15 +126,19 @@ class PlanificacionControlController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('planificacion_y_control_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
+
         $request->validate([
-            'folio_cambio' => 'required',
-            'fecha_registro' => 'required',
+            'folio_cambio' => 'required|numeric',
+            'fecha_registro' => 'required|date',
             'id_reviso' => 'required',
+            'fecha_inicio' => 'required|date',
+            'fecha_termino' => 'required|date',
             'origen_id' => 'required',
-            'objetivo' => 'required',
+            'objetivo' => 'required|string',
             'id_responsable' => 'required',
             'id_responsable_aprobar' => 'required',
+            'descripcion' => 'nullable|string',
+            'criterios_aceptacion' => 'nullable|string',
         ]);
 
         $planificacionControl = PlanificacionControl::create([
@@ -152,7 +156,6 @@ class PlanificacionControlController extends Controller
             'id_responsable_aprobar'=> $request->id_responsable_aprobar,
         ]);
 
-        
         Mail::to($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl));
 
 
@@ -174,7 +177,7 @@ class PlanificacionControlController extends Controller
             return intval($valor);
         }, $arrstrParticipantes);
         $planificacionControl->participantes()->sync($participantes);
-        
+
     }
 
     public function edit(PlanificacionControl $planificacionControl)
@@ -203,14 +206,17 @@ class PlanificacionControlController extends Controller
         // $planificacionControl->update($request->all());
 
         $request->validate([
-            'folio_cambio' => 'required',
-            'fecha_registro' => 'required',
+            'folio_cambio' => 'required|numeric',
+            'fecha_registro' => 'required|date',
             'id_reviso' => 'required',
+            'fecha_inicio' => 'required|date',
+            'fecha_termino' => 'required|date',
             'origen_id' => 'required',
-            'objetivo' => 'required',
+            'objetivo' => 'required|string',
             'id_responsable' => 'required',
-            'id_responsable_aprobar'=> 'required',
-
+            'id_responsable_aprobar' => 'required',
+            'descripcion' => 'nullable|string',
+            'criterios_aceptacion' => 'nullable|string',
         ]);
 
         $planificacionControl->update([
@@ -232,7 +238,7 @@ class PlanificacionControlController extends Controller
 
         // dd($planificacionControl);
 
-        if($planificacionControl->es_aprobado == 'pendiente'){ 
+        if($planificacionControl->es_aprobado == 'pendiente'){
              Mail::to($planificacionControl->responsableAprobar->email)->cc([$planificacionControl->empleado->email , $planificacionControl->responsable->email])->send(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
         }
 
@@ -299,19 +305,19 @@ class PlanificacionControlController extends Controller
             $route = 'public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_',  $planificacionControl->id) . '/' . $new_name_image;
             Storage::put($route, $value);
             // dd($request->aprobado);
-            
+
             if($request->tipo == 'responsable_aprobador' ){
                 $planificacionControl->update([
                     'firma_'.$request->tipo => $image,
-                   
+
                 ]);
             }else{
                 $planificacionControl->update([
                     'firma_'.$request->tipo => $image,
-    
+
                 ]);
             }
-            
+
             if($planificacionControl->firma_registro){
                 Mail::to($planificacionControl->responsable->email)->cc($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl));
 
@@ -321,8 +327,8 @@ class PlanificacionControlController extends Controller
                 Mail::to($planificacionControl->responsableAprobar->email)->cc([$planificacionControl->empleado->email , $planificacionControl->responsable->email])->send(new PlanificacionSolicitudResponsableAprobador($planificacionControl));
 
             }
-            
-            
+
+
         }
         // dd($request->aprobado);
             if($request->aprobado  != null){
@@ -333,10 +339,10 @@ class PlanificacionControlController extends Controller
                 Mail::to($planificacionControl->empleado->email)->cc([$planificacionControl->responsableAprobar->email , $planificacionControl->responsable->email])->send(new PlanificacionAceptadaRechazada($planificacionControl));
 
             }
-            
+
 
         return response()->json(['success'=>true]);
 
     }
-    
+
 }

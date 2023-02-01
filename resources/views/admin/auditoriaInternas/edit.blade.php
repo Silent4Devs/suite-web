@@ -2,7 +2,7 @@
 @section('content')
 
 <style type="text/css">
-    
+
     .select2-selection--multiple {
         overflow: hidden !important;
         height: auto !important;
@@ -24,8 +24,8 @@
             @csrf
             <div class="form-group col-sm-12 col-md-4 col-lg-4">
                 <label class="required"><i class="fas fa-ticket-alt iconos-crear"></i>Id</label>
-                <input class="form-control {{ $errors->has('id_auditoria') ? 'is-invalid' : '' }}" type="text" name="id_auditoria"
-                    id="id_auditoria"  value="{{ old('id_auditoria', $auditoriaInterna->id_auditoria) }}" required>
+                <input class="form-control {{ $errors->has('id_auditoria') ? 'is-invalid' : '' }}" type="text" maxlength="255"
+                name="id_auditoria" id="id_auditoria" value="{{ old('id_auditoria', $auditoriaInterna->id_auditoria) }}" required>
                 @if ($errors->has('id_auditoria'))
                     <div class="text-danger">
                         {{ $errors->first('id_auditoria') }}
@@ -36,7 +36,7 @@
             <div class="form-group col-sm-12 col-md-8 col-lg-8">
                 <label class="required"><i class="fas fa-clipboard-list iconos-crear"></i>Nombre de la auditoría</label>
                 <input class="form-control {{ $errors->has('nombre_auditoria') ? 'is-invalid' : '' }}" type="text" name="nombre_auditoria"
-                    id="nombre_auditoria" value="{{ old('nombre_auditoria', $auditoriaInterna->nombre_auditoria) }}" required>
+                    id="nombre_auditoria" maxlength="255" value="{{ old('nombre_auditoria', $auditoriaInterna->nombre_auditoria) }}" required>
                 @if ($errors->has('nombre_auditoria'))
                     <div class="text-danger">
                         {{ $errors->first('nombre_auditoria') }}
@@ -70,9 +70,8 @@
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.alcance_helper') }}</span>
             </div>
 
-       
             <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                <label><i class="far fa-file iconos-crear"></i>Criterios de auditoría</label>
+                <label class="required"><i class="far fa-file iconos-crear"></i>Criterios de auditoría</label>
                 <textarea class="form-control {{ $errors->has('criterios_auditoria') ? 'is-invalid' : '' }}" type="text"
                     name="criterios_auditoria" id="criterios_auditoria" required>{{ old('criterios_auditoria', $auditoriaInterna->criterios_auditoria) }}</textarea>
                 @if ($errors->has('criterios_auditoria'))
@@ -87,7 +86,7 @@
                 <label for="fecha_inicio"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
                     inicio</label>
                 <input class="form-control mt-2" type="date" id="fecha_inicio"
-                    name="fecha_inicio" value="{{ old('fecha_inicio',\Carbon\Carbon::parse($auditoriaInterna->fecha_inicio)->format('Y-m-d')) }}">
+                    name="fecha_inicio" min="1945-01-01" value="{{ old('fecha_inicio',\Carbon\Carbon::parse($auditoriaInterna->fecha_inicio)->format('Y-m-d')) }}">
                 @if ($errors->has('fecha_inicio'))
                     <div class="invalid-feedback">
                         {{ $errors->first('fecha_inicio') }}
@@ -109,7 +108,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.auditoriaInterna.fields.equipoauditoria_helper') }}</span>
             </div>
-            
+
             {{-- <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="clausulas"><i class="far fa-file iconos-crear"></i> Criterios de auditoría</label>
                 <select class="form-control {{ $errors->has('clausulas') ? 'is-invalid' : '' }}" name="clausulas[]"
@@ -117,7 +116,7 @@
                     <!-- <option value disabled >Selecciona una opción</option> -->
                     @foreach ($clausulas as $clausula)
                         <option value="{{ $clausula->id }}" {{ in_array(old('clausulas',$clausula->id),$auditoriaInterna->clausulas->pluck('id')->toArray()) ? 'selected' : '' }}>
-                            {{ $clausula->nombre }} 
+                            {{ $clausula->nombre }}
                         </option>
                     @endforeach
                 </select>
@@ -251,7 +250,7 @@
             </div>
             @livewire('table-auditoria-interna-hallazgos',['auditoria_internas_id'=> $auditoriaInterna->id])
             <div class="form-group col-12 text-right">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route('admin.auditoria-internas.index') }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -267,8 +266,8 @@
 @section('scripts')
 
 <script type="text/javascript">
-    
-    
+
+
     $(document).ready(function() {
         $("#clausulas").select2({
             theme: "bootstrap4",
@@ -279,7 +278,7 @@
 </script>
 
 <script type="text/javascript">
-    
+
     $(document).ready(function() {
         $("#equipoauditoria_id").select2({
             theme: "bootstrap4",

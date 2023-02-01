@@ -73,8 +73,8 @@
                                 <label class="form-label"><i class="fas fa-text-width iconos-crear"></i> Título
                                     corto de
                                     la mejora<sup>*</sup></label>
-                                <input type="" name="titulo" value="{{ $mejoras->titulo }}" class="form-control"
-                                    required>
+                                <input type="text" name="titulo" value="{{ $mejoras->titulo }}" class="form-control"
+                                    maxlength="255" required>
                             </div>
 
                             <div class="mt-2 form-group col-4">
