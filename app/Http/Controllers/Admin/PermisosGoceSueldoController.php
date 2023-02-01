@@ -25,9 +25,9 @@ class PermisosGoceSueldoController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'amenazas_ver';
-                $editGate = 'amenazas_editar';
-                $deleteGate = 'amenazas_eliminar';
+                $viewGate = 'reglas_goce_sueldo_acceder';
+                $editGate = 'reglas_goce_sueldo_editar';
+                $deleteGate = 'reglas_goce_sueldo_eliminar';
                 $crudRoutePart = 'permisos-goce-sueldo';
 
                 return view('partials.datatablesActions', compact(
