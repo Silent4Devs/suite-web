@@ -17,7 +17,7 @@
 
                 <div class="form-group col-md-6 col-lg-6 col-sm-12">
                     <label><i class="fas fa-ticket-alt iconos-crear"></i>ID del cambio<sup>*</sup></label>
-                    <input class="form-control {{ $errors->has('folio_cambio') ? 'is-invalid' : '' }}" type="number"
+                    <input required class="form-control {{ $errors->has('folio_cambio') ? 'is-invalid' : '' }}" type="number" min="0"
                         name="folio_cambio" id="folio_cambio"
                         value="{{ old('folio_cambio', $planificacionControl->folio_cambio) }}">
                     @if ($errors->has('folio_cambio'))
@@ -30,7 +30,7 @@
 
                 <div class="form-group col-md-6 col-lg-6 col-sm-12">
                     <label><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de registro del cambio<sup>*</sup></label>
-                    <input class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date"
+                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
                         name="fecha_registro" id="fecha_registro"
                         value="{{ old('fecha_registro', $planificacionControl->fecha_registro) }}">
                     @if ($errors->has('fecha_registro'))
@@ -43,7 +43,7 @@
 
                 <div class="form-group col-md-4 col-lg-4 col-sm-12">
                     <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Reporto cambio<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="id_reviso"
+                    <select required class="form-control {{ $errors->has('id_reviso') ? 'is-invalid' : '' }}" name="id_reviso"
                         id="id_reporta">
                         @foreach ($empleados as $id => $empleado)
                             <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
@@ -77,7 +77,7 @@
 
                 <div class="form-group col-md-4 col-lg-4 col-sm-12">
                     <label><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio<sup>*</sup></label>
-                    <input class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date"
+                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
                         name="fecha_inicio" id="fecha_inicio"
                         value="{{ old('fecha_inicio', $planificacionControl->fecha_inicio) }}">
                     @if ($errors->has('fecha_inicio'))
@@ -89,8 +89,8 @@
                 </div>
 
                 <div class="form-group col-md-4 col-lg-4 col-sm-12">
-                    <label><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de terminación</label>
-                    <input class="form-control {{ $errors->has('fecha_termino') ? 'is-invalid' : '' }}" type="date"
+                    <label class="required"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de terminación</label>
+                    <input required class="form-control {{ $errors->has('fecha_termino') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
                         name="fecha_termino" id="fecha_termino"
                         value="{{ old('fecha_termino', $planificacionControl->fecha_termino) }}">
                     @if ($errors->has('fecha_termino'))
@@ -116,7 +116,8 @@
 
                 <div class="form-group col-12">
                     <label for="objetivo"><i class="fas fa-align-left iconos-crear"></i>Objetivo del cambio<sup>*</sup></label>
-                    <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo" id="objetivo">{{ old('objetivo', $planificacionControl->objetivo) }}</textarea>
+                    <textarea required class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
+                        name="objetivo" id="objetivo">{{ old('objetivo', $planificacionControl->objetivo) }}</textarea>
                     @if ($errors->has('objetivo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivo') }}
@@ -127,7 +128,7 @@
 
                 <div class="form-group col-4">
                     <label><i class="fas fa-user-tie iconos-crear"></i>Responsable de la implementación<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('id_responsable') ? 'is-invalid' : '' }}"
+                    <select required class="form-control {{ $errors->has('id_responsable') ? 'is-invalid' : '' }}"
                         name="id_responsable" id="id_responsable">
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($responsables as $responsable)
@@ -158,7 +159,7 @@
 
                 <div class="form-group col-4">
                     <label><i class="fas fa-user-tie iconos-crear"></i>Responsable de aprobar<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
+                    <select required class="form-control {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
                         name="id_responsable_aprobar" id="id_responsable_aprobar">
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($aprobadores as $aprobador)
@@ -187,7 +188,7 @@
                 </div>
 
                 <div class="form-group col-12">
-                    <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>Descripción detalla del
+                    <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>Descripción detallada del
                         cambio</label>
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
                         id="descripcion">{{ old('descripcion', $planificacionControl->descripcion) }}</textarea>
@@ -202,7 +203,7 @@
                 <div class="form-group col-12">
                     <label><i class="fas fa-align-left iconos-crear"></i>Criterios de aceptación del cambio</label>
                     <textarea class="form-control {{ $errors->has('criterios_aceptacion') ? 'is-invalid' : '' }}"
-                        name="criterios_aceptacion" id="criterios">{{ old('criterios_aceptacion', $planificacionControl->folio_cambio) }}</textarea>
+                        name="criterios_aceptacion" id="criterios_aceptacion">{{ old('criterios_aceptacion', $planificacionControl->folio_cambio) }}</textarea>
                     @if ($errors->has('criterios_aceptacion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('criterios_aceptacion') }}
@@ -222,7 +223,7 @@
                         <div class="row">
                             <div class="form-group col-sm-12 col-md-12 col-lg-6">
                                 <label for="participantes"><i class="fas fa-search iconos-crear"></i>Buscar
-                                    participante</label>
+                                    participante<span class="text-danger">*</span></label>
                                 <input type="hidden" id="id_empleado">
                                 <input class="form-control" type="text" id="participantes_search"
                                     placeholder="Busca un empleado" style="position: relative" autocomplete="off" />
@@ -292,7 +293,7 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.planificacion-controls.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>

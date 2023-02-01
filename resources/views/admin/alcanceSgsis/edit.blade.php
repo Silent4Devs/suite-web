@@ -238,30 +238,30 @@
         });
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function(e) {
+<script>
+    document.addEventListener('DOMContentLoaded', function(e) {
 
-            let reviso_alcance = document.querySelector('#id_reviso_alcance');
-            let area_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-area');
-            let puesto_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-puesto');
+        let reviso_alcance = document.querySelector('#id_reviso_alcance');
+        let area_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-area');
+        let puesto_init = reviso_alcance.options[reviso_alcance.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto_init);
-            document.getElementById('area_reviso').innerHTML = recortarTexto(area_init);
-            reviso_politica.addEventListener('change', function(e) {
-                e.preventDefault();
-                let area = this.options[this.selectedIndex].getAttribute('data-area');
-                let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto);
-                document.getElementById('area_reviso').innerHTML = recortarTexto(area);
-            })
-
+        document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto_init);
+        document.getElementById('area_reviso').innerHTML = recortarTexto(area_init);
+        reviso_alcance.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('puesto_reviso').innerHTML = recortarTexto(puesto);
+            document.getElementById('area_reviso').innerHTML = recortarTexto(area);
         })
 
-        function recortarTexto(texto, length = 30) {
-            let trimmedString = texto?.length > length ?
-                texto.substring(0, length - 3) + "..." :
-                texto;
-            return trimmedString;
-        }
-    </script>
+    })
+
+    function recortarTexto(texto, length = 30) {
+    let trimmedString = texto?.length > length ?
+        texto.substring(0, length - 3) + "..." :
+        texto;
+    return trimmedString;
+}
+</script>
 @endsection

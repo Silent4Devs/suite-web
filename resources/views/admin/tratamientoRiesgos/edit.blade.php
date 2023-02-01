@@ -13,10 +13,10 @@
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-            
+
                 <div class="form-group col-md-4 mb-4">
                     <label for="validationServer01"><i class="fas fa-barcode iconos-crear"></i>ID</label>
-                    <input readonly disabled type="number" name="identificador"
+                    <input readonly disabled type="number"
                         value="{{ old('identificador', $tratamientos->identificador) }}" class="form-control"
                         name="identificador" id="identificador" required>
                     <div id="identificadorDisponible">
@@ -24,9 +24,9 @@
                 </div>
 
                 <div class="form-group col-12">
-                    <label><i class="far fa-file-alt iconos-crear"></i>Descripción del Riesgo</label>
-                    <textarea class="form-control {{ $errors->has('descripcionriesgo') ? 'is-invalid' : '' }}" name="descripcionriesgo"
-                        id="descripcionriesgo">{{ old('descripcionriesgo', $tratamientos->descripcionriesgo) }}</textarea>
+                    <label class="required"><i class="far fa-file-alt iconos-crear"></i>Descripción del Riesgo</label>
+                    <textarea required class="form-control {{ $errors->has('descripcionriesgo') ? 'is-invalid' : '' }}"
+                        name="descripcionriesgo" id="descripcionriesgo">{{ old('descripcionriesgo', $tratamientos->descripcionriesgo) }}</textarea>
                     @if ($errors->has('descripcionriesgo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcionriesgo') }}
@@ -36,7 +36,7 @@
 
                 <div class="form-group col-md-4 col-sm-4">
                     <label for="tipo_riesgo"><i class="fas fa-asterisk iconos-crear"></i>Tipo de riesgo</label>
-                    <select class="form-control {{ $errors->has('tipo_riesgo') ? 'is-invalid' : '' }}" name="tipo_riesgo"
+                    <select required class="form-control {{ $errors->has('tipo_riesgo') ? 'is-invalid' : '' }}" name="tipo_riesgo"
                         id="tipo_riesgo" disabled readonly>
                         <option value disabled {{ old('tipo_riesgo', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
@@ -71,7 +71,8 @@
 
                 <div class="form-group col-12">
                     <label for="acciones"><i class="fas fa-clipboard-list iconos-crear"></i>Acciones de Tratamiento<sup>*</sup></label>
-                    <textarea class="form-control {{ $errors->has('acciones') ? 'is-invalid' : '' }}" name="acciones" id="acciones" required>{{ old('acciones', $tratamientos->acciones) }}</textarea>
+                    <textarea class="form-control {{ $errors->has('acciones') ? 'is-invalid' : '' }}"
+                        name="acciones" id="acciones" required>{{ old('acciones', $tratamientos->acciones) }}</textarea>
                     @if ($errors->has('acciones'))
                         <div class="invalid-feedback">
                             {{ $errors->first('acciones') }}
@@ -81,8 +82,8 @@
 
                 <div class="form-group col-md-6 col-sm-4 col-lg-4">
                     <label for="id_dueno"><i class="fas fa-user-tie iconos-crear"></i>Dueño del riesgo<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('id_dueno') ? 'is-invalid' : '' }}" name="id_dueno"
-                        id="dueno" required>
+                    <select class="form-control {{ $errors->has('id_dueno') ? 'is-invalid' : '' }}"
+                        name="id_dueno" id="dueno" required>
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($empleados as $id => $empleado)
                             <option data-puesto="{{ $empleado->puesto }}" value="{{ $empleado->id }}"
@@ -111,8 +112,8 @@
 
                 <div class="form-group col-md-6 col-sm-4 col-lg-4">
                     <label><i class="fas fa-user-tie iconos-crear"></i>Registró riesgo<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('id_registro') ? 'is-invalid' : '' }}" name="id_registro"
-                        id="registro" required>
+                    <select class="form-control {{ $errors->has('id_registro') ? 'is-invalid' : '' }}"
+                        name="id_registro" id="registro" required>
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($registros as $id => $registro)
                             <option data-puesto="{{ $registro->puesto }}" value="{{ $registro->id }}"
@@ -140,8 +141,8 @@
                 </div>
 
                 <div class="form-group col-md-4 col-sm-12">
-                    <label for="id_proceso"><i class="fas fa-project-diagram iconos-crear"></i>Proceso</label><br>
-                    <select class="procesoSelect form-control" name="id_proceso" id="id_proceso">
+                    <label class="required" for="id_proceso"><i class="fas fa-project-diagram iconos-crear"></i>Proceso</label><br>
+                    <select required class="procesoSelect form-control" name="id_proceso" id="id_proceso">
                         <option value="">Seleccione una opción</option>
                         @foreach ($procesos as $proceso)
                             <option value="{{ $proceso->id }}"
@@ -160,7 +161,7 @@
 
                 <div class="form-group col-md-4 col-sm-12 col-lg-4">
                     <label for="fechacompromiso"><i class="far fa-calendar-alt iconos-crear"></i>Fecha compromiso<sup>*</sup></label>
-                    <input required class="form-control {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date"
+                    <input required class="form-control {{ $errors->has('fechavigor') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
                         name="fechacompromiso" id="fechacompromiso"
                         value="{{ old('fechacompromiso', $tratamientos->fechacompromiso ? \Carbon\Carbon::parse($tratamientos->fechacompromiso)->format('Y-m-d') : null) }}">
                     @if ($errors->has('fechacompromiso'))
@@ -171,9 +172,9 @@
                 </div>
 
                 <div class="form-group col-md-4 col-sm-4">
-                    <label for="inversion_requerida"><i class="fas fa-chart-line iconos-crear"></i>Inversión
+                    <label class="required" for="inversion_requerida"><i class="fas fa-chart-line iconos-crear"></i>Inversión
                         requerida</label>
-                    <select class="form-control {{ $errors->has('inversion_requerida') ? 'is-invalid' : '' }}"
+                    <select required class="form-control {{ $errors->has('inversion_requerida') ? 'is-invalid' : '' }}"
                         name="inversion_requerida" id="inversion_requerida">
                         <option value disabled {{ old('inversion_requerida', null) === null ? 'selected' : '' }}>
                             Selecciona una opción</option>
@@ -270,9 +271,9 @@
                 </div>
 
 
-               
+
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.tratamiento-riesgos.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>
@@ -288,7 +289,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             let riesgoTotalResultado = document.getElementById('riesgoTotalResultado');
             let riesgoTotal = riesgoTotalResultado.getAttribute('data-riesgo-total');
-            
+
             if (riesgoTotal <= 185) {
                 riesgoTotalResultado.style.background = "#FF417B";
                 riesgoTotalResultado.style.color = "white";
@@ -552,7 +553,7 @@
                         '/',
                     ]
                 });
-    
+
 
                 CKEDITOR.replace('acciones', {
                     toolbar: [{
@@ -604,7 +605,7 @@
                         '/',
                     ]
                 });
-    
+
             });
         </script>
 @endsection

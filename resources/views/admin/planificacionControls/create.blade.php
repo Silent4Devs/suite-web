@@ -15,7 +15,7 @@
 
                 <div class="form-group col-md-6">
                     <label><i class="fas fa-ticket-alt iconos-crear"></i>ID del cambio<sup>*</sup></label>
-                    <input class="form-control {{ $errors->has('folio_cambio') ? 'is-invalid' : '' }}" type="number"
+                    <input required class="form-control {{ $errors->has('folio_cambio') ? 'is-invalid' : '' }}" type="number" min="0"
                         name="folio_cambio" id="folio_cambio" value="{{ old('folio_cambio', '') }}">
                     @if ($errors->has('folio_cambio'))
                         <div class="invalid-feedback">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de registro del cambio<sup>*</sup></label>
-                    <input class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date"
+                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
                         name="fecha_registro" id="fecha_registro" value="{{ old('fecha_registro', '') }}">
                     @if ($errors->has('fecha_registro'))
                         <div class="invalid-feedback">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group col-4">
                     <label for="id_reviso"><i class="fas fa-user-tie iconos-crear"></i>Reporto el cambio<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="id_reviso"
+                    <select required class="form-control {{ $errors->has('reviso') ? 'is-invalid' : '' }}" name="id_reviso"
                         id="id_reporta">
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($empleados as $empleado)
@@ -71,7 +71,7 @@
 
                 <div class="form-group col-md-4">
                     <label><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio<sup>*</sup></label>
-                    <input class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date"
+                    <input required class="form-control {{ $errors->has('fecha_registro') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
                         name="fecha_inicio" id="fecha_inicio" value="{{ old('fecha_inicio', '') }}">
                     @if ($errors->has('fecha_inicio'))
                         <div class="invalid-feedback">
@@ -82,8 +82,8 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de terminación</label>
-                    <input class="form-control {{ $errors->has('fecha_termino') ? 'is-invalid' : '' }}" type="date"
+                    <label class="required"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de terminación</label>
+                    <input required class="form-control {{ $errors->has('fecha_termino') ? 'is-invalid' : '' }}" type="date" min="1945-01-01"
                         name="fecha_termino" id="fecha_termino" value="{{ old('fecha_termino', '') }}">
                     @if ($errors->has('fecha_termino'))
                         <div class="invalid-feedback">
@@ -108,7 +108,8 @@
 
                 <div class="form-group col-12">
                     <label for="objetivo"><i class="fas fa-align-left iconos-crear"></i>Objetivo del cambio<sup>*</sup></label>
-                    <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" name="objetivo" id="objetivo">{{ old('objetivo') }}</textarea>
+                    <textarea required class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
+                        name="objetivo" id="objetivo">{{ old('objetivo') }}</textarea>
                     @if ($errors->has('objetivo'))
                         <div class="invalid-feedback">
                             {{ $errors->first('objetivo') }}
@@ -119,7 +120,7 @@
 
                 <div class="form-group col-4">
                     <label><i class="fas fa-user-tie iconos-crear"></i>Responsable de la implementación<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
+                    <select required class="form-control {{ $errors->has('responsable') ? 'is-invalid' : '' }}"
                         name="id_responsable" id="id_responsable">
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($responsables as $responsable)
@@ -149,7 +150,7 @@
 
                 <div class="form-group col-4">
                     <label><i class="fas fa-user-tie iconos-crear"></i>Responsable de aprobar<sup>*</sup></label>
-                    <select class="form-control {{ $errors->has('responsable_aprobar') ? 'is-invalid' : '' }}"
+                    <select required class="form-control {{ $errors->has('responsable_aprobar') ? 'is-invalid' : '' }}"
                         name="id_responsable_aprobar" id="id_responsable_aprobar">
                         <option value="" disabled selected>Seleccione una opción</option>
                         @foreach ($aprobadores as $aprobador)
@@ -178,7 +179,7 @@
                 </div>
 
                 <div class="form-group col-12">
-                    <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>Descripción detalla del
+                    <label for="descripcion"><i class="fas fa-align-left iconos-crear"></i>Descripción detallada del
                         cambio</label>
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
                         id="descripcion">{{ old('descripcion') }}</textarea>
@@ -193,7 +194,7 @@
                 <div class="form-group col-12">
                     <label><i class="fas fa-align-left iconos-crear"></i>Criterios de aceptación del cambio</label>
                     <textarea class="form-control {{ $errors->has('criterios_aceptacion') ? 'is-invalid' : '' }}"
-                        name="criterios_aceptacion" id="criterios">{{ old('criterios_aceptacion') }}</textarea>
+                        name="criterios_aceptacion" id="criterios_aceptacion">{{ old('criterios_aceptacion') }}</textarea>
                     @if ($errors->has('criterios_aceptacion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('criterios_aceptacion') }}
@@ -274,7 +275,7 @@
                 </div>
 
                 <div class="form-group col-12 text-right">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.planificacion-controls.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit" id="btnGuardar">
                         {{ trans('global.save') }}
                     </button>

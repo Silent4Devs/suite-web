@@ -158,8 +158,7 @@
                     </div>
                     <div class="col-12">
                         <label class="text-muted" for=""><i class="fas fa-award mr-2"></i>Certificación</label>
-                        <input type="text" class="form-control input-tags" id="certificacion" data-role="tagsinput"
-                            placeholder="Certificación" wire:model.debounce.800ms="certificacion">
+                        <input type="text" class="form-control" placeholder="Certificación" wire:model.debounce.800ms="certificacion">
                     </div>
                     <div class="col-12 mt-3">
                         <p class="text-muted" style="border-bottom: 2px solid #345183">CURSOS / DIPLOMADOS</p>

@@ -106,7 +106,7 @@
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
-
+                    <a href="{{ route('admin.plan-auditoria.index') }}" class="btn_cancelar">Regresar</a>
                     <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
@@ -215,7 +215,7 @@
                                 <th scope="col-6">Horario de término</th>
                                 <th scope="col-6">Auditado</th>
                                 <th scope="col-6">Auditor</th>
-                
+
                             </tr>
                         </thead>
                         <tbody>
@@ -229,12 +229,12 @@
                                             src="{{ asset('storage/empleados/imagenes') }}/{{ $actividades->auditado ? $actividades->auditado->avatar : 'user.png' }}"
                                             title="{{$actividades->auditado->name }}"></td>
                                     <td style="min-width:100px;">{{$actividades->nombre_auditor}}</td>
-                                   
+
                                 </tr>
                                 @empty
                                 <strong>Sin registro</strong>
                             @endforelse
-                
+
                         </tbody>
                     </table>
 

@@ -751,6 +751,15 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $request ->validate([
+            'area_mejora' => 'nullable|string',
+            'proceso_mejora' => 'nullable|string',
+            'titulo' => 'required',
+            'tipo' => 'required',
+            'descripcion' => 'required',
+            'beneficios' => 'required',
+        ]);
+
         $mejoras = Mejoras::create([
             'empleado_mejoro_id' => auth()->user()->empleado->id,
             'descripcion' => $request->descripcion,
@@ -836,6 +845,15 @@ class InicioUsuarioController extends Controller
     {
         // $incidente_procedente = intval($request->procedente ? $request->procedente : $incidentes_seguridad->procedente) == 1 ? true : false;
         $incidente_procedente  = intval($request->procedente) == 1 ? true : false;
+
+        $request->validate([
+            'titulo' => 'required|string',
+            'fecha' => 'required',
+            'sede' => 'required',
+            'ubicacion' => 'nullable|string',
+            'descripcion' => 'required',
+            'procedente' => 'required',
+        ]);
 
         $incidentes_seguridad = IncidentesSeguridad::create([
             'titulo' => $request->titulo,
