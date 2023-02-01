@@ -25,9 +25,9 @@ class VacacionesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'amenazas_ver';
-                $editGate = 'amenazas_editar';
-                $deleteGate = 'amenazas_eliminar';
+                $viewGate = 'reglas_vacaciones_acceder';
+                $editGate = 'reglas_vacaciones_editar';
+                $deleteGate = 'reglas_vacaciones_eliminar';
                 $crudRoutePart = 'vacaciones';
 
                 return view('partials.datatablesActions', compact(
@@ -124,7 +124,6 @@ class VacacionesController extends Controller
     public function show($id)
     {
         abort_if(Gate::denies('reglas_vacaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        abort_if(Gate::denies('amenazas_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = Vacaciones::with('areas')->find($id);
 
         return view('admin.vacaciones.show', compact('vacacion'));
