@@ -47,7 +47,7 @@
         href="{{ route('admin.matriz-mapa.SistemaGestion', ['idAnalisis' => $id_matriz]) }}">Gráfica</a> --}}
      
 
-        @can('amenazas_agregar')
+        @can('matriz_bia_cuestionario_agregar')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [

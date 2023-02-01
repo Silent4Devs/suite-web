@@ -303,7 +303,7 @@
                                         {{$conteos['Gap1']['inexistente']}}
                                     </td>
                                     {{-- <td>{{number_format(($conteos['Gap1']['parcialmente'] * 30) / 15), 2, '.', ''}}%</td> --}}
-                                    <td >{{number_format(($conteos['Gap1']['inexistente'] *30) /91 ), 2, '.', ''}}%</td>
+                                    <td >{{number_format((($conteos['Gap1']['inexistente'] *30) /91 ), 2, '.', '')}}%</td>
 
                                 </tr>
                                 <tr>
@@ -312,7 +312,7 @@
                                         {{$conteos['Gap1']['inicial']}}
                                     </td>
                                     {{-- <td>{{number_format(($conteos['Gap1']['parcialmente'] * 30) / 15), 2, '.', ''}}%</td> --}}
-                                    <td>{{number_format(($conteos['Gap1']['inicial']*30) /91 ), 2, '.', ''}}%</td>
+                                    <td>{{number_format((($conteos['Gap1']['inicial']*30) /91 ), 2, '.', '')}}%</td>
 
                                 </tr>
                                 <tr>
@@ -320,28 +320,28 @@
                                     <td class="text-black" style="background-color: #aaaaaa;">
                                         {{$conteos['Gap1']['repetible']}}
                                     </td>
-                                    <td>{{number_format(($conteos['Gap1']['repetible'] *30) / 91), 2, '.', ''}}%</td>
+                                    <td>{{number_format((($conteos['Gap1']['repetible'] *30) / 91), 2, '.', '')}}%</td>
                                 </tr>
                                 <tr>
                                     <td>Definida</td>
                                     <td class="text-black" style="background-color: #4A98FF; color:white">
                                         {{$conteos['Gap1']['definida']}}
                                     </td>
-                                    <td>{{number_format(($conteos['Gap1']['definida'] *30) /91), 2, '.', ''}}%</td>
+                                    <td>{{number_format((($conteos['Gap1']['definida'] *30) /91), 2, '.', '')}}%</td>
                                 </tr>
                                 <tr>
                                     <td>Administrada</td>
                                     <td class="text-black" style="background-color: #FFCB63;">
                                         {{$conteos['Gap1']['administrada']}}
                                     </td>
-                                    <td>{{number_format(($conteos['Gap1']['administrada'] * 30) / 91), 2, '.', ''}}%</td>
+                                    <td>{{number_format((($conteos['Gap1']['administrada'] * 30) / 91), 2, '.', '')}}%</td>
                                 </tr>
                                 <tr>
                                     <td>Optimizada</td>
                                     <td class="text-black" style="background-color: #6DC866;">
                                         {{$conteos['Gap1']['optimizada']}}
                                     </td>
-                                    <td>{{number_format(($conteos['Gap1']['optimizada'] * 30) / 91), 2, '.', ''}}%</td>
+                                    <td>{{number_format((($conteos['Gap1']['optimizada'] * 30) / 91), 2, '.', '')}}%</td>
                                 </tr>
                                 <!--<tr>
                                     <td>Autodiagnóstico</td>
@@ -358,8 +358,11 @@
                                     <td>
                                         {{$conteos['Gap1']['inexistente'] + $conteos['Gap1']['inicial'] + $conteos['Gap1']['repetible']+ $conteos['Gap1']['definida']+ $conteos['Gap1']['administrada']+ $conteos['Gap1']['optimizada']}}
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         {{number_format($porcentajeGap1, 2, '.', '')}}%
+                                    </td> --}}
+                                    <td>
+                                        {{(($conteos['Gap1']['inexistente']* 30) / 91) + (($conteos['Gap1']['inicial']* 30) / 91) + (($conteos['Gap1']['repetible']* 30) / 91)+ (($conteos['Gap1']['definida']* 30) / 91)+ (($conteos['Gap1']['administrada']* 30) / 91)+ (($conteos['Gap1']['optimizada']* 30) / 91)}}%
                                     </td>
                                 </tr>
                                 </tbody>
@@ -426,42 +429,42 @@
                                     <td class="text-black" style="background-color: #6863FF; color:white">
                                         {{$conteos['Gap2']['inexistente']}}
                                     </td>
-                                    <td >{{number_format(($conteos['Gap2']['inexistente'] * 40) / 95), 2, '.', ''}}%</td>
+                                    <td >{{number_format((($conteos['Gap2']['inexistente'] * 40) / 95), 2, '.', '')}}%</td>
                                 </tr>
                                 <tr>
                                     <td>Inicial</td>
                                     <td class="text-black" style="background-color: #f49c37;">
                                         {{$conteos['Gap2']['inicial']}}
                                     </td>
-                                    <td>{{number_format(($conteos['Gap2']['inicial'] * 40) / 95), 2, '.', ''}}%</td>
+                                    <td>{{number_format((($conteos['Gap2']['inicial'] * 40) / 95), 2, '.', '')}}%</td>
                                 </tr>
                                 <tr>
                                     <td>Repetible</td>
                                     <td class="text-black" style="background-color: #aaaaaa;">
                                         {{$conteos['Gap2']['repetible']}}
                                     </td>
-                                    <td>{{number_format(($conteos['Gap2']['repetible'] * 40) / 95), 2, '.', ''}}%</td>
+                                    <td>{{number_format((($conteos['Gap2']['repetible'] * 40) / 95), 2, '.', '')}}%</td>
                                 </tr>
                                 <tr>
                                     <td>Definida</td>
                                     <td class="text-black" style="background-color: #4A98FF; color:white">
                                         {{$conteos['Gap2']['definida']}}
                                     </td>
-                                    <td>{{number_format(($conteos['Gap2']['definida'] * 40) / 95), 2, '.', ''}}%</td>
+                                    <td>{{number_format((($conteos['Gap2']['definida'] * 40) / 95), 2, '.', '')}}%</td>
                                 </tr>
                                 <tr>
                                     <td>Administrada</td>
                                     <td class="text-black" style="background-color: #FFCB63;">
                                         {{$conteos['Gap2']['administrada']}}
                                     </td>
-                                    <td>{{number_format(($conteos['Gap2']['administrada'] * 40) / 95), 2, '.', ''}}%</td>
+                                    <td>{{number_format((($conteos['Gap2']['administrada'] * 40) / 95), 2, '.', '')}}%</td>
                                 </tr>
                                 <tr>
                                     <td>Optimizada</td>
                                     <td class="text-black" style="background-color: #6DC866;">
                                         {{$conteos['Gap2']['optimizada']}}
                                     </td>
-                                    <td>{{number_format(($conteos['Gap2']['optimizada'] * 40) / 95), 2, '.', ''}}%</td>
+                                    <td>{{number_format((($conteos['Gap2']['optimizada'] * 40) / 95), 2, '.', '')}}%</td>
                                 </tr>
                                 <tr>
                                     <td align="right">Total</td>
@@ -469,9 +472,11 @@
                                         {{$conteos['Gap2']['inexistente'] + $conteos['Gap2']['inicial'] + $conteos['Gap2']['repetible']+ $conteos['Gap2']['definida']+ $conteos['Gap2']['administrada']+ $conteos['Gap2']['optimizada']}}
 
                                     </td>
+                                    
                                     <td>
-                                        {{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%
+                                        {{(($conteos['Gap2']['inexistente']* 40) / 95) + (($conteos['Gap2']['inicial']* 40) / 95) + (($conteos['Gap2']['repetible']* 40) / 95)+ (($conteos['Gap2']['definida']* 40) / 95)+ (($conteos['Gap2']['administrada']* 40) / 95)+ (($conteos['Gap2']['optimizada']* 40) / 95)}}%
                                     </td>
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -517,58 +522,62 @@
                             <table class="table table-responsive-sm letras-dashboard">
                                 <thead>
                                 <tr>
-                                    <th scope="col">ESTATUS</th>
+                                    <th scope="col">ESTATUS{{ $conteos['Gap3verif']['inexistente'] }}</th>
                                     <th scope="col">REQUISITOS</th>
                                     <th scope="col">PESO</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        
                                         <td>Inexistente</td>
                                         <td class="text-black" style="background-color: #6863FF; color:white">
                                             {{$conteos['Gap3verif']['inexistente']}}
                                         </td>
-                                        <td >{{number_format(($conteos['Gap3verif']['inexistente'] * 30) / 95), 2, '.', ''}}%</td>
+                                        <td>{{number_format((($conteos['Gap3verif']['inexistente'] * 30) / 95), 2, '.', '')}}%</td>
                                     </tr>
                                     <tr>
                                         <td>Inicial</td>
                                         <td class="text-black" style="background-color: #f49c37;">
                                             {{$conteos['Gap3verif']['inicial']}}
                                         </td>
-                                        <td>{{number_format(($conteos['Gap3verif']['inicial'] * 30) / 95), 2, '.', ''}}%</td>
-                                    </tr>
+                                        <td>{{number_format((($conteos['Gap3verif']['inicial'] * 30) / 95), 2, '.', '')}}%</td>
+                                    </tr>   
                                     <tr>
                                         <td>Repetible</td>
                                         <td class="text-black" style="background-color: #aaaaaa;">
                                             {{$conteos['Gap3verif']['repetible']}}
                                         </td>
-                                        <td>{{number_format(($conteos['Gap3verif']['repetible'] * 30) / 95), 2, '.', ''}}%</td>
+                                        <td>{{number_format((($conteos['Gap3verif']['repetible'] * 30) / 95), 2, '.', '')}}%</td>
                                     </tr>
                                     <tr>
                                         <td>Definida</td>
                                         <td class="text-black" style="background-color: #4A98FF; color:white">
                                             {{$conteos['Gap3verif']['definida']}}
                                         </td>
-                                        <td>{{number_format(($conteos['Gap3verif']['definida'] * 30) / 95), 2, '.', ''}}%</td>
+                                        <td>{{number_format((($conteos['Gap3verif']['definida'] * 30) / 95), 2, '.', '')}}%</td>
                                     </tr>
                                     <tr>
                                         <td>Administrada</td>
                                         <td class="text-black" style="background-color: #FFCB63;">
                                             {{$conteos['Gap3verif']['administrada']}}
                                         </td>
-                                        <td>{{number_format(($conteos['Gap3verif']['administrada'] * 30) / 95), 2, '.', ''}}%</td>
+                                        <td>{{number_format((($conteos['Gap3verif']['administrada'] * 30) / 95), 2, '.', '')}}%</td>
                                     </tr>
                                     <tr>
                                         <td>Optimizada</td>
                                         <td class="text-black" style="background-color: #6DC866;">
                                             {{$conteos['Gap3verif']['optimizada']}}
                                         </td>
-                                        <td>{{number_format(($conteos['Gap3verif']['optimizada'] * 30) / 95), 2, '.', ''}}%</td>
+                                        <td>{{number_format((($conteos['Gap3verif']['optimizada'] * 30) / 95), 2, '.', '')}}%</td>
                                     </tr>
                                     <tr>
                                         <td align="right">Total</td>
-                                        <td>6</td>
-                                        <td>{{number_format($porcentajeGap3['porcentaje'], 2, '.', '')}}%</td>
+                                        <td>
+                                            {{$conteos['Gap3verif']['inexistente'] + $conteos['Gap3verif']['inicial'] + $conteos['Gap3verif']['repetible']+ $conteos['Gap3verif']['definida']+ $conteos['Gap3verif']['administrada']+ $conteos['Gap3verif']['optimizada']}}
+    
+                                        </td>
+                                        <td>{{(($conteos['Gap3verif']['inexistente']* 30) / 95) + (($conteos['Gap3verif']['inicial']* 30) / 95) + (($conteos['Gap3verif']['repetible']* 30) / 95)+ (($conteos['Gap3verif']['definida']* 30) / 95)+ (($conteos['Gap3verif']['administrada']* 30) / 95)+ (($conteos['Gap3verif']['optimizada']* 30) / 95)}}%</td>
                                     </tr>
                                 </tbody>
                             </table>
