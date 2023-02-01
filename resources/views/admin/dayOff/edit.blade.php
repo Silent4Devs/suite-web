@@ -12,7 +12,7 @@
         <div class="card-body">
             {!! Form::model($vacacion, ['route' => ['admin.dayOff.update', $vacacion->id], 'method' => 'patch']) !!}
 
-            @include('admin.dayoff.fields')
+            @include('admin.dayOff.fields')
 
             {!! Form::close() !!}
         </div>
