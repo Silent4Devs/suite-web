@@ -25,9 +25,9 @@ class DayOffController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'amenazas_ver';
-                $editGate = 'amenazas_editar';
-                $deleteGate = 'amenazas_eliminar';
+                $viewGate = 'reglas_dayoff_acceder';
+                $editGate = 'reglas_dayoff_editar';
+                $deleteGate = 'reglas_dayoff_eliminar';
                 $crudRoutePart = 'dayOff';
 
                 return view('partials.datatablesActions', compact(
