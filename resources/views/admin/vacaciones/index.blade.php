@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        @can('amenazas_agregar')
+        @can('reglas_vacaciones_crear')
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [
@@ -200,14 +200,14 @@
             //     }
             // };
 
-            @can('amenazas_agregar')
+            @can('reglas_vacaciones_crear')
                 dtButtons.push(btnAgregar);
             @endcan
 
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
-            @can('amenazas_eliminar')
+            @can('reglas_vacaciones_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                     text: deleteButtonTrans,
