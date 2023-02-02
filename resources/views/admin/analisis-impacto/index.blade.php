@@ -235,7 +235,7 @@
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
-            @can('amenazas_eliminar')
+            @can('matriz_bia_cuestionario_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                     text: deleteButtonTrans,

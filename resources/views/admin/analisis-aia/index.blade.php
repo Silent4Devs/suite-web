@@ -47,7 +47,7 @@
         href="{{ route('admin.matriz-mapa.SistemaGestion', ['idAnalisis' => $id_matriz]) }}">Gráfica</a> --}}
      
 
-        @can('amenazas_agregar')
+        
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [
@@ -55,7 +55,6 @@
                         'route' => 'admin.amenazas.parseCsvImport',
                     ])
                 </div>
-            @endcan
         </div>
 
         @include('flash::message')
@@ -227,14 +226,14 @@
             //     }
             // };
 
-            @can('amenazas_agregar')
+            @can('matriz_bia_cuestionario_agregar')
                 dtButtons.push(btnAgregar);
             @endcan
 
             // dtButtons.push(btnExport);
             // dtButtons.push(btnImport);
 
-            @can('amenazas_eliminar')
+            @can('matriz_bia_cuestionario_eliminar')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
                     text: deleteButtonTrans,
