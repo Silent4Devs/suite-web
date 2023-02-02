@@ -139,7 +139,11 @@ class AnalisisAIAController extends Controller
    
     public function destroy($id)
     {
-        //
+        abort_if(Gate::denies('matriz_bia_cuestionario_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $cuestionario = AnalisisAIA::find($id);
+        $cuestionario->delete();
+
+        return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
     public function matriz()
