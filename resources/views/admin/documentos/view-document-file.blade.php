@@ -78,20 +78,25 @@
                 <a href="{{ url()->previous() }}">Regresar</a>
 
                 @can('documentos_download')
-                    <embed src="{{ asset($path_documento . '/' . $documento->archivo) }}" class="mt-5 w-100" style="height: 800px"
+                <embed src="{{ asset($path_documento . '/' . $documento->archivo) }}" class="mt-5 w-100" style="height: 800px"
                         frameborder="0" id="pdf">
+
                 @else
+
                     {{-- Oculta el panel --}}
                     {{-- <embed id="documento" src="{{ asset($path_documento . '/' . $documento->archivo) }}#toolbar=0&navpanes=0"
                         class="mt-5 w-100" style="height: 800px" frameborder="0" id="pdf"> --}}
                     <embed id="documento" src="{{ asset($path_documento . '/' . $documento->archivo) }}" class="mt-5 w-100"
                         style="height: 800px" frameborder="0" id="pdf">
+
                 @endcan
             @else
                 <h5 class="col-12 titulo_general_funcion">Documento no cargado</h5>
                 {{-- <h1>Documento no cargado</h1> --}}
             @endif
         </div>
+
+
 
         @if ($documento->archivo)
             <h2 style="padding: 20px">Documento visto por:</h2>
@@ -105,9 +110,7 @@
                                     class="img_empleado">
                             </div>
                             <h5 class="nombre_nuevo">No hay empleado registrado</h5>
-                            <div class="datos_nuevo">
-                               
-                            </div>
+                            <div class="datos_nuevo"></div>
                         @else
                             <div class="img_nuevo">
 
@@ -129,17 +132,15 @@
                                     @endif
                                 </p>
                             </div>
+
+                        @endif
                     </div>
-                @endif
+                        @empty
+                       <div class="nuevo">Este documento no tiene vistas</div>
             </div>
-
-        @empty
-            <div class="nuevo">Este documento no tiene vistas</div>
-        @endforelse
-
-    </div>
-    @endif
-    </div>
+                   @endforelse
+        @endif
+     </div>
 
 
 
