@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGapTreRequest;
 use App\Http\Requests\StoreGapTreRequest;
 use App\Models\GapTre;
+use App\Models\GapTresSedatu;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
@@ -68,23 +69,20 @@ class GapTresController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('gap_tre_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.gapTres.create');
     }
 
     public function store(StoreGapTreRequest $request)
     {
-        $gapTre = GapTre::create($request->all());
+        $gapTre = GapTresSedatu::create($request->all());
 
         return redirect()->route('admin.gap-tres.index');
     }
 
-    public function edit(GapTre $gapTre)
+    public function edit(GapTresSedatu $gapTre)
     {
-        abort_if(Gate::denies('gap_tre_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gapTre->load('team');
 
         return view('admin.gapTres.edit', compact('gapTre'));
     }
@@ -94,21 +92,21 @@ class GapTresController extends Controller
         if ($request->ajax()) {
             switch ($request->name) {
                 case 'evidencia':
-                    $gapun = GapTre::findOrFail($id);
+                    $gapun = GapTresSedatu::findOrFail($id);
                     $gapun->evidencia = $request->value;
                     $gapun->save();
 
                     return response()->json(['success' => true]);
                     break;
                 case 'recomendacion':
-                    $gapun = GapTre::findOrFail($id);
+                    $gapun = GapTresSedatu::findOrFail($id);
                     $gapun->recomendacion = $request->value;
                     $gapun->save();
 
                     return response()->json(['success' => true]);
                     break;
                 case 'valoracion':
-                    $gapun = GapTre::findOrFail($id);
+                    $gapun = GapTresSedatu::findOrFail($id);
                     $gapun->valoracion = $request->value;
                     $gapun->save();
 

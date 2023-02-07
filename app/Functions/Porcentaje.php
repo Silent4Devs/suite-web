@@ -78,7 +78,7 @@ class Porcentaje
         ];
     }//termina func
 
-    public function GapTresPorc($totaltres,$gap3porcentaje, $gap32porcentaje, $gap3optimizada,$gap3administrada, $gap3definida, $gap3repetible, $gap3inicial,$gap3inexistente)
+    public function GapTresPorc($totaltres, $gap3optimizada,$gap3administrada, $gap3definida, $gap3repetible, $gap3inicial,$gap3inexistente)
     {
        
 
@@ -87,10 +87,10 @@ class Porcentaje
         $inicial= $gap3inicial * $valor;
         $repetible= $gap3repetible * $valor;
         $definida=  $gap3definida * $valor;
-        $administrada= $gap3administrada * $valor;
-        $optimizada= $gap3optimizada * $valor;
-        $resultado = $inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada * (100) / 30 ;
-        $avance = (($inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada) *$resultado) /100;
+        // $administrada= $gap3administrada * $valor;
+        // $optimizada= $gap3optimizada * $valor;
+        $resultado = $inexistente +  $inicial + $repetible +  $definida  * (100) / 30 ;
+        $avance = (($inexistente +  $inicial + $repetible +  $definida ) * $resultado) /100;
         $resultadoporcentaje=round($resultado *(30)/100);
         // dd($valor, $totaltres, $inexistente, $inicial, $repetible, $resultadoporcentaje, $avance, $resultado);
         // dd($resultado);

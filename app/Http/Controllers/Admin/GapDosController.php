@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGapDoRequest;
 use App\Http\Requests\StoreGapDoRequest;
 use App\Models\GapDo;
+use App\Models\GapDosSedatu;
 use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
@@ -74,23 +75,20 @@ class GapDosController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('gap_do_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.gapDos.create');
     }
 
     public function store(StoreGapDoRequest $request)
     {
-        $gapDo = GapDo::create($request->all());
+        $gapDo = GapDosSedatu::create($request->all());
 
         return redirect()->route('admin.gap-dos.index');
     }
 
-    public function edit(GapDo $gapDo)
+    public function edit(GapDosSedatu $gapDo)
     {
-        abort_if(Gate::denies('gap_do_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gapDo->load('team');
 
         return view('admin.gapDos.edit', compact('gapDo'));
     }
@@ -100,21 +98,21 @@ class GapDosController extends Controller
         if ($request->ajax()) {
             switch ($request->name) {
                 case 'evidencia':
-                    $gapun = GapDo::findOrFail($id);
+                    $gapun = GapDosSedatu::findOrFail($id);
                     $gapun->evidencia = $request->value;
                     $gapun->save();
 
                     return response()->json(['success' => true]);
                     break;
                 case 'recomendacion':
-                    $gapun = GapDo::findOrFail($id);
+                    $gapun = GapDosSedatu::findOrFail($id);
                     $gapun->recomendacion = $request->value;
                     $gapun->save();
 
                     return response()->json(['success' => true]);
                     break;
                 case 'valoracion':
-                    $gapun = GapDo::findOrFail($id);
+                    $gapun = GapDosSedatu::findOrFail($id);
                     $gapun->valoracion = $request->value;
                     $gapun->save();
 
