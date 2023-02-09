@@ -227,4 +227,12 @@ class AnalisisBrechaController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function getEmployeeData(Request $request)
+    {
+        $empleados = Empleado::alta()->find($request->id);
+        $areas = Area::find($empleados->area_id);
+
+        return response()->json(['puesto' => $empleados->puesto, 'area' => $areas->area]);
+    }
 }

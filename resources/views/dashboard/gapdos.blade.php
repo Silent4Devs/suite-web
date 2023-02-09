@@ -10,7 +10,7 @@
                             class="progress-bar progress-bar-striped progress-bar-animated"
                             role="progressbar" aria-valuenow="40"
                             aria-valuemin="0" aria-valuemax="100"
-                            style="width: {{number_format($porcentajeGap2['Porcentaje'], 2, '.', '')}}%">{{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%
+                            style="width: {{number_format($porcentajeGap2['porcentaje_gap'], 2, '.', '')}}%">{{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%
                         </div>
                     </div>
                 </div>
