@@ -3,14 +3,14 @@
         <div class="card">
             <div class="card-body">
                 <div id="barraGap3" class="barraGap3">
-                    <h6 align="center">GAP 03: MARCO DE GESTIÓN DE SEGURIDAD DE LA INFORMACIÓN ({{ $porcentajeGap3['porcentaje'] }}%)
+                    <h6 align="center">GAP 03: MARCO DE GESTIÓN DE SEGURIDAD DE LA INFORMACIÓN ({{ (number_format($porcentajeGap3['porcentaje'], 2, '.', ''))}}%)
                     </h6>
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                             aria-valuenow="30"
                             aria-valuemin="0" aria-valuemax="100"
-                            style="width: {{ (number_format($porcentajeGap3['porcentaje'], 2, '.', ''))}}%">
-                            {{ $porcentajeGap3['porcentaje'] }} %</div>
+                            style="width: {{ (number_format($porcentajeGap3['porcentaje_gap'], 2, '.', ''))}}%">
+                            {{ (number_format($porcentajeGap3['porcentaje'], 2, '.', ''))}}%</div>
                     </div>
                 </div>
                 <p><strong>INSTRUCCIONES: </strong>Por favor, conteste

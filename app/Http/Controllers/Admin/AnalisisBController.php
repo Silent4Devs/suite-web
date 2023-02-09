@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\GapDosSedatu;
 use App\Models\GapTresSedatu;
 use App\Models\GapUnoSedatu;
+use Database\Seeders\GaptresTableSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -31,7 +32,7 @@ class AnalisisBController extends Controller
 
         $gap1porcentaje = GapUnoSedatu::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', request()->id)->skip(3)->take(91);
         $gap12porcentaje = GapUnoSedatu::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id', 'asc')->get()->where('analisis_brechas_id', '=', request()->id)->take(3);
-        
+
         $gap1inexistente = GapUnoSedatu::select('id')->where('valoracion', '=', '0')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap1inicial = GapUnoSedatu::select('id')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap1repetible = GapUnoSedatu::select('id')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', request()->id)->count();
@@ -61,25 +62,27 @@ class AnalisisBController extends Controller
         $gap3optimizada6 = GapTresSedatu::select('id')->where('valoracion', '=', '5')->where('analisis_brechas_id', '=', request()->id)->count();
 
         $gap3porcentaje = GapTresSedatu::select('id', 'valoracion')->where('analisis_brechas_id', '=', request()->id)->get();
-        
-        $gap31porcentaje = GapTresSedatu::select('id', 'valoracion')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', request()->id)->get();
-        $gap3satisfactorios = GapTresSedatu::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap3parcialmente = GapTresSedatu::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap3nocumple = GapTresSedatu::select('id')->where('valoracion', '=', '3')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap3asatisfactorios = GapTresSedatu::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap3aparcialmente = GapTresSedatu::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap3anocumple = GapTresSedatu::select('id')->where('valoracion', '=', '3')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', request()->id)->count();
-      
-        $total = GapDosSedatu::select('id')->where('analisis_brechas_id','=', request()->id)->get()->count();
-        // dd($total);
+
+        // $gap31porcentaje = GapTresSedatu::select('id', 'valoracion')->where('analisis_brechas_id', '=', request()->id)->get();
+        $gap3satisfactorios = GapTresSedatu::select('id')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap3parcialmente = GapTresSedatu::select('id')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap3nocumple = GapTresSedatu::select('id')->where('valoracion', '=', '3')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap3asatisfactorios = GapTresSedatu::select('id')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap3aparcialmente = GapTresSedatu::select('id')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap3anocumple = GapTresSedatu::select('id')->where('valoracion', '=', '3')->where('analisis_brechas_id', '=', request()->id)->count();
+
+        $total = GapDosSedatu::select('id')->where('analisis_brechas_id', '=', request()->id)->get()->count();
+
         $gapunoPorc = new Porcentaje();
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
-        $porcentajeGap1=(($porcentajeGap1 * 100)/455);
-        $porcentajeGap1=(($porcentajeGap1*30)/100);
-        $porcentajeGap2 = $gapunoPorc->GapDosPorc($total,$gap2inexistente, $gap2inicial, $gap2repetible,$gap2definida, $gap2administrada,$gap2optimizada);
-        $totaltres = GapTresSedatu::select('id')->where('analisis_brechas_id','=', request()->id)->get()->count();
-        $porcentajeGap3 = $gapunoPorc->GapTresPorc($totaltres,$gap3porcentaje, $gap31porcentaje,$gap3optimizada,$gap3administrada, $gap3definida, $gap3repetible, $gap3inicial,$gap3inexistente);
-
+        $porcentajeGap1 = (($porcentajeGap1 * 100) / 455);
+        $porcentajeGap1 = (($porcentajeGap1 * 30) / 100);
+        $porcentajeGap2 = $this->GapDosPorc();
+        $totaltres = GapTresSedatu::select('id')->where('analisis_brechas_id', '=', request()->id)->get()->count();
+        // dd($porcentajeGap2);
+       
+        $porcentajeGap3 = $this->GapTresPorc();
+   
         $conteos = [
             'Gap1' => [
                 'inexistente' => $gap1inexistente,
@@ -116,85 +119,95 @@ class AnalisisBController extends Controller
         ];
 
 
-        
+
         return view('dashboard.index', compact('gaptresVerif', 'gaptresAct'))
             ->with('gapunos', $gapuno)->with('gapda5s', $gapa5)->with('gapda6s', $gapa6)
             ->with('porcentajeGap1', $porcentajeGap1)
             ->with('porcentajeGap2', $porcentajeGap2)->with('porcentajeGap3', $porcentajeGap3)->with('conteos', $conteos);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function id($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function update(Request $request, $id)
-    // {
-    //     if ($request->ajax()) {
-    //         GapUno::find($request->input('pk'))->update([$request->input('evidencia') => $request->input('value')]);
-
-    //         return response()->json(['success' => true]);
-    //     }
-    // }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     public function obtenerAnalisis()
     {
         return view('admin.procesos.vistas');
+    }
+
+    public function GapDosPorc()
+    {
+
+        $puntos = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->get();
+        $preguntas = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->count();
+        $puntaje_maximo = $preguntas * 5;
+
+        $puntaje = 0;
+        foreach ($puntos as $punto) {
+            if ($punto->valoracion == '0') {
+                $puntaje += 0;
+            } elseif ($punto->valoracion == '1') {
+                $puntaje += 1;
+            } elseif ($punto->valoracion == '2') {
+                $puntaje += 2;
+            } elseif ($punto->valoracion == '3') {
+                $puntaje += 3;
+            } elseif ($punto->valoracion == '4') {
+                $puntaje += 4;
+            } elseif ($punto->valoracion == '5') {
+                $puntaje += 5;
+            } else {
+                $puntaje += 0;
+            }
+        }
+
+        $resultado = $puntaje;
+
+        $porcentaje_gap = ($resultado / $puntaje_maximo) * 100;
+        $porcentaje_analisis = (($porcentaje_gap * 40)/100);
+
+        return [
+            'preguntas' => $preguntas,
+            'puntaje_maximo' => $puntaje_maximo,
+            'porcentaje_gap' => $porcentaje_gap,
+            'Porcentaje' => $porcentaje_analisis,
+            'Avance' => $porcentaje_analisis,
+        ];
+    }
+
+    public function GapTresPorc()
+    {
+
+        $puntos = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->get();
+        $preguntas = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->count();
+        $puntaje_maximo = $preguntas * 5;
+
+        $puntaje = 0;
+        foreach ($puntos as $punto) {
+            if ($punto->valoracion == '0') {
+                $puntaje += 0;
+            } elseif ($punto->valoracion == '1') {
+                $puntaje += 1;
+            } elseif ($punto->valoracion == '2') {
+                $puntaje += 2;
+            } elseif ($punto->valoracion == '3') {
+                $puntaje += 3;
+            } elseif ($punto->valoracion == '4') {
+                $puntaje += 4;
+            } elseif ($punto->valoracion == '5') {
+                $puntaje += 5;
+            } else {
+                $puntaje += 0;
+            }
+        }
+
+        $resultado = $puntaje;
+
+        $porcentaje_gap = ($resultado / $puntaje_maximo) * 100;
+        $porcentaje_analisis = (($porcentaje_gap * 30)/100);
+
+        return [
+        
+            'porcentaje_gap' => $porcentaje_gap,
+            'porcentaje' => $porcentaje_analisis,
+            'verificar' => $porcentaje_analisis,
+        ];
     }
 }

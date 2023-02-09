@@ -125,7 +125,7 @@
             if (elaboroID) {
                 $.ajax({
                     type: "GET",
-                    url: "{{ url('admin/getEmployeeData') }}?id=" + elaboroID,
+                    url: "{{ url('admin/analisisdebrechas/getEmployeeData') }}?id=" + elaboroID,
                     success: function(res) {
                         if (res) {
                             $("#id_puesto").empty();
