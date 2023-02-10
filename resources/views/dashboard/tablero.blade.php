@@ -503,7 +503,7 @@
             <div class="card">
                 <div class="card-body">
                     <div id="barraGap3_tablero" class="barraGap3_table">
-                        <h6 align="center">GAP 03: MARCO DE GESTIÓN DE SEGURIDAD DE LA INFORMACIÓN ({{$porcentajeGap3['porcentaje']}}%)
+                        <h6 align="center">GAP 03: MARCO DE GESTIÓN DE SEGURIDAD DE LA INFORMACIÓN ({{number_format ($porcentajeGap3['porcentaje'], 2, '.', '')}}%)
                         </h6>
                         <div class="progress">
                             <div
@@ -511,7 +511,7 @@
                                 role="progressbar"
                                 aria-valuenow="{{(number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30}}"
                                 aria-valuemin="0" aria-valuemax="100"
-                                style="width: {{(number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30}}%">{{$porcentajeGap3['porcentaje']}}%
+                                style="width: {{(number_format($porcentajeGap3['porcentaje'], 2, '.', '') * 100) / 30}}%">{{number_format ($porcentajeGap3['porcentaje'], 2, '.', '')}}%
                             </div>
                         </div>
                     </div>

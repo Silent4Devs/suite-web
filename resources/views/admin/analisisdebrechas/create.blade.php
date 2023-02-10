@@ -66,10 +66,10 @@
                         <label for="id_elaboro"><i class="fas fa-user-tie iconos-crear"></i>Elaboró </label>
                         <select class="form-control {{ $errors->has('id_elaboro') ? 'is-invalid' : '' }}" name="id_elaboro"
                             id="id_elaboro">
-                            <option value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
+                            <option  value disabled {{ old('id_elaboro', null) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
                             @foreach ($empleados as $key => $label)
-                                <option value="{{ $label->id }}">{{ $label->name }}
+                                <option data-puesto="{{ $label->puesto }}" data-area="{{ $label->area->area }}" value="{{ $label->id }}">{{ $label->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -80,26 +80,15 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto </label>
-                        <input class="form-control {{ $errors->has('id_puesto') ? 'is-invalid' : '' }}" type="text"
-                            id="id_puesto" value="" disabled>
-                        @if ($errors->has('id_puesto'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_puesto') }}
-                            </div>
-                        @endif
-                    </div>
+                    
 
-                    <div class="form-group col-md-4 col-sm-4">
-                        <label for="id_area"><i class="fas fa-street-view iconos-crear"></i>Área </label>
-                        <input class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}" type="text"
-                            id="id_area" value="" disabled>
-                        @if ($errors->has('id_area'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('id_area') }}
-                            </div>
-                        @endif
+                    <div class="form-group col-md-4 col-sm-12 col-lg-4">
+                        <label for="id_puesto"><i class="fas fa-briefcase iconos-crear"></i>Puesto</label>
+                        <div class="form-control" id="id_puesto" readonly></div>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-12 col-lg-4">
+                        <label for="id_area"><i class="fas fa-street-viewa iconos-crear"></i>Área</label>
+                        <div class="form-control" id="id_area" readonly></div>
                     </div>
 
                 </div>
@@ -119,29 +108,21 @@
 @endsection
 
 @section('scripts')
-    <script type=text/javascript>
-        $('#id_elaboro').change(function() {
-            var elaboroID = $(this).val();
-            if (elaboroID) {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ url('admin/analisisdebrechas/getEmployeeData') }}?id=" + elaboroID,
-                    success: function(res) {
-                        if (res) {
-                            $("#id_puesto").empty();
-                            $("#id_puesto").attr("value", res.puesto);
-                            $("#id_area").empty();
-                            $("#id_area").attr("value", res.area);
-                        } else {
-                            $("#id_puesto").empty();
-                            $("#id_area").empty();
-                        }
-                    }
-                });
-            } else {
-                $("#id_puesto").empty();
-                $("#id_area").empty();
-            }
-        });
-    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let elaboro = document.querySelector('#id_elaboro');
+        let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
+        let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');
+
+        document.getElementById('id_puesto').innerHTML = puesto_init;
+        document.getElementById('id_area').innerHTML = area_init;
+        elaboro.addEventListener('change', function(e) {
+            e.preventDefault();
+            let area = this.options[this.selectedIndex].getAttribute('data-area');
+            let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
+            document.getElementById('id_puesto').innerHTML = puesto;
+            document.getElementById('id_area').innerHTML = area;
+        })
+    });
+</script>
 @endsection

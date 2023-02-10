@@ -50,55 +50,81 @@ class Porcentaje
         return $resultado;
     }//termina func
 
-    public function GapDosPorc($total,  $gap2inexistente,$gap2inicial,$gap2repetible,  $gap2definida, $gap2administrada, $gap2optimizada)
+
+    public function GapDosPorc($preguntasGap2, $puntosGap2)
     {
-        $valor = 40/$total;
-       
-        $inexistente=  $gap2inexistente * $valor;
-        $inicial= $gap2inicial * $valor;
-        $repetible= $gap2repetible * $valor;
-        $definida=  $gap2definida * $valor;
-        $administrada= $gap2administrada * $valor;
-        $optimizada= $gap2optimizada * $valor;
-        // dd($gap2satisfactorio);
-        //$parcialmenteValor = $gap2parcialmente * ($valor / 2);
-        $porcentaje = $inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada * (100) / 40;
-        
-        $avance = (($inexistente +  $inicial + $repetible +  $definida + $administrada + $optimizada) *$porcentaje) /100;
-        // dd($valor, $total, $inexistente, $inicial,  $repetible,$definida,$administrada, $optimizada);
-        // $avance= 68;
-       
-        
-        return [
-            // 'Gap2Satis' => $satisfactoriamente,
-           // 'Gap2Parcial' => $parcialmenteValor,
-            'Porcentaje' => $porcentaje,
-            'Avance' => $avance,
-            
-        ];
-    }//termina func
 
-    public function GapTresPorc($totaltres, $gap3optimizada,$gap3administrada, $gap3definida, $gap3repetible, $gap3inicial,$gap3inexistente)
+    
+        $puntaje_maximo = $preguntasGap2 * 5;
+        
+        $puntaje = 0;
+        foreach ($puntosGap2 as $punto) {
+            if ($punto->valoracion == '0') {
+                $puntaje += 0;
+            } elseif ($punto->valoracion == '1') {
+                $puntaje += 1;
+            } elseif ($punto->valoracion == '2') {
+                $puntaje += 2;
+            } elseif ($punto->valoracion == '3') {
+                $puntaje += 3;
+            } elseif ($punto->valoracion == '4') {
+                $puntaje += 4;
+            } elseif ($punto->valoracion == '5') {
+                $puntaje += 5;
+            } else {
+                $puntaje += 0;
+            }
+        }
+
+        $resultado = $puntaje;
+
+        $porcentaje_gap = ($resultado / $puntaje_maximo) * 100;
+        $porcentaje_analisis = (($porcentaje_gap * 40)/100);
+
+        return [
+            'preguntas' => $preguntasGap2,
+            'puntaje_maximo' => $puntaje_maximo,
+            'porcentaje_gap' => $porcentaje_gap,
+            'Porcentaje' => $porcentaje_analisis,
+            'Avance' => $porcentaje_analisis,
+        ];
+    }
+
+    public function GapTresPorc($preguntasGap3, $puntosGap3)
     {
-       
 
-        $valor = 30/$totaltres;
-        $inexistente=  $gap3inexistente * $valor;
-        $inicial= $gap3inicial * $valor;
-        $repetible= $gap3repetible * $valor;
-        $definida=  $gap3definida * $valor;
-        // $administrada= $gap3administrada * $valor;
-        // $optimizada= $gap3optimizada * $valor;
-        $resultado = $inexistente +  $inicial + $repetible +  $definida  * (100) / 30 ;
-        $avance = (($inexistente +  $inicial + $repetible +  $definida ) * $resultado) /100;
-        $resultadoporcentaje=round($resultado *(30)/100);
-        // dd($valor, $totaltres, $inexistente, $inicial, $repetible, $resultadoporcentaje, $avance, $resultado);
-        // dd($resultado);
-        //$porc2 = (round($gap12cont) * 20) / 100;
+        $puntaje_maximo = $preguntasGap3 * 5;
+        
+        $puntaje = 0;
+        foreach ($puntosGap3 as $punto) {
+            if ($punto->valoracion == '0') {
+                $puntaje += 0;
+            } elseif ($punto->valoracion == '1') {
+                $puntaje += 1;
+            } elseif ($punto->valoracion == '2') {
+                $puntaje += 2;
+            } elseif ($punto->valoracion == '3') {
+                $puntaje += 3;
+            } elseif ($punto->valoracion == '4') {
+                $puntaje += 4;
+            } elseif ($punto->valoracion == '5') {
+                $puntaje += 5;
+            } else {
+                $puntaje += 0;
+            }
+        }
+
+        $resultado = $puntaje;
+
+        $porcentaje_gap = ($resultado / $puntaje_maximo) * 100;
+        $porcentaje_analisis = (($porcentaje_gap * 30)/100);
+
         return [
-            'porcentaje' => round($resultado *(30)/100),
-            'verificar' => $resultado,
-
+        
+            'porcentaje_gap' => $porcentaje_gap,
+            'porcentaje' => $porcentaje_analisis,
+            'verificar' => $porcentaje_analisis,
         ];
-    }//termina func
+    }
+    
 }
