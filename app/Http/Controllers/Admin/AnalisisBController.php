@@ -77,11 +77,16 @@ class AnalisisBController extends Controller
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
         $porcentajeGap1 = (($porcentajeGap1 * 100) / 455);
         $porcentajeGap1 = (($porcentajeGap1 * 30) / 100);
-        $porcentajeGap2 = $this->GapDosPorc();
+
+        $puntosGap2 = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->get();       
+        $preguntasGap2 = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->count();
+        $porcentajeGap2 = $gapunoPorc->GapDosPorc($preguntasGap2, $puntosGap2);
+      
         $totaltres = GapTresSedatu::select('id')->where('analisis_brechas_id', '=', request()->id)->get()->count();
-        // dd($porcentajeGap2);
-       
-        $porcentajeGap3 = $this->GapTresPorc();
+
+        $puntosGap3 = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->get();   
+        $preguntasGap3 = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->count();
+        $porcentajeGap3 = $gapunoPorc->GapTresPorc($preguntasGap3, $puntosGap3);
    
         $conteos = [
             'Gap1' => [
@@ -132,82 +137,5 @@ class AnalisisBController extends Controller
         return view('admin.procesos.vistas');
     }
 
-    public function GapDosPorc()
-    {
 
-        $puntos = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->get();
-        $preguntas = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->count();
-        $puntaje_maximo = $preguntas * 5;
-
-        $puntaje = 0;
-        foreach ($puntos as $punto) {
-            if ($punto->valoracion == '0') {
-                $puntaje += 0;
-            } elseif ($punto->valoracion == '1') {
-                $puntaje += 1;
-            } elseif ($punto->valoracion == '2') {
-                $puntaje += 2;
-            } elseif ($punto->valoracion == '3') {
-                $puntaje += 3;
-            } elseif ($punto->valoracion == '4') {
-                $puntaje += 4;
-            } elseif ($punto->valoracion == '5') {
-                $puntaje += 5;
-            } else {
-                $puntaje += 0;
-            }
-        }
-
-        $resultado = $puntaje;
-
-        $porcentaje_gap = ($resultado / $puntaje_maximo) * 100;
-        $porcentaje_analisis = (($porcentaje_gap * 40)/100);
-
-        return [
-            'preguntas' => $preguntas,
-            'puntaje_maximo' => $puntaje_maximo,
-            'porcentaje_gap' => $porcentaje_gap,
-            'Porcentaje' => $porcentaje_analisis,
-            'Avance' => $porcentaje_analisis,
-        ];
-    }
-
-    public function GapTresPorc()
-    {
-
-        $puntos = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->get();
-        $preguntas = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', request()->id)->count();
-        $puntaje_maximo = $preguntas * 5;
-
-        $puntaje = 0;
-        foreach ($puntos as $punto) {
-            if ($punto->valoracion == '0') {
-                $puntaje += 0;
-            } elseif ($punto->valoracion == '1') {
-                $puntaje += 1;
-            } elseif ($punto->valoracion == '2') {
-                $puntaje += 2;
-            } elseif ($punto->valoracion == '3') {
-                $puntaje += 3;
-            } elseif ($punto->valoracion == '4') {
-                $puntaje += 4;
-            } elseif ($punto->valoracion == '5') {
-                $puntaje += 5;
-            } else {
-                $puntaje += 0;
-            }
-        }
-
-        $resultado = $puntaje;
-
-        $porcentaje_gap = ($resultado / $puntaje_maximo) * 100;
-        $porcentaje_analisis = (($porcentaje_gap * 30)/100);
-
-        return [
-        
-            'porcentaje_gap' => $porcentaje_gap,
-            'porcentaje' => $porcentaje_analisis,
-            'verificar' => $porcentaje_analisis,
-        ];
-    }
 }

@@ -7,6 +7,7 @@ use App\Functions\Porcentaje;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAnalisisBrechasRequest;
 use App\Models\AnalisisBrechaSedatu;
+use App\Models\Area;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Empleado;
 use App\Models\GapDosSedatu;
@@ -62,33 +63,23 @@ class AnalisisBrechaController extends Controller
             $table->editColumn('porcentaje_implementacion', function ($row) {
                 $gap1porcentaje = GapUnoSedatu::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', $row->id)->skip(3)->take(91);
                 $gap12porcentaje = GapUnoSedatu::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id', 'asc')->get()->where('analisis_brechas_id', '=', $row->id)->take(3);
-                $gap2inexistente = GapDosSedatu::select('id')->where('valoracion', '=', '0')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap2inicial = GapDosSedatu::select('id')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap2repetible = GapDosSedatu::select('id')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap2definida = GapDosSedatu::select('id')->where('valoracion', '=', '3')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap2administrada = GapDosSedatu::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap2optimizada = GapDosSedatu::select('id')->where('valoracion', '=', '5')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3porcentaje = GapTresSedatu::select('id', 'valoracion')->where('estado', '=', 'verificar')->get()->where('analisis_brechas_id', '=', $row->id);
-                $gap31porcentaje = GapTresSedatu::select('id', 'valoracion')->where('estado', '=', 'actuar')->get()->where('analisis_brechas_id', '=', $row->id);
-                $gap2noaplica = GapDosSedatu::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
-                
-                $gap3inexistente = GapTresSedatu::select('id')->where('valoracion', '=', '0')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3inicial = GapTresSedatu::select('id')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3repetible = GapTresSedatu::select('id')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3definida = GapTresSedatu::select('id')->where('valoracion', '=', '3')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3administrada = GapTresSedatu::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3optimizada = GapTresSedatu::select('id')->where('valoracion', '=', '5')->where('analisis_brechas_id', '=', $row->id)->count();
-                
-                $total = GapDosSedatu::select('id')->where('analisis_brechas_id','=', $row->id)->get()->count();
-                $totaltres = GapTresSedatu::select('id')->where('analisis_brechas_id','=', $row->id)->get()->count();
+               
                 $gapunoPorc = new Porcentaje();
                 $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
               
                 $porcentajeGap1=(($porcentajeGap1 * 100)/455);
                 $porcentajeGap1=(($porcentajeGap1*30)/100);
-                $porcentajeGap2 = $gapunoPorc->GapDosPorc($total, $gap2inexistente, $gap2inicial, $gap2repetible, $gap2definida, $gap2administrada, $gap2optimizada);
-                $porcentajeGap3 = $gapunoPorc->GapTresPorc($totaltres,$gap3porcentaje, $gap31porcentaje,$gap3optimizada,$gap3administrada, $gap3definida, $gap3repetible, $gap3inicial,$gap3inexistente);
+                
 
+                $puntosGap2 = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $row->id)->get();       
+                $preguntasGap2 = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $row->id)->count();
+                $porcentajeGap2 = $gapunoPorc->GapDosPorc($preguntasGap2, $puntosGap2);
+                // $porcentajeGap2 = $this->GapDosPorc($row);
+        
+                $puntosGap3 = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $row->id)->get();   
+                $preguntasGap3 = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $row->id)->count();
+                $porcentajeGap3 = $gapunoPorc->GapTresPorc($preguntasGap3, $puntosGap3);
+                
 
                 $cuentas = number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '');
                 return $cuentas . '%' ? $cuentas . '%' : '';
@@ -120,6 +111,7 @@ class AnalisisBrechaController extends Controller
 
         return view('admin.analisisdebrechas.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
+
 
     public function create()
     {
@@ -186,8 +178,15 @@ class AnalisisBrechaController extends Controller
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
         $porcentajeGap1=(($porcentajeGap1 * 100)/455);
         $porcentajeGap1=(($porcentajeGap1*30)/100);
-        $porcentajeGap2 = $gapunoPorc->GapDosPorc($total, $gap2inexistente, $gap2inicial, $gap2repetible, $gap2definida, $gap2administrada, $gap2optimizada);
-        $porcentajeGap3 = $gapunoPorc->GapTresPorc($totaltres,$gap3porcentaje, $gap31porcentaje,$gap3optimizada,$gap3administrada, $gap3definida, $gap3repetible, $gap3inicial,$gap3inexistente);
+        
+        $puntosGap2 = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $analisisBrecha->id)->get();       
+        $preguntasGap2 = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $porcentajeGap2 = $gapunoPorc->GapDosPorc($preguntasGap2, $puntosGap2);
+
+        $puntosGap3 = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $analisisBrecha->id)->get();   
+        $preguntasGap3 = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $porcentajeGap3 = $gapunoPorc->GapTresPorc($preguntasGap3, $puntosGap3);
+
         $cuentas = number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '');
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
@@ -235,4 +234,85 @@ class AnalisisBrechaController extends Controller
 
         return response()->json(['puesto' => $empleados->puesto, 'area' => $areas->area]);
     }
+
+    // public function GapDosPorc($row)
+    // {
+
+    //     $puntosGap2 = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $row->id)->get();
+       
+    //     $preguntasGap2 = GapDosSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $row->id)->count();
+
+    //     $puntaje_maximo = $preguntasGap2 * 5;
+    //     $puntaje = 0;
+    //     foreach ($puntosGap2 as $punto) {
+    //         if ($punto->valoracion == '0') {
+    //             $puntaje += 0;
+    //         } elseif ($punto->valoracion == '1') {
+    //             $puntaje += 1;
+    //         } elseif ($punto->valoracion == '2') {
+    //             $puntaje += 2;
+    //         } elseif ($punto->valoracion == '3') {
+    //             $puntaje += 3;
+    //         } elseif ($punto->valoracion == '4') {
+    //             $puntaje += 4;
+    //         } elseif ($punto->valoracion == '5') {
+    //             $puntaje += 5;
+    //         } else {
+    //             $puntaje += 0;
+    //         }
+    //     }
+
+    //     $resultado = $puntaje;
+
+    //     $porcentaje_gap = ($resultado / $puntaje_maximo) * 100;
+    //     $porcentaje_analisis = (($porcentaje_gap * 40)/100);
+
+    //     return [
+    //         'preguntas' => $preguntasGap2,
+    //         'puntaje_maximo' => $puntaje_maximo,
+    //         'porcentaje_gap' => $porcentaje_gap,
+    //         'Porcentaje' => $porcentaje_analisis,
+    //         'Avance' => $porcentaje_analisis,
+    //     ];
+    // }
+
+    // public function GapTresPorc($row)
+    // {
+
+    //     $puntos = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $row->id)->get();   
+    //     $preguntas = GapTresSedatu::select('id', 'valoracion', 'analisis_brechas_id')->where('analisis_brechas_id', '=', $row->id)->count();
+        
+    //     $puntaje_maximo = $preguntas * 5;
+
+    //     $puntaje = 0;
+    //     foreach ($puntos as $punto) {
+    //         if ($punto->valoracion == '0') {
+    //             $puntaje += 0;
+    //         } elseif ($punto->valoracion == '1') {
+    //             $puntaje += 1;
+    //         } elseif ($punto->valoracion == '2') {
+    //             $puntaje += 2;
+    //         } elseif ($punto->valoracion == '3') {
+    //             $puntaje += 3;
+    //         } elseif ($punto->valoracion == '4') {
+    //             $puntaje += 4;
+    //         } elseif ($punto->valoracion == '5') {
+    //             $puntaje += 5;
+    //         } else {
+    //             $puntaje += 0;
+    //         }
+    //     }
+
+    //     $resultado = $puntaje;
+
+    //     $porcentaje_gap = ($resultado / $puntaje_maximo) * 100;
+    //     $porcentaje_analisis = (($porcentaje_gap * 30)/100);
+
+    //     return [
+        
+    //         'porcentaje_gap' => $porcentaje_gap,
+    //         'porcentaje' => $porcentaje_analisis,
+    //         'verificar' => $porcentaje_analisis,
+    //     ];
+    // }
 }
