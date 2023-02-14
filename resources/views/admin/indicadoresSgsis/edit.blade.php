@@ -260,7 +260,7 @@
                             De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
                         <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
                             name="verde" id="verde" value="{{ old('verde', $indicadoresSgsi->verde) }}"
-                            placeholder="" min="" required>
+                            placeholder="" min="0" required>
                         @if ($errors->has('verde'))
                             <div class="text-danger">
                                 {{ $errors->first('verde') }}

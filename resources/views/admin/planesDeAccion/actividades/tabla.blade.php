@@ -41,7 +41,7 @@
                 <label for="inicio"><i class="iconos-crear fas fa-calendar-day"></i> Inicio <span
                         class="text-danger">*</span></label><i class="fas fa-info-circle"
                     style="font-size:12pt; float: right;" title="Fecha de inicio de la actividad"></i>
-                <input type="date" class="form-control" id="inicio" name="inicio">
+                <input type="date" min="1945-01-01" class="form-control" id="inicio" name="inicio">
                 {{-- <small id="inicioHelp" class="form-text text-muted">Fecha de inicio de la actividad</small> --}}
                 <small class="p-0 m-0 text-xs error_inicio errores text-danger"></small>
             </div>
@@ -53,7 +53,7 @@
                     style="font-size:12pt; float: right;"
                     title="Fecha de finalización de la
                         actividad"></i>
-                <input type="date" class="form-control" id="finalizacion" name="finalizacion">
+                <input type="date" min="1945-01-01" class="form-control" id="finalizacion" name="finalizacion">
                 {{-- <small id="finalizacionHelp" class="form-text text-muted">Fecha de finalización de la
                     actividad</small> --}}
                 <small class="p-0 m-0 text-xs error_finalizacion errores text-danger"></small>
@@ -152,7 +152,7 @@
                                 case 'STATUS_WAITING':
                                     $estatus = 'En Espera';
                                     $color="#F79136";
-                            
+
                                     break;
                                 case 'STATUS_UNDEFINED':
                                     $estatus = 'Indefinido';

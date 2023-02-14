@@ -161,7 +161,7 @@
                                             <option value="{{ $responsable->id }}"
                                                 data-area="{{ $responsable->area->area }}"
                                                 data-puesto="{{ $responsable->puesto }}">
-                                                {{ $responsable->name }}{{ $responsable->id }} </option>
+                                                {{ $responsable->name }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('responsable_id'))
