@@ -26,8 +26,8 @@
 
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="fechainicio"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de inicio</label>
-                <input class="form-control {{ $errors->has('fechainicio') ? 'is-invalid' : '' }}" type="datetime-local"
-                name="fechainicio" id="fechainicio" min="1945-01-01T00:00" value="{{ old('fechainicio') }}">
+                <input class="form-control {{ $errors->has('fechainicio') ? 'is-invalid' : '' }}" type="date"
+                name="fechainicio" id="fechainicio" min="1945-01-01" value="{{ old('fechainicio') }}">
                 @if($errors->has('fechainicio'))
                 <div class="invalid-feedback">
                     {{ $errors->first('fechainicio') }}
@@ -37,8 +37,8 @@
 
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="fechafin"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin</label>
-                <input class="form-control {{ $errors->has('fechafin') ? 'is-invalid' : '' }}" type="datetime-local"
-                name="fechafin" id="fechafin" min="1945-01-01T00:00" value="{{ old('fechafin') }}">
+                <input class="form-control {{ $errors->has('fechafin') ? 'is-invalid' : '' }}" type="date"
+                name="fechafin" id="fechafin" min="1945-01-01" value="{{ old('fechafin') }}">
                 @if($errors->has('fechafin'))
                 <div class="invalid-feedback">
                     {{ $errors->first('fechafin') }}

@@ -178,20 +178,27 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
             let elaboro = document.querySelector('#id_elaboro');
             let area_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-area');
             let puesto_init = elaboro.options[elaboro.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('id_puesto').innerHTML = puesto_init;
-            document.getElementById('id_area').innerHTML = area_init;
+            document.getElementById('id_puesto').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('id_area').innerHTML = recortarTexto(area_init);
             elaboro.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('id_puesto').innerHTML = puesto;
-                document.getElementById('id_area').innerHTML = area;
+                document.getElementById('id_puesto').innerHTML = recortarTexto(puesto);
+                document.getElementById('id_area').innerHTML = recortarTexto(area);
             })
+
+            function recortarTexto(texto, length = 30) {
+                let trimmedString = texto?.length > length ?
+                    texto.substring(0, length - 3) + "..." :
+                    texto;
+                return trimmedString;
+            }
         });
     </script>
 @endsection

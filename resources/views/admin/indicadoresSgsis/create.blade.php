@@ -235,7 +235,7 @@
                             <label class="required" for="amarillo"><span class="dotyellow"></span> De <span
                                     id="textorojo2"></span> a <span id="textoamarillo"></span>:</label>
                             <input class="form-control {{ $errors->has('amarillo') ? 'is-invalid' : '' }}" type="number"
-                                name="amarillo" id="amarillo" value="{{ old('amarillo', '') }}" min="" required>
+                                name="amarillo" id="amarillo" value="{{ old('amarillo', '') }}" min="0" required>
                             @if ($errors->has('amarillo'))
                                 <div class="text-danger">
                                     {{ $errors->first('amarillo') }}
@@ -250,7 +250,7 @@
                             <span class="dotverde"></span>
                             De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
                         <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
-                            name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min=""
+                            name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min="0"
                             required>
                         @if ($errors->has('verde'))
                             <div class="text-danger">

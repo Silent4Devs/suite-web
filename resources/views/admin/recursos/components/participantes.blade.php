@@ -2,7 +2,7 @@
     <div class="row">
         <div class="form-group col-sm-12 col-md-12 col-lg-12">
             <label for="selectGrupoDeParticipantes"><i class="fas fa-search iconos-crear"></i>Selecciona a los
-                partipantes por: </label>
+                participantes por: </label>
             <select id="selectGrupoDeParticipantes" name="tipo_de_grupo" class="form-control">
                 <option value="">-- Selecciona un opción --</option>
                 <option value="all"
