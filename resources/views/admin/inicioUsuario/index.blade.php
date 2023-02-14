@@ -274,10 +274,10 @@
             "></div>
             <img class="img_empleado_presentacion_mis_datos" src="{{ asset('storage/empleados/imagenes') }}/{{ $usuario->empleado ? $usuario->empleado->avatar : 'user.png' }}">
 
-            <h3 style="color: #3086AF; margin-top:30px; text-align: center;">{{ $usuario->empleado->name }}</h3>
-            <h5 style="color: #000; margin-top:15px; text-align: center;">{{ $usuario->empleado->puesto }}</h5>
-            <h6 style="color: #788BAC; margin-top:15px; text-align: center;">{{ $usuario->empleado->area->area }}</h6>
-            <h6 style="color: #747474; margin-top:15px; text-align: center;"><strong style="color:#3086AF;">Empleado:</strong> {{ $usuario->empleado->n_empleado}}</h6>
+            <h3 style="color: #3086AF; margin-top:30px; text-align: center;">{{ $usuario->empleado ? $usuario->empleado->name : "Sin registro"}}</h3>
+            <h5 style="color: #000; margin-top:15px; text-align: center;">{{ $usuario->empleado ? $usuario->empleado->puesto : "Sin registro" }}</h5>
+            <h6 style="color: #788BAC; margin-top:15px; text-align: center;">{{ $usuario->empleado ? $usuario->empleado->area->area : "Sin registro"}}</h6>
+            <h6 style="color: #747474; margin-top:15px; text-align: center;"><strong style="color:#3086AF;">Empleado:</strong> {{ $usuario->empleado ? $usuario->empleado->n_empleado : "Sin registro"}}</h6>
 
             <div class="caja-cards-mobile-datos mt-5">
                 <div class="card card-body" data-toggle="modal" data-target="#mis_datos_mobile">
@@ -334,7 +334,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-person iconos-crear"></i>N° Empleado</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado->n_empleado }}
+                                        {{ $usuario->empleado ? $usuario->empleado->n_empleado : "Sin registro" }}
                                     </div>
                                 </div>
                             @endif
@@ -342,7 +342,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-envelope iconos-crear"></i> Email</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado->email }}
+                                        {{ $usuario->empleado ? $usuario->empleado->email : "Sin registro"}}
                                     </div>
                                 </div>
                             @endif
@@ -350,7 +350,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-calendar2-event iconos-crear"></i> Fecha de ingreso</label>
                                     <div class="text-muted">
-                                        {{ \Carbon\Carbon::parse($usuario->empleado->antiguedad)->format('d/m/Y') }}
+                                        {{ $usuario->empleado ? \Carbon\Carbon::parse($usuario->empleado->antiguedad)->format('d/m/Y') : "Sin registro"}}
                                     </div>
                                 </div>
                             @endif
@@ -358,7 +358,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-person iconos-crear"></i> Jefe inmediato</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado->supervisor ? $usuario->empleado->supervisor->name : 'Sin Jefe Inmediato' }}
+                                        {{ $usuario->empleado ? $usuario->empleado->supervisor->name : 'Sin Jefe Inmediato' }}
                                     </div>
                                 </div>
                             @endif
@@ -366,7 +366,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-diagram-3 iconos-crear"></i> Área</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado->area ? $usuario->empleado->area->area : 'Dato no registrado' }}
+                                        {{ $usuario->empleado ? $usuario->empleado->area->area : 'Dato no registrado' }}
                                     </div>
                                 </div>
                             @endif
@@ -374,7 +374,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-person-badge iconos-crear"></i> Puesto</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado->puesto ? $usuario->empleado->puesto : 'Dato no registrado' }}
+                                        {{ $usuario->empleado ? $usuario->empleado->puesto : 'Dato no registrado' }}
                                     </div>
                                 </div>
                             @endif
@@ -382,7 +382,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-building iconos-crear"></i> Sede</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado->sede ? $usuario->empleado->sede->sede : 'Dato no registrado' }}
+                                        {{ $usuario->empleado ? $usuario->empleado->sede : 'Dato no registrado' }}
                                     </div>
                                 </div>
                             @endif
@@ -390,7 +390,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-telephone iconos-crear"></i> Teléfono</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado->telefono ? $usuario->empleado->telefono : 'Dato no registrado' }}
+                                        {{ $usuario->empleado ? $usuario->empleado->telefono : 'Dato no registrado' }}
                                     </div>
                                 </div>
                             @endif
@@ -400,7 +400,7 @@
                             <div class="form-group">
                                 <label><i class="bi bi-calendar4-event iconos-crear"></i> Cumpleaños</label>
                                 <div class="text-muted">
-                                    {{ \Carbon\Carbon::parse($usuario->empleado->cumpleaños)->format('d-m-Y') ?: 'Dato no registrado' }}
+                                    {{ $usuario->empleado ?\Carbon\Carbon::parse($usuario->empleado->cumpleaños)->format('d-m-Y') : 'Dato no registrado' }}
                                 </div>
                             </div>
                         @endif
@@ -408,7 +408,7 @@
                             <div class="form-group">
                                 <label><i class="bi bi-person-badge iconos-crear"></i> Perfil</label>
                                 <div class="text-muted">
-                                    {{ $usuario->empleado->perfil ? $usuario->empleado->perfil->nombre : 'Dato no registrado' }}
+                                    {{ $usuario->empleado ? $usuario->empleado->perfil->nombre : 'Dato no registrado' }}
                                 </div>
                             </div>
                         @endif
@@ -416,7 +416,7 @@
                             <div class="form-group">
                                 <label><i class="bi bi-person iconos-crear"></i> Genero</label>
                                 <div class="text-muted">
-                                    {{ $usuario->empleado->genero ? $usuario->empleado->genero : 'Dato no registrado' }}
+                                    {{ $usuario->empleado ? $usuario->empleado->genero : 'Dato no registrado' }}
                                 </div>
                             </div>
                         @endif
@@ -424,7 +424,7 @@
                             <div class="form-group">
                                 <label><i class="bi bi-reception-3 iconos-crear"></i> Estatus</label>
                                 <div class="text-muted">
-                                    {{ $usuario->empleado->estatus ? $usuario->empleado->estatus : 'Dato no registrado' }}
+                                    {{ $usuario->empleado ? $usuario->empleado->estatus : 'Dato no registrado' }}
                                 </div>
                             </div>
                         @endif
@@ -432,7 +432,7 @@
                             <div class="form-group">
                                 <label><i class="bi bi-geo-alt iconos-crear"></i> Dirección</label>
                                 <div class="text-muted">
-                                    {{ $usuario->empleado->direccion ? $usuario->empleado->direccion : 'Dato no registrado' }}
+                                    {{ $usuario->empleado ? $usuario->empleado->direccion : 'Dato no registrado' }}
                                 </div>
                             </div>
                         @endif
@@ -511,6 +511,7 @@
                     <div class="modal-body">
                         <p style="color: #3086AF;">Estos son los activos que tienes a tu cargo en estos momentos.</p>
 
+                        @if($activos)
                         @foreach ($activos as $activo)
                             <div class="d-flex mt-4">
                                 <i class="bi bi-pc-display card card-body d-flex align-items-center justify-content-center" style="background-color: #F6F6F6; font-size: 30px; max-width:30px; max-height: 30px; border-radius:100px;"></i>
@@ -522,6 +523,17 @@
                             </div>
                             <hr>
                         @endforeach
+                            @else
+                            <div class="d-flex mt-4">
+                                <i class="bi bi-pc-display card card-body d-flex align-items-center justify-content-center" style="background-color: #F6F6F6; font-size: 30px; max-width:30px; max-height: 30px; border-radius:100px;"></i>
+                                <div class="ml-3">
+                                    <h6 class="m-0">ACT-Dato no registrado</h6>
+                                    <p class="m-0">Dato no registrado</p>
+                                    <p class="m-0"><small>Dato no registrado</small></p>
+                                </div>
+                            </div>
+                            <hr>
+                        @endif
 
                         <div class="text-right mt-5">
                             <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>

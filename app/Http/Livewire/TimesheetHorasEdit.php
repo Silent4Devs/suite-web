@@ -35,7 +35,9 @@ class TimesheetHorasEdit extends Component
     {
         if ($id != null) {
             $hora_eliminada = TimesheetHoras::find($id);
-            $hora_eliminada->delete();
+            $hora_eliminada->delete($id);
+         
+           
         }
         $this->contador = $this->contador - 1;
         $this->emit('calcularSumatoriasFacturables');
