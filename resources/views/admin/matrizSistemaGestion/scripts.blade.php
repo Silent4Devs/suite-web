@@ -5,16 +5,24 @@
             let area_init = responsable.options[responsable.selectedIndex].getAttribute('data-area');
             let puesto_init = responsable.options[responsable.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('id_puesto').innerHTML = puesto_init;
-            document.getElementById('id_area').innerHTML = area_init;
+            document.getElementById('id_puesto').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('id_area').innerHTML = recortarTexto(area_init);
             responsable.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('id_puesto').innerHTML = puesto;
-                document.getElementById('id_area').innerHTML = area;
+                document.getElementById('id_puesto').innerHTML = recortarTexto(puesto);
+                document.getElementById('id_area').innerHTML = recortarTexto(area);
             })
         });
+
+        function recortarTexto(texto, length = 30) {
+            let trimmedString = texto?.length > length ?
+                texto.substring(0, length - 3) + "..." :
+                texto;
+            return trimmedString;
+        }
+
     </script>
 
     <script>
@@ -23,16 +31,24 @@
             let area_init = custodio.options[custodio.selectedIndex].getAttribute('data-area');
             let puesto_init = custodio.options[custodio.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('id_custodio_puesto').innerHTML = puesto_init;
-            document.getElementById('id_custodio_area').innerHTML = area_init;
+            document.getElementById('id_custodio_puesto').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('id_custodio_area').innerHTML = recortarTexto(area_init);
             custodio.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('id_custodio_puesto').innerHTML = puesto;
-                document.getElementById('id_custodio_area').innerHTML = area;
+                document.getElementById('id_custodio_puesto').innerHTML = recortarTexto(puesto);
+                document.getElementById('id_custodio_area').innerHTML = recortarTexto(area);
             })
         });
+
+        function recortarTexto(texto, length = 30) {
+            let trimmedString = texto?.length > length ?
+                texto.substring(0, length - 3) + "..." :
+                texto;
+            return trimmedString;
+        }
+
     </script>
 
     <script>
@@ -135,7 +151,7 @@
             <option value="9">MUY ALTO (9)</option>
             <option value="6">ALTO (6)</option>
             <option value="3">MEDIO (3)</option>
-            <option value="0">BAJO (0)</option>             
+            <option value="0">BAJO (0)</option>
            `
                 HTMLProbabilidadRes = `
             <option value="" disabled="" selected="">Selecciona una opción</option>
@@ -149,7 +165,7 @@
             <option value="9">MUY ALTO (9)</option>
             <option value="6">ALTO (6)</option>
             <option value="3">MEDIO (3)</option>
-            <option value="0">BAJO (0)</option>             
+            <option value="0">BAJO (0)</option>
            `
             } else {
                 HTMLProbabilidad = `
@@ -164,7 +180,7 @@
             <option value="0">MUY ALTO (0)</option>
             <option value="3">ALTO (3)</option>
             <option value="6">MEDIO (6)</option>
-            <option value="9">BAJO (9)</option>             
+            <option value="9">BAJO (9)</option>
            `
                 HTMLProbabilidadRes = `
             <option value="" disabled="" selected="">Selecciona una opción</option>
@@ -178,7 +194,7 @@
             <option value="0">MUY ALTO (0)</option>
             <option value="3">ALTO (3)</option>
             <option value="6">MEDIO (6)</option>
-            <option value="9">BAJO (9)</option>             
+            <option value="9">BAJO (9)</option>
            `
             }
             $("#nivelriesgo").attr("value", 0);
