@@ -186,7 +186,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn_cancelar" data-dismiss="modal">Cancelar</button>
                             <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
                         </div>
                     </div>

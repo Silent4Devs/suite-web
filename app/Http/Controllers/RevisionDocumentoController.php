@@ -116,6 +116,7 @@ class RevisionDocumentoController extends Controller
                                 break;
                             case 'proceso':
                                 $path_documentos_aprobacion .= '/procesos';
+                                break;
                             case 'formato':
                                 $path_documentos_aprobacion .= '/formatos';
                                 break;
@@ -398,6 +399,9 @@ class RevisionDocumentoController extends Controller
         $this->createDocumentosPublicadosIfNotExists();
         $path_documentos_publicados = 'public/Documentos publicados';
         switch ($documento->tipo) {
+            case 'proceso':
+                $path_documentos_publicados .= '/procesos';
+                break;
             case 'politica':
                 $path_documentos_publicados .= '/politicas';
                 break;
@@ -419,9 +423,6 @@ class RevisionDocumentoController extends Controller
             case 'externo':
                 $path_documentos_publicados .= '/externos';
                 break;
-            case 'proceso':
-                $path_documentos_publicados .= '/procesos';
-                break;
             case 'formato':
                 $path_documentos_publicados .= '/formatos';
                 break;
@@ -439,9 +440,10 @@ class RevisionDocumentoController extends Controller
         if (Storage::exists($path_documento_aprobacion)) {
             Storage::move($path_documento_aprobacion, $ruta_publicacion);
         }
+
         $ruta_publicacion_documento_anterior = $path_documentos_publicados . '/' . $documento->codigo . '-' . $documento->nombre . '-v' . intval($documento->version - 1) . '-publicado.' . $extension;
 
-        // dd($ruta_publicacion);
+        //dd($ruta_publicacion);
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
             if (Storage::exists($ruta_publicacion_documento_anterior)) {
                 $this->moveBeforeVersionOfDirectory($ruta_publicacion_documento_anterior, $documento);

@@ -106,6 +106,12 @@ class MatrizRiesgo extends Model
         '0'     => 'No',
     ];
 
+    const TIPO_TRATAMIENTO_SELECT = [
+        '1' => 'Aceptar',
+        '0' => 'Mitigar',
+        '2' => 'transferir',
+    ];
+
     protected $casts = [
         'plan_de_accion' => 'string',
         'confidencialidad_cid' => 'string',
