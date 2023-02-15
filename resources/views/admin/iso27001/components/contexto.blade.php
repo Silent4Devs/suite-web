@@ -10,8 +10,8 @@
                     </div>
                 </a></li>
         @endcan
-        @can('plan_de_implementacion_acceder')
-            <li><a href="{{ route('admin.planTrabajoBase.index') }}">
+        @can('planes_de_accion_acceder')
+            <li><a href="{{ route('admin.planes-de-accion.index') }}">
                     <div>
                         <i class="bi bi-file-earmark-arrow-up"></i><br>
                         Plan de implementación
