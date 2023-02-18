@@ -656,6 +656,10 @@
                         texto.style.fontWeight = '600';
                         container.appendChild(texto);
                         container.appendChild(img);
+                        const empleado = document.querySelector('#participantes_search');
+                        const areas = document.querySelector('#areas');
+                        empleado.setAttribute('disabled');
+                        areas.setAttribute('disabled');
                     },
                     success: function(response) {
                         let container = document.querySelector('.imagen-search');
@@ -679,6 +683,10 @@
                             'direction': orientacion,
                             'urlExportCSV': "{{ route('admin.organigrama.exportar') }}"
                         });
+                        const empleado = document.querySelector('#participantes_search');
+                        const areas = document.querySelector('#areas');
+                        empleado.removeAttribute('disabled');
+                        areas.removeAttribute('disabled');
                         document.getElementById("contenedorOrganigrama").style.pointerEvents =
                             'all';
                     },
@@ -702,6 +710,10 @@
                         texto.style.fontWeight = '600';
                         container.appendChild(texto);
                         container.appendChild(img);
+                        const empleado = document.querySelector('#participantes_search');
+                        const areas = document.querySelector('#areas');
+                        empleado.removeAttribute('disabled');
+                        areas.removeAttribute('disabled');
                     }
                 });
             }

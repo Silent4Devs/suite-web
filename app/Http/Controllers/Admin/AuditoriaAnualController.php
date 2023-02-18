@@ -101,9 +101,11 @@ class AuditoriaAnualController extends Controller
         abort_if(Gate::denies('programa_anual_auditoria_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'nombre' => 'required',
-            'objetivo' => 'required',
-            'alcance' => 'required',
+            'nombre' => 'required|string',
+            'fechainicio' => 'nullable|date',
+            'fechafin' => 'nullable|date',
+            'objetivo' => 'required|string',
+            'alcance' => 'required|string',
         ]);
 
         $auditoriaAnual = AuditoriaAnual::create($request->all());
@@ -129,9 +131,11 @@ class AuditoriaAnualController extends Controller
         abort_if(Gate::denies('programa_anual_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-            'nombre' => 'required',
-            'objetivo' => 'required',
-            'alcance' => 'required',
+            'nombre' => 'required|string',
+            'fechainicio' => 'nullable|date',
+            'fechafin' => 'nullable|date',
+            'objetivo' => 'required|string',
+            'alcance' => 'required|string',
         ]);
 
         $auditoriaAnual->update($request->all());

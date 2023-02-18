@@ -28,7 +28,7 @@
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="fechainicio"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio</label>
                 <input class="form-control {{ $errors->has('fechainicio') ? 'is-invalid' : '' }}" type="date"
-                name="fechainicio" id="fechainicio" min="1945-01-01T00:00"
+                name="fechainicio" id="fechainicio" min="1945-01-01"
                 value="{{ old('fechainicio', $auditoriaAnual->fechainicio ? \Carbon\Carbon::parse($auditoriaAnual->fechainicio)->format('Y-m-d') : null) }}">
                 @if($errors->has('fechainicio'))
                 <div class="invalid-feedback">
@@ -40,7 +40,7 @@
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="fechafin"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin</label>
                 <input class="form-control {{ $errors->has('fechafin', $auditoriaAnual->fechafin) ? 'is-invalid' : '' }}" type="date"
-                name="fechafin" id="fechafin" min="1945-01-01T00:00"
+                name="fechafin" id="fechafin" min="1945-01-01"
                 value="{{ old('fechafin', $auditoriaAnual->fechafin ? \Carbon\Carbon::parse($auditoriaAnual->fechafin)->format('Y-m-d') : null) }}">
                 @if($errors->has('fechafin'))
                 <div class="invalid-feedback">
@@ -50,9 +50,9 @@
             </div>
 
             <div class="form-group col-md-12 col-sm-12  mt-3">
-                <label for="objetivo"><i class="fas fa-bullseye iconos-crear"></i>Objetivo</label>
+                <label for="objetivo" class="required"><i class="fas fa-bullseye iconos-crear"></i>Objetivo</label>
                 <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
-                    name="objetivo" id="objetivo">{{ old('objetivo', $auditoriaAnual->objetivo) }}</textarea>
+                    name="objetivo" id="objetivo" required>{{ old('objetivo', $auditoriaAnual->objetivo) }}</textarea>
                 @if($errors->has('objetivo'))
                     <div class="invalid-feedback">
                         {{ $errors->first('objetivo') }}
@@ -62,9 +62,9 @@
             </div>
 
             <div class="form-group col-md-12 col-sm-12  mt-3">
-                <label for="alcance"><i class="fas fa-chart-line iconos-crear"></i>Alcance</label>
+                <label for="alcance" class="required"><i class="fas fa-chart-line iconos-crear"></i>Alcance</label>
                 <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}"
-                    name="alcance" id="alcance">{{ old('alcance', $auditoriaAnual->alcance) }}</textarea>
+                    name="alcance" id="alcance" required>{{ old('alcance', $auditoriaAnual->alcance) }}</textarea>
                 @if($errors->has('alcance'))
                     <div class="invalid-feedback">
                         {{ $errors->first('alcance') }}

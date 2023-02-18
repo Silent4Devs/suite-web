@@ -85,7 +85,7 @@
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="fecha_inicio"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha
                     inicio</label>
-                <input class="form-control mt-2" type="date" id="fecha_inicio"
+                <input class="form-control mt-2" type="date" id="fecha_inicio" min="1945-01-01"
                     name="fecha_inicio" min="1945-01-01" value="{{ old('fecha_inicio',\Carbon\Carbon::parse($auditoriaInterna->fecha_inicio)->format('Y-m-d')) }}">
                 @if ($errors->has('fecha_inicio'))
                     <div class="invalid-feedback">
@@ -164,7 +164,9 @@
             </div>
             <div class="form-group col-md-9">
                 <label for="totalnoconformidadmenor">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmenor') }}</label>
-                <input class="form-control {{ $errors->has('totalnoconformidadmenor') ? 'is-invalid' : '' }}" type="number" name="totalnoconformidadmenor" id="totalnoconformidadmenor" value="{{ old('totalnoconformidadmenor', $auditoriaInterna->totalnoconformidadmenor) }}">
+                <input class="form-control {{ $errors->has('totalnoconformidadmenor') ? 'is-invalid' : '' }}"
+                type="number" name="totalnoconformidadmenor" id="totalnoconformidadmenor" value="{{ old('totalnoconformidadmenor', $auditoriaInterna->totalnoconformidadmenor) }}"
+                min="0">
                 @if($errors->has('totalnoconformidadmenor'))
                     <div class="invalid-feedback">
                         {{ $errors->first('totalnoconformidadmenor') }}
@@ -187,7 +189,9 @@
             </div>
             <div class="form-group col-md-9">
                 <label for="totalnoconformidadmayor">{{ trans('cruds.auditoriaInterna.fields.totalnoconformidadmayor') }}</label>
-                <input class="form-control {{ $errors->has('totalnoconformidadmayor') ? 'is-invalid' : '' }}" type="number" name="totalnoconformidadmayor" id="totalnoconformidadmayor" value="{{ old('totalnoconformidadmayor', $auditoriaInterna->totalnoconformidadmayor) }}" step="0.01" max="99">
+                <input class="form-control {{ $errors->has('totalnoconformidadmayor') ? 'is-invalid' : '' }}" type="number"
+                name="totalnoconformidadmayor" id="totalnoconformidadmayor" value="{{ old('totalnoconformidadmayor', $auditoriaInterna->totalnoconformidadmayor) }}"
+                step="0.01" min="0" max="99">
                 @if($errors->has('totalnoconformidadmayor'))
                     <div class="invalid-feedback">
                         {{ $errors->first('totalnoconformidadmayor') }}
@@ -210,7 +214,9 @@
             </div>
             <div class="form-group col-md-9">
                 <label for="totalobservacion">{{ trans('cruds.auditoriaInterna.fields.totalobservacion') }}</label>
-                <input class="form-control {{ $errors->has('totalobservacion') ? 'is-invalid' : '' }}" type="number" name="totalobservacion" id="totalobservacion" value="{{ old('totalobservacion', $auditoriaInterna->totalobservacion) }}" step="0.01" max="99">
+                <input class="form-control {{ $errors->has('totalobservacion') ? 'is-invalid' : '' }}" type="number"
+                name="totalobservacion" id="totalobservacion" value="{{ old('totalobservacion', $auditoriaInterna->totalobservacion) }}"
+                step="0.01" min="0" max="99">
                 @if($errors->has('totalobservacion'))
                     <div class="invalid-feedback">
                         {{ $errors->first('totalobservacion') }}
@@ -233,7 +239,9 @@
             </div>
             <div class="form-group col-md-9">
                 <label for="totalmejora">{{ trans('cruds.auditoriaInterna.fields.totalmejora') }}</label>
-                <input class="form-control {{ $errors->has('totalmejora') ? 'is-invalid' : '' }}" type="number" name="totalmejora" id="totalmejora" value="{{ old('totalmejora', $auditoriaInterna->totalmejora) }}" step="0.01" max="99">
+                <input class="form-control {{ $errors->has('totalmejora') ? 'is-invalid' : '' }}" type="number"
+                name="totalmejora" id="totalmejora" value="{{ old('totalmejora', $auditoriaInterna->totalmejora) }}"
+                step="0.01" min="0" max="99">
                 @if($errors->has('totalmejora'))
                     <div class="invalid-feedback">
                         {{ $errors->first('totalmejora') }}

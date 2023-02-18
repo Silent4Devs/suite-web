@@ -170,32 +170,40 @@
                         let reporto = document.querySelector('#id_reporto');
                         let area_init = reporto.options[reporto.selectedIndex].getAttribute('data-area');
                         let puesto_init = reporto.options[reporto.selectedIndex].getAttribute('data-puesto');
-                        document.getElementById('reporto_puesto').innerHTML = puesto_init
-                        document.getElementById('reporto_area').innerHTML = area_init
+                        document.getElementById('reporto_puesto').innerHTML = recortarTexto(puesto_init);
+                        document.getElementById('reporto_area').innerHTML = recortarTexto(area_init);
 
                         let registro = document.querySelector('#id_registro');
                         let area = registro.options[registro.selectedIndex].getAttribute('data-area');
                         let puesto = registro.options[registro.selectedIndex].getAttribute('data-puesto');
-                        document.getElementById('registro_puesto').innerHTML = puesto
-                        document.getElementById('registro_area').innerHTML = area
+                        document.getElementById('registro_puesto').innerHTML = recortarTexto(puesto);
+                        document.getElementById('registro_area').innerHTML = recortarTexto(area);
 
 
                         reporto.addEventListener('change', function(e) {
                             e.preventDefault();
                             let area = this.options[this.selectedIndex].getAttribute('data-area');
                             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                            document.getElementById('reporto_puesto').innerHTML = puesto
-                            document.getElementById('reporto_area').innerHTML = area
+                            document.getElementById('reporto_puesto').innerHTML = recortarTexto(puesto);
+                            document.getElementById('reporto_area').innerHTML = recortarTexto(area);
                         })
                         registro.addEventListener('change', function(e) {
                             e.preventDefault();
                             let area = this.options[this.selectedIndex].getAttribute('data-area');
                             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                            document.getElementById('registro_puesto').innerHTML = puesto
-                            document.getElementById('registro_area').innerHTML = area
+                            document.getElementById('registro_puesto').innerHTML = recortarTexto(puesto);
+                            document.getElementById('registro_area').innerHTML = recortarTexto(area);
                         })
 
                     });
+
+                    function recortarTexto(texto, length = 30)
+                    {
+                        let trimmedString = texto?.length > length ?
+                            texto.substring(0, length - 3) + "..." :
+                            texto;
+                        return trimmedString;
+                    }
                 </script>
 
                 <script>
@@ -205,29 +213,37 @@
                         let atencion = document.querySelector('#id_atencion');
                         let area_init = atencion.options[atencion.selectedIndex].getAttribute('data-area');
                         let puesto_init = atencion.options[atencion.selectedIndex].getAttribute('data-puesto');
-                        document.getElementById('atencion_puesto').innerHTML = puesto_init
-                        document.getElementById('atencion_area').innerHTML = area_init
+                        document.getElementById('atencion_puesto').innerHTML = recortarTexto(puesto_init);
+                        document.getElementById('atencion_area').innerHTML = recortarTexto(area_init);
 
                         let autorizo = document.querySelector('#id_autorizo');
                         let area = autorizo.options[autorizo.selectedIndex].getAttribute('data-area');
                         let puesto = autorizo.options[autorizo.selectedIndex].getAttribute('data-puesto');
-                        document.getElementById('autorizo_puesto').innerHTML = puesto
-                        document.getElementById('autorizo_area').innerHTML = area
+                        document.getElementById('autorizo_puesto').innerHTML = recortarTexto(puesto);
+                        document.getElementById('autorizo_area').innerHTML = recortarTexto(area);
 
                         atencion.addEventListener('change', function(e) {
                             e.preventDefault();
                             let area = this.options[this.selectedIndex].getAttribute('data-area');
                             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                            document.getElementById('atencion_puesto').innerHTML = puesto
-                            document.getElementById('atencion_area').innerHTML = area
+                            document.getElementById('atencion_puesto').innerHTML = recortarTexto(puesto);
+                            document.getElementById('atencion_area').innerHTML = recortarTexto(area);
                         })
                         autorizo.addEventListener('change', function(e) {
                             e.preventDefault();
                             let area = this.options[this.selectedIndex].getAttribute('data-area');
                             let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                            document.getElementById('autorizo_puesto').innerHTML = puesto
-                            document.getElementById('autorizo_area').innerHTML = area
+                            document.getElementById('autorizo_puesto').innerHTML = recortarTexto(puesto);
+                            document.getElementById('autorizo_area').innerHTML = recortarTexto(area);
                         })
+
+                        function recortarTexto(texto, length = 30)
+                        {
+                            let trimmedString = texto?.length > length ?
+                                texto.substring(0, length - 3) + "..." :
+                                texto;
+                            return trimmedString;
+                        }
 
 
                     });
