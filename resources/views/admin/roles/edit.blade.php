@@ -58,6 +58,12 @@
                                 <th>Slug</th>
                             </thead>
                             <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td>ID del permiso</td>
+                                        <td>Descripcion del permiso</td>
+                                        <td>Slug o Codigo del permiso</td>
+                                    </tr>
                                 @foreach ($permissions as $idx => $permission)
                                     <tr>
                                         <td></td>
@@ -161,9 +167,10 @@
                     },
                     success: function(response) {
                         response.forEach(permission => {
-                            tblPermissions.row(`:eq(${permission-1})`, {
+                            tblPermissions.row(`:eq(${permission})`, {
                                 page: 'all'
                             }).select();
+                            console.log(permission);
                         });
                         console.log('cargado');
                     }

@@ -57,6 +57,12 @@
                                 <th>Slug</th>
                             </thead>
                             <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td>ID del permiso</td>
+                                        <td>Descripcion del permiso</td>
+                                        <td>Slug o Codigo del permiso</td>
+                                    </tr>
                                 @foreach ($permissions as $idx => $permission)
                                     <tr>
                                         <td></td>
@@ -146,6 +152,8 @@
                     }
                 });
             });
+
+            console.log(permission);
 
             function limpiarErrores() {
                 document.querySelectorAll(".errors").forEach(function(element) {
