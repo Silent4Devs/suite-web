@@ -58,7 +58,7 @@
                                 <th>Slug</th>
                             </thead>
                             <tbody>
-                                    <tr>
+                                    <tr style="display:none">
                                         <td></td>
                                         <td>ID del permiso</td>
                                         <td>Descripcion del permiso</td>
