@@ -358,7 +358,7 @@
                                 <div class="form-group">
                                     <label><i class="bi bi-person iconos-crear"></i> Jefe inmediato</label>
                                     <div class="text-muted">
-                                        {{ $usuario->empleado ? $usuario->empleado->supervisor->name : 'Sin Jefe Inmediato' }}
+                                        {{ $usuario->empleado ? $usuario->empleado->name : 'Sin Jefe Inmediato' }}
                                     </div>
                                 </div>
                             @endif

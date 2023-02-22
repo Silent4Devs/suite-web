@@ -70,7 +70,7 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('roles_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $permissions = Permission::all();
+        $permissions = Permission::all()->sortBy('id');
         $role = Role::all();
 
         return view('admin.roles.create', compact('permissions', 'role'));
@@ -110,7 +110,7 @@ class RolesController extends Controller
     public function edit(Role $role)
     {
         abort_if(Gate::denies('roles_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $permissions = Permission::all();
+        $permissions = Permission::all()->sortBy('id');
         $role->load('permissions');
 
         return view('admin.roles.edit', compact('permissions', 'role'));
