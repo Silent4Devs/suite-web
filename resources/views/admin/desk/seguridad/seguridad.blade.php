@@ -96,7 +96,7 @@
                 <th style="min-width: 250px;">Sede</th>
                 <th style="min-width: 250px;">Ubicación</th>
                 <th style="min-width: 500px;">Descripción</th>
-                <th style="min-width: 250px;">Areas Afectadas</th>
+                <th style="min-width: 250px;">Áreas Afectadas</th>
                 <th style="min-width: 250px;">Procesos Afectados</th>
                 <th style="min-width: 250px;">Activos Afectados</th>
                 <th style="min-width: 150px;">Fecha</th>

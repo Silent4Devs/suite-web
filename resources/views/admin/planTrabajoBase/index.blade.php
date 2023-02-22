@@ -562,7 +562,7 @@
                                 </div>
                                 <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
                                     <p>${empresa_actual}</p>
-                                    <strong style="color:#345183">ANÁLISIS DE BRECHAS</strong>
+                                    <strong style="color:#345183">Planes de Implementación</strong>
                                 </div>
                                 <div class="col-3 p-2">
                                     Fecha: ${jsDate}
