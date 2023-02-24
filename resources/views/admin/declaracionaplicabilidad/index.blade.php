@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        @else<strong>MSGI no es compatible con asignación de controles.</strong>
+        @else
 
         @include('admin.declaracionaplicabilidad.controlesmgsi')
         
