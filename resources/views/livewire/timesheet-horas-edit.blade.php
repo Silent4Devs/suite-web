@@ -37,6 +37,7 @@
                             <td wire:ignore>
                                 <input type="hidden" name="timesheet[{{ $i_hora }}][id_hora]" value="{{ $hora->id }}">
                                 <select id="select_proyectos{{ $i_hora }}" data-contador="{{ $i_hora }}" data-type="parent" name="timesheet[{{ $i_hora }}][proyecto]" class="select2">
+                                    <option value="" disabled>Selecione proyecto</option>
                                     <option selected value="{{ $hora->proyecto ? $hora->proyecto->id : '' }}">{{ $hora->proyecto ? $hora->proyecto->identificador . ' - ' . $hora->proyecto->proyecto : '' }}</option>
                                     @foreach($proyectos as $proyecto)
                                         <option value="{{ $proyecto['id'] }}">{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</option>
@@ -49,6 +50,7 @@
                                     $tareas = \App\Models\TimesheetTarea::where('proyecto_id', $hora->proyecto_id)->where('id','!=',$hora->tarea->id)->get();
                                 @endphp
                                 <select id="select_tareas{{ $i_hora }}" data-contador="{{ $i_hora }}" name="timesheet[{{ $i_hora }}][tarea]" class="select2">
+                                    <option value="" disabled>Selecione tarea</option>
                                     <option selected value="{{ $hora->tarea->id }}">{{ $hora->tarea->tarea }}</option>
                                     @foreach ($tareas as $tarea)
                                         <option value="{{ $tarea->id }}">{{ $tarea->tarea }}</option>

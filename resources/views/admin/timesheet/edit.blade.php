@@ -106,6 +106,7 @@
 
         document.querySelector('.tabla-llenar-horas').addEventListener('click', (e)=>{
             let element = e.target;
+
             if (e.target.tagName == 'I') {
                 element = e.target.closest('div');
             }
@@ -121,7 +122,27 @@
 
                 document.querySelector(tr_seleccionado + ' textarea').value = null;
                 document.querySelector(tr_seleccionado + ' #suma_horas_fila_1').innerText = '';
-                let inputs_1 = document.querySelectorAll(tr_seleccionado + ' input');
+                //let inputs_1 = document.querySelectorAll(tr_seleccionado + ' input');
+
+                // let select_2 = document.getElementById(`select_tareas1`);
+                // let html = '<option selected disabled>Seleccione tarea</option>';
+
+                // select_2.innerHTML = html;
+
+
+                let select_1 = document.querySelector("#select_tareas1");
+                let valor = select_1.options[select_1.selectedIndex];
+                let valor2 = select_1.options[0];
+                let b = document.getElementById("select2-select_tareas1-container")
+                b.setAttribute("title","hola")
+                select_1.innerHTML = b
+                select_1.options[select_1.selectedIndex].removeAttribute("Selected")
+                select_1.options[0].setAttribute("selected","");
+                 console.log(select_1)
+                 console.log(valor)
+                 console.log(valor2)
+
+                const inputs_1 =  document.querySelectorAll(`[data-i="1"]`);
                 inputs_1.forEach(input =>{
                     input.value = null;
                 });
