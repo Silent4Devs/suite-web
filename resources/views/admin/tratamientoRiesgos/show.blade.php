@@ -4,7 +4,7 @@
 
     <style>
 
-        
+
         span.errors {
             font-size: 11px;
         }
@@ -112,7 +112,7 @@
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
-
+                    <a href="{{ route('admin.tratamiento-riesgos.index') }}" class="btn_cancelar">Regresar</a>
                     <button class="btn btn-danger print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
@@ -251,7 +251,7 @@
                         @elseif ($tratamientoRiesgo->riesgo_total_residual >= 0 && $tratamientoRiesgo->riesgo_total_residual <= 45)
                             <i class="fas fa-circle" style="color: #6DC866;font-size:10pt;"></i><strong>
                                 {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
-                       
+
                         @endif
                         @endif
                     </div>
@@ -289,7 +289,7 @@
                     <div class="row col-12 ml-0" id="contenedor_firmas" >
 
                         <div class="col-12 p-2" style="color:#18183c; text-align: center;">
-                            @if ($tratamientoRiesgo->id_dueno == auth()->user()->empleado->id) 
+                            @if ($tratamientoRiesgo->id_dueno == auth()->user()->empleado->id)
                                     @if ($tratamientoRiesgo->es_aprobado == 'aprobado')
                                         @if ($tratamientoRiesgo->firma_responsable_aprobador == null)
                                             <div>
@@ -345,8 +345,8 @@
                                             <strong class="text-danger mt-4">Solicitud rechazada</strong>
                                         </div>
                                     @endif
-                                
-                             @endif 
+
+                             @endif
                             <div>
                                 @if ($tratamientoRiesgo->id_dueno == auth()->user()->empleado->id)
                                     <strong>Dueño del riesgo</strong>

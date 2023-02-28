@@ -115,8 +115,7 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i></i>Nombre
-                            del
-                            indicador</label>
+                            del indicador</label>
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text"
                             name="nombre" id="nombre" value="{{ old('nombre', $indicadoresSgsi->nombre) }}" required>
                         @if ($errors->has('nombre'))
@@ -129,8 +128,8 @@
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                         <label for="id_area" class="required"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                        <select class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}" name="id_area"
-                            id="id_area" required>
+                        <select class="form-control {{ $errors->has('id_area') ? 'is-invalid' : '' }}"
+                            name="id_area" id="id_area" required>
                             <option value="">Seleccione un responsable</option>
                             @foreach ($areas as $area)
                                 <option value="{{ $area->id }}"
@@ -261,7 +260,7 @@
                             De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
                         <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
                             name="verde" id="verde" value="{{ old('verde', $indicadoresSgsi->verde) }}"
-                            placeholder="" min="" required>
+                            placeholder="" min="0" required>
                         @if ($errors->has('verde'))
                             <div class="text-danger">
                                 {{ $errors->first('verde') }}
@@ -306,7 +305,7 @@
                         <div class="form-group">
                             <label class="required" for="frecuencia"><i
                                     class="fas fa-wave-square iconos-crear"></i>Frecuencia</label>
-                            <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}"
+                            <input class="form-control {{ $errors->has('frecuencia') ? 'is-invalid' : '' }}" maxlength="255"
                                 type="text" name="frecuencia" id="frecuencia"
                                 value="{{ old('frecuencia', $indicadoresSgsi->frecuencia) }}" required>
                             @if ($errors->has('frecuencia'))
@@ -315,6 +314,22 @@
                                 </div>
                             @endif
                             <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label class="required" for="ano"><i
+                                    class="fas fa-calendar-alt iconos-crear"></i>Año</label>
+                            <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}
+                                type="text" name="ano" id="ano"
+                                value="{{ old('ano', $indicadoresSgsi->ano) }}">
+                            @if ($errors->has('ano'))
+                                <div class="text-danger">
+                                    {{ $errors->first('ano') }}
+                                </div>
+                            @endif
+                        <span class="help-block"></span>
                         </div>
                     </div>
 
@@ -333,21 +348,8 @@
                             <span class="help-block"></span>
                         </div>
                     </div>
-
-                    <div class="form-group col-sm-6 col-md-2 col-lg-2">
-                        <label class="required" for="ano"><i
-                                class="fas fa-calendar-alt iconos-crear"></i>Año</label>
-                        <input class="yearpicker form-control" {{ $errors->has('ano') ? 'is-invalid' : '' }}"
-                            type="text" name="ano" id="ano"
-                            value="{{ old('ano', $indicadoresSgsi->ano) }}">
-                        @if ($errors->has('ano'))
-                            <div class="text-danger">
-                                {{ $errors->first('ano') }}
-                            </div>
-                        @endif
-                        <span class="help-block"></span>
-                    </div>
                 </div>
+
                 <h4 class="text-primary">Generación de formúla</h4>
                 @php
                     $formula_r = $indicadoresSgsi->formula_raw;
@@ -419,7 +421,7 @@
             </div>
 
             <div class="text-right form-group col-md-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route('admin.indicadores-sgsis.index') }}" class="btn_cancelar">Cancelar</a>
                 <input type="submit" value="Guardar" class="btn btn-success btn_enviar_form_modal">
             </div>
 

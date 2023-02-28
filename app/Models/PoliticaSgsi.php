@@ -13,10 +13,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class PoliticaSgsi extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'politica_sgsis';
 
     public static $searchable = [

@@ -91,22 +91,22 @@
                             incidente<sup>*</sup></label>
                             <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                 title="Describa de forma breve y con palabras clave el motivo del incidente."></i>
-                        <input type="" name="titulo" class="form-control" required>
+                        <input type="text" maxlength="255" name="titulo" class="form-control" required>
                     </div>
 
                     <div class="mt-2 form-group col-md-4">
-                        <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i> Fecha y hora 
+                        <label class="form-label"><i class="fas fa-calendar-alt iconos-crear"></i> Fecha y hora
                             de
-                            ocurrencia</label><i class="fas fa-info-circle"
+                            ocurrencia</label><sup>*</sup><i class="fas fa-info-circle"
                             style="font-size:12pt; float: right;"
                             title="Indique la fecha y hora aproximada en la que ocurrió el evento que motivó el incidente."></i>
-                        <input type="datetime-local" name="fecha" class="form-control">
+                        <input type="datetime-local" min="1945-01-01T00:00" name="fecha" class="form-control">
                     </div>
 
                     <div class="mt-2 form-group col-md-4">
-                        <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Sede</label>
-                        <select class="form-control" name="sede">
-                            <option disabled>seleccione sede</option>
+                        <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Sede<sup>*</sup></label>
+                        <select required class="form-control" name="sede">
+                            <option value="" selected disabled>Seleccione sede</option>
                             @foreach ($sedes as $sede)
                                 <option value="{{ $sede->sede }}">{{ $sede->sede }}</option>
                             @endforeach
@@ -117,7 +117,7 @@
                         <label class="form-label"><i class="fas fa-map iconos-crear"></i> Ubicación exacta</label>
                         <i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                                 title="Indique el lugar en el que ocurrió el evento que motivó el incidente."></i>
-                        <input type="" name="ubicacion" class="form-control">
+                        <input type="text" name="ubicacion" class="form-control" maxlength="255">
                     </div>
 
                     <div class="mt-2 form-group col-12">

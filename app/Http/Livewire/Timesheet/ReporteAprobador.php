@@ -152,7 +152,7 @@ class ReporteAprobador extends Component
         $calendario_array = [];
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
-        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null);
+        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null, $this->fecha_fin ? Carbon::parse($this->fecha_fin) : Carbon::now());
         $total_months = 0;
         foreach ($semanas_complit_timesheet as $semana) {
             $semana_array = explode('|', $semana);
@@ -291,7 +291,7 @@ class ReporteAprobador extends Component
                 $times_empleado_array[] = $time->semana_y;
             }
 
-            $this->times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array);
+            $this->times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array, 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null, $this->fecha_fin ? Carbon::parse($this->fecha_fin) : Carbon::now(), false);
 
             $times_atrasados = count($this->times_faltantes_empleado);
 

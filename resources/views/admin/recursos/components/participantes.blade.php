@@ -2,7 +2,7 @@
     <div class="row">
         <div class="form-group col-sm-12 col-md-12 col-lg-12">
             <label for="selectGrupoDeParticipantes"><i class="fas fa-search iconos-crear"></i>Selecciona a los
-                partipantes por: </label>
+                participantes por: </label>
             <select id="selectGrupoDeParticipantes" name="tipo_de_grupo" class="form-control">
                 <option value="">-- Selecciona un opción --</option>
                 <option value="all"
@@ -49,7 +49,7 @@
     </div>
 </div>
 <div class="text-right form-group col-12">
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+    <a href="{{ route('admin.recursos.index') }}" class="btn_cancelar">Cancelar</a>
     <button class="btn btn-danger btnGuardarDraftRecurso" type="submit" id="btnGuardarDraftRecurso">
         Borrador
     </button>

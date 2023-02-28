@@ -22,20 +22,20 @@
                 </div>
 
                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                    <label for="descripcion"><i class="fas fa-align-justify iconos-crear"></i>Descripción</label>
-                    <textarea class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
-                    @if ($errors->has('nombre_comite'))
+                    <label class="required" for="descripcion"><i class="fas fa-align-justify iconos-crear"></i>Descripción</label>
+                    <textarea required class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
+                    @if ($errors->has('descripcion'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('nombre_comite') }}
+                            {{ $errors->first('descripcion') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.comiteseguridad.fields.nombrerol_helper') }}</span>
                 </div>
 
-               
+
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.comiteseguridads.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
@@ -53,15 +53,23 @@
             let area_init = asignado.options[asignado.selectedIndex].getAttribute('data-area');
             let puesto_init = asignado.options[asignado.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('puesto_asignada').innerHTML = puesto_init;
-            document.getElementById('area_asignada').innerHTML = area_init;
+            document.getElementById('puesto_asignada').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('area_asignada').innerHTML = recortarTexto(area_init);
             asignado.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_asignada').innerHTML = puesto;
-                document.getElementById('area_asignada').innerHTML = area;
+                document.getElementById('puesto_asignada').innerHTML = recortarTexto(puesto);
+                document.getElementById('area_asignada').innerHTML = recortarTexto(area);
             })
+
+            function recortarTexto(texto, length = 40)
+            {
+                let trimmedString = texto?.length > length ?
+                    texto.substring(0, length - 3) + "..." :
+                    texto;
+                return trimmedString;
+            }
 
         })
     </script>

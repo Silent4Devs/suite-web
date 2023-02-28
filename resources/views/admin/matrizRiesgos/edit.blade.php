@@ -222,7 +222,7 @@
 
                 <p class="font-weight-bold" style="font-size:11pt;">Indique las caracteristicas del CID afectadas por este
                     riesgo</p>
-                <input type="hidden" id="resultadoponderacion" name="resultadoponderacion" value="{{ old('resultadoponderacion', $matrizRiesgo->resultadoponderacion) }}">
+                <input type="hidden"  id="resultadoponderacion" name="resultadoponderacion" value="{{ old('resultadoponderacion', $matrizRiesgo->resultadoponderacion) }}">
 
                 <div class="py-2 row">
                     <div class="form-group col-sm-3">
@@ -285,9 +285,9 @@
                         <label for="probabilidad"><i class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
                         <select class="form-control {{ $errors->has('probabilidad') ? 'is-invalid' : '' }}"
                             name="probabilidad" id="probabilidad">
-                            <option value disabled {{ old('probabilidad', null) === null ? 'selected' : '' }}>
+                            <option value disabled {{ old('probabilidad', $matrizRiesgo->probabilidad) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::PROBABILIDAD27000_SELECT as $key => $label)
+                            @foreach (App\Models\MatrizRiesgo::PROBABILIDAD_SELECT as $key => $label)
                                 <option value="{{ $key }}"
                                     {{ old('probabilidad', $matrizRiesgo->probabilidad) === (string) $key ? 'selected' : '' }}>
                                     {{ $label }}
@@ -307,9 +307,9 @@
                         <label for="impacto"><i class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
                         <select class="form-control {{ $errors->has('impacto') ? 'is-invalid' : '' }}" name="impacto"
                             id="impacto">
-                            <option value disabled {{ old('impacto', null) === null ? 'selected' : '' }}>
+                            <option value disabled {{ old('impacto', $matrizRiesgo->impacto) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::IMPACTO27000_SELECT as $key => $label)
+                            @foreach (App\Models\MatrizRiesgo::IMPACTO_SELECT as $key => $label)
                                 <option value="{{ $key }}"
                                     {{ old('impacto', $matrizRiesgo->impacto) === (string) $key ? 'selected' : '' }}>
                                     {{ $label }}
@@ -392,8 +392,8 @@
                                     class="fas fa-lock iconos-crear"></i>Seleccione los control(es)
                                 a
                                 aplicar</label>
-                            <div class="mb-4 col-12">
-                                {{-- <select
+                            {{--<div class="mb-4 col-12">
+                                 <select
                                     class="form-control js-example-basic-multiple select2  {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
@@ -404,7 +404,7 @@
                                             {{ $control->anexo_indice }} {{ $control->anexo_politica }}
                                         </option>
                                     @endforeach
-                                </select> --}}
+                                </select>
 
                                 <select
                                     class="form-control js-example-basic-multiple select2  {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
@@ -425,8 +425,25 @@
                                 @endif
                                 <span
                                     class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
-                            </div>
+                            </div>--}}
                         </div>
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <label for="tipo_tratamiento"><i class="fas fa-lightbulb iconos-crear"></i>Seleccione el tratamiento que desea darle a este riesgo</label>
+                        <select class="form-control" {{$errors->has('tipo_tratamiento')? 'is-invalid':''}} name="tipo_tratamiento" id="ejemplo">
+                            <option  value disabled {{old('tipo_tratamiento', $matrizRiesgo->tipo_tratamiento)===null ? 'selected': ''}}>Seleccione una opción</option>
+                            @foreach (App\Models\MatrizRiesgo::TIPO_TRATAMIENTO_SELECT as $key => $label)
+                            <option value="{{$key}}" {{old('tipo_tratamiento', $matrizRiesgo->tipo_tratamiento)=== (string) $key ? 'selected': ''}}>
+                            {{$label}}
+                            </option>
+                            @endforeach
+                        </select>
+                            <!-- Note, I changed hidden to text so you can see it<br/> -->
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <!-- <label for="" style="margin-left: 15px; margin-bottom:5px;"> <i class="fas fa-lightbulb iconos-crea"></i> Justificación</label> -->
+                        <textarea class="form-control" type="text" for="aceptar_transferir" name="aceptar_transferir" id="ver1" value="1" placeholder="Justificación" rows="3" style="display: none;">{{old('aceptar_transferir',$matrizRiesgo->aceptar_transferir)}}</textarea>
                     </div>
 
                     <div class="form-group col-sm-12">
@@ -534,9 +551,9 @@
                                 class="fas fa-wave-square iconos-crear"></i>Probabilidad</label>
                         <select class="form-control {{ $errors->has('probabilidad_residual') ? 'is-invalid' : '' }}"
                             name="probabilidad_residual" id="probabilidad_residual">
-                            <option value disabled {{ old('probabilidad_residual', null) === null ? 'selected' : '' }}>
+                            <option value disabled {{ old('probabilidad_residual', $matrizRiesgo->probabilidad_residual) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::PROBABILIDAD27000_SELECT as $key => $label)
+                            @foreach (App\Models\MatrizRiesgo::PROBABILIDAD_SELECT as $key => $label)
                                 <option value="{{ $key }}"
                                     {{ old('probabilidad_residual', $matrizRiesgo->probabilidad_residual) === (string) $key ? 'selected' : '' }}>
                                     {{ $label }}
@@ -556,9 +573,9 @@
                         <label for="impacto_residual"><i class="fas fa-compact-disc iconos-crear"></i>Impacto</label>
                         <select class="form-control {{ $errors->has('impacto_residual') ? 'is-invalid' : '' }}"
                             name="impacto_residual" id="impacto_residual">
-                            <option value disabled {{ old('impacto_residual', null) === null ? 'selected' : '' }}>
+                            <option value disabled {{ old('impacto_residual', $matrizRiesgo->impacto_residual) === null ? 'selected' : '' }}>
                                 Selecciona una opción</option>
-                            @foreach (App\Models\MatrizRiesgo::IMPACTO27000_SELECT as $key => $label)
+                            @foreach (App\Models\MatrizRiesgo::IMPACTO_SELECT as $key => $label)
                                 <option value="{{ $key }}"
                                     {{ old('impacto_residual', $matrizRiesgo->impacto_residual) === (string) $key ? 'selected' : '' }}>
                                     {{ $label }}
@@ -594,8 +611,8 @@
                 </div>
                 <hr>
 
-             
-              
+
+
                 <div class="text-right form-group col-12">
                     <a href="{{ route('admin.matriz-seguridad', ['id' => $matrizRiesgo->id_analisis]) }}"
                         class="btn_cancelar">Cancelar</a>

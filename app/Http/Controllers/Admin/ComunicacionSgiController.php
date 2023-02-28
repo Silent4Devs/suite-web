@@ -85,10 +85,12 @@ class ComunicacionSgiController extends Controller
         abort_if(Gate::denies('comunicados_generales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
+            'titulo' => 'required',
             'descripcion' => 'required',
             'publicar_en' => 'required',
             'link' => 'nullable|url',
-            'fecha_programable' => 'required',
+            'fecha_programable' => 'required|date',
+            'fecha_programable_fin' => 'nullable|date',
         ]);
         if ($request->by_area) {
             $opts = $request->by_area;
@@ -108,7 +110,7 @@ class ComunicacionSgiController extends Controller
             $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
             $image = $new_name_image;
             if ($extension == "mp4" || $extension == "mov" || $extension ==  "webm" || $extension == "wmv" || $extension == "avi") {
-               $request->file('imagen')->storeAs('public/imagen_comunicado_SGI/', $new_name_image); 
+               $request->file('imagen')->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
                $tipo_archivo = 'video';
             }else{
                 //Usamos image_intervention para disminuir el peso de la imagen
@@ -189,10 +191,12 @@ class ComunicacionSgiController extends Controller
     {
         abort_if(Gate::denies('comunicados_generales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
+            'titulo' => 'required',
             'descripcion' => 'required',
             'publicar_en' => 'required',
             'link' => 'nullable|url',
-            'fecha_programable' => 'required',
+            'fecha_programable' => 'required|date',
+            'fecha_programable_fin' => 'nullable|date',
         ]);
         if ($request->by_area) {
             $opts = $request->by_area;
@@ -209,15 +213,15 @@ class ComunicacionSgiController extends Controller
             $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
             $image = $new_name_image;
             if ($extension == "mp4" || $extension == "mov" || $extension ==  "webm" || $extension == "wmv" || $extension == "avi") {
-               $request->file('imagen')->storeAs('public/imagen_comunicado_SGI/', $new_name_image); 
-               $tipo_archivo = 'video'; 
+               $request->file('imagen')->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
+               $tipo_archivo = 'video';
             }else{
                 //Usamos image_intervention para disminuir el peso de la imagen
                 $img_intervention = Image::make($request->file('imagen'));
                 $img_intervention->resize(256, null, function ($constraint) {
                     $constraint->aspectRatio();
                 })->save($route);
-                $tipo_archivo = 'imagen'; 
+                $tipo_archivo = 'imagen';
             }
             $imagen_sgsi = $comunicacionSgi->imagenes_comunicacion->first();
             if ($imagen_sgsi) {

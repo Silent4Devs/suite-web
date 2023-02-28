@@ -10,14 +10,20 @@
                 @csrf
                 <div class="form-group">
                     <div class="form-group">
-                        <label for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre de Alcance</label>
-                        <input type="text" class="form-control" id="nombre"  name="nombre" required>
+                        <label class="required" for="nombre"><i class="fas fa-file-signature iconos-crear"></i>Nombre de Alcance</label>
+                        <input type="text" class="form-control" id="nombre"  name="nombre"
+                        value="{{ old('nombre') }}" required>
+                            @if ($errors->has('nombre'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('nombre') }}
+                            </div>
+                        @endif
                     </div>
 
-                    <label for="alcancesgsi"> <i class="fas fa-shield-alt iconos-crear"></i>Alcance </label><i
+                    <label class="required" for="alcancesgsi"> <i class="fas fa-shield-alt iconos-crear"></i>Alcance </label><i
                         class="fas fa-info-circle" style="font-size:12pt; float: right;"
                         title="Actividad clave que determina la base necesaria para las actividades de implementación del SGSI."></i>
-                    <textarea class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }}" name="alcancesgsi"
+                    <textarea required class="form-control {{ $errors->has('alcancesgsi') ? 'is-invalid' : '' }}" name="alcancesgsi"
                         id="alcancesgsi">{{ old('alcancesgsi') }}</textarea>
                     @if ($errors->has('alcancesgsi'))
                         <div class="invalid-feedback">
@@ -29,10 +35,10 @@
                 <div class="row">
 
                     <div class="form-group col-sm-4">
-                        <label for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i> Fecha de
+                        <label class="required" for="fecha_publicacion"><i class="far fa-calendar-alt iconos-crear"></i> Fecha de
                             publicación</label>
-                        <input class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
-                            type="date" name="fecha_publicacion" id="fecha_publicacion"
+                        <input required class="form-control {{ $errors->has('fecha_publicacion') ? 'is-invalid' : '' }}"
+                            type="date" name="fecha_publicacion" id="fecha_publicacion" min="1945-01-01"
                             value="{{ old('fecha_publicacion') }}">
                         @if ($errors->has('fecha_publicacion'))
                             <div class="invalid-feedback">
@@ -42,10 +48,11 @@
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label for="fecha_entrada"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de entrada en
+                        <label class="required" for="fecha_entrada"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de entrada en
                             vigor</label>
-                        <input class="form-control {{ $errors->has('fecha_entrada') ? 'is-invalid' : '' }}" type="date"
-                            name="fecha_entrada" id="fecha_entrada" value="{{ old('fecha_entrada') }}">
+                        <input required class="form-control {{ $errors->has('fecha_entrada') ? 'is-invalid' : '' }}" type="date"
+                            name="fecha_entrada" id="fecha_entrada" min="1945-01-01"
+                            value="{{ old('fecha_entrada') }}">
                         @if ($errors->has('fecha_entrada'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_entrada') }}
@@ -54,10 +61,11 @@
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
+                        <label class="required" for="fecha_revision"><i class="far fa-calendar-alt iconos-crear"></i>Fecha de
                             revisión</label>
-                        <input class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}" type="date"
-                            name="fecha_revision" id="fecha_revision" value="{{ old('fecha_revision') }}">
+                        <input required class="form-control {{ $errors->has('fecha_revision') ? 'is-invalid' : '' }}" type="date"
+                            name="fecha_revision" id="fecha_revision" min="1945-01-01"
+                            value="{{ old('fecha_revision') }}">
                         @if ($errors->has('fecha_revision'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_revision') }}
@@ -75,8 +83,8 @@
 
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="id_reviso_alcance"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
-                        <select class="form-control select2 {{ $errors->has('reviso_alcance') ? 'is-invalid' : '' }}"
+                        <label class="required" for="id_reviso_alcance"><i class="fas fa-user-tie iconos-crear"></i>Nombre</label>
+                        <select required class="form-control select2 {{ $errors->has('reviso_alcance') ? 'is-invalid' : '' }}"
                             name="id_reviso_alcance" id="id_reviso_alcance">
                             <option disabled selected>Seleccionar colaborador</option>
                             @foreach ($empleados as $empleado)
@@ -110,8 +118,8 @@
 
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
-                        <select
+                        <label class="required" for="normas"><i class="fas fa-ruler-vertical iconos-crear"></i>Norma(s)</label>
+                        <select required
                         class="form-control js-example-basic-multiple controles-select  {{ $errors->has('controles') ? 'is-invalid' : '' }}"
                         name="normas[]" id="controles" multiple="multiple">
                         <option value disabled>
@@ -133,7 +141,7 @@
 
 
                 <div class="text-right form-group col-12">
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                    <a href="{{ route('admin.alcance-sgsis.index') }}" class="btn_cancelar">Cancelar</a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>

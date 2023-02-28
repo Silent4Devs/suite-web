@@ -26,8 +26,8 @@
 
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="fechainicio"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de inicio</label>
-                <input class="form-control {{ $errors->has('fechainicio') ? 'is-invalid' : '' }}" type="datetime-local" 
-                name="fechainicio" id="fechainicio" value="{{ old('fechainicio') }}">
+                <input class="form-control {{ $errors->has('fechainicio') ? 'is-invalid' : '' }}" type="date"
+                name="fechainicio" id="fechainicio" min="1945-01-01" value="{{ old('fechainicio') }}">
                 @if($errors->has('fechainicio'))
                 <div class="invalid-feedback">
                     {{ $errors->first('fechainicio') }}
@@ -37,7 +37,8 @@
 
             <div class="form-group col-sm-12 col-md-6 col-lg-6">
                 <label for="fechafin"> <i class="fas fa-calendar-alt iconos-crear"></i>Fecha fin</label>
-                <input class="form-control {{ $errors->has('fechafin') ? 'is-invalid' : '' }}" type="datetime-local" name="fechafin" id="fechafin" value="{{ old('fechafin') }}">
+                <input class="form-control {{ $errors->has('fechafin') ? 'is-invalid' : '' }}" type="date"
+                name="fechafin" id="fechafin" min="1945-01-01" value="{{ old('fechafin') }}">
                 @if($errors->has('fechafin'))
                 <div class="invalid-feedback">
                     {{ $errors->first('fechafin') }}
@@ -47,7 +48,7 @@
 
             <div class="form-group col-md-12 col-sm-12  mt-3">
                 <label for="objetivo" class="required"><i class="fas fa-bullseye iconos-crear"></i>Objetivo</label>
-                <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}" 
+                <textarea class="form-control {{ $errors->has('objetivo') ? 'is-invalid' : '' }}"
                     name="objetivo" id="objetivo" required>{{ old('objetivo') }}</textarea>
                 @if($errors->has('objetivo'))
                     <div class="invalid-feedback">
@@ -59,7 +60,8 @@
 
             <div class="form-group col-md-12 col-sm-12 mt-3 ">
                 <label for="alcance" class="required"><i class="fas fa-chart-line iconos-crear"></i>Alcance</label>
-                <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}" name="alcance" id="alcance" required>{{ old('alcance') }}</textarea>
+                <textarea class="form-control {{ $errors->has('alcance') ? 'is-invalid' : '' }}"
+                    name="alcance" id="alcance" required>{{ old('alcance') }}</textarea>
                 @if($errors->has('alcance'))
                     <div class="invalid-feedback">
                         {{ $errors->first('alcance') }}
@@ -68,9 +70,9 @@
                 <span class="help-block">{{ trans('cruds.auditoriaAnual.fields.observaciones_helper') }}</span>
             </div>
 
-                      
+
             <div class="text-right form-group col-12">
-                <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+                <a href="{{ route("admin.auditoria-anuals.index") }}" class="btn_cancelar">Cancelar</a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

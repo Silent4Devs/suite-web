@@ -16,7 +16,7 @@
     <div class="mb-0 form-group col-md-5">
         <label for="fecha"><i class="far fa-calendar-alt iconos-crear"></i>Fecha</label>
         <input class="form-control date {{ $errors->has('fecha') ? 'is-invalid' : '' }}" type="date" name="fecha"
-            id="fecha" value="{{ old('fecha') }}" wire:model="fecha">
+            id="fecha" min="1945-01-01" value="{{ old('fecha') }}" wire:model="fecha">
         <div class="input-group-addon">
             <span class="glyphicon glyphicon-th"></span>
         </div>
@@ -36,7 +36,7 @@
                     <label for="formSlugs.{{ $key }}.{{ $customField->variable }}"><i
                             class="fab fa-diaspora iconos-crear"></i>{{ ucfirst(substr($customField->variable, 1)) }}</label>
                     <input class="form-control slugs-inputs {{ $errors->has('') ? 'is-invalid' : '' }}" type="number"
-                        wire:model="formSlugs.{{ $key }}.{{ $customField->variable }}"
+                        min="0" wire:model="formSlugs.{{ $key }}.{{ $customField->variable }}"
                         id="formSlugs.{{ $key }}.{{ $customField->variable }}" value="" required>
                 </div>
                 {{-- {{"formSlugs.$key.$customField->variable"}} --}}

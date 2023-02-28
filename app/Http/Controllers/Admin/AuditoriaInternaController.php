@@ -115,7 +115,8 @@ class AuditoriaInternaController extends Controller
             'objetivo' => 'required',
             'id_auditoria' => 'required',
             'nombre_auditoria' => 'required',
-
+            'criterios_auditoria' => 'required',
+            'fecha_inicio' => 'nullable|date',
         ]);
 
         $auditoriaInterna = AuditoriaInterna::create($request->all());
@@ -150,7 +151,8 @@ class AuditoriaInternaController extends Controller
             'objetivo' => 'required',
             'id_auditoria' => 'required',
             'nombre_auditoria' => 'required',
-
+            'criterios_auditoria' => 'required',
+            'fecha_inicio' => 'nullable|date',
         ]);
 
         $auditoriaInterna->update($request->all());
@@ -166,7 +168,7 @@ class AuditoriaInternaController extends Controller
 
         $auditoriaInterna->load('clausulas', 'auditorlider', 'equipo', 'team','auditoriaHallazgos');
         // dd( $auditoriaInterna->hallazgos);
-        
+
         return view('admin.auditoriaInternas.show', compact('auditoriaInterna'));
     }
 

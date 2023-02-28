@@ -106,21 +106,28 @@ class MatrizRiesgosController extends Controller
         return view('admin.matriz-seguridad', compact('tipoactivos', 'tipoactivos', 'controles', 'teams'));
     }*/
 
+
     public function create()
     {
         abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sedes = Sede::get();
-        $areas = Area::get();
-        $procesos = Proceso::get();
-        $responsables = Empleado::alta()->get();
-        $activos = SubcategoriaActivo::get();
-        $amenazas = Amenaza::get();
 
-        $vulnerabilidades = Vulnerabilidad::get();
+        $sedes = Sede::select('id','sede')->get();
+        //$areas = Area::get();
+        $procesos = Proceso::select('id','codigo','nombre')->get();
+        $responsables = Empleado::select('id','name','area_id','puesto_id')->alta()->get();
+
+        $activos = SubcategoriaActivo::select('id','subcategoria')->get();
+        $amenazas = Amenaza::select('id','nombre')->get();
+
+        $vulnerabilidades = Vulnerabilidad::select('id','nombre')->get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-        return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
+        $tipo_riesgo = MatrizRiesgo::TIPO_RIESGO_SELECT;
+        $probabilidad = MatrizRiesgo::PROBABILIDAD_SELECT;
+        $impacto = MatrizRiesgo::IMPACTO_SELECT;
+
+        return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables','tipo_riesgo','probabilidad','impacto'))->with('id_analisis', \request()->idAnalisis, );
     }
 
     public function store(StoreMatrizRiesgoRequest $request)
@@ -171,6 +178,7 @@ class MatrizRiesgosController extends Controller
                 array_push($planes_seleccionados, $plan->id);
             }
         }
+
 
         return view('admin.matrizRiesgos.edit', compact('planes_seleccionados', 'matrizRiesgo', 'vulnerabilidades', 'controles', 'amenazas', 'activos', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz', 'tipoactivos', 'responsables'));
     }
@@ -905,7 +913,7 @@ class MatrizRiesgosController extends Controller
             ]);
         }
 
-        
+
 
         return redirect()->route('admin.matriz-seguridad.sistema-gestion', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
     }
@@ -1089,7 +1097,7 @@ class MatrizRiesgosController extends Controller
 
     public function ISO31000(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizIso31000::get();
             $table = Datatables::of($query);
@@ -1223,7 +1231,7 @@ class MatrizRiesgosController extends Controller
 
     public function NIST(Request $request)
     {
-        abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('analisis_de_riesgos_matriz_riesgo_config'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = MatrizNist::get();
             $table = Datatables::of($query);

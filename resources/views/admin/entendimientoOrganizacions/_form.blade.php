@@ -1,6 +1,6 @@
 <div class="form-group col-sm-12 col-md-12 col-lg-12">
-    <label for="analisis required"><i class="fas fa-file-invoice iconos-crear"></i>Nombre del Análisis</label>
-    <input class="form-control" type="text" name="analisis" id="analisis"
+    <label class="required" for="analisis required"><i class="fas fa-file-invoice iconos-crear"></i>Nombre del Análisis</label>
+    <input required class="form-control" type="text" name="analisis" id="analisis"
         value="{{ old('analisis', $entendimientoOrganizacion->analisis) }}">
     @if ($errors->has('analisis'))
         <div class="invalid-feedback  d-block">
@@ -10,8 +10,8 @@
 </div>
 
 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-    <label for="fecha"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de Creación</label>
-    <input class="form-control" type="date" id="fecha" name="fecha"
+    <label class="required" for="fecha"> <i class="fas fa-calendar-alt iconos-crear"></i> Fecha de Creación</label>
+    <input required class="form-control" type="date" id="fecha" name="fecha"
         value="{{ old('fecha', $entendimientoOrganizacion->fecha) }}">
     @if ($errors->has('fecha'))
         <div class="invalid-feedback  d-block">
@@ -23,8 +23,8 @@
 
 
 <div class="form-group col-sm-12 col-md-6 col-lg-6">
-    <label for="id_elabora"><i class="fas fa-user-tie iconos-crear"></i>Realizó</label>
-    <select class="form-control  {{ $errors->has(' id_elabora') ? 'is-invalid' : '' }}" name="id_elabora"
+    <label class="required" for="id_elabora"><i class="fas fa-user-tie iconos-crear"></i>Realizó</label>
+    <select required class="form-control  {{ $errors->has(' id_elabora') ? 'is-invalid' : '' }}" name="id_elabora"
         id="id_elabora">
         <option value="">Seleccione una opción</option>
         @foreach ($empleados as $empleado)
@@ -35,9 +35,9 @@
             </option>
         @endforeach
     </select>
-    @if ($errors->has(' id_elabora'))
+    @if ($errors->has('id_elabora'))
         <div class="invalid-feedback">
-            {{ $errors->first(' id_elabora') }}
+            {{ $errors->first('id_elabora') }}
         </div>
     @endif
 </div>
@@ -141,7 +141,7 @@
 @endif
 
 <div class="text-right form-group col-12"><br>
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar">Cancelar</a>
+    <a href="{{ route('admin.entendimiento-organizacions.index') }}" class="btn_cancelar">Cancelar</a>
     <button id="btnGuardar" class="btn btn-danger" type="submit">
         {{ trans('global.save') }}
     </button>
@@ -155,17 +155,25 @@
             let area_init = asignado.options[asignado.selectedIndex].getAttribute('data-area');
             let puesto_init = asignado.options[asignado.selectedIndex].getAttribute('data-puesto');
 
-            document.getElementById('puesto_asignada').innerHTML = puesto_init;
-            document.getElementById('area_asignada').innerHTML = area_init;
+            document.getElementById('puesto_asignada').innerHTML = recortarTexto(puesto_init);
+            document.getElementById('area_asignada').innerHTML = recortarTexto(area_init);
             asignado.addEventListener('change', function(e) {
                 e.preventDefault();
                 let area = this.options[this.selectedIndex].getAttribute('data-area');
                 let puesto = this.options[this.selectedIndex].getAttribute('data-puesto');
-                document.getElementById('puesto_asignada').innerHTML = puesto;
-                document.getElementById('area_asignada').innerHTML = area;
+                document.getElementById('puesto_asignada').innerHTML = recortarTexto(puesto);
+                document.getElementById('area_asignada').innerHTML = recortarTexto(area);
             })
 
-        })
+            function recortarTexto(texto, length = 40)
+            {
+                let trimmedString = texto?.length > length ?
+                    texto.substring(0, length - 3) + "..." :
+                    texto;
+                return trimmedString;
+            }
+
+        });
     </script>
 
     <script>

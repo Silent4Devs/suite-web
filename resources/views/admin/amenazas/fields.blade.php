@@ -1,8 +1,8 @@
 <div class="row">
     <!-- Nombre Field -->
     <div class="form-group col-sm-6">
-        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('nombre', 'Nombre:') !!}
-        {!! Form::text('nombre', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+        <i class="fas fa-id-card iconos-crear"></i>{!! Form::label('nombre', 'Nombre:',['class'=>'required']) !!}
+        {!! Form::text('nombre', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255,'required']) !!}
     </div>
 
     <!-- Categoria Field -->

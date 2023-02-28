@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="nombre" class="required"><i class="fas fa-pencil mr-2"></i>Nombre</label>
-    <input type="text" value="{{ old('nombre', $tiposObjetivosSistema->nombre) }}" class="form-control" id="nombre"
+    <input required type="text" value="{{ old('nombre', $tiposObjetivosSistema->nombre) }}" class="form-control" id="nombre"
         name="nombre" placeholder="">
     <p class="m-0"><small><i class="fas fa-info-circle mr-2"></i> El campo slug se genera automáticamente a partir
             del nombre, el slug debe ser único</small></p>

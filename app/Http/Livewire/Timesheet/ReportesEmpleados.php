@@ -160,7 +160,7 @@ class ReportesEmpleados extends Component
         // $this->fecha_fin = "2023-01-29";
         $fecha_inicio_complit_timesheet = $this->fecha_inicio ? $this->fecha_inicio : Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
-        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null);
+        $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null, $this->fecha_fin ? Carbon::parse($this->fecha_fin) : Carbon::now(), false);
         $total_months = 0;
 
         foreach ($semanas_complit_timesheet as $semana) {
@@ -201,7 +201,10 @@ class ReportesEmpleados extends Component
                     } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
                             if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
+                                $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks'][] = $semana;
+                            }else{
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
+                                array_pop($calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']);
                             }
                         } else {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
@@ -210,6 +213,7 @@ class ReportesEmpleados extends Component
                 }
             }
         }
+        
         foreach ($calendario_array as $key => &$c_year) {
             $total_months = count($c_year['months']);
             $total_weeks_year = 0;
@@ -323,7 +327,7 @@ class ReportesEmpleados extends Component
                     $fecha_finalizacion = Carbon::parse($this->fecha_fin)->gt(now()) ? null : Carbon::parse($this->fecha_fin);
                 }
 
-                $this->times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array, 'monday', 'sunday', $fecha_finalizacion);
+                $this->times_faltantes_empleado = $this->getWeeksFromRange($antiguedad_y, $antiguedad_m, $antiguedad_d, $times_empleado_array, 'monday', 'sunday', $fecha_finalizacion, $this->fecha_fin ? Carbon::parse($this->fecha_fin) : Carbon::now(), true);
 
                 $times_atrasados = count($this->times_faltantes_empleado);
             }

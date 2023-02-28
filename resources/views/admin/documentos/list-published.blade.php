@@ -33,6 +33,7 @@
                         <label for=""><i class="fas fa-filter"></i> Filtrar por Tipo</label>
                         <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="tipoSelect">
                             <option value="" disabled selected>--Seleccionar--</option>
+                            <option value="">Todos</option>
                             <option value="Proceso">Proceso</option>
                             <option value="Politica">Política</option>
                             <option value="Procedimiento">Procedimiento</option>
@@ -42,17 +43,16 @@
                             <option value="Reglamento">Reglamento</option>
                             <option value="Externo">Documento Externo</option>
                             <option value="Formato">Formato</option>
-                            <option value="">Todos</option>
                         </select>
                     </div>
                     <div class="col-md-3 filtro_caja mt-2" style="">
                         <label for=""><i class="fas fa-filter"></i> Filtrar por Vínculo</label>
                         <select class="form-control {{ $errors->has('tipo') ? 'error-border' : '' }}" id="vinculadoSelect">
                             <option value="" disabled selected>--Seleccionar--</option>
+                            <option value="">Todos</option>
                             @foreach ($macroprocesosAndProcesos as $item)
                                 <option value="{{ $item }}">{{ $item }}</option>
                             @endforeach
-                            <option value="">Todos</option>
                         </select>
                     </div>
                 </div>

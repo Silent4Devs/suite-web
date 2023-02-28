@@ -15,13 +15,27 @@ class UpdateMaterialSgsiRequest extends FormRequest
     public function rules()
     {
         return [
-            'objetivo'                    => [
+            'nombre' => [
+                'string',
+                'required',
+            ],
+            'objetivo' => [
                 'string',
                 'required',
             ],
             'fechacreacion_actualizacion' => [
                 'date',
-                'nullable',
+                'required',
+            ],
+            'material_id',
+            'personalobjetivo' => [
+                'required',
+            ],
+            'arearesponsable_id' => [
+                'required',
+            ],
+            'tipoimparticion' => [
+                'required',
             ],
         ];
     }
