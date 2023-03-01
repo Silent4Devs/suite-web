@@ -158,16 +158,19 @@ class UsersController extends Controller
             $identificador = explode('-', $request->n_empleado);
             $tipo = $identificador[0];
             $numero = $identificador[1];
+            $iduser = Empleado::where('n_empleado', '=', $numero)->first();
 
-            if ($tipo == 'NEMPLEADO') {
-                $usuario->update([
-                    'n_empleado' => $numero,
-                ]);
-            } else {
-                $usuario->update([
-                    'empleado_id' => $numero,
-                ]);
-            }
+             if ($tipo == "NEMPLEADO") {
+                 $usuario->update([
+                     'n_empleado' => $numero,
+                     'empleado_id' => $iduser->id,
+                 ]);
+             } else {
+                 $usuario->update([
+                     'n_empleado' => $numero,
+                     'empleado_id' => $iduser->id,
+                 ]);
+             }
 
             return response()->json(['success' => true]);
         }
