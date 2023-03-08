@@ -953,7 +953,7 @@
 
 
         .table td {
-            text-align: justify !important;
+            {{--  text-align: justify !important;  --}}
         }
 
         .titulo_general_funcion {
