@@ -162,7 +162,6 @@
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
-                serverSide: true,
                 retrieve: true,
                 aaSorting: [],
                 ajax: "{{ route('admin.ev360-competencias-por-puesto.index') }}",
@@ -236,7 +235,7 @@
                     this.style.border = "2px solid #20a4a1";
                     table.columns(1).search("(^" + this.value + "$)", true, false).draw();
                 } else {
-                    this.style.border = "none";
+                    this.style.border = "1px solid #ccc";
                     table.columns(1).search(this.value).draw();
                 }
             });
