@@ -93,7 +93,7 @@ class MultiStepForm extends Component
     {
         $evaluacion = new Evaluacion;
         $areas = Area::all();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::orderBy('name')->alta()->get();
         $grupos_evaluados = GruposEvaluado::all();
 
         $competencias = Competencia::search($this->search)->simplePaginate($this->perPage);

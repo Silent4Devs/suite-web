@@ -57,7 +57,7 @@ class ConsultaDeEvaluciones extends Component
 
         if ($this->equipo) {
             $jefe = Empleado::select('id', 'name')->with('children')->find($this->evaluador);
-            $equipo_a_cargo = $ev360ResumenTabla->obtenerEquipoACargo($jefe->children);
+            $equipo_a_cargo = $evaluacionController->obtenerEquipoACargo($jefe->children);
             $equipo_a_cargo = Empleado::select('id', 'name')->find($equipo_a_cargo);
 
             return view('livewire.consulta-de-evaluciones', [
