@@ -88,9 +88,9 @@
             <div class="row justify-content-center">
                 <div class="mt-4 text-center card col-7 display:inline">
                     <img src="{{ asset('img/mensaje2.png') }}">
+                    <a href="{{asset('admin/inicioUsuario')}}#aprobaciones" class="mt-2 btn btn-primary">Regresar</a>
                 </div>
             </div>
-            <a href="{{asset('admin/inicioUsuario')}}#aprobaciones" class="mt-2 btn btn-primary">Regresar</a>
         </div>
     @else
         <div class="m-0 row justify-content-center w-100" style="position: relative">

@@ -283,9 +283,9 @@ class DocumentosController extends Controller
         $this->createDocumentosEnAprobacionIfNotExists();
         $path_documentos_aprobacion = $this->pathDocumentsWhenUpdate($request->tipo);
         $nombre_compuesto = $documento->archivo;
-        $version = $documento->version;
+        $version = $request->version;
         if ($estatus != Documento::EN_ELABORACION) {
-            $version = $documento->version;
+            $version = $request->version;
         }
         if ($request->file('archivo')) {
             // $extension = pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION);
