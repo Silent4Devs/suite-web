@@ -177,14 +177,14 @@
                                                 <label for="comentarios" class="labels-publicacion">Comentarios
                                                     adicionales:</label>
                                                 <textarea class="form-control" id="comentarios" name="comentarios" rows="1"></textarea>
-                                                <span class="text-danger" id="comentarios_error"></span </div>
+                                                <span class="text-danger" id="comentarios_error"></span> </div>
                                             </div>
                                         </div>
                                     </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn_cancelar" data-dismiss="modal">Cancelar</button>
                             <button type="button" id="finalizarPublicacion" class="btn btn-danger">Enviar</button>
                         </div>
                     </div>
