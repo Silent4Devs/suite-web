@@ -421,7 +421,7 @@ class Empleado extends Model
 
     public function empleado_certificaciones()
     {
-        return $this->hasMany(CertificacionesEmpleados::class);
+        return $this->hasMany(CertificacionesEmpleados::class)->orderByDesc('vigencia');
     }
 
     // public function idiomas()
@@ -442,7 +442,7 @@ class Empleado extends Model
 
     public function empleado_educacion()
     {
-        return $this->hasMany(EducacionEmpleados::class)->orderByDesc('año_inicio');
+        return $this->hasMany(EducacionEmpleados::class)->orderByDesc('año_fin');
     }
 
     public function empleado_documentos()
