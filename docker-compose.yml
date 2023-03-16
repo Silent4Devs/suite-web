@@ -16,24 +16,22 @@ services:
         networks:
             - tabantajnetwork
 
-    # mysql:
-    #     image: mysql:8.0
-    #     container_name: mysql
-    #     restart: unless-stopped
-    #     tty: true
-    #     ports:
-    #         - 33069:3306
-    #     volumes:
-    #         - ./mysql:/var/lib/mysql
-    #     environment:
-    #         MYSQL_DATABASE: 'homestead'
-    #         MYSQL_USER: 'homestead'
-    #         MYSQL_PASSWORD: 'secret'
-    #         MYSQL_ROOT_PASSWORD: 'secret'
-    #         SERVICE_TAGS: dev
-    #         SERVICE_NAME: mysql
-    #     networks:
-    #         - tabantajnetwork
+    postgres:
+      image: postgres:13-alpine
+      container_name: postgres
+      restart: unless-stopped
+      tty: true    
+      volumes:
+            - "./postgres:/var/lib/postgresql/data"
+      environment:
+            - POSTGRES_USER=homestead
+            - POSTGRES_PASSWORD=secret
+            - POSTGRES_DB=homestead
+      ports:
+            - "5432:5432"
+      networks:
+            - tabantajnetwork
+
 
     php:
         build:
