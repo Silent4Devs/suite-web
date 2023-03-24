@@ -1406,7 +1406,7 @@ class EV360EvaluacionesController extends Controller
 
     public function show()
     {
-        $objetivo=Objetivo::where('esta_aprobado', '!=', '1')->where('created_at', '>=', '2023-03-06')->get();
+        $objetivo=Objetivo::where('esta_aprobado', '=', '0')->where('created_at', '>=', '2023-03-06')->get();
         // dd($objetivo);
         
         foreach($objetivo as $obj)
