@@ -333,10 +333,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'index' => 'ev360-evaluaciones.index',
             'create' => 'ev360-evaluaciones.create',
             'store' => 'ev360-evaluaciones.store',
-            'show' => 'ev360-evaluaciones.show',
+            // 'show' => 'ev360-evaluaciones.show',
             'edit' => 'ev360-evaluaciones.edit',
             'update' => 'ev360-evaluaciones.update',
         ]);
+
+        Route::get('recursos-humanos/evaluacion-360/evaluacion/objetivostmp', 'RH\EV360EvaluacionesController@objetivosTemporal')->name('ev360-evaluaciones.objetivostmp');
 
         Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/remover', 'RH\EvaluadoEvaluadorController@remover')->name('ev360-evaluaciones.evaluadores.remover');
         Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/agregar', 'RH\EvaluadoEvaluadorController@agregar')->name('ev360-evaluaciones.evaluadores.agregar');
