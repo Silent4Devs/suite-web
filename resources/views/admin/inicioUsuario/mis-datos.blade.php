@@ -996,7 +996,6 @@ if (!is_null($organizacion)) {
                                             @endif
                                             <hr class="hr-custom-title">
 
-                                            @can('')
                                                 <div id="evaluacionesRealizar" class="row" x-show="show"
                                                     x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
                                                     @if ($evaluaciones->count())
@@ -1108,7 +1107,6 @@ if (!is_null($organizacion)) {
                                                                     @endif
                                                                 @endforeach --}}
                                                 </div>
-                                            @endcan
                                         </div>
                                     </div>
                                 </div>

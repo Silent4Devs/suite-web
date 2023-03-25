@@ -11,17 +11,20 @@ use App\Models\Empleado;
 use App\Models\RH\Competencia;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionCompetencia;
+use App\Models\RH\EvaluacionesEvaluados;
 use App\Models\RH\EvaluacionObjetivo;
 use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoCalificacion;
+use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RH\RangosResultado;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -358,11 +361,12 @@ class EV360EvaluacionesController extends Controller
                 $progreso_objetivos = floatval(number_format((($objetivos_evaluados / count($objetivos)) * 100)));
             }
         }
-
+// dd($objetivos);
+// dd($objetivos, $objetivos_evaluados, $objetivos_no_evaluados);
         $esta_evaluado = EvaluadoEvaluador::where('evaluado_id', $evaluado->id)
             ->where('evaluador_id', $evaluador->id)
             ->where('evaluacion_id', $evaluacion->id)->first()->evaluado;
-
+            // dd($esta_evaluado);
         $finalizo_tiempo = false;
         if (Carbon::now()->diffInDays(Carbon::parse($evaluacion->fecha_fin), false) + 1 <= 0) {
             $finalizo_tiempo = true;
@@ -1398,5 +1402,56 @@ class EV360EvaluacionesController extends Controller
         $evaluacion->delete();
 
         return response()->json(['deleted' => true]);
+    }
+
+    public function show()
+    {
+        $borrarrut1=ObjetivoRespuesta::where('objetivo_id', '1077')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
+        $borrarrut2=ObjetivoRespuesta::where('objetivo_id', '1077')->where('evaluador_id', '=', '326')->where('evaluacion_id','=', '24')->first();
+        $borrarrut3=ObjetivoRespuesta::where('objetivo_id', '1087')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
+        $borrarrut4=ObjetivoRespuesta::where('objetivo_id', '1087')->where('evaluador_id', '=', '326')->where('evaluacion_id','=', '24')->first();
+        $borrarrut5=ObjetivoRespuesta::where('objetivo_id', '1081')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
+        $borrarrut6=ObjetivoRespuesta::where('objetivo_id', '1081')->where('evaluador_id', '=', '326')->where('evaluacion_id','=', '24')->first();
+
+        $borrarrut1->delete();
+        $borrarrut2->delete();
+        $borrarrut3->delete();
+        $borrarrut4->delete();
+        $borrarrut5->delete();
+        $borrarrut6->delete();
+
+        $objetivo=Objetivo::where('esta_aprobado', '=', '0')->where('created_at', '>=', '2023-03-06')->get();
+        // dd($objetivo);
+        
+        foreach($objetivo as $obj)
+        {
+            $evaluado=ObjetivoEmpleado::where('objetivo_id','=',$obj->id)->get();
+            // dd($evaluado);
+            foreach($evaluado as $eva)
+            {
+                $evaluacion=EvaluacionesEvaluados::where('evaluado_id','=', $eva->empleado_id)->get();
+                // dd($evaluacion);
+                foreach($evaluacion as $evalu)
+                {
+                    $evaluador=EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)->where('evaluacion_id','=',$evalu->evaluacion_id)->whereIn('tipo',['0','1'])->get();
+                    
+                    foreach($evaluador as $evldr){
+                        ObjetivoRespuesta::create([
+                            'meta_alcanzada' => 'Sin evaluar',
+                            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+                            'calificacion' => 0,
+                            'objetivo_id' => $obj->id,
+                            'evaluado_id' => $eva->empleado_id,
+                            'evaluador_id' => $evldr->evaluador_id,
+                            'evaluacion_id' => $evalu->evaluacion_id,
+                        ]);                   
+                        // dd($obj->id,$eva->empleado_id,$evalu->evaluacion_id,$evldr->evaluador_id);
+                        $obj->update([
+                            'esta_aprobado'=>1,
+                        ]);
+                    }
+                }
+            }
+        }
     }
 }
