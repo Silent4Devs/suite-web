@@ -168,15 +168,15 @@
             <template x-if="estaBloqueado">
                 <div>
                     <label for="version">Versión:</label>
-                    <input readonly class="m-0 form-control" type="number" name="version" {{-- style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669" --}}
-                        value="{{ $documentoActual->version == null ? '1' : intval($documentoActual->version) }}" />
+                    <input readonly class="m-0 form-control" type="number" name="version" min="1" {{-- style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669" --}}
+                        value="{{ $newversdoc }}" />
                 </div>
             </template>
             <template x-if="!estaBloqueado">
                 <div>
                     <label for="version">Versión:</label>
-                    <input class="m-0 form-control" type="number" name="version" {{-- style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669" --}}
-                        value="{{ $documentoActual->version == null ? '1' : intval($documentoActual->version) }}" />
+                    <input class="m-0 form-control" type="number" name="version" min="1" {{-- style="border: 1px solid #ced4da !important;border-radius: 5px;padding: 6px 2px;background:#66666669" --}}
+                        value="{{ $newversdoc }}" />
                 </div>
             </template>
             <input type="checkbox" id="estaBloqueado" style="display:none">

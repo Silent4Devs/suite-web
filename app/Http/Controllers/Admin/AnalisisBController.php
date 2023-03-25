@@ -69,8 +69,8 @@ class AnalisisBController extends Controller
         $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap2nocumple = GapDo::select('id', 'valoracion')->where('valoracion', '=', '3')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', request()->id)->count();
-        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->get()->where('analisis_brechas_id', '=', request()->id);
-        $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->get()->where('analisis_brechas_id', '=', request()->id);
+        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
+        $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap3satisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap3parcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
         $gap3nocumple = GapTre::select('id')->where('valoracion', '=', '3')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', request()->id)->count();
@@ -82,7 +82,7 @@ class AnalisisBController extends Controller
         $gapunoPorc = new Porcentaje();
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
         $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
-        $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
+        $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap3satisfactorios, $gap3parcialmente, $gap31porcentaje, $gap3asatisfactorios, $gap3aparcialmente);
 
         $conteos = [
             'Gap1' => [
