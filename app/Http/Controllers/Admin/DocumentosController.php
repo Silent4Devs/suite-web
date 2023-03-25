@@ -43,8 +43,9 @@ class DocumentosController extends Controller
         $procesos = Proceso::get();
         $empleados = Empleado::alta()->get();
         $documentoActual = new Documento;
+        $newversdoc = '1';
 
-        return view('admin.documentos.create', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));
+        return view('admin.documentos.create', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual', 'newversdoc'));
     }
 
     public function store(Request $request)
@@ -198,8 +199,9 @@ class DocumentosController extends Controller
         $procesos = Proceso::get();
         $empleados = Empleado::alta()->get();
         $documentoActual = $documento;
+        $newversdoc = (intval($documentoActual->version)+1);
 
-        return view('admin.documentos.edit', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));
+        return view('admin.documentos.edit', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual', 'newversdoc'));
     }
 
     public function update(Request $request, Documento $documento)
@@ -395,6 +397,7 @@ class DocumentosController extends Controller
             if ($documento->tipo == 'proceso') {
                 // logica para eliminar el proceso vinculado al documento
                 $proceso = Proceso::where('documento_id', intval($documento->id))->first();
+                $revision=RevisionDocumento::where('documento_id', intval($documento->id))->first();
                 if ($request->delete_documents == 'true') {
                     if ($proceso) {
                         $dependencias = Documento::where('proceso_id', '=', $proceso->id)->get();
@@ -408,6 +411,11 @@ class DocumentosController extends Controller
                 if ($proceso) {
                     $proceso->delete();
                 }
+                $revision->delete();
+            }
+            else{
+                $revision=RevisionDocumento::where('documento_id', intval($documento->id))->first();
+                $revision->delete();
             }
             $path_documento = $this->getPathDocumento($documento, 'public');
             $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);

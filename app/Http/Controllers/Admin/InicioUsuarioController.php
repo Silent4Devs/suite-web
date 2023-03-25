@@ -1035,7 +1035,7 @@ class InicioUsuarioController extends Controller
 
     public function archivoAprobacion()
     {
-        $mis_documentos = Documento::get();
+        $mis_documentos = Documento::get()->where('deleted_at', '=', null);
 
         return view('admin.inicioUsuario.aprobaciones_archivo', compact('mis_documentos'));
     }
