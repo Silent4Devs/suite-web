@@ -1405,8 +1405,8 @@ class EV360EvaluacionesController extends Controller
     }
 
     //funcion para mostrar objetivos del usuario que no fueron aprobados por el lider 
-    // public function show()
-    // {
+    public function show()
+    {
     //     $borrarrut1=ObjetivoRespuesta::where('objetivo_id', '1077')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
     //     $borrarrut2=ObjetivoRespuesta::where('objetivo_id', '1077')->where('evaluador_id', '=', '326')->where('evaluacion_id','=', '24')->first();
     //     $borrarrut3=ObjetivoRespuesta::where('objetivo_id', '1087')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
@@ -1420,6 +1420,34 @@ class EV360EvaluacionesController extends Controller
     //     $borrarrut4->delete();
     //     $borrarrut5->delete();
     //     $borrarrut6->delete();
+
+    //REACTIVAR A LAURA(305) y MARCO (138)
+    $reacLL=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 305)->where('evaluador_id', '=', 305);
+    $reacLL->update([
+        'evaluado' => 'false',
+    ]);
+    $reacLM=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 305)->where('evaluador_id', '=', 138);
+    $reacLM->update([
+        'evaluado' => 'false',
+    ]);
+//REACTIVAR A OMAR(290) Y A NERI(259)
+$reacOO=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 290)->where('evaluador_id', '=', 290);
+    $reacOO->update([
+        'evaluado' => 'false',
+    ]);
+    $reacON=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 290)->where('evaluador_id', '=', 259);
+    $reacON->update([
+        'evaluado' => 'false',
+    ]);
+//Rodrigo B (268) REACTIVAR A NERI(259)
+$reacRR=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 268)->where('evaluador_id', '=', 259);
+$reacRR->update([
+    'evaluado' => 'false',
+]);
+$reacRN=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 268)->where('evaluador_id', '=', 259);
+$reacRN->update([
+    'evaluado' => 'false',
+]);
 
     //     $objetivo=Objetivo::where('esta_aprobado', '=', '0')->where('created_at', '>=', '2023-03-06')->get();
     //     // dd($objetivo);
@@ -1454,5 +1482,5 @@ class EV360EvaluacionesController extends Controller
     //             }
     //         }
     //     }
-    // }
+    }
 }
