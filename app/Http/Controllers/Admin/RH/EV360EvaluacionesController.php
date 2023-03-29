@@ -1405,8 +1405,10 @@ class EV360EvaluacionesController extends Controller
     }
 
     //funcion para mostrar objetivos del usuario que no fueron aprobados por el lider 
-    public function show()
-    {
+    //public function show()
+    //{
+    //Borra registros sobrantes que no fueron borrados correctamente de 2 tablas relacionadas,
+    //se tuvieron que buscar los registros especificos al no haber relacion directa
     //     $borrarrut1=ObjetivoRespuesta::where('objetivo_id', '1077')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
     //     $borrarrut2=ObjetivoRespuesta::where('objetivo_id', '1077')->where('evaluador_id', '=', '326')->where('evaluacion_id','=', '24')->first();
     //     $borrarrut3=ObjetivoRespuesta::where('objetivo_id', '1087')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
@@ -1421,33 +1423,44 @@ class EV360EvaluacionesController extends Controller
     //     $borrarrut5->delete();
     //     $borrarrut6->delete();
 
+    //Funcion para reactivar evaluaciones 360,
+    // a algunos usuarios se les agregaron sus objetivos tras finalizar su evaluacion360,
+    //por lo que hubo la necesidad de reactivar la evaluacion
+    //Se busca al evaluado y al evaluador en la evaluacion actual (24) y se rectivan al cambiar el estatus
+    // de true a false para que puedan volver a contestar
     //REACTIVAR A LAURA(305) y MARCO (138)
-    $reacLL=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 305)->where('evaluador_id', '=', 305);
-    $reacLL->update([
-        'evaluado' => 'false',
-    ]);
-    $reacLM=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 305)->where('evaluador_id', '=', 138);
-    $reacLM->update([
-        'evaluado' => 'false',
-    ]);
-//REACTIVAR A OMAR(290) Y A NERI(259)
-$reacOO=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 290)->where('evaluador_id', '=', 290);
-    $reacOO->update([
-        'evaluado' => 'false',
-    ]);
-    $reacON=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 290)->where('evaluador_id', '=', 259);
-    $reacON->update([
-        'evaluado' => 'false',
-    ]);
-//Rodrigo B (268) REACTIVAR A NERI(259)
-$reacRR=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 268)->where('evaluador_id', '=', 268);
-$reacRR->update([
-    'evaluado' => 'false',
-]);
-$reacRN=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 268)->where('evaluador_id', '=', 259);
-$reacRN->update([
-    'evaluado' => 'false',
-]);
+
+    //     $reacLL=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 305)->where('evaluador_id', '=', 305);
+    //     $reacLL->update([
+    //         'evaluado' => 'false',
+    //     ]);
+    //     $reacLM=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 305)->where('evaluador_id', '=', 138);
+    //     $reacLM->update([
+    //         'evaluado' => 'false',
+    //     ]);
+    // //REACTIVAR A OMAR(290) Y A NERI(259)
+    // $reacOO=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 290)->where('evaluador_id', '=', 290);
+    //     $reacOO->update([
+    //         'evaluado' => 'false',
+    //     ]);
+    //     $reacON=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 290)->where('evaluador_id', '=', 259);
+    //     $reacON->update([
+    //         'evaluado' => 'false',
+    //     ]);
+    // //Rodrigo B (268) REACTIVAR A NERI(259)
+    // $reacRR=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 268)->where('evaluador_id', '=', 268);
+    // $reacRR->update([
+    //     'evaluado' => 'false',
+    // ]);
+    // $reacRN=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 268)->where('evaluador_id', '=', 259);
+    // $reacRN->update([
+    //     'evaluado' => 'false',
+    // ]);
+
+    //Funcion para agregar los objetivos pendientes, esta funcion toma todos los objetivos de la tabla
+    // ev_360_objetivos_empleados que no se agregaron a la tabla ev360_objetivos_respuestas 
+    //por estar en estado "Pendiente" y los agrega a dicha tabla cambiando su
+    //estatus a aprobado en el proceso
 
     //     $objetivo=Objetivo::where('esta_aprobado', '=', '0')->where('created_at', '>=', '2023-03-06')->get();
     //     // dd($objetivo);
@@ -1482,5 +1495,5 @@ $reacRN->update([
     //             }
     //         }
     //     }
-    }
+    //}
 }
