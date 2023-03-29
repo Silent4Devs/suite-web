@@ -1440,7 +1440,7 @@ $reacOO=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id
         'evaluado' => 'false',
     ]);
 //Rodrigo B (268) REACTIVAR A NERI(259)
-$reacRR=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 268)->where('evaluador_id', '=', 259);
+$reacRR=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 268)->where('evaluador_id', '=', 268);
 $reacRR->update([
     'evaluado' => 'false',
 ]);
