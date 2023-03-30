@@ -1405,8 +1405,8 @@ class EV360EvaluacionesController extends Controller
     }
 
     //funcion para mostrar objetivos del usuario que no fueron aprobados por el lider 
-    public function show()
-    {
+    // public function show()
+    // {
     //Borra registros sobrantes que no fueron borrados correctamente de 2 tablas relacionadas,
     //se tuvieron que buscar los registros especificos al no haber relacion directa
     //     $borrarrut1=ObjetivoRespuesta::where('objetivo_id', '1077')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
@@ -1534,50 +1534,50 @@ class EV360EvaluacionesController extends Controller
         //     'evaluado' => 'false',
         // ]);
 
-        $cambioE = EvaluadoEvaluador::where('evaluado_id', '=', 134)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 132)->first();
-        $cambioE->update([
-            'evaluador_id' => '158',
-        ]);
+        // $cambioE = EvaluadoEvaluador::where('evaluado_id', '=', 134)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 132)->first();
+        // $cambioE->update([
+        //     'evaluador_id' => '158',
+        // ]);
 
-        $cambioEC = EvaluacionRepuesta::where('evaluado_id', '=', 134)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 132);
-        $cambioEC->update([
-            'evaluador_id' => '158',
-        ]);
+        // $cambioEC = EvaluacionRepuesta::where('evaluado_id', '=', 134)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 132);
+        // $cambioEC->update([
+        //     'evaluador_id' => '158',
+        // ]);
 
-        $cambioEO = ObjetivoRespuesta::where('evaluado_id', '=', 134)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 132);
-        $cambioEO->update([
-            'evaluador_id' => '158',
-        ]);
+        // $cambioEO = ObjetivoRespuesta::where('evaluado_id', '=', 134)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 132);
+        // $cambioEO->update([
+        //     'evaluador_id' => '158',
+        // ]);
 
-        $cambioGA = EvaluadoEvaluador::where('evaluado_id', '=', 135)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346)->first();
-        $cambioGA->update([
-            'evaluador_id' => '132',
-        ]);
+        // $cambioGA = EvaluadoEvaluador::where('evaluado_id', '=', 135)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346)->first();
+        // $cambioGA->update([
+        //     'evaluador_id' => '132',
+        // ]);
 
-        $cambioGAC = EvaluacionRepuesta::where('evaluado_id', '=', 135)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346);
-        $cambioGAC->update([
-            'evaluador_id' => '132',
-        ]);
+        // $cambioGAC = EvaluacionRepuesta::where('evaluado_id', '=', 135)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346);
+        // $cambioGAC->update([
+        //     'evaluador_id' => '132',
+        // ]);
 
-        $cambioGAO = ObjetivoRespuesta::where('evaluado_id', '=', 135)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346);
-        $cambioGAO->update([
-            'evaluador_id' => '132',
-        ]);
+        // $cambioGAO = ObjetivoRespuesta::where('evaluado_id', '=', 135)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346);
+        // $cambioGAO->update([
+        //     'evaluador_id' => '132',
+        // ]);
 
-        $cambioGU = EvaluadoEvaluador::where('evaluado_id', '=', 164)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346)->first();
-        $cambioGU->update([
-            'evaluador_id' => '132',
-        ]);
+        // $cambioGU = EvaluadoEvaluador::where('evaluado_id', '=', 164)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346)->first();
+        // $cambioGU->update([
+        //     'evaluador_id' => '132',
+        // ]);
 
-        $cambioGUC = EvaluacionRepuesta::where('evaluado_id', '=', 164)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346);
-        $cambioGUC->update([
-            'evaluador_id' => '132',
-        ]);
+        // $cambioGUC = EvaluacionRepuesta::where('evaluado_id', '=', 164)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346);
+        // $cambioGUC->update([
+        //     'evaluador_id' => '132',
+        // ]);
 
-        $cambioGUO = ObjetivoRespuesta::where('evaluado_id', '=', 164)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346);
-        $cambioGUO->update([
-            'evaluador_id' => '132',
-        ]);
+        // $cambioGUO = ObjetivoRespuesta::where('evaluado_id', '=', 164)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 346);
+        // $cambioGUO->update([
+        //     'evaluador_id' => '132',
+        // ]);
     
     //Funcion para reactivar evaluaciones 360,
     // a algunos usuarios se les agregaron sus objetivos tras finalizar su evaluacion360,
@@ -1586,10 +1586,10 @@ class EV360EvaluacionesController extends Controller
     // de true a false para que puedan volver a contestar
 
     //CESAR 152
-    $reacCC=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 152)->where('evaluador_id', '=', 152);
-         $reacCC->update([
-             'evaluado' => 'false',
-         ]);
+    // $reacCC=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 152)->where('evaluador_id', '=', 152);
+    //      $reacCC->update([
+    //          'evaluado' => 'false',
+    //      ]);
 
     //REACTIVAR A LAURA(305) y MARCO (138)
 
@@ -1658,5 +1658,5 @@ class EV360EvaluacionesController extends Controller
     //             }
     //         }
     //     }
-    }
+    //}
 }
