@@ -1405,8 +1405,8 @@ class EV360EvaluacionesController extends Controller
     }
 
     //funcion para mostrar objetivos del usuario que no fueron aprobados por el lider 
-    //public function show()
-    //{
+    public function show()
+    {
     //Borra registros sobrantes que no fueron borrados correctamente de 2 tablas relacionadas,
     //se tuvieron que buscar los registros especificos al no haber relacion directa
     //     $borrarrut1=ObjetivoRespuesta::where('objetivo_id', '1077')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24')->first();
@@ -1423,6 +1423,117 @@ class EV360EvaluacionesController extends Controller
     //     $borrarrut5->delete();
     //     $borrarrut6->delete();
 
+        $borrarG=ObjetivoRespuesta::where('evaluado_id', '=', '254')->where('evaluador_id', '=', '254')->where('evaluacion_id','=', '24');
+        $borrarGJ=ObjetivoRespuesta::where('evaluado_id', '=', '254')->where('evaluador_id', '=', '150')->where('evaluacion_id','=', '24');
+
+        $borrarG->delete();
+        $borrarGJ->delete();
+
+        ObjetivoRespuesta::create([
+            'meta_alcanzada' => 'Sin evaluar',
+            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            'calificacion' => 0,
+            'objetivo_id' => '1169',
+            'evaluado_id' => '254',
+            'evaluador_id' => '254',
+            'evaluacion_id' => '24',
+        ]);
+
+        ObjetivoRespuesta::create([
+            'meta_alcanzada' => 'Sin evaluar',
+            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            'calificacion' => 0,
+            'objetivo_id' => '1170',
+            'evaluado_id' => '254',
+            'evaluador_id' => '254',
+            'evaluacion_id' => '24',
+        ]);
+
+        ObjetivoRespuesta::create([
+            'meta_alcanzada' => 'Sin evaluar',
+            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            'calificacion' => 0,
+            'objetivo_id' => '1171',
+            'evaluado_id' => '254',
+            'evaluador_id' => '254',
+            'evaluacion_id' => '24',
+        ]);
+
+        ObjetivoRespuesta::create([
+            'meta_alcanzada' => 'Sin evaluar',
+            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            'calificacion' => 0,
+            'objetivo_id' => '1173',
+            'evaluado_id' => '254',
+            'evaluador_id' => '254',
+            'evaluacion_id' => '24',
+        ]);
+
+        ObjetivoRespuesta::create([
+            'meta_alcanzada' => 'Sin evaluar',
+            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            'calificacion' => 0,
+            'objetivo_id' => '1175',
+            'evaluado_id' => '254',
+            'evaluador_id' => '254',
+            'evaluacion_id' => '24',
+        ]);
+
+        ObjetivoRespuesta::create([
+            'meta_alcanzada' => 'Sin evaluar',
+            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            'calificacion' => 0,
+            'objetivo_id' => '1169',
+            'evaluado_id' => '254',
+            'evaluador_id' => '150',
+            'evaluacion_id' => '24',
+        ]);
+
+        ObjetivoRespuesta::create([
+            'meta_alcanzada' => 'Sin evaluar',
+            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            'calificacion' => 0,
+            'objetivo_id' => '1170',
+            'evaluado_id' => '254',
+            'evaluador_id' => '150',
+            'evaluacion_id' => '24',
+        ]);
+
+        ObjetivoRespuesta::create([
+            'meta_alcanzada' => 'Sin evaluar',
+            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            'calificacion' => 0,
+            'objetivo_id' => '1171',
+            'evaluado_id' => '254',
+            'evaluador_id' => '150',
+            'evaluacion_id' => '24',
+        ]);
+
+        ObjetivoRespuesta::create([
+            'meta_alcanzada' => 'Sin evaluar',
+            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            'calificacion' => 0,
+            'objetivo_id' => '1173',
+            'evaluado_id' => '254',
+            'evaluador_id' => '150',
+            'evaluacion_id' => '24',
+        ]);
+
+        ObjetivoRespuesta::create([
+            'meta_alcanzada' => 'Sin evaluar',
+            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            'calificacion' => 0,
+            'objetivo_id' => '1175',
+            'evaluado_id' => '254',
+            'evaluador_id' => '150',
+            'evaluacion_id' => '24',
+        ]);
+
+        $reacGG=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 254)->where('evaluador_id', '=', 254);
+        $reacGG->update([
+            'evaluado' => 'false',
+        ]);
+    
     //Funcion para reactivar evaluaciones 360,
     // a algunos usuarios se les agregaron sus objetivos tras finalizar su evaluacion360,
     //por lo que hubo la necesidad de reactivar la evaluacion
@@ -1495,5 +1606,5 @@ class EV360EvaluacionesController extends Controller
     //             }
     //         }
     //     }
-    //}
+    }
 }
