@@ -1405,8 +1405,8 @@ class EV360EvaluacionesController extends Controller
     }
 
     //funcion para mostrar objetivos del usuario que no fueron aprobados por el lider 
-    // public function show()
-    // {
+    public function show()
+    {
 
     //Cambio de fecha
     // $fecha=Evaluacion::find('24');
@@ -1536,10 +1536,22 @@ class EV360EvaluacionesController extends Controller
         //     'evaluacion_id' => '24',
         // ]);
 
-        // $reacGG=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 254)->where('evaluador_id', '=', 254);
-        // $reacGG->update([
-        //     'evaluado' => 'false',
-        // ]);
+        $cambioA = EvaluadoEvaluador::where('evaluado_id', '=', 140)->where('evaluacion_id', '=', 24)
+        ->where('evaluador_id', '=', 132)->first();
+        $cambioA->update([
+            'tipo' => '1',
+        ]);
+
+        $cambioM = EvaluadoEvaluador::where('evaluado_id', '=', 140)->where('evaluacion_id', '=', 24)
+        ->where('evaluador_id', '=', 193)->first();
+        $cambioM->update([
+            'tipo' => '2',
+        ]);
+
+        $cambioMO = ObjetivoRespuesta::where('evaluado_id', '=', 140)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 193);
+        $cambioMO->update([
+            'evaluador_id' => '132',
+        ]);
 
         // $cambioE = EvaluadoEvaluador::where('evaluado_id', '=', 134)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 132)->first();
         // $cambioE->update([
@@ -1591,6 +1603,11 @@ class EV360EvaluacionesController extends Controller
     //por lo que hubo la necesidad de reactivar la evaluacion
     //Se busca al evaluado y al evaluador en la evaluacion actual (24) y se rectivan al cambiar el estatus
     // de true a false para que puedan volver a contestar
+
+    // $reacGG=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 254)->where('evaluador_id', '=', 254);
+    // $reacGG->update([
+    //     'evaluado' => 'false',
+    // ]);
 
     //CESAR 152
     // $reacCC=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', 152)->where('evaluador_id', '=', 152);
@@ -1665,5 +1682,5 @@ class EV360EvaluacionesController extends Controller
     //             }
     //         }
     //     }
-    // }
+    }
 }
