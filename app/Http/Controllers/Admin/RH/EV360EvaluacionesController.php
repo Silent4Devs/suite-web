@@ -1405,14 +1405,14 @@ class EV360EvaluacionesController extends Controller
     }
 
     //funcion para mostrar objetivos del usuario que no fueron aprobados por el lider 
-    public function show()
-    {
+    // public function show()
+    // {
 
     //Cambio de fecha
-    $fecha=Evaluacion::find('24');
-    $fecha->update([
-        'fecha_fin' => '2023-04-07'
-    ]);
+    // $fecha=Evaluacion::find('24');
+    // $fecha->update([
+    //     'fecha_fin' => '2023-04-07'
+    // ]);
 
     //Borra registros sobrantes que no fueron borrados correctamente de 2 tablas relacionadas,
     //se tuvieron que buscar los registros especificos al no haber relacion directa
@@ -1665,5 +1665,5 @@ class EV360EvaluacionesController extends Controller
     //             }
     //         }
     //     }
-    }
+    // }
 }
