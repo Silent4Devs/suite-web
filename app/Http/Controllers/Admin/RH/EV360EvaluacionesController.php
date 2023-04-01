@@ -1405,8 +1405,8 @@ class EV360EvaluacionesController extends Controller
     }
 
     //funcion para mostrar objetivos del usuario que no fueron aprobados por el lider 
-    public function show()
-    {
+    // public function show()
+    // {
 
     //Cambio de fecha
     // $fecha=Evaluacion::find('24');
@@ -1536,58 +1536,58 @@ class EV360EvaluacionesController extends Controller
         //     'evaluacion_id' => '24',
         // ]);
 
-        $cambioEr = EvaluadoEvaluador::where('evaluado_id', '=', 134)->where('evaluacion_id', '=', 24)
-        ->where('evaluador_id', '=', 158)->where('tipo', '=', 2);
-        $cambioEr->update([
-            'evaluador_id' => '132',
-            'firma_evaluador' => null,
-            'evaluado' => false,
-        ]);
+        // $cambioEr = EvaluadoEvaluador::where('evaluado_id', '=', 134)->where('evaluacion_id', '=', 24)
+        // ->where('evaluador_id', '=', 158)->where('tipo', '=', 2);
+        // $cambioEr->update([
+        //     'evaluador_id' => '132',
+        //     'firma_evaluador' => null,
+        //     'evaluado' => false,
+        // ]);
 
-        $cambioCEr1 = EvaluacionRepuesta::where('id', '=', '6920');
-        $cambioCEr1->update([
-            'evaluador_id' => '132',
-        ]);
-        $cambioCEr2 = EvaluacionRepuesta::where('id', '=', '6921');
-        $cambioCEr2->update([
-            'evaluador_id' => '132',
-        ]);
-        $cambioCEr3 = EvaluacionRepuesta::where('id', '=', '6922');
-        $cambioCEr3->update([
-            'evaluador_id' => '132',
-        ]);
-        $cambioCEr4 = EvaluacionRepuesta::where('id', '=', '6923');
-        $cambioCEr4->update([
-            'evaluador_id' => '132',
-        ]);
-        $cambioCEr5 = EvaluacionRepuesta::where('id', '=', '6924');
-        $cambioCEr5->update([
-            'evaluador_id' => '132',
-        ]);
-        $cambioCEr6 = EvaluacionRepuesta::where('id', '=', '6925');
-        $cambioCEr6->update([
-            'evaluador_id' => '132',
-        ]);
-        $cambioCEr7 = EvaluacionRepuesta::where('id', '=', '6926');
-        $cambioCEr7->update([
-            'evaluador_id' => '132',
-        ]);
-        $cambioCEr8 = EvaluacionRepuesta::where('id', '=', '6927');
-        $cambioCEr8->update([
-            'evaluador_id' => '132',
-        ]);
-        $cambioCEr9 = EvaluacionRepuesta::where('id', '=', '6928');
-        $cambioCEr9->update([
-            'evaluador_id' => '132',
-        ]);
-        $cambioCEr10 = EvaluacionRepuesta::where('id', '=', '6929');
-        $cambioCEr10->update([
-            'evaluador_id' => '132',
-        ]);
-        $cambioCEr11 = EvaluacionRepuesta::where('id', '=', '6930');
-        $cambioCEr11->update([
-            'evaluador_id' => '132',
-        ]);
+        // $cambioCEr1 = EvaluacionRepuesta::where('id', '=', '6920');
+        // $cambioCEr1->update([
+        //     'evaluador_id' => '132',
+        // ]);
+        // $cambioCEr2 = EvaluacionRepuesta::where('id', '=', '6921');
+        // $cambioCEr2->update([
+        //     'evaluador_id' => '132',
+        // ]);
+        // $cambioCEr3 = EvaluacionRepuesta::where('id', '=', '6922');
+        // $cambioCEr3->update([
+        //     'evaluador_id' => '132',
+        // ]);
+        // $cambioCEr4 = EvaluacionRepuesta::where('id', '=', '6923');
+        // $cambioCEr4->update([
+        //     'evaluador_id' => '132',
+        // ]);
+        // $cambioCEr5 = EvaluacionRepuesta::where('id', '=', '6924');
+        // $cambioCEr5->update([
+        //     'evaluador_id' => '132',
+        // ]);
+        // $cambioCEr6 = EvaluacionRepuesta::where('id', '=', '6925');
+        // $cambioCEr6->update([
+        //     'evaluador_id' => '132',
+        // ]);
+        // $cambioCEr7 = EvaluacionRepuesta::where('id', '=', '6926');
+        // $cambioCEr7->update([
+        //     'evaluador_id' => '132',
+        // ]);
+        // $cambioCEr8 = EvaluacionRepuesta::where('id', '=', '6927');
+        // $cambioCEr8->update([
+        //     'evaluador_id' => '132',
+        // ]);
+        // $cambioCEr9 = EvaluacionRepuesta::where('id', '=', '6928');
+        // $cambioCEr9->update([
+        //     'evaluador_id' => '132',
+        // ]);
+        // $cambioCEr10 = EvaluacionRepuesta::where('id', '=', '6929');
+        // $cambioCEr10->update([
+        //     'evaluador_id' => '132',
+        // ]);
+        // $cambioCEr11 = EvaluacionRepuesta::where('id', '=', '6930');
+        // $cambioCEr11->update([
+        //     'evaluador_id' => '132',
+        // ]);
 
         // $cambioA = EvaluadoEvaluador::where('evaluado_id', '=', 140)->where('evaluacion_id', '=', 24)
         // ->where('evaluador_id', '=', 132)->first();
@@ -1737,5 +1737,5 @@ class EV360EvaluacionesController extends Controller
     //             }
     //         }
     //     }
-    }
+    // }
 }
