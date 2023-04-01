@@ -13,7 +13,8 @@ RUN apk add postgresql-dev \
     libmcrypt-dev \
     imagemagick-dev \
     && docker-php-ext-install soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache imagick\
-    && docker-php-ext-enable soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache imagick
+    && docker-php-ext-enable soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache imagick \
+    && docker-php-ext-configure gd --with-jpeg=/usr/include/ 
 
 # COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
