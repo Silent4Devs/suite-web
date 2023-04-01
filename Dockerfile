@@ -11,14 +11,24 @@ RUN apk add postgresql-dev \
     freetype-dev \
     libxpm-dev \
     libmcrypt-dev \
-    && docker-php-ext-install soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache\
-    && docker-php-ext-enable soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache
+    imagemagick-dev \
+    && docker-php-ext-install soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache imagick\
+    && docker-php-ext-enable soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache imagick \
+    && docker-php-ext-configure gd --with-jpeg=/usr/include/ 
 
 # COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 #add jit compiler
 RUN echo 'opcache.jit_buffer_size=100M' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
     && echo 'opcache.jit=1235' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+
+#file size
+RUN echo 'upload_max_filesize = 10000M' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo 'post_max_size = 10000' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+
+RUN echo 'upload_max_filesize = 10000M' >> /usr/local/etc/php/conf.d/docker-php-upload.ini \
+    && echo 'post_max_size = 10000M' >> /usr/local/etc/php/conf.d/docker-php-upload.ini
+
 
 # add composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
