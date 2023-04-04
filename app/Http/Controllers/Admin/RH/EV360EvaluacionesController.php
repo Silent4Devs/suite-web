@@ -1437,8 +1437,8 @@ class EV360EvaluacionesController extends Controller
         // $borrarG->delete();
         // $borrarGJ->delete();
 
-        // $borradoEvaEvaluados = EvaluacionesEvaluados::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '242')->where('puesto_id', '=', '156')->get();
-        // $borradoEvaEvaluados->each->delete();
+        $borradoEvaEvaluados = EvaluacionesEvaluados::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '242')->where('puesto_id', '=', '156')->get();
+        $borradoEvaEvaluados->each->delete();
 
         EvaluacionesEvaluados::firstOrCreate([
             'evaluacion_id' => '24',
@@ -1446,11 +1446,11 @@ class EV360EvaluacionesController extends Controller
             'puesto_id' => '156',
         ]);
 
-        // $borradoEvaluEvaluador = EvaluadoEvaluador::where('evaluado_id', '=', '242')
-        // ->where('evaluacion_id', '=', '24')
-        // ->where('peso', '=', '25')
-        // ->get();
-        // $borradoEvaluEvaluador->each->delete();
+        $borradoEvaluEvaluador = EvaluadoEvaluador::where('evaluado_id', '=', '242')
+        ->where('evaluacion_id', '=', '24')
+        ->where('peso', '=', '25')
+        ->get();
+        $borradoEvaluEvaluador->each->delete();
 
         EvaluadoEvaluador::firstOrCreate([
             'evaluado_id' => '242',
@@ -1484,11 +1484,11 @@ class EV360EvaluacionesController extends Controller
             'tipo' => '3',
         ]);
 
-        //Autoevaluacion
+        // //Autoevaluacion
 
-        // $borrarCompetencias = EvaluacionRepuesta::where('evaluado_id', '=', '242')
-        // ->where('evaluacion_id', '=', '24')->get();
-        // $borrarCompetencias->each->delete();
+        $borrarCompetencias = EvaluacionRepuesta::where('evaluado_id', '=', '242')
+        ->where('evaluacion_id', '=', '24')->get();
+        $borrarCompetencias->each->delete();
 
         EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
@@ -1571,7 +1571,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
         
-        //Evaluacion Gustavo
+        // //Evaluacion Gustavo
         
         EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
@@ -1654,7 +1654,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        //Evaluacion Gabriela Peralta Diaz
+        // //Evaluacion Gabriela Peralta Diaz
 
         EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
@@ -1737,7 +1737,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        //Gerardo Cruz
+        // //Gerardo Cruz
 
         EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
@@ -1820,11 +1820,11 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        // $borrarObjetivos = ObjetivoRespuesta::where('evaluado_id', '=', '242')
-        // ->where('evaluacion_id', '=', '24')->get();
-        // $borrarObjetivos->each->delete();
+        $borrarObjetivos = ObjetivoRespuesta::where('evaluado_id', '=', '242')
+        ->where('evaluacion_id', '=', '24')->get();
+        $borrarObjetivos->each->delete();
 
-        // dd($borrarCompetencias);
+        dd($borrarCompetencias);
 
             ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
