@@ -204,6 +204,13 @@ class Ev360ResumenTabla extends Component
                 $promedio_competencias_collect->push((($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_autoevaluacion / 100));
             }
 
+            $jefe_evaluador_id = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
+            ->where('evaluado_id', $evaluado->id)
+            ->where('tipo', '=', 1)
+            ->first();
+
+            $jefe_evaluador=Empleado::find($jefe_evaluador_id->evaluador_id);
+
             $lista_jefe_inmediato->push([
                 'tipo' => 'Jefe Inmediato',
                 'firma' => $filtro_jefe_inmediato->first() ? $locacionFirmas . $filtro_jefe_inmediato->first()->firma_evaluador : null,
@@ -381,6 +388,7 @@ class Ev360ResumenTabla extends Component
             'peso_general_competencias' => $evaluacion->peso_general_competencias,
             'peso_general_objetivos' => $evaluacion->peso_general_objetivos,
             'lista_autoevaluacion' => $lista_autoevaluacion,
+            'jefe_evaluador' => $jefe_evaluador,
             'lista_jefe_inmediato' => $lista_jefe_inmediato,
             'lista_equipo_a_cargo' => $lista_equipo_a_cargo,
             'lista_misma_area' => $lista_misma_area,
