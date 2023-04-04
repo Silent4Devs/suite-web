@@ -1410,10 +1410,10 @@ class EV360EvaluacionesController extends Controller
     {
 
     //Cambio de fecha
-    $fecha=Evaluacion::find('24');
-    $fecha->update([
-        'fecha_fin' => '2023-04-08'
-    ]);
+    // $fecha=Evaluacion::find('24');
+    // $fecha->update([
+    //     'fecha_fin' => '2023-04-08'
+    // ]);
 
     //Borra registros sobrantes que no fueron borrados correctamente de 2 tablas relacionadas,
     //se tuvieron que buscar los registros especificos al no haber relacion directa
@@ -1436,516 +1436,535 @@ class EV360EvaluacionesController extends Controller
 
         // $borrarG->delete();
         // $borrarGJ->delete();
-        EvaluacionesEvaluados::create([
-            'evaluacion_id' => '24',
-            'evaluado_id' => '242',
-            'puesto_id' => '156',
-        ]);
 
-        EvaluadoEvaluador::create([
-            'evaluado_id' => '242',
-            'evaluador_id' => '242',
-            'evaluacion_id' => '24',
-            'peso' => '25',
-            'tipo' => '0',
-        ]);
+        $borradoEvaEvaluados = EvaluacionesEvaluados::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '242')->where('puesto_id', '=', '156')->get();
+        $borradoEvaEvaluados->each->delete();
 
-        EvaluadoEvaluador::create([
-            'evaluado_id' => '242',
-            'evaluador_id' => '164',
-            'evaluacion_id' => '24',
-            'peso' => '25',
-            'tipo' => '1',
-        ]);
+        // EvaluacionesEvaluados::create([
+        //     'evaluacion_id' => '24',
+        //     'evaluado_id' => '242',
+        //     'puesto_id' => '156',
+        // ]);
 
-        EvaluadoEvaluador::create([
-            'evaluado_id' => '242',
-            'evaluador_id' => '135',
-            'evaluacion_id' => '24',
-            'peso' => '25',
-            'tipo' => '2',
-        ]);
+        $borradoEvaluEvaluador = EvaluadoEvaluador::where('evaluado_id', '=', '242')
+        ->where('evaluacion_id', '=', '24')
+        ->where('peso', '=', '25')
+        ->get();
+        $borradoEvaluEvaluador->each->delete();
 
-        EvaluadoEvaluador::create([
-            'evaluado_id' => '242',
-            'evaluador_id' => '240',
-            'evaluacion_id' => '24',
-            'peso' => '25',
-            'tipo' => '3',
-        ]);
+        // EvaluadoEvaluador::create([
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '242',
+        //     'evaluacion_id' => '24',
+        //     'peso' => '25',
+        //     'tipo' => '0',
+        // ]);
+
+        // EvaluadoEvaluador::create([
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '164',
+        //     'evaluacion_id' => '24',
+        //     'peso' => '25',
+        //     'tipo' => '1',
+        // ]);
+
+        // EvaluadoEvaluador::create([
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '135',
+        //     'evaluacion_id' => '24',
+        //     'peso' => '25',
+        //     'tipo' => '2',
+        // ]);
+
+        // EvaluadoEvaluador::create([
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '240',
+        //     'evaluacion_id' => '24',
+        //     'peso' => '25',
+        //     'tipo' => '3',
+        // ]);
 
         //Autoevaluacion
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '5',
-            'evaluado_id' => '242',
-            'evaluador_id' => '242',
-            'evaluacion_id' => '24',
-        ]);
+        $borrarCompetencias = EvaluacionRepuesta::where('evaluado_id', '=', '242')
+        ->where('evaluacion_id', '=', '24')->get();
+        $borrarCompetencias->each->delete();
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '2',
-            'evaluado_id' => '242',
-            'evaluador_id' => '242',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '5',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '242',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '3',
-            'evaluado_id' => '242',
-            'evaluador_id' => '242',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '2',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '242',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '6',
-            'evaluado_id' => '242',
-            'evaluador_id' => '242',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '3',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '242',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '4',
-            'evaluado_id' => '242',
-            'evaluador_id' => '242',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '6',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '242',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '7',
-            'evaluado_id' => '242',
-            'evaluador_id' => '242',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '4',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '242',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '8',
-            'evaluado_id' => '242',
-            'evaluador_id' => '242',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '7',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '242',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '22',
-            'evaluado_id' => '242',
-            'evaluador_id' => '242',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '8',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '242',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '21',
-            'evaluado_id' => '242',
-            'evaluador_id' => '242',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '22',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '242',
+        //     'evaluacion_id' => '24',
+        // ]);
+
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '21',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '242',
+        //     'evaluacion_id' => '24',
+        // ]);
         
-        //Evaluacion Gustavo
+        // //Evaluacion Gustavo
         
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '5',
-            'evaluado_id' => '242',
-            'evaluador_id' => '164',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '5',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '164',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '2',
-            'evaluado_id' => '242',
-            'evaluador_id' => '164',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '2',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '164',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '3',
-            'evaluado_id' => '242',
-            'evaluador_id' => '164',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '3',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '164',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '6',
-            'evaluado_id' => '242',
-            'evaluador_id' => '164',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '6',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '164',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '4',
-            'evaluado_id' => '242',
-            'evaluador_id' => '164',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '4',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '164',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '7',
-            'evaluado_id' => '242',
-            'evaluador_id' => '164',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '7',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '164',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '8',
-            'evaluado_id' => '242',
-            'evaluador_id' => '164',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '8',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '164',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '22',
-            'evaluado_id' => '242',
-            'evaluador_id' => '164',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '22',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '164',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '21',
-            'evaluado_id' => '242',
-            'evaluador_id' => '164',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '21',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '164',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        //Evaluacion Gabriela Peralta Diaz
+        // //Evaluacion Gabriela Peralta Diaz
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '5',
-            'evaluado_id' => '242',
-            'evaluador_id' => '135',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '5',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '135',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '2',
-            'evaluado_id' => '242',
-            'evaluador_id' => '135',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '2',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '135',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '3',
-            'evaluado_id' => '242',
-            'evaluador_id' => '135',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '3',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '135',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '6',
-            'evaluado_id' => '242',
-            'evaluador_id' => '135',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '6',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '135',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '4',
-            'evaluado_id' => '242',
-            'evaluador_id' => '135',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '4',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '135',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '7',
-            'evaluado_id' => '242',
-            'evaluador_id' => '135',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '7',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '135',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '8',
-            'evaluado_id' => '242',
-            'evaluador_id' => '135',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '8',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '135',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '22',
-            'evaluado_id' => '242',
-            'evaluador_id' => '135',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '22',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '135',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '21',
-            'evaluado_id' => '242',
-            'evaluador_id' => '135',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '21',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '135',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        //Gerardo Cruz
+        // //Gerardo Cruz
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '5',
-            'evaluado_id' => '242',
-            'evaluador_id' => '240',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '5',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '240',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '2',
-            'evaluado_id' => '242',
-            'evaluador_id' => '240',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '2',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '240',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '3',
-            'evaluado_id' => '242',
-            'evaluador_id' => '240',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '3',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '240',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '6',
-            'evaluado_id' => '242',
-            'evaluador_id' => '240',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '6',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '240',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '4',
-            'evaluado_id' => '242',
-            'evaluador_id' => '240',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '4',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '240',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '7',
-            'evaluado_id' => '242',
-            'evaluador_id' => '240',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '7',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '240',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '8',
-            'evaluado_id' => '242',
-            'evaluador_id' => '240',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '8',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '240',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '22',
-            'evaluado_id' => '242',
-            'evaluador_id' => '240',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '22',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '240',
+        //     'evaluacion_id' => '24',
+        // ]);
 
-        EvaluacionRepuesta::create([
-            'calificacion' => 0,
-            'descripcion' => null,
-            'competencia_id' => '21',
-            'evaluado_id' => '242',
-            'evaluador_id' => '240',
-            'evaluacion_id' => '24',
-        ]);
+        // EvaluacionRepuesta::create([
+        //     'calificacion' => 0,
+        //     'descripcion' => null,
+        //     'competencia_id' => '21',
+        //     'evaluado_id' => '242',
+        //     'evaluador_id' => '240',
+        //     'evaluacion_id' => '24',
+        // ]);
 
+        $borrarObjetivos = ObjetivoRespuesta::where('evaluado_id', '=', '242')
+        ->where('evaluacion_id', '=', '24')->get();
+        $borrarObjetivos->each->delete();
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '876',
-                'evaluado_id' => '242',
-                'evaluador_id' => '242',
-                'evaluacion_id' => '24',
-            ]);
+        dd($borrarCompetencias);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '876',
-                'evaluado_id' => '242',
-                'evaluador_id' => '164',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '876',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '242',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '877',
-                'evaluado_id' => '242',
-                'evaluador_id' => '242',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '876',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '164',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '877',
-                'evaluado_id' => '242',
-                'evaluador_id' => '164',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '877',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '242',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '878',
-                'evaluado_id' => '242',
-                'evaluador_id' => '242',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '877',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '164',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '878',
-                'evaluado_id' => '242',
-                'evaluador_id' => '164',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '878',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '242',
+            //     'evaluacion_id' => '24',
+            // ]);
+
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '878',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '164',
+            //     'evaluacion_id' => '24',
+            // ]);
         
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '879',
-                'evaluado_id' => '242',
-                'evaluador_id' => '242',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '879',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '242',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '879',
-                'evaluado_id' => '242',
-                'evaluador_id' => '164',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '879',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '164',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '880',
-                'evaluado_id' => '242',
-                'evaluador_id' => '242',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '880',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '242',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '880',
-                'evaluado_id' => '242',
-                'evaluador_id' => '164',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '880',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '164',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '881',
-                'evaluado_id' => '242',
-                'evaluador_id' => '242',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '881',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '242',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '881',
-                'evaluado_id' => '242',
-                'evaluador_id' => '164',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '881',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '164',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '882',
-                'evaluado_id' => '242',
-                'evaluador_id' => '242',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '882',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '242',
+            //     'evaluacion_id' => '24',
+            // ]);
 
-            ObjetivoRespuesta::create([
-                'meta_alcanzada' => 'Sin evaluar',
-                'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-                'calificacion' => 0,
-                'objetivo_id' => '882',
-                'evaluado_id' => '242',
-                'evaluador_id' => '164',
-                'evaluacion_id' => '24',
-            ]);
+            // ObjetivoRespuesta::create([
+            //     'meta_alcanzada' => 'Sin evaluar',
+            //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //     'calificacion' => 0,
+            //     'objetivo_id' => '882',
+            //     'evaluado_id' => '242',
+            //     'evaluador_id' => '164',
+            //     'evaluacion_id' => '24',
+            // ]);
 
         // ObjetivoRespuesta::create([
         //     'meta_alcanzada' => 'Sin evaluar',
