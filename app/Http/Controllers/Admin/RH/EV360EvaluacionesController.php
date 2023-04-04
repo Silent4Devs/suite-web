@@ -1440,7 +1440,7 @@ class EV360EvaluacionesController extends Controller
         // $borradoEvaEvaluados = EvaluacionesEvaluados::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '242')->where('puesto_id', '=', '156')->get();
         // $borradoEvaEvaluados->each->delete();
 
-        EvaluacionesEvaluados::create([
+        EvaluacionesEvaluados::firstOrCreate([
             'evaluacion_id' => '24',
             'evaluado_id' => '242',
             'puesto_id' => '156',
@@ -1452,7 +1452,7 @@ class EV360EvaluacionesController extends Controller
         // ->get();
         // $borradoEvaluEvaluador->each->delete();
 
-        EvaluadoEvaluador::create([
+        EvaluadoEvaluador::firstOrCreate([
             'evaluado_id' => '242',
             'evaluador_id' => '242',
             'evaluacion_id' => '24',
@@ -1460,7 +1460,7 @@ class EV360EvaluacionesController extends Controller
             'tipo' => '0',
         ]);
 
-        EvaluadoEvaluador::create([
+        EvaluadoEvaluador::firstOrCreate([
             'evaluado_id' => '242',
             'evaluador_id' => '164',
             'evaluacion_id' => '24',
@@ -1468,7 +1468,7 @@ class EV360EvaluacionesController extends Controller
             'tipo' => '1',
         ]);
 
-        EvaluadoEvaluador::create([
+        EvaluadoEvaluador::firstOrCreate([
             'evaluado_id' => '242',
             'evaluador_id' => '135',
             'evaluacion_id' => '24',
@@ -1476,7 +1476,7 @@ class EV360EvaluacionesController extends Controller
             'tipo' => '2',
         ]);
 
-        EvaluadoEvaluador::create([
+        EvaluadoEvaluador::firstOrCreate([
             'evaluado_id' => '242',
             'evaluador_id' => '240',
             'evaluacion_id' => '24',
@@ -1490,7 +1490,7 @@ class EV360EvaluacionesController extends Controller
         // ->where('evaluacion_id', '=', '24')->get();
         // $borrarCompetencias->each->delete();
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '5',
@@ -1499,7 +1499,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '2',
@@ -1508,7 +1508,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '3',
@@ -1517,7 +1517,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '6',
@@ -1526,7 +1526,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '4',
@@ -1535,7 +1535,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '7',
@@ -1544,7 +1544,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '8',
@@ -1553,7 +1553,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '22',
@@ -1562,7 +1562,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '21',
@@ -1573,7 +1573,7 @@ class EV360EvaluacionesController extends Controller
         
         //Evaluacion Gustavo
         
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '5',
@@ -1582,7 +1582,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '2',
@@ -1591,7 +1591,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '3',
@@ -1600,7 +1600,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '6',
@@ -1609,7 +1609,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '4',
@@ -1618,7 +1618,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '7',
@@ -1627,7 +1627,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '8',
@@ -1636,7 +1636,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '22',
@@ -1645,7 +1645,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '21',
@@ -1656,7 +1656,7 @@ class EV360EvaluacionesController extends Controller
 
         //Evaluacion Gabriela Peralta Diaz
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '5',
@@ -1665,7 +1665,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '2',
@@ -1674,7 +1674,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '3',
@@ -1683,7 +1683,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '6',
@@ -1692,7 +1692,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '4',
@@ -1701,7 +1701,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '7',
@@ -1710,7 +1710,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '8',
@@ -1719,7 +1719,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '22',
@@ -1728,7 +1728,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '21',
@@ -1739,7 +1739,7 @@ class EV360EvaluacionesController extends Controller
 
         //Gerardo Cruz
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '5',
@@ -1748,7 +1748,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '2',
@@ -1757,7 +1757,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '3',
@@ -1766,7 +1766,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '6',
@@ -1775,7 +1775,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '4',
@@ -1784,7 +1784,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '7',
@@ -1793,7 +1793,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '8',
@@ -1802,7 +1802,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '22',
@@ -1811,7 +1811,7 @@ class EV360EvaluacionesController extends Controller
             'evaluacion_id' => '24',
         ]);
 
-        EvaluacionRepuesta::create([
+        EvaluacionRepuesta::firstOrCreate([
             'calificacion' => 0,
             'descripcion' => null,
             'competencia_id' => '21',
@@ -1826,7 +1826,7 @@ class EV360EvaluacionesController extends Controller
 
         // dd($borrarCompetencias);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1836,7 +1836,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1846,7 +1846,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1856,7 +1856,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1866,7 +1866,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1876,7 +1876,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1886,7 +1886,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
         
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1896,7 +1896,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1906,7 +1906,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1916,7 +1916,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1926,7 +1926,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1936,7 +1936,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1946,7 +1946,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
@@ -1956,7 +1956,7 @@ class EV360EvaluacionesController extends Controller
                 'evaluacion_id' => '24',
             ]);
 
-            ObjetivoRespuesta::create([
+            ObjetivoRespuesta::firstOrCreate([
                 'meta_alcanzada' => 'Sin evaluar',
                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
                 'calificacion' => 0,
