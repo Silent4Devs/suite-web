@@ -333,12 +333,13 @@
                             <div class="mt-2 row">
                                 <div class="col-12" style="font-size: 12px">
                                     Evaluación realizada por:
-                                    <strong> {{ $evaluador['nombre'] }}</strong>
                                     @if ($evaluador['esAutoevaluacion'])
+                                        <strong> {{ $evaluador['nombre'] }}</strong>
                                         <span class="badge badge-primary">Autoevaluación</span>
                                     @endif
                                     @if ($evaluador['esSupervisor'])
-                                        <span class="badge badge-success">Supervisor</span>
+                                        <strong> {{ $jefe_evaluador->name }}</strong>
+                                        <span class="badge badge-success">Evaluador</span>
                                     @endif
                                 </div>
                                 <div class="text-center text-white col-2"
