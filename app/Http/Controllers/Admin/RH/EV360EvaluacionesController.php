@@ -1406,14 +1406,14 @@ class EV360EvaluacionesController extends Controller
         return response()->json(['deleted' => true]);
     }
 
-    public function show()
-    {
+    // public function show()
+    // {
 
     //Cambio de fecha
-    $fecha=Evaluacion::find('24');
-    $fecha->update([
-        'fecha_fin' => '2023-04-15'
-    ]);
+    // $fecha=Evaluacion::find('24');
+    // $fecha->update([
+    //     'fecha_fin' => '2023-04-15'
+    // ]);
 
     //Borra registros sobrantes que no fueron borrados correctamente de 2 tablas relacionadas,
     //se tuvieron que buscar los registros especificos al no haber relacion directa
@@ -1444,109 +1444,109 @@ class EV360EvaluacionesController extends Controller
 
 //PUESTO ID 176
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '2',
-            'puesto_id' => '176',
-            'nivel_esperado' => '3',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '2',
+        //     'puesto_id' => '176',
+        //     'nivel_esperado' => '3',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '3',
-            'puesto_id' => '176',
-            'nivel_esperado' => '2',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '3',
+        //     'puesto_id' => '176',
+        //     'nivel_esperado' => '2',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '4',
-            'puesto_id' => '176',
-            'nivel_esperado' => '3',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '4',
+        //     'puesto_id' => '176',
+        //     'nivel_esperado' => '3',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '5',
-            'puesto_id' => '176',
-            'nivel_esperado' => '2',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '5',
+        //     'puesto_id' => '176',
+        //     'nivel_esperado' => '2',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '6',
-            'puesto_id' => '176',
-            'nivel_esperado' => '2',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '6',
+        //     'puesto_id' => '176',
+        //     'nivel_esperado' => '2',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '7',
-            'puesto_id' => '176',
-            'nivel_esperado' => '2',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '7',
+        //     'puesto_id' => '176',
+        //     'nivel_esperado' => '2',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '8',
-            'puesto_id' => '176',
-            'nivel_esperado' => '2',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '8',
+        //     'puesto_id' => '176',
+        //     'nivel_esperado' => '2',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '15',
-            'puesto_id' => '176',
-            'nivel_esperado' => '3',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '15',
+        //     'puesto_id' => '176',
+        //     'nivel_esperado' => '3',
+        // ]);
 
 //Puesto id 175
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '2',
-            'puesto_id' => '175',
-            'nivel_esperado' => '1',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '2',
+        //     'puesto_id' => '175',
+        //     'nivel_esperado' => '1',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '3',
-            'puesto_id' => '175',
-            'nivel_esperado' => '1',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '3',
+        //     'puesto_id' => '175',
+        //     'nivel_esperado' => '1',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '4',
-            'puesto_id' => '175',
-            'nivel_esperado' => '1',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '4',
+        //     'puesto_id' => '175',
+        //     'nivel_esperado' => '1',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '5',
-            'puesto_id' => '175',
-            'nivel_esperado' => '1',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '5',
+        //     'puesto_id' => '175',
+        //     'nivel_esperado' => '1',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '6',
-            'puesto_id' => '175',
-            'nivel_esperado' => '1',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '6',
+        //     'puesto_id' => '175',
+        //     'nivel_esperado' => '1',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '7',
-            'puesto_id' => '175',
-            'nivel_esperado' => '1',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '7',
+        //     'puesto_id' => '175',
+        //     'nivel_esperado' => '1',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '8',
-            'puesto_id' => '175',
-            'nivel_esperado' => '1',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '8',
+        //     'puesto_id' => '175',
+        //     'nivel_esperado' => '1',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '17',
-            'puesto_id' => '175',
-            'nivel_esperado' => '2',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '17',
+        //     'puesto_id' => '175',
+        //     'nivel_esperado' => '2',
+        // ]);
 
-        CompetenciaPuesto::firstOrCreate([
-            'competencia_id' => '18',
-            'puesto_id' => '175',
-            'nivel_esperado' => '2',
-        ]);
+        // CompetenciaPuesto::firstOrCreate([
+        //     'competencia_id' => '18',
+        //     'puesto_id' => '175',
+        //     'nivel_esperado' => '2',
+        // ]);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // EvaluacionesEvaluados::firstOrCreate([
@@ -2383,5 +2383,5 @@ class EV360EvaluacionesController extends Controller
     //             }
     //         }
     //     }
-    }
+    // }
 }
