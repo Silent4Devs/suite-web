@@ -20,7 +20,7 @@
             <div class="p-2">
                 <a href={{ route('admin.users.eliminados')}}
                     class="btn btn-danger" role="button" aria-pressed="true">
-                    <i class="fas fa-user-slash"></i>...Usuarios eliminados</a>
+                    <i class="fas fa-user-slash"></i>&nbsp &nbsp Usuarios eliminados</a>
             </div>
 
     </div>
