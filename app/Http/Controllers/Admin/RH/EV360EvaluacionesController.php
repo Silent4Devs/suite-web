@@ -9,6 +9,7 @@ use App\Mail\RH\Evaluaciones\RecordatorioEvaluadores;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\RH\Competencia;
+use App\Models\RH\CompetenciaPuesto;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionCompetencia;
 use App\Models\RH\EvaluacionesEvaluados;
@@ -1405,15 +1406,14 @@ class EV360EvaluacionesController extends Controller
         return response()->json(['deleted' => true]);
     }
 
-    //funcion para mostrar objetivos del usuario que no fueron aprobados por el lider 
-    // public function show()
-    // {
+    public function show()
+    {
 
     //Cambio de fecha
-    // $fecha=Evaluacion::find('24');
-    // $fecha->update([
-    //     'fecha_fin' => '2023-04-08'
-    // ]);
+    $fecha=Evaluacion::find('24');
+    $fecha->update([
+        'fecha_fin' => '2023-04-15'
+    ]);
 
     //Borra registros sobrantes que no fueron borrados correctamente de 2 tablas relacionadas,
     //se tuvieron que buscar los registros especificos al no haber relacion directa
@@ -1440,6 +1440,115 @@ class EV360EvaluacionesController extends Controller
         // $borradoEvaEvaluados = EvaluacionesEvaluados::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '242')->where('puesto_id', '=', '156')->get();
         // $borradoEvaEvaluados->each->delete();
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//PUESTO ID 176
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '2',
+            'puesto_id' => '176',
+            'nivel_esperado' => '3',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '3',
+            'puesto_id' => '176',
+            'nivel_esperado' => '2',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '4',
+            'puesto_id' => '176',
+            'nivel_esperado' => '3',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '5',
+            'puesto_id' => '176',
+            'nivel_esperado' => '2',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '6',
+            'puesto_id' => '176',
+            'nivel_esperado' => '2',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '7',
+            'puesto_id' => '176',
+            'nivel_esperado' => '2',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '8',
+            'puesto_id' => '176',
+            'nivel_esperado' => '2',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '15',
+            'puesto_id' => '176',
+            'nivel_esperado' => '3',
+        ]);
+
+//Puesto id 175
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '2',
+            'puesto_id' => '175',
+            'nivel_esperado' => '1',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '3',
+            'puesto_id' => '175',
+            'nivel_esperado' => '1',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '4',
+            'puesto_id' => '175',
+            'nivel_esperado' => '1',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '5',
+            'puesto_id' => '175',
+            'nivel_esperado' => '1',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '6',
+            'puesto_id' => '175',
+            'nivel_esperado' => '1',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '7',
+            'puesto_id' => '175',
+            'nivel_esperado' => '1',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '8',
+            'puesto_id' => '175',
+            'nivel_esperado' => '1',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '17',
+            'puesto_id' => '175',
+            'nivel_esperado' => '2',
+        ]);
+
+        CompetenciaPuesto::firstOrCreate([
+            'competencia_id' => '18',
+            'puesto_id' => '175',
+            'nivel_esperado' => '2',
+        ]);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // EvaluacionesEvaluados::firstOrCreate([
         //     'evaluacion_id' => '24',
         //     'evaluado_id' => '242',
@@ -1966,7 +2075,7 @@ class EV360EvaluacionesController extends Controller
             //     'evaluacion_id' => '24',
             // ]);
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // ObjetivoRespuesta::create([
         //     'meta_alcanzada' => 'Sin evaluar',
@@ -2121,6 +2230,8 @@ class EV360EvaluacionesController extends Controller
         //     'evaluador_id' => '132',
         // ]);
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         // $cambioA = EvaluadoEvaluador::where('evaluado_id', '=', 140)->where('evaluacion_id', '=', 24)
         // ->where('evaluador_id', '=', 132)->first();
         // $cambioA->update([
@@ -2184,7 +2295,8 @@ class EV360EvaluacionesController extends Controller
         // $cambioGUO->update([
         //     'evaluador_id' => '132',
         // ]);
-    
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Funcion para reactivar evaluaciones 360,
     // a algunos usuarios se les agregaron sus objetivos tras finalizar su evaluacion360,
     //por lo que hubo la necesidad de reactivar la evaluacion
@@ -2231,6 +2343,8 @@ class EV360EvaluacionesController extends Controller
     //     'evaluado' => 'false',
     // ]);
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     //Funcion para agregar los objetivos pendientes, esta funcion toma todos los objetivos de la tabla
     // ev_360_objetivos_empleados que no se agregaron a la tabla ev360_objetivos_respuestas 
     //por estar en estado "Pendiente" y los agrega a dicha tabla cambiando su
@@ -2269,5 +2383,5 @@ class EV360EvaluacionesController extends Controller
     //             }
     //         }
     //     }
-    // }
+    }
 }
