@@ -16,7 +16,7 @@
                             {{ trans('cruds.user.fields.id') }}
                         </th>
                         <td>
-                            {{ $user->id }}
+                            {{ $us->id }}
                         </td>
                     </tr>
                     <tr>
@@ -24,7 +24,7 @@
                             {{ trans('cruds.user.fields.name') }}
                         </th>
                         <td>
-                            {{ $user->name }}
+                            {{ $us->name }}
                         </td>
                     </tr>
                     <tr>
@@ -32,7 +32,7 @@
                             {{ trans('cruds.user.fields.email') }}
                         </th>
                         <td>
-                            {{ $user->email }}
+                            {{ $us->email }}
                         </td>
                     </tr>
 
@@ -41,7 +41,7 @@
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
                         <td>
-                            @foreach($user->roles as $key => $roles)
+                            @foreach($us->roles as $key => $roles)
                                 <span class="label label-info">{{ $roles->title }}</span>
                             @endforeach
                         </td>
@@ -51,7 +51,7 @@
                             {{ trans('cruds.user.fields.organizacion') }}
                         </th>
                         <td>
-                            {{ $user->organizacion->organizacion ?? '' }}
+                            {{ $org->empresa ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -59,7 +59,7 @@
                             {{ trans('cruds.user.fields.area') }}
                         </th>
                         <td>
-                            {{ $user->area->area ?? '' }}
+                            {{ $us->area ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -67,7 +67,7 @@
                             {{ trans('cruds.user.fields.puesto') }}
                         </th>
                         <td>
-                            {{ $user->puesto->puesto ?? '' }}
+                            {{ $us->puesto ?? '' }}
                         </td>
                     </tr>
                 </tbody>

@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\Organizacion;
 use App\Models\Organizacione;
 use App\Models\Puesto;
 use App\Models\Role;
@@ -136,9 +137,25 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('usuarios_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
+        // $user->load('roles', 'organizacion', 'area', 'puesto', 'team', 'userUserAlerts');
+        $us = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' 
+        => function ($q) {
+                 $q->with('area');
+                }])
+            ->join('empleados', function($join){
+                $join->orOn('empleados.id', '=', 'users.empleado_id')
+                    ->orOn('empleados.n_empleado', '=', 'users.n_empleado');
+                })
+            ->join('areas', 'empleados.area_id', '=', 'areas.id')
+            ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+            ->select('users.id as id', 'users.name as name','users.email as email',
+            'empleados.name as empname','areas.area as area','puestos.puesto as puesto')
+            ->where('users.id', '=', $user->id)
+            ->first();
 
-        return view('admin.users.show', compact('user'));
+            $org = Organizacion::select('empresa')->first();
+
+        return view('admin.users.show', compact('us', 'org'));
     }
 
     public function destroy(User $user)
