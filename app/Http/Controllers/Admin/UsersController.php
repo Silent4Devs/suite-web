@@ -42,11 +42,39 @@ class UsersController extends Controller
 
     public function getUsersIndex(Request $request)
     {
-        $query = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
-            $q->with('area');
-        }])->get();
+        // $query = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
+        //     $q->with('area');
+        // }])->get();
 
-        return datatables()->of($query)->toJson();
+        $empid = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' 
+        => function ($q) {
+                 $q->with('area');
+                }])
+            ->join('empleados', function($join){
+                $join->orOn('empleados.id', '=', 'users.empleado_id')
+                    ->orOn('empleados.n_empleado', '=', 'users.n_empleado');
+                })
+            ->join('areas', 'empleados.area_id', '=', 'areas.id')
+            ->join('puestos', 'empleados.puesto_id', '=', 'puestos.id')
+            ->select('users.id as id', 'users.name as usname','users.email as usemail','empleados.name as empname','areas.area as emparea','puestos.puesto as empuesto')
+            ->orderBy('usname', 'ASC')
+            ->get();
+
+            $novinc = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' 
+            => function ($q) {
+                     $q->with('area');
+                    }])
+                ->where('empleado_id', null)->where('n_empleado', null)
+                ->select('name as usname','email as usemail','users.*',)
+                ->orderBy('usname', 'ASC')
+                ->get();
+        //    dd($empid);
+
+            $usuarios = $empid->merge($novinc);
+
+        return datatables()->of($usuarios)->toJson();
+        // return datatables()->of($novinc)->toJson();
+        // return datatables()->of($query)->toJson();
     }
 
     public function create()

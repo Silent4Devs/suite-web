@@ -20,7 +20,7 @@
             <div class="p-2">
                 <a href={{ route('admin.users.eliminados')}}
                     class="btn btn-danger" role="button" aria-pressed="true">
-                    <i class="fas fa-user-slash"></i>&nbsp &nbsp Usuarios eliminados</a>
+                    <i class="fas fa-user-slash"></i>&nbsp; &nbsp; Usuarios eliminados</a>
             </div>
 
     </div>
@@ -202,12 +202,12 @@
                     }
                 },
                 columns: [{
-                        data: 'name',
-                        name: 'name'
+                        data: 'usname',
+                        name: 'usname'
                     },
                     {
-                        data: 'email',
-                        name: 'email'
+                        data: 'usemail',
+                        name: 'usemail'
                     },
                     {
                         data: 'roles',
@@ -222,37 +222,41 @@
                         }
                     },
                     {
+                        data: 'empname',
+                        name: 'empname',
+                        
                         data: 'id',
                         render: function(data, type, row, meta) {
-                            if (row.n_empleado != null || row.empleado_id != null) {
-                                if (row.empleado) {
-                                    return row.empleado?.name;
-                                }
+                            if (row.empname != null) {
+                                    return row.empname;
                             }
-                            return 'Sin vincular a empleado';
-
+                            else{
+                                return 'Sin vincular a empleado';
+                            }
                         }
                     },
                     {
+                        data: 'emparea',
+                        name: 'emparea',
                         data: 'id',
                         render: function(data, type, row, meta) {
-                            if (row.n_empleado != null || row.empleado_id != null) {
-                                if (row.empleado) {
-                                    return row.empleado?.area?.area;
+                            if (row.emparea != null) {
+                                    return row.emparea;
                                 }
-                            }
                             return 'Sin vincular a empleado';
                         }
                     },
-                    {
+                    {                   
+                        data: 'empuesto',
+                        name: 'empuesto',
                         data: 'id',
                         render: function(data, type, row, meta) {
-                            if (row.n_empleado != null || row.empleado_id != null) {
-                                if (row.empleado) {
-                                    return row.empleado?.puesto;
-                                }
+                            if (row.empuesto != null) {
+                                    return row.empuesto;
                             }
-                            return 'Sin vincular a empleado';
+                            else{
+                                return 'Sin vincular a empleado';
+                            }
                         }
                     },
                     {
@@ -276,7 +280,7 @@
                                     <a href="${urlButtonShow}" class="btn btn-sm" title="Visualizar"><i class="fas fa-eye"></i></a>
                                     @endcan
                                     @can('usuarios_vincular_empleados')
-                                    <button title="${row.n_empleado?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm ${row.n_empleado?'':'border border-primary rounded'}" onclick="AbrirModal('${data}');">
+                                    <button title="${row.empname?'Cambiar empleado vinculado':'Vincular Empleado'}" class="btn btn-sm ${row.empname?'':'border border-primary rounded'}" onclick="AbrirModal('${data}');">
                                         <i class="fas fa-user-tag"></i>
                                     </button>
                                     @endcan
@@ -291,7 +295,7 @@
                                     </a>
                                     @endcan
                                     @can('usuarios_eliminar')
-                                    <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.name}');"><i class="fas fa-trash-alt"></i></button>
+                                    <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.usname}');"><i class="fas fa-trash-alt"></i></button>
                                     @endcan
                                 </div>
 
@@ -308,7 +312,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</p>
+                                                <p><strong>Empleado vinculado actualmente:</strong> ${row.empname?row.empname:"Sin vincular"}</p>
                                                 <select name="n_empleado" id="n_empleado${data}" class="select2">
                                                     <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>`;
                                                     empleados.forEach(empleado => {
@@ -321,7 +325,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" class="btn btn-primary" onclick="VincularEmpleado('${row.name}','${data}');">Vincular</button>
+                                                <button type="button" class="btn btn-primary" onclick="VincularEmpleado('${row.usname}','${data}');">Vincular</button>
                                             </div>
                                         </div>
                                     </div>
