@@ -780,7 +780,7 @@ class EV360EvaluacionesController extends Controller
         $peso_general_competencias = $informacion_obtenida['peso_general_competencias'];
         $peso_general_objetivos = $informacion_obtenida['peso_general_objetivos'];
         $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
-        $jefe_evaluador = $informacion_obtenida['jefe_evaluador'];
+        // $jefe_evaluador = $informacion_obtenida['jefe_evaluador'];
         $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
         $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
         $lista_misma_area = $informacion_obtenida['lista_misma_area'];
@@ -823,7 +823,9 @@ class EV360EvaluacionesController extends Controller
             $firmaPar = 'img/signature.png';
         }
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'jefe_evaluador', 'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias', 'calificaciones_equipo_competencias', 'calificaciones_area_competencias', 'nivelesEsperadosCompetencias', 'peso_general_competencias', 'peso_general_objetivos', 'firmaAuto', 'firmaJefe', 'firmaEquipo', 'firmaPar', 'existeFirmaAuto', 'existeFirmaJefe', 'existeFirmaSubordinado', 'existeFirmaPar', 'nombresObjetivos', 'metaObjetivos', 'calificacionObjetivos'));
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'jefe_evaluador',
+         'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias',
+        'calificaciones_equipo_competencias', 'calificaciones_area_competencias', 'nivelesEsperadosCompetencias', 'peso_general_competencias', 'peso_general_objetivos', 'firmaAuto', 'firmaJefe', 'firmaEquipo', 'firmaPar', 'existeFirmaAuto', 'existeFirmaJefe', 'existeFirmaSubordinado', 'existeFirmaPar', 'nombresObjetivos', 'metaObjetivos', 'calificacionObjetivos'));
     }
 
     public function normalizarCalificacionObjetivo(Request $request)
@@ -1679,9 +1681,9 @@ class EV360EvaluacionesController extends Controller
         //     'evaluador_id' => '242',
         //     'evaluacion_id' => '24',
         // ]);
-        
+
         // // //Evaluacion Gustavo
-        
+
         // EvaluacionRepuesta::firstOrCreate([
         //     'calificacion' => 0,
         //     'descripcion' => null,
@@ -1994,7 +1996,7 @@ class EV360EvaluacionesController extends Controller
             //     'evaluador_id' => '164',
             //     'evaluacion_id' => '24',
             // ]);
-        
+
             // ObjetivoRespuesta::firstOrCreate([
             //     'meta_alcanzada' => 'Sin evaluar',
             //     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
@@ -2356,13 +2358,13 @@ class EV360EvaluacionesController extends Controller
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Funcion para agregar los objetivos pendientes, esta funcion toma todos los objetivos de la tabla
-    // ev_360_objetivos_empleados que no se agregaron a la tabla ev360_objetivos_respuestas 
+    // ev_360_objetivos_empleados que no se agregaron a la tabla ev360_objetivos_respuestas
     //por estar en estado "Pendiente" y los agrega a dicha tabla cambiando su
     //estatus a aprobado en el proceso
 
     //     $objetivo=Objetivo::where('esta_aprobado', '=', '0')->where('created_at', '>=', '2023-03-06')->get();
     //     // dd($objetivo);
-        
+
     //     foreach($objetivo as $obj)
     //     {
     //         $evaluado=ObjetivoEmpleado::where('objetivo_id','=',$obj->id)->get();
@@ -2374,7 +2376,7 @@ class EV360EvaluacionesController extends Controller
     //             foreach($evaluacion as $evalu)
     //             {
     //                 $evaluador=EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)->where('evaluacion_id','=',$evalu->evaluacion_id)->whereIn('tipo',['0','1'])->get();
-                    
+
     //                 foreach($evaluador as $evldr){
     //                     ObjetivoRespuesta::create([
     //                         'meta_alcanzada' => 'Sin evaluar',
@@ -2384,7 +2386,7 @@ class EV360EvaluacionesController extends Controller
     //                         'evaluado_id' => $eva->empleado_id,
     //                         'evaluador_id' => $evldr->evaluador_id,
     //                         'evaluacion_id' => $evalu->evaluacion_id,
-    //                     ]);                   
+    //                     ]);
     //                     // dd($obj->id,$eva->empleado_id,$evalu->evaluacion_id,$evldr->evaluador_id);
     //                     $obj->update([
     //                         'esta_aprobado'=>1,
