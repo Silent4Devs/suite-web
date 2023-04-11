@@ -10,7 +10,6 @@ use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
-use App\Models\RH\ObjetivoRespuesta;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -176,18 +175,16 @@ class EV360ObjetivosController extends Controller
     {
 
         //Borrar de objetivo calificaciones
-        $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->id)
-        ->where('evaluado_id', $objetivo->empleado_id);
-        // ->where('evaluacion_id', ); //de donde saco el dato?
+        // $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->id)
+        // ->where('evaluado_id', $objetivo->empleado_id);
+        //->where('evaluacion_id', ); //de donde saco el dato?
         //Si pregunto por evaluaciones activas podrian haber varias en curso
         //La mejor opcion es agregar una columna donde venga la evaluacion en ObjetivoEmpleado
         //(Mismo problema si hay varios activos)
         //Si muestro los objetivos activos con sus evaluaciones podria ser mas facil borrarlo
         //Luego borrar objetivo empleados como estaba originalmente
         // $objetivo = ObjetivoEmpleado::find($request->all());
-        // $objetivo->delete(); //borra de una tabla, el problema es si estan en la otra afectaria
-
-        //borrar de otros objetivos
+        $objetivo->delete();
 
         return response()->json(['success' => 'deleted successfully!', $request->all()]);
         // $objetivo->delete();
