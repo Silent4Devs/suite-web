@@ -174,6 +174,15 @@ class EV360ObjetivosController extends Controller
     public function destroyByEmpleado(Request $request, ObjetivoEmpleado $objetivo)
     {
 
+        //Borrar de objetivo calificaciones
+        // $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->id)
+        // ->where('evaluado_id', $objetivo->empleado_id);
+        //->where('evaluacion_id', ); //de donde saco el dato?
+        //Si pregunto por evaluaciones activas podrian haber varias en curso
+        //La mejor opcion es agregar una columna donde venga la evaluacion en ObjetivoEmpleado
+        //(Mismo problema si hay varios activos)
+        //Si muestro los objetivos activos con sus evaluaciones podria ser mas facil borrarlo
+        //Luego borrar objetivo empleados como estaba originalmente
         // $objetivo = ObjetivoEmpleado::find($request->all());
         $objetivo->delete();
 

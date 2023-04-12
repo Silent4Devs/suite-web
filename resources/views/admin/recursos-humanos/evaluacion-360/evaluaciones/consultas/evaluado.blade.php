@@ -42,7 +42,7 @@
                         @php
                             use App\Models\Organizacion;
                             $organizacion = Organizacion::first();
-                            
+
                         @endphp
                         <img src="{{ $organizacion->logotipo }}" class="img-fluid" alt="" width="70">
                     </div>
