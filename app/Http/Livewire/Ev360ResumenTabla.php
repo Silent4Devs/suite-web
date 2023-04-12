@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Http\Controllers\Admin\RH\EV360EvaluacionesController;
 use App\Models\Empleado;
 use App\Models\RH\Competencia;
+use App\Models\RH\CompetenciaPuesto;
 use App\Models\RH\Evaluacion;
 use App\Models\RH\EvaluacionRepuesta;
 use App\Models\RH\EvaluadoEvaluador;
@@ -209,7 +210,12 @@ class Ev360ResumenTabla extends Component
             ->where('tipo', '=', 1)
             ->first();
 
-            $jefe_evaluador=Empleado::find($jefe_evaluador_id->evaluador_id);
+            if($jefe_evaluador_id == null)
+            {
+                $jefe_evaluador= '-';
+            }else{
+                $jefe_evaluador=Empleado::find($jefe_evaluador_id->evaluador_id);
+            }
 
             $lista_jefe_inmediato->push([
                 'tipo' => 'Jefe Inmediato',
@@ -310,6 +316,7 @@ class Ev360ResumenTabla extends Component
         $supervisorObjetivos = $evaluadores->filter(function ($item) {
             return intval($item->tipo) == EvaluadoEvaluador::JEFE_INMEDIATO;
         })->first();
+//        dd($evaluado->supervisor_id, $evaluado->name);
         if ($evaluacion->include_objetivos) {
             if ($supervisorObjetivos) {
                 $objetivos_calificaciones = ObjetivoRespuesta::with(['objetivo' => function ($q) {
@@ -320,7 +327,7 @@ class Ev360ResumenTabla extends Component
                     ->orderBy('id')->get();
 
                 $evaluadores_objetivos->push([
-                    'id' => $evaluado->supervisorEv360->id, 'nombre' => $evaluado->supervisorEv360->name,
+                    'id' => $evaluado->supervisor_id, 'nombre' => $evaluado->name,
                     'esSupervisor' => true,
                     'esAutoevaluacion' => false,
                     'objetivos' => $objetivos_calificaciones->map(function ($objetivo) {
@@ -414,11 +421,20 @@ class Ev360ResumenTabla extends Component
             'competencias' => $evaluaciones_competencias->map(function ($competencia) use ($evaluador, $evaluado, $competencias) {
                 $nivel_esperado = $competencias->filter(function ($compe) use ($competencia) {
                     return $compe->competencia_id == $competencia->competencia_id;
-                })->first()->nivel_esperado;
+                })->first();
+
+                if($nivel_esperado == null)
+                {
+                    $n = CompetenciaPuesto::where('competencia_id', '=', $competencia->competencia_id)->first();
+                    $nne = $n->nivel_esperado;
+                }else{
+                    $nne = intval($nivel_esperado->nivel_esperado);
+                    // dd($nne);
+                }
 
                 $porcentaje = 0;
                 if ($competencia->calificacion > 0) {
-                    $porcentaje = number_format((($competencia->calificacion) / $nivel_esperado), 2);
+                    $porcentaje = number_format((($competencia->calificacion) / $nne), 2);
                 }
 
                 return [
@@ -429,7 +445,7 @@ class Ev360ResumenTabla extends Component
                     'porcentaje' => $porcentaje,
                     'evaluado' => $evaluador->evaluado,
                     'peso' => $evaluador->peso,
-                    'meta' => $nivel_esperado,
+                    'meta' => $nne,
                     'firma_evaluador' => $evaluador->firma_evaluador,
                     'firma_evaluado' => $evaluador->firma_evaluado,
                 ];
