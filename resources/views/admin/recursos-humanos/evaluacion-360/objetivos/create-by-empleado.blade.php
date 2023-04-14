@@ -177,7 +177,13 @@
                     data: 'objetivo.tipo.nombre',
                 }, {
                     data: 'objetivo.nombre'
-                }, {
+                },{
+                    data: 'id',
+                    render: function(data, type, row, meta) {
+                        return row.evaluacion_id;
+                    }
+                },
+                {
                     data: 'objetivo.KPI',
                 }, {
                     data: 'objetivo',
@@ -509,7 +515,7 @@
                 e.preventDefault();
                 let empleados = @json($empleados);
                 let modalContent = document.getElementById('contenidoModal');
-                let contenidoHTMLGenerado = `                       
+                let contenidoHTMLGenerado = `
                 <form id="formCopiaObjetivos" class="form-group">
                     <div class="row">
                         <div class="col-12">

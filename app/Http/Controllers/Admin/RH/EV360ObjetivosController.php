@@ -11,6 +11,9 @@ use App\Models\Puesto;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\ObjetivoRespuesta;
+use App\Models\RH\EvaluacionesEvaluados;
+use App\Models\RH\Evaluacion;
+use App\Models\RH\EvaluadoEvaluador;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -119,6 +122,42 @@ class EV360ObjetivosController extends Controller
                 'objetivo_id' => $objetivo->id,
                 'empleado_id' => $empleado->id,
             ]);
+
+            // $reciente = Evaluacion::latest()->first();
+
+            // $evaluacion=EvaluacionesEvaluados::where('evaluacion_id','=', $reciente->id)->get();
+
+            // foreach($evaluacion as $evalu){
+
+            //     $evaluado=ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+            //     ->where('empleado_id', '=', $evalu->evaluado_id)
+            //     ->where('en_curso', '=', true)->get();
+
+            //     foreach($evaluado as $eva){
+            //         $evaluador=EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
+            //         ->where('evaluacion_id','=',$reciente->id)
+            //         ->whereIn('tipo',['0','1'])->get();
+
+            //         foreach($evaluador as $evldr){
+            //             ObjetivoRespuesta::create([
+            //                 'meta_alcanzada' => 'Sin evaluar',
+            //                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+            //                 'calificacion' => 0,
+            //                 'objetivo_id' => $objetivo->id,
+            //                 'evaluado_id' => $eva->empleado_id,
+            //                 'evaluador_id' => $evldr->evaluador_id,
+            //                 'evaluacion_id' => $reciente->id,
+            //             ]);
+            //             ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+            //             ->where('en_curso', '=', true)
+            //             ->where('empleado_id', '=', $eva->empleado_id)
+            //             ->update([
+            //                 'evaluacion_id' => $reciente->id,
+            //             ]);
+            //         }
+            //     }
+            // }
+
             if ($objetivo) {
                 return response()->json(['success' => true]);
             } else {
@@ -155,6 +194,44 @@ class EV360ObjetivosController extends Controller
             'esta_aprobado' => $aprobacion,
             'comentarios_aprobacion' => $request->comentarios_aprobacion,
         ]);
+        //Creacion de objetivos
+        // $reciente = Evaluacion::latest()->first();
+
+        // if($objetivo->esta_aprobado == '1'){
+
+        //     $evaluacion=EvaluacionesEvaluados::where('evaluacion_id','=', $reciente->id)->get();
+
+        //     foreach($evaluacion as $evalu){
+
+        //         $evaluado=ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+        //         ->where('empleado_id', '=', $evalu->evaluado_id)
+        //         ->where('en_curso', '=', true)->get();
+
+        //         foreach($evaluado as $eva){
+        //             $evaluador=EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
+        //             ->where('evaluacion_id','=',$reciente->id)
+        //             ->whereIn('tipo',['0','1'])->get();
+
+        //             foreach($evaluador as $evldr){
+        //                 ObjetivoRespuesta::create([
+        //                     'meta_alcanzada' => 'Sin evaluar',
+        //                     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+        //                     'calificacion' => 0,
+        //                     'objetivo_id' => $objetivo->id,
+        //                     'evaluado_id' => $eva->empleado_id,
+        //                     'evaluador_id' => $evldr->evaluador_id,
+        //                     'evaluacion_id' => $reciente->id,
+        //                 ]);
+        //                 ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+        //                 ->where('en_curso', '=', true)
+        //                 ->where('empleado_id', '=', $eva->empleado_id)
+        //                 ->update([
+        //                     'evaluacion_id' => $reciente->id,
+        //                 ]);
+        //             }
+        //         }
+        //     }
+        // }
 
         return response()->json(['success' => true]);
     }
@@ -175,19 +252,17 @@ class EV360ObjetivosController extends Controller
     public function destroyByEmpleado(Request $request, ObjetivoEmpleado $objetivo)
     {
 
-        //Borrar de objetivo calificaciones
-        $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->id)
-        ->where('evaluado_id', $objetivo->empleado_id);
-        // ->where('evaluacion_id', ); //de donde saco el dato?
-        //Si pregunto por evaluaciones activas podrian haber varias en curso
-        //La mejor opcion es agregar una columna donde venga la evaluacion en ObjetivoEmpleado
-        //(Mismo problema si hay varios activos)
-        //Si muestro los objetivos activos con sus evaluaciones podria ser mas facil borrarlo
-        //Luego borrar objetivo empleados como estaba originalmente
-        // $objetivo = ObjetivoEmpleado::find($request->all());
-        // $objetivo->delete(); //borra de una tabla, el problema es si estan en la otra afectaria
+        //Buscar en objetivo calificaciones y se borra
+        $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->objetivo_id)
+        ->where('evaluado_id', $objetivo->empleado_id)
+        ->where('evaluacion_id', $objetivo->evaluacion_id);
+        //Borrar si existe
+        if($objres != null){
+            $objres->delete();
+        }
 
-        //borrar de otros objetivos
+        // $objetivo = ObjetivoEmpleado::find($request->all());
+        $objetivo->delete(); //Se borra de objetivo empleado
 
         return response()->json(['success' => 'deleted successfully!', $request->all()]);
         // $objetivo->delete();
