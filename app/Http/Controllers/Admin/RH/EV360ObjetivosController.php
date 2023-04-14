@@ -255,8 +255,8 @@ class EV360ObjetivosController extends Controller
         //Buscar en objetivo calificaciones y se borra
         $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->objetivo_id)
         ->where('evaluado_id', $objetivo->empleado_id)
-        ->orWhere('evaluacion_id', $objetivo->evaluacion_id)
-        ->orWhere('evaluacion_id', '=', null);
+        ->where('evaluacion_id', $objetivo->evaluacion_id);
+
         //Borrar si existe
         if($objres != null){
             $objres->delete();
