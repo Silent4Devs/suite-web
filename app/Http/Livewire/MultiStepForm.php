@@ -652,6 +652,7 @@ class MultiStepForm extends Component
                             ]);
                             ObjetivoEmpleado::where('empleado_id', '=', $empleado->id)
                             ->where('objetivo_id', '=', $objetivo->objetivo_id)
+                            ->where('en_curso', '=', true)
                             ->update([
                                 'evaluacion_id' => $evaluacion->id,
                             ]);

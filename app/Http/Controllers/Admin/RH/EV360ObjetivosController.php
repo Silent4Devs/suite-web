@@ -123,40 +123,40 @@ class EV360ObjetivosController extends Controller
                 'empleado_id' => $empleado->id,
             ]);
 
-            // $reciente = Evaluacion::latest()->first();
+            $reciente = Evaluacion::latest()->first();
 
-            // $evaluacion=EvaluacionesEvaluados::where('evaluacion_id','=', $reciente->id)->get();
+            $evaluacion=EvaluacionesEvaluados::where('evaluacion_id','=', $reciente->id)->get();
 
-            // foreach($evaluacion as $evalu){
+            foreach($evaluacion as $evalu){
 
-            //     $evaluado=ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
-            //     ->where('empleado_id', '=', $evalu->evaluado_id)
-            //     ->where('en_curso', '=', true)->get();
+                $evaluado=ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+                ->where('empleado_id', '=', $evalu->evaluado_id)
+                ->where('en_curso', '=', true)->get();
 
-            //     foreach($evaluado as $eva){
-            //         $evaluador=EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
-            //         ->where('evaluacion_id','=',$reciente->id)
-            //         ->whereIn('tipo',['0','1'])->get();
+                foreach($evaluado as $eva){
+                    $evaluador=EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
+                    ->where('evaluacion_id','=',$reciente->id)
+                    ->whereIn('tipo',['0','1'])->get();
 
-            //         foreach($evaluador as $evldr){
-            //             ObjetivoRespuesta::create([
-            //                 'meta_alcanzada' => 'Sin evaluar',
-            //                 'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-            //                 'calificacion' => 0,
-            //                 'objetivo_id' => $objetivo->id,
-            //                 'evaluado_id' => $eva->empleado_id,
-            //                 'evaluador_id' => $evldr->evaluador_id,
-            //                 'evaluacion_id' => $reciente->id,
-            //             ]);
-            //             ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
-            //             ->where('en_curso', '=', true)
-            //             ->where('empleado_id', '=', $eva->empleado_id)
-            //             ->update([
-            //                 'evaluacion_id' => $reciente->id,
-            //             ]);
-            //         }
-            //     }
-            // }
+                    foreach($evaluador as $evldr){
+                        ObjetivoRespuesta::create([
+                            'meta_alcanzada' => 'Sin evaluar',
+                            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+                            'calificacion' => 0,
+                            'objetivo_id' => $objetivo->id,
+                            'evaluado_id' => $eva->empleado_id,
+                            'evaluador_id' => $evldr->evaluador_id,
+                            'evaluacion_id' => $reciente->id,
+                        ]);
+                        ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+                        ->where('en_curso', '=', true)
+                        ->where('empleado_id', '=', $eva->empleado_id)
+                        ->update([
+                            'evaluacion_id' => $reciente->id,
+                        ]);
+                    }
+                }
+            }
 
             if ($objetivo) {
                 return response()->json(['success' => true]);
@@ -195,43 +195,43 @@ class EV360ObjetivosController extends Controller
             'comentarios_aprobacion' => $request->comentarios_aprobacion,
         ]);
         //Creacion de objetivos
-        // $reciente = Evaluacion::latest()->first();
+        $reciente = Evaluacion::latest()->first();
 
-        // if($objetivo->esta_aprobado == '1'){
+        if($objetivo->esta_aprobado == '1'){
 
-        //     $evaluacion=EvaluacionesEvaluados::where('evaluacion_id','=', $reciente->id)->get();
+            $evaluacion=EvaluacionesEvaluados::where('evaluacion_id','=', $reciente->id)->get();
 
-        //     foreach($evaluacion as $evalu){
+            foreach($evaluacion as $evalu){
 
-        //         $evaluado=ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
-        //         ->where('empleado_id', '=', $evalu->evaluado_id)
-        //         ->where('en_curso', '=', true)->get();
+                $evaluado=ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+                ->where('empleado_id', '=', $evalu->evaluado_id)
+                ->where('en_curso', '=', true)->get();
 
-        //         foreach($evaluado as $eva){
-        //             $evaluador=EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
-        //             ->where('evaluacion_id','=',$reciente->id)
-        //             ->whereIn('tipo',['0','1'])->get();
+                foreach($evaluado as $eva){
+                    $evaluador=EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
+                    ->where('evaluacion_id','=',$reciente->id)
+                    ->whereIn('tipo',['0','1'])->get();
 
-        //             foreach($evaluador as $evldr){
-        //                 ObjetivoRespuesta::create([
-        //                     'meta_alcanzada' => 'Sin evaluar',
-        //                     'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
-        //                     'calificacion' => 0,
-        //                     'objetivo_id' => $objetivo->id,
-        //                     'evaluado_id' => $eva->empleado_id,
-        //                     'evaluador_id' => $evldr->evaluador_id,
-        //                     'evaluacion_id' => $reciente->id,
-        //                 ]);
-        //                 ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
-        //                 ->where('en_curso', '=', true)
-        //                 ->where('empleado_id', '=', $eva->empleado_id)
-        //                 ->update([
-        //                     'evaluacion_id' => $reciente->id,
-        //                 ]);
-        //             }
-        //         }
-        //     }
-        // }
+                    foreach($evaluador as $evldr){
+                        ObjetivoRespuesta::create([
+                            'meta_alcanzada' => 'Sin evaluar',
+                            'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
+                            'calificacion' => 0,
+                            'objetivo_id' => $objetivo->id,
+                            'evaluado_id' => $eva->empleado_id,
+                            'evaluador_id' => $evldr->evaluador_id,
+                            'evaluacion_id' => $reciente->id,
+                        ]);
+                        ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+                        ->where('en_curso', '=', true)
+                        ->where('empleado_id', '=', $eva->empleado_id)
+                        ->update([
+                            'evaluacion_id' => $reciente->id,
+                        ]);
+                    }
+                }
+            }
+        }
 
         return response()->json(['success' => true]);
     }
