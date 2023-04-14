@@ -239,6 +239,9 @@
                         Objetivos Estratégicos
                     </th>
                     <th style="vertical-align: top">
+                        Evaluación Asignada
+                    </th>
+                    <th style="vertical-align: top">
                         KPI
                     </th>
                     <th style="vertical-align: top">

@@ -213,6 +213,12 @@ class EV360EvaluacionesController extends Controller
                     'evaluador_id' => $evaluador,
                     'evaluacion_id' => $evaluacion->id,
                 ]);
+                ObjetivoEmpleado::where('empleado_id', '=', $empleado->id)
+                ->where('objetivo_id', '=', $objetivo->id)
+                ->where('en_curso', '=', true)
+                ->update([
+                    'evaluacion_id' => $evaluacion->id,
+                ]);
             }
         }
     }
