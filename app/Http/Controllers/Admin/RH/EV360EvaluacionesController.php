@@ -213,6 +213,12 @@ class EV360EvaluacionesController extends Controller
                     'evaluador_id' => $evaluador,
                     'evaluacion_id' => $evaluacion->id,
                 ]);
+                ObjetivoEmpleado::where('empleado_id', '=', $empleado->id)
+                ->where('objetivo_id', '=', $objetivo->id)
+                ->where('en_curso', '=', true)
+                ->update([
+                    'evaluacion_id' => $evaluacion->id,
+                ]);
             }
         }
     }
@@ -780,7 +786,7 @@ class EV360EvaluacionesController extends Controller
         $peso_general_competencias = $informacion_obtenida['peso_general_competencias'];
         $peso_general_objetivos = $informacion_obtenida['peso_general_objetivos'];
         $lista_autoevaluacion = $informacion_obtenida['lista_autoevaluacion'];
-        // $jefe_evaluador = $informacion_obtenida['jefe_evaluador'];
+        $jefe_evaluador = $informacion_obtenida['jefe_evaluador'];
         $lista_jefe_inmediato = $informacion_obtenida['lista_jefe_inmediato'];
         $lista_equipo_a_cargo = $informacion_obtenida['lista_equipo_a_cargo'];
         $lista_misma_area = $informacion_obtenida['lista_misma_area'];
@@ -827,6 +833,42 @@ class EV360EvaluacionesController extends Controller
          'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias',
         'calificaciones_equipo_competencias', 'calificaciones_area_competencias', 'nivelesEsperadosCompetencias', 'peso_general_competencias', 'peso_general_objetivos', 'firmaAuto', 'firmaJefe', 'firmaEquipo', 'firmaPar', 'existeFirmaAuto', 'existeFirmaJefe', 'existeFirmaSubordinado', 'existeFirmaPar', 'nombresObjetivos', 'metaObjetivos', 'calificacionObjetivos'));
     }
+
+    // public function reactivarPorEvaluado($evaluacion, $evaluado)
+    // {
+    //     $evaluacion = Evaluacion::find(intval($evaluacion));
+    //     $evaluado = Empleado::find(intval($evaluado));
+
+    //     $reactivacion=EvaluadoEvaluador::where('evaluacion_id', '=', $evaluacion->id)
+    //     ->where('evaluado_id', '=', $evaluado->id)->get();
+
+    //     foreach($reactivacion as $react)
+    //     {
+    //         $react->update([
+    //             'evaluado' => 'false',
+    //         ]);
+    //     }
+
+    //     return response()->json(['success' => 'true']);
+    // }
+
+    // public function reactivarPorEvaluador($evaluacion, $evaluado, $evaluador)
+    // {
+    //     $evaluacion = Evaluacion::find(intval($evaluacion));
+    //     $evaluado = Empleado::find(intval($evaluado));
+    //     $evaluador = Empleado::find(intval($evaluador));
+
+    //     $reactivacion=EvaluadoEvaluador::where('evaluacion_id', '=', $evaluacion->id)
+    //     ->where('evaluado_id', '=', $evaluado->id)
+    //     ->where('evaluador_id', '=', $evaluador->id)
+    //     ->first();
+
+    //     $reactivacion->update([
+    //             'evaluado' => 'false',
+    //         ]);
+
+    //     return response()->json(['success' => 'true']);
+    // }
 
     public function normalizarCalificacionObjetivo(Request $request)
     {
