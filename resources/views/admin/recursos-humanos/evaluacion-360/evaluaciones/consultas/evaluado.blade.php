@@ -327,6 +327,89 @@
                 <small><i class="fas fa-info mr-1"></i> Para editar la columna "logrado" se debe posicionar sobre el
                     número y dar doble clic, se habilitará un input y podrá realizar la edición.
                     Una vez que termine de editar recargue la página para que se vean reflejados los cambios. </small>
+
+<table id="tblobjetivos" hidden>
+                    <thead>
+                            <th>Evaluador</th>
+                            <th>
+                                Objetivo
+                            </th>
+                            <th>
+                                KPI
+                            </th>
+                            <th>
+                                Puesto
+                            </th>
+                            <th>
+                                Logrado
+                            </th>
+                            <th>
+                                <small>Descripción</small>
+                            </th>
+                            <th>
+                                Comentarios
+                            </th>
+                    </thead>
+                        @forelse ($evaluadores_objetivos as $evaluador)
+                    <tbody>
+                        <div class="col-12" id="tblObjetivosSupervisor">
+                            @forelse ($evaluador['objetivos'] as $idx => $objetivo)
+                                <tr>
+                                    @if ($evaluador['esAutoevaluacion'])
+                                    <td>{{ $evaluador['nombre'] }}</td>
+                                    @endif
+                                    @if ($evaluador['esSupervisor'])
+                                        <td>{{ $jefe_evaluador->name }}</td>
+                                    @endif
+                                    <td>
+                                        {{ $objetivo['nombre'] }}
+                                    </td>
+                                    <td>
+                                        {{ $objetivo['KPI'] }}
+                                    </td>
+                                    <td>
+                                        {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
+                                    </td>
+                                    <td>
+                                        {{ $objetivo['calificacion'] }} {{ $objetivo['metrica'] }}
+                                    </td>
+                                    <td>
+                                        {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
+                                    </td>
+                                    <td>
+                                        {{ $objetivo['meta_alcanzada'] }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <strong class="text-muted">
+                                        <i class="fas fa-info-circle"></i>
+                                        Sin objetivos a evaluar
+                                    </strong>
+                                </tr>
+                            @endforelse
+                @empty
+                    <tr>Sin objetivos a evaluar</tr>
+                @endforelse
+                {{-- <tr></tr>
+                <tr>
+                    <td>Objetivo</td>
+                </tr>
+                <tr>
+                <td>Promedio</td>
+                <td>{{ number_format($promedio_objetivos / 100, 2) }}</td>
+                </tr>
+            <tr>
+                <td>% Participación</td>
+                <td>{{ number_format($promedio_objetivos, 2) }}%<td>
+                </tr> --}}
+                </tbody>
+</table>
+<div class="text-center">
+<button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
+    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+</button>
+</div>
                 @forelse ($evaluadores_objetivos as $evaluador)
                     <div class="row">
                         <div class="col-12">
@@ -483,6 +566,36 @@
 @endsection
 
 @section('scripts')
+
+    <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+
+    <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
+
+    <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <script>
+        const $btnExportar = document.querySelector("#btnExportar"),
+            $tabla = document.querySelector("#tblobjetivos");
+
+        $btnExportar.addEventListener("click", function() {
+            let tableExport = new TableExport($tabla, {
+                exportButtons: false, // No queremos botones
+                filename: "prueba", //Nombre del archivo de Excel
+                sheetname: "prueba", //Título de la hoja
+            });
+            let datos = tableExport.getExportData();
+            console.log(datos.tblobjetivos.xlsx.data);
+
+            // console.log(datos.tblobjetivos);
+            // console.log(datos.tblobjetivos.xlsx);
+            // console.log(datos.tblobjetivos.xlsx.data);
+            let preferenciasDocumento = datos.tblobjetivos.xlsx;
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
