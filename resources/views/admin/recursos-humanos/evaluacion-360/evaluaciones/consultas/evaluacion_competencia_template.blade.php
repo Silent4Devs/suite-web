@@ -7,13 +7,17 @@
                     @if ($tipo != 'autoevaluacion' && $tipo != 'jefe')
                         @if (auth()->user()->empleado)
                             @if ($evaluado->id != auth()->user()->empleado->id)
-                                {{ $evaluador['nombre'] }}
+                                {{ $evaluador['nombre'] }} <br>
+                                <a href="/admin/recursos-humanos/evaluacion-360/evaluacion/{{$evaluacion->id}}/reactivar/{{$evaluado->id}}/{{$evaluador['id']}}"
+                                    class="btn btn-primary btn-xs" title="Reactivar">Reactivar Evaluación</a>
                             @else
                                 Evaluador
                             @endif
                         @endif
                     @else
-                        {{ $evaluador['nombre'] }}
+                        {{ $evaluador['nombre'] }} <br>
+                        <a href="/admin/recursos-humanos/evaluacion-360/evaluacion/{{$evaluacion->id}}/reactivar/{{$evaluado->id}}/{{$evaluador['id']}}"
+                            class="btn btn-primary btn-xs" title="Reactivar">Reactivar Evaluación</a>
                     @endif
                 </strong>
                 {{-- <span class="badge badge-primary">{{ $evaluador['tipo'] }}</span> --}}
