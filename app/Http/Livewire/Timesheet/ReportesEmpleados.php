@@ -308,6 +308,9 @@ class ReportesEmpleados extends Component
             } else {
                 $fecha_inicio_timesheet_faltantes_empleado = $fecha_inicio_timesheet_empleado;
             }
+            if(is_null($fecha_inicio_timesheet_faltantes_empleado)){
+                $fecha_inicio_timesheet_faltantes_empleado = $this->fecha_inicio;
+            }
             $antiguedad_y = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('Y');
             $antiguedad_m = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('m');
             $antiguedad_d = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('d');
