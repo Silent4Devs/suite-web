@@ -34,12 +34,12 @@ RUN apk add --no-cache autoconf \
     # \
     && docker-php-ext-install soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache \
     && docker-php-ext-enable soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache \
-    # \
-    # # Install imagick
-    # && pecl install imagick \
-    # && docker-php-ext-enable imagick \
-    # && true \
-    # \
+    \
+    # Install imagick
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && true \
+    \
     # add composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
