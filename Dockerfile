@@ -17,11 +17,12 @@ RUN apt-get update && apt-get install -y \
     sudo \
     unzip \
     npm \
-    nodejs
+    nodejs \
+    libpq-dev
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
+RUN docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd \
     # add composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
