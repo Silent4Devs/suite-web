@@ -1,45 +1,27 @@
-FROM php:8.1-fpm-alpine
-
-RUN apk add --no-cache autoconf \
-    postgresql-dev \
-    oniguruma-dev \
-    libzip-dev \
-    curl-dev \
-    libxml2-dev \
+FROM php:8.1-fpm-buster
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
+    curl \
     libpng-dev \
-    libjpeg-turbo-dev \
-    libwebp-dev \
-    freetype-dev \
-    libxpm-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
     libmcrypt-dev \
-    c-client \
-    imagemagick-dev \
-    \
-    # Install gd
-    && ln -s /usr/lib/$(apk --print-arch)-linux-gnu/libXpm.* /usr/lib/ \
-    && docker-php-ext-configure gd \
-    --enable-gd \
-    --with-webp \
-    --with-jpeg \
-    --with-xpm \
-    --with-freetype \
-    --enable-gd-jis-conv \
-    && docker-php-ext-install -j$(nproc) gd \
-    && true \
-    \
-    # # Install apcu
-    # && pecl install apcu \
-    # && docker-php-ext-enable apcu \
-    # && true \
-    # \
-    && docker-php-ext-install soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache \
-    && docker-php-ext-enable soap gd curl zip pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath opcache \
-    # \
-    # # Install imagick
-    # && pecl install imagick \
-    # && docker-php-ext-enable imagick \
-    # && true \
-    # \
+    libgd-dev \
+    jpegoptim optipng pngquant gifsicle \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    sudo \
+    unzip \
+    npm \
+    nodejs
+
+# Install PHP extensions
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
     # add composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
