@@ -33,6 +33,9 @@ ARG PGID=33
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
 
+# Increase memory_limit
+RUN echo 'memory_limit = 256M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
+
 # Add opcache config, jit compiler and file size config
 RUN echo 'opcache.jit_buffer_size=100M' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
     && echo 'opcache.jit=1235' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
