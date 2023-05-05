@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-buster-slim
+FROM php:8.2-fpm-slim
 # Install system dependencies
 RUN apt-get update &&\
     apt-get install -y --no-install-recommends\
