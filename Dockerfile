@@ -20,11 +20,11 @@ RUN apt-get update &&\
     npm \
     nodejs \
     libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install PHP extensions
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
-RUN docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd \
+    && rm -rf /var/lib/apt/lists/* \
+    # Install PHP extensions
+    && docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd curl soap zip pdo mbstring exif bcmath opcache \
+    && docker-php-ext-enable pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd curl soap zip pdo mbstring exif bcmath opcache \
     # add composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
