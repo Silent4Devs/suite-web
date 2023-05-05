@@ -1,7 +1,8 @@
 FROM php:8.2-fpm
 # Install system dependencies
 RUN apt-get update &&\
-    apt-get install -y --no-install-recommends\
+    apt-get install -y \
+    libcurl4-openssl-dev \
     build-essential \
     git \
     curl \
