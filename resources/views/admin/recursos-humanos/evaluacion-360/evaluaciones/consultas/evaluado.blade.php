@@ -184,6 +184,11 @@
                 style="background-color:#345183; border-radius: 100px; color: white; text-transform: uppercase;">
                 Resultado de la evaluación por competencias
             </div>
+            @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{session()->get('success')}}
+                    </div>
+                @endif
             <div class="col-12">
                 {{-- <div class="mt-2 row">
                     <div class="p-0 col-12 progress">
