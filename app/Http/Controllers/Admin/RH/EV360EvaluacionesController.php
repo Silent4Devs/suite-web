@@ -852,23 +852,26 @@ class EV360EvaluacionesController extends Controller
     //     return response()->json(['success' => 'true']);
     // }
 
-    // public function reactivarPorEvaluador($evaluacion, $evaluado, $evaluador)
-    // {
-    //     $evaluacion = Evaluacion::find(intval($evaluacion));
-    //     $evaluado = Empleado::find(intval($evaluado));
-    //     $evaluador = Empleado::find(intval($evaluador));
+    public function reactivarPorEvaluador($evaluacion, $evaluado, $evaluador)
+    {
+        $evaluacion = Evaluacion::find(intval($evaluacion));
+        $evaluado = Empleado::find(intval($evaluado));
+        $evaluador = Empleado::find(intval($evaluador));
+        // dd($evaluacion->id, $evaluado->id, $evaluador->id);
 
-    //     $reactivacion=EvaluadoEvaluador::where('evaluacion_id', '=', $evaluacion->id)
-    //     ->where('evaluado_id', '=', $evaluado->id)
-    //     ->where('evaluador_id', '=', $evaluador->id)
-    //     ->first();
+        $reactivacion=EvaluadoEvaluador::where('evaluacion_id', '=', $evaluacion->id)
+        ->where('evaluado_id', '=', $evaluado->id)
+        ->where('evaluador_id', '=', $evaluador->id)
+        ->first();
 
-    //     $reactivacion->update([
-    //             'evaluado' => 'false',
-    //         ]);
+        $reactivacion->update([
+                'evaluado' => 'false',
+            ]);
 
-    //     return response()->json(['success' => 'true']);
-    // }
+            return redirect()->back()
+            ->with('success', 'Se ha reactivado al usuario: '.$evaluador->name.
+            ', para evaluar al usuario: '.$evaluado->name);
+    }
 
     public function normalizarCalificacionObjetivo(Request $request)
     {
