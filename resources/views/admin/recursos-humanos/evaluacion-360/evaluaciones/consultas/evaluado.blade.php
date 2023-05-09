@@ -87,6 +87,8 @@
                             </div>
                             <div class="border col-9">
                                 <p class="m-0">{{ $evaluado->name }}</p>
+                                <input type="text" name="evaname" id="evaname"
+                                value="{{$evaluado->name}}" disabled hidden>
                             </div>
                         </div>
                     </div>
@@ -201,6 +203,9 @@
                 <div class="mt-2">
                     <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] }}</span>
                     <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] }}%</span>
+                    <button id="btnExportarAutoevaluacion" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
+                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel Autoevaluación"></i>
+                    </button>
                     @forelse ($lista_autoevaluacion->first()['evaluaciones'] as $evaluador)
                         @include(
                             'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
@@ -219,6 +224,9 @@
                 <div class="mt-2">
                     <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['tipo'] }}</span>
                     <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['peso_general'] }}%</span>
+                    <button id="btnExportarJefe" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
+                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel Jefe"></i>
+                    </button>
                     @forelse ($lista_jefe_inmediato->first()['evaluaciones'] as $evaluador)
                         @include(
                             'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
@@ -235,6 +243,9 @@
                 <div class="mt-2">
                     <span style="font-size: 11px">Subordinado</span>
                     <span style="font-size: 11px">{{ $lista_equipo_a_cargo->first()['peso_general'] }}%</span>
+                    <button id="btnExportarSubordinado" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
+                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel Subordinado"></i>
+                    </button>
                     @forelse ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluador)
                         @include(
                             'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
@@ -251,6 +262,9 @@
                 <div class="mt-2">
                     <span style="font-size: 11px">Par</span>
                     <span style="font-size: 11px">{{ $lista_misma_area->first()['peso_general'] }}%</span>
+                    <button id="btnExportarPar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
+                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel Colega"></i>
+                    </button>
                     @forelse ($lista_misma_area->first()['evaluaciones'] as $evaluador)
                         @include(
                             'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
@@ -597,6 +611,94 @@
             // console.log(datos.tblobjetivos.xlsx);
             // console.log(datos.tblobjetivos.xlsx.data);
             let preferenciasDocumento = datos.tblobjetivos.xlsx;
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+        });
+    </script>
+
+    <script>
+        const $btnExportarAutoevaluacion = document.querySelector("#btnExportarAutoevaluacion"),
+            $tablaauto = document.querySelector("#autoevaluacion");
+
+        $btnExportarAutoevaluacion.addEventListener("click", function() {
+            let nombeva = document.getElementById("evaname").value;
+            let tableExport = new TableExport($tablaauto, {
+                exportButtons: false, // No queremos botones
+                filename: "Evaluacion Competencias de "+nombeva+"-Autoevaluacion", //Nombre del archivo de Excel
+                sheetname: "Evaluacion Competencias", //Título de la hoja
+            });
+            let datos = tableExport.getExportData();
+            console.log(datos.autoevaluacion.xlsx.data);
+
+            // console.log(datos.tblobjetivos);
+            // console.log(datos.tblobjetivos.xlsx);
+            // console.log(datos.tblobjetivos.xlsx.data);
+            let preferenciasDocumento = datos.autoevaluacion.xlsx;
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+        });
+    </script>
+
+    <script>
+        const $btnExportarJefe = document.querySelector("#btnExportarJefe"),
+            $tablajefe = document.querySelector("#jefe");
+
+        $btnExportarJefe.addEventListener("click", function() {
+            let nombeva = document.getElementById("evaname").value;
+            let tableExport = new TableExport($tablajefe, {
+                exportButtons: false, // No queremos botones
+                filename: "Evaluacion Competencias de "+nombeva+"-Jefe", //Nombre del archivo de Excel
+                sheetname: "Evaluacion Competencias", //Título de la hoja
+            });
+            let datos = tableExport.getExportData();
+            console.log(datos.jefe.xlsx.data);
+
+            // console.log(datos.tblobjetivos);
+            // console.log(datos.tblobjetivos.xlsx);
+            // console.log(datos.tblobjetivos.xlsx.data);
+            let preferenciasDocumento = datos.jefe.xlsx;
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+        });
+    </script>
+
+    <script>
+        const $btnExportarSubordinado = document.querySelector("#btnExportarSubordinado"),
+            $tablasub = document.querySelector("#equipo");
+
+        $btnExportarSubordinado.addEventListener("click", function() {
+            let nombeva = document.getElementById("evaname").value;
+            let tableExport = new TableExport($tablasub, {
+                exportButtons: false, // No queremos botones
+                filename: "Evaluacion Competencias de "+nombeva+"-Subordinado", //Nombre del archivo de Excel
+                sheetname: "Evaluacion Competencias", //Título de la hoja
+            });
+            let datos = tableExport.getExportData();
+            console.log(datos.equipo.xlsx.data);
+
+            // console.log(datos.tblobjetivos);
+            // console.log(datos.tblobjetivos.xlsx);
+            // console.log(datos.tblobjetivos.xlsx.data);
+            let preferenciasDocumento = datos.equipo.xlsx;
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+        });
+    </script>
+
+    <script>
+        const $btnExportarPar = document.querySelector("#btnExportarPar"),
+            $tablapar = document.querySelector("#misma_area");
+
+        $btnExportarPar.addEventListener("click", function() {
+            let nombeva = document.getElementById("evaname").value;
+            let tableExport = new TableExport($tablapar, {
+                exportButtons: false, // No queremos botones
+                filename: "Evaluacion Competencias de "+nombeva+"-Colega", //Nombre del archivo de Excel
+                sheetname: "Evaluacion Competencias", //Título de la hoja
+            });
+            let datos = tableExport.getExportData();
+            console.log(datos.misma_area.xlsx.data);
+
+            // console.log(datos.tblobjetivos);
+            // console.log(datos.tblobjetivos.xlsx);
+            // console.log(datos.tblobjetivos.xlsx.data);
+            let preferenciasDocumento = datos.misma_area.xlsx;
             tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
         });
     </script>
