@@ -8,6 +8,7 @@ use App\Console\Commands\NotificarRecursos;
 use App\Console\Commands\NotificarUsuarioCapacitacion;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Jobs\EnviarMailFelicitacionJob;
 
 class Kernel extends ConsoleKernel
 {
@@ -38,6 +39,11 @@ class Kernel extends ConsoleKernel
         //     ->everyFiveMinutes();
         // $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everySixHours();
         $schedule->command('cache:clearall')->everyMinute();
+        $schedule->job(new EnviarMailFelicitacionJob)
+        ->timezone('America/Mexico_City')
+        ->dailyAt('10:00');
+        // $schedule->job(new EnviarMailFelicitacionJob)->dailyAt('10:36')->timezone('America/Mexico_City');
+        // $schedule->command(EnviarCorreoFelicitaciones::class)->dailyAt('10:47')->timezone('America/Mexico_City');
     }
 
     /**
