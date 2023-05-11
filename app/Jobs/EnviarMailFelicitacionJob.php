@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\FelicitacionesMail;
 use App\Models\Empleado;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class EnviarMailFelicitacionJob implements ShouldQueue
 {
@@ -57,6 +58,7 @@ class EnviarMailFelicitacionJob implements ShouldQueue
 
                 $email = new FelicitacionesMail($nombre, $correodestinatario, $imgpastel, $imgtab);
                 Mail::to($correodestinatario)->send($email);
+                Log::info('Correo de cumpleaños enviado correctamente');
                 // Mail::to('victor.rodriguez@becarios.silent4business.com')->send($email);
                 // echo $nombre.'<br>';
                 // echo $correodestinatario.'<br>';
