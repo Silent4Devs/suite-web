@@ -40,11 +40,9 @@ class Kernel extends ConsoleKernel
         // $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everySixHours();
         $schedule->command('cache:clearall')->everyTwoHours();
         $schedule->job(new EnviarMailFelicitacionJob)
-            ->dailyAt('10:00');
-        // ->timezone('America/Mexico_City')
-        // ->dailyAt('10:00');
-        // $schedule->job(new EnviarMailFelicitacionJob)->dailyAt('10:36')->timezone('America/Mexico_City');
-        // $schedule->command(EnviarCorreoFelicitaciones::class)->dailyAt('10:47')->timezone('America/Mexico_City');
+        ->timezone('America/Mexico_City')
+        ->dailyAt('10:00');
+
     }
 
     /**
