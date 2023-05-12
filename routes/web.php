@@ -30,6 +30,9 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+
+    //log-viewer
+    Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
     Route::get('users/{id}/restablecer', 'UsersController@restablecerUsuario')->name('users.restablecer');
     Route::get('users/eliminados', 'UsersController@vistaEliminados')->name('users.eliminados');
