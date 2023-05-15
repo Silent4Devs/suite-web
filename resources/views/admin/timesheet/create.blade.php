@@ -126,7 +126,15 @@
 
                 let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
 
-                $(tr_seleccionado).remove();
+                // limpiar datos de tr
+                var inputs_clear = document.querySelectorAll(tr_seleccionado + ' input');
+                for (var i = 0; i < inputs_clear.length; i++) {
+                    inputs_clear[i].value = '';
+                }
+                document.querySelector(tr_seleccionado + ' .total_filas').textContent = '';
+                $(tr_seleccionado + ' .select2').val(null).trigger('change');
+
+                console.log('filas removs');
                 Livewire.emit('removerFila');
             }
             if (element.classList.contains('btn_clear_tr')) {
