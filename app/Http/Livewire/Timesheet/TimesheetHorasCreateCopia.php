@@ -15,6 +15,7 @@ class TimesheetHorasCreateCopia extends Component
     public $timesheet;
     public $timesheet_id;
     public $contador;
+    public $horas_excluidas;
 
     protected $listeners = ['removerFila'];
 
@@ -29,15 +30,17 @@ class TimesheetHorasCreateCopia extends Component
         $this->tareas = $tareas;
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;
+
+        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
+        $this->timesheet = Timesheet::find($this->timesheet_id);
     }
 
     public function removerFila($id)
     {
         if ($id != null) {
-            $hora_eliminada = TimesheetHoras::find($id);
-            $hora_eliminada->delete();
+            $this->horas_excluidas[] = $id;
+            $this->horas = $this->horas->except($this->horas_excluidas);
         }
-        $this->contador = $this->contador - 1;
         $this->emit('calcularSumatoriasFacturables');
     }
 
@@ -48,8 +51,6 @@ class TimesheetHorasCreateCopia extends Component
 
     public function render()
     {
-        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
-        $this->timesheet = Timesheet::find($this->timesheet_id);
 
         return view('livewire.timesheet.timesheet-horas-create-copia');
     }
