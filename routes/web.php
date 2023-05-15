@@ -30,6 +30,9 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+
+    //log-viewer
+    Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
     Route::get('users/{id}/restablecer', 'UsersController@restablecerUsuario')->name('users.restablecer');
     Route::get('users/eliminados', 'UsersController@vistaEliminados')->name('users.eliminados');
@@ -325,6 +328,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('recursos-humanos/evaluacion-360/autoevaluacion/competencias/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionCompetencias')->name('ev360-evaluaciones.autoevaluacion.competencias.get');
         Route::post('recursos-humanos/evaluacion-360/autoevaluacion/objetivos/obtener', 'RH\EV360EvaluacionesController@getAutoevaluacionObjetivos')->name('ev360-evaluaciones.autoevaluacion.objetivos.get');
         Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/consulta/{evaluado}', 'RH\EV360EvaluacionesController@consultaPorEvaluado')->name('ev360-evaluaciones.autoevaluacion.consulta.evaluado');
+        // Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/reactivar/{evaluado}', 'RH\EV360EvaluacionesController@reactivarPorEvaluado')->name('ev360-evaluaciones.reactivarPorEvaluado');
+        Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/reactivar/{evaluado}/{evaluador}', 'RH\EV360EvaluacionesController@reactivarPorEvaluador')->name('ev360-evaluaciones.reactivarPorEvaluador');
         Route::post('recursos-humanos/evaluacion-360/normalizar/objetivo', 'RH\EV360EvaluacionesController@normalizarCalificacionObjetivo')->name('ev360-evaluaciones.normalizar.objetivo');
         Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen', 'RH\EV360EvaluacionesController@resumen')->name('ev360-evaluaciones.consulta.resumen');
         Route::get('recursos-humanos/evaluacion-360/evaluacion/{evaluacion}/resumen/jefe/{empleado}', 'RH\EV360EvaluacionesController@resumenJefe')->name('ev360-evaluaciones.consulta.resumenJefe');
