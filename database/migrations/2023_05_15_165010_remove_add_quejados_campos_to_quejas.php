@@ -15,9 +15,10 @@ class RemoveAddQuejadosCamposToQuejas extends Migration
     {
         Schema::table('quejas', function (Blueprint $table) {
             $table->longText('area_quejado')->nullable()->change();
+            $table->longText('externo_quejado')->nullable()->change(); 
             $table->longText('colaborador_quejado')->nullable()->change();
             $table->longText('proceso_quejado')->nullable()->change();
-            $table->longText('externo_quejado')->nullable()->change();
+
         });
     }
 
@@ -30,9 +31,10 @@ class RemoveAddQuejadosCamposToQuejas extends Migration
     {
         Schema::table('quejas', function (Blueprint $table) {
             $table->string('area_quejado')->nullable()->change();
-            $table->string('colaborador_quejado')->nullable()->change();
             $table->string('proceso_quejado')->nullable()->change();
+            $table->string('colaborador_quejado')->nullable()->change();
             $table->string('externo_quejado')->nullable()->change();
+
         });
     }
 }
