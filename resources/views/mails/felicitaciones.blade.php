@@ -100,10 +100,10 @@
                                             <img src="{{ asset($logotipo) }}" class="mt-2 ml-4"
                                                 style="width:160px;">
                                         </div>
-                                        <div class="caja_img_logo" style="margin-top:20px; text-align:center">
+                                        {{-- <div class="caja_img_logo" style="margin-top:20px; text-align:center">
                                             <img src="{{ $message->embed($pastel) }}" class="mt-2 ml-4"
                                                 style="width:260px;">
-                                        </div>
+                                        </div> --}}
 
                                         <div style="margin-top:50px;">
                                             <strong
