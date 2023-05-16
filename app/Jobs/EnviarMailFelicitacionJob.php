@@ -58,12 +58,12 @@ class EnviarMailFelicitacionJob implements ShouldQueue
 
                 $email = new FelicitacionesMail($nombre, $correodestinatario, $imgpastel, $imgtab);
                 Mail::to($correodestinatario)->send($email);
-                Log::info('Correo de cumpleaños enviado correctamente');
+                // Log::info('Correo de cumpleaños enviado correctamente');
                 // echo $nombre.'<br>';
                 // echo $correodestinatario.'<br>';
             }
         }
         //
-        Log::info('Se ejecuto con exito');
+        // Log::info('Se ejecuto con exito');
     }
 }
