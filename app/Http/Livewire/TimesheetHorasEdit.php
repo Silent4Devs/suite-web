@@ -15,6 +15,7 @@ class TimesheetHorasEdit extends Component
     public $timesheet;
     public $timesheet_id;
     public $contador;
+    public $horas_excluidas;
 
     protected $listeners = ['removerFila'];
 
@@ -29,17 +30,15 @@ class TimesheetHorasEdit extends Component
         $this->tareas = $tareas;
         $this->origen = $origen;
         $this->timesheet_id = $timesheet_id;
+        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
     }
 
     public function removerFila($id)
     {
         if ($id != null) {
-            $hora_eliminada = TimesheetHoras::find($id);
-            $hora_eliminada->delete($id);
-         
-           
+            $this->horas_excluidas[] = $id;
+            $this->horas = $this->horas->except($this->horas_excluidas);
         }
-        $this->contador = $this->contador - 1;
         $this->emit('calcularSumatoriasFacturables');
     }
 
@@ -50,7 +49,6 @@ class TimesheetHorasEdit extends Component
 
     public function render()
     {
-        $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
         $this->timesheet = Timesheet::find($this->timesheet_id);
 
         return view('livewire.timesheet-horas-edit');
