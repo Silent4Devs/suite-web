@@ -97,17 +97,14 @@
                                     <td style="padding:0 0 36px 0;">
 
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img src="{{ asset($logotipo) }}" class="mt-2 ml-4"
+                                            <img width="160" src="{{ asset($logotipo) }}" class="mt-2 ml-4"
                                                 style="width:160px;">
                                         </div>
-                                        {{-- <div class="caja_img_logo" style="margin-top:20px; text-align:center">
-                                            <img src="{{ $message->embed($pastel) }}" class="mt-2 ml-4"
-                                                style="width:260px;">
-                                        </div> --}}
+                                        <div class="caja_img_logo" style="margin-top:30px; text-align:center">
+                                            <img width="160" src="{{ asset($pastel) }}" class="mt-2 ml-4"
+                                                style="width:160px;">
+                                        </div>
 
-                                        <div style="margin-top:50px;">
-                                            <strong
-                                                style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:12px;font-family:Arial,sans-serif;">
                                                 <h1 style="text-align: center;"> ¡¡Feliz cumpleaños!! </h1><br>
                                                 <h3 style="text-align: center;"> {{ $empleado }}</h3>
                                             </strong>
