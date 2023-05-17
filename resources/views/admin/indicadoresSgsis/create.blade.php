@@ -338,7 +338,7 @@
                 </div>
 
                 <h4 class="text-primary">Generación de fórmula</h4>
-                <input id="formula" name="formula" class="form-control" type="text" placeholder="Formula generada"
+                <input id="formula" name="formula" readonly class="form-control" type="text" placeholder="Formula generada"
                     required><br>
                 {{-- <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp; --}}
                 <hr>
@@ -347,7 +347,7 @@
                     <div class="col-sm-6 align-items-center">
                         <div class="container">
                             <div class="calc">
-                                <input type="text" id="calculadora" name="calculadora" class="result">
+                                <input type="text" id="calculadora" name="calculadora" class="result" readonly>
                                 <ul class="numbers">
                                     <li class="btnNumber" value="00">c</li>
                                     <li class="btnNumber" value="11">.</li>
