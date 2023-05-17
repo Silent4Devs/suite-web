@@ -97,7 +97,7 @@
                                     <td style="padding:0 0 36px 0;">
 
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img width="100px" height="100px" src="{{ asset($logotipo) }}" class="mt-2 ml-4">
+                                            <img width="100px" hspace="100" vspace="100" height="100px" src="{{ asset($logotipo) }}" class="mt-2 ml-4">
                                         </div>
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
                                             <img width="100px" height="100px" src="{{ asset($pastel) }}" class="mt-2 ml-4">
