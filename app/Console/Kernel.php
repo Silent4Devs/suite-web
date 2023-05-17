@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('cache:clearall')->everyTwoHours();
         $schedule->job(new EnviarMailFelicitacionJob)
         ->timezone('America/Mexico_City')
-        ->dailyAt('16:40')
+        ->dailyAt('17:20')
         ->withoutOverlapping();
 
     }
