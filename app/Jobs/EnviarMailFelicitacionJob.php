@@ -13,6 +13,7 @@ use App\Mail\FelicitacionesMail;
 use App\Models\Empleado;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use App\Models\CorreoCumpleanos;
 
 class EnviarMailFelicitacionJob implements ShouldQueue
 {
@@ -39,7 +40,7 @@ class EnviarMailFelicitacionJob implements ShouldQueue
      */
     public function handle()
     {
-        $cumplehoy = Carbon::now();
+        $cumplehoy = Carbon::today();
         $cumplehoy->toDateString();
         // dd($cumplehoy);
         $cumpleañeros = Empleado::alta()
@@ -48,22 +49,34 @@ class EnviarMailFelicitacionJob implements ShouldQueue
         ->get();
 
         $imgtab = public_path("img\icono_tabantaj.png");
-        $imgpastel = public_path('img\Pastel.png');
+        $imgpastel = public_path('public/img/Pastel.png');
 
         if($cumpleañeros != null){
             foreach($cumpleañeros as $cumpleañero)
             {
-                $nombre = $cumpleañero->name;
-                $correodestinatario = $cumpleañero->email;
+                $filtro = CorreoCumpleanos::where('empleado_id', $cumpleañero->id)
+                ->whereDate('fecha_envio', '=', $cumpleañero->cumpleaños);
+                if($filtro->exists() == false){
+                    // dd("Si aparece");
+                    $empcump=CorreoCumpleanos::firstOrCreate([
+                        'empleado_id' => $cumpleañero->id,
+                        'fecha_envio' => $cumpleañero->cumpleaños,
+                        'enviado' => false,
+                    ]);
+                    // dd("Si crea el registro");
+                    $nombre = $cumpleañero->name;
+                    $correodestinatario = $cumpleañero->email;
 
-                $email = new FelicitacionesMail($nombre, $correodestinatario, $imgpastel, $imgtab);
-                Mail::to($correodestinatario)->send($email);
-                Log::info('Correo de cumpleaños enviado correctamente');
-                // echo $nombre.'<br>';
-                // echo $correodestinatario.'<br>';
+                    $email = new FelicitacionesMail($nombre, $correodestinatario, $imgpastel, $imgtab);
+                    Mail::to($correodestinatario)->send($email);
+                    // dd('Si manda el correo');
+                    $empcump->update([
+                        'enviado' => true,
+                    ]);
+                }else{
+                    //No hace nada
+                }
             }
         }
-        //
-        Log::info('Se ejecuto con exito');
     }
 }
