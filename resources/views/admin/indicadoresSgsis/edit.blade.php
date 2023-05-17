@@ -368,7 +368,7 @@
                     <div class="col-sm-6 align-items-center">
                         <div class="container">
                             <div class="calc">
-                                <input type="text" id="calculadora" name="calculadora" class="result" readonly>
+                                <input type="text" id="calculadora" name="calculadora" class="result" readonly >
                                 <ul class="numbers">
                                     <li class="btnNumber" value="00">c</li>
                                     <li class="btnNumber" value="11">.</li>
