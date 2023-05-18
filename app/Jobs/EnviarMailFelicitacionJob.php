@@ -49,7 +49,7 @@ class EnviarMailFelicitacionJob implements ShouldQueue
         ->get();
 
         $imgtab = public_path("img\icono_tabantaj.png");
-        $imgpastel = public_path('public/img/Pastel.png');
+        $imgpastel = public_path('img\pastel.png');
 
         if($cumpleañeros != null){
             foreach($cumpleañeros as $cumpleañero)
