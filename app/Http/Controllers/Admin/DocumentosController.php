@@ -532,6 +532,7 @@ class DocumentosController extends Controller
     public function renderViewDocument(Documento $documento)
     {
         $path_documento = $this->getPathDocumento($documento, 'storage');
+        // dd($path_documento);
 
         if (auth()->user()->empleado) {
             if (!VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', auth()->user()->empleado->id)->exists()) {
@@ -627,6 +628,7 @@ class DocumentosController extends Controller
                 break;
         }
 
+        // dd($path_documento);
         return $path_documento;
     }
 
@@ -714,6 +716,15 @@ class DocumentosController extends Controller
     {
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
 
+        if(empty($versiones[0]['id'])){
+            $versiones = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('id', $documento->id)->get();
+            // dd($versiones);
+            $path_documento = $this->getPathDocumento($documento, 'storage');
+            $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
+
+            return view('admin.documentos.versions-document', compact('documento', 'versiones', 'path_documento'));
+        }
+        // dd($versiones);
         return view('admin.documentos.versions-document', compact('documento', 'versiones'));
     }
 
