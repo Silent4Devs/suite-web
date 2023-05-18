@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('cache:clearall')->everyTwoHours();
         $schedule->command(EnviarCorreoFelicitaciones::class)
         ->timezone('America/Mexico_City')
-        ->dailyAt('09:00')
+        ->dailyAt('11:00')
         ->withoutOverlapping()
         ->onOneServer();
 
