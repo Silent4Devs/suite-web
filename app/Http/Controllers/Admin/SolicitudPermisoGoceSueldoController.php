@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Mail\RespuestaPermisoGoceSueldo as MailRespuestaPermisoGoceSueldo;
 use App\Mail\SolicitudPermisoGoceSueldo as MailSolicitudPermisoGoceSueldo;
-use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\PermisosGoceSueldo;
@@ -13,15 +13,10 @@ use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use App\Models\User;
-use App\Models\Vacaciones;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rules\Exists;
 
 class SolicitudPermisoGoceSueldoController extends Controller
 {
-
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -83,9 +78,9 @@ class SolicitudPermisoGoceSueldoController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.solicitudGoceSueldo.index', compact('logo_actual', 'empresa_actual'));
     }
-
 
     public function create()
     {
@@ -96,7 +91,6 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
         return view('admin.solicitudGoceSueldo.create', compact('vacacion', 'autoriza', 'permisos'));
     }
-
 
     public function store(Request $request)
     {
@@ -112,9 +106,9 @@ class SolicitudPermisoGoceSueldoController extends Controller
         Mail::to($supervisor->email)->send(new MailSolicitudPermisoGoceSueldo($solicitante, $supervisor, $solicitud));
 
         Flash::success('Solicitud creada satisfactoriamente.');
+
         return redirect()->route('admin.solicitud-permiso-goce-sueldo.index');
     }
-
 
     public function show($id)
     {
@@ -124,12 +118,12 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
         if (empty($vacacion)) {
             Flash::error('Vacación not found');
+
             return redirect(route('admin.solicitud-vacaciones.index'));
         }
 
         return view('admin.solicitudGoceSueldo.show', compact('vacacion'));
     }
-
 
     public function edit(Request $request, $id)
     {
@@ -144,7 +138,6 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
         // return view('admin.solicitudGoceSueldo.edit', compact('vacacion'));
     }
-
 
     public function update(Request $request, $id)
     {
@@ -163,7 +156,6 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
         return redirect(route('admin.solicitud-permiso-goce-sueldo.aprobacion'));
     }
-
 
     public function destroy(Request $request)
     {
@@ -206,7 +198,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
                 return $row->fecha_fin ? $row->fecha_fin : '';
             });
             $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion  : '';
+                return $row->aprobacion ? $row->aprobacion : '';
             });
             // $table->editColumn('descripcion', function ($row) {
             //     return $row->descripcion ? $row->descripcion : '';
@@ -224,20 +216,20 @@ class SolicitudPermisoGoceSueldoController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.solicitudGoceSueldo.global-solicitudes', compact('logo_actual', 'empresa_actual'));
     }
-
 
     public function respuesta($id)
     {
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudPermisoGoceSueldo::with('empleado')->find($id);
+
         return view('admin.solicitudGoceSueldo.respuesta', compact('vacacion'));
     }
 
     public function archivo(Request $request)
     {
-
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
@@ -279,6 +271,7 @@ class SolicitudPermisoGoceSueldoController extends Controller
             });
 
             $table->rawColumns(['actions', 'placeholder']);
+
             return $table->make(true);
         }
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
@@ -289,8 +282,10 @@ class SolicitudPermisoGoceSueldoController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.solicitudGoceSueldo.archivo', compact('logo_actual', 'empresa_actual'));
     }
+
     public function showVistaGlobal($id)
     {
         abort_if(Gate::denies('reglas_goce_sueldo_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -298,8 +293,10 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
         if (empty($vacacion)) {
             Flash::error('Vacación not found');
+
             return redirect(route('admin.solicitud-vacaciones.index'));
         }
+
         return view('admin.solicitudGoceSueldo.vistaGlobal', compact('vacacion'));
     }
 
@@ -310,8 +307,10 @@ class SolicitudPermisoGoceSueldoController extends Controller
 
         if (empty($vacacion)) {
             Flash::error('Vacación not found');
+
             return redirect(route('admin.solicitud-permiso-goce-sueldo.index'));
         }
+
         return view('admin.solicitudGoceSueldo.archivoShow', compact('vacacion'));
     }
 }

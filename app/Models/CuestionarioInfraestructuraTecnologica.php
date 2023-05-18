@@ -9,7 +9,7 @@ class CuestionarioInfraestructuraTecnologica extends Model
 {
     use HasFactory;
 
-    public $table = "cuestionario_infraestructura_tecnologica";
+    public $table = 'cuestionario_infraestructura_tecnologica';
 
     public $fillable = [
         'id',

@@ -8,12 +8,11 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class PlanAuditorium extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-   
+
     public $table = 'plan_auditoria';
 
     public static $searchable = [
@@ -49,7 +48,6 @@ class PlanAuditorium extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-
 
     public function getFechaAuditoriaAttribute($value)
     {
@@ -90,7 +88,6 @@ class PlanAuditorium extends Model
     {
         return html_entity_decode(strip_tags($this->documentoauditar), ENT_QUOTES, 'UTF-8');
     }
-
 
     public function actividadesPlan()
     {

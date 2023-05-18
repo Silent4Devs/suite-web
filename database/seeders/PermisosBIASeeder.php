@@ -53,7 +53,6 @@ class PermisosBIASeeder extends Seeder
                 'name' => 'Este permiso permite al usuario modificar los ajustes de matriz BIA',
             ],
 
-
         ];
 
         Permission::insert($permissions);

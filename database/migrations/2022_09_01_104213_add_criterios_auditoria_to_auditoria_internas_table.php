@@ -17,7 +17,6 @@ class AddCriteriosAuditoriaToAuditoriaInternasTable extends Migration
             $table->longText('criterios_auditoria')->nullable();
             $table->string('id_auditoria')->nullable();
             $table->string('nombre_auditoria')->nullable();
-
         });
     }
 

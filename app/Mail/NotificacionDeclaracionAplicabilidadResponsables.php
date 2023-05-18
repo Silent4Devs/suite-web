@@ -5,7 +5,6 @@ namespace App\Mail;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Empleado;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -18,7 +17,6 @@ class NotificacionDeclaracionAplicabilidadResponsables extends Mailable
      *
      * @return void
      */
-
     public $aprobador;
     public $aplicabilidad;
     public $responsable;
@@ -27,7 +25,7 @@ class NotificacionDeclaracionAplicabilidadResponsables extends Mailable
     public function __construct(Empleado $aprobador, Empleado $responsable, DeclaracionAplicabilidad $aplicabilidad, $control)
     {
         $this->aprobador = $aprobador;
-        $this->aplicabilidad =$aplicabilidad;
+        $this->aplicabilidad = $aplicabilidad;
         $this->responsable = $responsable;
         $this->control = $control;
     }
@@ -40,6 +38,5 @@ class NotificacionDeclaracionAplicabilidadResponsables extends Mailable
     public function build()
     {
         return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadResponsable')->subject('Aprobación/rechazo del control ' . $this->aplicabilidad->anexo_indice);
-
     }
 }

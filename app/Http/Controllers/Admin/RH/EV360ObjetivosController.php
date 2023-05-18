@@ -8,12 +8,12 @@ use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
+use App\Models\RH\Evaluacion;
+use App\Models\RH\EvaluacionesEvaluados;
+use App\Models\RH\EvaluadoEvaluador;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\ObjetivoRespuesta;
-use App\Models\RH\EvaluacionesEvaluados;
-use App\Models\RH\Evaluacion;
-use App\Models\RH\EvaluadoEvaluador;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -125,20 +125,19 @@ class EV360ObjetivosController extends Controller
 
             $reciente = Evaluacion::latest()->first();
 
-            $evaluacion=EvaluacionesEvaluados::where('evaluacion_id','=', $reciente->id)->get();
+            $evaluacion = EvaluacionesEvaluados::where('evaluacion_id', '=', $reciente->id)->get();
 
-            foreach($evaluacion as $evalu){
-
-                $evaluado=ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+            foreach ($evaluacion as $evalu) {
+                $evaluado = ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
                 ->where('empleado_id', '=', $evalu->evaluado_id)
                 ->where('en_curso', '=', true)->get();
 
-                foreach($evaluado as $eva){
-                    $evaluador=EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
-                    ->where('evaluacion_id','=',$reciente->id)
-                    ->whereIn('tipo',['0','1'])->get();
+                foreach ($evaluado as $eva) {
+                    $evaluador = EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
+                    ->where('evaluacion_id', '=', $reciente->id)
+                    ->whereIn('tipo', ['0', '1'])->get();
 
-                    foreach($evaluador as $evldr){
+                    foreach ($evaluador as $evldr) {
                         ObjetivoRespuesta::create([
                             'meta_alcanzada' => 'Sin evaluar',
                             'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
@@ -148,7 +147,7 @@ class EV360ObjetivosController extends Controller
                             'evaluador_id' => $evldr->evaluador_id,
                             'evaluacion_id' => $reciente->id,
                         ]);
-                        ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+                        ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
                         ->where('en_curso', '=', true)
                         ->where('empleado_id', '=', $eva->empleado_id)
                         ->update([
@@ -197,22 +196,20 @@ class EV360ObjetivosController extends Controller
         //Creacion de objetivos
         $reciente = Evaluacion::latest()->first();
 
-        if($objetivo->esta_aprobado == '1'){
+        if ($objetivo->esta_aprobado == '1') {
+            $evaluacion = EvaluacionesEvaluados::where('evaluacion_id', '=', $reciente->id)->get();
 
-            $evaluacion=EvaluacionesEvaluados::where('evaluacion_id','=', $reciente->id)->get();
-
-            foreach($evaluacion as $evalu){
-
-                $evaluado=ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+            foreach ($evaluacion as $evalu) {
+                $evaluado = ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
                 ->where('empleado_id', '=', $evalu->evaluado_id)
                 ->where('en_curso', '=', true)->get();
 
-                foreach($evaluado as $eva){
-                    $evaluador=EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
-                    ->where('evaluacion_id','=',$reciente->id)
-                    ->whereIn('tipo',['0','1'])->get();
+                foreach ($evaluado as $eva) {
+                    $evaluador = EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
+                    ->where('evaluacion_id', '=', $reciente->id)
+                    ->whereIn('tipo', ['0', '1'])->get();
 
-                    foreach($evaluador as $evldr){
+                    foreach ($evaluador as $evldr) {
                         ObjetivoRespuesta::create([
                             'meta_alcanzada' => 'Sin evaluar',
                             'calificacion_persepcion' => ObjetivoRespuesta::INACEPTABLE,
@@ -222,7 +219,7 @@ class EV360ObjetivosController extends Controller
                             'evaluador_id' => $evldr->evaluador_id,
                             'evaluacion_id' => $reciente->id,
                         ]);
-                        ObjetivoEmpleado::where('objetivo_id','=',$objetivo->id)
+                        ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
                         ->where('en_curso', '=', true)
                         ->where('empleado_id', '=', $eva->empleado_id)
                         ->update([
@@ -251,14 +248,13 @@ class EV360ObjetivosController extends Controller
 
     public function destroyByEmpleado(Request $request, ObjetivoEmpleado $objetivo)
     {
-
         //Buscar en objetivo calificaciones y se borra
         $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->objetivo_id)
         ->where('evaluado_id', $objetivo->empleado_id)
         ->where('evaluacion_id', $objetivo->evaluacion_id);
 
         //Borrar si existe
-        if($objres != null){
+        if ($objres != null) {
             $objres->delete();
         }
 

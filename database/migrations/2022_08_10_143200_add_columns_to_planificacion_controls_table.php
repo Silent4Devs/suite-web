@@ -23,7 +23,7 @@ class AddColumnsToPlanificacionControlsTable extends Migration
             $table->unsignedBigInteger('id_responsable')->nullable();
             $table->unsignedBigInteger('origen_id')->nullable();
             $table->foreign('id_responsable')->references('id')->on('empleados')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('origen_id')->references('id')->on('planificacion_control_origen_cambio')->onUpdate('cascade')->onDelete('cascade');          
+            $table->foreign('origen_id')->references('id')->on('planificacion_control_origen_cambio')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

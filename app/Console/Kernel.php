@@ -8,7 +8,6 @@ use App\Console\Commands\NotificarRecursos;
 use App\Console\Commands\NotificarUsuarioCapacitacion;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Jobs\EnviarMailFelicitacionJob;
 
 class Kernel extends ConsoleKernel
 {
@@ -44,7 +43,6 @@ class Kernel extends ConsoleKernel
         ->dailyAt('10:00')
         ->withoutOverlapping()
         ->onOneServer();
-
     }
 
     /**

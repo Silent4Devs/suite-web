@@ -48,7 +48,7 @@ class EventosPortal extends Component
         $this->aniversarios = Empleado::alta()->whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->get();
         $this->aniversarios_contador_circulo = 0;
         foreach ($this->aniversarios as $key => $aniv) {
-            if (Carbon::createFromTimeStamp(strtotime($aniv->antiguedad))->diffInYears() > 0){
+            if (Carbon::createFromTimeStamp(strtotime($aniv->antiguedad))->diffInYears() > 0) {
                 $this->aniversarios_contador_circulo++;
             }
         }

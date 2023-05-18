@@ -25,7 +25,6 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -368,12 +367,12 @@ class EV360EvaluacionesController extends Controller
                 $progreso_objetivos = floatval(number_format((($objetivos_evaluados / count($objetivos)) * 100)));
             }
         }
-// dd($objetivos);
-// dd($objetivos, $objetivos_evaluados, $objetivos_no_evaluados);
+        // dd($objetivos);
+        // dd($objetivos, $objetivos_evaluados, $objetivos_no_evaluados);
         $esta_evaluado = EvaluadoEvaluador::where('evaluado_id', $evaluado->id)
             ->where('evaluador_id', $evaluador->id)
             ->where('evaluacion_id', $evaluacion->id)->first()->evaluado;
-            // dd($esta_evaluado);
+        // dd($esta_evaluado);
         $finalizo_tiempo = false;
         if (Carbon::now()->diffInDays(Carbon::parse($evaluacion->fecha_fin), false) + 1 <= 0) {
             $finalizo_tiempo = true;
@@ -829,9 +828,40 @@ class EV360EvaluacionesController extends Controller
             $firmaPar = 'img/signature.png';
         }
 
-        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact('evaluacion', 'evaluado', 'lista_autoevaluacion', 'jefe_evaluador',
-         'lista_jefe_inmediato', 'lista_equipo_a_cargo', 'lista_misma_area', 'promedio_competencias', 'promedio_general_competencias', 'evaluadores_objetivos', 'promedio_objetivos', 'promedio_general_objetivos', 'calificacion_final', 'competencias_lista_nombre', 'calificaciones_autoevaluacion_competencias', 'calificaciones_jefe_competencias',
-        'calificaciones_equipo_competencias', 'calificaciones_area_competencias', 'nivelesEsperadosCompetencias', 'peso_general_competencias', 'peso_general_objetivos', 'firmaAuto', 'firmaJefe', 'firmaEquipo', 'firmaPar', 'existeFirmaAuto', 'existeFirmaJefe', 'existeFirmaSubordinado', 'existeFirmaPar', 'nombresObjetivos', 'metaObjetivos', 'calificacionObjetivos'));
+        return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluado', compact(
+            'evaluacion',
+            'evaluado',
+            'lista_autoevaluacion',
+            'jefe_evaluador',
+            'lista_jefe_inmediato',
+            'lista_equipo_a_cargo',
+            'lista_misma_area',
+            'promedio_competencias',
+            'promedio_general_competencias',
+            'evaluadores_objetivos',
+            'promedio_objetivos',
+            'promedio_general_objetivos',
+            'calificacion_final',
+            'competencias_lista_nombre',
+            'calificaciones_autoevaluacion_competencias',
+            'calificaciones_jefe_competencias',
+            'calificaciones_equipo_competencias',
+            'calificaciones_area_competencias',
+            'nivelesEsperadosCompetencias',
+            'peso_general_competencias',
+            'peso_general_objetivos',
+            'firmaAuto',
+            'firmaJefe',
+            'firmaEquipo',
+            'firmaPar',
+            'existeFirmaAuto',
+            'existeFirmaJefe',
+            'existeFirmaSubordinado',
+            'existeFirmaPar',
+            'nombresObjetivos',
+            'metaObjetivos',
+            'calificacionObjetivos'
+        ));
     }
 
     // public function reactivarPorEvaluado($evaluacion, $evaluado)
@@ -859,7 +889,7 @@ class EV360EvaluacionesController extends Controller
         $evaluador = Empleado::find(intval($evaluador));
         // dd($evaluacion->id, $evaluado->id, $evaluador->id);
 
-        $reactivacion=EvaluadoEvaluador::where('evaluacion_id', '=', $evaluacion->id)
+        $reactivacion = EvaluadoEvaluador::where('evaluacion_id', '=', $evaluacion->id)
         ->where('evaluado_id', '=', $evaluado->id)
         ->where('evaluador_id', '=', $evaluador->id)
         ->first();
@@ -868,9 +898,9 @@ class EV360EvaluacionesController extends Controller
                 'evaluado' => 'false',
             ]);
 
-            return redirect()->back()
-            ->with('success', 'Se ha reactivado al usuario: '.$evaluador->name.
-            ', para evaluar al usuario: '.$evaluado->name);
+        return redirect()->back()
+        ->with('success', 'Se ha reactivado al usuario: ' . $evaluador->name .
+        ', para evaluar al usuario: ' . $evaluado->name);
     }
 
     public function normalizarCalificacionObjetivo(Request $request)
@@ -2305,8 +2335,6 @@ class EV360EvaluacionesController extends Controller
         // $cambioMO->update([
         //     'evaluador_id' => '132',
         // ]);
-
-
 
         // $cambioE = EvaluadoEvaluador::where('evaluado_id', '=', 134)->where('evaluacion_id', '=', 24)->where('evaluador_id', '=', 132)->first();
         // $cambioE->update([

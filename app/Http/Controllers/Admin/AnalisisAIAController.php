@@ -5,16 +5,15 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\AjustesAIA;
 use App\Models\AnalisisAIA;
-use Illuminate\Http\Request;
 use App\Models\Organizacion;
 use Flash;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisAIAController extends Controller
 {
-
     public function index(Request $request)
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -84,7 +83,6 @@ class AnalisisAIAController extends Controller
         return view('admin.analisis-aia.index', compact('logo_actual', 'empresa_actual'));
     }
 
-
     public function create()
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -93,20 +91,19 @@ class AnalisisAIAController extends Controller
         return view('admin.analisis-aia.create', compact('cuestionario'));
     }
 
-
     public function store(Request $request)
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         //validacion
-        $request -> validate([
+        $request->validate([
             'id' => ['required'],
             'fecha_entrevista' => ['required', 'date'],
             'entrevistado' => ['required'],
             'puesto' => ['required'],
             'area' => ['required'],
             'direccion' => ['required'],
-            'extencion' => ['nullable', 'numeric'] ,
+            'extencion' => ['nullable', 'numeric'],
             'correo' => ['required'],
             'aplicaciones_a_cargo' => ['required'],
             // DATOS DE IDENTIFICACIÓN DEL PROCESO
@@ -121,18 +118,15 @@ class AnalisisAIAController extends Controller
             'area_responsable_aplicacion' => ['required'],
         ]);
 
-
         $cuestionario = AnalisisAIA::create($request->all());
 
         return redirect()->route('admin.analisis-aia.edit', ['id' => $cuestionario]);
     }
 
-
     public function show($id)
     {
         //
     }
-
 
     public function edit($id)
     {
@@ -142,25 +136,25 @@ class AnalisisAIAController extends Controller
 
         if (empty($cuestionario)) {
             Flash::error('Cuestionario no encontrado');
+
             return redirect(route('admin.analisis-aia.index'));
         }
 
         return view('admin.analisis-aia.edit', ['id' => $cuestionario], compact('cuestionario'));
     }
 
-
     public function update(Request $request, $id)
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request -> validate([
+        $request->validate([
 //            'id' => ['required'],
             'fecha_entrevista' => ['required', 'date'],
             'entrevistado' => ['required'],
             'puesto' => ['required'],
             'area' => ['required'],
 //            'direccion' => ['required'],
-            'extencion' => ['nullable', 'numeric'] ,
+            'extencion' => ['nullable', 'numeric'],
             'correo' => ['required'],
             'aplicaciones_a_cargo' => ['required'],
             // DATOS DE IDENTIFICACIÓN DEL PROCESO
@@ -421,7 +415,7 @@ class AnalisisAIAController extends Controller
             // Agregados posteriormente
             'productivo_desarrollo',
             'interno_externo',
-            'manejador_bd'
+            'manejador_bd',
         ]);
 
         $cuestionario = AnalisisAIA::find($id);
@@ -431,7 +425,6 @@ class AnalisisAIAController extends Controller
         return redirect(route('admin.analisis-aia.index'));
     }
 
-
     public function destroy($id)
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -439,13 +432,13 @@ class AnalisisAIAController extends Controller
         $cuestionario->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
-
     }
 
     public function matriz()
     {
         abort_if(Gate::denies('matriz_bia_matriz'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $cuestionario = AnalisisAIA::with('proporcionaInformacion','proporcionaMantenimientos')->get();
+        $cuestionario = AnalisisAIA::with('proporcionaInformacion', 'proporcionaMantenimientos')->get();
+
         return view('admin.analisis-aia.matriz', compact('cuestionario'));
     }
 
@@ -456,15 +449,17 @@ class AnalisisAIAController extends Controller
         $cuestionario = AjustesAIA::find($id);
         if (empty($cuestionario)) {
             Flash::error('Ajustes no encontrados');
+
             return redirect(route('admin.analisis-aia.matriz'));
         }
+
         return view('admin.analisis-aia.ajustes', compact('cuestionario'));
     }
 
     public function updateAjustesAIA(Request $request, $id)
     {
         abort_if(Gate::denies('matriz_bia_matriz_ajustes_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $cuestionario =  AjustesAIA::find($id);
+        $cuestionario = AjustesAIA::find($id);
         $cuestionario->update($request->all());
         Flash::success('Ajustes aplicados satisfactoriamente.');
 

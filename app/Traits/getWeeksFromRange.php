@@ -8,15 +8,15 @@ use Carbon\Carbon;
 
 trait getWeeksFromRange
 {
-    public function getWeeksFromRange(int $year, String $month, String $day, array $employeeWeksTimesheet, $startWeek = 'monday', $endWeek = 'sunday', $fecha_fin = null, $fecha_fin_extern, $faltantes = null)
+    public function getWeeksFromRange(int $year, String $month, String $day, array $employeeWeksTimesheet, $startWeek, $endWeek, $fecha_fin, $fecha_fin_extern, $faltantes = null)
     {
         $rangeArray = [];
         $now = Carbon::now();
         $actualYear = $now->year;
         if ($faltantes) {
             $cycles = $fecha_fin_extern->year - $year;
-        }else{
-                $cycles = ($fecha_fin_extern->year - $year) + 1;
+        } else {
+            $cycles = ($fecha_fin_extern->year - $year) + 1;
         }
         $lastYear = $year;
         if ($fecha_fin != null) {

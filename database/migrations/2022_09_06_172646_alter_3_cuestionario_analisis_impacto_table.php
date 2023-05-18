@@ -29,7 +29,7 @@ class Alter3CuestionarioAnalisisImpactoTable extends Migration
             $table->integer('mtpd_mes')->nullable();
             $table->integer('mtpd_semana')->nullable();
             $table->integer('mtpd_dia')->nullable();
-            $table->integer('mtpd_hora')->nullable();  
+            $table->integer('mtpd_hora')->nullable();
         });
     }
 

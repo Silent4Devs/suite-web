@@ -24,6 +24,7 @@ class VisitanteQuoteController extends Controller
         } else {
             $quote = new VisitanteQuote();
         }
+
         return view('admin.visitantes.quotes.index', compact('quote'));
     }
 
@@ -50,7 +51,6 @@ class VisitanteQuoteController extends Controller
                 'quote' => $request->quote,
             ]);
         }
-
 
         return response()->json([
             'success' => true,

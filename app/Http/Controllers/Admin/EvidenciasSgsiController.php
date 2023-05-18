@@ -13,9 +13,9 @@ use App\Models\EvidenciaSgsiPdf;
 use App\Models\EvidenciasSgsi;
 use App\Models\Team;
 use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,7 +87,7 @@ class EvidenciasSgsiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.evidenciasSgsis.index', compact('users', 'teams', 'organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.evidenciasSgsis.index', compact('users', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()

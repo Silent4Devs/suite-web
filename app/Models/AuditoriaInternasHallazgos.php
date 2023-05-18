@@ -12,7 +12,6 @@ class AuditoriaInternasHallazgos extends Model
 
     public $table = 'auditoria_internas_hallazgos';
 
-
     protected $fillable = [
         'incumplimiento_requisito',
         'descripcion',
@@ -24,7 +23,6 @@ class AuditoriaInternasHallazgos extends Model
         'updated_at',
         'deleted_at',
     ];
-
 
     public function auditoriaInterna()
     {

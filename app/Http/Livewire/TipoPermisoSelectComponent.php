@@ -17,7 +17,6 @@ class TipoPermisoSelectComponent extends Component
         $this->tipos = [];
     }
 
-
     public function render()
     {
         $this->tipos = TipoDePermiso::get();
@@ -29,5 +28,4 @@ class TipoPermisoSelectComponent extends Component
     {
         $this->emit('select2');
     }
-
 }

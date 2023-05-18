@@ -9,9 +9,9 @@ use App\Models\AuditoriaAnualDocumento;
 use App\Models\Empleado;
 use App\Models\Team;
 use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -81,7 +81,7 @@ class AuditoriaAnualController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.auditoriaAnuals.index', compact('auditoriaAnual', 'documentoAuditoriaAnuals', 'users', 'teams','organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.auditoriaAnuals.index', compact('auditoriaAnual', 'documentoAuditoriaAnuals', 'users', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -147,7 +147,7 @@ class AuditoriaAnualController extends Controller
     {
         abort_if(Gate::denies('programa_anual_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditoriaAnual->load( 'team');
+        $auditoriaAnual->load('team');
 
         return view('admin.auditoriaAnuals.show', compact('auditoriaAnual'));
     }
@@ -161,7 +161,6 @@ class AuditoriaAnualController extends Controller
         return back();
     }
 
-
     public function massDestroy(MassDestroyAuditoriaAnualRequest $request)
     {
         AuditoriaAnual::whereIn('id', request('ids'))->delete();
@@ -171,15 +170,11 @@ class AuditoriaAnualController extends Controller
 
     public function programa($id)
     {
-
-
-
         return view('admin.auditoriaAnuals.programa', compact('id'));
     }
 
     public function programaDocumentos(Request $request)
     {
-
         $auditoria = AuditoriaAnual::with('documentos_material')->find($request->auditoriaId);
         $paths = [];
         foreach ($auditoria->documentos_material as $documento) {
@@ -190,6 +185,7 @@ class AuditoriaAnualController extends Controller
                 'extension' => $extension,
             ]);
         }
+
         return response()->json(['paths' => $paths]);
     }
 }

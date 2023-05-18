@@ -17,7 +17,6 @@ class AnalisisdeRiesgosController extends Controller
 {
     public function menu()
     {
-
         // abort_if(Gate::denies('menu_analisis_riesgo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.analisis-riesgos.menu-buttons');
     }

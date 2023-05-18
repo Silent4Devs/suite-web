@@ -15,7 +15,7 @@ class CreateCuestionarioAnalisisImpactoTable extends Migration
     {
         Schema::create('cuestionario_analisis_impacto', function (Blueprint $table) {
             $table->increments('id');
-            // DATOS DE IDENTIFICACIÓN DEL ENTREVISTADO 
+            // DATOS DE IDENTIFICACIÓN DEL ENTREVISTADO
             $table->date('fecha_entrevista')->nullable();
             $table->string('entrevistado')->nullable();
             $table->string('puesto')->nullable();
@@ -87,26 +87,25 @@ class CreateCuestionarioAnalisisImpactoTable extends Migration
             $table->integer('disruptivos_q_9')->default(0);
             $table->integer('disruptivos_q_10')->default(0);
             $table->integer('disruptivos_q_11')->default(0);
-             // RIESGOS E INCIDENTES DISRUPTIVOS
-             $table->integer('operacion_q_1')->nullable();
-             $table->integer('operacion_q_2')->nullable();
-             $table->integer('operacion_q_3')->nullable();
-             $table->integer('regulatorio_q_1')->nullable();
-             $table->integer('regulatorio_q_2')->nullable();
-             $table->integer('regulatorio_q_3')->nullable();
-             $table->integer('reputacion_q_1')->nullable();
-             $table->integer('reputacion_q_2')->nullable();
-             $table->integer('reputacion_q_3')->nullable();
-             $table->integer('social_q_1')->nullable();
-             $table->integer('social_q_2')->nullable();
-             $table->integer('social_q_3')->nullable();
-             $table->string('incidentes_q_26')->nullable();
-             $table->string('incidentes_q_27')->nullable();
+            // RIESGOS E INCIDENTES DISRUPTIVOS
+            $table->integer('operacion_q_1')->nullable();
+            $table->integer('operacion_q_2')->nullable();
+            $table->integer('operacion_q_3')->nullable();
+            $table->integer('regulatorio_q_1')->nullable();
+            $table->integer('regulatorio_q_2')->nullable();
+            $table->integer('regulatorio_q_3')->nullable();
+            $table->integer('reputacion_q_1')->nullable();
+            $table->integer('reputacion_q_2')->nullable();
+            $table->integer('reputacion_q_3')->nullable();
+            $table->integer('social_q_1')->nullable();
+            $table->integer('social_q_2')->nullable();
+            $table->integer('social_q_3')->nullable();
+            $table->string('incidentes_q_26')->nullable();
+            $table->string('incidentes_q_27')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
     }
-
 
     public function down()
     {

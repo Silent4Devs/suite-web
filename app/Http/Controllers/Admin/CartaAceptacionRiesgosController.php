@@ -185,7 +185,6 @@ class CartaAceptacionRiesgosController extends Controller
 
     public function show($cartaAceptacion)
     {
-
         // $controles =DeclaracionAplicabilidad::where('carta_id','=',$cartaAceptacion->id)->get();
         $cartaAceptacion = CartaAceptacion::with(['aprobaciones' => function ($query) {
             $query->with('empleado', 'aprobacionesActivo')->orderBy('nivel');

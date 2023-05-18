@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
 use App\Mail\SolicitudDayOff as MailSolicitudDayoff;
-use App\Http\Controllers\Controller;
 use App\Models\DayOff;
 use App\Models\Empleado;
 use App\Models\IncidentesDayoff;
-use App\Models\IncidentesVacaciones;
 use App\Models\Organizacion;
 use App\Models\SolicitudDayOff;
 use Carbon\Carbon;
@@ -20,7 +19,6 @@ use Illuminate\Support\Facades\Mail;
 
 class SolicitudDayOffController extends Controller
 {
-
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -90,7 +88,6 @@ class SolicitudDayOffController extends Controller
         return view('admin.solicitudDayoff.index', compact('logo_actual', 'empresa_actual', 'dias_disponibles'));
     }
 
-
     public function create()
     {
         abort_if(Gate::denies('solicitud_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -114,10 +111,12 @@ class SolicitudDayOffController extends Controller
                 })->select('dias', 'tipo_conteo')->first();
             } else {
                 Flash::error('Regla de Day´s Off no asociada');
+
                 return redirect(route('admin.solicitud-dayoff.index'));
             }
         } else {
             Flash::error('Regla de Day´s Off no asociada');
+
             return redirect(route('admin.solicitud-dayoff.index'));
         }
         $tipo_conteo = $regla_aplicada->tipo_conteo;
@@ -130,7 +129,6 @@ class SolicitudDayOffController extends Controller
 
         return view('admin.solicitudDayoff.create', compact('vacacion', 'dias_disponibles', 'año', 'autoriza', 'organizacion', 'dias_pendientes', 'tipo_conteo'));
     }
-
 
     public function store(Request $request)
     {
@@ -155,7 +153,6 @@ class SolicitudDayOffController extends Controller
         return redirect()->route('admin.solicitud-dayoff.index');
     }
 
-
     public function show($id)
     {
         abort_if(Gate::denies('solicitud_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -164,18 +161,17 @@ class SolicitudDayOffController extends Controller
 
         if (empty($vacacion)) {
             Flash::error('Day Off not found');
+
             return redirect(route('admin.solicitud-dayoff.index'));
         }
 
         return view('admin.solicitudDayoff.show', compact('vacacion'));
     }
 
-
     public function edit($id)
     {
         //
     }
-
 
     public function update(Request $request, $id)
     {
@@ -203,7 +199,6 @@ class SolicitudDayOffController extends Controller
         return redirect(route('admin.solicitud-dayoff.aprobacion'));
     }
 
-
     public function destroy(Request $request)
     {
         abort_if(Gate::denies('solicitud_dayoff_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -213,9 +208,9 @@ class SolicitudDayOffController extends Controller
 
         return response()->json(['status' => 200]);
     }
+
     public function diasDisponibles()
     {
-
         $año = Carbon::now()->format('Y');
         $existe_regla_ingreso = DayOff::where('inicio_conteo', 1)->exists();
 
@@ -249,6 +244,7 @@ class SolicitudDayOffController extends Controller
                 ->orwhere('aprobacion', '=', 3);
         })->sum('dias_solicitados');
         $dias_disponibles = $dias_otorgados - $dias_gastados + $dias_extra - $dias_restados;
+
         return $dias_disponibles;
     }
 
@@ -278,7 +274,7 @@ class SolicitudDayOffController extends Controller
                 return $row->fecha_fin ? $row->fecha_fin : '';
             });
             $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion  : '';
+                return $row->aprobacion ? $row->aprobacion : '';
             });
             // $table->editColumn('descripcion', function ($row) {
             //     return $row->descripcion ? $row->descripcion : '';
@@ -296,12 +292,12 @@ class SolicitudDayOffController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.solicitudDayoff.global-solicitudes', compact('logo_actual', 'empresa_actual'));
     }
 
     public function respuesta($id)
     {
-
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = SolicitudDayOff::with('empleado')->find($id);
 
@@ -314,13 +310,11 @@ class SolicitudDayOffController extends Controller
         $ingreso = Empleado::where('id', $solicitante)->pluck('antiguedad')->first();
         $año = Carbon::createFromDate($ingreso)->age;
 
-
         return view('admin.solicitudDayoff.respuesta', compact('vacacion', 'año'));
     }
 
     public function archivo(Request $request)
     {
-
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
@@ -362,6 +356,7 @@ class SolicitudDayOffController extends Controller
             });
 
             $table->rawColumns(['actions', 'placeholder']);
+
             return $table->make(true);
         }
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
@@ -372,8 +367,10 @@ class SolicitudDayOffController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.solicitudDayoff.archivo', compact('logo_actual', 'empresa_actual'));
     }
+
     public function showVistaGlobal($id)
     {
         abort_if(Gate::denies('reglas_dayoff_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -381,10 +378,13 @@ class SolicitudDayOffController extends Controller
 
         if (empty($vacacion)) {
             Flash::error('Vacación not found');
+
             return redirect(route('admin.solicitud-dayoff.index'));
         }
+
         return view('admin.solicitudDayoff.vistaGlobal', compact('vacacion'));
     }
+
     public function showArchivo($id)
     {
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -392,8 +392,10 @@ class SolicitudDayOffController extends Controller
 
         if (empty($vacacion)) {
             Flash::error('Vacación not found');
+
             return redirect(route('admin.solicitud-dayoff.index'));
         }
+
         return view('admin.solicitudDayoff.showArchivo', compact('vacacion'));
     }
 }

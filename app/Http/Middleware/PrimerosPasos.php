@@ -15,6 +15,7 @@ class PrimerosPasos
     protected $except = [
         '/admin/inicioUsuario',
     ];
+
     /**
      * Handle an incoming request.
      *
@@ -38,6 +39,7 @@ class PrimerosPasos
         ) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
+
         return $next($request);
     }
 }

@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AjustesAIA extends Model
 {
     use SoftDeletes;
-    
+
     public $table = 'ajustes_aia';
 
     const CREATED_AT = 'created_at';

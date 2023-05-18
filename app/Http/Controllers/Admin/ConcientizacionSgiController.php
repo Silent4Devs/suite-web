@@ -11,11 +11,11 @@ use App\Models\Area;
 use App\Models\ConcientizacionSgi;
 use App\Models\DocumentoConcientizacionSgis;
 use App\Models\Team;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -85,8 +85,7 @@ class ConcientizacionSgiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-
-        return view('admin.concientizacionSgis.index', compact('areas', 'teams','organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.concientizacionSgis.index', compact('areas', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()

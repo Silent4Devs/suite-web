@@ -17,7 +17,6 @@ class AddColumnResponsableToActivosTable extends Migration
             $table->dropForeign('dueno_fk_2438646');
         });
         Schema::table('activos', function (Blueprint $table) {
-
             // $table->dropForeign('dueno_fk_2438646');
             $table->unsignedBigInteger('dueno_id')->change();
             $table->foreign('dueno_id')->references('id')->on('empleados');

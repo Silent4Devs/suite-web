@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
-use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class PlanificacionControl extends Model
 {
@@ -37,8 +35,6 @@ class PlanificacionControl extends Model
         'comentarios',
 
     ];
-
-
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -73,7 +69,6 @@ class PlanificacionControl extends Model
     public function origen()
     {
         return $this->belongsTo(PlanificacionControlOrigenCambio::class, 'origen_id');
-
     }
 
     public function planes()

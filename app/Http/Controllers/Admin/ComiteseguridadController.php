@@ -8,12 +8,11 @@ use App\Http\Requests\UpdateComiteseguridadRequest;
 use App\Models\Comiteseguridad;
 use App\Models\Empleado;
 use App\Models\MiembrosComiteSeguridad;
-use App\Models\Organizacion;
 use App\Models\Team;
 use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -23,7 +22,6 @@ class ComiteseguridadController extends Controller
 
     public function index(Request $request)
     {
-
         abort_if(Gate::denies('comformacion_comite_seguridad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
@@ -54,6 +52,7 @@ class ComiteseguridadController extends Controller
                 return $row->descripcion ? $row->descripcion : '';
             });
             $table->rawColumns(['actions', 'placeholder', 'personaasignada']);
+
             return $table->make(true);
         }
 
@@ -63,8 +62,7 @@ class ComiteseguridadController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-
-        return view('admin.comiteseguridads.index', compact('users', 'teams','organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.comiteseguridads.index', compact('users', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -84,7 +82,7 @@ class ComiteseguridadController extends Controller
         // $comiteseguridad = Comiteseguridad::create($request->all());
         // // dd($comiteseguridad);
         // return redirect()->route('admin.comiteseguridads.index')->with('success', 'Guardado con éxito');
-        $request -> validate([
+        $request->validate([
             'nombre_comite' => 'required',
             'descripcion' => 'required',
         ]);
@@ -111,7 +109,7 @@ class ComiteseguridadController extends Controller
     {
         abort_if(Gate::denies('comformacion_comite_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request -> validate([
+        $request->validate([
             'nombre_comite' => 'required',
             'descripcion' => 'required',
         ]);
@@ -178,6 +176,7 @@ class ComiteseguridadController extends Controller
                 return $row->descripcion ? $row->descripcion : '';
             });
             $table->rawColumns(['actions', 'placeholder', 'personaasignada']);
+
             return $table->make(true);
         }
 
@@ -187,9 +186,6 @@ class ComiteseguridadController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-
-        return view('admin.comiteseguridads.visualizacion', compact('users', 'teams','organizacion_actual','logo_actual','empresa_actual'));
-
-
+        return view('admin.comiteseguridads.visualizacion', compact('users', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 }

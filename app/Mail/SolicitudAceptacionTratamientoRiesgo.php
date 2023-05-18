@@ -5,7 +5,6 @@ namespace App\Mail;
 use App\Models\Empleado;
 use App\Models\TratamientoRiesgo;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -18,7 +17,6 @@ class SolicitudAceptacionTratamientoRiesgo extends Mailable
      *
      * @return void
      */
-
     public $tratamientoRiesgo;
     public $empleado;
 

@@ -2,17 +2,18 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\FelicitacionesMail;
+use App\Models\CorreoCumpleanos;
 use App\Models\Empleado;
 use Carbon\Carbon;
-use App\Models\CorreoCumpleanos;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class EnviarCorreoFelicitaciones extends Command
 {
-    protected $nombre, $correodestinatario, $cumplehoy;
+    protected $nombre;
+    protected $correodestinatario;
+    protected $cumplehoy;
     /**
      * The name and signature of the console command.
      *
@@ -55,14 +56,13 @@ class EnviarCorreoFelicitaciones extends Command
         $imgtab = public_path("img\icono_tabantaj.png");
         $imgpastel = public_path('img\pastel.png');
 
-        if($cumpleañeros != null){
-            foreach($cumpleañeros as $cumpleañero)
-            {
+        if ($cumpleañeros != null) {
+            foreach ($cumpleañeros as $cumpleañero) {
                 $filtro = CorreoCumpleanos::where('empleado_id', $cumpleañero->id)
                 ->whereDate('fecha_envio', '=', $cumpleañero->cumpleaños);
-                if($filtro->exists() == false){
+                if ($filtro->exists() == false) {
                     // dd("Si aparece");
-                    $empcump=CorreoCumpleanos::firstOrCreate([
+                    $empcump = CorreoCumpleanos::firstOrCreate([
                         'empleado_id' => $cumpleañero->id,
                         'fecha_envio' => $cumpleañero->cumpleaños,
                         'enviado' => false,
@@ -77,7 +77,7 @@ class EnviarCorreoFelicitaciones extends Command
                     $empcump->update([
                         'enviado' => true,
                     ]);
-                }else{
+                } else {
                     //No hace nada
                 }
             }

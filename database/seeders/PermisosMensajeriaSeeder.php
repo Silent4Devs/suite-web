@@ -44,7 +44,6 @@ class PermisosMensajeriaSeeder extends Seeder
                 'title' => 'solicitud_mensajeria_atencion',
                 'name' => 'Este permiso permite al usuario acceder al modulo de atencion de solicitudes de mensajeria',
             ],
-            
 
         ];
 
