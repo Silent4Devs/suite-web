@@ -279,7 +279,7 @@
         }
 
     </style>
-    <h5 class="col-12 titulo_general_funcion">Historial del aprobación del documento: {{ $documento->nombre }}</h5>
+    <h5 class="col-12 titulo_general_funcion">Historial de aprobación del documento: {{ $documento->nombre }}</h5>
     <div class="mt-5 card">
         <div class="container">
             <h5 class="mb-4 text-center" style="font-weight: bold">ESTATUS ACTUAL DEL DOCUMENTO

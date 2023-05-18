@@ -468,7 +468,7 @@ class DocumentosController extends Controller
             $revisores1 = [];
             $documento = Documento::find($documento_id);
             $documento->load('elaborador', 'macroproceso');
-            Mail::to($documento->elaborador->email)->send(new ConfirmacionSolicitudAprobacionMail($documento));
+            // Mail::to($documento->elaborador->email)->send(new ConfirmacionSolicitudAprobacionMail($documento));
             $numero_revision = RevisionDocumento::where('documento_id', $documento_id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $documento_id)->max('no_revision')) + 1 : 1;
 
             $historialRevisionDocumento = HistorialRevisionDocumento::create([
@@ -489,7 +489,7 @@ class DocumentosController extends Controller
                         'documento_id' => $documento_id,
                         'version' => $documento->version,
                     ]);
-                    Mail::to($revisor->empleado->email)->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
+                    // Mail::to($revisor->empleado->email)->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
                 }
             }
 
@@ -532,6 +532,7 @@ class DocumentosController extends Controller
     public function renderViewDocument(Documento $documento)
     {
         $path_documento = $this->getPathDocumento($documento, 'storage');
+        // dd($path_documento);
 
         if (auth()->user()->empleado) {
             if (!VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', auth()->user()->empleado->id)->exists()) {
@@ -627,6 +628,7 @@ class DocumentosController extends Controller
                 break;
         }
 
+        // dd($path_documento);
         return $path_documento;
     }
 
@@ -714,6 +716,15 @@ class DocumentosController extends Controller
     {
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
 
+        if(empty($versiones[0]['id'])){
+            $versiones = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('id', $documento->id)->get();
+            // dd($versiones);
+            $path_documento = $this->getPathDocumento($documento, 'storage');
+            $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
+
+            return view('admin.documentos.versions-document', compact('documento', 'versiones', 'path_documento'));
+        }
+        // dd($versiones);
         return view('admin.documentos.versions-document', compact('documento', 'versiones'));
     }
 
