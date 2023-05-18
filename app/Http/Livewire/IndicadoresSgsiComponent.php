@@ -49,20 +49,22 @@ class IndicadoresSgsiComponent extends Component
 
     public function mount($indicadoresSgsis)
     {
-        $this->generaInputs($indicadoresSgsis);
-        // $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
-        // $data = [];
-        // $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
-        //     $data[$value->variable] = '';
+        dd('Hola desde el mount');
+        $this->indicadoresSgsis = $indicadoresSgsis;
+        $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
+        $data = [];
+        $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
+            $data[$value->variable] = '';
 
-        //     dump($data);
-        //     return $data;
-        // })->toArray();
+            // dump($data);
+            return $data;
+        })->toArray();
         // dd($this->formSlugs);
     }
 
     public function render()
     {
+        dd('Hola desde el render');
         $responsables = Empleado::alta()->get();
         $procesos = Proceso::get();
         $evaluaciones = EvaluacionIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->get();
@@ -74,21 +76,6 @@ class IndicadoresSgsiComponent extends Component
             'customFields' => $this->customFields,
             'evaluaciones' => $evaluaciones,
         ]);
-    }
-
-    public function generaInputs($indicadoresSgsis){
-
-        $this->indicadoresSgsis = $indicadoresSgsis;
-        $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
-        $data = [];
-        $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
-            $data[$value->variable] = '';
-
-            // dump($data);
-            return $data;
-        })->toArray();
-        return $this->formSlugs;
-        // dd($this->formSlugs);
     }
 
     public function store()
