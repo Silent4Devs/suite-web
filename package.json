@@ -8,7 +8,7 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "test": "echo \"Todo bien\" && exit 0",
+        "test": "echo \"Todo bien\" && exit 0"
     },
     "devDependencies": {
         "axios": "^0.21.1",
