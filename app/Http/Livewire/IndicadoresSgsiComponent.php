@@ -53,6 +53,7 @@ class IndicadoresSgsiComponent extends Component
         $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
         $data = [];
         dump('Hola desde el mount');
+        dump($this->customFields);
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
             $data[$value->variable] = '';
             dump($data);
