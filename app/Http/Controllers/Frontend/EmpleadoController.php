@@ -181,7 +181,6 @@ class EmpleadoController extends Controller
 
     public function onlyStore($request)
     {
-
         // dd($request->all());
         $experiencias = json_decode($request->experiencia);
         $educacions = json_decode($request->educacion);

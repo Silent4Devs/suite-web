@@ -21,7 +21,6 @@ class AddTipoControlAccesoIdToControlAccesosTable extends Migration
             $table->date('fecha_fin')->nullable();
             $table->foreign('tipo_control_acceso_id')->references('id')->on('tipo_permiso');
             $table->foreign('responsable_id')->references('id')->on('empleados');
-
         });
     }
 

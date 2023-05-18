@@ -168,7 +168,6 @@ class ActivosController extends Controller
 
         if ($request->hasfile('documentos_relacionados')) {
             foreach ($request->file('documentos_relacionados') as $file) {
-
                 // $nombre_original =  $request->nombreactivo;
                 // $nombre_compuesto = basename($nombre_original) . '.' . $file->extension();
                 $nombre_compuesto = $file->getClientOriginalName();

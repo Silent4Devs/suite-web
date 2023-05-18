@@ -108,73 +108,69 @@ class SistemaGestionHeatmap extends Component
         $areas = Area::select('id', 'area')->get();
         $procesos = Proceso::select('id', 'nombre')->get();
 
-        $muy_alto = MatrizRiesgosSistemaGestion::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad',9)->where('impacto',9)->orWhere(function($query) {
-            $query->where('probabilidad',9)->where('impacto',6)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-            $query->where('probabilidad',6)->where('impacto',9)->where('id_analisis', '=', $this->id_analisis);
+        $muy_alto = MatrizRiesgosSistemaGestion::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad', 9)->where('impacto', 9)->orWhere(function ($query) {
+            $query->where('probabilidad', 9)->where('impacto', 6)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad', 6)->where('impacto', 9)->where('id_analisis', '=', $this->id_analisis);
         });
 
-        $alto = MatrizRiesgosSistemaGestion::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad',3)->where('impacto',9)->orWhere(function($query) {
-            $query->where('probabilidad',6)->where('impacto',6)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-            $query->where('probabilidad',9)->where('impacto',3)->where('id_analisis', '=', $this->id_analisis);
+        $alto = MatrizRiesgosSistemaGestion::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad', 3)->where('impacto', 9)->orWhere(function ($query) {
+            $query->where('probabilidad', 6)->where('impacto', 6)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad', 9)->where('impacto', 3)->where('id_analisis', '=', $this->id_analisis);
         });
 
-        $medio = MatrizRiesgosSistemaGestion::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad',0)->where('impacto',9)->orWhere(function($query) {
-            $query->where('probabilidad',0)->where('impacto',6)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-            $query->where('probabilidad',3)->where('impacto',6)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-            $query->where('probabilidad',3)->where('impacto',3)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-                $query->where('probabilidad',6)->where('impacto',3)->where('id_analisis', '=', $this->id_analisis);
-            })->orWhere(function($query) {
-                    $query->where('probabilidad',6)->where('impacto',0)->where('id_analisis', '=', $this->id_analisis);
-                })->orWhere(function($query) {
-                        $query->where('probabilidad',9)->where('impacto',0)->where('id_analisis', '=', $this->id_analisis);
-                    });
-        
-        $bajo = MatrizRiesgosSistemaGestion::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad',3)->where('impacto',0)->orWhere(function($query) {
-            $query->where('probabilidad',0)->where('impacto',0)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-            $query->where('probabilidad',0)->where('impacto',3)->where('id_analisis', '=', $this->id_analisis);
+        $medio = MatrizRiesgosSistemaGestion::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad', 0)->where('impacto', 9)->orWhere(function ($query) {
+            $query->where('probabilidad', 0)->where('impacto', 6)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad', 3)->where('impacto', 6)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad', 3)->where('impacto', 3)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad', 6)->where('impacto', 3)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad', 6)->where('impacto', 0)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad', 9)->where('impacto', 0)->where('id_analisis', '=', $this->id_analisis);
         });
 
-
-
-
-        $muy_alto_residual = MatrizRiesgosSistemaGestion::select('id', 'probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad_residual',9)->where('impacto_residual',9)->orWhere(function($query) {
-            $query->where('probabilidad_residual',9)->where('impacto_residual',6)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-            $query->where('probabilidad_residual',6)->where('impacto_residual',9)->where('id_analisis', '=', $this->id_analisis);
+        $bajo = MatrizRiesgosSistemaGestion::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad', 3)->where('impacto', 0)->orWhere(function ($query) {
+            $query->where('probabilidad', 0)->where('impacto', 0)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad', 0)->where('impacto', 3)->where('id_analisis', '=', $this->id_analisis);
         });
 
-        $alto_residual = MatrizRiesgosSistemaGestion::select('id', 'probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad_residual',3)->where('impacto_residual',9)->orWhere(function($query) {
-            $query->where('probabilidad_residual',6)->where('impacto_residual',6)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-            $query->where('probabilidad_residual',9)->where('impacto_residual',3)->where('id_analisis', '=', $this->id_analisis);
+        $muy_alto_residual = MatrizRiesgosSistemaGestion::select('id', 'probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad_residual', 9)->where('impacto_residual', 9)->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 9)->where('impacto_residual', 6)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 6)->where('impacto_residual', 9)->where('id_analisis', '=', $this->id_analisis);
         });
 
-        $medio_residual =  MatrizRiesgosSistemaGestion::select('id', 'probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad_residual',0)->where('impacto_residual',9)->orWhere(function($query) {
-            $query->where('probabilidad_residual',0)->where('impacto_residual',6)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-            $query->where('probabilidad_residual',3)->where('impacto_residual',6)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-            $query->where('probabilidad_residual',3)->where('impacto_residual',3)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-                $query->where('probabilidad_residual',6)->where('impacto_residual',3)->where('id_analisis', '=', $this->id_analisis);
-            })->orWhere(function($query) {
-                    $query->where('probabilidad_residual',6)->where('impacto_residual',0)->where('id_analisis', '=', $this->id_analisis);
-                })->orWhere(function($query) {
-                        $query->where('probabilidad_residual',9)->where('impacto_residual',0)->where('id_analisis', '=', $this->id_analisis);
-                    });
-                    
-        $bajo_residual =  MatrizRiesgosSistemaGestion::select('id', 'probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad_residual',3)->where('impacto_residual',0)->orWhere(function($query) {
-            $query->where('probabilidad_residual',0)->where('impacto_residual',0)->where('id_analisis', '=', $this->id_analisis);
-        })->orWhere(function($query) {
-            $query->where('probabilidad_residual',0)->where('impacto_residual',3)->where('id_analisis', '=', $this->id_analisis);
+        $alto_residual = MatrizRiesgosSistemaGestion::select('id', 'probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad_residual', 3)->where('impacto_residual', 9)->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 6)->where('impacto_residual', 6)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 9)->where('impacto_residual', 3)->where('id_analisis', '=', $this->id_analisis);
         });
 
+        $medio_residual = MatrizRiesgosSistemaGestion::select('id', 'probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad_residual', 0)->where('impacto_residual', 9)->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 0)->where('impacto_residual', 6)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 3)->where('impacto_residual', 6)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 3)->where('impacto_residual', 3)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 6)->where('impacto_residual', 3)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 6)->where('impacto_residual', 0)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 9)->where('impacto_residual', 0)->where('id_analisis', '=', $this->id_analisis);
+        });
+
+        $bajo_residual = MatrizRiesgosSistemaGestion::select('id', 'probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad_residual', 3)->where('impacto_residual', 0)->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 0)->where('impacto_residual', 0)->where('id_analisis', '=', $this->id_analisis);
+        })->orWhere(function ($query) {
+            $query->where('probabilidad_residual', 0)->where('impacto_residual', 3)->where('id_analisis', '=', $this->id_analisis);
+        });
 
         //querys contador en grafica
         $matriz_query = MatrizRiesgosSistemaGestion::select('probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis);
@@ -430,7 +426,7 @@ class SistemaGestionHeatmap extends Component
     public function callQuery($id, $valor)
     {
         // dd($id);
-        $matriz_riesgos = MatrizRiesgosSistemaGestion::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo','identificador','riesgo_total','resultado_ponderacion')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad', '=', $id)->where('impacto', '=', $valor);
+        $matriz_riesgos = MatrizRiesgosSistemaGestion::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo', 'identificador', 'riesgo_total', 'resultado_ponderacion')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad', '=', $id)->where('impacto', '=', $valor);
 
         if ($this->sede_id != '') {
             $matriz_riesgos->Where('id_sede', '=', $this->sede_id);
@@ -461,7 +457,7 @@ class SistemaGestionHeatmap extends Component
     public function callQueryResidual($id, $valor)
     {
         // $matriz_riesgos_residual = MatrizRiesgosSistemaGestion::select('id', 'descripcionriesgo', 'probabilidad_residual', 'impacto_residual', 'nivelriesgo_residual','identificador')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', $id);
-        $matriz_riesgos_residual = MatrizRiesgosSistemaGestion::select('id', 'descripcionriesgo', 'probabilidad_residual', 'impacto_residual', 'nivelriesgo_residual','identificador','riesgo_residual','resultado_ponderacionRes')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad_residual', '=', $id)->where('impacto_residual', '=', $valor);
+        $matriz_riesgos_residual = MatrizRiesgosSistemaGestion::select('id', 'descripcionriesgo', 'probabilidad_residual', 'impacto_residual', 'nivelriesgo_residual', 'identificador', 'riesgo_residual', 'resultado_ponderacionRes')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad_residual', '=', $id)->where('impacto_residual', '=', $valor);
 
         if ($this->sede_id != '') {
             $matriz_riesgos_residual->Where('id_sede', '=', $this->sede_id);

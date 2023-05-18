@@ -17,19 +17,19 @@ class BitacoraAccesos extends Component
     use WithPagination;
     use LivewireAlert;
     protected $listeners = [
-        'confirmarSalida'
+        'confirmarSalida',
     ];
     protected $paginationTheme = 'bootstrap';
     public $perPage = 5;
-    public $colaborador = "";
-    public $area = "";
-    public $rangoFechas = "";
+    public $colaborador = '';
+    public $area = '';
+    public $rangoFechas = '';
     public $fechaInicio;
     public $fechaFin;
     public $empleados;
     public $areas;
     public $textoFiltro;
-    public $search = "";
+    public $search = '';
     public $total = 0;
     public $tipoVista = 'bitacora';
     public $visitanteID;
@@ -41,7 +41,6 @@ class BitacoraAccesos extends Component
         'perPage' => ['except' => ''],
         'search' => ['except' => ''],
     ];
-
 
     public function updatedRangoFechas($value)
     {
@@ -63,6 +62,7 @@ class BitacoraAccesos extends Component
         $visitantes = $model->paginate($this->perPage);
         $this->total = $model->count();
         $this->obtenerTexto($this->total, $visitantes->count());
+
         return view('livewire.visitantes.bitacora-accesos', compact('visitantes'));
     }
 
@@ -92,28 +92,30 @@ class BitacoraAccesos extends Component
             $query->where('autorizado', false);
         }
         $query->orderByDesc('created_at');
+
         return $query;
     }
 
     public function exportarExcel()
     {
         $model = $this->getQueryFilter();
+
         return Excel::download(new VisitanteExport($model->get()), 'Reporte de Visitantes ' . now()->format('d-m-Y h:i A') . '.xlsx');
     }
 
     public function default()
     {
-        $this->colaborador = "";
-        $this->area = "";
-        $this->rangoFechas = "";
-        $this->fechaInicio = "";
-        $this->fechaFin = "";
+        $this->colaborador = '';
+        $this->area = '';
+        $this->rangoFechas = '';
+        $this->fechaInicio = '';
+        $this->fechaFin = '';
         $this->perPage = 5;
     }
 
     private function obtenerTexto($total, $paginados)
     {
-        if ($this->colaborador != "" || $this->area != "" || $this->rangoFechas != "") {
+        if ($this->colaborador != '' || $this->area != '' || $this->rangoFechas != '') {
             $this->textoFiltro = "Mostrando {$paginados} de {$total} resultados filtrados";
         } else {
             $this->textoFiltro = "Mostrando {$paginados} de {$total} resultados";
@@ -122,10 +124,10 @@ class BitacoraAccesos extends Component
 
     public function limpiarFiltro($tipo)
     {
-        $this->$tipo = "";
+        $this->$tipo = '';
         if ($tipo == 'rangoFechas') {
-            $this->fechaInicio = "";
-            $this->fechaFin = "";
+            $this->fechaInicio = '';
+            $this->fechaFin = '';
         }
     }
 
@@ -148,7 +150,7 @@ class BitacoraAccesos extends Component
         $visitante = RegistrarVisitante::find($this->visitanteID);
         $visitante->update([
             'autorizado' => true,
-            'fecha_salida' => Carbon::now()
+            'fecha_salida' => Carbon::now(),
         ]);
         $this->alert('success', 'Bien Hecho!', [
             'position' => 'top-end',

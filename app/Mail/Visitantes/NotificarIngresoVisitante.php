@@ -3,7 +3,6 @@
 namespace App\Mail\Visitantes;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -12,6 +11,7 @@ class NotificarIngresoVisitante extends Mailable
     use Queueable, SerializesModels;
 
     public $visitante;
+
     /**
      * Create a new message instance.
      *

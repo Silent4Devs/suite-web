@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAuditoriaInternaRequest;
-use App\Http\Requests\UpdateAuditoriaInternaRequest;
 use App\Models\AuditoriaInterna;
-use App\Models\AuditoriaInternasHallazgos;
 use App\Models\Clausula;
 use App\Models\Controle;
 use App\Models\Empleado;
@@ -77,8 +75,6 @@ class AuditoriaInternaController extends Controller
                 return $row->equipo ? $row->equipo : '';
             });
 
-
-
             $table->rawColumns(['actions', 'placeholder', 'cheknoconformidadmenor', 'checknoconformidadmayor', 'checkobservacion', 'checkmejora']);
 
             return $table->make(true);
@@ -138,8 +134,6 @@ class AuditoriaInternaController extends Controller
 
         $equipoauditorias = Empleado::alta()->get();
 
-
-
         return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'));
     }
 
@@ -166,7 +160,7 @@ class AuditoriaInternaController extends Controller
     {
         abort_if(Gate::denies('auditoria_interna_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditoriaInterna->load('clausulas', 'auditorlider', 'equipo', 'team','auditoriaHallazgos');
+        $auditoriaInterna->load('clausulas', 'auditorlider', 'equipo', 'team', 'auditoriaHallazgos');
         // dd( $auditoriaInterna->hallazgos);
 
         return view('admin.auditoriaInternas.show', compact('auditoriaInterna'));

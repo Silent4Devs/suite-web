@@ -20,7 +20,6 @@ class ChangeColumnsToAnalisisAccionCorrectivaTable extends Migration
             $table->longText('porque_3')->nullable()->change();
             $table->longText('porque_4')->nullable()->change();
             $table->longText('porque_5')->nullable()->change();
-
         });
     }
 

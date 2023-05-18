@@ -989,12 +989,12 @@ class EmpleadoController extends Controller
                 'evidencia_viejo_id' => $doc_empleado_id,
             ]);
         }
+
         return $lista_docs;
     }
 
     public function expedienteUpdate(Request $request)
     {
-
         if ($request->name == 'file') {
             $fileName = time() . $request->file('value')->getClientOriginalName();
             // dd($request->file('value'));

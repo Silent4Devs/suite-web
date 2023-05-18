@@ -15,7 +15,6 @@ class ChangeColumnAprobadoToPlanificacionControlsTable extends Migration
     {
         Schema::table('planificacion_controls', function (Blueprint $table) {
             $table->string('es_aprobado')->default('pendiente');
-
         });
     }
 

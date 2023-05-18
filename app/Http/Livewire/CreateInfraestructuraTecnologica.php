@@ -21,8 +21,6 @@ class CreateInfraestructuraTecnologica extends Component
     public $normasModel = [];
     protected $listeners = ['editarInfraestructura' => 'editInfraestructura', 'eliminarInfraestructura' => 'destroy'];
 
-  
-
     public function validarTecnologia()
     {
         $this->validate([
@@ -52,7 +50,7 @@ class CreateInfraestructuraTecnologica extends Component
         'cuestionario_id' => $this->cuestionario_id,
         ]);
 
-        $this->reset('id','sistemas','aplicativos','base_datos','otro','escenario',);
+        $this->reset('id', 'sistemas', 'aplicativos', 'base_datos', 'otro', 'escenario', );
         $this->emit('render');
         $this->emit('cerrar-modal-infraestructura', ['editarInfraestructura' => false]);
     }
@@ -69,7 +67,6 @@ class CreateInfraestructuraTecnologica extends Component
         $this->escenario = $model->escenario;
         $this->cuestionario_id = $model->cuestionario_id;
         $this->emit('abrir-modal-infraestructura');
-
     }
 
     public function default()
@@ -106,6 +103,7 @@ class CreateInfraestructuraTecnologica extends Component
         $model->delete();
         $this->emit('render');
     }
+
     public function render()
     {
         return view('livewire.create-infraestructura-tecnologica');

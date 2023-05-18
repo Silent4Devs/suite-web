@@ -5,10 +5,10 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\PlanImplementacion;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,7 +16,6 @@ class PlanTrabajoBaseController extends Controller
 {
     use ObtenerOrganizacion;
 
-    
     public function listaDataTables()
     {
         $planes = PlanImplementacion::where('es_plan_trabajo_base', true)->with('elaborador')->get();
@@ -48,7 +47,7 @@ class PlanTrabajoBaseController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.planTrabajoBase.index', compact('organizacion_actual','logo_actual','empresa_actual','archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
+        return view('admin.planTrabajoBase.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual', 'archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
     }
 
     public function showTarea($texto)

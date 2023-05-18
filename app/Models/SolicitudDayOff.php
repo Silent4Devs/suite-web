@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SolicitudDayOff extends Model
 {
-    
     use SoftDeletes;
 
     public $table = 'solicitud_dayoff';
@@ -25,9 +23,8 @@ class SolicitudDayOff extends Model
         'comentarios_aprobador',
     ];
 
-
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class,'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id');
     }
 }

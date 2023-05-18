@@ -8,10 +8,9 @@ use App\Models\DeclaracionAplicabilidad;
 use App\Models\DeclaracionAplicabilidadAprobadores;
 use App\Models\DeclaracionAplicabilidadResponsable;
 use App\Models\Empleado;
-use Illuminate\Http\Request;
 use App\Traits\ObtenerOrganizacion;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Yajra\DataTables\Facades\DataTables;
 
 class PanelDeclaracionController extends Controller
 {
@@ -19,12 +18,12 @@ class PanelDeclaracionController extends Controller
 
     public function index(Request $request)
     {
-
         $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
-        return view('admin.panelDeclaracion.index', compact('empleados','organizacion_actual','logo_actual','empresa_actual'));
+
+        return view('admin.panelDeclaracion.index', compact('empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function controles()
@@ -41,7 +40,6 @@ class PanelDeclaracionController extends Controller
             $q->select('empleados.id', 'empleados.name', 'foto');
         }])->orderBy('id')->get();
 
-        
         return datatables()->of($query)->toJson();
     }
 
@@ -55,7 +53,6 @@ class PanelDeclaracionController extends Controller
 
     public function store(Request $request, $id)
     {
-
         //cuando mandamos muchos datos es necesario el foreach
         // foreach($request->controles as $control){
         // $declaracion =DeclaracionAplicabilidad::find($id);
@@ -219,7 +216,7 @@ class PanelDeclaracionController extends Controller
             $destinatarios = DeclaracionAplicabilidadResponsable::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } elseif ($request->enviarNoNotificados) {
             $destinatarios = DeclaracionAplicabilidadResponsable::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
-            // dd($destinatarios);
+        // dd($destinatarios);
         } else {
             $destinatarios = json_decode($request->responsables);
         }

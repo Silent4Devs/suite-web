@@ -12,9 +12,9 @@ use App\Models\Proceso;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\VariablesIndicador;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -67,7 +67,7 @@ class IndicadoresSgsiController extends Controller
             });
 
             $table->editColumn('responsable_name', function ($row) {
-                return $row->empleado ? $row->empleado  : '';
+                return $row->empleado ? $row->empleado : '';
             });
 
             $table->editColumn('año', function ($row) {
@@ -223,7 +223,6 @@ class IndicadoresSgsiController extends Controller
 
         $finish_array = [];
 
-
         foreach ($formula_array as $result) {
             if (strstr($result, '$')) {
                 array_push($finish_array, $result);
@@ -234,7 +233,6 @@ class IndicadoresSgsiController extends Controller
             $up = $indicadoresSgsis
                 ->update(['formula' => $remplazo_formula, 'formula_raw' => $indicadoresSgsis->formula]);
         }
-
 
         foreach ($finish_array as $key => $value) {
             VariablesIndicador::create(['id_indicador' => $indicadoresSgsis->id, 'variable' => str_replace('.', '', $value)]);
@@ -271,14 +269,16 @@ class IndicadoresSgsiController extends Controller
         $variablesIndicadores = VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->get();
         VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->delete();
         foreach ($finish_array as $key => $value) {
-
             VariablesIndicador::create(
                 [
                     'id_indicador' => $indicadoresSgsis->id,
-                    'variable' => str_replace(".", "", $value),
+                    'variable' => str_replace('.', '', $value),
                 ]
             );
         }
+
+        dd(VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->get());
+
         return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id]);
     }
 
@@ -316,11 +316,11 @@ class IndicadoresSgsiController extends Controller
     public function indicadoresDashboardPorcentaje(Request $request)
     {
         $request->validate([
-            'porcentaje' => 'required|numeric|min:0|max:100'
+            'porcentaje' => 'required|numeric|min:0|max:100',
         ], [
             'porcentaje.required' => 'Porcentaje requerido',
             'porcentaje.min' => 'El porcentaje debe ser mayor o igual a 0',
-            'porcentaje.max' => "El porcentaje debe ser menor o igual a 100"
+            'porcentaje.max' => 'El porcentaje debe ser menor o igual a 100',
 
         ]);
 
@@ -333,6 +333,7 @@ class IndicadoresSgsiController extends Controller
             DashboardIndicadorSG::first()->update([
                 'porcentaje_cumplimiento' => $request->porcentaje,
             ]);
+
             return response()->json(['estatus' => 200]);
         }
     }

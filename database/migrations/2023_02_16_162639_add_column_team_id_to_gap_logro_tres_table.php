@@ -15,7 +15,6 @@ class AddColumnTeamIdToGapLogroTresTable extends Migration
     {
         Schema::table('gap_logro_tres', function (Blueprint $table) {
             $table->string('team_id')->nullable();
-
         });
     }
 

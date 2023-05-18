@@ -15,7 +15,7 @@ class ResponsableVisitantes extends Model
     protected $fillable = [
         'empleado_id',
         'fotografia_requerida',
-        'firma_requerida'
+        'firma_requerida',
     ];
 
     public function empleado()

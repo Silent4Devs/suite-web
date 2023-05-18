@@ -2,24 +2,24 @@
 
 namespace App\Jobs;
 
+use App\Mail\FelicitacionesMail;
+use App\Models\CorreoCumpleanos;
+use App\Models\Empleado;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\FelicitacionesMail;
-use App\Models\Empleado;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
-use App\Models\CorreoCumpleanos;
 
 class EnviarMailFelicitacionJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $nombre, $correodestinatario, $cumplehoy;
+    protected $nombre;
+    protected $correodestinatario;
+    protected $cumplehoy;
 
     /**
      * Create a new job instance.
@@ -51,14 +51,13 @@ class EnviarMailFelicitacionJob implements ShouldQueue
         $imgtab = public_path("img\icono_tabantaj.png");
         $imgpastel = public_path('img\pastel.png');
 
-        if($cumpleañeros != null){
-            foreach($cumpleañeros as $cumpleañero)
-            {
+        if ($cumpleañeros != null) {
+            foreach ($cumpleañeros as $cumpleañero) {
                 $filtro = CorreoCumpleanos::where('empleado_id', $cumpleañero->id)
                 ->whereDate('fecha_envio', '=', $cumpleañero->cumpleaños);
-                if($filtro->exists() == false){
+                if ($filtro->exists() == false) {
                     // dd("Si aparece");
-                    $empcump=CorreoCumpleanos::firstOrCreate([
+                    $empcump = CorreoCumpleanos::firstOrCreate([
                         'empleado_id' => $cumpleañero->id,
                         'fecha_envio' => $cumpleañero->cumpleaños,
                         'enviado' => false,
@@ -73,7 +72,7 @@ class EnviarMailFelicitacionJob implements ShouldQueue
                     $empcump->update([
                         'enviado' => true,
                     ]);
-                }else{
+                } else {
                     //No hace nada
                 }
             }

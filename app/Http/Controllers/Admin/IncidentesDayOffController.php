@@ -79,7 +79,8 @@ class IncidentesDayOffController extends Controller
         $empleados = Empleado::get();
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
         $año = Carbon:: now()->format('Y');
-        return view('admin.incidentesDayoff.create', compact('vacacion', 'empleados', 'empleados_seleccionados','año'));
+
+        return view('admin.incidentesDayoff.create', compact('vacacion', 'empleados', 'empleados_seleccionados', 'año'));
     }
 
     public function store(Request $request)

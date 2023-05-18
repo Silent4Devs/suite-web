@@ -171,7 +171,6 @@ class VacacionesPermisosSeeder extends Seeder
                 'title' => 'solicitud_vacaciones_eliminar',
             ],
 
-
             [
                 'name' => 'Acceder modulo solicitud de Day Off',
                 'title' => 'solicitud_dayoff_acceder',

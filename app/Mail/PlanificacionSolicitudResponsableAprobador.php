@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use App\Models\PlanificacionControl;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -17,9 +16,8 @@ class PlanificacionSolicitudResponsableAprobador extends Mailable
      *
      * @return void
      */
+    public $planificacionControles;
 
-     public $planificacionControles;
-     
     public function __construct(PlanificacionControl $planificacionControles)
     {
         $this->planificacionControles = $planificacionControles;
@@ -33,6 +31,5 @@ class PlanificacionSolicitudResponsableAprobador extends Mailable
     public function build()
     {
         return $this->view('mails.planificacionControles.solicitud-firma-aprobador')->subject('Solicitud de aprobación del cambio ' . $this->planificacionControles->folio_cambio);
-
     }
 }

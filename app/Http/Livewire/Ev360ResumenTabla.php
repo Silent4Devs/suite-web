@@ -210,11 +210,10 @@ class Ev360ResumenTabla extends Component
             ->where('tipo', '=', 1)
             ->first();
 
-            if($jefe_evaluador_id == null)
-            {
-                $jefe_evaluador= '-';
-            }else{
-                $jefe_evaluador=Empleado::find($jefe_evaluador_id->evaluador_id);
+            if ($jefe_evaluador_id == null) {
+                $jefe_evaluador = '-';
+            } else {
+                $jefe_evaluador = Empleado::find($jefe_evaluador_id->evaluador_id);
             }
 
             $lista_jefe_inmediato->push([
@@ -423,11 +422,10 @@ class Ev360ResumenTabla extends Component
                     return $compe->competencia_id == $competencia->competencia_id;
                 })->first();
 
-                if($nivel_esperado == null)
-                {
+                if ($nivel_esperado == null) {
                     $n = CompetenciaPuesto::where('competencia_id', '=', $competencia->competencia_id)->first();
                     $nne = $n->nivel_esperado;
-                }else{
+                } else {
                     $nne = intval($nivel_esperado->nivel_esperado);
                     // dd($nne);
                 }

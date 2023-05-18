@@ -11,17 +11,15 @@ class PlanificacionControlOrigenCambio extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table='planificacion_control_origen_cambio';
+    protected $table = 'planificacion_control_origen_cambio';
 
-    protected $fillable=[
+    protected $fillable = [
         'nombre',
         'descripcion',
     ];
 
     public function origen()
     {
-        return $this->hasMany(PlanificacionControlOrigenCambio::class, 'origen_id');
-
+        return $this->hasMany(self::class, 'origen_id');
     }
-
 }

@@ -21,7 +21,6 @@ class CreateAjustesMatrizBiaTable extends Migration
             $table->integer('impacto_social')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
         });
     }
 

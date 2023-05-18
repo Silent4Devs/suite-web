@@ -4328,7 +4328,6 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'solicitud_vacaciones_eliminar',
             ],
 
-
             [
                 'name' => 'Acceder modulo solicitud de Day Off',
                 'title' => 'solicitud_dayoff_acceder',
@@ -4371,8 +4370,6 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Aprobar Permisos con goce de sueldo',
                 'title' => 'solicitud_permiso_goce_aprobar',
             ],
-
-
 
         ];
 

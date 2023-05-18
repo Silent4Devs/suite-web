@@ -6,10 +6,7 @@ use App\Models\CuestionarioRecursosHumanosAIA;
 use Livewire\Component;
 
 class CreateRecursosHumanosAia extends Component
-
-
 {
-
     public $miembroID;
     public $empresa;
     public $nombre;
@@ -22,11 +19,8 @@ class CreateRecursosHumanosAia extends Component
     public $escenario;
     public $cuestionario_id;
 
-
     public $view = 'create';
     protected $listeners = ['editarRecursos' => 'edit', 'eliminarRecursos' => 'destroy'];
-
-
 
     public function validarMiembro()
     {
@@ -136,4 +130,3 @@ class CreateRecursosHumanosAia extends Component
         return view('livewire.create-recursos-humanos-aia');
     }
 }
-

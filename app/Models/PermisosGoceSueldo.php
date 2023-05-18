@@ -2,21 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PermisosGoceSueldo extends Model
 {
     use SoftDeletes;
-  
+
     public $table = 'permisos_goce_sueldo';
 
     public $fillable = [
         'nombre',
         'descripcion',
         'dias',
-        'tipo_permiso'
+        'tipo_permiso',
     ];
 
     protected $casts = [
@@ -24,7 +23,7 @@ class PermisosGoceSueldo extends Model
         'nombre' => 'string',
         'descripcion' => 'string',
         'dias' => 'integer',
-        'tipo_permiso'
+        'tipo_permiso',
     ];
 
     // public function areas()

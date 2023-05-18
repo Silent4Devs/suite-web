@@ -732,7 +732,6 @@ class InicioUsuarioController extends Controller
             }
         }
 
-
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
 
@@ -751,7 +750,7 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request ->validate([
+        $request->validate([
             'area_mejora' => 'nullable|string',
             'proceso_mejora' => 'nullable|string',
             'titulo' => 'required',
@@ -776,8 +775,6 @@ class InicioUsuarioController extends Controller
             'mejoras_id' => $mejoras->id,
             'formulario' => 'mejora',
         ]);
-
-
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }
@@ -844,7 +841,7 @@ class InicioUsuarioController extends Controller
     public function storeSeguridad(Request $request)
     {
         // $incidente_procedente = intval($request->procedente ? $request->procedente : $incidentes_seguridad->procedente) == 1 ? true : false;
-        $incidente_procedente  = intval($request->procedente) == 1 ? true : false;
+        $incidente_procedente = intval($request->procedente) == 1 ? true : false;
 
         $request->validate([
             'titulo' => 'required|string',
@@ -868,7 +865,6 @@ class InicioUsuarioController extends Controller
             'procedente' => $incidente_procedente,
             'justificacion' => $request->justificacion,
         ]);
-
 
         if ($incidente_procedente) {
             $incidentes_seguridad->update([
@@ -908,7 +904,6 @@ class InicioUsuarioController extends Controller
                 ]);
             }
         }
-
 
         return redirect()->route('admin.desk.index')->with('success', 'Reporte generado');
     }

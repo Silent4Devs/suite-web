@@ -18,7 +18,7 @@ class CuestionarioRecibeInformacion extends Model
         'extencion',
         'ubicacion',
         'cuestionario_id',
-        'interno_externo'
+        'interno_externo',
     ];
 
     public function cuestionario()

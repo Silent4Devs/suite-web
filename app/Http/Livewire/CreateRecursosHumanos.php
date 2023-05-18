@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class CreateRecursosHumanos extends Component
 {
-
     public $miembroID;
     public $empresa;
     public $nombre;
@@ -20,11 +19,8 @@ class CreateRecursosHumanos extends Component
     public $escenario;
     public $cuestionario_id;
 
-
     public $view = 'create';
     protected $listeners = ['editarRecursos' => 'edit', 'eliminarRecursos' => 'destroy'];
-
-
 
     public function validarMiembro()
     {

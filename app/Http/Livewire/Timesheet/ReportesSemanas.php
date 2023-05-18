@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Livewire\Component;
 use App\Models\Empleado;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
+use Livewire\Component;
 
 class ReportesSemanas extends Component
 {
@@ -58,10 +58,10 @@ class ReportesSemanas extends Component
                 }
             }
         }
-        $this->horas_time = collect(); 
-        $this->horas_time = $timeSheetHorasCollection; 
+        $this->horas_time = collect();
+        $this->horas_time = $timeSheetHorasCollection;
         // dd($this->horas_time);
-        
+
         $this->emit('scriptTabla');
 
         return view('livewire.timesheet.reportes-semanas');

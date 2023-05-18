@@ -6,9 +6,7 @@ use App\Models\CuestionarioRecursosMaterialesAIA;
 use Livewire\Component;
 
 class CreateRecursosMaterialesAia extends Component
-
 {
-
     public $recursoID;
     public $equipos;
     public $impresoras;
@@ -18,11 +16,8 @@ class CreateRecursosMaterialesAia extends Component
     public $escenario;
     public $cuestionario_id;
 
-
     public $view = 'create';
     protected $listeners = ['editarMateriales' => 'edit', 'eliminarMateriales' => 'destroy'];
-
-
 
     public function validarMaterial()
     {
@@ -45,9 +40,9 @@ class CreateRecursosMaterialesAia extends Component
     public function saveMateriales()
     {
         $this->validarMaterial();
-        $num_equipos = $this->equipos == "" ? 0: $this->equipos;
-        $num_impresoras = $this->impresoras == "" ? 0: $this->impresoras;
-        $num_telefonos = $this->telefono == "" ? 0: $this->telefono;
+        $num_equipos = $this->equipos == '' ? 0 : $this->equipos;
+        $num_impresoras = $this->impresoras == '' ? 0 : $this->impresoras;
+        $num_telefonos = $this->telefono == '' ? 0 : $this->telefono;
         $model = CuestionarioRecursosMaterialesAIA::create([
             'escenario' => $this->escenario,
             'equipos' => $num_equipos,
@@ -57,8 +52,8 @@ class CreateRecursosMaterialesAia extends Component
             'cuestionario_id' => $this->cuestionario_id,
             'otro_numero' => $this->otro_numero,
         ]);
-       
-        $this->reset('id', 'escenario', 'impresoras', 'telefono', 'otro', 'equipos','otro_numero');
+
+        $this->reset('id', 'escenario', 'impresoras', 'telefono', 'otro', 'equipos', 'otro_numero');
         $this->emit('render');
         $this->emit('cerrar-modal-materiales', ['editarMateriales' => false]);
     }
@@ -73,8 +68,8 @@ class CreateRecursosMaterialesAia extends Component
         $this->impresoras = $model->impresoras;
         $this->telefono = $model->telefono;
         $this->otro = $model->otro;
-        $this->otro_numero= $model->otro_numero;
-        
+        $this->otro_numero = $model->otro_numero;
+
         $this->cuestionario_id = $model->cuestionario_id;
         $this->emit('abrir-modal-materiales');
     }
@@ -94,9 +89,9 @@ class CreateRecursosMaterialesAia extends Component
     {
         $this->validarMaterial();
         $model = CuestionarioRecursosMaterialesAIA::find($this->recursoID);
-        $num_equipos = $this->equipos == "" ? 0: $this->equipos;
-        $num_impresoras = $this->impresoras == "" ? 0: $this->impresoras;
-        $num_telefonos = $this->telefono == "" ? 0: $this->telefono;
+        $num_equipos = $this->equipos == '' ? 0 : $this->equipos;
+        $num_impresoras = $this->impresoras == '' ? 0 : $this->impresoras;
+        $num_telefonos = $this->telefono == '' ? 0 : $this->telefono;
         $model->update([
             'escenario' => $this->escenario,
             'equipos' => $num_equipos,
@@ -123,4 +118,3 @@ class CreateRecursosMaterialesAia extends Component
         return view('livewire.create-recursos-materiales-aia');
     }
 }
-

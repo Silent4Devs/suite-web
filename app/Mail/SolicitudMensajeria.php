@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -14,15 +13,12 @@ class SolicitudMensajeria extends Mailable
     public $coordinador;
     public $solicitante;
     public $solicitud;
-    
-
 
     public function __construct($solicitante, $coordinador, $solicitud)
     {
         $this->coordinador = $coordinador;
         $this->solicitante = $solicitante;
         $this->solicitud = $solicitud;
-        
     }
 
     /**

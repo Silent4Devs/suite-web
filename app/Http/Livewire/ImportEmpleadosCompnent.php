@@ -10,7 +10,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ImportEmpleadosCompnent extends Component
 {
-
     use WithFileUploads;
     use LivewireAlert;
 
@@ -52,7 +51,7 @@ class ImportEmpleadosCompnent extends Component
         ], [
             'file.required' => 'El archivo de importación es requerido',
             'file.mimes' => 'Solo se permiten archivos tipo Excel y CSV',
-            'file.max' => 'El peso máximo del archivo es de ' . $mb . ' MB'
+            'file.max' => 'El peso máximo del archivo es de ' . $mb . ' MB',
         ]);
     }
 

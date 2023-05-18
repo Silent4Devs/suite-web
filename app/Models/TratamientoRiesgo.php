@@ -8,12 +8,11 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class TratamientoRiesgo extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-   
+
     public $table = 'tratamiento_riesgos';
 
     public static $searchable = [
@@ -46,7 +45,7 @@ class TratamientoRiesgo extends Model
         'riesgototal',
         'riesgo_total_residual',
         'acciones',
-        'id_proceso',    
+        'id_proceso',
         'nivelriesgo',
         'control_id',
         'id_reviso',

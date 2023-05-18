@@ -13,6 +13,7 @@ class RecursosHumanosAia extends Component
     public function render()
     {
         $datas = CuestionarioRecursosHumanosAIA::where('cuestionario_id', '=', $this->cuestionario_id)->get();
-        return view('livewire.recursos-humanos-aia',compact('datas'));
+
+        return view('livewire.recursos-humanos-aia', compact('datas'));
     }
 }
