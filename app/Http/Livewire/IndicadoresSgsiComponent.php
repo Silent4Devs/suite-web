@@ -58,6 +58,7 @@ class IndicadoresSgsiComponent extends Component
             dump($data);
             return $data;
         })->toArray();
+        dd($this->formSlugs);
     }
 
     public function render()
