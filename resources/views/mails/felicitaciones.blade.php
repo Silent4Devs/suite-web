@@ -161,8 +161,8 @@
                                         </div>
 
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img width="160" src="{{ asset($pastel) }}" class="mt-2 ml-4"
-                                                style="width:160px;">
+                                            <img width="240" src="{{ asset('img/pastel_cumple.png') }}" class="mt-2 ml-4"
+                                                style="width:240px;">
                                         </div>
 
                                         <strong>
