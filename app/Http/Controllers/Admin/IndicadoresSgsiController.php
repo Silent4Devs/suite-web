@@ -268,6 +268,7 @@ class IndicadoresSgsiController extends Controller
 
         $variablesIndicadores = VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->get();
         VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->delete();
+        sleep(2);
         foreach ($finish_array as $key => $value) {
             VariablesIndicador::create(
                 [
