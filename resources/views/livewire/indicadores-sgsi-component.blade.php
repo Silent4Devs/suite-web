@@ -87,26 +87,26 @@
             elInput.value += btnValor;
         }
     
-        $('#fecha').datepicker({
-            format: "dd-mm-yyyy",
-            todayBtn: true,
-            orientation: "bottom right",
-            autoclose: true,
-            autoHide: true,
-            beforeShowDay: function(date) {
-                if (date.getMonth() == (new Date()).getMonth())
-                    switch (date.getDate()) {
-                        case 4:
-                            return {
-                                tooltip: 'Example tooltip',
-                                    classes: 'active'
-                            };
-                        case 8:
-                            return false;
-                        case 12:
-                            return "blue";
-                    }
-            }
-        });
+        // $('#fecha').datepicker({
+        //     format: "dd-mm-yyyy",
+        //     todayBtn: true,
+        //     orientation: "bottom right",
+        //     autoclose: true,
+        //     autoHide: true,
+        //     beforeShowDay: function(date) {
+        //         if (date.getMonth() == (new Date()).getMonth())
+        //             switch (date.getDate()) {
+        //                 case 4:
+        //                     return {
+        //                         tooltip: 'Example tooltip',
+        //                             classes: 'active'
+        //                     };
+        //                 case 8:
+        //                     return false;
+        //                 case 12:
+        //                     return "blue";
+        //             }
+        //     }
+        // });
     </script>
 </div>
