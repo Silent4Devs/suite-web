@@ -54,6 +54,7 @@ class IndicadoresSgsiComponent extends Component
         $data = [];
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
             $data[$value->variable] = '';
+
             return $data;
         })->toArray();
     }
