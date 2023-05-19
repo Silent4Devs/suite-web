@@ -187,7 +187,6 @@ class IndicadoresSgsiController extends Controller
         ]);
         $indicadoresSgsi->update($request->all());
 
-        dd('stop');
         //return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
     }
