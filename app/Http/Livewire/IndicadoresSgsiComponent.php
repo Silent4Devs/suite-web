@@ -49,6 +49,7 @@ class IndicadoresSgsiComponent extends Component
 
     public function mount($indicadoresSgsis)
     {
+        dump($indicadoresSgsis);
         $this->indicadoresSgsis = $indicadoresSgsis;
         $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
         $data = [];
