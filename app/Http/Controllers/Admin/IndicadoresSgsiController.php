@@ -185,13 +185,11 @@ class IndicadoresSgsiController extends Controller
             'no_revisiones' => 'required',
             'ano' => 'required',
         ]);
-        $form_request = $request->except('_token', '_method'); // Excluir campos especiales como '_token' y '_method'
-        $indicadoresSgsi->update($form_request);
+        $indicadoresSgsi->update($request->all());
 
         //return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
     }
-
 
     public function show(IndicadoresSgsi $indicadoresSgsi)
     {

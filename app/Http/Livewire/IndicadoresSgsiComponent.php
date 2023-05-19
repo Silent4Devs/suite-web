@@ -59,11 +59,6 @@ class IndicadoresSgsiComponent extends Component
         })->toArray();
     }
 
-    public function hydrate()
-    {
-        $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
-    }
-
     public function render()
     {
         $responsables = Empleado::alta()->get();
