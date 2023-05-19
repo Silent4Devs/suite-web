@@ -276,7 +276,7 @@ class IndicadoresSgsiController extends Controller
                 ]
             );
         }
-        
+
         return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id]);
     }
 
