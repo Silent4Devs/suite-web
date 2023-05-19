@@ -17,7 +17,6 @@ class AddColumnAddColumnsToAuditoriaAnualsTable extends Migration
             $table->longText('objetivo')->nullable();
             $table->longText('alcance')->nullable();
             $table->string('nombre')->nullable();
-            
         });
     }
 

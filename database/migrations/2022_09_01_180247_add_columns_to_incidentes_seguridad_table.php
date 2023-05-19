@@ -18,7 +18,6 @@ class AddColumnsToIncidentesSeguridadTable extends Migration
             $table->unsignedInteger('subcategoria_id')->nullable();
             $table->foreign('categoria_id')->references('id')->on('categorias_incidentes');
             $table->foreign('subcategoria_id')->references('id')->on('subcategorias_incidentes');
-
         });
     }
 

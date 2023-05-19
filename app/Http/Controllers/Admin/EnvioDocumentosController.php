@@ -1,31 +1,29 @@
 <?php
 
 namespace App\Http\Controllers\admin;
-use App\Mail\SolicitudMensajeria as MailMensajeria;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SolicitudMensajeria as MailMensajeria;
 use App\Models\Empleado;
 use App\Models\EnvioDocumentos;
 use App\Models\EnvioDocumentosAjustes;
 use App\Models\Organizacion;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Mail;
 
 class EnvioDocumentosController extends Controller
 {
-  
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_mensajeria_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
         if ($request->ajax()) {
-            $query = EnvioDocumentos::with(['coordinador','mensajero'])->where('id_solicita', '=', $data)->orderByDesc('id')->get();
+            $query = EnvioDocumentos::with(['coordinador', 'mensajero'])->where('id_solicita', '=', $data)->orderByDesc('id')->get();
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -77,24 +75,23 @@ class EnvioDocumentosController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.envio-documentos.index', compact('logo_actual', 'empresa_actual'));
     }
 
-  
     public function create()
     {
         abort_if(Gate::denies('solicitud_mensajeria_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $operadores = EnvioDocumentosAjustes::with(['coordinador','mensajero'])->first();
+        $operadores = EnvioDocumentosAjustes::with(['coordinador', 'mensajero'])->first();
         $solicitud = new EnvioDocumentos();
         $solicita = auth()->user()->empleado->supervisor_id;
         $fecha_solicitud = Carbon::now();
         $fecha_solicitud = $fecha_solicitud->format('d-m-Y');
         // $permisos = PermisosGoceSueldo::get();
 
-        return view('admin.envio-documentos.create', compact('solicitud','solicita','operadores','fecha_solicitud'));
+        return view('admin.envio-documentos.create', compact('solicitud', 'solicita', 'operadores', 'fecha_solicitud'));
     }
 
- 
     public function store(Request $request)
     {
         abort_if(Gate::denies('solicitud_mensajeria_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -111,25 +108,25 @@ class EnvioDocumentosController extends Controller
         Mail::to($coordinador->email)->send(new MailMensajeria($solicitante, $coordinador, $solicitud));
 
         Flash::success('Solicitud creada satisfactoriamente.');
+
         return redirect()->route('admin.envio-documentos.index');
     }
 
-   
     public function show($id)
     {
         abort_if(Gate::denies('solicitud_mensajeria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $envio = EnvioDocumentos::with(['mensajero', 'coordinador','solicita'])->find($id);
+        $envio = EnvioDocumentos::with(['mensajero', 'coordinador', 'solicita'])->find($id);
 
         if (empty($envio)) {
             Flash::error('Solicitud no localizada');
+
             return redirect(route('admin.envio-documentos.index'));
         }
 
         return view('admin.envio-documentos.show', compact('envio'));
     }
 
-   
     public function edit($id)
     {
         abort_if(Gate::denies('solicitud_mensajeria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -142,17 +139,15 @@ class EnvioDocumentosController extends Controller
         }
 
         $fecha_solicitud = $solicitud->fecha_solicitud;
-        $operadores = EnvioDocumentosAjustes::with(['coordinador','mensajero'])->first();
-      
-        return view('admin.envio-documentos.edit',compact('solicitud','fecha_solicitud','operadores'));
+        $operadores = EnvioDocumentosAjustes::with(['coordinador', 'mensajero'])->first();
+
+        return view('admin.envio-documentos.edit', compact('solicitud', 'fecha_solicitud', 'operadores'));
     }
 
-    
     public function update(Request $request, $id)
     {
         abort_if(Gate::denies('solicitud_mensajeria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        
         $solicitud = EnvioDocumentos::find($id);
 
         if (empty($solicitud)) {
@@ -168,14 +163,14 @@ class EnvioDocumentosController extends Controller
         return redirect(route('admin.envio-documentos.index'));
     }
 
-   
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         abort_if(Gate::denies('solicitud_mensajeria_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $id = $request->id;
         $envio = EnvioDocumentos::find($id);
-       
+
         $envio->delete();
+
         return redirect(route('admin.envio-documentos.index'));
     }
 
@@ -184,15 +179,16 @@ class EnvioDocumentosController extends Controller
         abort_if(Gate::denies('solicitud_mensajeria_ajustes'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $id = 1;
-        $ajustes =EnvioDocumentosAjustes::find($id);
+        $ajustes = EnvioDocumentosAjustes::find($id);
         if (empty($ajustes)) {
             Flash::error('Ajustes no encontrados');
+
             return redirect(route('admin.Ausencias.index'));
         }
         $empleados = Empleado::get();
         // dd($ajustes);
-      
-        return view('admin.envio-documentos.ajustesEdit',compact('ajustes','empleados'));
+
+        return view('admin.envio-documentos.ajustesEdit', compact('ajustes', 'empleados'));
     }
 
     public function ajustesUpdate(Request $request, $id)
@@ -212,7 +208,7 @@ class EnvioDocumentosController extends Controller
         $data = auth()->user()->empleado->id;
 
         if ($request->ajax()) {
-            $query = EnvioDocumentos::with(['coordinador','mensajero'])->where('id_coordinador', '=', $data)->orderByDesc('id')->get();
+            $query = EnvioDocumentos::with(['coordinador', 'mensajero'])->where('id_coordinador', '=', $data)->orderByDesc('id')->get();
             $table = datatables()::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -248,7 +244,6 @@ class EnvioDocumentosController extends Controller
             $table->editColumn('notas', function ($row) {
                 return $row->notas ? $row->notas : '';
             });
-            
 
             $table->rawColumns(['actions', 'placeholder']);
 
@@ -262,43 +257,43 @@ class EnvioDocumentosController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.envio-documentos.atencion', compact('logo_actual', 'empresa_actual'));
     }
 
     public function seguimiento($id)
-{
-    abort_if(Gate::denies('solicitud_mensajeria_atencion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-    $solicitud = EnvioDocumentos::find($id);
-
-    if (empty($solicitud)) {
-        Flash::error('Amenaza not found');
-
-        return redirect(route('admin.envio-documentos.index'));
-    }
-
-    $fecha_solicitud = $solicitud->fecha_solicitud;
-    $operadores = EnvioDocumentosAjustes::with(['coordinador','mensajero'])->first();
-  
-    return view('admin.envio-documentos.seguimiento',compact('solicitud','fecha_solicitud','operadores'));
-}
-public function seguimientoUpdate(Request $request, $id)
     {
         abort_if(Gate::denies('solicitud_mensajeria_atencion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        
         $solicitud = EnvioDocumentos::find($id);
 
         if (empty($solicitud)) {
-            Flash::error('Error al actualizar');
+            Flash::error('Amenaza not found');
 
             return redirect(route('admin.envio-documentos.index'));
         }
 
-        $solicitud->update($request->all());
+        $fecha_solicitud = $solicitud->fecha_solicitud;
+        $operadores = EnvioDocumentosAjustes::with(['coordinador', 'mensajero'])->first();
 
-        Flash::success('Solicitud actualizada correctamente.');
-
-        return redirect(route('admin.envio-documentos.atencion'));
+        return view('admin.envio-documentos.seguimiento', compact('solicitud', 'fecha_solicitud', 'operadores'));
     }
 
+public function seguimientoUpdate(Request $request, $id)
+{
+    abort_if(Gate::denies('solicitud_mensajeria_atencion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+    $solicitud = EnvioDocumentos::find($id);
+
+    if (empty($solicitud)) {
+        Flash::error('Error al actualizar');
+
+        return redirect(route('admin.envio-documentos.index'));
+    }
+
+    $solicitud->update($request->all());
+
+    Flash::success('Solicitud actualizada correctamente.');
+
+    return redirect(route('admin.envio-documentos.atencion'));
+}
 }

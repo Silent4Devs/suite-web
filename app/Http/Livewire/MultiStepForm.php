@@ -298,7 +298,6 @@ class MultiStepForm extends Component
 
     public function validateStepThree()
     {
-
         // foreach($this->listaEvaluados as $listaEvaluado){
         //     foreach($listaEvaluado['evaluadores'] as $evaluador){
         //         if($evaluador['id'] == 0){

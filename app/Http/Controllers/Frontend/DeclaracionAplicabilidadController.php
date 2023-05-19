@@ -122,7 +122,6 @@ class DeclaracionAplicabilidadController extends Controller
     {
         if ($request->ajax()) {
             switch ($request->name) {
-
                 case 'justificacion':
                     $gapun = DeclaracionAplicabilidad::findOrFail($id);
                     $gapun->justificacion = $request->value;

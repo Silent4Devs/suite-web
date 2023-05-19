@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ajustesMatrizBIA extends Model
 {
-
     use SoftDeletes;
-    
+
     public $table = 'ajustes_matriz_bia';
 
     const CREATED_AT = 'created_at';

@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\CuestionarioProporcionaInformacionAIA;
+use Livewire\Component;
 
 class ProporcionaInformacionAia extends Component
 {
@@ -13,6 +13,7 @@ class ProporcionaInformacionAia extends Component
     public function render()
     {
         $datas = CuestionarioProporcionaInformacionAIA::where('cuestionario_id', '=', $this->cuestionario_id)->get();
-        return view('livewire.proporciona-informacion-aia',compact('datas'));
+
+        return view('livewire.proporciona-informacion-aia', compact('datas'));
     }
 }

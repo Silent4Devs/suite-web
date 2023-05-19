@@ -115,7 +115,7 @@ class IncidentesVacacionesController extends Controller
         abort_if(Gate::denies('incidentes_vacaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
         $vacacion = IncidentesVacaciones::with('empleados')->find($id);
-       
+
         if (empty($vacacion)) {
             Flash::error('Excepción not found');
 

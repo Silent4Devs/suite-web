@@ -16,7 +16,6 @@ class ChangeColumnIdentificadorToMatrizRiesgosSistemaGestionTable extends Migrat
         Schema::table('matriz_riesgos_sistema_gestion', function (Blueprint $table) {
             // $table->string('identificador')->unique(false)->nullable()->change();
             $table->dropUnique('matriz_riesgos_sistema_gestion_identificador_unique');
-
         });
     }
 

@@ -49,16 +49,16 @@ class MatrizRequisitoLegalesController extends Controller
         abort_if(Gate::denies('matriz_requisitos_legales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //dd($request->all());
         $request->validate([
-            'nombrerequisito' => ['required','string'],
-            'formacumple' => ['nullable','string'],
-            'tipo' => ['required','string'],
-            'fechaexpedicion' => ['nullable','date'],
-            'fechavigor' => ['nullable','date'],
-            'periodicidad_cumplimiento' => ['required','string'],
+            'nombrerequisito' => ['required', 'string'],
+            'formacumple' => ['nullable', 'string'],
+            'tipo' => ['required', 'string'],
+            'fechaexpedicion' => ['nullable', 'date'],
+            'fechavigor' => ['nullable', 'date'],
+            'periodicidad_cumplimiento' => ['required', 'string'],
             'requisitoacumplir' => ['required'],
-            'cumplerequisito' => ['nullable','string'],
-            'medio' => ['nullable','string'],
-            'descripcion_cumplimiento' => ['nullable','string'],
+            'cumplerequisito' => ['nullable', 'string'],
+            'medio' => ['nullable', 'string'],
+            'descripcion_cumplimiento' => ['nullable', 'string'],
         ]);
 
         $matrizRequisitoLegale = MatrizRequisitoLegale::create($request->all());
@@ -106,17 +106,17 @@ class MatrizRequisitoLegalesController extends Controller
     {
         abort_if(Gate::denies('matriz_requisitos_legales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request ->validate([
-            'nombrerequisito' => ['required','string'],
-            'formacumple' => ['nullable','string'],
-            'tipo' => ['required','string'],
+        $request->validate([
+            'nombrerequisito' => ['required', 'string'],
+            'formacumple' => ['nullable', 'string'],
+            'tipo' => ['required', 'string'],
             'fechaexpedicion' => ['nullable'],
-            'fechavigor' => ['nullable','date'],
-            'periodicidad_cumplimiento' => ['required','string'],
+            'fechavigor' => ['nullable', 'date'],
+            'periodicidad_cumplimiento' => ['required', 'string'],
             'requisitoacumplir' => ['required'],
-            'cumplerequisito' => ['nullable','string'],
-            'medio' => ['nullable','string'],
-            'descripcion_cumplimiento' => ['nullable','string'],
+            'cumplerequisito' => ['nullable', 'string'],
+            'medio' => ['nullable', 'string'],
+            'descripcion_cumplimiento' => ['nullable', 'string'],
         ]);
 
         $matrizRequisitoLegale->update($request->all());
@@ -254,7 +254,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $request->validate([
             'cumplerequisito' => ['required'],
-            'fechaverificacion'  => ['required','date'],
+            'fechaverificacion'  => ['required', 'date'],
             'metodo' => ['required'],
             'descripcion_cumplimiento' => ['required'],
             'evidencia' => ['nullable'],

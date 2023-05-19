@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class CreateRecibeInformacion extends Component
 {
-    
     public $miembroID;
     public $nombre;
     public $puesto;
@@ -17,19 +16,16 @@ class CreateRecibeInformacion extends Component
     public $cuestionario_id;
     public $interno_externo;
 
-
     public $id_interesado;
     public $view = 'create';
     protected $listeners = ['editarFuenteInformacionRecibe' => 'editRecibe', 'eliminarFuenteInformacionRecibe' => 'destroy'];
-
-  
 
     public function validarMiembro()
     {
         $this->validate([
             'nombre' => 'required|max:50',
             'puesto' => 'required|max:75',
-            'correo_electronico' => 'required|max:50', 
+            'correo_electronico' => 'required|max:50',
             'extencion' => 'max:16',
             'ubicacion' => 'max:150',
         ]);
@@ -44,7 +40,7 @@ class CreateRecibeInformacion extends Component
     public function saveRecibe()
     {
         $this->validarMiembro();
-        $extencion = $this->extencion == "" ? 0: $this->extencion;
+        $extencion = $this->extencion == '' ? 0 : $this->extencion;
         $model = CuestionarioRecibeInformacion::create([
         'nombre'=> $this->nombre,
         'puesto'=> $this->puesto,
@@ -55,7 +51,7 @@ class CreateRecibeInformacion extends Component
         'interno_externo' => $this->interno_externo,
         ]);
 
-        $this->reset('id','nombre','puesto','correo_electronico','extencion','ubicacion','interno_externo');
+        $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
         $this->emit('render');
         $this->emit('cerrar-modal-recibe', ['editarRecibe' => false]);
     }
@@ -73,7 +69,6 @@ class CreateRecibeInformacion extends Component
         $this->cuestionario_id = $model->cuestionario_id;
         $this->interno_externo = $model->interno_externo;
         $this->emit('abrir-modal-recibe');
-
     }
 
     public function default()
@@ -92,7 +87,7 @@ class CreateRecibeInformacion extends Component
     {
         $this->validarMiembro();
         $model = CuestionarioRecibeInformacion::find($this->miembroID);
-        $extencion = $this->extencion == "" ? 0: $this->extencion;
+        $extencion = $this->extencion == '' ? 0 : $this->extencion;
         $model->update([
             'nombre'=> $this->nombre,
             'puesto'=> $this->puesto,
@@ -113,6 +108,7 @@ class CreateRecibeInformacion extends Component
         $model->delete();
         $this->emit('render');
     }
+
     public function render()
     {
         return view('livewire.create-recibe-informacion');

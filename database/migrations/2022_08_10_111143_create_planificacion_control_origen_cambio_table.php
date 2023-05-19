@@ -20,7 +20,6 @@ class CreatePlanificacionControlOrigenCambioTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        
     }
 
     /**

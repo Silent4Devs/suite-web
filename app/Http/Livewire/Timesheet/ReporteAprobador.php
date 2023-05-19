@@ -63,6 +63,7 @@ class ReporteAprobador extends Component
     public $fecha_inicio_empleado;
     public $fecha_fin_empleado;
     public $habilitarTodos = false;
+
     public function mount()
     {
         $this->habilitarTodos = false;
@@ -453,7 +454,6 @@ class ReporteAprobador extends Component
 
         $hoy_2 = now();
         if ($hoy_2->subweeks(3)->lt($fecha_inicio_timesheet_empleado)) {
-
             if (gettype($fecha_inicio_timesheet_empleado) == 'string') {
                 $fecha_inicio_timesheet_empleado = Carbon::parse($fecha_inicio_timesheet_empleado)->startOfMonth()->subMonth();
             } else {

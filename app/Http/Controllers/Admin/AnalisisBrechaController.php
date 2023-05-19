@@ -11,9 +11,9 @@ use App\Models\Empleado;
 use App\Models\GapDo;
 use App\Models\GapTre;
 use App\Models\GapUno;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -106,7 +106,7 @@ class AnalisisBrechaController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.analisisdebrechas.index',compact('organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.analisisdebrechas.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -121,7 +121,7 @@ class AnalisisBrechaController extends Controller
     {
         abort_if(Gate::denies('analisis_de_brechas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request -> validate([
+        $request->validate([
             'nombre' => ['required'],
             'fecha' => ['required'],
             'id_elaboro' => ['required'],
@@ -181,7 +181,7 @@ class AnalisisBrechaController extends Controller
     {
         abort_if(Gate::denies('analisis_de_brechas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request -> validate([
+        $request->validate([
             'nombre' => ['required'],
             'fecha' => ['required'],
             'porcentaje_implementacion' => ['nullable'],

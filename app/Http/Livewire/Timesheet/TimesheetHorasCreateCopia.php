@@ -51,7 +51,6 @@ class TimesheetHorasCreateCopia extends Component
 
     public function render()
     {
-
         return view('livewire.timesheet.timesheet-horas-create-copia');
     }
 }

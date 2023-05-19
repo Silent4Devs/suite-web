@@ -9,13 +9,13 @@ use Livewire\Component;
 class ConfiguracionVisitantes extends Component
 {
     public $empleados;
-    public $responsable = "";
+    public $responsable = '';
     public $responsableVisitante;
     public $fotografiaRequerida = false;
     public $firmaRequerida = true;
 
     protected $rules = [
-        'responsable' => 'required|numeric'
+        'responsable' => 'required|numeric',
     ];
 
     public function hydrate()
@@ -25,7 +25,6 @@ class ConfiguracionVisitantes extends Component
 
     public function mount()
     {
-
         $this->empleados = Empleado::select('id', 'name')->orderBy('name')->get();
     }
 
@@ -38,6 +37,7 @@ class ConfiguracionVisitantes extends Component
             $this->fotografiaRequerida = $this->responsableVisitante->fotografia_requerida;
             $this->firmaRequerida = $this->responsableVisitante->firma_requerida;
         }
+
         return view('livewire.visitantes.configuracion-visitantes');
     }
 
@@ -57,6 +57,7 @@ class ConfiguracionVisitantes extends Component
             ['fotografia_requerida' => $value]
         );
     }
+
     public function updatedfirmaRequerida($value)
     {
         $value = $value == 'true' ? true : false;

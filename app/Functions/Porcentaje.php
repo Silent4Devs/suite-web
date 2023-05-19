@@ -50,19 +50,25 @@ class Porcentaje
         ];
     }//termina func
 
-    public function GapTresPorc($gap3porcentaje, $gap3satisfactorios, $gap3parcialmente, 
-    $gap31porcentaje, $gap3asatisfactorios, $gap3aparcialmente)
+    public function GapTresPorc(
+        $gap3porcentaje,
+        $gap3satisfactorios,
+        $gap3parcialmente,
+        $gap31porcentaje,
+        $gap3asatisfactorios,
+        $gap3aparcialmente
+    )
     {
         //Suma de los datos para sacar el total
-        $suma=$gap3porcentaje+$gap31porcentaje;
+        $suma = $gap3porcentaje + $gap31porcentaje;
         //Sacar el valor correspondiente
-        $valor=30/$suma;
+        $valor = 30 / $suma;
         //Valor de satisfactoriamente y de parcialmente
-        $porcg3satis=$valor;
-        $porcg3parc=$valor/2;
+        $porcg3satis = $valor;
+        $porcg3parc = $valor / 2;
 
-        $gapverif=($gap3satisfactorios*$porcg3satis)+($gap3parcialmente*$porcg3parc);
-        $gapactu=($gap3asatisfactorios*$porcg3satis)+($gap3aparcialmente*$porcg3parc);
+        $gapverif = ($gap3satisfactorios * $porcg3satis) + ($gap3parcialmente * $porcg3parc);
+        $gapactu = ($gap3asatisfactorios * $porcg3satis) + ($gap3aparcialmente * $porcg3parc);
 
         $resultado = ($gapverif + $gapactu);
 
@@ -75,9 +81,9 @@ class Porcentaje
 
     public function GAPTotal($porcentajeGap1, $porcentajeGap2, $porcentajeGap3)
     {
-        $total=$porcentajeGap1+ $porcentajeGap2+ $porcentajeGap3;
+        $total = $porcentajeGap1 + $porcentajeGap2 + $porcentajeGap3;
 
-        $total = round($total,2);
+        $total = round($total, 2);
 
         return $total;
     }

@@ -11,7 +11,6 @@ class AuditoriaAnualDocumento extends Model
 
     public $table = 'documento_auditoria_anuals';
 
-
     protected $fillable = [
         'documento',
         'id_auditoria_anuals',
@@ -19,7 +18,6 @@ class AuditoriaAnualDocumento extends Model
         'updated_at',
         'deleted_at',
     ];
-
 
     public function auditoria_anual()
     {

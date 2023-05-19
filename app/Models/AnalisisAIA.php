@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use AlterCuestionarioRecibeInformacionTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AnalisisAIA extends Model
 {
     use HasFactory;
-
 
     public $table = 'analisis_aia';
 
@@ -324,7 +322,7 @@ class AnalisisAIA extends Model
         // Agregados posteriormente
         'productivo_desarrollo',
         'interno_externo',
-        'manejador_bd'
+        'manejador_bd',
 
     ];
 
@@ -365,6 +363,7 @@ class AnalisisAIA extends Model
         $dia_rpo = $this->rpo_dia * 24;
         $hora_rpo = $this->rpo_hora;
         $total_horas = $mese_rpo + $semana_rpo + $dia_rpo + $hora_rpo;
+
         return $total_horas;
     }
 
@@ -375,6 +374,7 @@ class AnalisisAIA extends Model
         $dia_rto = $this->rto_dia * 24;
         $hora_rto = $this->rto_hora;
         $total_horas = $mese_rto + $semana_rto + $dia_rto + $hora_rto;
+
         return $total_horas;
     }
 
@@ -385,6 +385,7 @@ class AnalisisAIA extends Model
         $dia_wrt = $this->wrt_dia * 24;
         $hora_wrt = $this->wrt_hora;
         $total_horas = $mese_wrt + $semana_wrt + $dia_wrt + $hora_wrt;
+
         return $total_horas;
     }
 
@@ -395,8 +396,10 @@ class AnalisisAIA extends Model
         $dia_mtpd = $this->mtpd_dia * 24;
         $hora_mtpd = $this->mtpd_hora;
         $total_horas = $mese_mtpd + $semana_mtpd + $dia_mtpd + $hora_mtpd;
+
         return $total_horas;
     }
+
     public function getNivelRtoAttribute()
     {
         $parametro = $this->rto_horas;
@@ -417,8 +420,10 @@ class AnalisisAIA extends Model
             $color_texto = '#000000';
             $texto = 'No definido';
         }
+
         return  [$color,  $color_texto, $texto];
     }
+
     public function getOperacionPromedioAttribute()
     {
         $parametro_1 = $this->operacion_q_1;
@@ -426,6 +431,7 @@ class AnalisisAIA extends Model
         $parametro_3 = $this->operacion_q_3;
         $parametro_4 = $this->operacion_q_4;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3 + $parametro_4) / 4;
+
         return round($promedio);
     }
 
@@ -436,8 +442,10 @@ class AnalisisAIA extends Model
         $parametro_3 = $this->regulatorio_q_3;
         $parametro_4 = $this->regulatorio_q_4;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3 + $parametro_4) / 4;
+
         return round($promedio);
     }
+
     public function getReputacionPromedioAttribute()
     {
         $parametro_1 = $this->reputacion_q_1;
@@ -445,8 +453,10 @@ class AnalisisAIA extends Model
         $parametro_3 = $this->reputacion_q_3;
         $parametro_4 = $this->reputacion_q_4;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3 + $parametro_4) / 4;
+
         return round($promedio);
     }
+
     public function getSocialPromedioAttribute()
     {
         $parametro_1 = $this->social_q_1;
@@ -454,6 +464,7 @@ class AnalisisAIA extends Model
         $parametro_3 = $this->social_q_3;
         $parametro_4 = $this->social_q_4;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3 + $parametro_4) / 4;
+
         return round($promedio);
     }
 
@@ -468,6 +479,7 @@ class AnalisisAIA extends Model
         $parametro_3 = $this->reputacion_promedio * $impacto_reputacion;
         $parametro_4 = $this->social_promedio * $impacto_social;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3 + $parametro_4);
+
         return round($promedio);
     }
 
@@ -483,7 +495,6 @@ class AnalisisAIA extends Model
             $color_texto = '#000000';
             $texto = 'Medio';
         } elseif ($parametro <= 57) {
-
             $color = '#FF3333';
             $color_texto = '#FFFFFF';
             $texto = 'Alto';
@@ -492,6 +503,7 @@ class AnalisisAIA extends Model
             $color_texto = '#000000';
             $texto = 'No definido';
         }
+
         return  [$color,  $color_texto, $texto];
     }
 
@@ -555,10 +567,12 @@ class AnalisisAIA extends Model
     {
         return $this->hasMany(LiberaMantenimientoAIA::class, 'cuestionario_id');
     }
+
     public function recursosHumanos()
     {
         return $this->hasMany(CuestionarioRecursosHumanosAIA::class, 'cuestionario_id');
     }
+
     public function getCantidadTotalPersonasNormalAttribute()
     {
         return $this->recursosHumanos()->where('escenario', '1')->count();
@@ -568,6 +582,7 @@ class AnalisisAIA extends Model
     {
         return $this->recursosHumanos()->where('escenario', '2')->count();
     }
+
     public function getDatosPersonasContingenciaAttribute()
     {
         return $this->recursosHumanos()->where('escenario', '2')->get()->shift();
@@ -576,6 +591,7 @@ class AnalisisAIA extends Model
     public function getDatosPersonasContingenciaDifAttribute()
     {
         $persona_contingencia = $this->recursosHumanos()->where('escenario', '2')->get()->slice(1);
+
         return $persona_contingencia;
     }
 
@@ -588,34 +604,42 @@ class AnalisisAIA extends Model
     {
         return $this->recursosMateriales()->where('escenario', '1')->pluck('equipos')->sum();
     }
+
     public function getCantidadTelefoniaNormalAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '1')->pluck('telefono')->sum();
     }
+
     public function getCantidadImpresoraNormalAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '1')->pluck('impresoras')->sum();
     }
+
     public function getCantidadOtrosNormalAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '1')->pluck('otro_numero')->sum();
     }
+
     public function getDescripcionOtrosNormalAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '2')->pluck('otro')->first();
     }
+
     public function getCantidadEquipoComputoContingenciaAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '2')->pluck('equipos')->sum();
     }
+
     public function getCantidadTelefoniaContingenciaAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '2')->pluck('telefono')->sum();
     }
+
     public function getCantidadImpresoraContingenciaAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '2')->pluck('impresoras')->sum();
     }
+
     public function getCantidadOtrosContingenciaAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '2')->pluck('otro_numero')->sum();
@@ -628,6 +652,7 @@ class AnalisisAIA extends Model
         } else {
             $ajuste = 1;
         }
+
         return $ajuste;
     }
 }

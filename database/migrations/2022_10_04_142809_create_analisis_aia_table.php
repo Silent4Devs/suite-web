@@ -15,7 +15,7 @@ class CreateAnalisisAiaTable extends Migration
     {
         Schema::create('analisis_aia', function (Blueprint $table) {
             $table->increments('id');
-            // DATOS DE IDENTIFICACIÓN DEL ENTREVISTADO 
+            // DATOS DE IDENTIFICACIÓN DEL ENTREVISTADO
             $table->date('fecha_entrevista')->nullable();
             $table->string('entrevistado')->nullable();
             $table->string('puesto')->nullable();

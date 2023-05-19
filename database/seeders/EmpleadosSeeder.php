@@ -42,8 +42,7 @@ class EmpleadosSeeder extends Seeder
                 'n_empleado' => 1,
                 'genero' => 'H',
                 'sede_id' => Sede::all()->random()->id,
-            ]
-            ,[
+            ], [
                 'name' => 'Tania Michelle Garcia Aguillón',
                 'foto' => null,
                 'puesto_id' => Puesto::where('puesto', 'Analista de Diseño')->first()->id,

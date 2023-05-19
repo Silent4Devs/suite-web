@@ -668,11 +668,11 @@ class TimesheetController extends Controller
         array_push($equipo_a_cargo, auth()->user()->empleado->id);
 
         if ($habilitarTodos) {
-            $aprobados  = Timesheet::where('estatus', 'aprobado')
+            $aprobados = Timesheet::where('estatus', 'aprobado')
                 ->whereIn('aprobador_id', $equipo_a_cargo)
                 ->get();
         } else {
-            $aprobados  = Timesheet::where('estatus', 'aprobado')
+            $aprobados = Timesheet::where('estatus', 'aprobado')
                 ->where('aprobador_id', auth()->user()->empleado->id)
                 ->get();
         }

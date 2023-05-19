@@ -13,6 +13,7 @@ class RecibeInformacion extends Component
     public function render()
     {
         $recibe = CuestionarioRecibeInformacion::where('cuestionario_id', '=', $this->cuestionario_id)->get();
-        return view('livewire.recibe-informacion',compact('recibe'));
+
+        return view('livewire.recibe-informacion', compact('recibe'));
     }
 }

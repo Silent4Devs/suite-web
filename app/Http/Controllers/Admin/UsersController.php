@@ -211,19 +211,19 @@ class UsersController extends Controller
         if ($usuario != null) {
             $usuario = User::withTrashed()->find($id)->restore();
             Flash::success('Usuario restablecido satisfactoriamente.');
+
             return redirect()->route('admin.users.index');
         } else {
             Flash::error('Usuario no encontrado');
 
             return redirect(route('admin.users.index'));
         }
-
-       
     }
 
     public function vistaEliminados()
     {
         $usuarios = User::withTrashed()->where('deleted_at', '<>', null)->get();
+
         return view('admin.users.eliminados', compact('usuarios'));
     }
 }

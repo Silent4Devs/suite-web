@@ -159,7 +159,7 @@ class VacacionesController extends Controller
 
         $vacacion = Vacaciones::find($id);
 
-        if ($request->afectados == 2){
+        if ($request->afectados == 2) {
             $vacacion->update($request->all());
             $areas = array_map(function ($value) {
                 return intval($value);
@@ -183,7 +183,8 @@ class VacacionesController extends Controller
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 
-    public function vistaGlobal(Request $request){
+    public function vistaGlobal(Request $request)
+    {
         abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = auth()->user()->empleado->id;
 
@@ -208,7 +209,7 @@ class VacacionesController extends Controller
                 return $row->fecha_fin ? $row->fecha_fin : '';
             });
             $table->editColumn('aprobacion', function ($row) {
-                return $row->aprobacion ? $row->aprobacion  : '';
+                return $row->aprobacion ? $row->aprobacion : '';
             });
             $table->editColumn('descripcion', function ($row) {
                 return $row->descripcion ? $row->descripcion : '';
@@ -226,6 +227,7 @@ class VacacionesController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
+
         return view('admin.vacaciones.solicitudes', compact('logo_actual', 'empresa_actual'));
     }
 }

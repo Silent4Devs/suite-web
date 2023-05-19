@@ -11,7 +11,7 @@ use Livewire\Component;
 class PlanAuditoriaActividadesComponent extends Component
 {
     use LivewireAlert;
-    
+
     public $actividad_auditar;
     public $fecha_auditoria;
     public $horario_inicio;
@@ -19,7 +19,7 @@ class PlanAuditoriaActividadesComponent extends Component
     public $nombre_auditor;
     public $auditado;
     public $plan_auditoria_id;
-    
+
     public $actividadID;
     public $parteInteresadaIdEN;
     public $view = 'create';
@@ -39,6 +39,7 @@ class PlanAuditoriaActividadesComponent extends Component
             'auditado' => 'required',
         ]);
     }
+
     public function create()
     {
         $this->default();
@@ -73,10 +74,10 @@ class PlanAuditoriaActividadesComponent extends Component
     {
         $this->view = 'edit';
         $plan = PlanAuditoriaActividades::find($id);
-        $this->actividadID=$id;
+        $this->actividadID = $id;
         // dd($model);
         $this->actividad_auditar = $plan->actividad_auditar;
-        $this->fecha_auditoria= Carbon::parse($plan->fecha_auditoria)->format('Y-m-d');
+        $this->fecha_auditoria = Carbon::parse($plan->fecha_auditoria)->format('Y-m-d');
         $this->auditado = $plan->id_auditado;
         $this->nombre_auditor = $plan->nombre_auditor;
         $this->horario_inicio = $plan->horario_inicio;
@@ -91,12 +92,13 @@ class PlanAuditoriaActividadesComponent extends Component
         $this->actividad_auditar = '';
         $this->auditado = '';
         $this->nombre_auditor = '';
-        $this->horario_inicio= '';
-        $this->horario_termino= '';
+        $this->horario_inicio = '';
+        $this->horario_termino = '';
         $this->fecha_auditoria = '';
 
         $this->view = 'create';
     }
+
     public function update()
     {
         $this->validarActividades();
@@ -110,8 +112,7 @@ class PlanAuditoriaActividadesComponent extends Component
             'id_auditado'=> $this->auditado,
             'plan_auditoria_id'=> $this->plan_auditoria_id,
         ]);
-        
-      
+
         $this->emit('cerrar-modal', ['editar' => true]);
         $this->default();
         $this->emit('render');
@@ -135,7 +136,6 @@ class PlanAuditoriaActividadesComponent extends Component
             'text' => 'Registro eliminado',
            ]);
     }
-
 
     public function render()
     {

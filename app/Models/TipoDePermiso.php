@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TipoDePermiso extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'tipo_permiso';
     protected $fillable = ['nombre', 'slug', 'descripcion'];
 

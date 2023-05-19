@@ -260,7 +260,6 @@ class DeskController extends Controller
             }
         }
 
-
         return redirect()->route('admin.desk.index', $id_incidente)->with('success', 'Reporte actualizado');
     }
 
@@ -557,7 +556,6 @@ class DeskController extends Controller
 
     public function archivadoQueja(Request $request, $incidente)
     {
-
         // dd($request);
         if ($request->ajax()) {
             $queja = Quejas::findOrfail(intval($incidente));
@@ -724,7 +722,7 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_mejoras_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request ->validate([
+        $request->validate([
             'area_mejora' => 'nullable|string',
             'proceso_mejora' => 'nullable|string',
             'titulo' => 'required',

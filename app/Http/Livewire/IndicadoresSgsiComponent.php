@@ -44,7 +44,7 @@ class IndicadoresSgsiComponent extends Component
     protected $mesages = [
         'evaluacion.required' => 'Debes de definir una evaluación',
         'fecha.required' => 'Debes seleccionar una fecha',
-        'formSlugs.*.*.required' => 'Agrega la evaluación'
+        'formSlugs.*.*.required' => 'Agrega la evaluación',
     ];
 
     public function mount($indicadoresSgsis)
@@ -58,6 +58,7 @@ class IndicadoresSgsiComponent extends Component
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
             $data[$value->variable] = '';
             dump($data);
+
             return $data;
         })->toArray();
         dump('mount post');
@@ -98,7 +99,7 @@ class IndicadoresSgsiComponent extends Component
         } catch (\Throwable $th) {
             if ($th->getMessage() == 'Division by zero') {
                 $result = 0;
-            }else{
+            } else {
                 $result = 0;
             }
         }
@@ -147,7 +148,7 @@ class IndicadoresSgsiComponent extends Component
         } catch (\Throwable $th) {
             if ($th->getMessage() == 'Division by zero') {
                 $result = 0;
-            }else{
+            } else {
                 $result = 0;
             }
         }

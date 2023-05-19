@@ -9,12 +9,12 @@ class OrigenCambioComponent extends Component
 {
     public $nombre;
     public $descripcion;
-    protected $rules=[
+    protected $rules = [
         'nombre'=>'required',
         'descripcion'=>'nullable',
     ];
-    protected $messages=[
-        'nombre.required'=>'Debes definir un nombre para el origen de cambio'
+    protected $messages = [
+        'nombre.required'=>'Debes definir un nombre para el origen de cambio',
 
     ];
 
@@ -28,6 +28,7 @@ class OrigenCambioComponent extends Component
         $this->emit('OrigenCambioStore');
         $this->emit('render-origen-select-component');
     }
+
     public function render()
     {
         return view('livewire.origen-cambio-component');

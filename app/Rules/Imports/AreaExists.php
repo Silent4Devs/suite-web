@@ -7,7 +7,6 @@ use Illuminate\Contracts\Validation\Rule;
 
 class AreaExists implements Rule
 {
-
     public string $nombre;
 
     /**

@@ -159,13 +159,11 @@ Breadcrumbs::for('admin.analisis-riesgos.menu', function ($trail) {
 Breadcrumbs::for('BIA', function ($trail) {
     $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
     $trail->push('BIA');
-   
 });
 
 Breadcrumbs::for('AIA', function ($trail) {
     $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
     $trail->push('AIA');
-   
 });
 
 Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
@@ -372,7 +370,6 @@ Breadcrumbs::for('admin.tratamiento-riesgos.show', function ($trail) {
     $trail->push('Tratamiento de los Riesgos', route('admin.tratamiento-riesgos.index'));
     $trail->push('Visualizar');
 });
-
 
 Breadcrumbs::for('admin.indicadores-sgsis.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
@@ -605,7 +602,6 @@ Breadcrumbs::for('Ajustes-dayoff', function ($trail) {
     $trail->push('Solicitudes e Incidencias', route('admin.Ausencias.index'));
     $trail->push('Ajustes de Day Off', route('admin.Ausencias.index'));
 });
-
 
 Breadcrumbs::for('Reglas-Vacaciones', function ($trail) {
     $trail->parent('capital-humano');

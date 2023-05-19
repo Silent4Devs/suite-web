@@ -8,11 +8,10 @@ use App\Models\Empleado;
 use App\Models\Visitantes\RegistrarVisitante;
 use App\Models\Visitantes\ResponsableVisitantes;
 use App\Models\Visitantes\VisitantesDispositivo;
-use App\Rules\DispositivosVisitantesRule;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
-use Illuminate\Support\Str;
 
 class RegistroVisitantes extends Component
 {
@@ -48,7 +47,7 @@ class RegistroVisitantes extends Component
     public $showStepFour = false;
 
     protected $rules = [
-        'registrarVisitante' => 'nullable'
+        'registrarVisitante' => 'nullable',
     ];
 
     protected $listeners = ['imprimirCredencialImage'];
@@ -93,7 +92,6 @@ class RegistroVisitantes extends Component
     //     $this->emit('coincidenciasNombreVisitantes', $coincidencias);
     // }
 
-
     public function removeInput($key)
     {
         $this->dispositivos->pull($key);
@@ -101,7 +99,6 @@ class RegistroVisitantes extends Component
 
     public function goToStep($step)
     {
-
         if ($step > $this->currentStep) {
             $this->validateData();
             $this->currentStep = $step;
@@ -143,17 +140,17 @@ class RegistroVisitantes extends Component
             $this->showStepTwo = false;
             $this->showStepThree = false;
             $this->showStepFour = false;
-        } else if ($this->currentStep == 2) {
+        } elseif ($this->currentStep == 2) {
             $this->showStepOne = false;
             $this->showStepTwo = true;
             $this->showStepThree = false;
             $this->showStepFour = false;
-        } else if ($this->currentStep == 3) {
+        } elseif ($this->currentStep == 3) {
             $this->showStepOne = false;
             $this->showStepTwo = false;
             $this->showStepThree = true;
             $this->showStepFour = false;
-        } else if ($this->currentStep == 4) {
+        } elseif ($this->currentStep == 4) {
             $this->showStepOne = false;
             $this->showStepTwo = false;
             $this->showStepThree = false;
@@ -173,20 +170,19 @@ class RegistroVisitantes extends Component
                     'name' => $castEmpleado ? $castEmpleado->name : '',
                     'area' => $castEmpleado ? $castEmpleado->area : '',
                     'puesto' => $castEmpleado ? $castEmpleado->puesto : '',
-                    'avatar' => $castEmpleado ? $castEmpleado->avatar : ''
+                    'avatar' => $castEmpleado ? $castEmpleado->avatar : '',
                 ],
                 'area' => [
                     'id' => $this->area_id,
                     'area' => $castArea ? $castArea->area : '',
                 ],
-                'tipo_visita' => $this->tipo_visita
+                'tipo_visita' => $this->tipo_visita,
             ];
         }
     }
 
     public function validateData()
     {
-
         if ($this->currentStep == 1) {
             $this->validate([
                 'nombre' => 'required|string|max:255',
@@ -203,23 +199,23 @@ class RegistroVisitantes extends Component
                 'dispositivos.*.dispositivo.required_unless' => 'El campo dispositivo es requerido cuando se ha ingresado información en alguno de los campos contiguos',
                 'dispositivos.*.marca.required_unless' => 'El campo marca es requerido cuando se ha ingresado información en alguno de los campos contiguos',
                 'dispositivos.*.serie.required_unless' => 'El campo serie es requerido cuando se ha ingresado información en alguno de los campos contiguos',
-                'celular' => 'El formato del celular debe ser de 10 digitos'
+                'celular' => 'El formato del celular debe ser de 10 digitos',
             ]);
-        } else if ($this->currentStep == 2) {
+        } elseif ($this->currentStep == 2) {
             if (ResponsableVisitantes::first()) {
                 if (ResponsableVisitantes::first()->fotografia_requerida) {
                     $this->validate([
-                        'foto' => 'required'
+                        'foto' => 'required',
                     ], [
-                        'foto.required' => 'Es requerido por la organización que se tome una fotografia para ingresar'
+                        'foto.required' => 'Es requerido por la organización que se tome una fotografia para ingresar',
                     ]);
                 } else {
                     $this->validate([
-                        'foto' => 'nullable'
+                        'foto' => 'nullable',
                     ]);
                 }
             }
-        } else if ($this->currentStep == 3) {
+        } elseif ($this->currentStep == 3) {
             $this->validate([
                 'tipo_visita' => 'required',
             ]);
@@ -250,7 +246,7 @@ class RegistroVisitantes extends Component
             'empleado_id' => $this->empleado_id,
             'area_id' => $this->area_id,
             'tipo_visita' => $this->tipo_visita,
-            'uuid' => Str::uuid()
+            'uuid' => Str::uuid(),
         ]);
         $registrarDispositivos = true;
         if ($this->dispositivos->count() == 1) {
@@ -289,6 +285,7 @@ class RegistroVisitantes extends Component
             ]);
         }
     }
+
     public function imprimirCredencial()
     {
         $this->emit('imprimirCredencialSelf');
@@ -298,9 +295,10 @@ class RegistroVisitantes extends Component
     {
         $pdf = \PDF::loadView('visitantes.credencial.index', ['credencial' => $dataImage])->output();
         $fileName = 'Credencial de ' . $this->registrarVisitante->nombre . ' ' . $this->registrarVisitante->apellidos . '.pdf';
+
         return response()->streamDownload(
             function () use ($pdf) {
-                echo ($pdf);
+                echo $pdf;
                 $this->alert('success', 'Bien Hecho ' . $this->nombre . ', se ha imprimido correctamente la credencial', [
                     'position' => 'top-end',
                     'timer' => 1000,
@@ -311,7 +309,7 @@ class RegistroVisitantes extends Component
             $fileName,
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
             ]
         );
     }

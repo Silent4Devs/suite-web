@@ -7,8 +7,6 @@ use Livewire\Component;
 
 class CreateRecursosMateriales extends Component
 {
-
-    
     public $recursoID;
     public $equipos;
     public $impresoras;
@@ -17,11 +15,8 @@ class CreateRecursosMateriales extends Component
     public $escenario;
     public $cuestionario_id;
 
-
     public $view = 'create';
     protected $listeners = ['editarMateriales' => 'edit', 'eliminarMateriales' => 'destroy'];
-
-
 
     public function validarMaterial()
     {
@@ -43,9 +38,9 @@ class CreateRecursosMateriales extends Component
     public function saveMateriales()
     {
         $this->validarMaterial();
-        $num_equipos = $this->equipos == "" ? 0: $this->equipos;
-        $num_impresoras = $this->impresoras == "" ? 0: $this->impresoras;
-        $num_telefonos = $this->telefono == "" ? 0: $this->telefono;
+        $num_equipos = $this->equipos == '' ? 0 : $this->equipos;
+        $num_impresoras = $this->impresoras == '' ? 0 : $this->impresoras;
+        $num_telefonos = $this->telefono == '' ? 0 : $this->telefono;
         $model = CuestionarioRecursosMateriales::create([
             'escenario' => $this->escenario,
             'equipos' => $num_equipos,
@@ -54,7 +49,7 @@ class CreateRecursosMateriales extends Component
             'otro' => $this->otro,
             'cuestionario_id' => $this->cuestionario_id,
         ]);
-       
+
         $this->reset('id', 'escenario', 'impresoras', 'telefono', 'otro', 'equipos');
         $this->emit('render');
         $this->emit('cerrar-modal-materiales', ['editarMateriales' => false]);
@@ -70,7 +65,7 @@ class CreateRecursosMateriales extends Component
         $this->impresoras = $model->impresoras;
         $this->telefono = $model->telefono;
         $this->otro = $model->otro;
-        
+
         $this->cuestionario_id = $model->cuestionario_id;
         $this->emit('abrir-modal-materiales');
     }
@@ -82,7 +77,7 @@ class CreateRecursosMateriales extends Component
         $this->impresoras = '';
         $this->telefono = '';
         $this->otro = '';
-      
+
         $this->view = 'create';
     }
 
@@ -90,9 +85,9 @@ class CreateRecursosMateriales extends Component
     {
         $this->validarMaterial();
         $model = CuestionarioRecursosMateriales::find($this->recursoID);
-        $num_equipos = $this->equipos == "" ? 0: $this->equipos;
-        $num_impresoras = $this->impresoras == "" ? 0: $this->impresoras;
-        $num_telefonos = $this->telefono == "" ? 0: $this->telefono;
+        $num_equipos = $this->equipos == '' ? 0 : $this->equipos;
+        $num_impresoras = $this->impresoras == '' ? 0 : $this->impresoras;
+        $num_telefonos = $this->telefono == '' ? 0 : $this->telefono;
         $model->update([
             'escenario' => $this->escenario,
             'equipos' => $num_equipos,

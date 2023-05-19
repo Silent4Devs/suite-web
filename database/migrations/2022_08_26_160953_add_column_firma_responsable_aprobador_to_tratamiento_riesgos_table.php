@@ -17,7 +17,6 @@ class AddColumnFirmaResponsableAprobadorToTratamientoRiesgosTable extends Migrat
             $table->longText('firma_responsable_aprobador')->nullable();
             $table->string('es_aprobado')->default('pendiente');
             $table->longText('comentarios')->nullable();
-
         });
     }
 

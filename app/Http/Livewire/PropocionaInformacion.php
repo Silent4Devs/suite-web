@@ -13,6 +13,7 @@ class PropocionaInformacion extends Component
     public function render()
     {
         $datas = CuestionarioProporcionaInformacion::where('cuestionario_id', '=', $this->cuestionario_id)->get();
-        return view('livewire.propociona-informacion',compact('datas'));
+
+        return view('livewire.propociona-informacion', compact('datas'));
     }
 }

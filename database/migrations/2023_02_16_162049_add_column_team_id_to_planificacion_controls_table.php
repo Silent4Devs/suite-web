@@ -15,7 +15,6 @@ class AddColumnTeamIdToPlanificacionControlsTable extends Migration
     {
         Schema::table('planificacion_controls', function (Blueprint $table) {
             $table->string('team_id')->nullable();
-
         });
     }
 

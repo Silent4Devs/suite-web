@@ -8,19 +8,17 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class AuditoriaAnual extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-  
+
     public $table = 'auditoria_anuals';
 
     public static $searchable = [
         'tipo',
     ];
 
-   
     protected $dates = [
         'fechainicio',
         'fechafin',

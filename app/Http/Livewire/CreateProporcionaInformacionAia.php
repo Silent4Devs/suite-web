@@ -7,8 +7,6 @@ use Livewire\Component;
 
 class CreateProporcionaInformacionAia extends Component
 {
-   
-   
     public $miembroID;
     public $nombre;
     public $puesto;
@@ -22,9 +20,7 @@ class CreateProporcionaInformacionAia extends Component
     public $parteInteresadaIdEN;
     public $view = 'create';
     public $normasModel = [];
-    protected $listeners = ['editarFuenteInformacionAia' => 'edit', 'eliminarFuenteInformacionAia' => 'destroy',];
-
-  
+    protected $listeners = ['editarFuenteInformacionAia' => 'edit', 'eliminarFuenteInformacionAia' => 'destroy'];
 
     public function validarMiembro()
     {
@@ -46,7 +42,7 @@ class CreateProporcionaInformacionAia extends Component
     public function save()
     {
         $this->validarMiembro();
-        $extencion = $this->extencion == "" ? 0: $this->extencion;
+        $extencion = $this->extencion == '' ? 0 : $this->extencion;
         $model = CuestionarioProporcionaInformacionAIA::create([
         'nombre'=> $this->nombre,
         'puesto'=> $this->puesto,
@@ -57,7 +53,7 @@ class CreateProporcionaInformacionAia extends Component
         'interno_externo' => $this->interno_externo,
         ]);
 
-        $this->reset('id','nombre','puesto','correo_electronico','extencion','ubicacion','interno_externo');
+        $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
         $this->emit('render');
         $this->emit('cerrar-modal', ['editar' => false]);
     }
@@ -75,7 +71,6 @@ class CreateProporcionaInformacionAia extends Component
         $this->cuestionario_id = $model->cuestionario_id;
         $this->interno_externo = $model->interno_externo;
         $this->emit('abrir-modal');
-
     }
 
     public function default()
@@ -94,7 +89,7 @@ class CreateProporcionaInformacionAia extends Component
     {
         $this->validarMiembro();
         $model = CuestionarioProporcionaInformacionAIA::find($this->miembroID);
-        $extencion = $this->extencion == "" ? 0: $this->extencion;
+        $extencion = $this->extencion == '' ? 0 : $this->extencion;
         $model->update([
             'nombre'=> $this->nombre,
             'puesto'=> $this->puesto,
@@ -119,6 +114,5 @@ class CreateProporcionaInformacionAia extends Component
     public function render()
     {
         return view('livewire.create-proporciona-informacion-aia');
-
     }
 }

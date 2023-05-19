@@ -8,9 +8,9 @@ use App\Models\AlcanceSgsi;
 use App\Models\Empleado;
 use App\Models\Norma;
 use App\Models\Team;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -88,7 +88,7 @@ class AlcanceSgsiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.alcanceSgsis.index', compact('teams', 'empleados','organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.alcanceSgsis.index', compact('teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()

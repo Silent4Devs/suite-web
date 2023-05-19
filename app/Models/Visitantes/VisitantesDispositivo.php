@@ -15,7 +15,7 @@ class VisitantesDispositivo extends Model
         'dispositivo',
         'serie',
         'marca',
-        'modelo'
+        'modelo',
     ];
 
     public function visitante()

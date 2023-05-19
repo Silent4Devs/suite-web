@@ -32,7 +32,7 @@ class RegistrarVisitante extends Model
         'registro_salida',
         'fecha_salida',
         'uuid',
-        'autorizado'
+        'autorizado',
     ];
     protected $casts = [
         'empleado_id' => 'integer',
@@ -43,10 +43,12 @@ class RegistrarVisitante extends Model
     {
         return $this->belongsTo(Empleado::class);
     }
+
     public function area()
     {
         return $this->belongsTo(Area::class);
     }
+
     public function dispositivos()
     {
         return $this->hasMany(VisitantesDispositivo::class);

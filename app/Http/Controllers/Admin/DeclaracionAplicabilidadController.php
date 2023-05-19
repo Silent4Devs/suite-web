@@ -10,13 +10,13 @@ use App\Models\DeclaracionAplicabilidad;
 use App\Models\DeclaracionAplicabilidadAprobadores;
 use App\Models\DeclaracionAplicabilidadResponsable;
 use App\Models\Empleado;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
@@ -24,6 +24,7 @@ use Throwable;
 class DeclaracionAplicabilidadController extends Controller
 {
     use ObtenerOrganizacion;
+
     /**
      * Display a listing of the resource.
      *
@@ -108,11 +109,11 @@ class DeclaracionAplicabilidadController extends Controller
         $lista_archivos_declaracion = glob($path . 'Analisis Inicial*.pdf');
         $empleados = Empleado::select('id', 'name', 'genero', 'foto')->alta()->get();
         $responsables = DeclaracionAplicabilidadResponsable::with(['empleado' => function ($q) {
-            $q->select('id', 'name', 'foto','estatus')->where('estatus','alta');
+            $q->select('id', 'name', 'foto', 'estatus')->where('estatus', 'alta');
         }])->orderBy('id')->get();
         // dd($responsables);
         $aprobadores = DeclaracionAplicabilidadAprobadores::with(['empleado' => function ($q) {
-            $q->select('id', 'name', 'foto','estatus')->where('estatus','alta');
+            $q->select('id', 'name', 'foto', 'estatus')->where('estatus', 'alta');
         }])->get();
 
         // $empleados=Empleado::select('id','name','genero','foto')->get();
@@ -139,6 +140,7 @@ class DeclaracionAplicabilidadController extends Controller
     {
         if ($request->ajax()) {
             $controles = DeclaracionAplicabilidad::orderBy('id')->get();
+
             return datatables()->of($controles)->toJson();
         }
 
@@ -146,18 +148,19 @@ class DeclaracionAplicabilidadController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.declaracionaplicabilidad.tabla', compact('organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.declaracionaplicabilidad.tabla', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function edit(Request $request, $control)
     {
         $control = DeclaracionAplicabilidad::find($control);
+
         return view('admin.declaracionaplicabilidad.tabla-edit', compact('control'));
     }
 
     public function updateTabla(Request $request, $control)
     {
-        $request-> validate([
+        $request->validate([
             'anexo_politica' => 'required',
             'anexo_descripcion' => 'required',
         ]);
@@ -167,6 +170,7 @@ class DeclaracionAplicabilidadController extends Controller
             'anexo_politica' => $request->anexo_politica,
             'anexo_descripcion' => $request->anexo_descripcion,
         ]);
+
         return redirect()->route('admin.declaracion-aplicabilidad.tabla')->with('success', 'Declaración de aplicabilidad actualizada con éxito');
     }
 
@@ -182,7 +186,6 @@ class DeclaracionAplicabilidadController extends Controller
         // dd($id);
         if ($request->ajax()) {
             switch ($request->name) {
-
                 case 'justificacion':
 
                     $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['justificacion' => $request->value]);

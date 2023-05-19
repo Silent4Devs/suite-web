@@ -11,9 +11,9 @@ use App\Models\Objetivosseguridad;
 use App\Models\Team;
 use App\Models\TiposObjetivosSistema;
 use App\Models\VariablesObjetivosseguridad;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -88,8 +88,7 @@ class ObjetivosseguridadController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-
-        return view('admin.objetivosseguridads.index', compact('teams','organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.objetivosseguridads.index', compact('teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -98,7 +97,6 @@ class ObjetivosseguridadController extends Controller
         $responsables = Empleado::alta()->with('area', 'puesto')->get();
         $tiposObjetivosSistemas = TiposObjetivosSistema::get();
         $normas = Norma::get();
-
 
         return view('admin.objetivosseguridads.create', compact('normas', 'responsables', 'tiposObjetivosSistemas'));
     }
@@ -142,7 +140,6 @@ class ObjetivosseguridadController extends Controller
 
         $normas = Norma::get();
         $responsables = Empleado::alta()->get();
-
 
         return view('admin.objetivosseguridads.edit', compact('normas_seleccionadas', 'normas', 'objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
     }

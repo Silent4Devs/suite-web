@@ -7,8 +7,6 @@ use Livewire\Component;
 
 class CreateMantenimientoAia extends Component
 {
-   
-   
     public $miembroID;
     public $nombre;
     public $puesto;
@@ -22,9 +20,7 @@ class CreateMantenimientoAia extends Component
     public $parteInteresadaIdEN;
     public $view = 'create';
     public $normasModel = [];
-    protected $listeners = ['editarMantenimiento' => 'edit', 'eliminarMantenimiento' => 'destroy',];
-
-  
+    protected $listeners = ['editarMantenimiento' => 'edit', 'eliminarMantenimiento' => 'destroy'];
 
     public function validarMiembro()
     {
@@ -45,7 +41,7 @@ class CreateMantenimientoAia extends Component
     public function save()
     {
         $this->validarMiembro();
-        $extencion = $this->extencion == "" ? 0: $this->extencion;
+        $extencion = $this->extencion == '' ? 0 : $this->extencion;
         $model = LiberaMantenimientoAIA::create([
         'nombre'=> $this->nombre,
         'puesto'=> $this->puesto,
@@ -56,7 +52,7 @@ class CreateMantenimientoAia extends Component
         'interno_externo' => $this->interno_externo,
         ]);
 
-        $this->reset('id','nombre','puesto','correo_electronico','extencion','ubicacion','interno_externo');
+        $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
         $this->emit('render');
         $this->emit('cerrar-modal-mantenimiento', ['editar' => false]);
     }
@@ -74,7 +70,6 @@ class CreateMantenimientoAia extends Component
         $this->cuestionario_id = $model->cuestionario_id;
         $this->interno_externo = $model->interno_externo;
         $this->emit('abrir-modal-mantenimiento');
-
     }
 
     public function default()
@@ -93,7 +88,7 @@ class CreateMantenimientoAia extends Component
     {
         $this->validarMiembro();
         $model = LiberaMantenimientoAIA::find($this->miembroID);
-        $extencion = $this->extencion == "" ? 0: $this->extencion;
+        $extencion = $this->extencion == '' ? 0 : $this->extencion;
         $model->update([
             'nombre'=> $this->nombre,
             'puesto'=> $this->puesto,
@@ -120,4 +115,3 @@ class CreateMantenimientoAia extends Component
         return view('livewire.create-mantenimiento-aia');
     }
 }
-

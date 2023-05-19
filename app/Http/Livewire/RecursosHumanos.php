@@ -13,6 +13,7 @@ class RecursosHumanos extends Component
     public function render()
     {
         $datas = CuestionarioRecursosHumanos::where('cuestionario_id', '=', $this->cuestionario_id)->get();
-        return view('livewire.recursos-humanos',compact('datas'));
+
+        return view('livewire.recursos-humanos', compact('datas'));
     }
 }
