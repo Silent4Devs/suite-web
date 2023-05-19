@@ -49,19 +49,13 @@ class IndicadoresSgsiComponent extends Component
 
     public function mount($indicadoresSgsis)
     {
-        dump($indicadoresSgsis);
         $this->indicadoresSgsis = $indicadoresSgsis;
         $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
         $data = [];
-        dump('Hola desde el mount');
-        dump($this->customFields);
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
             $data[$value->variable] = '';
-            dump($data);
-
             return $data;
         })->toArray();
-        dump('mount post');
     }
 
     public function render()
