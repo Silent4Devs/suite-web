@@ -185,7 +185,8 @@ class IndicadoresSgsiController extends Controller
             'no_revisiones' => 'required',
             'ano' => 'required',
         ]);
-        $indicadoresSgsi->update($request->all());
+        $form_request = $request->all();
+        $indicadoresSgsi->update($form_request);
 
         //return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
