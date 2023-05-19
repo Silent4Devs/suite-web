@@ -3,7 +3,6 @@
 namespace App\Mail\Visitantes;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -13,6 +12,7 @@ class SolicitudSalidaVisitante extends Mailable
 
     public $visitante;
     public $responsable;
+
     /**
      * Create a new message instance.
      *

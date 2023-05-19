@@ -24,7 +24,6 @@ class XFrameHeadersMiddleware
 
     public function handle($request, Closure $next)
     {
-
         /*
          * This middleware was created to prevent OWASP warnings, like:
          *

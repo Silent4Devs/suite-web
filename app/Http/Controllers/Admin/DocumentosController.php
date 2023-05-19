@@ -73,7 +73,7 @@ class DocumentosController extends Controller
 
     public function validateRequestStore(Request $request)
     {
-        if ($request->tipo == "formato") {
+        if ($request->tipo == 'formato') {
             $request->validate([
                 'codigo' => 'required|string|unique:documentos,codigo,NULL,id,deleted_at,NULL',
                 'nombre' => 'required|string',
@@ -91,7 +91,7 @@ class DocumentosController extends Controller
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
                 'archivo.mimetypes' => 'El archivo debe ser de tipo PDF o Word',
             ]);
-        } else
+        } else {
             $request->validate([
                 'codigo' => 'required|string|unique:documentos,codigo,NULL,id,deleted_at,NULL',
                 'nombre' => 'required|string',
@@ -109,6 +109,7 @@ class DocumentosController extends Controller
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
                 'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
             ]);
+        }
     }
 
     public function storeDocument(Request $request, $estatus)
@@ -199,7 +200,7 @@ class DocumentosController extends Controller
         $procesos = Proceso::get();
         $empleados = Empleado::alta()->get();
         $documentoActual = $documento;
-        $newversdoc = (intval($documentoActual->version)+1);
+        $newversdoc = (intval($documentoActual->version) + 1);
 
         return view('admin.documentos.edit', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual', 'newversdoc'));
     }
@@ -241,7 +242,7 @@ class DocumentosController extends Controller
         $aproboId = $documento->aprobo_id != null ? 'nullable' : 'required';
         $responsableId = $documento->responsable_id != null ? 'nullable' : 'required';
         $codigoDoc = $documento->codigo != null ? 'nullable' : 'required';
-        if ($request->tipo == "formato") {
+        if ($request->tipo == 'formato') {
             $request->validate([
                 'codigo' => $codigoDoc . '|string|unique:documentos,codigo,' . $documento->id . ',id,deleted_at,NULL',
                 'nombre' => 'required|string',
@@ -259,7 +260,7 @@ class DocumentosController extends Controller
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
                 'archivo.mimetypes' => 'El archivo debe ser de tipo PDF o Word',
             ]);
-        } else
+        } else {
             $request->validate([
                 'codigo' => $codigoDoc . '|string|unique:documentos,codigo,' . $documento->id . ',id,deleted_at,NULL',
                 'nombre' => 'required|string',
@@ -277,6 +278,7 @@ class DocumentosController extends Controller
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
                 'archivo.mimetypes' => 'El archivo debe ser de tipo PDF',
             ]);
+        }
     }
 
     public function updateDocument(Request $request, Documento $documento, $estatus)
@@ -397,7 +399,7 @@ class DocumentosController extends Controller
             if ($documento->tipo == 'proceso') {
                 // logica para eliminar el proceso vinculado al documento
                 $proceso = Proceso::where('documento_id', intval($documento->id))->first();
-                $revision=RevisionDocumento::where('documento_id', intval($documento->id))->first();
+                $revision = RevisionDocumento::where('documento_id', intval($documento->id))->first();
                 if ($request->delete_documents == 'true') {
                     if ($proceso) {
                         $dependencias = Documento::where('proceso_id', '=', $proceso->id)->get();
@@ -412,9 +414,8 @@ class DocumentosController extends Controller
                     $proceso->delete();
                 }
                 $revision->delete();
-            }
-            else{
-                $revision=RevisionDocumento::where('documento_id', intval($documento->id))->first();
+            } else {
+                $revision = RevisionDocumento::where('documento_id', intval($documento->id))->first();
                 $revision->delete();
             }
             $path_documento = $this->getPathDocumento($documento, 'public');
@@ -544,6 +545,7 @@ class DocumentosController extends Controller
         }
 
         $empleados_vistas = VistaDocumento::with('empleados')->where('documento_id', $documento->id)->get();
+
         return view('admin.documentos.view-document-file', compact('documento', 'path_documento', 'empleados_vistas'));
     }
 
@@ -716,7 +718,7 @@ class DocumentosController extends Controller
     {
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
 
-        if(empty($versiones[0]['id'])){
+        if (empty($versiones[0]['id'])) {
             $versiones = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('id', $documento->id)->get();
             // dd($versiones);
             $path_documento = $this->getPathDocumento($documento, 'storage');

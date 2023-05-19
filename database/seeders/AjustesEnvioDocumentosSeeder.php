@@ -7,7 +7,6 @@ use Illuminate\Database\Seeder;
 
 class AjustesEnvioDocumentosSeeder extends Seeder
 {
-   
     public function run()
     {
         $inputs = [

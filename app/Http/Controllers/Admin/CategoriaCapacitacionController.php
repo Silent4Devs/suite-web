@@ -4,15 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoriaCapacitacion;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
 class CategoriaCapacitacionController extends Controller
 {
     use ObtenerOrganizacion;
+
     /**
      * Display a listing of the resource.
      *
@@ -50,7 +51,6 @@ class CategoriaCapacitacionController extends Controller
             });
 
             $table->rawColumns(['actions']);
-           
 
             return $table->make(true);
         }
@@ -59,7 +59,7 @@ class CategoriaCapacitacionController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.categoria-capacitacion.index',compact('organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.categoria-capacitacion.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     /**

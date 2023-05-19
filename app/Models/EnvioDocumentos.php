@@ -40,7 +40,6 @@ class EnvioDocumentos extends Model
         '4' => 'Devolución',
     ];
 
-
     public function solicita()
     {
         return $this->belongsTo(Empleado::class, 'id_solicita')->alta();

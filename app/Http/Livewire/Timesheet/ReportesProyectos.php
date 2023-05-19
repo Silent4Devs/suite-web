@@ -11,11 +11,11 @@ use App\Models\TimesheetProyecto;
 use App\Models\TimesheetTarea;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
-use Livewire\Component;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 class ReportesProyectos extends Component
@@ -223,7 +223,6 @@ class ReportesProyectos extends Component
             $this->proyectos = TimesheetProyecto::get();
         }
         foreach ($this->proyectos as $proyecto) {
-
             // registros existenetes horas a la semana
             $registro_horas_proyecto = TimesheetHoras::where('proyecto_id', $proyecto->id)->get();
 
@@ -274,15 +273,14 @@ class ReportesProyectos extends Component
         }
         if ($this->search) {
             $proyectos_array = $proyectos_array->filter(function ($item) {
-                return (str_contains($item['cliente'], $this->search) || str_contains($item['proyecto'], $this->search) || $item['areas']->pluck('area')->contains(function ($item) {
+                return str_contains($item['cliente'], $this->search) || str_contains($item['proyecto'], $this->search) || $item['areas']->pluck('area')->contains(function ($item) {
                     return str_contains($item, $this->search);
-                }));
+                });
             });
         }
 
         $this->totalRegistrosMostrando = count($proyectos_array);
         $proyectos_array = $this->paginate($proyectos_array, $this->perPage);
-
 
         $this->calendario_tabla = $calendario_array;
         $this->hoy_format = $this->hoy->format('d/m/Y');
@@ -294,6 +292,7 @@ class ReportesProyectos extends Component
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
+
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 

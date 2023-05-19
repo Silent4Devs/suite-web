@@ -33,6 +33,7 @@ class DispositivosVisitantesRule implements Rule
                 $passes = false;
             }
         }
+
         return $passes;
     }
 

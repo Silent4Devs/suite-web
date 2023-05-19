@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Livewire\InfraestructuraTecnologica;
 use App\Models\ajustesMatrizBIA;
 use App\Models\AnalisisImpacto;
 use App\Models\CuestionarioInfraestructuraTecnologica;
@@ -104,7 +103,7 @@ class AnalisisdeImpactoController extends Controller
         abort_if(Gate::denies('matriz_bia_cuestionario_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         //validacion
-        $request -> validate([
+        $request->validate([
             //'id' => ['required'],
             'fecha_entrevista' => ['required', 'date'],
             'entrevistado' => ['required'],
@@ -147,6 +146,7 @@ class AnalisisdeImpactoController extends Controller
 
         if (empty($cuestionario)) {
             Flash::error('Cuestionario no encontrado');
+
             return redirect(route('admin.analisis-impacto.index'));
         }
 
@@ -157,7 +157,7 @@ class AnalisisdeImpactoController extends Controller
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request -> validate([
+        $request->validate([
 //            'id' => ['required'],
             'fecha_entrevista' => ['required', 'date'],
             'entrevistado' => ['required'],
@@ -370,39 +370,42 @@ class AnalisisdeImpactoController extends Controller
         $cuestionario = AnalisisImpacto::with(['recursosHumanos', 'recibeInformacion', 'proporcionaInformacion'])->orderBy('id', 'DESC')->get();
         $tecnologica = CuestionarioInfraestructuraTecnologica::with('cuestionario')->get();
         $personas_contingencia = CuestionarioRecursosHumanos::with('cuestionario')->where('escenario', '2')->get();
-        $proporciona_informacion =  CuestionarioProporcionaInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
-        $recibe_informacion =  CuestionarioRecibeInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
+        $proporciona_informacion = CuestionarioProporcionaInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
+        $recibe_informacion = CuestionarioRecibeInformacion::with('cuestionario')->orderByDesc('cuestionario_id')->get();
 
-        return view('admin.analisis-impacto.matriz', compact('cuestionario', 'tecnologica', 'personas_contingencia','proporciona_informacion','recibe_informacion'));
+        return view('admin.analisis-impacto.matriz', compact('cuestionario', 'tecnologica', 'personas_contingencia', 'proporciona_informacion', 'recibe_informacion'));
     }
 
     public function menu()
     {
         abort_if(Gate::denies('matriz_bia_menu_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.analisis-impacto.menu-buttons');
     }
 
     public function menuBIA()
     {
         abort_if(Gate::denies('matriz_bia_menu_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.analisis-impacto.menu-bia');
     }
 
     public function menuAIA()
     {
         abort_if(Gate::denies('matriz_bia_menu_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.analisis-impacto.menu-aia');
     }
 
     public function ajustes()
     {
-
         abort_if(Gate::denies('matriz_bia_matriz_ajustes'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $id = 1;
-        $cuestionario =ajustesMatrizBIA::find($id);
+        $cuestionario = ajustesMatrizBIA::find($id);
         if (empty($cuestionario)) {
             Flash::error('Ajustes no encontrados');
+
             return redirect(route('admin.analisis-impacto.matriz'));
         }
 

@@ -24,7 +24,6 @@ class CuestionarioRecursosHumanosAIA extends Model
         'cuestionario_id',
     ];
 
-
     public function cuestionario()
     {
         return $this->belongsTo(AnalisisAIA::class, 'cuestionario_id', 'id');

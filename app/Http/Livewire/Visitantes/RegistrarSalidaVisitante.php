@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Visitantes;
 
 use App\Mail\Visitantes\SolicitudSalidaVisitante;
-use App\Models\Empleado;
 use App\Models\Visitantes\RegistrarVisitante;
 use App\Models\Visitantes\ResponsableVisitantes;
 use Carbon\Carbon;
@@ -18,7 +17,6 @@ class RegistrarSalidaVisitante extends Component
     public $firma;
     public $tipo;
 
-
     protected $listeners = ['registrarSalida'];
 
     // protected $rules = [
@@ -32,10 +30,9 @@ class RegistrarSalidaVisitante extends Component
         $this->tipo = $tipo;
     }
 
-
     protected $messages = [
         'visitante.required' => 'Seleccione un visitante',
-        'firma.required' => 'Ingrese la firma'
+        'firma.required' => 'Ingrese la firma',
     ];
 
     public function render()
@@ -54,7 +51,7 @@ class RegistrarSalidaVisitante extends Component
         $validateFirma = ResponsableVisitantes::first()->firma_requerida ? 'required' : 'nullable';
         $this->validate([
             'visitante' => 'nullable',
-            'firma' => $validateFirma
+            'firma' => $validateFirma,
         ]);
         $registroVisitante = RegistrarVisitante::find($this->visitante->id);
         $registroVisitante->update([
@@ -75,6 +72,6 @@ class RegistrarSalidaVisitante extends Component
         if ($this->tipo == 'full') {
             $this->emit('salidaRegistradaSelf');
         }
-        $this->emit('closeModal',   $this->visitante);
+        $this->emit('closeModal', $this->visitante);
     }
 }

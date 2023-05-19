@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use App\Models\PlanificacionControl;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -21,7 +20,7 @@ class SolicitudFirmasControlCambios extends Mailable
 
     public function __construct(PlanificacionControl $planificacionControles)
     {
-        $this->planificacionControles=$planificacionControles;
+        $this->planificacionControles = $planificacionControles;
     }
 
     /**

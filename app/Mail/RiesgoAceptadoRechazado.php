@@ -5,7 +5,6 @@ namespace App\Mail;
 use App\Models\Empleado;
 use App\Models\TratamientoRiesgo;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -20,12 +19,11 @@ class RiesgoAceptadoRechazado extends Mailable
      */
     // public $tratamientoRiesgo;
     public $tratamientoRiesgo;
-    
+
     public function __construct(TratamientoRiesgo $tratamientoRiesgo)
     {
         // $this->empleado = $empleado;
         $this->tratamientoRiesgo = $tratamientoRiesgo;
-
     }
 
     /**

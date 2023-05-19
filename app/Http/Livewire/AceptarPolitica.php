@@ -13,15 +13,13 @@ class AceptarPolitica extends Component
     public function mount($id_politica)
     {
         $this->id_politica = $id_politica;
-       
     }
 
     public function render()
     {
-       
-        if(AceptoPolitica::where('id_empleado', auth()->user()->empleado->id)->where('id_politica',  $this->id_politica)->first()){
-            $this->acepto_politica = AceptoPolitica::where('id_empleado', auth()->user()->empleado->id)->where('id_politica',  $this->id_politica)->first()->acepto;
-        }else{
+        if (AceptoPolitica::where('id_empleado', auth()->user()->empleado->id)->where('id_politica', $this->id_politica)->first()) {
+            $this->acepto_politica = AceptoPolitica::where('id_empleado', auth()->user()->empleado->id)->where('id_politica', $this->id_politica)->first()->acepto;
+        } else {
             $this->acepto_politica = false;
         }
 
@@ -33,6 +31,6 @@ class AceptarPolitica extends Component
         $aceptar = AceptoPolitica::updateOrCreate([
             'id_politica' => $id_politica,
             'id_empleado' => auth()->user()->empleado->id,
-        ],['aceptado'=>true]);
+        ], ['aceptado'=>true]);
     }
 }

@@ -15,7 +15,6 @@ class AddFechaInicioToAuditoriaInternasTable extends Migration
     {
         Schema::table('auditoria_internas', function (Blueprint $table) {
             $table->date('fecha_inicio')->nullable();
-
         });
     }
 

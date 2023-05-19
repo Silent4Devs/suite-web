@@ -12,7 +12,6 @@ class AuditoriaInternaHallazgos extends Component
 {
     use LivewireAlert;
 
-    
     public $incumplimiento_requisito;
     public $descripcion;
     public $clasificacion_hallazgo;
@@ -38,6 +37,7 @@ class AuditoriaInternaHallazgos extends Component
             'clasificacion_hallazgo' => 'required',
         ]);
     }
+
     public function create()
     {
         $this->default();
@@ -47,8 +47,8 @@ class AuditoriaInternaHallazgos extends Component
     public function save()
     {
         $this->validarHallazgos();
-        $this->proceso=$this->proceso==""?null:$this->proceso;
-        $this->area=$this->area==""?null:$this->area;
+        $this->proceso = $this->proceso == '' ? null : $this->proceso;
+        $this->area = $this->area == '' ? null : $this->area;
         // dd($this->proceso);
         $model = AuditoriaInternasHallazgos::create([
             'proceso_id'=> $this->proceso,
@@ -59,11 +59,7 @@ class AuditoriaInternaHallazgos extends Component
             'auditoria_internas_id'=> $this->auditoria_internas_id,
         ]);
 
-       
-
-       
-
-        $this->reset('descripcion', 'incumplimiento_requisito', 'clasificacion_hallazgo', 'proceso','area');
+        $this->reset('descripcion', 'incumplimiento_requisito', 'clasificacion_hallazgo', 'proceso', 'area');
         $this->emit('render');
         $this->emit('cerrar-modal', ['editar' => false]);
         $this->alert('success', 'Bien hecho', [
@@ -78,7 +74,7 @@ class AuditoriaInternaHallazgos extends Component
     {
         $this->view = 'edit';
         $hallazgo = AuditoriaInternasHallazgos::find($id);
-        $this->hallazgoAuditoriaID=$id;
+        $this->hallazgoAuditoriaID = $id;
         // dd($model);
         $this->descripcion = $hallazgo->descripcion;
         $this->clasificacion_hallazgo = $hallazgo->clasificacion_hallazgo;
@@ -95,11 +91,11 @@ class AuditoriaInternaHallazgos extends Component
         $this->proceso = '';
         $this->area = '';
         $this->clasificacion_hallazgo = '';
-        $this->incumplimiento_requisito= '';
-
+        $this->incumplimiento_requisito = '';
 
         $this->view = 'create';
     }
+
     public function update()
     {
         $this->validarHallazgos();
@@ -112,8 +108,7 @@ class AuditoriaInternaHallazgos extends Component
             'descripcion'=> $this->descripcion,
             'auditoria_internas_id'=> $this->auditoria_internas_id,
         ]);
-        
-      
+
         $this->emit('cerrar-modal', ['editar' => true]);
         $this->default();
         $this->emit('render');
@@ -137,12 +132,12 @@ class AuditoriaInternaHallazgos extends Component
             'text' => 'Registro eliminado',
            ]);
     }
+
     public function render()
     {
-
         $areas = Area::get();
         $procesos = Proceso::get();
-        
-        return view('livewire.auditoria-interna-hallazgos', compact('procesos','areas'));
+
+        return view('livewire.auditoria-interna-hallazgos', compact('procesos', 'areas'));
     }
 }

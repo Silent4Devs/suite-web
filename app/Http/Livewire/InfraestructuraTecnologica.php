@@ -13,6 +13,7 @@ class InfraestructuraTecnologica extends Component
     public function render()
     {
         $datas = CuestionarioInfraestructuraTecnologica::where('cuestionario_id', '=', $this->cuestionario_id)->get();
-        return view('livewire.infraestructura-tecnologica',compact('datas'));
+
+        return view('livewire.infraestructura-tecnologica', compact('datas'));
     }
 }

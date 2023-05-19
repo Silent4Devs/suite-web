@@ -9,7 +9,6 @@ class AnalisisImpacto extends Model
 {
     use HasFactory;
 
-
     public $table = 'cuestionario_analisis_impacto';
 
     const DisruptivoSelect = [
@@ -20,10 +19,8 @@ class AnalisisImpacto extends Model
         '5' => 'Casi cierto (Cada Semana)',
     ];
 
-
-
     public $fillable = [
-        // DATOS DE IDENTIFICACIÓN DEL ENTREVISTADO 
+        // DATOS DE IDENTIFICACIÓN DEL ENTREVISTADO
         'id',
         'fecha_entrevista',
         'entrevistado',
@@ -249,6 +246,7 @@ class AnalisisImpacto extends Model
         $dia_rpo = $this->rpo_dia * 24;
         $hora_rpo = $this->rpo_hora;
         $total_horas = $mese_rpo + $semana_rpo + $dia_rpo + $hora_rpo;
+
         return $total_horas;
     }
 
@@ -259,6 +257,7 @@ class AnalisisImpacto extends Model
         $dia_rto = $this->rto_dia * 24;
         $hora_rto = $this->rto_hora;
         $total_horas = $mese_rto + $semana_rto + $dia_rto + $hora_rto;
+
         return $total_horas;
     }
 
@@ -269,6 +268,7 @@ class AnalisisImpacto extends Model
         $dia_wrt = $this->wrt_dia * 24;
         $hora_wrt = $this->wrt_hora;
         $total_horas = $mese_wrt + $semana_wrt + $dia_wrt + $hora_wrt;
+
         return $total_horas;
     }
 
@@ -279,8 +279,10 @@ class AnalisisImpacto extends Model
         $dia_mtpd = $this->mtpd_dia * 24;
         $hora_mtpd = $this->mtpd_hora;
         $total_horas = $mese_mtpd + $semana_mtpd + $dia_mtpd + $hora_mtpd;
+
         return $total_horas;
     }
+
     public function getNivelRtoAttribute()
     {
         $parametro = $this->rto_horas;
@@ -301,14 +303,17 @@ class AnalisisImpacto extends Model
             $color_texto = '#000000';
             $texto = 'No definido';
         }
+
         return  [$color,  $color_texto, $texto];
     }
+
     public function getOperacionPromedioAttribute()
     {
         $parametro_1 = $this->operacion_q_1;
         $parametro_2 = $this->operacion_q_2;
         $parametro_3 = $this->operacion_q_3;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3) / 3;
+
         return round($promedio);
     }
 
@@ -318,22 +323,27 @@ class AnalisisImpacto extends Model
         $parametro_2 = $this->regulatorio_q_2;
         $parametro_3 = $this->regulatorio_q_3;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3) / 3;
+
         return round($promedio);
     }
+
     public function getReputacionPromedioAttribute()
     {
         $parametro_1 = $this->reputacion_q_1;
         $parametro_2 = $this->reputacion_q_2;
         $parametro_3 = $this->reputacion_q_3;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3) / 3;
+
         return round($promedio);
     }
+
     public function getSocialPromedioAttribute()
     {
         $parametro_1 = $this->social_q_1;
         $parametro_2 = $this->social_q_2;
         $parametro_3 = $this->social_q_3;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3) / 3;
+
         return round($promedio);
     }
 
@@ -348,6 +358,7 @@ class AnalisisImpacto extends Model
         $parametro_3 = $this->reputacion_promedio * $impacto_reputacion;
         $parametro_4 = $this->social_promedio * $impacto_social;
         $promedio = ($parametro_1 + $parametro_2 + $parametro_3 + $parametro_4);
+
         return round($promedio);
     }
 
@@ -363,7 +374,6 @@ class AnalisisImpacto extends Model
             $color_texto = '#000000';
             $texto = 'Medio';
         } elseif ($parametro <= 57) {
-
             $color = '#FF3333';
             $color_texto = '#FFFFFF';
             $texto = 'Alto';
@@ -372,6 +382,7 @@ class AnalisisImpacto extends Model
             $color_texto = '#000000';
             $texto = 'No definido';
         }
+
         return  [$color,  $color_texto, $texto];
     }
 
@@ -391,53 +402,45 @@ class AnalisisImpacto extends Model
             $color = '#FFC000';
             $color_texto = '#000000';
             $texto = '2.Importante';
-        }elseif ($nivel_rto == 'Medio' and $nivel_impacto == 'Alto') {
+        } elseif ($nivel_rto == 'Medio' and $nivel_impacto == 'Alto') {
             $color = '#FF3333';
             $color_texto = '#FFFFFF';
             $texto = '1.Crítico';
-        }
-        elseif ($nivel_rto == 'Medio' and $nivel_impacto == 'Medio') {
+        } elseif ($nivel_rto == 'Medio' and $nivel_impacto == 'Medio') {
             $color = '#FFC000';
             $color_texto = '#000000';
             $texto = '2.Importante';
-        }
-        elseif ($nivel_rto == 'Medio' and $nivel_impacto == 'Bajo') {
+        } elseif ($nivel_rto == 'Medio' and $nivel_impacto == 'Bajo') {
             $color = '#00B050';
             $color_texto = '#000000';
             $texto = '3.Necesario';
-        }
-        elseif ($nivel_rto == 'Bajo' and $nivel_impacto == 'Alto') {
+        } elseif ($nivel_rto == 'Bajo' and $nivel_impacto == 'Alto') {
             $color = '#FFC000';
             $color_texto = '#000000';
             $texto = '2.Importante';
-        }
-        elseif ($nivel_rto == 'Bajo' and $nivel_impacto == 'Medio') {
+        } elseif ($nivel_rto == 'Bajo' and $nivel_impacto == 'Medio') {
             $color = '#00B050';
             $color_texto = '#000000';
             $texto = '3.Necesario';
-        }
-        elseif ($nivel_rto == 'Bajo' and $nivel_impacto == 'Bajo') {
+        } elseif ($nivel_rto == 'Bajo' and $nivel_impacto == 'Bajo') {
             $color = '#00B050';
             $color_texto = '#000000';
             $texto = '3.Necesario';
-        }else{
+        } else {
             $color = '#33A5FF';
             $color_texto = '#000000';
             $texto = 'Fuera de Rango';
         }
-        
+
         return  [$color,  $color_texto, $texto];
-
-    
     }
-
-
 
     // Appens 3.0 Entradas y salidas
     public function recibeInformacion()
     {
         return $this->hasMany(CuestionarioRecibeInformacion::class, 'cuestionario_id');
     }
+
     public function proporcionaInformacion()
     {
         return $this->hasMany(CuestionarioProporcionaInformacion::class, 'cuestionario_id');
@@ -464,7 +467,8 @@ class AnalisisImpacto extends Model
         } elseif ($recibe == $proporciona) {
             $rowspan = $proporciona;
         }
-        $diferencia =  $proporciona - $recibe;
+        $diferencia = $proporciona - $recibe;
+
         return  [$diferencia, 2];
     }
 
@@ -494,30 +498,37 @@ class AnalisisImpacto extends Model
     {
         return $this->recursosMateriales()->where('escenario', '1')->pluck('equipos')->sum();
     }
+
     public function getCantidadTelefoniaNormalAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '1')->pluck('telefono')->sum();
     }
+
     public function getCantidadImpresoraNormalAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '1')->pluck('impresoras')->sum();
     }
+
     public function getCantidadOtrosNormalAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '1')->pluck('otro')->first();
     }
+
     public function getCantidadEquipoComputoContingenciaAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '2')->pluck('equipos')->sum();
     }
+
     public function getCantidadTelefoniaContingenciaAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '2')->pluck('telefono')->sum();
     }
+
     public function getCantidadImpresoraContingenciaAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '2')->pluck('impresoras')->sum();
     }
+
     public function getCantidadOtrosContingenciaAttribute()
     {
         return $this->recursosMateriales()->where('escenario', '2')->pluck('otro')->first();

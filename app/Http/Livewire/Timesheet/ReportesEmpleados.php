@@ -202,7 +202,7 @@ class ReportesEmpleados extends Component
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
                             if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks'][] = $semana;
-                            }else{
+                            } else {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                                 array_pop($calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']);
                             }
@@ -213,7 +213,7 @@ class ReportesEmpleados extends Component
                 }
             }
         }
-        
+
         foreach ($calendario_array as $key => &$c_year) {
             $total_months = count($c_year['months']);
             $total_weeks_year = 0;
@@ -238,7 +238,6 @@ class ReportesEmpleados extends Component
                 $fecha_inicio_timesheet_empleado = $this->fecha_inicio;
             }
 
-
             if (($this->fecha_fin) && (Carbon::parse($this->fecha_fin)->lt($this->hoy))) {
                 $fecha_fin_timesheet_empleado = $this->fecha_fin;
             } else {
@@ -256,7 +255,6 @@ class ReportesEmpleados extends Component
 
             // horas totales por empleado
             $times_empleado_aprobados_pendientes_list = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->get();
-
 
             $horas_semana = 0;
             $times_empleado_calendario_array = [];
@@ -308,7 +306,7 @@ class ReportesEmpleados extends Component
             } else {
                 $fecha_inicio_timesheet_faltantes_empleado = $fecha_inicio_timesheet_empleado;
             }
-            if(!$fecha_inicio_timesheet_faltantes_empleado){
+            if (!$fecha_inicio_timesheet_faltantes_empleado) {
                 $fecha_inicio_timesheet_faltantes_empleado = $this->fecha_inicio;
             }
             $antiguedad_y = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('Y');
@@ -495,7 +493,6 @@ class ReportesEmpleados extends Component
 
         $hoy_2 = now();
         if ($hoy_2->subweeks(3)->lt($fecha_inicio_timesheet_empleado)) {
-
             if (gettype($fecha_inicio_timesheet_empleado) == 'string') {
                 $fecha_inicio_timesheet_empleado = Carbon::parse($fecha_inicio_timesheet_empleado)->startOfMonth()->subMonth();
             } else {

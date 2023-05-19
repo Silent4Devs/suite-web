@@ -10,9 +10,9 @@ use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\PoliticaSgsi;
 use App\Models\Team;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
-use App\Traits\ObtenerOrganizacion;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -90,7 +90,7 @@ class PoliticaSgsiController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.politicaSgsis.index', compact('politicaSgsis', 'teams', 'empleados','organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.politicaSgsis.index', compact('politicaSgsis', 'teams', 'empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -106,7 +106,7 @@ class PoliticaSgsiController extends Controller
     {
         abort_if(Gate::denies('politica_sistema_gestion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request -> validate([
+        $request->validate([
             'nombre_politica' => 'required',
             'politicasgsi' => 'required',
             'fecha_publicacion' => 'required|date',
@@ -135,14 +135,14 @@ class PoliticaSgsiController extends Controller
     {
         abort_if(Gate::denies('politica_sistema_gestion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-         $request -> validate([
-             'nombre_politica' => 'required',
-             'politicasgsi' => 'required',
+        $request->validate([
+            'nombre_politica' => 'required',
+            'politicasgsi' => 'required',
 /*            'fecha_publicacion' => 'required|date',
-            'fecha_entrada' => 'required|date',
-            'fecha_revision' => 'required|date',*/
-             'id_reviso_politica' => 'required',
-         ]);
+           'fecha_entrada' => 'required|date',
+           'fecha_revision' => 'required|date',*/
+            'id_reviso_politica' => 'required',
+        ]);
 
         $politicaSgsi->update($request->all());
 

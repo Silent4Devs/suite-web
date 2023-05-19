@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Functions\GeneratePdf;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPlanAuditoriumRequest;
-use App\Http\Requests\StorePlanAuditoriumRequest;
-use App\Http\Requests\UpdatePlanAuditoriumRequest;
 use App\Models\ActividadesPlanAuditorium;
 use App\Models\AuditoriaAnual;
-use App\Models\AuditoriaInternasHallazgos;
 use App\Models\Empleado;
 use App\Models\PlanAuditoria;
 use App\Models\PlanAuditorium;
 use App\Models\Puesto;
-use App\Models\Team;
-use Gate;
-use Illuminate\Validation\Rule;
-use Illuminate\Http\Request;
 use App\Traits\ObtenerOrganizacion;
+use Gate;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -80,7 +75,6 @@ class PlanAuditoriaController extends Controller
                 return $row->auditados ? $row->auditados : '';
             });
 
-
             $table->rawColumns(['actions', 'placeholder', 'auditados']);
 
             return $table->make(true);
@@ -91,7 +85,7 @@ class PlanAuditoriaController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.planAuditoria.index', compact('auditoria_anuals','organizacion_actual','logo_actual','empresa_actual'));
+        return view('admin.planAuditoria.index', compact('auditoria_anuals', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()
@@ -108,9 +102,9 @@ class PlanAuditoriaController extends Controller
 
         $actividadesAuditoria = ActividadesPlanAuditorium::get();
 
-        $planAuditoria=PlanAuditoria::get();
+        $planAuditoria = PlanAuditoria::get();
 
-        return view('admin.planAuditoria.create', compact('planAuditoria','equipoauditorias', 'empleados', 'puesto', 'actividadesAuditoria'));
+        return view('admin.planAuditoria.create', compact('planAuditoria', 'equipoauditorias', 'empleados', 'puesto', 'actividadesAuditoria'));
     }
 
     public function store(Request $request)
@@ -124,19 +118,16 @@ class PlanAuditoriaController extends Controller
             'objetivo' => 'required',
             'alcance' => 'required',
             'criterios'=> 'required',
-            'id_auditoria' => ['nullable', Rule::unique('plan_auditoria')->whereNull('deleted_at')]
+            'id_auditoria' => ['nullable', Rule::unique('plan_auditoria')->whereNull('deleted_at')],
 
         ]);
 
-        $planAuditorium=PlanAuditorium::create($request->all());
-
+        $planAuditorium = PlanAuditorium::create($request->all());
 
         $planAuditorium->auditados()->sync($request->equipo);
         $this->saveUpdateAuditados($request->auditados, $planAuditorium);
 
-
         return redirect()->route('admin.plan-auditoria.edit', ['planAuditorium'=>$planAuditorium]);
-
     }
 
     public function edit(PlanAuditorium $planAuditorium)
@@ -159,7 +150,6 @@ class PlanAuditoriaController extends Controller
     {
         abort_if(Gate::denies('plan_de_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
         $request->validate([
             'fecha_inicio_auditoria' => 'required|date',
             'nombre_auditoria'=>'required|string',
@@ -167,7 +157,7 @@ class PlanAuditoriaController extends Controller
             'objetivo' => 'required',
             'alcance' => 'required',
             'criterios'=> 'required',
-            'id_auditoria' => 'nullable|unique:plan_auditoria,id_auditoria,'.$planAuditorium->id.',id,deleted_at,NULL',
+            'id_auditoria' => 'nullable|unique:plan_auditoria,id_auditoria,' . $planAuditorium->id . ',id,deleted_at,NULL',
 
         ]);
 
@@ -183,7 +173,7 @@ class PlanAuditoriaController extends Controller
 
         ]);
 
-         // $planAuditorium->auditados()->sync($request->input('auditados', []));
+        // $planAuditorium->auditados()->sync($request->input('auditados', []));
         $planAuditorium->auditados()->sync($request->equipo);
         $this->saveUpdateAuditados($request->auditados, $planAuditorium);
 
@@ -195,8 +185,6 @@ class PlanAuditoriaController extends Controller
         abort_if(Gate::denies('plan_de_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $planAuditorium->load('auditados', 'team', 'actividadesPlan');
-
-
 
         return view('admin.planAuditoria.show', compact('planAuditorium'));
     }

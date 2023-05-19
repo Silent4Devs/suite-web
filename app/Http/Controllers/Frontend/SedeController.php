@@ -142,7 +142,6 @@ class SedeController extends Controller
         $sede = Sede::find($id);
         $image = $sede->foto_sedes;
         if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
-
             //Si existe la imagen entonces se elimina al editarla
 
             $isExists = Storage::disk('public')->exists('sedes/imagenes/' . $sede->foto_sedes);

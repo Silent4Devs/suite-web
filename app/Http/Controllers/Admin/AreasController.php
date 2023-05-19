@@ -6,7 +6,6 @@ use App\Exports\AreasExport;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyAreaRequest;
-use App\Http\Requests\StoreAreaRequest;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Grupo;
@@ -96,6 +95,7 @@ class AreasController extends Controller
         $areas = Area::with('areas')->get();
         $empleados = Empleado::alta()->get();
         $area = new Area();
+
         return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados', 'area'));
     }
 
@@ -112,7 +112,7 @@ class AreasController extends Controller
             'area' => 'required|string',
             'id_reporta' => $validateReporta,
         ], [
-            'id_reporta.required' => 'El área a la que reporta es requerido'
+            'id_reporta.required' => 'El área a la que reporta es requerido',
         ]);
 
         $area = Area::create($request->all());
@@ -134,7 +134,6 @@ class AreasController extends Controller
         $area->update([
             'foto_area' => $image,
         ]);
-
 
         return redirect()->route('admin.areas.index')->with('success', 'Guardado con éxito');
     }
@@ -171,13 +170,11 @@ class AreasController extends Controller
             'area' => 'required|string',
             'id_reporta' => $validateReporta,
         ], [
-            'id_reporta.required' => 'El área a la que reporta es requerido'
+            'id_reporta.required' => 'El área a la que reporta es requerido',
         ]);
-
 
         $image = $area->foto_area;
         if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
-
             //Si existe la imagen entonces se elimina al editarla
 
             $isExists = Storage::disk('public')->exists('/app/public/areas/' . $area->foto_area);

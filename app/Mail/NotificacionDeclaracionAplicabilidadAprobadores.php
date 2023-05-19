@@ -2,12 +2,11 @@
 
 namespace App\Mail;
 
-use App\Models\Empleado;
 use App\Models\DeclaracionAplicabilidad;
+use App\Models\Empleado;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class NotificacionDeclaracionAplicabilidadAprobadores extends Mailable
 {
@@ -26,7 +25,7 @@ class NotificacionDeclaracionAplicabilidadAprobadores extends Mailable
     public function __construct(Empleado $aprobador, Empleado $responsable, DeclaracionAplicabilidad $aplicabilidad)
     {
         $this->aprobador = $aprobador;
-        $this->aplicabilidad =$aplicabilidad;
+        $this->aplicabilidad = $aplicabilidad;
         $this->responsable = $responsable;
     }
 

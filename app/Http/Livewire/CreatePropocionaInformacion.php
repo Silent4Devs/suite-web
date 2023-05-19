@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class CreatePropocionaInformacion extends Component
 {
-   
     public $miembroID;
     public $nombre;
     public $puesto;
@@ -23,14 +22,12 @@ class CreatePropocionaInformacion extends Component
     public $normasModel = [];
     protected $listeners = ['editarFuenteInformacion' => 'edit', 'eliminarFuenteInformacion' => 'destroy', 'agregarNormas'];
 
-  
-
     public function validarMiembro()
     {
         $this->validate([
             'nombre' => 'required|max:50',
             'puesto' => 'required|max:75',
-            'correo_electronico' => 'required|max:50', 
+            'correo_electronico' => 'required|max:50',
             'extencion' => 'max:16',
             'ubicacion' => 'max:150',
         ]);
@@ -45,7 +42,7 @@ class CreatePropocionaInformacion extends Component
     public function save()
     {
         $this->validarMiembro();
-        $extencion = $this->extencion == "" ? 0: $this->extencion;
+        $extencion = $this->extencion == '' ? 0 : $this->extencion;
         $model = CuestionarioProporcionaInformacion::create([
         'nombre'=> $this->nombre,
         'puesto'=> $this->puesto,
@@ -56,7 +53,7 @@ class CreatePropocionaInformacion extends Component
         'interno_externo' => $this->interno_externo,
         ]);
 
-        $this->reset('id','nombre','puesto','correo_electronico','extencion','ubicacion','interno_externo');
+        $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
         $this->emit('render');
         $this->emit('cerrar-modal', ['editar' => false]);
     }
@@ -74,7 +71,6 @@ class CreatePropocionaInformacion extends Component
         $this->cuestionario_id = $model->cuestionario_id;
         $this->interno_externo = $model->interno_externo;
         $this->emit('abrir-modal');
-
     }
 
     public function default()
@@ -93,7 +89,7 @@ class CreatePropocionaInformacion extends Component
     {
         $this->validarMiembro();
         $model = CuestionarioProporcionaInformacion::find($this->miembroID);
-        $extencion = $this->extencion == "" ? 0: $this->extencion;
+        $extencion = $this->extencion == '' ? 0 : $this->extencion;
         $model->update([
             'nombre'=> $this->nombre,
             'puesto'=> $this->puesto,

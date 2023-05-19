@@ -12,7 +12,8 @@ class MantenimientoAia extends Component
 
     public function render()
     {
-        $datas =LiberaMantenimientoAIA::where('cuestionario_id', '=', $this->cuestionario_id)->get();
-        return view('livewire.mantenimiento-aia',compact('datas'));
+        $datas = LiberaMantenimientoAIA::where('cuestionario_id', '=', $this->cuestionario_id)->get();
+
+        return view('livewire.mantenimiento-aia', compact('datas'));
     }
 }

@@ -135,7 +135,6 @@ class GenerarPdfComponent extends Component
 
     public function generarEstudioContexto($filename, $organizacion, $logotipo, $matriz_requisitos_legales, $foda, $partes_interesadas, $control_documento)
     {
-
         // $control_documento = ControlDocumento::where('nombre', '=', 'Contexto de la organización')->first();
         // if (!$control_documento) {
         //     session()->flash('error_control_documento', 'No existe el control de documento: Contexto de la organización');

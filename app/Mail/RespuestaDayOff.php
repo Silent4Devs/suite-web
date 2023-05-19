@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -15,7 +14,7 @@ class RespuestaDayOff extends Mailable
     public $supervisor;
     public $solicitud;
 
-    public function __construct($solicitante,$supervisor,$solicitud)
+    public function __construct($solicitante, $supervisor, $solicitud)
     {
         $this->solicitante = $solicitante;
         $this->supervisor = $supervisor;

@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class IndicadoresSgsi.
@@ -69,7 +68,7 @@ class IndicadoresSgsi extends Model
         'amarillo',
         'rojo',
         'ano',
-        'id_area'
+        'id_area',
     ];
 
     public function getResultado()

@@ -9,14 +9,11 @@ use App\Models\PerfilEmpleado;
 use App\Models\Puesto;
 use App\Models\Role;
 use App\Models\User;
-use App\Rules\Imports\AreaExists;
 use App\Traits\GeneratePassword;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
@@ -27,7 +24,6 @@ class EmpleadoImport implements ToModel, WithHeadingRow, WithValidation
     private $empleados;
     private $area;
 
-
     public function model(array $row)
     {
         $antiguedad = $this->transformDate($row['ingreso']);
@@ -36,7 +32,7 @@ class EmpleadoImport implements ToModel, WithHeadingRow, WithValidation
 
         $empleado = Empleado::updateOrCreate(
             [
-                'name' => ucfirst($row['nombre'])
+                'name' => ucfirst($row['nombre']),
             ],
             [
                 'puesto_id' => Puesto::select('id', 'puesto')->where('puesto', $row['puesto'])->first()->id,
@@ -60,7 +56,6 @@ class EmpleadoImport implements ToModel, WithHeadingRow, WithValidation
 
     public function rules(): array
     {
-
         return [
             '*.nombre' => 'required|string|min:2|max:255',
             '*.puesto' => ['required', 'string', 'min:2', 'max:255', function ($attribute, $value, $onFailure) {
@@ -117,8 +112,6 @@ class EmpleadoImport implements ToModel, WithHeadingRow, WithValidation
 
         return $user;
     }
-
-
 
     // public function batchSize(): int
     // {

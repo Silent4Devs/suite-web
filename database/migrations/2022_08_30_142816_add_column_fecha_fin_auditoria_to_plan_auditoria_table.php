@@ -15,7 +15,6 @@ class AddColumnFechaFinAuditoriaToPlanAuditoriaTable extends Migration
     {
         Schema::table('plan_auditoria', function (Blueprint $table) {
             $table->date('fecha_fin_auditoria')->nullable();
-
         });
     }
 

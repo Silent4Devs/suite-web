@@ -23,6 +23,4 @@ class PlanAuditoria extends Model
         'fecha_inicio_auditoria',
         'fecha_fin_auditoria',
     ];
-
-    
 }

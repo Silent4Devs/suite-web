@@ -106,28 +106,26 @@ class MatrizRiesgosController extends Controller
         return view('admin.matriz-seguridad', compact('tipoactivos', 'tipoactivos', 'controles', 'teams'));
     }*/
 
-
     public function create()
     {
         abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
-        $sedes = Sede::select('id','sede')->get();
+        $sedes = Sede::select('id', 'sede')->get();
         //$areas = Area::get();
-        $procesos = Proceso::select('id','codigo','nombre')->get();
-        $responsables = Empleado::select('id','name','area_id','puesto_id')->alta()->get();
+        $procesos = Proceso::select('id', 'codigo', 'nombre')->get();
+        $responsables = Empleado::select('id', 'name', 'area_id', 'puesto_id')->alta()->get();
 
-        $activos = SubcategoriaActivo::select('id','subcategoria')->get();
-        $amenazas = Amenaza::select('id','nombre')->get();
+        $activos = SubcategoriaActivo::select('id', 'subcategoria')->get();
+        $amenazas = Amenaza::select('id', 'nombre')->get();
 
-        $vulnerabilidades = Vulnerabilidad::select('id','nombre')->get();
+        $vulnerabilidades = Vulnerabilidad::select('id', 'nombre')->get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
         $tipo_riesgo = MatrizRiesgo::TIPO_RIESGO_SELECT;
         $probabilidad = MatrizRiesgo::PROBABILIDAD_SELECT;
         $impacto = MatrizRiesgo::IMPACTO_SELECT;
 
-        return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables','tipo_riesgo','probabilidad','impacto'))->with('id_analisis', \request()->idAnalisis, );
+        return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables', 'tipo_riesgo', 'probabilidad', 'impacto'))->with('id_analisis', \request()->idAnalisis, );
     }
 
     public function store(StoreMatrizRiesgoRequest $request)
@@ -178,7 +176,6 @@ class MatrizRiesgosController extends Controller
                 array_push($planes_seleccionados, $plan->id);
             }
         }
-
 
         return view('admin.matrizRiesgos.edit', compact('planes_seleccionados', 'matrizRiesgo', 'vulnerabilidades', 'controles', 'amenazas', 'activos', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz', 'tipoactivos', 'responsables'));
     }
@@ -793,9 +790,11 @@ class MatrizRiesgosController extends Controller
         return view('admin.matrizSistemaGestion.create', compact('amenazas', 'matrizRiesgo', 'activos', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
 
-    public function identificadorExist(Request $request){
+    public function identificadorExist(Request $request)
+    {
         $identificador = $request->identificador;
-        $exist = MatrizRiesgosSistemaGestion::where('identificador',$identificador)->exists();
+        $exist = MatrizRiesgosSistemaGestion::where('identificador', $identificador)->exists();
+
         return response()->json(['existe'=>$exist]);
     }
 
@@ -805,7 +804,7 @@ class MatrizRiesgosController extends Controller
 
         $request->validate([
             'controles_id' => 'required',
-            'identificador' => ['required', Rule::unique('matriz_riesgos_sistema_gestion')->whereNull('deleted_at')]
+            'identificador' => ['required', Rule::unique('matriz_riesgos_sistema_gestion')->whereNull('deleted_at')],
         ]);
         // dd($request->all());
         $controles = array_map(function ($value) {
@@ -819,8 +818,8 @@ class MatrizRiesgosController extends Controller
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
 
-        if($matrizRiesgo->riesgo_total >=90){
-            $tratamiento_riesgo=TratamientoRiesgo::create([
+        if ($matrizRiesgo->riesgo_total >= 90) {
+            $tratamiento_riesgo = TratamientoRiesgo::create([
                 'matriz_sistema_gestion_id'=>$matrizRiesgo->id,
                 'identificador'=>$request->identificador,
                 'descripcionriesgo'=>$request->descripcionriesgo,
@@ -874,7 +873,7 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('analisis_de_riesgo_integral_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'controles_id' => 'required',
-            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador,'.$matrizRiesgo.',id,deleted_at,NULL',
+            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador,' . $matrizRiesgo . ',id,deleted_at,NULL',
         ]);
 
         // dd($matrizRiesgo);
@@ -890,13 +889,13 @@ class MatrizRiesgosController extends Controller
             $matrizRiesgo->planes()->sync($request->plan_accion);
         }
 
-        if($matrizRiesgo->riesgo_total <90){
-            if( TratamientoRiesgo::where('matriz_sistema_gestion_id',$matrizRiesgo->id)->first()){
-                TratamientoRiesgo::where('matriz_sistema_gestion_id',$matrizRiesgo->id)->first()->delete();
+        if ($matrizRiesgo->riesgo_total < 90) {
+            if (TratamientoRiesgo::where('matriz_sistema_gestion_id', $matrizRiesgo->id)->first()) {
+                TratamientoRiesgo::where('matriz_sistema_gestion_id', $matrizRiesgo->id)->first()->delete();
             }
         }
-        if($matrizRiesgo->riesgo_total >=90){
-            $tratamiento_riesgo=TratamientoRiesgo::updateOrCreate(
+        if ($matrizRiesgo->riesgo_total >= 90) {
+            $tratamiento_riesgo = TratamientoRiesgo::updateOrCreate(
                 [
                     'matriz_sistema_gestion_id'=>$matrizRiesgo->id,
 
@@ -910,10 +909,9 @@ class MatrizRiesgosController extends Controller
                 'acciones'=>$request->acciones,
                 'id_proceso'=>$request->id_proceso,
                 'id_dueno'=>$request->id_responsable,
-            ]);
+            ]
+            );
         }
-
-
 
         return redirect()->route('admin.matriz-seguridad.sistema-gestion', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
     }

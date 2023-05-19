@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Organizacion;
 use App\Models\PermisosGoceSueldo;
 use App\Models\SolicitudPermisoGoceSueldo;
-use App\Models\Vacaciones;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

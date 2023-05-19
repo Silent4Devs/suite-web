@@ -24,9 +24,9 @@ class VisitantesAvisoPrivacidadController extends Controller
         } else {
             $aviso_privacidad = new AvisoPrivacidadVisitante();
         }
+
         return view('admin.visitantes.aviso-privacidad.index', compact('aviso_privacidad'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -51,7 +51,6 @@ class VisitantesAvisoPrivacidadController extends Controller
                 'aviso_privacidad' => $request->aviso_privacidad,
             ]);
         }
-
 
         return response()->json([
             'success' => true,

@@ -23,7 +23,8 @@ class TiposObjetivosSistemaController extends Controller
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
-        return view('admin.tipos_objetivos_sistema.index',compact('organizacion_actual','logo_actual','empresa_actual'));
+
+        return view('admin.tipos_objetivos_sistema.index', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function getDataForDataTable()

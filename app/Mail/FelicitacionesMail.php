@@ -3,17 +3,18 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class FelicitacionesMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $nombre, $correodestinatario, $imgpastel, $imgtab;
+    protected $nombre;
+    protected $correodestinatario;
+    protected $imgpastel;
+    protected $imgtab;
+
     /**
      * Create a new message instance.
      *
@@ -37,10 +38,12 @@ class FelicitacionesMail extends Mailable
     {
         return $this->from(env('# MAIL_FROM_ADDRESS'), env('# MAIL_FROM_NAME'))
         ->subject('Feliz Cumpleaños')
-        ->view('mails.felicitaciones',
+        ->view(
+            'mails.felicitaciones',
             ['empleado'=>$this->nombre,
             'pastel'=>$this->imgpastel,
-            'tabantaj'=>$this->imgtab
-        ]);
+            'tabantaj'=>$this->imgtab,
+        ]
+        );
     }
 }

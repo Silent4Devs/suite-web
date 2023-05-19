@@ -4,19 +4,20 @@ namespace App\Http\Controllers\Visitantes;
 
 use App\Http\Controllers\Controller;
 use App\Models\Organizacion;
-use App\Models\Visitantes\RegistrarVisitante;
 use App\Models\Visitantes\AvisoPrivacidadVisitante;
+use App\Models\Visitantes\RegistrarVisitante;
 use App\Models\Visitantes\ResponsableVisitantes;
 use App\Models\Visitantes\VisitanteQuote;
-use Illuminate\Http\Request;
 
 class RegistroVisitantesController extends Controller
 {
     public $existsResponsable;
+
     public function __construct()
     {
         $this->existsResponsable = ResponsableVisitantes::exists();
     }
+
     public function presentacion()
     {
         $quote = VisitanteQuote::first();
@@ -32,6 +33,7 @@ class RegistroVisitantesController extends Controller
 
         return view('visitantes.registro-visitantes.presentacion', compact('quote', 'logo'))->with('existsResponsable', $this->existsResponsable);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +44,6 @@ class RegistroVisitantesController extends Controller
         if (AvisoPrivacidadVisitante::count() > 0) {
             $aviso_privacidad = AvisoPrivacidadVisitante::first();
         } else {
-
             $aviso_privacidad = new AvisoPrivacidadVisitante();
         }
         if (Organizacion::count() > 0) {
@@ -56,13 +57,13 @@ class RegistroVisitantesController extends Controller
 
     public function salida()
     {
-
         return view('visitantes.registro-visitantes.salida')->with('existsResponsable', $this->existsResponsable);
     }
 
     public function registrarSalida($registrarVisitante)
     {
         $visitante = RegistrarVisitante::where('uuid', $registrarVisitante)->first();
+
         return view('visitantes.registro-visitantes.salida-registro', compact('visitante'))->with('existsResponsable', $this->existsResponsable);
     }
 }
