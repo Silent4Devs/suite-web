@@ -258,7 +258,7 @@ class IndicadoresSgsiController extends Controller
                 array_push($finish_array, $result);
             }
         }
-
+        // dd($finish_array);
         $remplazo_formula = str_replace('!', '', $indicadoresSgsis->formula);
 
         if ($remplazo_formula) {
@@ -266,14 +266,22 @@ class IndicadoresSgsiController extends Controller
                 ->update(['formula' => $remplazo_formula, 'formula_raw' => $indicadoresSgsis->formula]);
         }
 
-        $variablesIndicadores = VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->get();
-        VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->delete();
-        sleep(2);
+
+        // $variablesIndicadores = VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)
+        // ->latest('created_at')
+        // ->get();
+        // dd($variablesIndicadores);
+        VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->latest('created_at')->delete();
+        $i=0;
         foreach ($finish_array as $key => $value) {
+            $i=$i+1;
+        }
+
+        for ($j=0; $j < $i; $j++) {
             VariablesIndicador::create(
                 [
                     'id_indicador' => $indicadoresSgsis->id,
-                    'variable' => str_replace('.', '', $value),
+                    'variable' => str_replace('.', '', $finish_array[$j]),
                 ]
             );
         }
