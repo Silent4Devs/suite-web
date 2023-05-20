@@ -50,7 +50,19 @@ class IndicadoresSgsiComponent extends Component
     public function mount($indicadoresSgsis)
     {
         $this->indicadoresSgsis = $indicadoresSgsis;
-        $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
+        // dd($indicadoresSgsis);
+        $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)
+        ->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
+        foreach($this->customFields as $variable){
+            if($variable->deleted_at != null){
+                $updvar = VariablesIndicador::where('id', '=', $this->variable->id)
+                ->latest('created_at')
+                ->latest('updated_at')
+                ->withTrashed()
+                ->restore();
+            }
+        }
+        // dd($this->customFields);
         $data = [];
         $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
             $data[$value->variable] = '';
