@@ -272,16 +272,13 @@ class IndicadoresSgsiController extends Controller
         // ->get();
         // dd($variablesIndicadores);
         VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->latest('created_at')->delete();
-        $i=0;
-        foreach ($finish_array as $key => $value) {
-            $i=$i+1;
-        }
 
-        for ($j=0; $j < $i; $j++) {
+        foreach ($finish_array as $key => $value) {
             VariablesIndicador::create(
                 [
                     'id_indicador' => $indicadoresSgsis->id,
-                    'variable' => str_replace('.', '', $finish_array[$j]),
+                    'variable' => str_replace('.', '', $value),
+                    'deleted_at' => null,
                 ]
             );
         }
