@@ -274,13 +274,17 @@ class IndicadoresSgsiController extends Controller
         VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->latest('created_at')->delete();
 
         foreach ($finish_array as $key => $value) {
-            VariablesIndicador::create(
+            $varcreada=VariablesIndicador::create(
                 [
                     'id_indicador' => $indicadoresSgsis->id,
                     'variable' => str_replace('.', '', $value),
                     'deleted_at' => null,
                 ]
             );
+            sleep(1);
+            VariablesIndicador::where('id', $varcreada->id)
+            ->update([ 'deleted_at' => null,
+            ]);
         }
 
         return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id]);
