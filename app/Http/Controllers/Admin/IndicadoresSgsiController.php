@@ -234,14 +234,10 @@ class IndicadoresSgsiController extends Controller
                 ->update(['formula' => $remplazo_formula, 'formula_raw' => $indicadoresSgsis->formula]);
         }
 
-        foreach ($finish_array as $key => $value) {
-            VariablesIndicador::create(['id_indicador' => $indicadoresSgsis->id, 'variable' => str_replace('.', '', $value)]);
-        }
-
         //dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);
 
         // return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesInsert', ['id' => $indicadoresSgsis->id]);
-        return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id]);
+        return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id, 'variables' => $finish_array]);
     }
 
     public function IndicadorUpdate(Request $request)
@@ -266,48 +262,62 @@ class IndicadoresSgsiController extends Controller
                 ->update(['formula' => $remplazo_formula, 'formula_raw' => $indicadoresSgsis->formula]);
         }
 
-
-        // $variablesIndicadores = VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)
-        // ->latest('created_at')
-        // ->get();
-        // dd($variablesIndicadores);
-        VariablesIndicador::where('id_indicador', $indicadoresSgsis->id)->latest('created_at')->delete();
-
-        foreach ($finish_array as $key => $value) {
-            $varcreada=VariablesIndicador::create(
-                [
-                    'id_indicador' => $indicadoresSgsis->id,
-                    'variable' => str_replace('.', '', $value),
-                    'deleted_at' => null,
-                ]
-            );
-            sleep(1);
-            VariablesIndicador::where('id', $varcreada->id)
-            ->update([ 'deleted_at' => null,
-            ]);
-        }
-
-        return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id]);
+        return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id, 'variables' => $finish_array]);
     }
 
     public function evaluacionesInsert(Request $request)
     {
-        $id = $request->all();
+        $id = $request->all('id');
 
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
+        $variables = $request->all('variables');
+        // dd($variables);
+        if($variables['variables'] == null){
+
+            $indicadoresSgsi = IndicadoresSgsi::find($id['id']);
+
+            if ($indicadoresSgsi->formula_raw == null) {
+                $indicadoresSgsi->update(['formula_raw' => $indicadoresSgsi->formula]);
+            }
+
+            $formula_r = $indicadoresSgsi->formula_raw;
+            $chars = ["$", '/', '*', '-', '+'];
+            $onlyconsonants = $formula_r;
+            foreach ($chars as $key => $char) {
+                $onlyconsonants = str_replace($char, '!' . $char, $onlyconsonants);
+            }
+
+            $formula_array = explode('!', $onlyconsonants);
+
+            $finish_array = [];
+
+            foreach ($formula_array as $result) {
+                if (strstr($result, '$')) {
+                    array_push($finish_array, $result);
+                }
+            }
+
+            return view('admin.indicadoresSgsis.evaluacion')
+            ->with('indicadoresSgsis', $indicadoresSgsis)
+            ->with('variables', $finish_array);
+        }
+
         return view('admin.indicadoresSgsis.evaluacion')
-            ->with('indicadoresSgsis', $indicadoresSgsis);
+            ->with('indicadoresSgsis', $indicadoresSgsis)
+            ->with('variables', $variables);
     }
 
     public function evaluacionesUpdate(Request $request)
     {
-        $id = $request->all();
-
+        // dd($request->all('id'));
+        $id = $request->all('id');
+        $variables = $request->all('variables');
+        // dd($variables);
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
-        return view('admin.indicadoresSgsis.evaluacion')
-            ->with('indicadoresSgsis', $indicadoresSgsis);
+        return view('admin.indicadoresSgsis.evaluacion')->with('indicadoresSgsis', $indicadoresSgsis)
+        ->with('variables', $variables);
     }
 
     public function indicadoresDashboard(Request $request)
