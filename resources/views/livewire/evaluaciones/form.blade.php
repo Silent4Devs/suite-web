@@ -33,14 +33,14 @@
         @if ($customField != null)
             <div class="mb-0 form-group col-sm-6">
                 <div class="form-group mb-1">
-                    <label for="formSlugs.{{ $key }}.{{ $customField->variable }}"><i
-                            class="fab fa-diaspora iconos-crear"></i>{{ ucfirst(substr($customField->variable, 1)) }}</label>
+                    <label for="formSlugs.{{ $key }}.{{ $customField}}"><i
+                            class="fab fa-diaspora iconos-crear"></i>{{ ucfirst(substr($customField, 1)) }}</label>
                     <input class="form-control slugs-inputs {{ $errors->has('') ? 'is-invalid' : '' }}" type="number"
-                        min="0" wire:model="formSlugs.{{ $key }}.{{ $customField->variable }}"
-                        id="formSlugs.{{ $key }}.{{ $customField->variable }}" value="" required>
+                        min="0" wire:model="formSlugs.{{ $key }}.{{ $customField }}"
+                        id="formSlugs.{{ $key }}.{{ $customField }}" value="" required>
                 </div>
                 {{-- {{"formSlugs.$key.$customField->variable"}} --}}
-                @if ($errors->has("formSlugs.$key.$customField->variable"))
+                @if ($errors->has("formSlugs.$key.$customField"))
                     <small class="text-danger">
                         {{-- {{ $errors->first("formSlugs.$key.$customField->variable") }} --}}
                         <p>Debes agregar esta evaluación</p>
