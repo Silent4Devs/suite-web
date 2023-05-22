@@ -8,6 +8,7 @@ use App\Models\Proceso;
 use App\Models\VariablesIndicador;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use App\Models\IndicadoresSgsi;
 
 class IndicadoresSgsiComponent extends Component
 {
@@ -24,6 +25,7 @@ class IndicadoresSgsiComponent extends Component
     public $id_empleado;
     public $id_proceso;
     public $indicadoresSgsis;
+    public $inpvar;
     public $view = 'create';
     public $formSlugs;
     public $customFields;
@@ -47,28 +49,39 @@ class IndicadoresSgsiComponent extends Component
         'formSlugs.*.*.required' => 'Agrega la evaluación',
     ];
 
-    public function mount($indicadoresSgsis)
+    public function mount($indicadoresSgsis, $inpvar)
     {
         $this->indicadoresSgsis = $indicadoresSgsis;
         // dd($indicadoresSgsis);
-        $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)
-        ->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
-        foreach($this->customFields as $variable){
-            if($variable->deleted_at != null){
-                $updvar = VariablesIndicador::where('id', '=', $this->variable->id)
-                ->latest('created_at')
-                ->latest('updated_at')
-                ->withTrashed()
-                ->restore();
+        // $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)
+        // ->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
+
+        $this->formula = IndicadoresSgsi::find($this->indicadoresSgsis->id);
+
+        // dd($this->formula->formula);
+
+        $finish_array = [];
+        // dd('Como llega?', $inpvar);
+        if(array_key_exists('variables', $inpvar) === true){
+            foreach ($inpvar['variables'] as $result) {
+                if(strstr($result, '$')){
+                array_push($finish_array, $result);
             }
-        }
-        // dd($this->customFields);
+        };
+        }else{
+            foreach ($inpvar as $result) {
+                array_push($finish_array, $result);
+        }}
+
+        $this->customFields = $finish_array;
+
         $data = [];
-        $this->formSlugs = collect($this->customFields)->map(function ($value) use ($data) {
-            $data[$value->variable] = '';
+        $this->formSlugs = collect($finish_array)->map(function ($value) use ($data) {
+            $data[$value] = '';
 
             return $data;
         })->toArray();
+        // dd($this->formSlugs);
     }
 
     public function render()

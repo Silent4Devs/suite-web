@@ -11,7 +11,9 @@
                 <span style="font-size: 17px; font-weight: bold;">
                     Información del indicador</span>
             </div>
-            @livewire('indicadores-sgsi-component', ['indicadoresSgsis' => $indicadoresSgsis])
+            @livewire('indicadores-sgsi-component', [
+                'indicadoresSgsis' => $indicadoresSgsis,
+                'inpvar' => $variables])
         </div>
     </div>
 @endsection
