@@ -50,7 +50,7 @@ RUN echo 'memory_limit = 0M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.in
     && echo 'post_max_size = 10000M' >> /usr/local/etc/php/conf.d/docker-php-upload.ini
 
 WORKDIR /var/www/html
-##COPY . .
+COPY . .
 RUN composer install
 
 # Healthcheck

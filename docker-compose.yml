@@ -1,42 +1,42 @@
 version: "3.8"
 services:
-  nginx:
+  nginx-tabantaj:
     image: nginx:stable-alpine
-    container_name: nginx
+    container_name: nginx-tabantaj
     restart: unless-stopped
     tty: true
     ports:
       - 80:80
     volumes:
       - .:/var/www/html
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - php
-      #- postgres
+      - php-tabantaj
+      - postgres-tabantaj
     networks:
       - tabantajnetwork
 
-  # postgres:
-  #   image: postgres:13-alpine
-  #   container_name: postgres
-  #   restart: unless-stopped
-  #   tty: true
-  #   volumes:
-  #         - "./postgres:/var/lib/postgresql/data"
-  #   environment:
-  #         - POSTGRES_USER=homestead
-  #         - POSTGRES_PASSWORD=secret
-  #         - POSTGRES_DB=homestead
-  #   ports:
-  #         - "5432:5432"
-  #   networks:
-  #         - tabantajnetwork
+  postgres-tabantaj:
+    image: postgres:14-alpine
+    container_name: postgres-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+          - "./infra/postgres:/var/lib/postgresql/data"
+    environment:
+          - POSTGRES_USER=homestead
+          - POSTGRES_PASSWORD=secret
+          - POSTGRES_DB=homestead
+    ports:
+          - "5432:5432"
+    networks:
+          - tabantajnetwork
 
-  php:
+  php-tabantaj:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: php
+    container_name: php-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
@@ -46,18 +46,18 @@ services:
     networks:
       - tabantajnetwork
 
-  nginx-amplify:
-    image: nginx-amplify-agent
-    container_name: nginx-amplify
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/nginx-amplify:/etc/amplify
-    environment:
-      - AMPLIFY_IMAGENAME=nginx
-      - AMPLIFY_APIKEY=7cb260676b00276f4e0be01bf4cba131
-    networks:
-      - tabantajnetwork
+  # nginx-amplify:
+  #   image: nginx-amplify-agent
+  #   container_name: nginx-amplify
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /etc/nginx-amplify:/etc/amplify
+  #   environment:
+  #     - AMPLIFY_IMAGENAME=nginx
+  #     - AMPLIFY_APIKEY=7cb260676b00276f4e0be01bf4cba131
+  #   networks:
+  #     - tabantajnetwork
 
 networks:
   tabantajnetwork:
