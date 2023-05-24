@@ -46,18 +46,5 @@ services:
     networks:
       - tabantajnetwork
 
-  # nginx-amplify:
-  #   image: nginx-amplify-agent
-  #   container_name: nginx-amplify
-  #   restart: unless-stopped
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - /etc/nginx-amplify:/etc/amplify
-  #   environment:
-  #     - AMPLIFY_IMAGENAME=nginx
-  #     - AMPLIFY_APIKEY=7cb260676b00276f4e0be01bf4cba131
-  #   networks:
-  #     - tabantajnetwork
-
 networks:
   tabantajnetwork:
