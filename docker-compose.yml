@@ -1,8 +1,8 @@
 version: "3.8"
 services:
-  nginx-tabantaj:
+  nginx:
     image: nginx:stable-alpine
-    container_name: nginx-tabantaj
+    container_name: nginx
     restart: unless-stopped
     tty: true
     ports:
@@ -11,14 +11,14 @@ services:
       - .:/var/www/html
       - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - php-tabantaj
-      - postgres-tabantaj
+      - php
+      - postgres
     networks:
       - tabantajnetwork
 
-  postgres-tabantaj:
-    image: postgres:13-alpine
-    container_name: postgres-tabantaj
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres
     restart: unless-stopped
     tty: true
     volumes:
@@ -32,11 +32,11 @@ services:
     networks:
           - tabantajnetwork
 
-  php-tabantaj:
+  php:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: php-tabantaj
+    container_name: php
     restart: unless-stopped
     tty: true
     volumes:
