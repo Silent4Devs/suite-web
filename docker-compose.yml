@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-          - "./infra/postgres:/var/lib/postgresql/data"
+          - "./infra/postgres/data:/var/lib/postgresql/data"
     environment:
           - POSTGRES_USER=homestead
           - POSTGRES_PASSWORD=secret
