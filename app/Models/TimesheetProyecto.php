@@ -22,6 +22,9 @@ class TimesheetProyecto extends Model
         'identificador',
         'sede_id',
         'tipo',
+        'horas_proyecto',
+        'proveedor',
+        'horas_tercero',
     ];
 
     const TIPOS = [

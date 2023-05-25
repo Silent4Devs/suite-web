@@ -8,6 +8,7 @@ use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\Sede;
 use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Models\TimesheetCliente;
@@ -522,6 +523,21 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.proyectos', compact('clientes', 'logo_actual', 'empresa_actual'));
+    }
+
+    public function createProyectos()
+    {
+        $clientes = TimesheetCliente::get();
+        $sedes = Sede::get();
+        $areas = Area::get();
+        $tipos = TimesheetProyecto::TIPOS;
+        $tipo = $tipos['Interno'];
+        return view('admin.timesheet.create-proyectos', compact('clientes', 'areas', 'sedes', 'tipos', 'tipo'));
+    }
+
+    public function storeProyectos(Request $request)
+    {
+        dd('Si manda a guardar', $request);
     }
 
     public function updateProyectos(Request $request, $id)
