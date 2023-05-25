@@ -23,8 +23,6 @@ class TimesheetProyecto extends Model
         'sede_id',
         'tipo',
         'horas_proyecto',
-        'proveedor',
-        'horas_tercero',
     ];
 
     const TIPOS = [
@@ -62,5 +60,15 @@ class TimesheetProyecto extends Model
     public function proyectos()
     {
         return $this->hasMany(QuejasCliente::class, 'proyectos_id');
+    }
+
+    public function empleados()
+    {
+        return $this->hasMany(TimesheetProyectoEmpleado::class, 'proyecto_id', 'id');
+    }
+
+    public function proveedores()
+    {
+        return $this->hasMany(TimesheetProyectoEmpleado::class, 'proyecto_id', 'id');
     }
 }

@@ -17,8 +17,6 @@ class AddHorasAsignadasTable extends Migration
             //
             $table->bigInteger('horas_proyecto')->nullable();
 
-            $table->bigInteger('proveedor')->nullable();
-            $table->bigInteger('horas_tercero')->nullable();
         });
     }
 

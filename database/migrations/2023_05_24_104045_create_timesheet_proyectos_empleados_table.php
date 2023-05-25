@@ -25,7 +25,6 @@ class CreateTimesheetProyectosEmpleadosTable extends Migration
             $table->unsignedBigInteger('area_id')->nullable();
             $table->foreign('area_id')->references('id')->on('areas')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->string('proveedor');
             $table->bigInteger('horas_asignadas')->nullable();
             $table->bigInteger('costo_hora')->nullable();
             $table->timestamps();
