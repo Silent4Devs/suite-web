@@ -2,13 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\Iso27\ClasificacionIso;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        $this->call([
+        $this->call(
+            [
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             UsersTableSeeder::class,
@@ -63,6 +65,11 @@ class DatabaseSeeder extends Seeder
             VacacionesPermisosSeeder::class,
             PermisosBIASeeder::class,
             AjustesAIASeeder::class,
-        ]);
+            ClasificacionSeeder::class,
+            GapDosCatalogoIsoSeeder::class,
+            GapTresCatalogoIsoSeeder::class,
+            GapUnoCatalogoIsoSeeder::class
+            ]
+        );
     }
 }
