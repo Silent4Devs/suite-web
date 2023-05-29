@@ -537,7 +537,66 @@ class TimesheetController extends Controller
 
     public function storeProyectos(Request $request)
     {
-        dd('Si manda a guardar', $request);
+        $request->validate(
+            [
+                'identificador' => 'required|unique:timesheet_proyectos,identificador',
+                'proyecto_name' => 'required',
+            ],
+            [
+                'identificador.unique' => 'El ID ya esta en uso',
+            ],
+        );
+        if ($request->fecha_inicio && $request->fecha_fin) {
+            $request->validate(
+                [
+                    'fecha_inicio' => 'before:fecha_fin',
+                    'fecha_fin' => 'after:fecha_inicio',
+                ],
+                [
+                    'fecha_inicio.before' => 'La fecha de incio debe ser anterior a la fecha de fin',
+                    'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de incio',
+                ],
+            );
+        }
+        dd('Si manda a validar', $request);
+        $nuevo_proyecto = TimesheetProyecto::create([
+            'identificador' => $request->identificador,
+            'proyecto' => $request->proyecto_name,
+            'cliente_id' => $request->cliente_id,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'sede_id' => $request->sede_id,
+            'tipo' => $request->tipo,
+        ]);
+
+        foreach ($request->areas_seleccionadas as $key => $area_id) {
+            TimesheetProyectoArea::create([
+                'proyecto_id' => $nuevo_proyecto->id,
+                'area_id' => $area_id,
+            ]);
+        }
+
+        return view('admin.timesheet.index');
+    }
+
+    public function showProyectos($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+        $areas = TimesheetProyectoArea::where('proyecto_id', $id)
+        ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
+        ->get('areas.area');
+
+        $sedes = TimesheetProyecto::where('timesheet_proyectos.id', $id)
+        ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
+        ->get('sedes.sede');
+
+        $clientes = TimesheetProyecto::where('timesheet_proyectos.id', $id)
+        ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
+        ->get('timesheet_clientes.nombre');
+
+        // dd($proyecto, $areas, $sedes);
+
+        return view('admin.timesheet.show-proyectos', compact('proyecto', 'areas', 'sedes', 'clientes'));
     }
 
     public function updateProyectos(Request $request, $id)
