@@ -14,6 +14,7 @@ use App\Models\Timesheet;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetTarea;
 use Carbon\Carbon;
@@ -1046,5 +1047,21 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.reporte-aprobador', compact('logo_actual', 'empresa_actual'));
+    }
+
+    public function proyectosEmpleados($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.proyecto-empleados', compact('proyecto', 'logo_actual', 'empresa_actual'));
     }
 }

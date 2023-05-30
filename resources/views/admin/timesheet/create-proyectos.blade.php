@@ -4,7 +4,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-<div class="card mt-4">
+<div class="card card-body mt-4">
     @php
         use App\Models\TimesheetHoras;
     @endphp
@@ -27,11 +27,13 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-10">
                     <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto</label>
                     <input id="name_proyect" name="name_proyect" class="form-control" required>
                 </div>
-                <div class="form-group col-md-2">
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio <small>(opcional)</small></label>
                     <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">
                     @if ($errors->has('fecha_inicio'))
@@ -43,7 +45,7 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-6">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de fin <small>(opcional)</small></label>
                     <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
                     @if ($errors->has('fecha_fin'))
@@ -55,7 +57,9 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-3">
+            </div>
+            <div class="row">
+                <div class="form-group col-md-5">
                     <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
                     <select name="cliente_id" id="cliente_id" class="form-control">
                         <option selected value="">Seleccione cliente</option>
@@ -65,7 +69,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-3" wire:ignore id="caja_areas_seleccionadas_create">
+                <div class="form-group col-md-7" wire:ignore id="caja_areas_seleccionadas_create">
                     <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
                     <select class="select2-multiple form-control" multiple="multiple"
                     id="areas_seleccionadas" name="areas_seleccionadas[]" required>
@@ -80,7 +84,9 @@
                         <input id="chkall" name="chkall" type="checkbox" value="todos"> Seleccionar Todas
                     </div>
                 </div>
-                <div class="form-group col-md-3">
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
                     <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede</label>
                     <select class="form-control" name="sede_id" id="sede_id">
                         <option selected value="">Seleccione sede</option>
@@ -89,7 +95,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label class="form-label"><i
                             class="fa-solid fa-info-circle iconos-crear"></i>Tipo</label>
                     <select class="form-control" name="tipo" id="tipo">
@@ -98,8 +104,7 @@
                         @endforeach
                     </select>
                 </div>
-
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-4">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Horas Asignadas al proyecto</label>
                     <input type="number" min="0" name="horas_proyecto" id="horas_asignadas" class="form-control">
                     @if ($errors->has('horas_proyecto'))
@@ -108,7 +113,9 @@
                         </div>
                     @endif
                 </div>
-                <div class="form-group col-md-2">
+            </div>
+            {{-- <div class="row">
+                  <div class="form-group col-md-4">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i>Proveedor (Opcional)</label>
                     <input type="text" name="proveedor" id="proveedor" class="form-control">
                     @if ($errors->has('proveedor'))
@@ -117,7 +124,7 @@
                         </div>
                     @endif
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-4">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Horas Asignadas del Tercero (Opcional)</label>
                     <input type="number" min="0" name="horas_tercero" id="horas_asignadas" class="form-control">
                     @if ($errors->has('horas_tercero'))
@@ -125,10 +132,11 @@
                             {{ $errors->first('horas_tercero') }}
                         </div>
                     @endif
-                </div>
-
+                </div> 
+            </div>  --}}
+            <div class="row">
                 <div class="form-group col-12 text-right">
-                    <button class="btn btn-success" type="submit"><i class="fas fa-plus"></i> Crear Proyecto</button>
+                    <button class="btn btn-success" type="submit"> Crear Proyecto</button>
                 </div>
             </div>
         </form>

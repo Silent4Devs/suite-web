@@ -20,7 +20,4 @@ class TimesheetProyectoEmpleado extends Model
         'horas_asignadas',
         'costo_hora',
     ];
-
-
-
 }
