@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="form-group col-md-2">
                     <label><i class="fas fa-list iconos-crear"></i> ID</label>
-                    <input id="identificador_proyect" class="form-control" required>
+                    <input id="identificador_proyect" name="identificador" class="form-control" required>
                     @if ($errors->has('identificador'))
                         <div class="invalid-feedback">
                             {{ $errors->first('identificador') }}
@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group col-md-10">
                     <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto</label>
-                    <input id="name_proyect" name="name_proyect" class="form-control" required>
+                    <input id="name_proyect" name="proyecto_name" class="form-control" required>
                 </div>
             </div>
             <div class="row">
@@ -159,23 +159,4 @@
         });
 </script>
 
-<script type="text/javascript">
-
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('identificador_proyect').addEventListener('keyup', (e) => {
-            let value = e.target.value;
-            this.set('identificador', value, true);
-        });
-        document.getElementById('name_proyect').addEventListener('keyup', (e) => {
-            let value = e.target.value;
-            this.set('proyecto_name', value, true);
-        });
-
-        // $(document.body).on("change", "#areas_seleccionadas", function() {
-        //     let value = $('#areas_seleccionadas').val();
-        //     this.set('areas_seleccionadas', value, true);
-        // });
-
-    });
-</script>
 @endsection
