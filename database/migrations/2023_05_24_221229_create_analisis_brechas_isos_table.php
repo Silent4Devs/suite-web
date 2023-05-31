@@ -18,7 +18,7 @@ class CreateAnalisisBrechasIsosTable extends Migration
                 $table->increments('id');
                 $table->string('nombre');
                 $table->date('fecha');
-                $table->string('porcentaje_implementacion');
+                $table->string('porcentaje_implementacion')->nullable();
                 $table->unsignedBigInteger('id_elaboro')->nullable();
                 $table->foreign('id_elaboro')->references('id')->on('empleados');
                 $table->integer('estatus');

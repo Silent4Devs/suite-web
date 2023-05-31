@@ -17,6 +17,7 @@ class CreateGapTresCatalogoIsosTable extends Migration
             'gap_tres_catalogo_isos', function (Blueprint $table) {
                 $table->id();
                 $table->string('pregunta');
+                $table->string('estado');
                 $table->timestamps();
                 $table->softDeletes();
             }

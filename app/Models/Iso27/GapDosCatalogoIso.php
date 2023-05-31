@@ -20,6 +20,6 @@ class GapDosCatalogoIso extends Model
 
     public function clasificacion()
     {
-        return $this->hasOne(ClasificacionIso::class, 'id_clasificacion', 'id');
+        return $this->hasOne(ClasificacionIso::class, 'id', 'id_clasificacion');
     }
 }
