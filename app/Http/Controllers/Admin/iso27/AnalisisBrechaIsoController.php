@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\iso27;
+namespace App\Http\Controllers\Admin\iso27;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class GapUnoConcentradoIsoController extends Controller
+class AnalisisBrechaIsoController extends Controller
 {
     /**
      * Display a listing of the resource.

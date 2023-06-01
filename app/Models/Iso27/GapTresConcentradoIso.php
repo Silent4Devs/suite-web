@@ -22,7 +22,7 @@ class GapTresConcentradoIso extends Model
 
     public function gap_tres_catalogo()
     {
-        return $this->hasOne(GapTresCatalogoIso::class, 'id_gap_tres_catalogo', 'id');
+        return $this->belongsTo(GapTresCatalogoIso::class, 'id_gap_tres_catalogo', 'id');
     }
 
     public function analisis_brechas()

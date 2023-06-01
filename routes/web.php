@@ -604,6 +604,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('analisisdebrechas', 'AnalisisBrechaController');
         Route::get('getEmployeeData', 'AnalisisBrechaController@getEmployeeData')->name('getEmployeeData');
 
+        Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
+        Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
+
+        // Gap Unos 2022
+        Route::delete('gap-uno-2022/destroy', 'iso27\GapUnoConcentradoIsoController@massDestroy')->name('gap-unos-2022.massDestroy');
+        Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
+
+        // Gap Dos
+        Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
+        Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
+
+        // Gap Tres
+        Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
+        Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
+
         // Declaracion de Aplicabilidad
         Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
         Route::get('declaracion-aplicabilidad/tabla', 'DeclaracionAplicabilidadController@tabla')->name('declaracion-aplicabilidad.tabla');

@@ -2,27 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Functions\GenerateAnalisisB;
+use App\Functions\GenerateAnalisisBIso;
 use App\Functions\Porcentaje;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAnalisisBrechasRequest;
 use App\Models\AnalisisBrecha;
 use App\Models\Empleado;
-use App\Models\GapDo;
-use App\Models\GapTre;
-use App\Models\GapUno;
+use App\Models\Iso27\GapUnoConcentratoIso;
+use App\Models\Iso27\GapDosConcentradoIso;
+use App\Models\Iso27\GapTresConcentradoIso;
+use App\Models\Iso27\AnalisisBrechasIso;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\Iso27\GapUnoConcentratoIso;
-use App\Models\Iso27\GapDosConcentradoIso;
-use App\Models\Iso27\GapTresConcentradoIso;
-use App\Models\Iso27\AnalisisBrechasIso;
-use App\Functions\GenerateAnalisisBIso;
 
-class AnalisisBrechaController extends Controller
+class AnalisisBrechaIsoController extends Controller
 {
     use ObtenerOrganizacion;
 
@@ -31,7 +27,7 @@ class AnalisisBrechaController extends Controller
         abort_if(Gate::denies('analisis_de_brechas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AnalisisBrecha::with(['empleado', 'gap_logro_tres', 'gap_logro_dos', 'gap_logro_unos'])->orderByDesc('id')->get();
+            $query = AnalisisBrechaIso::with(['empleado', 'gap_logro_tres', 'gap_logro_dos', 'gap_logro_unos'])->orderByDesc('id')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -64,19 +60,19 @@ class AnalisisBrechaController extends Controller
             });
 
             $table->editColumn('porcentaje_implementacion', function ($row) {
-                $gap1porcentaje = GapUno::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', $row->id)->skip(3)->take(12);
-                $gap12porcentaje = GapUno::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id', 'asc')->get()->where('analisis_brechas_id', '=', $row->id)->take(3);
-                $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap2satisfactorio = GapDo::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3satisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3parcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3asatisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap3aparcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $row->id)->count();
-                $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
-                $total = 114 - $gap2noaplica;
+                $gap1porcentaje = GapUnoConcentratoIso::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', $row->id)->skip(3)->take(12);
+                $gap12porcentaje = GapUnoConcentratoIso::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id', 'asc')->get()->where('analisis_brechas_id', '=', $row->id)->take(3);
+                $gap2porcentaje = GapDosConcentradoIso::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap2satisfactorio = GapDosConcentradoIso::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap2parcialmente = GapDosConcentradoIso::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap3porcentaje = GapTresConcentradoIso::select('id', 'valoracion')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap31porcentaje = GapTresConcentradoIso::select('id', 'valoracion')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap3satisfactorios = GapTresConcentradoIso::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap3parcialmente = GapTresConcentradoIso::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap3asatisfactorios = GapTresConcentradoIso::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap3aparcialmente = GapTresConcentradoIso::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $row->id)->count();
+                $gap2noaplica = GapDosConcentradoIso::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $row->id)->count();
+                $total = 93 - $gap2noaplica;
                 $gapunoPorc = new Porcentaje();
                 $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
                 $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente);
@@ -133,32 +129,20 @@ class AnalisisBrechaController extends Controller
             'estatus' => ['required'],
         ]);
 
-        $analisisBrecha = AnalisisBrecha::create($request->all());
+        $analisisBrecha = AnalisisBrechasIso::create($request->all());
 
-        $dataCieCont = new GenerateAnalisisB();
+        $dataCieCont = new GenerateAnalisisBIso();
         $datosgapuno = $dataCieCont->TraerDatos($analisisBrecha->id);
-        // dd($cie);
-        GapUno::insert($datosgapuno);
+        GapUnoConcentratoIso::insert($datosgapuno);
         $datosgapdos = $dataCieCont->TraerDatosDos($analisisBrecha->id);
-        GapDo::insert($datosgapdos);
+        GapDosConcentradoIso::insert($datosgapdos);
         $datosgaptres = $dataCieCont->TraerDatosTres($analisisBrecha->id);
-        GapTre::insert($datosgaptres);
-
-        $analisisBrechaIso = AnalisisBrechasIso::create($request->all());
-
-        $dataCieContIso = new GenerateAnalisisBIso();
-        $datosgapunoIso = $dataCieContIso->TraerDatos($analisisBrechaIso->id);
-        // dd($cie);
-        GapUnoConcentratoIso::insert($datosgapunoIso);
-        $datosgapdosIso = $dataCieContIso->TraerDatosDos($analisisBrechaIso->id);
-        GapDosConcentradoIso::insert($datosgapdosIso);
-        $datosgaptresIso = $dataCieContIso->TraerDatosTres($analisisBrechaIso->id);
-        GapTresConcentradoIso::insert($datosgaptresIso);
+        GapTresConcentradoIso::insert($datosgaptres);
 
         return redirect()->route('admin.analisisdebrechas.index');
     }
 
-    public function show(AnalisisBrecha $analisisBrecha)
+    public function show(AnalisisBrechaIso $analisisBrecha)
     {
     }
 
@@ -168,20 +152,20 @@ class AnalisisBrechaController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $analisisBrecha = AnalisisBrecha::find($id);
+        $analisisBrecha = AnalisisBrechaIso::find($id);
 
-        $gap1porcentaje = GapUno::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id)->skip(3)->take(12);
-        $gap12porcentaje = GapUno::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id', 'asc')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id)->take(3);
-        $gap2porcentaje = GapDo::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
-        $gap2satisfactorio = GapDo::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
-        $gap2parcialmente = GapDo::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
-        $gap3porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
-        $gap31porcentaje = GapTre::select('id', 'valoracion')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
-        $gap3satisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
-        $gap3parcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
-        $gap3asatisfactorios = GapTre::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
-        $gap3aparcialmente = GapTre::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
-        $gap2noaplica = GapDo::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap1porcentaje = GapUnoConcentratoIso::latest()->select('id', 'valoracion', 'analisis_brechas_id')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id)->skip(3)->take(12);
+        $gap12porcentaje = GapUnoConcentratoIso::select('id', 'valoracion', 'analisis_brechas_id')->orderBy('id', 'asc')->get()->where('analisis_brechas_id', '=', $analisisBrecha->id)->take(3);
+        $gap2porcentaje = GapDosConcentradoIso::select('id', 'valoracion')->where('valoracion', '!=', '4')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap2satisfactorio = GapDosConcentradoIso::select('id', 'valoracion')->where('valoracion', '=', '1')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap2parcialmente = GapDosConcentradoIso::select('id', 'valoracion')->where('valoracion', '=', '2')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap3porcentaje = GapTresConcentradoIso::select('id', 'valoracion')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap31porcentaje = GapTresConcentradoIso::select('id', 'valoracion')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap3satisfactorios = GapTresConcentradoIso::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap3parcialmente = GapTresConcentradoIso::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'verificar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap3asatisfactorios = GapTresConcentradoIso::select('id')->where('valoracion', '=', '1')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap3aparcialmente = GapTresConcentradoIso::select('id')->where('valoracion', '=', '2')->where('estado', '=', 'actuar')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
+        $gap2noaplica = GapDosConcentradoIso::select('id')->where('valoracion', '=', '4')->where('analisis_brechas_id', '=', $analisisBrecha->id)->count();
         $total = 114 - $gap2noaplica;
         $gapunoPorc = new Porcentaje();
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje, $gap12porcentaje);
@@ -205,7 +189,7 @@ class AnalisisBrechaController extends Controller
             'estatus' => ['required'],
         ]);
 
-        $analisisBrecha = AnalisisBrecha::find($id);
+        $analisisBrecha = AnalisisBrechaIso::find($id);
 
         $analisisBrecha->update([
             'nombre' =>  $request->nombre,
@@ -222,7 +206,7 @@ class AnalisisBrechaController extends Controller
     {
         abort_if(Gate::denies('analisis_de_brechas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $AnalisisBrecha = AnalisisBrecha::find($AnalisisBrecha);
+        $AnalisisBrecha = AnalisisBrechaIso::find($AnalisisBrecha);
         $AnalisisBrecha->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
@@ -230,7 +214,7 @@ class AnalisisBrechaController extends Controller
 
     public function massDestroy(MassDestroyAnalisisBrechasRequest $request)
     {
-        AnalisisBrecha::whereIn('id', request('ids'))->delete();
+        AnalisisBrechaIso::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

@@ -22,11 +22,11 @@ class GapUnoConcentratoIso extends Model
 
     public function gap_uno_catalogo()
     {
-        return $this->hasOne(GapUnoCatalogoIsoSeeder::class, 'id_gap_uno_catalogo', 'id');
+        return $this->hasOne(GapUnoCatalogoIso::class, 'id', 'id_gap_uno_catalogo');
     }
 
     public function analisis_brechas()
     {
-        return $this->hasOne(AnalisisBrecha::class, 'id_analisis_brechas', 'id');
+        return $this->hasOne(AnalisisBrechaIso::class, 'id_analisis_brechas', 'id');
     }
 }

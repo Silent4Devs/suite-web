@@ -14,13 +14,14 @@ class GapDosConcentradoIso extends Model
         'id',
         'id_gap_dos_catalogo',
         'id_analisis_brechas',
+        'valoracion',
         'evidencia',
         'recomendacion'
     ];
 
     public function gap_dos_catalogo()
     {
-        return $this->hasOne(GapDosCatalogoIso::class, 'id_gap_dos_catalogo', 'id');
+        return $this->belongsTo(GapDosCatalogoIso::class, 'id_gap_dos_catalogo', 'id');
     }
 
     public function analisis_brechas()
