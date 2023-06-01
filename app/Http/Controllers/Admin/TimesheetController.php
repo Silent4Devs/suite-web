@@ -567,6 +567,7 @@ class TimesheetController extends Controller
             'fecha_fin' => $request->fecha_fin,
             'sede_id' => $request->sede_id,
             'tipo' => $request->tipo,
+            'horas_proyecto' => $request->horas_proyecto,
         ]);
 
         foreach ($request->areas_seleccionadas as $key => $area_id) {
@@ -603,11 +604,8 @@ class TimesheetController extends Controller
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_proyectos,identificador,' . $id,
-                'proyecto' => 'required',
-            ],
-            [
-                'identificador.unique' => 'El ID ya esta en uso',
+                'identificador' => 'required',
+                'proyecto_name' => 'required',
             ],
         );
 
@@ -626,7 +624,16 @@ class TimesheetController extends Controller
 
         $edit_proyecto = TimesheetProyecto::find($id);
 
-        $edit_proyecto->update($request->all());
+        $edit_proyecto->update([
+            'identificador' => $request->identificador,
+            'proyecto' => $request->proyecto_name,
+            'cliente_id' => $request->cliente_id,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'sede_id' => $request->sede_id,
+            'tipo' => $request->tipo,
+            'horas_proyecto' => $request->horas_proyecto,
+        ]);
 
         $proyectos_areas_eliminados = TimesheetProyectoArea::where('proyecto_id', $edit_proyecto->id)->delete();
 
@@ -1129,6 +1136,8 @@ class TimesheetController extends Controller
         $clientes = TimesheetCliente::get();
         $areas = Area::get();
         $sedes = Sede::get();
+        $tipos = TimesheetProyecto::TIPOS;
+        $tipo = $tipos['Interno'];
 
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {
@@ -1139,6 +1148,6 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes'));
+        return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes', 'tipos'));
     }
 }
