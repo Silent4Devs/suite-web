@@ -6,6 +6,7 @@ use App\Models\TimesheetProyectoEmpleado;
 use App\Models\Empleado;
 
 use Livewire\Component;
+use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\F;
 
 class TimesheetProyectoEmpleadosComponent extends Component
 {
@@ -41,5 +42,12 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'horas_asignadas' => $this->horas_asignadas,
             'costo_hora' => $this->costo_hora,
         ]);
+    }
+
+    public function empleadoProyectoRemove($id)
+    {
+        $empleado_remov = TimesheetProyectoEmpleado::find($id);
+
+        $empleado_remov->delete();
     }
 }

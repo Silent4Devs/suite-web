@@ -559,7 +559,6 @@ class TimesheetController extends Controller
                 ],
             );
         }
-        dd('Si manda a validar', $request);
         $nuevo_proyecto = TimesheetProyecto::create([
             'identificador' => $request->identificador,
             'proyecto' => $request->proyecto_name,
@@ -577,7 +576,7 @@ class TimesheetController extends Controller
             ]);
         }
 
-        return view('admin.timesheet.index');
+        return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
     }
 
     public function showProyectos($id)

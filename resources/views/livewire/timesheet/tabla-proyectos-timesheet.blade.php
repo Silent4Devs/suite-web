@@ -4,7 +4,7 @@
     @endphp
     <x-loading-indicator />
     @can('timesheet_administrador_proyectos_create')
-        <div class="w-100">
+        {{--  <div class="w-100">
             <h5 id="titulo_estatus">Crear Proyecto</h5>
         </div>
         <form wire:submit.prevent="store()" class="w-100">
@@ -93,7 +93,10 @@
                     <button class="btn btn-success"><i class="fas fa-plus"></i> Agregar</button>
                 </div>
             </div>
-        </form>
+        </form>  --}}
+        <div class="text-right">
+            <a href="{{ route('admin.timesheet-proyectos-create') }}" class="btn btn-success">Crear Proyecto</a>
+        </div>
     @endcan
 
     <style type="text/css">

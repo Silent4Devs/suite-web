@@ -1,5 +1,5 @@
 <div class="w-100">
-    <h6>Asignar Empleado a Proyecto</h6>
+    <h5 class="d-flex justify-content-between">Asignar Empleado a Proyecto <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Regresar</a></h5>
     <form wire:submit.prevent="addEmpleado">
         <div class="row mt-4">
             <div class="form-group col-md-7">
@@ -51,21 +51,62 @@
                         <td>{{ $proyect_empleado->empleado->puesto }} </td>
                         <td>{{ $proyect_empleado->horas_asignadas }} </td>
                         <td>{{ $proyect_empleado->costo_horas }} </td>
-                        <td>ops</td>
+                        <td>
+                            <button class="btn" data-toggle="modal"
+                                data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
+                                <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
+                                    title="Eliminar"></i>
+                            </button>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 
+    @foreach($proyecto_empleados as $proyect_empleado)
+        <div class="modal fade" id="modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button class="btn btn-tache-cerrar" data-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <div class="delete">
+                            <div class="text-center">
+                                <i class="fa-solid fa-trash-can" style="color: #E34F4F; font-size:60pt;"></i>
+                                <h1 class="my-4" style="font-size:14pt;">Remover empleado de Proyecto:
+                                    <small>{{ $proyect_empleado->proyecto->proyecto }}</small></h1>
+                                <p class="parrafo">¿Desea remover a {{ $proyect_empleado->empleado->name }} del proyecto {{ $proyect_empleado->proyecto->proyecto }}?</p>
+                            </div>
+
+                            <div class="mt-4 d-flex justify-content-between">
+                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button class="btn btn-info" style="border:none; background-color:#E34F4F;"
+                                    wire:click="empleadoProyectoRemove({{ $proyect_empleado->id }})" data-dismiss="modal">
+                                    Eliminar Proyecto
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
     @section('scripts')
     @parent
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', () => {
+                
                 Livewire.on('scriptTabla', () => {
                     tablaLivewire('tabla_time_poyect_empleados');
-                    $('.select2').select2({
-                        'theme' : 'bootstrap4',
+                    
+                    $('.select2').select2().on('change', function (e) {
+                        var data = $(this).select2("val");
+                        @this.set('empleado_añadido', data);
                     });
                 });
 
