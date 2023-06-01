@@ -1123,4 +1123,23 @@ class TimesheetController extends Controller
 
         return view('admin.timesheet.proyecto-empleados', compact('proyecto', 'logo_actual', 'empresa_actual'));
     }
+
+    public function editProyectos($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+        $clientes = TimesheetCliente::get();
+        $areas = Area::get();
+        $sedes = Sede::get();
+
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes'));
+    }
 }

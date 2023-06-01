@@ -11,8 +11,6 @@ class TimesheetProyectoEmpleado extends Model
 
     protected $table = 'timesheet_proyectos_empleados';
 
-    protected $appends = ['areas'];
-
     protected $fillable = [
         'proyecto_id',
         'empleado_id',
@@ -20,4 +18,14 @@ class TimesheetProyectoEmpleado extends Model
         'horas_asignadas',
         'costo_hora',
     ];
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id');
+    }
+
+    public function proyecto()
+    {
+        return $this->belongsTo(TimesheetProyecto::class, 'proyecto_id');
+    }
 }

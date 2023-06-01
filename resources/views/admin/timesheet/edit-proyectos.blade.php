@@ -1,24 +1,23 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card mt-4">
 
-    <form action="{{ route('admin.timesheet-proyectos-update', $proyecto->id) }}" method="POST">
-        @csrf
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Editar Proyecto:
-                {{ $proyecto->proyecto }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<div class="card card-body mt-4">
+    @php
+        use App\Models\TimesheetHoras;
+    @endphp
+    @can('timesheet_administrador_proyectos_create')
+        <div class="d-flex">
+            <h5 id="titulo_estatus">{nombre de proyecto}</h5>
         </div>
-        <div class="modal-body">
-
-            <div class="row">
-                <div class="form-group col-md-3">
+        <form method="POST" action="{{ route('admin.timesheet-proyectos-store') }}">
+            @csrf
+            <div class="row mt-4">
+                <div class="form-group col-md-2">
                     <label><i class="fas fa-list iconos-crear"></i> ID</label>
-                    <input name="identificador" class="form-control" required
-                        value="{{ $proyecto->identificador }}">
+                    <input id="identificador_proyect" name="identificador" class="form-control" required>
                     @if ($errors->has('identificador'))
                         <div class="invalid-feedback">
                             {{ $errors->first('identificador') }}
@@ -28,16 +27,15 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-9">
+                <div class="form-group col-md-10">
                     <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto</label>
-                    <input name="proyecto" class="form-control" required
-                        value="{{ $proyecto->proyecto }}">
+                    <input id="name_proyect" name="proyecto_name" class="form-control" required>
                 </div>
+            </div>
+            <div class="row">
                 <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i>
-                        Fecha de inicio</label>
-                    <input type="date" name="fecha_inicio" class="form-control"
-                        value="{{ $proyecto->fecha_inicio }}">
+                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio <small>(opcional)</small></label>
+                    <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">
                     @if ($errors->has('fecha_inicio'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_inicio') }}
@@ -48,10 +46,8 @@
                     @enderror
                 </div>
                 <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i>
-                        Fecha de fin</label>
-                    <input type="date" name="fecha_fin" class="form-control"
-                        value="{{ $proyecto->fecha_fin }}">
+                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de fin <small>(opcional)</small></label>
+                    <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
                     @if ($errors->has('fecha_fin'))
                         <div class="invalid-feedback">
                             {{ $errors->first('fecha_fin') }}
@@ -61,59 +57,107 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-6">
+            </div>
+            <div class="row">
+                <div class="form-group col-md-5">
                     <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
-                    <select name="area_id" class="form-control">
-                        <option selected
-                            value="{{ $proyecto->cliente_id ? $proyecto->cliente->id : '' }}">
-                            {{ $proyecto->cliente_id ? $proyecto->cliente->nombre : '' }}</option>
+                    <select name="cliente_id" id="cliente_id" class="form-control">
+                        <option selected value="">Seleccione cliente</option>
                         @foreach ($clientes as $cliente)
-                            <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                            <option value="{{ $cliente->id }}">{{ $cliente->identificador }} - {{ $cliente->nombre }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-6" wire:ignore id="caja_areas_select_edit">
+                <div class="form-group col-md-7" wire:ignore id="caja_areas_seleccionadas_create">
                     <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
-                    <select name="areas_seleccionadas[]" class="form-control select2" required
-                        multiple>
-                        @foreach ($proyecto->areas as $area)
-                            <option selected value="{{ $area->id }}">{{ $area->area }}</option>
-                        @endforeach
+                    <select class="select2-multiple form-control" multiple="multiple"
+                    id="areas_seleccionadas" name="areas_seleccionadas[]" required>
                         @foreach ($areas as $area)
-                            <option value="{{ $area->id }}">{{ $area->area }}</option>
+                            <option value="{{ $area->id }}">
+                                {{ $area->area }}
+                            </option>
                         @endforeach
                     </select>
+
+                    <div class="mt-1">
+                        <input id="chkall" name="chkall" type="checkbox" value="todos"> Seleccionar Todas
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label class="form-label"><i
-                            class="fa-solid fa-building iconos-crear"></i>Sede</label>
-                    <select class="form-control" name="sede_id">
-                        <option selected
-                            value="{{ $proyecto->sede_id ? $proyecto->sede->id : '' }}">
-                            {{ $proyecto->sede_id ? $proyecto->sede->sede : '' }}</option>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede</label>
+                    <select class="form-control" name="sede_id" id="sede_id">
+                        <option selected value="">Seleccione sede</option>
                         @foreach ($sedes as $sede)
                             <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label class="form-label"><i
-                            class="fa-solid fa-building iconos-crear"></i>Tipo</label>
-                    <select class="form-control" name="tipo">
-                        <option selected
-                            value="{{ $proyecto->tipo ? $proyecto->tipo : '' }}">
-                            {{ $proyecto->tipo ? $proyecto->tipo : '' }}</option>
-                        @foreach ($tipos as $tipo)
-                            <option value="{{ $tipo }}">{{ $tipo }}</option>
-                        @endforeach
+                            class="fa-solid fa-info-circle iconos-crear"></i>Tipo</label>
+                    <select class="form-control" name="tipo" id="tipo">
+                        {{--  @foreach ($tipos as $tipo_it)
+                            <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it?'selected':'' }}>{{ $tipo_it }}</option>
+                        @endforeach  --}}
                     </select>
                 </div>
-                <div class="form-group col-md-12 text-right">
-                    <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
-                    <button type="submit" class="btn btn-success">Guardar</button>
+                <div class="form-group col-md-4">
+                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Horas Asignadas al proyecto</label>
+                    <input type="number" min="0" name="horas_proyecto" id="horas_asignadas" class="form-control">
+                    @if ($errors->has('horas_proyecto'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('horas_proyecto') }}
+                        </div>
+                    @endif
                 </div>
             </div>
-        </div>
-    </form>
-
+            {{-- <div class="row">
+                  <div class="form-group col-md-4">
+                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i>Proveedor (Opcional)</label>
+                    <input type="text" name="proveedor" id="proveedor" class="form-control">
+                    @if ($errors->has('proveedor'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('proveedor') }}
+                        </div>
+                    @endif
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Horas Asignadas del Tercero (Opcional)</label>
+                    <input type="number" min="0" name="horas_tercero" id="horas_asignadas" class="form-control">
+                    @if ($errors->has('horas_tercero'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('horas_tercero') }}
+                        </div>
+                    @endif
+                </div> 
+            </div>  --}}
+            <div class="row">
+                <div class="form-group col-12 text-right">
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn_cancelar">Cancelar</a>
+                    <button class="btn btn-success" type="submit"> Guardar</button>
+                </div>
+            </div>
+        </form>
+    @endcan
 </div>
+@endsection
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+            // Select2 Multiple
+            $('.select2-multiple').select2({
+                theme : 'bootstrap4',
+                placeholder: "select",
+                allowClear: true
+            });
+
+        });
+</script>
+
+@endsection

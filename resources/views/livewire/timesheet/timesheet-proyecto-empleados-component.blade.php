@@ -2,7 +2,7 @@
     <h6>Asignar Empleado a Proyecto</h6>
     <form wire:submit.prevent="addEmpleado">
         <div class="row mt-4">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-7">
                 <label for="">Empleado</label>
                 <select wire:model="empleado_añadido" name="" id="" class="select2" required>
                     <option value="" selected disabled></option>
@@ -11,11 +11,21 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-5">
                 <label for="">Área</label>
                 <div class="form-control">Área de emp</div>
             </div>
-            <div class="form-group col-md-3" style="display: flex; align-items: flex-end;">
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="">Horas asignadas</label>
+                <input type="number" class="form-control">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="">Costo por hora</label>
+                <input type="number" class="form-control">
+            </div>
+            <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
                 <button class="btn btn-success">Agregar</button>
             </div>
         </div>
@@ -27,6 +37,8 @@
                     <th>Nombre </th>
                     <th>Área </th>
                     <th>Puesto </th>
+                    <th>Horas asignadas </th>
+                    <th>Costo por hora </th>
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
             </thead>
@@ -34,9 +46,11 @@
             <tbody style="position:relative;">
                 @foreach ($proyecto_empleados as $proyect_empleado)
                     <tr>
-                        <td>{{ $proyect_empleado->name }} </td>
-                        <td>{{ $proyect_empleado->area->area }} </td>
-                        <td>{{ $proyect_empleado->puesto }} </td>
+                        <td>{{ $proyect_empleado->empleado->name }} </td>
+                        <td>{{ $proyect_empleado->empleado->area->area }} </td>
+                        <td>{{ $proyect_empleado->empleado->puesto }} </td>
+                        <td>{{ $proyect_empleado->horas_asignadas }} </td>
+                        <td>{{ $proyect_empleado->costo_horas }} </td>
                         <td>ops</td>
                     </tr>
                 @endforeach
@@ -53,6 +67,11 @@
                     $('.select2').select2({
                         'theme' : 'bootstrap4',
                     });
+                });
+
+                $('.select2').select2().on('change', function (e) {
+                    var data = $(this).select2("val");
+                    @this.set('empleado_añadido', data);
                 });
             });
         </script>
