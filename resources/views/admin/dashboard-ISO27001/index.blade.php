@@ -31,7 +31,6 @@
                             </div>
                         </div>
                         <div class="container" style="margin-top: 20px;">
-
                             <div class="row">
                                 <div class="col">
                                     <ul class="nav nav-pills nav-justified" id="myTab" role="tablist">
@@ -96,14 +95,6 @@
                                              aria-labelledby="contact-tab">
                                              @include('admin.dashboard-ISO27001.tablero')
                                         </div>
-                                        <div class="tab-pane fade" id="nueva" role="tabpanel"
-                                        aria-labelledby="contact-tab">
-                                       <div class="container">
-                                           <!--gap dos -->
-                                       {{-- @include('admin.dashboard-ISO27001.gapdos') --}}
-                                       <!--gap dos -->
-                                       </div>
-                                   </div>
                                     </div>
                                 </div>
                             </div>
