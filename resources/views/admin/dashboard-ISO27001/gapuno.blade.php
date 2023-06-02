@@ -3,10 +3,10 @@
         <div class="card">
             <div class="card-body">
                 <div id="barraGap1" class="barraGap1">
-                    {{-- <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE SEGURIDAD Y PRIVACIDAD DE LA ORGANIZACIÓN
-                        ({{ number_format($porcentajeGap1, 2, '.', '') }}%)</h6> --}}
+                    <h6 align="center">GAP 01: DEFINICIÓN DE MARCO DE SEGURIDAD Y PRIVACIDAD DE LA ORGANIZACIÓN
+                        ({{ number_format($porcentajeGap1, 2, '.', '') }}%)</h6>
 
-                    {{-- <div class="progress">
+                    <div class="progress">
                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                             aria-valuenow="{{ (number_format($porcentajeGap1, 2, '.', '') * 100) / 30 }}"
                             aria-valuemin="0" aria-valuemax="100"
@@ -14,7 +14,7 @@
                             {{ number_format($porcentajeGap1, 2, '.', '') }}
                             %
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-body">

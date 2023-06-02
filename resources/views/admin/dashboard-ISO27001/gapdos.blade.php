@@ -3,15 +3,15 @@
         <div class="card">
             <div class="card-body">
                 <div id="barraGap2" class="barraGap2">
-                    {{-- <h6 align="center">GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN ({{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%)
-                    </h6> --}}
+                    <h6 align="center">GAP 02: IMPLEMENTACIÓN DEL PLAN DE SEGURIDAD Y PRIVACIDAD DE LA INFORMACIÓN ({{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%)
+                    </h6>
                     <div class="progress">
-                        {{-- <div
+                        <div
                             class="progress-bar progress-bar-striped progress-bar-animated"
                             role="progressbar" aria-valuenow="40"
                             aria-valuemin="0" aria-valuemax="100"
                             style="width: {{number_format($porcentajeGap2['Porcentaje'], 2, '.', '')}}%">{{number_format($porcentajeGap2['Avance'], 2, '.', '')}}%
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -42,7 +42,7 @@
                                 parcialmente
                             </div>
                             <div class="col-9">Lo que la norma requiere
-                                (ISO27001 versión 2013)
+                                (ISO27001 versión 2022)
                                 se está haciendo de manera parcial, se está
                                 haciendo diferente,
                                 no está documentado, se definió y aprobó pero no

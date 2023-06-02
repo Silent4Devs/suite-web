@@ -48,8 +48,8 @@
                                                role="tab" aria-controls="gapdos" aria-selected="false">GAP 02</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#gaptres"
-                                               role="tab" aria-controls="gaptres" aria-selected="false">GAP03</a>
+                                            <a class="nav-link" id="contact-tab3" data-toggle="tab" href="#gaptres"
+                                               role="tab" aria-controls="gaptres" aria-selected="false">GAP 03</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="contact-tabZ" data-toggle="tab" href="#dashboard"
@@ -65,13 +65,13 @@
                                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                                              aria-labelledby="home-tab">
                                             <!--introduccion-->
-                                        @include('admin.dashboard-ISO27001.introduccion')
-                                        <!--introduccion-->
+                                            @include('admin.dashboard-ISO27001.introduccion')
+                                            <!--introduccion-->
                                         </div>
                                         <div class="tab-pane fade" id="gapuno" role="tabpanel"
-                                             aria-labelledby="profile-tab">
-                                            <div class="container">
-                                                <!--gap uno-->
+                                        aria-labelledby="profile-tab">
+                                        <div class="container">
+                                            <!--gap uno-->
                                             @include('admin.dashboard-ISO27001.gapuno')
                                             <!--gap uno-->
                                             </div>
@@ -94,8 +94,16 @@
                                         </div>
                                         <div class="tab-pane fade" id="dashboard" role="tabpanel"
                                              aria-labelledby="contact-tab">
-                                            @include('admin.dashboard-ISO27001.tablero')
+                                             @include('admin.dashboard-ISO27001.tablero')
                                         </div>
+                                        <div class="tab-pane fade" id="nueva" role="tabpanel"
+                                        aria-labelledby="contact-tab">
+                                       <div class="container">
+                                           <!--gap dos -->
+                                       {{-- @include('admin.dashboard-ISO27001.gapdos') --}}
+                                       <!--gap dos -->
+                                       </div>
+                                   </div>
                                     </div>
                                 </div>
                             </div>
