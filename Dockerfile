@@ -51,8 +51,8 @@ RUN echo 'memory_limit = 10000M' >> /usr/local/etc/php/conf.d/docker-php-memlimi
     && echo 'upload_max_filesize = 10000M' >> /usr/local/etc/php/conf.d/docker-php-upload.ini \
     && echo 'post_max_size = 10000M' >> /usr/local/etc/php/conf.d/docker-php-upload.ini \
     && echo 'max_file_uploads = 10000' >> /usr/local/etc/php/conf.d/docker-php-upload.ini \
-    && echo 'max_execution_time = 1000' >> /usr/local/etc/php/conf.d/docker-php-execution.ini \
-    && echo 'max_input_time = 1000' >> /usr/local/etc/php/conf.d/docker-php-execution.ini
+    && echo 'max_execution_time = 1800' >> /usr/local/etc/php/conf.d/docker-php-execution.ini \
+    && echo 'max_input_time = 1800' >> /usr/local/etc/php/conf.d/docker-php-execution.ini
 
 
 # WORKDIR /var/www/html
