@@ -22,60 +22,60 @@ class AnalisisBIsoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
         //
         // dd('Vamos bien');
         abort_if(Gate::denies('analisis_de_brechas_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gapunos = GapUnoConcentratoIso::where('id_analisis_brechas', $id)->with('gap_uno_catalogo')->orderBy('id', 'ASC')->get();
-        $gaptresver = GapTresConcentradoIso::where('id_analisis_brechas', $id)->with('gap_tres_catalogo')->whereHas('gap_tres_catalogo', function($query){
+        $gapunos = GapUnoConcentratoIso::where('id_analisis_brechas', request()->id)->with('gap_uno_catalogo')->orderBy('id', 'ASC')->get();
+        $gaptresver = GapTresConcentradoIso::where('id_analisis_brechas', request()->id)->with('gap_tres_catalogo')->whereHas('gap_tres_catalogo', function($query){
             return $query->where('estado', '=', 'verificar');
         })->orderBy('id', 'ASC')->get();
-        $gaptresact = GapTresConcentradoIso::where('id_analisis_brechas', $id)->with('gap_tres_catalogo')->whereHas('gap_tres_catalogo', function($query){
+        $gaptresact = GapTresConcentradoIso::where('id_analisis_brechas', request()->id)->with('gap_tres_catalogo')->whereHas('gap_tres_catalogo', function($query){
             return $query->where('estado', '=', 'actuar');
         })->orderBy('id', 'ASC')->get();
 
-        $gapa5 = GapDosConcentradoIso::where('id_analisis_brechas', $id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
+        $gapa5 = GapDosConcentradoIso::where('id_analisis_brechas', request()->id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
         ->whereHas('gap_dos_catalogo', function($query){
             return $query->where('control_iso', 'LIKE', "A.5.".'%');
         })->orderBy('id', 'ASC')->get();
 
-        $gapa6 = GapDosConcentradoIso::where('id_analisis_brechas', $id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
+        $gapa6 = GapDosConcentradoIso::where('id_analisis_brechas', request()->id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
         ->whereHas('gap_dos_catalogo', function($query){
             return $query->where('control_iso', 'LIKE', "A.6.".'%');
         })->orderBy('id', 'ASC')->get();
 
-        $gapa7 = GapDosConcentradoIso::where('id_analisis_brechas', $id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
+        $gapa7 = GapDosConcentradoIso::where('id_analisis_brechas', request()->id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
         ->whereHas('gap_dos_catalogo', function($query){
             return $query->where('control_iso', 'LIKE', "A.7.".'%');
         })->orderBy('id', 'ASC')->get();
 
-        $gapa8 = GapDosConcentradoIso::where('id_analisis_brechas', $id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
+        $gapa8 = GapDosConcentradoIso::where('id_analisis_brechas', request()->id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
         ->whereHas('gap_dos_catalogo', function($query){
             return $query->where('control_iso', 'LIKE', "A.8.".'%');
         })->orderBy('id', 'ASC')->get();
 
 
-        $gap1porcentaje = GapUnoConcentratoIso::select('id', 'valoracion', 'id_analisis_brechas')->where('id_analisis_brechas', '=', $id)->orderBy('id', 'asc')->get();
-        $gap1satisfactorios = GapUnoConcentratoIso::select('id')->where('valoracion', '1')->where('id_analisis_brechas', '=', $id)->count();
-        $gap1parcialmente = GapUnoConcentratoIso::select('id')->where('valoracion', '2')->where('id_analisis_brechas', '=', $id)->count();
-        $gap1nocumple = GapUnoConcentratoIso::select('id')->where('valoracion', '=', '3')->where('id_analisis_brechas', '=', $id)->count();
+        $gap1porcentaje = GapUnoConcentratoIso::select('id', 'valoracion', 'id_analisis_brechas')->where('id_analisis_brechas', '=', request()->id)->orderBy('id', 'asc')->get();
+        $gap1satisfactorios = GapUnoConcentratoIso::select('id')->where('valoracion', '1')->where('id_analisis_brechas', '=', request()->id)->count();
+        $gap1parcialmente = GapUnoConcentratoIso::select('id')->where('valoracion', '2')->where('id_analisis_brechas', '=', request()->id)->count();
+        $gap1nocumple = GapUnoConcentratoIso::select('id')->where('valoracion', '=', '3')->where('id_analisis_brechas', '=', request()->id)->count();
         $gapunoPorc = new Porcentaje2022();
         $porcentajeGap1 = $gapunoPorc->GapUnoPorc($gap1porcentaje);
         // dd($porcentajeGap1);
         // dd($gap1porcentaje, $gap1satisfactorios, $gap1parcialmente, $gap1nocumple);
 
-        $gap2porcentaje = GapDosConcentradoIso::select('id', 'valoracion', 'id_analisis_brechas')->where('id_analisis_brechas', '=', $id)->orderBy('id', 'asc')->get();
-        $gap2satisfactorios = GapDosConcentradoIso::select('id')->where('valoracion', '1')->where('id_analisis_brechas', '=', $id)->count();
-        $gap2parcialmente = GapDosConcentradoIso::select('id')->where('valoracion', '2')->where('id_analisis_brechas', '=', $id)->count();
-        $gap2nocumple = GapDosConcentradoIso::select('id')->where('valoracion', '=', '3')->where('id_analisis_brechas', '=', $id)->count();
-        $gap2noaplica = GapDosConcentradoIso::select('id')->where('valoracion', '=', '4')->where('id_analisis_brechas', '=', $id)->count();
+        $gap2porcentaje = GapDosConcentradoIso::select('id', 'valoracion', 'id_analisis_brechas')->where('id_analisis_brechas', '=', request()->id)->orderBy('id', 'asc')->get();
+        $gap2satisfactorios = GapDosConcentradoIso::select('id')->where('valoracion', '1')->where('id_analisis_brechas', '=', request()->id)->count();
+        $gap2parcialmente = GapDosConcentradoIso::select('id')->where('valoracion', '2')->where('id_analisis_brechas', '=', request()->id)->count();
+        $gap2nocumple = GapDosConcentradoIso::select('id')->where('valoracion', '=', '3')->where('id_analisis_brechas', '=', request()->id)->count();
+        $gap2noaplica = GapDosConcentradoIso::select('id')->where('valoracion', '=', '4')->where('id_analisis_brechas', '=', request()->id)->count();
         $total = 93 - $gap2noaplica;
         $porcentajeGap2 = $gapunoPorc->GapDosPorc($gap2porcentaje, $total, $gap2satisfactorios, $gap2parcialmente);
         // dd($gap2porcentaje, $gap2satisfactorios, $gap2parcialmente, $gap2nocumple, $gap2noaplica);
         // dd($porcentajeGap2);
 
-        $gap3porcentaje = GapTresConcentradoIso::select('id', 'valoracion', 'id_analisis_brechas')->where('id_analisis_brechas', '=', $id)->orderBy('id', 'asc')->count();
+        $gap3porcentaje = GapTresConcentradoIso::select('id', 'valoracion', 'id_analisis_brechas')->where('id_analisis_brechas', '=', request()->id)->orderBy('id', 'asc')->count();
         $gap3satisfactorios = GapTresConcentradoIso::select('id')->where('valoracion', '=', '1')->where('id_analisis_brechas', '=', request()->id)->with('gap_tres_catalogo')->whereHas('gap_tres_catalogo', function($query){
             return $query->where('estado', '=', 'verificar');
         })->count();

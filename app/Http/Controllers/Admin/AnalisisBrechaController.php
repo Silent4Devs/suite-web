@@ -16,10 +16,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\Iso27\GapUnoConcentratoIso;
-use App\Models\Iso27\GapDosConcentradoIso;
-use App\Models\Iso27\GapTresConcentradoIso;
-use App\Models\Iso27\AnalisisBrechasIso;
 use App\Functions\GenerateAnalisisBIso;
 
 class AnalisisBrechaController extends Controller
@@ -143,17 +139,6 @@ class AnalisisBrechaController extends Controller
         GapDo::insert($datosgapdos);
         $datosgaptres = $dataCieCont->TraerDatosTres($analisisBrecha->id);
         GapTre::insert($datosgaptres);
-
-        $analisisBrechaIso = AnalisisBrechasIso::create($request->all());
-
-        $dataCieContIso = new GenerateAnalisisBIso();
-        $datosgapunoIso = $dataCieContIso->TraerDatos($analisisBrechaIso->id);
-        // dd($cie);
-        GapUnoConcentratoIso::insert($datosgapunoIso);
-        $datosgapdosIso = $dataCieContIso->TraerDatosDos($analisisBrechaIso->id);
-        GapDosConcentradoIso::insert($datosgapdosIso);
-        $datosgaptresIso = $dataCieContIso->TraerDatosTres($analisisBrechaIso->id);
-        GapTresConcentradoIso::insert($datosgaptresIso);
 
         return redirect()->route('admin.analisisdebrechas.index');
     }

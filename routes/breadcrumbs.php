@@ -10,6 +10,12 @@ Breadcrumbs::for('admin.analisisdebrechas.index', function ($trail) {
     $trail->push('Análisis de Brechas', route('admin.analisis-brechas.index'));
 });
 
+Breadcrumbs::for('admin.analisisdebrechas-2022.index', function ($trail) {
+    $trail->push('Sistema de Gestión', route('admin.iso27001.index'));
+    $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
+    $trail->push('Análisis de Brechas-2022', route('admin.analisis-brechas-2022.index'));
+});
+
 Breadcrumbs::for('dashboard-iso27001', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Dashboard', route('admin.home'));
