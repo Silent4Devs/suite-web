@@ -16,7 +16,7 @@ class CreateDeclaracionAplicabilidadConcentradoIsosTable extends Migration
         Schema::create(
             'declaracion_aplicabilidad_concentrado_isos', function (Blueprint $table) {
                 $table->id();
-                $table->string('valoracion');
+                $table->string('valoracion')->nullable();
                 //foreign
                 $table->unsignedBigInteger('id_gap_dos_catalogo')->nullable();
                 $table->foreign('id_gap_dos_catalogo')->references('id')->on('gap_dos_catalogo_isos');

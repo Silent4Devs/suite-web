@@ -24,8 +24,18 @@ class DeclaracionAplicabilidadResponsableIso extends Model
         return $this->hasOne(Empleado::class, 'aprobadores_id', 'id');
     }
 
-    public function declaracion()
+    public function declaracion_aplicabilidad()
     {
-        return $this->hasOne(DeclaracionAplicabilidadConcentradoIso::class, 'declaracion_id', 'id');
+        return $this->belongsTo(DeclaracionAplicabilidadConcentradoIso::class, 'declaracion_id');
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'aprobadores_id')->alta();
+    }
+
+    public function notificacion()
+    {
+        return $this->hasMany(NotificacionAprobadores::class, 'responsables_id', 'id');
     }
 }
