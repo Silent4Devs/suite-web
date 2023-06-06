@@ -84,7 +84,7 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="gaptres" role="tabpanel"
-                                             aria-labelledby="contact-tab">
+                                             aria-labelledby="contact-tab3">
                                             <div class="container">
                                                 <!--gap tres-->
                                             @include('admin.dashboard-ISO27001.gaptres')
@@ -92,7 +92,7 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="dashboard" role="tabpanel"
-                                             aria-labelledby="contact-tab">
+                                             aria-labelledby="contact-tabZ">
                                              @include('admin.dashboard-ISO27001.tablero')
                                         </div>
                                     </div>
