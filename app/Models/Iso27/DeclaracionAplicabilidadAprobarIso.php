@@ -5,6 +5,7 @@ namespace App\Models\Iso27;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Empleado;
 
 class DeclaracionAplicabilidadAprobarIso extends Model
 {
@@ -19,13 +20,18 @@ class DeclaracionAplicabilidadAprobarIso extends Model
         'declaracion_id',
     ];
 
-    public function empleado()
+    public function aprobador_declaracion()
     {
-        return $this->hasOne(Empleado::class, 'aprobadores_id', 'id');
+        return $this->hasMany(Empleado::class, 'id', 'empleado_id');
     }
 
-    public function declaracion()
-    {
-        return $this->hasOne(DeclaracionAplicabilidadConcentradoIso::class, 'declaracion_id', 'id');
-    }
+    // public function empleado()
+    // {
+    //     return $this->hasOne(Empleado::class, 'aprobadores_id', 'id');
+    // }
+
+    // public function declaracion()
+    // {
+    //     return $this->hasOne(DeclaracionAplicabilidadConcentradoIso::class, 'declaracion_id', 'id');
+    // }
 }

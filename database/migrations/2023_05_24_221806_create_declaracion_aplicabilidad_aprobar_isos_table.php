@@ -20,8 +20,8 @@ class CreateDeclaracionAplicabilidadAprobarIsosTable extends Migration
                 $table->longText('comentarios')->nullable();
                 $table->date('fecha_aprobacion')->nullable();
                 //foreign
-                $table->unsignedBigInteger('aprobadores_id')->nullable();
-                $table->foreign('aprobadores_id')->references('id')->on('empleados')->nullable();
+                $table->unsignedBigInteger('empleado_id')->nullable();
+                $table->foreign('empleado_id')->references('id')->on('empleados')->nullable();
                 //foreign
                 $table->unsignedInteger('declaracion_id')->nullable();
                 $table->foreign('declaracion_id')->references('id')->on('declaracion_aplicabilidad_concentrado_isos')->nullable();

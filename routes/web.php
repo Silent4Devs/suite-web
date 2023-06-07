@@ -634,6 +634,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('declaracion-aplicabilidad/enviar-correo', 'DeclaracionAplicabilidadController@enviarCorreo')->name('declaracion-aplicabilidad.enviarcorreo');
         Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
 
+        // Declaracion de Aplicabilidad 2022
+        Route::get('declaracion-aplicabilidad-2022/descargar', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@download')->name('declaracion-aplicabilidad-2022.descargar');
+        Route::get('declaracion-aplicabilidad-2022/tabla', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@tabla')->name('declaracion-aplicabilidad-2022.tabla');
+        Route::put('declaracion-aplicabilidad-2022/tabla/{control}', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@updateTabla')->name('declaracion-aplicabilidad-2022.updateTabla');
+        Route::get('declaracion-aplicabilidad-2022/{id}', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@index')->name('declaracion-aplicabilidad-2022');
+        Route::delete('declaracion-aplicabilidad-2022/destroy', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@massDestroy')->name('declaracion-aplicabilidad-2022.massDestroy');
+        Route::resource('declaracion-aplicabilidad-2022', 'iso27\DeclaracionAplicabilidadConcentradoIsoController');
+        Route::post('declaracion-aplicabilidad-2022/enviar-correo', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@enviarCorreo')->name('declaracion-aplicabilidad-2022.enviarcorreo');
+        Route::get('getEmployeeData', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@getEmployeeData')->name('getEmployeeData');
+
         //Panel declaracion
         Route::post('paneldeclaracion/controles', 'PanelDeclaracionController@controles')->name('paneldeclaracion.controles');
         Route::post('paneldeclaracion/responsables-quitar', 'PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');

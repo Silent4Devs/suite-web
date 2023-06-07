@@ -24,12 +24,14 @@ class PanelDeclaracionIsoController extends Controller
         //     'id_gap_dos_catalogo',
         // )->with('gapdos')
         // ->with('gapdos.clasificacion')
-        // ->with(['responsables2022' => function ($q) {
+        // ->with(['responsables2022.responsable_declaracion' => function ($q) {
         //     $q->select('empleados.id', 'empleados.name', 'foto');
-        //  }])->with(['aprobadores2022' => function ($q) {
+        //  }])
+        // ->with(['aprobadores2022.aprobador_declaracion' => function ($q) {
         //     $q->select('empleados.id', 'empleados.name', 'foto');
-        // }])->orderBy('id')->first();
-        // dd($query);
+        // }])
+        // ->orderBy('id')->first();
+        // dd($query->aprobadores2022[0]->aprobador_declaracion[0]['name']);
         $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -45,11 +47,13 @@ class PanelDeclaracionIsoController extends Controller
             'id_gap_dos_catalogo',
         )->with('gapdos')
         ->with('gapdos.clasificacion')
-        ->with(['responsables2022' => function ($q) {
+        ->with(['responsables2022.responsable_declaracion' => function ($q) {
             $q->select('empleados.id', 'empleados.name', 'foto');
-         }])->with(['aprobadores2022' => function ($q) {
+         }])
+        ->with(['aprobadores2022.aprobador_declaracion' => function ($q) {
             $q->select('empleados.id', 'empleados.name', 'foto');
-        }])->orderBy('id')->get();
+        }])
+        ->orderBy('id')->get();
 
         return datatables()->of($query)->toJson();
     }
