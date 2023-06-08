@@ -299,7 +299,6 @@
                             responsableselect =
                                 `<select class="revisoresSelect responsables" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
                             ${responsableselects?.map ((responsable,idx)=>{
-                                console.log('hola', responsable);
                                 return`<option ${responsable.declaraciones_responsable2022?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>${responsable.name }</option>`})}
                                 </select>`;
                             return responsableselect;

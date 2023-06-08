@@ -16,7 +16,7 @@ class DeclaracionAplicabilidadAprobarIso extends Model
         'estatus',
         'comentarios',
         'fecha_aprobacion',
-        'aprobadores_id',
+        'empleado_id',
         'declaracion_id',
     ];
 

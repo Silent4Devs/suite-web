@@ -42,7 +42,7 @@ class DeclaracionAplicabilidadConcentradoIso extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'aprobadores_id', 'id')->alta();
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
     }
 
     // public function notificacion()
