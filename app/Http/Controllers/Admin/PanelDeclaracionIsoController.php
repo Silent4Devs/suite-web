@@ -217,37 +217,29 @@ class PanelDeclaracionIsoController extends Controller
 
     public function enviarCorreo(Request $request)
     {
-        // // // return response()->json(['message'=>$request->all()],200);
-        // // dd($request->all());
-        // // $declaracion = $request->declaracion;
 
-        // if ($request->enviarTodos) {
-        //     $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('empleado_id')->pluck('empleado_id')->toArray();
-        // } elseif ($request->enviarNoNotificados) {
-        //     $destinatarios = DeclaracionAplicabilidadResponsableIso::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
-        // // dd($destinatarios);
-        // } else {
-        //     $destinatarios = json_decode($request->responsables);
-        // }
-        // // dd( $declaracion);
-        // // dd($destinatarios);
-        // $tipo = $request->tipo;
-        // $declaracion = $request->declaracion;
+        if ($request->enviarTodos) {
+            $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('empleado_id')->pluck('empleado_id')->toArray();
+        } elseif ($request->enviarNoNotificados) {
+            $destinatarios = DeclaracionAplicabilidadResponsableIso::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
+        } else {
+            $destinatarios = json_decode($request->responsables);
+        }
+        $tipo = $request->tipo;
+        $declaracion = $request->declaracion;
 
-        // foreach ($destinatarios as $destinatario) {
-        //     $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($destinatario));
-        //     // dd($empleado); Hacer la consulta de controles se la envio como controles buscar la tabla where->
-        //     $responsable = DeclaracionAplicabilidadResponsableIso::with('declaracion_aplicabilidad')->where('aprobadores_id', $destinatario)->get();
-        //     // dd($responsable);
-        //     $controles = collect();
-        //     foreach ($responsable as $control) {
-        //         $controles->push($control->declaracion_aplicabilidad);
-        //     }
-        //     Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
-        //     $responsable = DeclaracionAplicabilidadResponsableIso::where('empleado_id', $destinatario)->first();
-        //     $responsable->update(['esta_correo_enviado' => true]);
-        // }
+        foreach ($destinatarios as $destinatario) {
+            $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($destinatario));
+            $responsable = DeclaracionAplicabilidadResponsableIso::with('declaracion_aplicabilidad')->where('aprobadores_id', $destinatario)->get();
+            $controles = collect();
+            foreach ($responsable as $control) {
+                $controles->push($control->declaracion_aplicabilidad);
+            }
+            Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
+            $responsable = DeclaracionAplicabilidadResponsableIso::where('empleado_id', $destinatario)->first();
+            $responsable->update(['esta_correo_enviado' => true]);
+        }
 
-        // return response()->json(['message' => 'Correo enviado'], 200);
+         return response()->json(['message' => 'Correo enviado'], 200);
     }
 }
