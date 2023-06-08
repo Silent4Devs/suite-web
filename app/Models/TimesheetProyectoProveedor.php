@@ -18,4 +18,9 @@ class TimesheetProyectoProveedor extends Model
         'costo_tercero',
     ];
 
+    public function proyecto()
+    {
+        return $this->belongsTo(TimesheetProyecto::class, 'proyecto_id');
+    }
+
 }

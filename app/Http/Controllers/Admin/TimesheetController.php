@@ -644,7 +644,8 @@ class TimesheetController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Guardado con éxito');
+        // return back()->with('success', 'Guardado con éxito');
+        return redirect('admin/timesheet/proyecto-empleados/' . $edit_proyecto->id);
     }
 
     public function tareas()
@@ -1128,6 +1129,22 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.proyecto-empleados', compact('proyecto', 'logo_actual', 'empresa_actual'));
+    }
+
+    public function proyectosExternos($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.proyecto-externos', compact('proyecto', 'logo_actual', 'empresa_actual'));
     }
 
     public function editProyectos($id)

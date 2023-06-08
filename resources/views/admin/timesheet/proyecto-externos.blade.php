@@ -4,13 +4,13 @@
 
     {{ Breadcrumbs::render('timesheet-tareas-proyecto') }}
 
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Asignacion de Empleados por Proyecto</font>
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Asignacion de Proveedores/Consultores por Proyecto</font>
     </h5>
 
     <div class="card card-body">
         <div class="row">
 
-            @livewire('timesheet.timesheet-proyecto-empleados-component', ['proyecto_id' => $proyecto->id])
+            @livewire('timesheet.timesheet-proyecto-externos-component', ['proyecto_id' => $proyecto->id])
 
         </div>
     </div>

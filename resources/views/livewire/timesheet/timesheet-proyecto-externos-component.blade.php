@@ -1,30 +1,21 @@
 <div class="w-100">
-    <h5 class="d-flex justify-content-between">Asignar Empleado a Proyecto <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar Proyecto</a><a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Tablas Proyectos</a></h5>
-    <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-info">Asignar Proveedores/Consultores</a>
-    <form wire:submit.prevent="addEmpleado">
+    <h5 class="d-flex justify-content-between">Asignar Proveedor/Consultor Externo a Proyecto <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar Proyecto</a><a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Tablas Proyectos</a></h5>
+    <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-info">Asignar Empleados</a>
+    <form wire:submit.prevent="addExterno">
         <div class="row mt-4">
             <div class="form-group col-md-7">
-                <label for="">Empleado</label>
-                <select wire:model="empleado_añadido" name="" id="" class="select2" required>
-                    <option value="" selected disabled></option>
-                    @foreach ($empleados as $empleado)
-                        <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
-                    @endforeach
-                </select>
+                <label for="">Externo</label>
+                <input wire:model="externo_añadido" name="" id=""type="text" required>
             </div>
-            {{-- <div class="form-group col-md-5">
-                <label for="">Área</label>
-                <div class="form-control">Área de emp</div>
-            </div> --}}
         </div>
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas</label>
-                <input wire:model="horas_asignadas" name="" id="" type="number" class="form-control">
+                <input wire:model="horas_tercero" name="" id="" type="number" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="">Costo por hora</label>
-                <input wire:model="costo_hora" name="" id="" type="number" class="form-control">
+                <input wire:model="costo_tercero" name="" id="" type="number" class="form-control">
             </div>
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
                 <button class="btn btn-success">Agregar</button>
@@ -32,12 +23,10 @@
         </div>
     </form>
     <div class="datatable-fix w-100 mt-5">
-        <table id="tabla_time_poyect_empleados" class="table w-100 tabla-animada">
+        <table id="tabla_time_proyect_externos" class="table w-100 tabla-animada">
             <thead class="w-100">
                 <tr>
                     <th>Nombre </th>
-                    <th>Área </th>
-                    <th>Puesto </th>
                     <th>Horas asignadas </th>
                     <th>Costo por hora </th>
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
@@ -45,16 +34,14 @@
             </thead>
 
             <tbody style="position:relative;">
-                @foreach ($proyecto_empleados as $proyect_empleado)
+                @foreach ($proyecto_proveedores as $proyecto_proveedor)
                     <tr>
-                        <td>{{ $proyect_empleado->empleado->name }} </td>
-                        <td>{{ $proyect_empleado->empleado->area->area }} </td>
-                        <td>{{ $proyect_empleado->empleado->puesto }} </td>
-                        <td>{{ $proyect_empleado->horas_asignadas }} </td>
-                        <td>{{ $proyect_empleado->costo_hora }} </td>
+                        <td>{{ $proyecto_proveedor->proveedor_tercero }} </td>
+                        <td>{{ $proyecto_proveedor->horas_tercero }} </td>
+                        <td>{{ $proyecto_proveedor->costo_tercero }} </td>
                         <td>
                             <button class="btn" data-toggle="modal"
-                                data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
+                                data-target="#modal_proyecto_externo_eliminar_{{ $proyecto_proveedor->id }}">
                                 <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
                                     title="Eliminar"></i>
                             </button>
@@ -65,8 +52,8 @@
         </table>
     </div>
 
-    @foreach($proyecto_empleados as $proyect_empleado)
-        <div class="modal fade" id="modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}" tabindex="-1" role="dialog"
+    @foreach($proyecto_proveedores as $proyecto_proveedor)
+        <div class="modal fade" id="modal_proyecto_externo_eliminar_{{ $proyecto_proveedor->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -76,9 +63,9 @@
                         <div class="delete">
                             <div class="text-center">
                                 <i class="fa-solid fa-trash-can" style="color: #E34F4F; font-size:60pt;"></i>
-                                <h1 class="my-4" style="font-size:14pt;">Remover empleado de Proyecto:
-                                    <small>{{ $proyect_empleado->proyecto->proyecto }}</small></h1>
-                                <p class="parrafo">¿Desea remover a {{ $proyect_empleado->empleado->name }} del proyecto {{ $proyect_empleado->proyecto->proyecto }}?</p>
+                                <h1 class="my-4" style="font-size:14pt;">Remover externo de Proyecto:
+                                    <small>{{ $proyecto_proveedor->proyecto->proyecto }}</small></h1>
+                                <p class="parrafo">¿Desea remover a {{ $proyecto_proveedor->proveedor_tercero }} del proyecto {{ $proyecto_proveedor->proyecto->proyecto }}?</p>
                             </div>
 
                             <div class="mt-4 d-flex justify-content-between">
@@ -86,7 +73,7 @@
                                     Cancelar
                                 </button>
                                 <button class="btn btn-info" style="border:none; background-color:#E34F4F;"
-                                    wire:click="empleadoProyectoRemove({{ $proyect_empleado->id }})" data-dismiss="modal">
+                                    wire:click="externoProyectoRemove({{ $proyecto_proveedor->id }})" data-dismiss="modal">
                                     Eliminar Proyecto
                                 </button>
                             </div>
@@ -103,19 +90,20 @@
             document.addEventListener('DOMContentLoaded', () => {
 
                 Livewire.on('scriptTabla', () => {
-                    tablaLivewire('tabla_time_poyect_empleados');
+                    tablaLivewire('tabla_time_proyect_externos');
 
                     $('.select2').select2().on('change', function (e) {
                         var data = $(this).select2("val");
-                        @this.set('empleado_añadido', data);
+                        @this.set('externo_añadido', data);
                     });
                 });
 
                 $('.select2').select2().on('change', function (e) {
                     var data = $(this).select2("val");
-                    @this.set('empleado_añadido', data);
+                    @this.set('externo_añadido', data);
                 });
             });
         </script>
     @endsection
+
 </div>
