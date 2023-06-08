@@ -287,45 +287,41 @@
                         name: 'gapdos.clasificacion.nombre',
                     },
                     {
-                        data: 'responsables2022[id].responsable_declaracion[id].name',
-                        name: 'responsables2022[id].responsable_declaracion[id].name',
-                        // data: 'id',
-                        // name: 'id',
-                        // render: function(data, type, row, meta) {
-                        //     if (type === "responsableText") {
-                        //         console.log('hola');
-                        //         return data.name;
-                        //     }
-                        //     let responsableselect = "";
-                        //     let responsableselects = @json($empleados);
-                        //     //  console.log(row.empleados.declaraciones_responsable);
-                        //     responsableselect =
-                        //         `<select class="revisoresSelect responsables" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
-                        //     ${responsableselects?.map ((responsable,idx)=>{
-                        //         return`<option ${responsables2022[id].responsable_declaracion[id].name?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>${responsable.name }</option>`})}
-                        //         </select>`;
-                        //     return responsableselect;
-                        // }
+
+                        data: 'id',
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                            if (type === "responsableText") {
+                                return data.name;
+                            }
+                            let responsableselect = "";
+                            let responsableselects = @json($empleados);
+                            responsableselect =
+                                `<select class="revisoresSelect responsables" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
+                            ${responsableselects?.map ((responsable,idx)=>{
+                                console.log('hola', responsable);
+                                return`<option ${responsable.declaraciones_responsable2022?.includes(row.id)?'selected':''} data-avatar='${responsable.avatar}' data-id-empleado='${responsable.id}' data-gender='${responsable.genero}'>${responsable.name }</option>`})}
+                                </select>`;
+                            return responsableselect;
+                        }
                     },
                     {
-                        data: 'aprobadores2022[id].aprobador_declaracion[id].name',
-                        name: 'aprobadores2022[id].aprobador_declaracion[id].name',
-                        // data: 'id',
-                        // name: 'id',
-                    //     render: function(data, type, row, meta) {
-                    //         if (type === "responsableText") {
-                    //             console.log('hola');
-                    //             return data.name;
-                    //         }
-                    //         let aprobadorselect = "";
-                    //         let aprobadoreselects = @json($empleados);
-                    //         aprobadorselect = `
-                    // <select class="revisoresSelect aprobadores" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
-                    //     ${aprobadoreselects?.map ((aprobador,idx)=>{
-                    //         return`<option ${aprobador.declaraciones_aprobador?.includes(row.id)?'selected':''} data-avatar='${aprobador.avatar}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>${aprobador.name }</option>`})}
-                    //     </select>`;
-                    //         return aprobadorselect;
-                    //     }
+
+                        data: 'id',
+                        name: 'id',
+                        render: function(data, type, row, meta) {
+                            if (type === "responsableText") {
+                                return data.name;
+                            }
+                            let aprobadorselect = "";
+                            let aprobadoreselects = @json($empleados);
+                            aprobadorselect = `
+                    <select class="revisoresSelect aprobadores" id='aprobadores${row.id}'' name="aprobadores[]" multiple="multiple" data-id='${row.id}'>
+                        ${aprobadoreselects?.map ((aprobador,idx)=>{
+                            return`<option ${aprobador.declaraciones_aprobador2022?.includes(row.id)?'selected':''} data-avatar='${aprobador.avatar}' data-id-empleado='${aprobador.id}' data-gender='${aprobador.genero}'>${aprobador.name }</option>`})}
+                        </select>`;
+                            return aprobadorselect;
+                        }
                     },
                     {
                         data: 'id',

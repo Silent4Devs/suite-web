@@ -30,8 +30,8 @@ class DeclaracionAplicabilidadAprobarIso extends Model
     //     return $this->hasOne(Empleado::class, 'aprobadores_id', 'id');
     // }
 
-    // public function declaracion()
-    // {
-    //     return $this->hasOne(DeclaracionAplicabilidadConcentradoIso::class, 'declaracion_id', 'id');
-    // }
+    public function declaracion()
+    {
+        return $this->hasOne(DeclaracionAplicabilidadConcentradoIso::class, 'declaracion_id', 'id');
+    }
 }

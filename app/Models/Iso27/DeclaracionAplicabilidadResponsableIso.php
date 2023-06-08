@@ -16,7 +16,7 @@ class DeclaracionAplicabilidadResponsableIso extends Model
         'aplica',
         'justificacion',
         'fecha_aprobacion',
-        'aprobadores_id',
+        'empleado_id',
         'declaracion_id',
     ];
 
@@ -30,10 +30,10 @@ class DeclaracionAplicabilidadResponsableIso extends Model
     //     return $this->hasOne(Empleado::class, 'aprobadores_id', 'id');
     // }
 
-    // public function declaracion_aplicabilidad()
-    // {
-    //     return $this->belongsTo(DeclaracionAplicabilidadConcentradoIso::class, 'declaracion_id');
-    // }
+    public function declaracion_aplicabilidad()
+    {
+        return $this->belongsTo(DeclaracionAplicabilidadConcentradoIso::class, 'declaracion_id');
+    }
 
     // public function empleado()
     // {

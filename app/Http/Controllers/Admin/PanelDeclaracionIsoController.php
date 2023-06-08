@@ -119,16 +119,15 @@ class PanelDeclaracionIsoController extends Controller
         $responsable = $request->responsable;
         $existResponsable = DeclaracionAplicabilidadResponsableIso::select('declaracion_id')->where('declaracion_id', $declaracion)->exists();
 
-        $isReasignable = DeclaracionAplicabilidadResponsableIso::select('declaracion_id')->where('declaracion_id', $declaracion)->whereNull('aprobadores_id')->exists();
+        $isReasignable = DeclaracionAplicabilidadResponsableIso::select('declaracion_id')->where('declaracion_id', $declaracion)->whereNull('empleado_id')->exists();
         $readyExistResponsable = DeclaracionAplicabilidadAprobarIso::select('declaracion_id')
-            ->where('declaracion_id', $declaracion)->where('aprobadores_id', $responsable)->exists();
+            ->where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
         if ($readyExistResponsable) {
             return response()->json(['estatus' => 'ya_es_aprobador', 'message' => 'Ya fue asignado aprobador'], 200);
         } else {
             if (!$existResponsable) {
-                $exists = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('aprobadores_id', $responsable)->exists();
+                $exists = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
                 if (!$exists) {
-                    // dd($responsable);
                     DeclaracionAplicabilidadResponsableIso::updateOrCreate([
                         'declaracion_id' => $declaracion,
                         'aprobadores_id' => $responsable,
@@ -143,7 +142,7 @@ class PanelDeclaracionIsoController extends Controller
                 }
             } else {
                 if ($isReasignable) {
-                    DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->update(['aprobadores_id' => $responsable,  'esta_correo_enviado' => false]);
+                    DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->update(['empleado_id' => $responsable]);
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Responsable asignado'], 200);
                 } else {
@@ -158,15 +157,13 @@ class PanelDeclaracionIsoController extends Controller
     {
         $declaracion = $request->declaracion;
         $responsable = $request->responsable;
-        $registro = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('aprobadores_id', $responsable);
+        $registro = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable);
 
         $exists = $registro->exists();
         if ($exists) {
-            $registro = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('aprobadores_id', $responsable)->update(['aprobadores_id' => null, 'esta_correo_enviado' => true]);
+            $registro = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->update(['empleado_id' => null, 'esta_correo_enviado' => true]);
 
             return response()->json(['message' => 'Responsable desasignado', 'request' => $request->all()], 200);
-            // } else {
-            //     return response()->json(['message'=>'Este responsable no ha sido asignado'], 200);
         }
     }
 
@@ -176,17 +173,17 @@ class PanelDeclaracionIsoController extends Controller
         $declaracion = $request->declaracion;
         $aprobador = $request->aprobador;
         $existAprobador = DeclaracionAplicabilidadAprobarIso::select('declaracion_id')->where('declaracion_id', $declaracion)->exists();
-        $readyExistResponsable = DeclaracionAplicabilidadResponsableIso::select('declaracion_id')->where('declaracion_id', $declaracion)->where('aprobadores_id', $aprobador)->exists();
+        $readyExistResponsable = DeclaracionAplicabilidadResponsableIso::select('declaracion_id')->where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->exists();
         if ($readyExistResponsable) {
             return response()->json(['estatus' => 'ya_es_responsable', 'message' => 'Ya fue asignado responsable'], 200);
         } else {
             if (!$existAprobador) {
-                $exists = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('aprobadores_id', $aprobador)->exists();
+                $exists = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->exists();
                 if (!$exists) {
                     DeclaracionAplicabilidadAprobarIso::updateOrCreate(
                         [
                             'declaracion_id' => $declaracion,
-                            'aprobadores_id' => $aprobador,
+                            'empleado_id' => $aprobador,
                         ],
                         [
                             'esta_correo_enviado' => false,
@@ -208,7 +205,7 @@ class PanelDeclaracionIsoController extends Controller
     {
         $declaracion = $request->declaracion;
         $aprobador = $request->aprobador;
-        $registro = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('aprobadores_id', $aprobador);
+        $registro = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador);
         $exists = $registro->exists();
         if ($exists) {
             $registro->first()->delete();
@@ -223,37 +220,37 @@ class PanelDeclaracionIsoController extends Controller
 
     public function enviarCorreo(Request $request)
     {
-        // // return response()->json(['message'=>$request->all()],200);
-        // dd($request->all());
+        // // // return response()->json(['message'=>$request->all()],200);
+        // // dd($request->all());
+        // // $declaracion = $request->declaracion;
+
+        // if ($request->enviarTodos) {
+        //     $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('empleado_id')->pluck('empleado_id')->toArray();
+        // } elseif ($request->enviarNoNotificados) {
+        //     $destinatarios = DeclaracionAplicabilidadResponsableIso::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
+        // // dd($destinatarios);
+        // } else {
+        //     $destinatarios = json_decode($request->responsables);
+        // }
+        // // dd( $declaracion);
+        // // dd($destinatarios);
+        // $tipo = $request->tipo;
         // $declaracion = $request->declaracion;
 
-        if ($request->enviarTodos) {
-            $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
-        } elseif ($request->enviarNoNotificados) {
-            $destinatarios = DeclaracionAplicabilidadResponsableIso::where('esta_correo_enviado', false)->distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
-        // dd($destinatarios);
-        } else {
-            $destinatarios = json_decode($request->responsables);
-        }
-        // dd( $declaracion);
-        // dd($destinatarios);
-        $tipo = $request->tipo;
-        $declaracion = $request->declaracion;
+        // foreach ($destinatarios as $destinatario) {
+        //     $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($destinatario));
+        //     // dd($empleado); Hacer la consulta de controles se la envio como controles buscar la tabla where->
+        //     $responsable = DeclaracionAplicabilidadResponsableIso::with('declaracion_aplicabilidad')->where('aprobadores_id', $destinatario)->get();
+        //     // dd($responsable);
+        //     $controles = collect();
+        //     foreach ($responsable as $control) {
+        //         $controles->push($control->declaracion_aplicabilidad);
+        //     }
+        //     Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
+        //     $responsable = DeclaracionAplicabilidadResponsableIso::where('empleado_id', $destinatario)->first();
+        //     $responsable->update(['esta_correo_enviado' => true]);
+        // }
 
-        foreach ($destinatarios as $destinatario) {
-            $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($destinatario));
-            // dd($empleado); Hacer la consulta de controles se la envio como controles buscar la tabla where->
-            $responsable = DeclaracionAplicabilidadResponsableIso::with('declaracion_aplicabilidad')->where('aprobadores_id', $destinatario)->get();
-            // dd($responsable);
-            $controles = collect();
-            foreach ($responsable as $control) {
-                $controles->push($control->declaracion_aplicabilidad);
-            }
-            Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
-            $responsable = DeclaracionAplicabilidadResponsableIso::where('aprobadores_id', $destinatario)->first();
-            $responsable->update(['esta_correo_enviado' => true]);
-        }
-
-        return response()->json(['message' => 'Correo enviado'], 200);
+        // return response()->json(['message' => 'Correo enviado'], 200);
     }
 }

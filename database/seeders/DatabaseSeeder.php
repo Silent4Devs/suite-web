@@ -68,7 +68,10 @@ class DatabaseSeeder extends Seeder
             ClasificacionSeeder::class,
             GapDosCatalogoIsoSeeder::class,
             GapTresCatalogoIsoSeeder::class,
-            GapUnoCatalogoIsoSeeder::class
+            GapUnoCatalogoIsoSeeder::class,
+            Declaracion_aplicabilidad_concentrado_Seeder::class,
+            Declaracion_aplicabilidad_aprobador_Seeder::class,
+            Declaracion_aplicabilidad_responsable_Seeder::class
             ]
         );
     }
