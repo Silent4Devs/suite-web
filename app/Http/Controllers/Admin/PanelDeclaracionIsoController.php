@@ -130,7 +130,7 @@ class PanelDeclaracionIsoController extends Controller
                 if (!$exists) {
                     DeclaracionAplicabilidadResponsableIso::updateOrCreate([
                         'declaracion_id' => $declaracion,
-                        'aprobadores_id' => $responsable,
+                        'empleado_id' => $responsable,
                     ], [
                         'esta_correo_enviado' => false,
 
