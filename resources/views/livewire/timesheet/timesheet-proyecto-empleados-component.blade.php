@@ -19,11 +19,11 @@
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas</label>
-                <input type="number" class="form-control">
+                <input wire:model="horas_asignadas" name="" id="" type="number" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="">Costo por hora</label>
-                <input type="number" class="form-control">
+                <input wire:model="costo_hora" name="" id="" type="number" class="form-control">
             </div>
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
                 <button class="btn btn-success">Agregar</button>
@@ -50,7 +50,7 @@
                         <td>{{ $proyect_empleado->empleado->area->area }} </td>
                         <td>{{ $proyect_empleado->empleado->puesto }} </td>
                         <td>{{ $proyect_empleado->horas_asignadas }} </td>
-                        <td>{{ $proyect_empleado->costo_horas }} </td>
+                        <td>{{ $proyect_empleado->costo_hora }} </td>
                         <td>
                             <button class="btn" data-toggle="modal"
                                 data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
@@ -100,10 +100,10 @@
     @parent
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', () => {
-                
+
                 Livewire.on('scriptTabla', () => {
                     tablaLivewire('tabla_time_poyect_empleados');
-                    
+
                     $('.select2').select2().on('change', function (e) {
                         var data = $(this).select2("val");
                         @this.set('empleado_añadido', data);
