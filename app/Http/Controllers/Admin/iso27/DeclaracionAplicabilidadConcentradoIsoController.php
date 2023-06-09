@@ -6,16 +6,27 @@ use Yajra\DataTables\Facades\DataTables;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\Controller;
 
 use App\Models\Iso27\DeclaracionAplicabilidadConcentradoIso;
+use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
+use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
+use App\Mail\NotificacionDeclaracionAplicabilidadAprobadores;
+use App\Mail\NotificacionDeclaracionAplicabilidadResponsables;
 use App\Models\Iso27\GapDosCatalogoIso;
 use App\Models\Iso27\GapTresCatalogoIso;
 use App\Models\Iso27\GapUnoConcentratoIso;
 use App\Models\Iso27\GapDosConcentradoIso;
 use App\Models\Iso27\GapTresConcentradoIso;
+use App\Models\Empleado;
+
+use Carbon\Carbon;
 
 use App\Traits\ObtenerOrganizacion;
 
@@ -53,13 +64,54 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
             return $query->where('control_iso', 'LIKE', "A.8.".'%');
         })->orderBy('id', 'ASC')->get();
 
-        dd($gapa5, $gapa6, $gapa7, $gapa8);
+        $responsables = DeclaracionAplicabilidadResponsableIso::with(['empleado' => function ($q) {
+            $q->select('id', 'name', 'foto', 'estatus')->where('estatus', 'alta');
+        }])->orderBy('id')->get();
+        // dd($responsables);
+        $aprobadores = DeclaracionAplicabilidadAprobarIso::with(['empleado' => function ($q) {
+            $q->select('id', 'name', 'foto', 'estatus')->where('estatus', 'alta');
+        }])->orderBy('id')->get();
 
-        return view('admin.declaracionaplicabilidad.index', compact('conteoAplica', 'conteoNoaplica', 'A5', 'A5No', 'A6', 'A6No', 'A7', 'A7No', 'A8', 'A8No', 'A9', 'A9No', 'A10', 'A10No', 'A11', 'A11No', 'A12', 'A12No', 'A13', 'A13No', 'A14', 'A14No', 'A15', 'A15No', 'A16', 'A16No', 'A17', 'A17No', 'A18', 'A18No'))
+        $totalconteo = GapDosCatalogoIso::get()->count();
+        $conteoAplica = DeclaracionAplicabilidadResponsableIso::where('aplica', '=', '1')->get()->count();
+        $conteoNoaplica = DeclaracionAplicabilidadResponsableIso::where('aplica', '=', '2')->get()->count();
+
+        // dd($conteoAplica, $conteoNoaplica);
+
+        $gap5 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function($query){
+            return $query->where('control_iso', 'LIKE', "A.5.".'%');
+        })->get();
+        $gap6 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function($query){
+            return $query->where('control_iso', 'LIKE', "A.6.".'%');
+        })->get();
+        $gap7 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function($query){
+            return $query->where('control_iso', 'LIKE', "A.7.".'%');
+        })->get();
+        $gap8 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function($query){
+            return $query->where('control_iso', 'LIKE', "A.8.".'%');
+        })->get();
+
+        // dd($gap5, $gap6, $gap7, $gap8);
+
+        // $gap182total = $gapa182->count();
+        $A5 = $gap5->where('aplica', '=', 1)->count();
+        $A5No = $gap5->where('aplica', '=', 2)->count();
+        $A6 = $gap6->where('aplica', '=', 1)->count();
+        $A6No = $gap6->where('aplica', '=', 2)->count();
+        $A7 = $gap7->where('aplica', '=', 1)->count();
+        $A7No = $gap7->where('aplica', '=', 2)->count();
+        $A8 = $gap8->where('aplica', '=', 1)->count();
+        $A8No = $gapa8->where('aplica', '=', 2)->count();
+
+        // dd($A5, $A5No, $A6, $A6No, $A7, $A7No, $A8, $A8No);
+        // dd($gapa5, $gapa6, $gapa7, $gapa8);
+
+        return view('admin.declaracionaplicabilidad2022.index', compact('conteoAplica', 'conteoNoaplica', 'totalconteo',
+        'A5', 'A5No', 'A6', 'A6No', 'A7', 'A7No', 'A8', 'A8No'))
         ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)
-        ->with('gapda7s', $gapa71)->with('gapda8s', $gapa81)
-        ->with('lista_archivos_declaracion', $lista_archivos_declaracion)
-        ->with('ISO27001_SoA_PATH', $ISO27001_SoA_PATH)
+        ->with('gapda7s', $gapa7)->with('gapda8s', $gapa8)
+        // ->with('lista_archivos_declaracion', $lista_archivos_declaracion)
+        // ->with('ISO27001_SoA_PATH', $ISO27001_SoA_PATH)
         ->with('aprobadores', $aprobadores)
         ->with('responsables', $responsables);
     }
@@ -81,6 +133,141 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         return view('admin.declaracionaplicabilidad2022.tabla', compact('organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
+    public function updateTabla(Request $request, $control)
+     {
+        dd($request);
+         $request->validate([
+             'anexo_politica' => 'required',
+             'anexo_descripcion' => 'required',
+         ]);
+
+         $control = GapDosCatalogoIso::find($control);
+         $control->update([
+             'anexo_politica' => $request->anexo_politica,
+             'anexo_descripcion' => $request->anexo_descripcion,
+         ]);
+
+         return redirect()->route('admin.declaracion-aplicabilidad.tabla')->with('success', 'Declaración de aplicabilidad actualizada con éxito');
+     }
+
+         /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
+     * @return \Illuminate\Http\Response
+     */
+
+     public function update(Request $request, $id)
+     {
+         // dd($id);
+         if ($request->ajax()) {
+             switch ($request->name) {
+                 case 'justificacion':
+                    // dd('Si esta llegando aqui al update del controller', $request, $id);
+                     $gapun = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['justificacion' => $request->value]);
+                     $control = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+                     $aplicabilidad = DeclaracionAplicabilidadConcentradoIso::find($control->declaracion_id);
+                    //  if ($control->aplica != null) {
+                    //      $aprobadorDeclaracion = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $id)->orderBy('created_at')->first();
+                    //      $aprobador = Empleado::select('id', 'name', 'email')->find($aprobadorDeclaracion->empleado_id);
+                    //      $responsable = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
+                    //      Mail::to($aprobador->email)->send(new  NotificacionDeclaracionAplicabilidadAprobadores($aprobador, $responsable, $aplicabilidad));
+                    //  }
+
+                     return response()->json(['success' => true, 'id' => $id]);
+
+                     break;
+                 case 'aplica':
+
+                     $gapun = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
+                     $control = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+
+                     $aplicabilidad = DeclaracionAplicabilidadConcentradoIso::find($control->declaracion_id);
+                    //  if ($control->justificacion != null) {
+                    //      $aprobadorDeclaracion = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $id)->orderBy('created_at')->first();
+                    //      $aprobador = Empleado::select('id', 'name', 'email')->find($aprobadorDeclaracion->empleado_id);
+                    //      $responsable = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
+                    //      Mail::to($aprobador->email)->send(new NotificacionDeclaracionAplicabilidadAprobadores($aprobador, $responsable, $aplicabilidad));
+                    //  }
+
+                     return response()->json(['success' => true, 'id' => $id]);
+
+                     break;
+                 case 'aplica2':
+                     try {
+                         $gapun = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
+                         // $gapun->aplica = $request->value;
+                         return response()->json(['success' => true, 'id' => $id]);
+                     } catch (Throwable $e) {
+                         return response()->json(['success' => false]);
+                     }
+
+                     break;
+                 case 'estatus':
+
+                    $fecha_aprob = Carbon::today();
+                    $gapun = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['estatus' => $request->value, 'fecha_aprobacion' => $fecha_aprob]);
+                    $control = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+
+                    $aplicabilidad = DeclaracionAplicabilidadConcentradoIso::find($control->declaracion_id);
+
+                    //  if ($control->comentarios != null) {
+                    //      $responsableDeclaracion = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $id)->orderBy('created_at')->first();
+                    //      $responsable = Empleado::select('id', 'name', 'email')->find($responsableDeclaracion->empleado_id);
+                    //      $aprobador = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
+                    //      Mail::to($responsable->email)->send(new NotificacionDeclaracionAplicabilidadResponsables($aprobador, $responsable, $aplicabilidad, $control));
+                    //  }
+
+                     return response()->json(['success' => true, 'id' => $id, 'value' => $request->value, 'fecha' => Carbon::parse($control->updated_at)->format('d-m-Y')]);
+
+                     break;
+
+                 case 'comentarios':
+                     $gapun = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['comentarios' => $request->value]);
+
+                     // $gapun->comentarios = $request->value;
+                     $control = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+
+                     $aplicabilidad = DeclaracionAplicabilidadConcentradoIso::find($control->declaracion_id);
+                    //  if ($control->estatus != null) {
+                    //      $responsableDeclaracion = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $id)->orderBy('created_at')->first();
+                    //      $responsable = Empleado::select('id', 'name', 'email')->find($responsableDeclaracion->empleado_id);
+                    //      $aprobador = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
+                    //      Mail::to($responsable->email)->send(new NotificacionDeclaracionAplicabilidadResponsables($aprobador, $responsable, $aplicabilidad, $control));
+                    //  }
+
+                     return response()->json(['success' => true, 'id' => $id]);
+
+                     break;
+
+                 case 'fecha_aprobacion':
+                     try {
+                         $gapun = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['fecha_aprobacion' => $request->value]);
+                         $gapun->fecha_aprobacion = $request->value;
+
+                         return response()->json(['success' => true, 'id' => $id]);
+                     } catch (Throwable $e) {
+                         return response()->json(['success' => false]);
+                     }
+                     break;
+
+                 case 'empleado_id':
+                     $gapun = DeclaracionAplicabilidadAprobarIso::findOrFail($id);
+                     $gapun->empleado_id = $request->value;
+
+                     return response()->json(['success' => true]);
+                     break;
+
+                 case 'empleado_id':
+                     $gapun = DeclaracionAplicabilidadResponsableIso::findOrFail($id);
+                     $gapun->empleado_id = $request->value;
+
+                     return response()->json(['success' => true]);
+                     break;
+             }
+         }
+     }
     /**
      * Show the form for creating a new resource.
      *
@@ -128,36 +315,6 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
-     * @return \Illuminate\Http\Response
-     */
-
-     public function updateTabla(Request $request, $control)
-     {
-        dd($request);
-         $request->validate([
-             'anexo_politica' => 'required',
-             'anexo_descripcion' => 'required',
-         ]);
-
-         $control = GapDosCatalogoIso::find($control);
-         $control->update([
-             'anexo_politica' => $request->anexo_politica,
-             'anexo_descripcion' => $request->anexo_descripcion,
-         ]);
-
-         return redirect()->route('admin.declaracion-aplicabilidad.tabla')->with('success', 'Declaración de aplicabilidad actualizada con éxito');
-     }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int $id
@@ -166,5 +323,90 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function download(DeclaracionAplicabilidadConcentradoIso $declaracionAplicabilidad)
+    {
+        $gapa5 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')
+        ->with('gapdos.clasificacion')
+        ->whereHas('gapdos', function($query){
+            return $query->where('control_iso', 'LIKE', "A.5.".'%');
+        })
+        ->with('responsables2022')
+        ->orderBy('id', 'ASC')->get();
+
+        $gapa6 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
+        ->whereHas('gapdos', function($query){
+            return $query->where('control_iso', 'LIKE', "A.6.".'%');
+        })
+        ->with('responsables2022')
+        ->orderBy('id', 'ASC')->get();
+
+        $gapa7 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
+        ->whereHas('gapdos', function($query){
+            return $query->where('control_iso', 'LIKE', "A.7.".'%');
+        })
+        ->with('responsables2022')
+        ->orderBy('id', 'ASC')->get();
+
+        $gapa8 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
+        ->whereHas('gapdos', function($query){
+            return $query->where('control_iso', 'LIKE', "A.8.".'%');
+        })
+        ->with('responsables2022')
+        ->orderBy('id', 'ASC')->get();
+
+        $logo = DB::table('organizacions')
+            ->select('logotipo')
+            ->first();
+        $logotipo = '';
+        if (isset($logo)) {
+            if ($logo->logotipo != null) {
+                $logotipo = 'images/' . $logo->logotipo;
+            } else {
+                $logotipo = 'img/Silent4Business-Logo-Color.png';
+            }
+        } else {
+            $logotipo = 'img/Silent4Business-Logo-Color.png';
+        }
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('admin.declaracionaplicabilidad2022.plantilla', compact(
+            'gapa5',
+            'gapa6',
+            'gapa7',
+            'gapa8',
+            'logotipo',
+        ));
+
+        $nombre_pdf = 'Analisis Inicial ' . Carbon::now()->format('d-m-Y') . '.pdf';
+        $content = $pdf->download()->getOriginalContent();
+        Storage::put('public/Normas/ISO27001/Analísis Inicial/' . $nombre_pdf, $content);
+        //$pdf->download(storage_path('Normas/ISO27001/Analísis Inicial/' . $nombre_pdf));
+        return $pdf->setPaper('a4', 'landscape')->stream();
+
+    }
+
+    public function enviarCorreo(Request $request)
+    {
+        if ($request->enviarTodos) {
+            $destinatarios = DeclaracionAplicabilidadAprobarIso::distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
+        } elseif ($request->enviarNoNotificados) {
+            $destinatarios = DeclaracionAplicabilidadAprobarIso::where('notificado', false)->distinct('aprobadores_id')->pluck('aprobadores_id')->toArray();
+        } else {
+            $destinatarios = json_decode($request->aprobadores);
+        }
+        // dd($destinatarios);
+        $tipo = $request->tipo;
+        foreach ($destinatarios as $destinatario) {
+            //TODO:FALTA ENVIAR CONTROLES A MailDeclaracionAplicabilidad
+            $empleado = Empleado::select('id', 'name', 'email')->find(intval($destinatario));
+            Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidadAprobadores($empleado->name, $tipo, []));
+            $responsable = DeclaracionAplicabilidadAprobarIso::where('empleado_id', $destinatario)->each(function ($item) {
+                $item->notificado = true;
+            });
+        }
+
+        return response()->json(['message' => 'Correo enviado'], 200);
     }
 }

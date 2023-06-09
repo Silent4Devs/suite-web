@@ -28,7 +28,7 @@
 
                 <section style="margin-top:30px;" id="dashboard">
 
-                    {{-- @include('admin.declaracionaplicabilidad2022.declaracion-dashboard') --}}
+                    @include('admin.declaracionaplicabilidad2022.declaracion-dashboard')
 
                 </section>
             </div>

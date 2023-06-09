@@ -205,7 +205,7 @@ class PanelDeclaracionIsoController extends Controller
         $registro = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador);
         $exists = $registro->exists();
         if ($exists) {
-            $registro->first()->delete();
+            $registro = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->update(['empleado_id' => null]);
 
             return response()->json(['message' => 'Aprobador desasignado'], 200);
         } else {

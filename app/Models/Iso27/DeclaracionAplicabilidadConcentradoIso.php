@@ -32,12 +32,12 @@ class DeclaracionAplicabilidadConcentradoIso extends Model
 
     public function responsables2022()
     {
-        return $this->hasMany(DeclaracionAplicabilidadResponsableIso::class, 'declaracion_id', 'id_gap_dos_catalogo');
+        return $this->hasOne(DeclaracionAplicabilidadResponsableIso::class, 'declaracion_id', 'id_gap_dos_catalogo');
     }
 
     public function aprobadores2022()
     {
-        return $this->hasMany(DeclaracionAplicabilidadAprobarIso::class, 'declaracion_id', 'id_gap_dos_catalogo');
+        return $this->hasOne(DeclaracionAplicabilidadAprobarIso::class, 'declaracion_id', 'id_gap_dos_catalogo');
     }
 
     public function empleado()

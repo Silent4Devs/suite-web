@@ -20,6 +20,11 @@ class DeclaracionAplicabilidadResponsableIso extends Model
         'declaracion_id',
     ];
 
+    public function gapdos()
+    {
+        return $this->hasOne(GapDosCatalogoIso::class, 'id', 'declaracion_id');
+    }
+
     public function responsable_declaracion()
     {
         return $this->hasMany(Empleado::class, 'id', 'empleado_id');
@@ -35,10 +40,10 @@ class DeclaracionAplicabilidadResponsableIso extends Model
         return $this->belongsTo(DeclaracionAplicabilidadConcentradoIso::class, 'declaracion_id');
     }
 
-    // public function empleado()
-    // {
-    //     return $this->belongsTo(Empleado::class, 'aprobadores_id')->alta();
-    // }
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
+    }
 
     // public function notificacion()
     // {
