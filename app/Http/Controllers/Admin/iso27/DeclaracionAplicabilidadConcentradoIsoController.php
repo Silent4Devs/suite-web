@@ -29,6 +29,7 @@ use App\Models\Empleado;
 use Carbon\Carbon;
 
 use App\Traits\ObtenerOrganizacion;
+use App\Functions\PorcentajeDecApl2022;
 
 class DeclaracionAplicabilidadConcentradoIsoController extends Controller
 {
@@ -78,6 +79,16 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
 
         // dd($conteoAplica, $conteoNoaplica);
 
+        $conteoAprobado = DeclaracionAplicabilidadResponsableIso::with('aprobador')->whereHas('aprobador', function($query){
+            return $query->where('estatus', '2');
+        })->orderBy('id')->get()->count();
+
+        $conteoNoaprobado = DeclaracionAplicabilidadResponsableIso::with('aprobador')->whereHas('aprobador', function($query){
+            return $query->where('estatus', '3');
+        })->orderBy('id')->get()->count();
+
+        // dd($conteoAprobado, $conteoNoaprobado);
+
         $gap5 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function($query){
             return $query->where('control_iso', 'LIKE', "A.5.".'%');
         })->get();
@@ -105,7 +116,11 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
 
         // dd($A5, $A5No, $A6, $A6No, $A7, $A7No, $A8, $A8No);
         // dd($gapa5, $gapa6, $gapa7, $gapa8);
+        $total = 93 - $conteoNoaplica;
+        $Porc = new PorcentajeDecApl2022();
 
+        $porcentajeDecApl = $Porc->GapDecAplPorc($total, $conteoAprobado);
+        dd($porcentajeDecApl['porcentaje'], $porcentajeDecApl['faltante']);
         return view('admin.declaracionaplicabilidad2022.index', compact('conteoAplica', 'conteoNoaplica', 'totalconteo',
         'A5', 'A5No', 'A6', 'A6No', 'A7', 'A7No', 'A8', 'A8No'))
         ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)

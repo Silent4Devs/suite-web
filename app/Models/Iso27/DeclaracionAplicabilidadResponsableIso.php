@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Empleado;
+use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
 
 class DeclaracionAplicabilidadResponsableIso extends Model
 {
@@ -28,6 +29,11 @@ class DeclaracionAplicabilidadResponsableIso extends Model
     public function responsable_declaracion()
     {
         return $this->hasMany(Empleado::class, 'id', 'empleado_id');
+    }
+
+    public function aprobador()
+    {
+        return $this->hasOne(DeclaracionAplicabilidadAprobarIso::class, 'declaracion_id', 'declaracion_id');
     }
 
     // public function aprobadores()

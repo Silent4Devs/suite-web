@@ -161,7 +161,7 @@ class PanelDeclaracionIsoController extends Controller
 
         $exists = $registro->exists();
         if ($exists) {
-            $registro = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->update(['empleado_id' => null]);
+            $registro = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->delete();
 
             return response()->json(['message' => 'Responsable desasignado', 'request' => $request->all()], 200);
         }
@@ -205,7 +205,7 @@ class PanelDeclaracionIsoController extends Controller
         $registro = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador);
         $exists = $registro->exists();
         if ($exists) {
-            $registro = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->update(['empleado_id' => null]);
+            $registro = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->delete();
 
             return response()->json(['message' => 'Aprobador desasignado'], 200);
         } else {
