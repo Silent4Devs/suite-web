@@ -15,7 +15,9 @@
         </div>
     </div>
 </div>
-
+<div class="form-group col-12 text-right">
+<a href="{{ route('admin.declaracion-aplicabilidad-2022.dashboard') }}" class="btn btn-danger">Dashboard</a>
+</div>
 <div class="row">
     <div class="col">
         <div class="card-body">
@@ -30,8 +32,8 @@
                                     Generar Reporte
                                 </button>
                             @endcan
-{{--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--}}
-                            {{-- @if (count($lista_archivos_declaracion) > 0)
+
+                            @if (count($lista_archivos_declaracion) > 0)
                                 <div class="btn-group dropright">
                                     <button type="button" class="btn btn-sm btn-outline-danger dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,15 +43,14 @@
                                     <div class="dropdown-menu">
                                         @foreach ($lista_archivos_declaracion as $archivo)
                                             <a class="dropdown-item" target="_blank"
-                                                href=" {{ asset($ISO27001_SoA_PATH . basename($archivo)) }}">
+                                                href=" {{ asset($ISO27001_2022_SoA_PATH . basename($archivo)) }}">
                                                 <i class="far fa-file-pdf text-danger"></i>
                                                 {{ basename($archivo) }}
                                             </a>
                                         @endforeach
                                     </div>
                                 </div>
-                            @endif --}}
-{{--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--}}
+                            @endif
                             {{-- <button type="button" class="btn btn-sm btn-outline-success dropdown-toggle"
                                 aria-haspopup="true" aria-expanded="false" data-toggle="modal"
                                 data-target="#ResponsablesModal">

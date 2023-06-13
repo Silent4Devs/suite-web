@@ -35,6 +35,7 @@ use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\TratamientoRiesgo;
 use App\Models\Vulnerabilidad;
+use App\Models\Iso27\GapDosCatalogoIso;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -110,6 +111,8 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $version = 2022;
+
         $sedes = Sede::select('id', 'sede')->get();
         //$areas = Area::get();
         $procesos = Proceso::select('id', 'codigo', 'nombre')->get();
@@ -119,13 +122,18 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::select('id', 'nombre')->get();
 
         $vulnerabilidades = Vulnerabilidad::select('id', 'nombre')->get();
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+
+        if($version === 2013){
+            $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        }else{
+            $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->get();
+        }
 
         $tipo_riesgo = MatrizRiesgo::TIPO_RIESGO_SELECT;
         $probabilidad = MatrizRiesgo::PROBABILIDAD_SELECT;
         $impacto = MatrizRiesgo::IMPACTO_SELECT;
 
-        return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables', 'tipo_riesgo', 'probabilidad', 'impacto'))->with('id_analisis', \request()->idAnalisis, );
+        return view('admin.matrizRiesgos.create', compact('version', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables', 'tipo_riesgo', 'probabilidad', 'impacto'))->with('id_analisis', \request()->idAnalisis, );
     }
 
     public function store(StoreMatrizRiesgoRequest $request)

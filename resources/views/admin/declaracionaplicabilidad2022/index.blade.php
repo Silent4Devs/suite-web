@@ -11,9 +11,9 @@
                 Declaración Aplicabilidad
             </a>
 
-            <a href="#" data-tabs="dashboard">
+            {{-- <a href="#" data-tabs="dashboard">
                 Dashboard
-            </a>
+            </a> --}}
         </div>
 
         <div class="caja_caja_secciones">
@@ -26,11 +26,11 @@
 
                 </section>
 
-                <section style="margin-top:30px;" id="dashboard">
+                {{-- <section style="margin-top:30px;" id="dashboard">
 
                     @include('admin.declaracionaplicabilidad2022.declaracion-dashboard')
 
-                </section>
+                </section> --}}
             </div>
         </div>
 

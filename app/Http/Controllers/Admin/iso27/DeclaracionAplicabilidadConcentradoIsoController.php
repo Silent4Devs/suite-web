@@ -73,6 +73,20 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
             $q->select('id', 'name', 'foto', 'estatus')->where('estatus', 'alta');
         }])->orderBy('id')->get();
 
+        $ISO27001_2022_SoA_PATH = 'storage/Normas/ISO27001-2022/Analísis Inicial/';
+        $path = public_path($ISO27001_2022_SoA_PATH);
+        $lista_archivos_declaracion = glob($path . 'Analisis Inicial-2022*.pdf');
+
+        return view('admin.declaracionaplicabilidad2022.index')
+        ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)
+        ->with('gapda7s', $gapa7)->with('gapda8s', $gapa8)
+        ->with('lista_archivos_declaracion', $lista_archivos_declaracion)
+        ->with('ISO27001_2022_SoA_PATH', $ISO27001_2022_SoA_PATH)
+        ->with('aprobadores', $aprobadores)
+        ->with('responsables', $responsables);
+    }
+
+    public function dashboard(){
         $totalconteo = GapDosCatalogoIso::get()->count();
         $conteoAplica = DeclaracionAplicabilidadResponsableIso::where('aplica', '=', '1')->get()->count();
         $conteoNoaplica = DeclaracionAplicabilidadResponsableIso::where('aplica', '=', '2')->get()->count();
@@ -102,7 +116,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
             return $query->where('control_iso', 'LIKE', "A.8.".'%');
         })->get();
 
-        // dd($gap5, $gap6, $gap7, $gap8);
+                // dd($gap5, $gap6, $gap7, $gap8);
 
         // $gap182total = $gapa182->count();
         $A5 = $gap5->where('aplica', '=', 1)->count();
@@ -112,7 +126,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         $A7 = $gap7->where('aplica', '=', 1)->count();
         $A7No = $gap7->where('aplica', '=', 2)->count();
         $A8 = $gap8->where('aplica', '=', 1)->count();
-        $A8No = $gapa8->where('aplica', '=', 2)->count();
+        $A8No = $gap8->where('aplica', '=', 2)->count();
 
         // dd($A5, $A5No, $A6, $A6No, $A7, $A7No, $A8, $A8No);
         // dd($gapa5, $gapa6, $gapa7, $gapa8);
@@ -120,15 +134,14 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         $Porc = new PorcentajeDecApl2022();
 
         $porcentajeDecApl = $Porc->GapDecAplPorc($total, $conteoAprobado);
-        dd($porcentajeDecApl['porcentaje'], $porcentajeDecApl['faltante']);
-        return view('admin.declaracionaplicabilidad2022.index', compact('conteoAplica', 'conteoNoaplica', 'totalconteo',
+
+        // dd($porcentajeDecApl['porcentaje'], $porcentajeDecApl['faltante']);
+
+        return view('admin.declaracionaplicabilidad2022.declaracion-dashboard', compact('conteoAplica', 'conteoNoaplica', 'totalconteo',
         'A5', 'A5No', 'A6', 'A6No', 'A7', 'A7No', 'A8', 'A8No'))
-        ->with('gapda6s', $gapa6)->with('gapda5s', $gapa5)
-        ->with('gapda7s', $gapa7)->with('gapda8s', $gapa8)
-        // ->with('lista_archivos_declaracion', $lista_archivos_declaracion)
-        // ->with('ISO27001_SoA_PATH', $ISO27001_SoA_PATH)
-        ->with('aprobadores', $aprobadores)
-        ->with('responsables', $responsables);
+        ->with('total', $total)
+        ->with('porcentaje', $porcentajeDecApl['porcentaje'])
+        ->with('faltante', $porcentajeDecApl['faltante']);
     }
 
     public function tabla(Request $request)
@@ -394,9 +407,9 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
             'logotipo',
         ));
 
-        $nombre_pdf = 'Analisis Inicial ' . Carbon::now()->format('d-m-Y') . '.pdf';
+        $nombre_pdf = 'Analisis Inicial-2022 ' . Carbon::now()->format('d-m-Y') . '.pdf';
         $content = $pdf->download()->getOriginalContent();
-        Storage::put('public/Normas/ISO27001/Analísis Inicial/' . $nombre_pdf, $content);
+        Storage::put('public/Normas/ISO27001-2022/Analísis Inicial/' . $nombre_pdf, $content);
         //$pdf->download(storage_path('Normas/ISO27001/Analísis Inicial/' . $nombre_pdf));
         return $pdf->setPaper('a4', 'landscape')->stream();
 

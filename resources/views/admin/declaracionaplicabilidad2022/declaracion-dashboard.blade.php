@@ -1,3 +1,14 @@
+@extends('layouts.admin')
+@section('content')
+
+
+
+{{ Breadcrumbs::render('admin.declaracion-aplicabilidad.index') }}
+
+<h5 class="col-12 titulo_general_funcion">Declaración de Aplicabilidad Dashboard</h5>
+<div class="form-group col-12 text-right">
+    <a href="{{ route('admin.declaracion-aplicabilidad-2022.index') }}" class="btn btn-danger">Declaracion Aplicabilidad</a>
+    </div>
 <div class="card">
     <div class="card-body">
 
@@ -17,6 +28,14 @@
             </div>
         </div>
         <h5 class="ml-3" style="font-size: 16px">Controles</h5>
+        <div class="progress">
+            <div
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                role="progressbar" aria-valuenow="40"
+                aria-valuemin="0" aria-valuemax="100"
+                style="width: {{number_format($porcentaje, 2, '.', '')}}%">{{number_format($porcentaje, 2, '.', '')}}%
+            </div>
+        </div>
         <div class="row">
 
 
@@ -27,10 +46,12 @@
                         <tr>
 
                             <td>Total de controles</td>
-                            <td>{{ $totalconteo-$conteoNoaplica }}</td>
+                            <td>{{ $total }}</td>
 
 
                         </tr>
+                    </tbody>
+
                     <tbody>
                         <tr>
 
@@ -39,6 +60,7 @@
 
                         </tr>
                     </tbody>
+                    <tbody>
                     <tr>
 
                         <td>No aplica</td>
@@ -113,7 +135,7 @@
     </div>
 </div>
 
-
+@endsection
 
 @section('scripts')
 
@@ -130,14 +152,14 @@
             },
             data: {
                 labels: [
-                    "Aplican",
-                    "No aplican"
+                    "Aprobados",
+                    "Reprobados"
                 ],
                 datasets: [{
                     label: '% Capacitacion',
                     data: [
-                        {{ $conteoAplica }},
-                        {{ $conteoNoaplica }},
+                        {{ $porcentaje }},
+                        {{ $faltante }},
                     ],
                     backgroundColor: [
                         'rgba(22, 193, 66, 66)',

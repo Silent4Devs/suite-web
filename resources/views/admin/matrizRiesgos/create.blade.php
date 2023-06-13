@@ -776,11 +776,20 @@
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
                                         Selecciona una opción</option>
-                                    @foreach ($controles as $control)
+                                    @if ($version === 2013)
+                                        @foreach ($controles as $control)
                                         <option value="{{ $control->id }}">
                                             {{ $control->anexo_indice }} {{ $control->anexo_politica }}
                                         </option>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        @foreach ($controles as $control)
+                                        <option value="{{ $control->id }}">
+                                            {{ $control->control_iso }} {{ $control->anexo_politica }}
+                                        </option>
+                                        @endforeach
+                                    @endif
+
                                 </select>
                                 @if ($errors->has('controles_id'))
                                     <div class="invalid-feedback">
