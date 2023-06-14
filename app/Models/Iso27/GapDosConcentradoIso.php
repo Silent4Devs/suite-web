@@ -21,7 +21,7 @@ class GapDosConcentradoIso extends Model
 
     public function gap_dos_catalogo()
     {
-        return $this->hasMany(GapDosCatalogoIso::class, 'id_gap_dos_catalogo', 'id');
+        return $this->hasOne(GapDosCatalogoIso::class, 'id', 'id_gap_dos_catalogo');
     }
 
     public function analisis_brechas()

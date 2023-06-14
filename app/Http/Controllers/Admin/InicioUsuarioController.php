@@ -44,6 +44,7 @@ use App\Models\SolicitudVacaciones;
 use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
 use App\Models\User;
+use App\Models\VersionesIso;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -1266,5 +1267,21 @@ class InicioUsuarioController extends Controller
         // ]);
 
         return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
+    }
+
+    public function updateVersionIso(Request $request){
+
+        foreach($request->toArray() as $var){
+            if($var === false){
+                $valor = false;
+            }else{
+                $valor = true;
+            }
+        }
+
+        $ver = VersionesIso::first();
+        $ver->update([
+            'version_historico' => $valor,
+        ]);
     }
 }

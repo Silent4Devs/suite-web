@@ -14,6 +14,7 @@ use Spatie\Health\Checks\Checks\DatabaseCheck;
 use Spatie\Health\Checks\Checks\EnvironmentCheck;
 use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
 use Spatie\Health\Facades\Health;
+use App\Models\VersionesIso;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -55,6 +56,12 @@ class AppServiceProvider extends ServiceProvider
             $path = Config::get('session.path');
 
             return new CustomSessionHandler($files, $path, $minutes);
+        });
+
+        view()->composer('*', function ($view) {
+            $version_historico = VersionesIso::first();
+            $version_iso = $version_historico->version_historico;
+            $view->with('version_iso', $version_iso);
         });
     }
 }

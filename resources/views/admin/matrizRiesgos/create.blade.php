@@ -764,7 +764,13 @@
 
                 <hr>
                 <p class="font-weight-bold" style="font-size:11pt;">Acciones</p>
+                <input type="text" id="version_historico" name="version_historico" value="{{$version_historico}}" hidden>
                 <div class="row">
+                    @if ($version_historico === true)
+                        <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2013</p>
+                    @else
+                        <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2022</p>
+                    @endif
                     <div class="form-group col-sm-12">
                         <div class="row">
                             <label for="controles_id" style="margin-left: 15px; margin-bottom:5px; margin-right: 0px;" class="required"><i class="fas fa-lock iconos-crear"></i>Seleccione los control(es)
@@ -776,7 +782,7 @@
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
                                         Selecciona una opción</option>
-                                    @if ($version === 2013)
+                                    @if ($version_historico === true)
                                         @foreach ($controles as $control)
                                         <option value="{{ $control->id }}">
                                             {{ $control->anexo_indice }} {{ $control->anexo_politica }}
