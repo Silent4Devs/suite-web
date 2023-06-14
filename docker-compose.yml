@@ -16,7 +16,7 @@ services:
     networks:
       - tabantajnetwork
     deploy:
-      replicas: 3  # Set the desired number of replicas
+      replicas: 1  # Set the desired number of replicas
 
   postgres:
     image: postgres:13-alpine
@@ -52,7 +52,7 @@ services:
     networks:
       - tabantajnetwork
     deploy:
-      replicas: 5  # Set the desired number of replicas
+      replicas: 1  # Set the desired number of replicas
 
 networks:
   tabantajnetwork:
