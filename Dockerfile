@@ -17,8 +17,8 @@ RUN apk add \
     libzip-dev \
     make \
     mysql-client \
-    nodejs \
-    npm \
+    # nodejs \
+    # npm \
     oniguruma-dev \
     yarn \
     openssh-client \
