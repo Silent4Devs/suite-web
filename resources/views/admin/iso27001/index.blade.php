@@ -176,7 +176,85 @@
         }
 
     </style>
-
+    <style>
+    .toggle, .toggle:before, .slot__label, .curtain {
+        transition-property: background-color, transform, visibility;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-in, cubic-bezier(0.6,0.2,0.4,1.5), linear;
+    }
+    .toggle:before, .slot, .slot__label {
+        display: block;
+    }
+    .toggle:before, .curtain {
+        position: absolute;
+    }
+    .toggle:checked, .curtain {
+        background-color: #9ef0ca;
+    }
+    .toggle:focus {
+        outline: transparent;
+    }
+    .toggle {
+        border-radius: 0.75em;
+        box-shadow: 0 0 0 0.1em inset;
+        cursor: pointer;
+        position: relative;
+        margin-right: 0.25em;
+        width: 3em;
+        height: 1.5em;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .toggle:before {
+        background: currentColor;
+        border-radius: 50%;
+        content: "";
+        top: 0.2em;
+        left: 0.2em;
+        width: 1.1em;
+        height: 1.1em;
+    }
+    .toggle:checked:before {
+        transform: translateX(1.5em);
+    }
+    .toggle:checked ~ .slot .slot__label, .slot__label:nth-child(2) {
+        transform: translateY(-50%) scaleY(0);
+    }
+    .toggle:checked ~ .slot .slot__label:nth-child(2) {
+        transform: translateY(-100%) scaleY(1);
+    }
+    .toggle:checked ~ .curtain {
+        transform: scaleX(1);
+    }
+    .slot {
+        color: transparent;
+        font-size: 1.5em;
+        font-weight: bold;
+        letter-spacing: 0.1em;
+        line-height: 1;
+        overflow: hidden;
+        height: 1em;
+        text-indent: -0.9em;
+        -webkit-text-stroke: 0.05em #fff;
+    }
+    .slot__label {
+        transform-origin: 50% 0;
+    }
+    .slot__label:nth-child(2) {
+        transform-origin: 50% 100%;
+    }
+    .curtain {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: scaleX(0);
+        transform-origin: 0 50%;
+        z-index: -1;
+    }
+    </style>
 
 
 
@@ -195,6 +273,14 @@
     {{-- {{ Breadcrumbs::render('admin.iso27001.index') }} --}}
     <div style="display:flex; justify-content:space-between;">
         <h5 class="titulo_general_funcion">Sistema de Gestión</h5>
+        <div class="d-flex">
+            <input id="toggle" class="toggle" type="checkbox" role="switch" name="toggle" value="true" @if($version_iso === true) checked @endif style="align-content: center">
+            <label for="toggle" class="slot">
+                <span style="color: black" class="slot__label">&nbsp;&nbsp;&nbsp;&nbsp;Norma ISO 27001:2022</span>
+                <span style="color: black" class="slot__label">&nbsp;&nbsp;&nbsp;&nbsp;Norma ISO 27001:2013</span>
+            </label>
+            <div class="curtain"></div>
+        </div>
         <div class="d-flex">
             <a href="#" class="btn btn-secundario" style="width: 160px !important;" data-toggle="modal" data-target="#modal_guia_general">
                 <i class="far fa-play-circle mr-2"></i>
@@ -319,5 +405,36 @@
             $(".ventana_menu").css("transition", "1s");
             $(".breadcrumb-item.active").html("ISO 27001");
         });
+    </script>
+
+    <script>
+    document.addEventListener('change', function() {
+        const version = document.getElementById('toggle');
+        version.value = version.checked ? 'true': 'false';
+        // console.log(version.value);
+        const valor = version.value;
+        // console.log(valor);
+        $.ajax({
+                method: "POST",
+                headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                        },
+                url: "{{ route('admin.inicio-Usuario.updateVersionIso') }}",
+                data: valor,
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "JSON",
+        });
+
+        async function reloadPage() {
+        try {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            location.reload();
+        } catch (error) {
+            console.error('Error al recargar la página:', error);
+        }
+        }
+            reloadPage();
+    });
     </script>
 @endsection

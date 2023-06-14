@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
+use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
 use App\Models\RH\BeneficiariosEmpleado;
 use App\Models\RH\ContactosEmergenciaEmpleado;
 use App\Models\RH\DependientesEconomicosEmpleados;
@@ -82,7 +84,7 @@ class Empleado extends Model
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
-        'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'fecha_ingreso', 'saludo', 'saludo_completo',
+        'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador','declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
         'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'es_supervisor', 'fecha_min_timesheet',
     ];
 
@@ -512,6 +514,27 @@ class Empleado extends Model
     }
 
     public function getFechaIngresoAttribute()
+    {
+        return Carbon::parse($this->antiguedad)->format('d-m-Y');
+    }
+
+    //declaraciones iso
+
+    public function getDeclaracionesResponsable2022Attribute()
+    {
+        $misDeclaraciones = DeclaracionAplicabilidadResponsableIso::select('id', 'declaracion_id')->where('empleado_id', $this->id)->pluck('declaracion_id')->toArray();
+
+        return $misDeclaraciones;
+    }
+
+    public function getDeclaracionesAprobador2022Attribute()
+    {
+        $misDeclaraciones = DeclaracionAplicabilidadAprobarIso::select('id', 'declaracion_id')->where('empleado_id', $this->id)->pluck('declaracion_id')->toArray();
+
+        return $misDeclaraciones;
+    }
+
+    public function getFechaIngreso2020Attribute()
     {
         return Carbon::parse($this->antiguedad)->format('d-m-Y');
     }

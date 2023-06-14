@@ -35,6 +35,8 @@ use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\TratamientoRiesgo;
 use App\Models\Vulnerabilidad;
+use App\Models\Iso27\GapDosCatalogoIso;
+use App\Models\VersionesIso;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -110,6 +112,9 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $ver = VersionesIso::first();
+        $version_historico = $ver->version_historico;
+
         $sedes = Sede::select('id', 'sede')->get();
         //$areas = Area::get();
         $procesos = Proceso::select('id', 'codigo', 'nombre')->get();
@@ -119,13 +124,18 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::select('id', 'nombre')->get();
 
         $vulnerabilidades = Vulnerabilidad::select('id', 'nombre')->get();
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+
+        if($version_historico === true){
+            $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        }else{
+            $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->get();
+        }
 
         $tipo_riesgo = MatrizRiesgo::TIPO_RIESGO_SELECT;
         $probabilidad = MatrizRiesgo::PROBABILIDAD_SELECT;
         $impacto = MatrizRiesgo::IMPACTO_SELECT;
 
-        return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables', 'tipo_riesgo', 'probabilidad', 'impacto'))->with('id_analisis', \request()->idAnalisis, );
+        return view('admin.matrizRiesgos.create', compact('version_historico', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables', 'tipo_riesgo', 'probabilidad', 'impacto'))->with('id_analisis', \request()->idAnalisis, );
     }
 
     public function store(StoreMatrizRiesgoRequest $request)
@@ -160,7 +170,12 @@ class MatrizRiesgosController extends Controller
         if ($matrizRiesgo->matriz_riesgos_controles_pivots != null) {
             $controlesSeleccionado = $matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray();
         }
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        if($matrizRiesgo->version_historico === true){
+            $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        }else{
+            $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->get();
+        }
+
         $sedes = Sede::get();
         $areas = Area::get();
         $amenazas = Amenaza::get();
