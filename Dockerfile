@@ -30,8 +30,10 @@ RUN apk add \
 RUN chmod +x /usr/local/bin/install-php-extensions
 
 # Use bash command to install all available PHP extensions
-RUN docker-php-ext-install $(docker-php-ext-install -l) \
-    @composer 
+RUN docker-php-ext-install $(docker-php-ext-install -l) 
+
+# Install the latest version
+RUN install-php-extensions @composer
 
 # Add local and global vendor bin to PATH.
 ENV PATH ./vendor/bin:/composer/vendor/bin:/root/.composer/vendor/bin:/usr/local/bin:$PATH
