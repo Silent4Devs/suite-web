@@ -45,10 +45,10 @@ class DeclaracionAplicabilidadConcentradoIso extends Model
         return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
     }
 
-    // public function notificacion()
-    // {
-    //     return $this->hasMany(NotificacionAprobadores::class, 'declaracion_id', 'id');
-    // }
+    public function notificacion()
+    {
+        return $this->hasMany(App\Models\Iso27\NotificacionAprobadores::class, 'declaracion_id', 'id');
+    }
 
     public function control()
     {

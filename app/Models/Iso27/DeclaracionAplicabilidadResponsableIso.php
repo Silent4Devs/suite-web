@@ -19,6 +19,7 @@ class DeclaracionAplicabilidadResponsableIso extends Model
         'fecha_aprobacion',
         'empleado_id',
         'declaracion_id',
+        'esta_correo_enviado'
     ];
 
     public function gapdos()

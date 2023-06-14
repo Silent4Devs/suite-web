@@ -18,6 +18,7 @@ class CreateDeclaracionAplicabilidadResponsableIsosTable extends Migration
                 $table->id();
                 $table->string('aplica')->nullable();
                 $table->longText('justificacion')->nullable();
+                $table->boolean('esta_correo_enviado')->default(true);
                  //foreign
                 $table->unsignedBigInteger('empleado_id')->nullable();
                 $table->foreign('empleado_id')->references('id')->on('empleados')->nullable();

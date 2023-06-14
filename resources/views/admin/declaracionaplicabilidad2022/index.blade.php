@@ -3,7 +3,7 @@
 
 
 
-    {{ Breadcrumbs::render('admin.declaracion-aplicabilidad.index') }}
+    {{ Breadcrumbs::render('admin.declaracion-aplicabilidad-2022.index') }}
     <h5 class="col-12 titulo_general_funcion">Declaración de Aplicabilidad</h5>
     <div class="mt-5 card" id="d-aplicabilidad">
         <div class="caja_botones_menu">

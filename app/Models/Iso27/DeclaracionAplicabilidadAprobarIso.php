@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Empleado;
+use App\Models\NotificacionAprobadore;
 use Carbon\Carbon;
 
 class DeclaracionAplicabilidadAprobarIso extends Model
@@ -19,6 +20,7 @@ class DeclaracionAplicabilidadAprobarIso extends Model
         'fecha_aprobacion',
         'empleado_id',
         'declaracion_id',
+        'esta_correo_enviado'
     ];
 
     public function gapdos()
@@ -29,6 +31,11 @@ class DeclaracionAplicabilidadAprobarIso extends Model
     public function aprobador_declaracion()
     {
         return $this->hasMany(Empleado::class, 'id', 'empleado_id');
+    }
+
+    public function notificacion()
+    {
+        return $this->hasMany(NotificacionAprobadore::class, 'aprobadores_id', 'id');
     }
 
     public function empleado()

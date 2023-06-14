@@ -561,7 +561,7 @@
 
                 const enviarTodos = dataRadio == 1 ? false : true;
                 const enviarNoNotificados = dataRadio == 2 ? false : true;
-                const url = "{{ route('admin.paneldeclaracion.enviarcorreo') }}"
+                const url = "{{ route('admin.paneldeclaracion-2022.enviarcorreo') }}"
                 const token = "{{ csrf_token() }}";
                 const request = fetch(url, {
                         mode: 'cors', // this cannot be 'no-cors'

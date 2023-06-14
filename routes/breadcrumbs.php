@@ -38,6 +38,10 @@ Breadcrumbs::for('admin.declaracion-aplicabilidad.index', function ($trail) {
     $trail->push('Declaración de Aplicabilidad', route('admin.declaracion-aplicabilidad.index'));
 });
 
+Breadcrumbs::for('admin.declaracion-aplicabilidad-2022.index', function ($trail) {
+    $trail->push('Title Here', route('admin.declaracion-aplicabilidad-2022.index'));
+});
+
 Breadcrumbs::for('admin.partes-interesadas.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');

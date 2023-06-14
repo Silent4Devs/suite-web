@@ -19,6 +19,7 @@ class CreateDeclaracionAplicabilidadAprobarIsosTable extends Migration
                 $table->integer('estatus')->nullable();
                 $table->longText('comentarios')->nullable();
                 $table->date('fecha_aprobacion')->nullable();
+                $table->boolean('esta_correo_enviado')->default(true);
                 //foreign
                 $table->unsignedBigInteger('empleado_id')->nullable();
                 $table->foreign('empleado_id')->references('id')->on('empleados')->nullable();

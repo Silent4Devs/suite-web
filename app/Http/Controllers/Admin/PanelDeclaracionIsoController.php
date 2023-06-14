@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\DeclaracionAplicabilidad as MailDeclaracionAplicabilidad;
+use App\Mail\DeclaracionAplicabilidadIso;
 use App\Models\Iso27\DeclaracionAplicabilidadConcentradoIso;
 use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
 use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
 use App\Models\Empleado;
+use App\Models\Iso27\GapDosConcentradoIso;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -19,19 +21,6 @@ class PanelDeclaracionIsoController extends Controller
 
     public function index(Request $request)
     {
-        // $query = DeclaracionAplicabilidadConcentradoIso::select(
-        //     'id',
-        //     'id_gap_dos_catalogo',
-        // )->with('gapdos')
-        // ->with('gapdos.clasificacion')
-        // ->with(['responsables2022.responsable_declaracion' => function ($q) {
-        //     $q->select('empleados.id', 'empleados.name', 'foto');
-        //  }])
-        // ->with(['aprobadores2022.aprobador_declaracion' => function ($q) {
-        //     $q->select('empleados.id', 'empleados.name', 'foto');
-        // }])
-        // ->orderBy('id')->first();
-        // dd($query->aprobadores2022[0]->aprobador_declaracion[0]['name']);
         $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -61,17 +50,13 @@ class PanelDeclaracionIsoController extends Controller
     public function create()
     {
         $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
-        $controles = DeclaracionAplicabilidadConcentradoIso::OrderBy('id')->get();
+        // $controles = DeclaracionAplicabilidadConcentradoIso::OrderBy('id')->get();
 
         return view('admin.panelDeclaracion2022.create', compact('empleados', 'controles'));
     }
 
     public function store(Request $request, $id)
     {
-        //cuando mandamos muchos datos es necesario el foreach
-        // foreach($request->controles as $control){
-        // $declaracion =DeclaracionAplicabilidadConcentradoIso::find($id);
-
         $declaracion = DeclaracionAplicabilidadConcentradoIso::find($id);
         //guarda lo que viene en el request
         $responsables = $request->responsables;
@@ -93,7 +78,7 @@ class PanelDeclaracionIsoController extends Controller
     public function edit($id)
     {
         $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
-        $controles = DeclaracionAplicabilidadConcentradoIso::get();
+       // $controles = DeclaracionAplicabilidadConcentradoIso::get();
 
         return view('admin.panelDeclaracion2022.edit', compact('empleados', 'controles'));
     }
@@ -142,7 +127,7 @@ class PanelDeclaracionIsoController extends Controller
                 }
             } else {
                 if ($isReasignable) {
-                    DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->update(['empleado_id' => $responsable]);
+                    DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->update(['empleado_id' => $responsable,  'esta_correo_enviado' => false]);
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Responsable asignado'], 200);
                 } else {
@@ -161,7 +146,7 @@ class PanelDeclaracionIsoController extends Controller
 
         $exists = $registro->exists();
         if ($exists) {
-            $registro = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->delete();
+            $registro = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->update(['empleado_id' => null, 'esta_correo_enviado' => true]);
 
             return response()->json(['message' => 'Responsable desasignado', 'request' => $request->all()], 200);
         }
@@ -184,6 +169,9 @@ class PanelDeclaracionIsoController extends Controller
                         [
                             'declaracion_id' => $declaracion,
                             'empleado_id' => $aprobador,
+                        ],
+                        [
+                            'esta_correo_enviado' => false,
                         ]
                     );
 
@@ -217,7 +205,6 @@ class PanelDeclaracionIsoController extends Controller
 
     public function enviarCorreo(Request $request)
     {
-
         if ($request->enviarTodos) {
             $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } elseif ($request->enviarNoNotificados) {
@@ -230,12 +217,13 @@ class PanelDeclaracionIsoController extends Controller
 
         foreach ($destinatarios as $destinatario) {
             $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($destinatario));
-            $responsable = DeclaracionAplicabilidadResponsableIso::with('declaracion_aplicabilidad')->where('aprobadores_id', $destinatario)->get();
-            $controles = collect();
+            $responsable = DeclaracionAplicabilidadResponsableIso::with('declaracion_aplicabilidad', 'gapdos')->where('empleado_id', $destinatario)->get();
+            $controles_name = collect();
             foreach ($responsable as $control) {
-                $controles->push($control->declaracion_aplicabilidad);
+                $controles_name->push($control->gapdos);
             }
-            Mail::to($empleado->email)->send(new MailDeclaracionAplicabilidad($empleado->name, $tipo, $controles));
+
+            Mail::to($empleado->email)->send(new DeclaracionAplicabilidadIso($empleado->name, $tipo, $controles_name));
             $responsable = DeclaracionAplicabilidadResponsableIso::where('empleado_id', $destinatario)->first();
             $responsable->update(['esta_correo_enviado' => true]);
         }
