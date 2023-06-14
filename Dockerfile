@@ -80,10 +80,10 @@ RUN echo 'memory_limit = 10000M' >> /usr/local/etc/php/conf.d/docker-php-memlimi
     && echo 'max_execution_time = 1800' >> /usr/local/etc/php/conf.d/docker-php-execution.ini \
     && echo 'max_input_time = 1800' >> /usr/local/etc/php/conf.d/docker-php-execution.ini \
     # Add PHP-FPM config
-    && echo 'pm.max_children = 50' >> /usr/local/etc/php-fpm.d/www.conf \
-    && echo 'pm.start_servers = 5' >> /usr/local/etc/php-fpm.d/www.conf \
-    && echo 'pm.min_spare_servers = 5' >> /usr/local/etc/php-fpm.d/www.conf \
-    && echo 'pm.max_spare_servers = 35' >> /usr/local/etc/php-fpm.d/www.conf
+    # && echo 'pm.max_children = 50' >> /usr/local/etc/php-fpm.d/www.conf \
+    # && echo 'pm.start_servers = 5' >> /usr/local/etc/php-fpm.d/www.conf \
+    # && echo 'pm.min_spare_servers = 5' >> /usr/local/etc/php-fpm.d/www.conf \
+    # && echo 'pm.max_spare_servers = 35' >> /usr/local/etc/php-fpm.d/www.conf
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
