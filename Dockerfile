@@ -50,7 +50,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     pdo_pgsql \
     pgsql \
     mbstring \
-    opcache \
+    opcache 
 
 
 # Add local and global vendor bin to PATH.
