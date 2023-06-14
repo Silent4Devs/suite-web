@@ -43,6 +43,7 @@ services:
       # target: php-production  # Specify the target build stage if applicable
       # args:
       # - BUILD_ENV=production  # Pass any necessary build arguments
+    container_name: php
     restart: unless-stopped
     tty: true
     volumes:
