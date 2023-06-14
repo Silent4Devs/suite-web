@@ -1,34 +1,90 @@
-FROM php:8.2-fpm
+FROM php:8.2-fpm-alpine
+
+# Add docker-php-extension-installer script
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
 # Install system dependencies
-RUN apt-get update &&\
-    apt-get install -y \
-    libcurl4-openssl-dev \
-    libzip-dev \
-    build-essential \
-    git \
+# RUN apt-get update &&\
+#     apt-get install -y \
+#     libcurl4-openssl-dev \
+#     libzip-dev \
+#     build-essential \
+#     git \
+#     curl \
+#     libpng-dev \
+#     libjpeg-dev \
+#     libfreetype6-dev \
+#     libjpeg62-turbo-dev \
+#     libmcrypt-dev \
+#     libgd-dev \
+#     jpegoptim optipng pngquant gifsicle \
+#     libonig-dev \
+#     libxml2-dev \
+#     zip \
+#     sudo \
+#     unzip \
+#     npm \
+#     nodejs \
+#     libpq-dev \
+#     && rm -rf /var/lib/apt/lists/* \
+#     # Install PHP extensions
+#     && docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
+#     && docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd curl soap zip pdo mbstring exif bcmath opcache \
+#     && docker-php-ext-enable pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd curl soap zip pdo mbstring exif bcmath opcache \
+#     # add composer
+#     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install dependencies
+RUN apk add --no-cache \
+    bash \
     curl \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libmcrypt-dev \
-    libgd-dev \
-    jpegoptim optipng pngquant gifsicle \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    sudo \
-    unzip \
-    npm \
+    freetype-dev \
+    g++ \
+    gcc \
+    git \
+    icu-dev \
+    icu-libs \
+    libc-dev \
+    libzip-dev \
+    make \
+    mysql-client \
     nodejs \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    # Install PHP extensions
+    npm \
+    oniguruma-dev \
+    yarn \
+    openssh-client \
+    postgresql-libs \
+    rsync \
+    zlib-dev\
     && docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd curl soap zip pdo mbstring exif bcmath opcache \
     && docker-php-ext-enable pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd curl soap zip pdo mbstring exif bcmath opcache \
     # add composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install php extensions
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions \
+    @composer \
+    redis-stable \
+    imagick-stable \
+    xdebug-stable \
+    bcmath \
+    calendar \
+    exif \
+    gd \
+    intl \
+    pdo_mysql \
+    pdo_pgsql \
+    pcntl \
+    soap \
+    zip
+
+# Add local and global vendor bin to PATH.
+ENV PATH ./vendor/bin:/composer/vendor/bin:/root/.composer/vendor/bin:/usr/local/bin:$PATH
+
+# Install PHP_CodeSniffer
+RUN composer global require "squizlabs/php_codesniffer=*"
 
 # add permissions
 # ARG PUID=33
