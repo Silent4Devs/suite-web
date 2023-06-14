@@ -42,28 +42,55 @@
             </div>
         @endcan
         @can('asignacion_de_controles_acceder')
-            <li><a href="{{ route('admin.paneldeclaracion.index') . '#controles' }}">
-                    <div>
-                        <i class="bi bi-file-earmark-zip"></i> <br>
-                        Asignación de controles
-                    </div>
-                </a></li>
+        @if($version_iso === true)
+        <li><a href="{{ route('admin.paneldeclaracion.index') . '#controles' }}">
+                <div>
+                    <i class="bi bi-file-earmark-zip"></i> <br>
+                    Asignación de controles
+                </div>
+            </a></li>
+        @else
+        <li><a href="{{ route('admin.paneldeclaracion-2022.index') . '#controles' }}">
+            <div>
+                <i class="bi bi-file-earmark-zip"></i> <br>
+                Asignación de controles
+            </div>
+        </a></li>
+        @endif
         @endcan
         @can('declaracion_de_aplicabilidad_acceder')
-            <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
-                    <div>
-                        <i class="bi bi-file-diff"></i> <br>
-                        Declaración de aplicabilidad
-                    </div>
-                </a></li>
+        @if($version_iso === true)
+        <li><a href="{{ route('admin.declaracion-aplicabilidad.index') . '#declaracion' }}">
+                <div>
+                    <i class="bi bi-file-diff"></i> <br>
+                    Declaración de aplicabilidad
+                </div>
+            </a></li>
+        @else
+        <li><a href="{{ route('admin.declaracion-aplicabilidad-2022.index') . '#declaracion' }}">
+            <div>
+                <i class="bi bi-file-diff"></i> <br>
+                Declaración de aplicabilidad
+            </div>
+        </a></li>
+        @endif
         @endcan
         @can('declaracion_de_aplicabilidad_acceder')
+        @if($version_iso === true)
             <li><a href="{{ route('admin.declaracion-aplicabilidad.tabla') . '#declaracion' }}">
                     <div>
                         <i class="bi bi-file-diff"></i> <br>
                         Declaración de aplicabilidad Tabla
                     </div>
                 </a></li>
+        @else
+        <li><a href="{{ route('admin.declaracion-aplicabilidad-2022.tabla') . '#declaracion' }}">
+            <div>
+                <i class="bi bi-file-diff"></i> <br>
+                Declaración de aplicabilidad Tabla
+            </div>
+        </a></li>
+        @endif
         @endcan
         {{-- <li><a href="{{ route('admin.riesgosoportunidades.index') }}">
                 <div>

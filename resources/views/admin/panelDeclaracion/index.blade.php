@@ -284,12 +284,10 @@
                         name: 'id',
                         render: function(data, type, row, meta) {
                             if (type === "responsableText") {
-                                console.log('hola');
                                 return data.name;
                             }
                             let responsableselect = "";
                             let responsableselects = @json($empleados);
-                            //  console.log(row.empleados.declaraciones_responsable);
                             responsableselect =
                                 `<select class="revisoresSelect responsables" id='responsables${row.id}'' name="responsables[]" multiple="multiple" data-id='${row.id}'>
                             ${responsableselects?.map ((responsable,idx)=>{
@@ -302,7 +300,6 @@
                         name: 'id',
                         render: function(data, type, row, meta) {
                             if (type === "responsableText") {
-                                console.log('hola');
                                 return data.name;
                             }
                             let aprobadorselect = "";
@@ -433,7 +430,6 @@
                             document.getElementById('loaderComponent').style.display =
                                 'none';
                         })
-                        console.log(declaracion, aprobador);
                     });
 
                     $(`select.responsables`).on('select2:select', function(e) {
@@ -470,7 +466,6 @@
                                 $(`.responsables`).trigger(
                                     'change.select2');
                             }
-                            console.log(data.estatus)
                             if (data.estatus == 'ya_es_aprobador') {
                                 const usuarioSeleccionadoResp = $(
                                     `option[data-id-empleado="${responsable}"]`
@@ -536,12 +531,11 @@
 
             window.enviarCorreo = (e, tipo) => {
                 let enviarRadio = document.getElementsByName('contact');
-
                 //false
                 let dataRadio = document.querySelector('input[name=contact]:checked').value;
 
                 const responsables = $(e.target.parentElement.querySelector('select')).select2('data');
-                console.log(dataRadio);
+                console.log(dataRadio,'saul');
                 const array_responsables = [];
                 if (responsables) {
                     responsables.forEach(responsable => {
