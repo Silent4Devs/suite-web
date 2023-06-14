@@ -27,10 +27,22 @@ RUN apk add \
     zlib-dev
 
 # Install php extensions
-RUN chmod +x /usr/local/bin/install-php-extensions
-
-# Use bash command to install all available PHP extensions
-RUN docker-php-ext-install $(docker-php-ext-install -l) 
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions \
+    @composer \
+    redis-stable \
+    imagick-stable \
+    xdebug-stable \
+    bcmath \
+    calendar \
+    exif \
+    gd \
+    intl \
+    pdo_mysql \
+    pdo_pgsql \
+    pcntl \
+    soap \
+    zip
 
 # Install the latest version
 RUN install-php-extensions @composer
