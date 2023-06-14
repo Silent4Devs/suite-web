@@ -29,7 +29,10 @@ RUN apk add \
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions \
-    @composer \
+    # this add latest version of composer
+    @composer \ 
+    # this add latest version of composer
+    apcu \ 
     redis-stable \
     imagick-stable \
     xdebug-stable \
@@ -42,10 +45,13 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     pdo_pgsql \
     pcntl \
     soap \
-    zip
+    zip \
+    curl \
+    pdo_pgsql \
+    pgsql \
+    mbstring \
+    opcache \
 
-# Install the latest version
-RUN install-php-extensions @composer
 
 # Add local and global vendor bin to PATH.
 ENV PATH ./vendor/bin:/composer/vendor/bin:/root/.composer/vendor/bin:/usr/local/bin:$PATH
