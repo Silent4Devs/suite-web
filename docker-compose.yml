@@ -60,7 +60,7 @@ services:
   #   deploy:
   #     replicas: 1 # Set the desired number of replicas
 
-  php:
+  php_nginx:
     image: serversideup/php:8.2-fpm-nginx
     restart: unless-stopped
     tty: true
