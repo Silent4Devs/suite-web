@@ -26,7 +26,8 @@ RUN apt-get update && apt-get install -y \
     # Install PHP extensions
     && docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd curl soap zip pdo mbstring exif bcmath opcache \
-    && docker-php-ext-enable pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd curl soap zip pdo mbstring exif bcmath opcache \
+    && pecl install apcu \
+    && docker-php-ext-enable pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd curl soap zip pdo mbstring exif bcmath opcache apcu\
     # Add composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -56,7 +57,7 @@ RUN echo 'opcache.memory_consumption=256' >> /usr/local/etc/php/conf.d/docker-ph
 
 WORKDIR /var/www/html
 COPY . .
-RUN composer install --optimize-autoloader
+RUN composer dump-autoload
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
