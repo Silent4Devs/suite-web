@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-{{ Breadcrumbs::render('admin.analisis-brechas.index') }}
+{{ Breadcrumbs::render('admin.analisis-brechas-2022.index') }}
     <div class="content">
         <div class="row">
             <div class="col-lg-12">

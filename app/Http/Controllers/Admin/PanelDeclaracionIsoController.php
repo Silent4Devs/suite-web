@@ -108,7 +108,7 @@ class PanelDeclaracionIsoController extends Controller
         $readyExistResponsable = DeclaracionAplicabilidadAprobarIso::select('declaracion_id')
             ->where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
         if ($readyExistResponsable) {
-            return response()->json(['estatus' => 'ya_es_aprobador', 'message' => 'Ya fue asignado aprobador'], 200);
+            return response()->json(['estatus' => 'ya_es_aprobador', 'message' => 'Ya fue asignado como aprobador'], 200);
         } else {
             if (!$existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
@@ -160,7 +160,7 @@ class PanelDeclaracionIsoController extends Controller
         $existAprobador = DeclaracionAplicabilidadAprobarIso::select('declaracion_id')->where('declaracion_id', $declaracion)->exists();
         $readyExistResponsable = DeclaracionAplicabilidadResponsableIso::select('declaracion_id')->where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->exists();
         if ($readyExistResponsable) {
-            return response()->json(['estatus' => 'ya_es_responsable', 'message' => 'Ya fue asignado responsable'], 200);
+            return response()->json(['estatus' => 'ya_es_responsable', 'message' => 'Ya fue asignado como responsable'], 200);
         } else {
             if ($existAprobador) {
                 $exists = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->exists();
