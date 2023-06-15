@@ -66,6 +66,8 @@ services:
     tty: true
     ports:
       - 80:80
+    environment:
+      SSL_MODE: "off"
     volumes:
       - .:/var/www/html
     depends_on:
