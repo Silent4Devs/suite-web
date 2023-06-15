@@ -1,22 +1,22 @@
 version: "3.8"
 services:
-  # nginx:
-  #   image: nginx:stable-alpine
-  #   container_name: nginx
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 80:80
-  #   volumes:
-  #     - .:/var/www/html
-  #     - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
-  #   depends_on:
-  #     - php
-  #     - postgres
-  #   networks:
-  #     - tabantajnetwork
-  #   deploy:
-  #     replicas: 1 # Set the desired number of replicas
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 80:80
+    volumes:
+      - .:/var/www/html
+      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - postgres
+    networks:
+      - tabantajnetwork
+    deploy:
+      replicas: 1 # Set the desired number of replicas
 
   postgres:
     image: postgres:13-alpine
@@ -36,44 +36,27 @@ services:
     deploy:
       replicas: 1 # Set the desired number of replicas
 
-  # php:
-  #   #uncomment this if you will use only docker compose
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #     # target: php-production  # Specify the target build stage if applicable
-  #     # args:
-  #     # - BUILD_ENV=production  # Pass any necessary build arguments
-  #   #container_name: php
-  #   #uncomment this if you will use only docker compose
-  #   #uncommment for swagger mode
-  #   # image: tabantaj_php:latest
-  #   #uncommment for swagger mode
-  #   restart: unless-stopped
-  #   tty: true
-  #   volumes:
-  #     - .:/var/www/html
-  #   ports:
-  #     - 9000:80
-  #   networks:
-  #     - tabantajnetwork
-  #   deploy:
-  #     replicas: 1 # Set the desired number of replicas
-
-  php_nginx:
-    image: serversideup/php:8.2-fpm-nginx
+  php:
+    #uncomment this if you will use only docker compose
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # target: php-production  # Specify the target build stage if applicable
+      # args:
+      # - BUILD_ENV=production  # Pass any necessary build arguments
+    container_name: php
+    #uncomment this if you will use only docker compose
+    #image: tabantaj_php:latest
     restart: unless-stopped
     tty: true
-    ports:
-      - 80:80
-    environment:
-      SSL_MODE: "off"
     volumes:
       - .:/var/www/html
-    depends_on:
-      - postgres
+    ports:
+      - 9000:80
     networks:
       - tabantajnetwork
+    deploy:
+      replicas: 1 # Set the desired number of replicas
 
 networks:
   tabantajnetwork:
