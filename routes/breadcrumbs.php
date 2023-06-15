@@ -39,7 +39,9 @@ Breadcrumbs::for('admin.declaracion-aplicabilidad.index', function ($trail) {
 });
 
 Breadcrumbs::for('admin.declaracion-aplicabilidad-2022.index', function ($trail) {
-    $trail->push('Title Here', route('admin.declaracion-aplicabilidad-2022.index'));
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Declaración de Aplicabilidad 2022', route('admin.declaracion-aplicabilidad-2022.index'));
 });
 
 Breadcrumbs::for('admin.partes-interesadas.index', function ($trail) {
@@ -206,6 +208,12 @@ Breadcrumbs::for('admin.paneldeclaracion.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
     $trail->push('Asignación Controles', route('admin.paneldeclaracion.index'));
+});
+
+Breadcrumbs::for('admin.paneldeclaracion-2022.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Asignación Controles 2022', route('admin.paneldeclaracion-2022.index'));
 });
 
 Breadcrumbs::for('admin.objetivosseguridads.index', function ($trail) {

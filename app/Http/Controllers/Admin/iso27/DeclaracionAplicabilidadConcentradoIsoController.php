@@ -72,7 +72,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         $aprobadores = DeclaracionAplicabilidadAprobarIso::with(['empleado' => function ($q) {
             $q->select('id', 'name', 'foto', 'estatus')->where('estatus', 'alta');
         }])->orderBy('id')->get();
-
+        // dd($responsables, $aprobadores);
         $ISO27001_2022_SoA_PATH = 'storage/Normas/ISO27001-2022/Analísis Inicial/';
         $path = public_path($ISO27001_2022_SoA_PATH);
         $lista_archivos_declaracion = glob($path . 'Analisis Inicial-2022*.pdf');
