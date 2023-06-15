@@ -25,7 +25,7 @@
             min-width: 300px !important;
         }
     </style>
-    {{ Breadcrumbs::render('admin.paneldeclaracion.index') }}
+    {{ Breadcrumbs::render('admin.paneldeclaracion-2022.index') }}
 
     @include('partials.flashMessages')
     <x-loading-indicator />
