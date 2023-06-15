@@ -163,7 +163,6 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
 
     public function updateTabla(Request $request, $control)
      {
-        dd($request);
          $request->validate([
              'anexo_politica' => 'required',
              'anexo_descripcion' => 'required',
@@ -175,7 +174,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
              'anexo_descripcion' => $request->anexo_descripcion,
          ]);
 
-         return redirect()->route('admin.declaracion-aplicabilidad2022.tabla')->with('success', 'Declaración de aplicabilidad actualizada con éxito');
+         return redirect()->route('admin.declaracion-aplicabilidad-2022.tabla')->with('success', 'Declaración de aplicabilidad actualizada con éxito');
      }
 
          /**
