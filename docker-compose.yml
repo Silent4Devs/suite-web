@@ -38,15 +38,15 @@ services:
 
   php:
     #uncomment this if you will use only docker compose
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
-    #   # target: php-production  # Specify the target build stage if applicable
-    #   # args:
-    #   # - BUILD_ENV=production  # Pass any necessary build arguments
-    # container_name: php
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # target: php-production  # Specify the target build stage if applicable
+      # args:
+      # - BUILD_ENV=production  # Pass any necessary build arguments
+    container_name: php
     #uncomment this if you will use only docker compose
-    image: tabantaj_php:latest
+    #image: tabantaj_php:latest
     restart: unless-stopped
     tty: true
     volumes:
