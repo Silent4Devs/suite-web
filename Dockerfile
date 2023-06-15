@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    libjpeg62-turbo-dev \
+    #libjpeg62-turbo-dev \
     libmcrypt-dev \
     libgd-dev \
     jpegoptim optipng pngquant gifsicle \
@@ -58,7 +58,7 @@ RUN echo 'opcache.memory_consumption=256' >> /usr/local/etc/php/conf.d/docker-ph
 
 WORKDIR /var/www/html
 COPY . .
-RUN composer dump-autoload
+RUN composer install --optimize-autoloader
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
