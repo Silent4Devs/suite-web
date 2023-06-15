@@ -189,7 +189,7 @@
         position: absolute;
     }
     .toggle:checked, .curtain {
-        background-color: #9ef0ca;
+        background-color: #ffffff;
     }
     .toggle:focus {
         outline: transparent;
@@ -287,10 +287,10 @@
                 GUÍA GENERAL
             </a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="{{ route('admin.home') }}" class="btn btn-success">
+            {{-- <a href="{{ route('admin.home') }}" class="btn btn-success">
                 <i class="fas fa-chart-pie mr-2"></i>
                 DASHBOARD
-            </a>
+            </a> --}}
         </div>
     </div>
     <div class="mt-5 card">
