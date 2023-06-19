@@ -44,9 +44,9 @@
     {{-- <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css"> --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- PWA  -->
-    <meta name="theme-color" content="#6777ef" />
+    {{--  <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">  --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -1855,14 +1855,14 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     @yield('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-idletimer/1.0.0/idle-timer.min.js" integrity="sha512-hh4Bnn1GtJOoCXufO1cvrBF6BzRWBp7rFiQCEdSRwwxJVdCIlrp6AWeD8GJVbnLO9V1XovnJSylI5/tZGOzVAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('/sw.js') }}"></script>
+    {{--  <script src="{{ asset('/sw.js') }}"></script>
     <script>
         if (!navigator.serviceWorker?.controller) {
             navigator.serviceWorker?.register("/sw.js").then(function(reg) {
                 console.log("Service worker has been registered for scope: " + reg.scope);
             });
         }
-    </script>
+    </script>  --}}
     {{-- <script>
         $(function() {
             let idleTime = Number(@json(env('SESSION_LIFETIME')))*60*1000; // in milliseconds
