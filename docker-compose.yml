@@ -1,63 +1,68 @@
 version: "3.8"
 services:
-  nginx:
-    image: nginx:stable-alpine
-    container_name: nginx
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 80:80
-    volumes:
-      - .:/var/www/html
-      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - php
-      - postgres
-    networks:
-      - tabantajnetwork
-    # deploy:
-    #   replicas: 1 # Set the desired number of replicas
+    nginx:
+        image: nginx:stable-alpine
+        container_name: nginx
+        restart: unless-stopped
+        tty: true
+        ports:
+            - 80:80
+        volumes:
+            - .:/var/www/html
+            - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - php
+            - postgres
+        networks:
+            - tabantajnetwork
+        # deploy:
+        #   replicas: 1 # Set the desired number of replicas
 
-  postgres:
-    image: postgres:13-alpine
-    container_name: postgres
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - "7857865b978636595372b3ba21b6019aff6797516293d56033a5ba1769027476:/var/lib/postgresql/data"
-      #- "./infra/postgres/data:/var/lib/postgresql/proddata"
-    environment:
-      - POSTGRES_USER=homestead
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=homestead
-    ports:
-      - "5432:5432"
-    networks:
-      - tabantajnetwork
-    # deploy:
-    #   replicas: 1 # Set the desired number of replicas
+    postgres:
+        image: postgres:13-alpine
+        container_name: postgres
+        restart: unless-stopped
+        tty: true
+        volumes:
+            - "orphaned_volume:/var/lib/postgresql/data"
+            #- "./infra/postgres/data:/var/lib/postgresql/proddata"
+        environment:
+            - POSTGRES_USER=homestead
+            - POSTGRES_PASSWORD=secret
+            - POSTGRES_DB=homestead
+        ports:
+            - "5432:5432"
+        networks:
+            - tabantajnetwork
+        # deploy:
+        #   replicas: 1 # Set the desired number of replicas
 
-  php:
-    #uncomment this if you will use only docker compose
-    build:
-      context: .
-      dockerfile: Dockerfile
-      # target: php-production  # Specify the target build stage if applicable
-      # args:
-      # - BUILD_ENV=production  # Pass any necessary build arguments
-    container_name: php
-    #uncomment this if you will use only docker compose
-    #image: tabantaj_php:latest
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - .:/var/www/html
-    ports:
-      - 9000:80
-    networks:
-      - tabantajnetwork
-    # deploy:
-    #   replicas: 1 # Set the desired number of replicas
+    php:
+        #uncomment this if you will use only docker compose
+        build:
+            context: .
+            dockerfile: Dockerfile
+            # target: php-production  # Specify the target build stage if applicable
+            # args:
+            # - BUILD_ENV=production  # Pass any necessary build arguments
+        container_name: php
+        #uncomment this if you will use only docker compose
+        #image: tabantaj_php:latest
+        restart: unless-stopped
+        tty: true
+        volumes:
+            - .:/var/www/html
+        ports:
+            - 9000:80
+        networks:
+            - tabantajnetwork
+        # deploy:
+        #   replicas: 1 # Set the desired number of replicas
+
+volumes:
+    orphaned_volume:
+        external:
+            name: 7857865b978636595372b3ba21b6019aff6797516293d56033a5ba1769027476
 
 networks:
-  tabantajnetwork:
+    tabantajnetwork:
