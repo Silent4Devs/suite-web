@@ -62,7 +62,7 @@ services:
 volumes:
     orphaned_volume:
         external:
-            name: 7857865b978636595372b3ba21b6019aff6797516293d56033a5ba1769027476
+            name: e3bbb060709a19451dffdb4a4f0abca0cb66725524371ca281232a4680cbb121
 
 networks:
     tabantajnetwork:
