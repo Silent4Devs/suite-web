@@ -40,14 +40,23 @@ RUN chown -R www-data:www-data /var/www \
 # Increase memory_limit
 #RUN echo 'memory_limit = 0M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
 
-# Add opcache config, jit compiler and file size config
-RUN echo 'memory_limit = 0M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini \
-    && echo 'opcache.jit_buffer_size=100M' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+# Add opcache and other config settings
+RUN echo 'opcache.memory_consumption=256' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo 'opcache.interned_strings_buffer=16' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo 'opcache.max_accelerated_files=5000' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini \
+    && echo 'opcache.enable=1' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo 'opcache.enable_cli=1' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo 'opcache.jit_buffer_size=5120M' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
     && echo 'opcache.jit=1235' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
     && echo 'upload_max_filesize = 10000M' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
     && echo 'post_max_size = 10000M' >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
     && echo 'upload_max_filesize = 10000M' >> /usr/local/etc/php/conf.d/docker-php-upload.ini \
-    && echo 'post_max_size = 10000M' >> /usr/local/etc/php/conf.d/docker-php-upload.ini
+    && echo 'post_max_size = 10000M' >> /usr/local/etc/php/conf.d/docker-php-upload.ini \
+    && echo 'max_file_uploads = 10000' >> /usr/local/etc/php/conf.d/docker-php-upload.ini \
+    && echo 'max_execution_time = 3600' >> /usr/local/etc/php/conf.d/docker-php-execution.ini \
+    && echo 'max_input_time = 3600' >> /usr/local/etc/php/conf.d/docker-php-execution.ini
+
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
