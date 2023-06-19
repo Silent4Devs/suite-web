@@ -18,9 +18,9 @@ services:
     # deploy:
     #   replicas: 1 # Set the desired number of replicas
 
-  postgres:
+  postgres-tabantaj:
     image: postgres:13-alpine
-    container_name: postgres
+    container_name: postgres-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
