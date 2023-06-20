@@ -58,11 +58,11 @@ RUN echo 'opcache.memory_consumption=256' >> /usr/local/etc/php/conf.d/docker-ph
     && echo 'max_execution_time = 3600' >> /usr/local/etc/php/conf.d/docker-php-execution.ini \
     && echo 'max_input_time = 3600' >> /usr/local/etc/php/conf.d/docker-php-execution.ini
 
-WORKDIR /var/www/html
-COPY . .
+# WORKDIR /var/www/html
+# COPY . .
 #automatic backups
 COPY ./infra/supervisor/supervisor.conf /etc/supervisor/conf.d/supervisord.conf
-RUN composer install --optimize-autoloader
+# RUN composer install --optimize-autoloader
 
 CMD ["/usr/bin/supervisord"]
 
