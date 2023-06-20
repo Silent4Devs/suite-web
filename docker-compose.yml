@@ -24,8 +24,8 @@ services:
         restart: unless-stopped
         tty: true
         volumes:
-            - "orphaned_volume:/var/lib/postgresql/data"
-            #- "./infra/postgres/data:/var/lib/postgresql/proddata"
+            #- "orphaned_volume:/var/lib/postgresql/data"
+            - "./infra/postgres/data:/var/lib/postgresql/data"
         environment:
             - POSTGRES_USER=homestead
             - POSTGRES_PASSWORD=secret
@@ -59,10 +59,10 @@ services:
         # deploy:
         #   replicas: 1 # Set the desired number of replicas
 
-volumes:
-    orphaned_volume:
-        external:
-            name: 7857865b978636595372b3ba21b6019aff6797516293d56033a5ba1769027476
+# volumes:
+#     orphaned_volume:
+#         external:
+#             name: 7857865b978636595372b3ba21b6019aff6797516293d56033a5ba1769027476
 
 networks:
     tabantajnetwork:
