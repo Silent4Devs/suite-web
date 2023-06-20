@@ -89,7 +89,7 @@ class GapDosCatalogoIsoSeeder extends Seeder
             ],
             [
                 'control_iso' => "A.5.12",
-                'anexo_politica' => "Devolución de activos",
+                'anexo_politica' => "Clasificación de la información",
                 'anexo_descripcion' => "La información se clasificará de acuerdo con las necesidades de seguridad de la información de la organización en función de la confidencialidad, la integridad, la disponibilidad y los requisitos pertinentes de las partes interesadas.",
                 'id_clasificacion' => $organizacional,
             ],
