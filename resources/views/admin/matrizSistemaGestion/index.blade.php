@@ -83,12 +83,12 @@
                             </th>
                             <th class="text-center" style="background-color:#1168af;" colspan="3">9001:2015</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="3">20000-1:2018</th>
-                            <th class="text-center" style="background-color:#1168af;" colspan="3">27001:2013</th>
+                            <th class="text-center" style="background-color:#1168af;" colspan="3">27001</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="5">Riesgo Inicial
-                            <th class="text-center" style="background-color:#1168af;" colspan="2">Acciones</th>
+                            <th class="text-center" style="background-color:#1168af;" colspan="3">Acciones</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="3">9001:2015</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="3">20000-1:2018</th>
-                            <th class="text-center" style="background-color:#1168af;" colspan="3">27001:2013</th>
+                            <th class="text-center" style="background-color:#1168af;" colspan="3">27001</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="4">Riesgo Residual</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
                         </tr>
@@ -161,6 +161,9 @@
                             </th>
                             <th style="min-width:120px;">
                                 Riesgo&nbsp;total
+                            </th>
+                            <th>
+                                Versión ISO
                             </th>
                             <th style="min-width:170px;">
                                 Control
@@ -567,6 +570,17 @@
                                 }
                             }
                             return 'N/A';
+                        }
+                    },
+                    {
+                        data: 'version_historico',
+                        name: 'version_historico',
+                        render: function(data) {
+                            if(data === true) {
+                                return `<div style="text-align:center"><div>27001:2013</div></div>`;
+                            }else{
+                                return `<div style="text-align:center"><div>27001:2022</div></div>`;
+                            }
                         }
                     },
                     {

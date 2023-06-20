@@ -152,8 +152,8 @@
             },
             data: {
                 labels: [
-                    "Aprobados",
-                    "Reprobados"
+                    "% de Aprobados",
+                    "% de Reprobados",
                 ],
                 datasets: [{
                     label: '% Capacitacion',

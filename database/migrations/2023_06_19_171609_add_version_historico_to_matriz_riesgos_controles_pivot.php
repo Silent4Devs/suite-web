@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddVersionHistoricoToMatrizRiesgos extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddVersionHistoricoToMatrizRiesgos extends Migration
      */
     public function up()
     {
-        Schema::table('matriz_riesgos', function (Blueprint $table) {
+        Schema::table('matriz_riesgos_controles_pivot', function (Blueprint $table) {
             //
-            $table->boolean('version_historico')->nullable()->default(true);
+            $table->boolean('version_historico')->default(true);
         });
     }
 
@@ -26,8 +26,8 @@ class AddVersionHistoricoToMatrizRiesgos extends Migration
      */
     public function down()
     {
-        Schema::table('matriz_riesgos', function (Blueprint $table) {
+        Schema::table('matriz_riesgos_controles_pivot', function (Blueprint $table) {
             //
         });
     }
-}
+};
