@@ -15,8 +15,8 @@ services:
       - postgres
     networks:
       - tabantajnetwork
-    deploy:
-      replicas: 1 # Set the desired number of replicas
+    # deploy:
+    #   replicas: 1 # Set the desired number of replicas
 
   postgres:
     image: postgres:13-alpine
@@ -33,8 +33,8 @@ services:
       - "5432:5432"
     networks:
       - tabantajnetwork
-    deploy:
-      replicas: 1 # Set the desired number of replicas
+    # deploy:
+    #   replicas: 1 # Set the desired number of replicas
 
   php:
     #uncomment this if you will use only docker compose
@@ -55,8 +55,8 @@ services:
       - 9000:80
     networks:
       - tabantajnetwork
-    deploy:
-      replicas: 1 # Set the desired number of replicas
+    # deploy:
+    #   replicas: 1 # Set the desired number of replicas
 
 networks:
   tabantajnetwork:
