@@ -23,6 +23,8 @@ RUN apt-get update && apt-get install -y \
     # npm \
     # nodejs \
     libpq-dev \
+    cron \
+    supervisor \
     && rm -rf /var/lib/apt/lists/* \
     # Install PHP extensions
     && docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
@@ -53,12 +55,16 @@ RUN echo 'opcache.memory_consumption=256' >> /usr/local/etc/php/conf.d/docker-ph
     && echo 'upload_max_filesize = 10000M' >> /usr/local/etc/php/conf.d/docker-php-upload.ini \
     && echo 'post_max_size = 10000M' >> /usr/local/etc/php/conf.d/docker-php-upload.ini \
     && echo 'max_file_uploads = 10000' >> /usr/local/etc/php/conf.d/docker-php-upload.ini \
-    && echo 'max_execution_time = 1800' >> /usr/local/etc/php/conf.d/docker-php-execution.ini \
-    && echo 'max_input_time = 1800' >> /usr/local/etc/php/conf.d/docker-php-execution.ini
+    && echo 'max_execution_time = 3600' >> /usr/local/etc/php/conf.d/docker-php-execution.ini \
+    && echo 'max_input_time = 3600' >> /usr/local/etc/php/conf.d/docker-php-execution.ini
 
 WORKDIR /var/www/html
 COPY . .
+#automatic backups
+COPY infra/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN composer install --optimize-autoloader
+
+CMD ["/usr/bin/supervisord"]
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
