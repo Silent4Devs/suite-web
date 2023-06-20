@@ -236,7 +236,6 @@
                                                 @if ($responsable->declaracion_id == $g5s->id)
                                                     @if (auth()->user()->empleado->id == $responsable->empleado_id)
                                                         <td class="text-justify">
-                                                        Este es el de justificación?
                                                             <a data-type="textarea" data-pk="{{ $g5s->id }}"
                                                                 data-url="{{ route('admin.declaracion-aplicabilidad-2022.update', $g5s->id) }}"
                                                                 data-title="Justificacion"

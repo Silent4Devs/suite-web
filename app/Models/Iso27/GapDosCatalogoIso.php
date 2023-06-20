@@ -10,6 +10,8 @@ class GapDosCatalogoIso extends Model
 {
     use HasFactory,SoftDeletes;
 
+    protected $table = 'gap_dos_catalogo_isos';
+
     protected $fillable = [
         'id',
         'id_clasificacion',

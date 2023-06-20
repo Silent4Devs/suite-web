@@ -479,7 +479,7 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span> --}}
                         {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                        <div class="row w-100">
+                        {{-- <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i
                                     class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
                             @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
@@ -491,7 +491,7 @@
                             </div>
                             @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de
                             riesgos', 'id_matriz' => $matrizRiesgo->id_analisis])
-                        </div>
+                        </div> --}}
                         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
 
