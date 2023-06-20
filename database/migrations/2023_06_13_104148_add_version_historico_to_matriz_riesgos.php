@@ -15,7 +15,7 @@ class AddVersionHistoricoToMatrizRiesgos extends Migration
     {
         Schema::table('matriz_riesgos', function (Blueprint $table) {
             //
-            $table->boolean('version_historico')->nullable()->default(false);
+            $table->boolean('version_historico')->nullable()->default(true);
         });
     }
 

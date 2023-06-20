@@ -38,6 +38,7 @@ class Kernel extends ConsoleKernel
         //     ->everyFiveMinutes();
         // $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everySixHours();
         $schedule->command('cache:clearall')->everyTwoHours();
+        $schedule->command('backup:run')->daily();
         $schedule->command(EnviarCorreoFelicitaciones::class)
         ->timezone('America/Mexico_City')
         ->dailyAt('10:00')
