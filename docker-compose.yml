@@ -25,7 +25,8 @@ services:
         tty: true
         volumes:
             #- "orphaned_volume:/var/lib/postgresql/data"
-            - "./infra/postgres/data:/var/lib/postgresql/data"
+            #- "./infra/postgres/data:/var/lib/postgresql/data"
+            - "./infra/postgres/data:/var/lib/postgresql/datadb"
         environment:
             - POSTGRES_USER=homestead
             - POSTGRES_PASSWORD=secret
