@@ -1424,7 +1424,7 @@
                     <div class="form-group col-sm-12" id="modulo_planaccion" style="display: none;">
 
                         {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                        <div class="row w-100">
+                        {{-- <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i
                                     class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
                             @livewire('planes-implementacion-select', ['planes_seleccionados' => []])
@@ -1440,7 +1440,7 @@
                                                         riesgos',
                                 'id_matriz' => $id_analisis,
                             ])
-                        </div>
+                        </div> --}}
                         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
                     <!-- hasta aqui -->
