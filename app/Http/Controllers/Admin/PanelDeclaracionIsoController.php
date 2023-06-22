@@ -26,7 +26,22 @@ class PanelDeclaracionIsoController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.panelDeclaracion2022.index', compact('empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+        $asignados = DeclaracionAplicabilidadConcentradoIso::select(
+            'id',
+            'id_gap_dos_catalogo',
+        )->with('gapdos')
+        ->with('gapdos.clasificacion')
+        ->with(['responsables2022.responsable_declaracion' => function ($q) {
+            $q->select('empleados.id', 'empleados.name', 'foto');
+         }])
+        ->with('responsables2022.empleado')
+        ->with(['aprobadores2022.aprobador_declaracion' => function ($q) {
+            $q->select('empleados.id', 'empleados.name', 'foto');
+        }])
+        ->with('aprobadores2022.empleado')
+        ->orderBy('id')->get();
+
+        return view('admin.panelDeclaracion2022.index', compact('empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'asignados'));
     }
 
     public function controles()
@@ -113,7 +128,8 @@ class PanelDeclaracionIsoController extends Controller
             if (!$existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
                 if (!$exists) {
-                    DeclaracionAplicabilidadResponsableIso::updateOrCreate([
+                    DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)
+                    ->update([
                         'declaracion_id' => $declaracion,
                         'empleado_id' => $responsable,
                     ], [
@@ -165,15 +181,15 @@ class PanelDeclaracionIsoController extends Controller
             if ($existAprobador) {
                 $exists = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->exists();
                 if (!$exists) {
-                    DeclaracionAplicabilidadAprobarIso::updateOrCreate(
+                    DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)
+                    ->update(
                         [
                             'declaracion_id' => $declaracion,
                             'empleado_id' => $aprobador,
                         ],
                         [
                             'esta_correo_enviado' => false,
-                        ]
-                    );
+                        ]);
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Aprobador asignado'], 200);
                 } else {
@@ -193,7 +209,7 @@ class PanelDeclaracionIsoController extends Controller
         $registro = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador);
         $exists = $registro->exists();
         if ($exists) {
-            $registro = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->delete();
+            $registro = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->update(['empleado_id' => null, 'esta_correo_enviado' => true]);
 
             return response()->json(['message' => 'Aprobador desasignado'], 200);
         } else {

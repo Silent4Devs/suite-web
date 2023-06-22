@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Empleado;
 use App\Models\NotificacionAprobadore;
 use Carbon\Carbon;
+use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
+
 
 class DeclaracionAplicabilidadAprobarIso extends Model
 {
@@ -40,7 +42,7 @@ class DeclaracionAplicabilidadAprobarIso extends Model
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
     }
 
     public function declaracion()
