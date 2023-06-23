@@ -19,8 +19,8 @@ RUN apt-get update &&\
     zip \
     sudo \
     unzip \
-    npm \
-    nodejs \
+    # npm \
+    # nodejs \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/* \
     # Install PHP extensions
