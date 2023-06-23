@@ -17,6 +17,8 @@ services:
             - tabantajnetwork
         deploy:
           replicas: 1 # Set the desired number of replicas
+          restart_policy:
+            condition: on-failure
 
     postgres-tabantaj:
         image: postgres:14-alpine
@@ -56,6 +58,8 @@ services:
             - tabantajnetwork
         deploy:
           replicas: 1 # Set the desired number of replicas
+          restart_policy:
+            condition: on-failure
 
 networks:
     tabantajnetwork:
