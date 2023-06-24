@@ -64,7 +64,7 @@ services:
     #     condition: on-failure
 
   pgadmin-tabantaj:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     container_name: pgadmin-tabantaj
     environment:
       - PGADMIN_DEFAULT_EMAIL=luis.vargas@silent4business.com
