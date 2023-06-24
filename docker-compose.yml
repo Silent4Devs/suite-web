@@ -64,7 +64,9 @@ services:
     #     condition: on-failure
 
   pgadmin-tabantaj:
-    image: dpage/pgadmin4:latest
+    build:
+      context: "./infra/pgadmin"
+      dockerfile: Dockerfile
     container_name: pgadmin-tabantaj
     user: "1000:1000"
     environment:

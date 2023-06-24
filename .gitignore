@@ -43,7 +43,6 @@ storage/app/public/documentos_material_sgsi/
 
 /infra/postgres/*
 /infra/postgres/data/*
-/infra/pgadmin/*
 /respaldos/*
 /storage/app/public/Documentos\ en\ aprobacion/procedimientos/*
 /storage/app/public/Documentos\ en\ aprobacion/procesos/*
