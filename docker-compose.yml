@@ -12,7 +12,7 @@ services:
             - .:/var/www/html
             - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
         depends_on:
-            - php-tabantaj
+            - php
             - postgres-tabantaj
         networks:
             - tabantajnetwork
@@ -38,7 +38,7 @@ services:
             - tabantajnetwork
         mem_limit: 6g
 
-    php-tabantaj:
+    php:
         #uncomment this if you will use only docker compose
         # build:
         #     context: "./infra/php"
