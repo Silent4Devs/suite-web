@@ -49,6 +49,7 @@ services:
         # #container_name: php-tabantaj
         #uncomment this if you will use only docker compose
         image: johnvo95/tabantaj_php-tabantaj:latest
+        container_name: php-tabantaj
         restart: unless-stopped
         tty: true
         volumes:
