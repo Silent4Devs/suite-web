@@ -66,6 +66,7 @@ services:
   pgadmin-tabantaj:
     image: dpage/pgadmin4:latest
     container_name: pgadmin-tabantaj
+    user: "1000:1000"
     environment:
       - PGADMIN_DEFAULT_EMAIL=luis.vargas@silent4business.com
       - PGADMIN_DEFAULT_PASSWORD=G9byX6G5Y*Z3mN!Y
