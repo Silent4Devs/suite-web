@@ -39,15 +39,15 @@ services:
 
     php-tabantaj:
         #uncomment this if you will use only docker compose
-        build:
-            context: "./infra/php"
-            dockerfile: Dockerfile
-            # target: php-production  # Specify the target build stage if applicable
-            # args:
-            # - BUILD_ENV=production  # Pass any necessary build arguments
-        #container_name: php-tabantaj
+        # build:
+        #     context: "./infra/php"
+        #     dockerfile: Dockerfile
+        #     # target: php-production  # Specify the target build stage if applicable
+        #     # args:
+        #     # - BUILD_ENV=production  # Pass any necessary build arguments
+        # #container_name: php-tabantaj
         #uncomment this if you will use only docker compose
-        #image: tabantaj_php:latest
+        image: johnvo95/tabantaj_php-tabantaj:latest
         restart: unless-stopped
         tty: true
         volumes:
