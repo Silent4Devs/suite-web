@@ -35,7 +35,7 @@ services:
             - "5432:5432"
         networks:
             - tabantajnetwork
-        mem_limit: 6g
+        #mem_limit: 6g
 
     php-tabantaj:
         #uncomment this if you will use only docker compose
