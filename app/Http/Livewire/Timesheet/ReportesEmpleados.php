@@ -334,6 +334,10 @@ class ReportesEmpleados extends Component
             }
             // registro de horas en calendario
             // dd($times_empleado_array);
+            //Fecha de ingreso para saber si aplica el registro de semanas
+            $fecha_ing =Carbon::parse($empleado_list->antiguedad);
+            $fecha_ingre =date("Y-m-d", strtotime($fecha_ing));
+
 
             $calendario_tabla_empleado = [];
             foreach ($calendario_array as $key => $año) {
@@ -354,11 +358,20 @@ class ReportesEmpleados extends Component
                                 foreach ($time as $key => $t) {
                                     array_push($calendario_tabla_empleado, $t['horas_semana']);
                                 }
-                            } else {
+                            } elseif($entro_esta_semana === true){
+                                array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">No&nbsp;Aplica</span>');
+                            }else{
                                 array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
+                                $times_atrasados = ($times_atrasados+1);
                             }
                         } else {
-                            array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
+                            $s = explode('|', $semana);
+                            if(Carbon::parse($s[0])->lt($fecha_ingre)){
+                                array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">No&nbsp;Aplica</span>');
+                            }else{
+                                array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
+                                $times_atrasados = ($times_atrasados+1);
+                            }
                         }
                     }
                 }
