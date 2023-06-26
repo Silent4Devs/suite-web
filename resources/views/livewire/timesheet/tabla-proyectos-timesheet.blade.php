@@ -4,7 +4,7 @@
     @endphp
     <x-loading-indicator />
     @can('timesheet_administrador_proyectos_create')
-        <div class="w-100">
+        {{--  <div class="w-100">
             <h5 id="titulo_estatus">Crear Proyecto</h5>
         </div>
         <form wire:submit.prevent="store()" class="w-100">
@@ -83,7 +83,7 @@
                 <div class="form-group col-md-3">
                     <label class="form-label"><i
                             class="fa-solid fa-info-circle iconos-crear"></i>Tipo</label>
-                    <select class="form-control" name="tipo" wire:model.defer="tipo">     
+                    <select class="form-control" name="tipo" wire:model.defer="tipo">
                         @foreach ($tipos as $tipo_it)
                             <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it?'selected':'' }}>{{ $tipo_it }}</option>
                         @endforeach
@@ -93,7 +93,10 @@
                     <button class="btn btn-success"><i class="fas fa-plus"></i> Agregar</button>
                 </div>
             </div>
-        </form>
+        </form>  --}}
+        <div class="text-right">
+            <a href="{{ route('admin.timesheet-proyectos-create') }}" class="btn btn-success">Crear Proyecto</a>
+        </div>
     @endcan
 
     <style type="text/css">
@@ -191,10 +194,10 @@
                                             title="Este proyecto no puede ser eliminado debido a que está en uso"></i>
                                     </div>
                                 @endif
-                                <button class="btn" data-toggle="modal"
-                                    data-target="#modal_proyecto_editar_{{ $proyecto->id }}">
-                                    <i class="fa-solid fa-pen-to-square" style="font-size:15pt;"></i>
-                                </button>
+                                <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn">
+                                    <i class="fa-solid fa-pen-to-square" style="font-size:15pt;"
+                                    title="Editar proyecto: {{ $proyecto->proyecto }}"></i>
+                                </a>
                             @endcan
                             @can('timesheet_administrador_tareas_proyectos_access')
                                 <a href="{{ route('admin.timesheet-tareas-proyecto', $proyecto->id) }}" class="btn">
@@ -287,7 +290,7 @@
             </div>
         </div>
 
-        <div class="modal fade edit_modal" id="modal_proyecto_editar_{{ $proyecto->id }}" tabindex="-1"
+        {{-- <div class="modal fade edit_modal" id="modal_proyecto_editar_{{ $proyecto->id }}" tabindex="-1"
             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -405,7 +408,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
         {{-- <div class="btn btn-danger" wire:click="click_e()">wire:click="click_e()"</div> --}}
     @endforeach
     @section('scripts')

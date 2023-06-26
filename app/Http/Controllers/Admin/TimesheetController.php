@@ -8,11 +8,13 @@ use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\Sede;
 use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetTarea;
 use Carbon\Carbon;
@@ -524,15 +526,86 @@ class TimesheetController extends Controller
         return view('admin.timesheet.proyectos', compact('clientes', 'logo_actual', 'empresa_actual'));
     }
 
+    public function createProyectos()
+    {
+        $clientes = TimesheetCliente::get();
+        $sedes = Sede::get();
+        $areas = Area::get();
+        $tipos = TimesheetProyecto::TIPOS;
+        $tipo = $tipos['Interno'];
+        return view('admin.timesheet.create-proyectos', compact('clientes', 'areas', 'sedes', 'tipos', 'tipo'));
+    }
+
+    public function storeProyectos(Request $request)
+    {
+        $request->validate(
+            [
+                'identificador' => 'required|unique:timesheet_proyectos,identificador',
+                'proyecto_name' => 'required',
+            ],
+            [
+                'identificador.unique' => 'El ID ya esta en uso',
+            ],
+        );
+        if ($request->fecha_inicio && $request->fecha_fin) {
+            $request->validate(
+                [
+                    'fecha_inicio' => 'before:fecha_fin',
+                    'fecha_fin' => 'after:fecha_inicio',
+                ],
+                [
+                    'fecha_inicio.before' => 'La fecha de incio debe ser anterior a la fecha de fin',
+                    'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de incio',
+                ],
+            );
+        }
+        $nuevo_proyecto = TimesheetProyecto::create([
+            'identificador' => $request->identificador,
+            'proyecto' => $request->proyecto_name,
+            'cliente_id' => $request->cliente_id,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'sede_id' => $request->sede_id,
+            'tipo' => $request->tipo,
+            'horas_proyecto' => $request->horas_proyecto,
+        ]);
+
+        foreach ($request->areas_seleccionadas as $key => $area_id) {
+            TimesheetProyectoArea::create([
+                'proyecto_id' => $nuevo_proyecto->id,
+                'area_id' => $area_id,
+            ]);
+        }
+
+        return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
+    }
+
+    public function showProyectos($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+        $areas = TimesheetProyectoArea::where('proyecto_id', $id)
+        ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
+        ->get('areas.area');
+
+        $sedes = TimesheetProyecto::where('timesheet_proyectos.id', $id)
+        ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
+        ->get('sedes.sede');
+
+        $clientes = TimesheetProyecto::where('timesheet_proyectos.id', $id)
+        ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
+        ->get('timesheet_clientes.nombre');
+
+        // dd($proyecto, $areas, $sedes);
+
+        return view('admin.timesheet.show-proyectos', compact('proyecto', 'areas', 'sedes', 'clientes'));
+    }
+
     public function updateProyectos(Request $request, $id)
     {
         $request->validate(
             [
-                'identificador' => 'required|unique:timesheet_proyectos,identificador,' . $id,
-                'proyecto' => 'required',
-            ],
-            [
-                'identificador.unique' => 'El ID ya esta en uso',
+                'identificador' => 'required',
+                'proyecto_name' => 'required',
             ],
         );
 
@@ -551,7 +624,16 @@ class TimesheetController extends Controller
 
         $edit_proyecto = TimesheetProyecto::find($id);
 
-        $edit_proyecto->update($request->all());
+        $edit_proyecto->update([
+            'identificador' => $request->identificador,
+            'proyecto' => $request->proyecto_name,
+            'cliente_id' => $request->cliente_id,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'sede_id' => $request->sede_id,
+            'tipo' => $request->tipo,
+            'horas_proyecto' => $request->horas_proyecto,
+        ]);
 
         $proyectos_areas_eliminados = TimesheetProyectoArea::where('proyecto_id', $edit_proyecto->id)->delete();
 
@@ -562,7 +644,8 @@ class TimesheetController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Guardado con éxito');
+        // return back()->with('success', 'Guardado con éxito');
+        return redirect('admin/timesheet/proyecto-empleados/' . $edit_proyecto->id);
     }
 
     public function tareas()
@@ -1030,5 +1113,58 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.reporte-aprobador', compact('logo_actual', 'empresa_actual'));
+    }
+
+    public function proyectosEmpleados($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.proyecto-empleados', compact('proyecto', 'logo_actual', 'empresa_actual'));
+    }
+
+    public function proyectosExternos($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.proyecto-externos', compact('proyecto', 'logo_actual', 'empresa_actual'));
+    }
+
+    public function editProyectos($id)
+    {
+        $proyecto = TimesheetProyecto::find($id);
+        $clientes = TimesheetCliente::get();
+        $areas = Area::get();
+        $sedes = Sede::get();
+        $tipos = TimesheetProyecto::TIPOS;
+        $tipo = $tipos['Interno'];
+
+        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
+        if (is_null($organizacion_actual)) {
+            $organizacion_actual = new Organizacion();
+            $organizacion_actual->logotipo = asset('img/logo.png');
+            $organizacion_actual->empresa = 'Silent4Business';
+        }
+        $logo_actual = $organizacion_actual->logotipo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes', 'tipos'));
     }
 }
