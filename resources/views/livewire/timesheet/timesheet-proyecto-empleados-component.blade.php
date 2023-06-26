@@ -1,10 +1,18 @@
 <div class="w-100">
-    <h5 class="d-flex justify-content-between">Asignar Empleado a Proyecto <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar Proyecto</a><a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Tablas Proyectos</a></h5>
-    <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-info">Asignar Proveedores/Consultores</a>
+    <h5 class="d-flex justify-content-between">Asignar Empleado a Proyecto</h5>
+    <div class="row">
+        <div class="form-group col-12 text-right">
+        <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar Proyecto</a>
+        @if($proyecto->tipo === "Externo")
+            <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-success">Asignar Proveedores/Consultores</a>
+        @endif
+        <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
+        </div>
+    </div>
     <form wire:submit.prevent="addEmpleado">
         <div class="row mt-4">
             <div class="form-group col-md-7">
-                <label for="">Empleado</label>
+                <label for="">Empleado<sup>*</sup></label>
                 <select wire:model="empleado_añadido" name="" id="" class="select2" required>
                     <option value="" selected disabled></option>
                     @foreach ($empleados as $empleado)
@@ -18,14 +26,16 @@
             </div> --}}
         </div>
         <div class="row">
+            @if($proyecto->tipo === "Externo")
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas</label>
-                <input wire:model="horas_asignadas" name="" id="" type="number" class="form-control">
+                <input wire:model="horas_asignadas" name="" id="" type="number" min="1" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="">Costo por hora</label>
-                <input wire:model="costo_hora" name="" id="" type="number" class="form-control">
+                <input wire:model="costo_hora" name="" id="" type="number" min="1" class="form-control">
             </div>
+            @endif
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
                 <button class="btn btn-success">Agregar</button>
             </div>
@@ -40,6 +50,7 @@
                     <th>Puesto </th>
                     <th>Horas asignadas </th>
                     <th>Costo por hora </th>
+                    <th>Costo total estimado</th>
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
             </thead>
@@ -50,8 +61,9 @@
                         <td>{{ $proyect_empleado->empleado->name }} </td>
                         <td>{{ $proyect_empleado->empleado->area->area }} </td>
                         <td>{{ $proyect_empleado->empleado->puesto }} </td>
-                        <td>{{ $proyect_empleado->horas_asignadas }} </td>
-                        <td>{{ $proyect_empleado->costo_hora }} </td>
+                        <td>{{ $proyect_empleado->horas_asignadas ?? '0'}} </td>
+                        <td>{{ $proyect_empleado->costo_hora ?? '0'}} </td>
+                        <td>{{($proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora) ?? ''}}</td>
                         <td>
                             <button class="btn" data-toggle="modal"
                                 data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">

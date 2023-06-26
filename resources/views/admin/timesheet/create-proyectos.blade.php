@@ -16,7 +16,7 @@
             @csrf
             <div class="row">
                 <div class="form-group col-md-2">
-                    <label><i class="fas fa-list iconos-crear"></i> ID</label>
+                    <label><i class="fas fa-list iconos-crear"></i>ID<sup>*</sup></label>
                     <input id="identificador_proyect" name="identificador" class="form-control" required>
                     @if ($errors->has('identificador'))
                         <div class="invalid-feedback">
@@ -28,7 +28,7 @@
                     @enderror
                 </div>
                 <div class="form-group col-md-10">
-                    <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto</label>
+                    <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto<sup>*</sup></label>
                     <input id="name_proyect" name="proyecto_name" class="form-control" required>
                 </div>
             </div>
@@ -60,8 +60,8 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-5">
-                    <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
-                    <select name="cliente_id" id="cliente_id" class="form-control">
+                    <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente<sup>*</sup></label>
+                    <select name="cliente_id" id="cliente_id" class="form-control" required>
                         <option selected value="">Seleccione cliente</option>
                         @foreach ($clientes as $cliente)
                             <option value="{{ $cliente->id }}">{{ $cliente->identificador }} - {{ $cliente->nombre }}
@@ -70,7 +70,7 @@
                     </select>
                 </div>
                 <div class="form-group col-md-7" wire:ignore id="caja_areas_seleccionadas_create">
-                    <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
+                    <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)<sup>*</sup></label>
                     <select class="select2-multiple form-control" multiple="multiple"
                     id="areas_seleccionadas" name="areas_seleccionadas[]" required>
                         @foreach ($areas as $area)
@@ -87,8 +87,8 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede</label>
-                    <select class="form-control" name="sede_id" id="sede_id">
+                    <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede<sup>*</sup></label>
+                    <select class="form-control" name="sede_id" id="sede_id" required>
                         <option selected value="">Seleccione sede</option>
                         @foreach ($sedes as $sede)
                             <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
@@ -97,15 +97,15 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label"><i
-                            class="fa-solid fa-info-circle iconos-crear"></i>Tipo</label>
-                    <select class="form-control" name="tipo" id="tipo">
+                            class="fa-solid fa-info-circle iconos-crear"></i>Tipo<sup>*</sup></label>
+                    <select class="form-control" name="tipo" id="tipo" required>
                         @foreach ($tipos as $tipo_it)
                             <option value="{{ $tipo_it }}" {{ $tipo == $tipo_it?'selected':'' }}>{{ $tipo_it }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Horas Asignadas al proyecto</label>
+                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Horas Asignadas al proyecto <small>(opcional)</small></label>
                     <input type="number" min="0" name="horas_proyecto" id="horas_asignadas" class="form-control">
                     @if ($errors->has('horas_proyecto'))
                         <div class="invalid-feedback">

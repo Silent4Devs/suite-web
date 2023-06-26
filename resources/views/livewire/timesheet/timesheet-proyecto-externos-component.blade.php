@@ -1,21 +1,28 @@
 <div class="w-100">
-    <h5 class="d-flex justify-content-between">Asignar Proveedor/Consultor Externo a Proyecto <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar Proyecto</a><a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Tablas Proyectos</a></h5>
-    <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-info">Asignar Empleados</a>
+    <h5 class="d-flex justify-content-between">Asignar Proveedor/Consultor Externo a Proyecto</h5>
+    <div class="row">
+        <div class="form-group col-12 text-right">
+            <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar Proyecto</a>
+            <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-success">Asignar Empleados</a>
+            <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
+        </div>
+    </div>
+
     <form wire:submit.prevent="addExterno">
         <div class="row mt-4">
             <div class="form-group col-md-7">
-                <label for="">Externo</label>
+                <label for="">Externo<sup>*</sup> </label><br>
                 <input wire:model="externo_añadido" name="" id=""type="text" required>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas</label>
-                <input wire:model="horas_tercero" name="" id="" type="number" class="form-control">
+                <input wire:model="horas_tercero" name="" id="" type="number" min="1" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="">Costo por hora</label>
-                <input wire:model="costo_tercero" name="" id="" type="number" class="form-control">
+                <input wire:model="costo_tercero" name="" id="" type="number" min="1" class="form-control">
             </div>
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
                 <button class="btn btn-success">Agregar</button>
@@ -29,6 +36,7 @@
                     <th>Nombre </th>
                     <th>Horas asignadas </th>
                     <th>Costo por hora </th>
+                    <th>Costo Total Estimado</th>
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
             </thead>
@@ -37,8 +45,9 @@
                 @foreach ($proyecto_proveedores as $proyecto_proveedor)
                     <tr>
                         <td>{{ $proyecto_proveedor->proveedor_tercero }} </td>
-                        <td>{{ $proyecto_proveedor->horas_tercero }} </td>
-                        <td>{{ $proyecto_proveedor->costo_tercero }} </td>
+                        <td>{{ $proyecto_proveedor->horas_tercero ?? '0' }} </td>
+                        <td>{{ $proyecto_proveedor->costo_tercero ?? '0'}} </td>
+                        <td>{{ ($proyecto_proveedor->horas_tercero * $proyecto_proveedor->costo_tercero) ?? ''}}</td>
                         <td>
                             <button class="btn" data-toggle="modal"
                                 data-target="#modal_proyecto_externo_eliminar_{{ $proyecto_proveedor->id }}">
