@@ -381,11 +381,23 @@
                     </div>
                     {{-- 27001:2013 --}}
                     <hr>
-                    <div class="text-center form-group" style="background-color: #e3e6eb;
-                                                    border-radius: 100px;
-                                                    color: #681818;">
+                    @if ($matrizRiesgo->version_historico === true)
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
+                                border-radius: 100px;
+                                color: #681818;">
                         ISO 27001:2013
                     </div>
+                    @else
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
+                                border-radius: 100px;
+                                color: #681818;">
+                        ISO 27001:2022
+                    </div>
+                    @endif
+
+
                     <hr>
                     <div class="row">
                         <div class="form-group col-sm-4">
@@ -727,11 +739,21 @@
                     </div>
                     {{-- 27001:2013 --}}
                     <hr>
-                    <div class="text-center form-group" style="background-color: #e3e6eb;
-                                        border-radius: 100px;
-                                        color: #681818;">
+                    @if ($matrizRiesgo->version_historico === true)
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
+                                border-radius: 100px;
+                                color: #681818;">
                         ISO 27001:2013
                     </div>
+                    @else
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
+                                border-radius: 100px;
+                                color: #681818;">
+                        ISO 27001:2022
+                    </div>
+                    @endif
                     <hr>
                     <div class="row">
                         <div class="form-group col-sm-4">
@@ -922,6 +944,11 @@
                 {{-- Accciones --}}
                 <p class="font-weight-bold" style="font-size:11pt;">Acciones</p>
                 <div class="row">
+                    @if ($matrizRiesgo->version_historico === true)
+                        <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2013</p>
+                    @else
+                        <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2022</p>
+                    @endif
                     <div class="form-group col-sm-12">
                         <div class="row">
                             <label for="controles_id" style="margin-left: 15px; margin-bottom:5px; margin-right: 0px;"><i
@@ -934,12 +961,21 @@
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
                                         Selecciona una opción</option>
-                                    @foreach ($controles as $control)
-                                        <option value="{{ $control->id }}"
-                                            {{ in_array(old('controles_id[]',$control->id),$matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray()) == $control->id ? 'selected' : '' }}>
-                                            {{ $control->anexo_indice }} {{ $control->anexo_politica }}
-                                        </option>
-                                    @endforeach
+                                        @if ($matrizRiesgo->version_historico === true)
+                                        @foreach ($controles as $control)
+                                            <option value="{{ $control->id }}"
+                                                {{ in_array(old('controles_id[]',$control->id),$matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray()) == $control->id ? 'selected' : '' }}>
+                                                {{ $control->anexo_indice }} {{ $control->anexo_politica }}
+                                            </option>
+                                        @endforeach
+                                        @else
+                                        @foreach ($controles as $control)
+                                            <option value="{{ $control->id }}"
+                                                {{ in_array(old('controles_id[]',$control->id),$matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray()) == $control->id ? 'selected' : '' }}>
+                                                {{ $control->control_iso }} {{ $control->anexo_politica }}
+                                            </option>
+                                        @endforeach
+                                        @endif
                                 </select>
                                 @if ($errors->has('controles_id'))
                                     <div class="invalid-feedback">
@@ -975,7 +1011,7 @@
                     <div class="form-group col-sm-12" id="modulo_planaccion" style="display: none;">
 
                         {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                        <div class="row w-100">
+                        {{-- <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i
                                     class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
                             @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
@@ -987,7 +1023,7 @@
                             </div>
                             @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de
                             riesgos', 'id_matriz' => $matrizRiesgo->id_analisis])
-                        </div>
+                        </div> --}}
                         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
 

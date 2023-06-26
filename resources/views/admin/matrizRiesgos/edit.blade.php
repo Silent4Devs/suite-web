@@ -386,27 +386,41 @@
                 <hr>
                 <p class="font-weight-bold" style="font-size:11pt;">Acciones</p>
                 <div class="row">
+                    @if ($matrizRiesgo->version_historico === true)
+                        <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2013</p>
+                    @else
+                        <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2022</p>
+                    @endif
                     <div class="form-group col-sm-12">
                         <div class="row">
                             <label for="controles_id" style="margin-left: 15px; margin-bottom:5px; margin-right: 0px;"><i
                                     class="fas fa-lock iconos-crear"></i>Seleccione los control(es)
                                 a
                                 aplicar</label>
-                            {{--<div class="mb-4 col-12">
+                            <div class="mb-4 col-12">
                                  <select
                                     class="form-control js-example-basic-multiple select2  {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
                                         Selecciona una opción</option>
-                                        @foreach ($controles as $control)
+                                    @if ($matrizRiesgo->version_historico === true)
+                                    @foreach ($controles as $control)
                                         <option value="{{ $control->id }}"
                                             {{ in_array(old('controles_id[]',$control->id),$matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray()) == $control->id ? 'selected' : '' }}>
                                             {{ $control->anexo_indice }} {{ $control->anexo_politica }}
                                         </option>
                                     @endforeach
+                                    @else
+                                    @foreach ($controles as $control)
+                                        <option value="{{ $control->id }}"
+                                            {{ in_array(old('controles_id[]',$control->id),$matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray()) == $control->id ? 'selected' : '' }}>
+                                            {{ $control->control_iso }} {{ $control->anexo_politica }}
+                                        </option>
+                                    @endforeach
+                                    @endif
                                 </select>
 
-                                <select
+                                {{-- <select
                                     class="form-control js-example-basic-multiple select2  {{ $errors->has('controles_id') ? 'is-invalid' : '' }}"
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
@@ -424,8 +438,8 @@
                                     </div>
                                 @endif
                                 <span
-                                    class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span>
-                            </div>--}}
+                                    class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span> --}}
+                            </div>
                         </div>
                     </div>
 
@@ -465,7 +479,7 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span> --}}
                         {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                        <div class="row w-100">
+                        {{-- <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i
                                     class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
                             @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
@@ -477,7 +491,7 @@
                             </div>
                             @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de
                             riesgos', 'id_matriz' => $matrizRiesgo->id_analisis])
-                        </div>
+                        </div> --}}
                         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
 

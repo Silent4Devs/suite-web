@@ -35,6 +35,8 @@ use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\TratamientoRiesgo;
 use App\Models\Vulnerabilidad;
+use App\Models\Iso27\GapDosCatalogoIso;
+use App\Models\VersionesIso;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -110,6 +112,13 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $ver = VersionesIso::select('version_historico')->first();
+        if($ver->version_historico === true ){
+            $version_historico = "true";
+        }elseif($ver->version_historico === false ){
+            $version_historico = "false";
+        }
+
         $sedes = Sede::select('id', 'sede')->get();
         //$areas = Area::get();
         $procesos = Proceso::select('id', 'codigo', 'nombre')->get();
@@ -119,13 +128,18 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::select('id', 'nombre')->get();
 
         $vulnerabilidades = Vulnerabilidad::select('id', 'nombre')->get();
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+
+        if($version_historico === "true"){
+            $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->orderBy('id')->get();
+        }elseif($version_historico === "false"){
+            $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
+        }
 
         $tipo_riesgo = MatrizRiesgo::TIPO_RIESGO_SELECT;
         $probabilidad = MatrizRiesgo::PROBABILIDAD_SELECT;
         $impacto = MatrizRiesgo::IMPACTO_SELECT;
 
-        return view('admin.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables', 'tipo_riesgo', 'probabilidad', 'impacto'))->with('id_analisis', \request()->idAnalisis, );
+        return view('admin.matrizRiesgos.create', compact('version_historico', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables', 'tipo_riesgo', 'probabilidad', 'impacto'))->with('id_analisis', \request()->idAnalisis, );
     }
 
     public function store(StoreMatrizRiesgoRequest $request)
@@ -136,6 +150,7 @@ class MatrizRiesgosController extends Controller
         foreach ($request->controles_id as $item) {
             $control = new MatrizRiesgosControlesPivot();
             // $control->matriz_id = 2;
+            $control->version_historico = $matrizRiesgo->version_historico;
             $control->matriz_id = $matrizRiesgo->id;
             $control->controles_id = $item;
             $control->save();
@@ -160,7 +175,12 @@ class MatrizRiesgosController extends Controller
         if ($matrizRiesgo->matriz_riesgos_controles_pivots != null) {
             $controlesSeleccionado = $matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray();
         }
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        if($matrizRiesgo->version_historico === true OR $matrizRiesgo->version_historico === null){
+            $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->orderBy('id')->get();
+        }elseif($matrizRiesgo->version_historico === false){
+            $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
+        }
+        // dd($matrizRiesgo->version_historico, $controles);
         $sedes = Sede::get();
         $areas = Area::get();
         $amenazas = Amenaza::get();
@@ -304,8 +324,21 @@ class MatrizRiesgosController extends Controller
             $table->editColumn('nivelriesgo', function ($row) {
                 return $row->nivelriesgo ? $row->nivelriesgo : '';
             });
+            $table->editColumn('version_historico', function ($row) {
+                return $row->version_historico ? $row->version_historico : '';
+            });
+
             $table->editColumn('control', function ($row) {
-                return $row->matriz_riesgos_controles_pivots ? $row->matriz_riesgos_controles_pivots : '';
+                if($row->version_historico === true){
+                    return $row->matriz_riesgos_controles_pivots ? $row->matriz_riesgos_controles_pivots : '';
+                }else{
+                    $controles = MatrizRiesgosControlesPivot::select('gap_dos_catalogo_isos.control_iso AS anexo_indice', 'gap_dos_catalogo_isos.anexo_politica AS anexo_politica')
+                    ->where('matriz_riesgos_controles_pivot.version_historico', '=', 'false')
+                    ->join('gap_dos_catalogo_isos', 'gap_dos_catalogo_isos.id', '=', 'matriz_riesgos_controles_pivot.controles_id' )
+                    ->orderBy('gap_dos_catalogo_isos.id')
+                    ->get();
+                     return $controles ? $controles: '';
+                }
             });
             $table->editColumn('plan_de_accion', function ($row) {
                 return $row->planes ? $row->planes : '';
@@ -645,8 +678,21 @@ class MatrizRiesgosController extends Controller
             /*$table->editColumn('riesgototal', function ($row) {
                 return $row->riesgototal ? $row->riesgototal : "";
             });*/
+            $table->editColumn('version_historico', function ($row) {
+                return $row->version_historico ? $row->version_historico : '';
+            });
+
             $table->editColumn('control', function ($row) {
-                return $row->matriz_riesgos_controles_pivots ? $row->matriz_riesgos_controles_pivots : '';
+                if($row->version_historico === true){
+                    return $row->matriz_riesgos_controles_pivots ? $row->matriz_riesgos_controles_pivots : '';
+                }else{
+                    $controles = MatrizRiesgosControlesPivot::select('gap_dos_catalogo_isos.control_iso AS anexo_indice', 'gap_dos_catalogo_isos.anexo_politica AS anexo_politica')
+                    ->join('gap_dos_catalogo_isos', 'gap_dos_catalogo_isos.id', '=', 'matriz_riesgos_controles_pivot.controles_id' )
+                    ->where('version_historico', '=', 'false')
+                    ->orderBy('gap_dos_catalogo_isos.id')
+                    ->get();
+                     return $controles ? $controles: '';
+                }
             });
             $table->editColumn('plan_de_accion', function ($row) {
                 return $row->planes ? $row->planes : '';
@@ -785,9 +831,20 @@ class MatrizRiesgosController extends Controller
         $activos = SubcategoriaActivo::get();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
 
-        return view('admin.matrizSistemaGestion.create', compact('amenazas', 'matrizRiesgo', 'activos', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
+        $ver = VersionesIso::first();
+        if($ver->version_historico === false){
+            $version_historico = "false";
+        }elseif($ver->version_historico === true){
+            $version_historico = "true";
+        }
+        if($version_historico === "true"){
+            $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->orderBy('id')->get();
+        }elseif($version_historico === "false"){
+            $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
+        }
+
+        return view('admin.matrizSistemaGestion.create', compact('version_historico', 'amenazas', 'matrizRiesgo', 'activos', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
 
     public function identificadorExist(Request $request)
@@ -848,7 +905,12 @@ class MatrizRiesgosController extends Controller
         if ($matrizRiesgo->matriz_riesgos_controles_pivots != null) {
             $controlesSeleccionado = $matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray();
         }
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        if($matrizRiesgo->version_historico === true OR $matrizRiesgo->version_historico === null){
+            $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->orderBy('id')->get();
+        }elseif($matrizRiesgo->version_historico === false){
+            $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
+        }
+
         $sedes = Sede::get();
         $areas = Area::get();
         $amenazas = Amenaza::get();

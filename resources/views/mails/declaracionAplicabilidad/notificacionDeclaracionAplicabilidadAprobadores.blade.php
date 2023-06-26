@@ -138,7 +138,7 @@
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; color:#153643;">
-                                                Le informamos que {{ $responsable->name}}, responsable de darle seguimiento al control {{$aplicabilidad->anexo_indice}}, ha añadido información que necesita ser aprobada.
+                                                Le informamos que {{ $responsable->name}}, responsable de darle seguimiento al control {{$aplicabilidad->anexo_indice ?: $aplicabilidad->gapdos->control_iso}}, ha añadido información que necesita ser aprobada.
                                             </p>
                                             <br>
                                             <div style="text-align:center; margin-top:20px">

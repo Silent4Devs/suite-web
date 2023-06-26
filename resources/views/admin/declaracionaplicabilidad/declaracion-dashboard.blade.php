@@ -80,6 +80,7 @@
                             <td>{{ $A5No }}</td>
 
                         </tr>
+                    </tbody>
                     <tbody>
                         <tr>
 
@@ -89,8 +90,8 @@
 
                         </tr>
                     </tbody>
+                    <tbody>
                     <tr>
-
                         <td>A.7 seguridad de los recursos humanos</td>
                         <td>{{ $A7 }}</td>
                         <td>{{ $A7No }}</td>
@@ -103,6 +104,7 @@
                         <td>{{ $A8No }}</td>
                     </tr>
                     </tbody>
+                    <tbody>
                     <tr>
 
                         <td>A.9 Control de acceso</td>
@@ -110,13 +112,14 @@
                         <td>{{ $A9No }}</td>
                     </tr>
                     </tbody>
+                    <tbody>
                     <tr>
-
                         <td>A.10 Criptografía</td>
                         <td>{{ $A10 }}</td>
                         <td>{{ $A10No }}</td>
                     </tr>
                     </tbody>
+                    <tbody>
                     <tr>
 
                         <td>A.11 Seguridad Física y del Entorno</td>
@@ -124,6 +127,7 @@
                         <td>{{ $A11No }}</td>
                     </tr>
                     </tbody>
+                    <tbody>
                     <tr>
 
                         <td>A.12 Seguridad de las Operaciones</td>
@@ -132,6 +136,7 @@
                         <td>{{ $A12No }}</td>
                     </tr>
                     </tbody>
+                    <tbody>
                     <tr>
 
                         <td>A.13 Seguridad de las comunicaciones</td>
@@ -140,6 +145,7 @@
 
                     </tr>
                     </tbody>
+                    <tbody>
                     <tr>
 
                         <td>A.14 Adquisición, desarrollo y mantenimiento de los sistemas de información </td>
@@ -147,6 +153,7 @@
                         <td>{{ $A14No }}</td>
                     </tr>
                     </tbody>
+                    <tbody>
                     <tr>
 
                         <td>A.15 Relación con los proveedores</td>
@@ -154,12 +161,14 @@
                         <td>{{ $A15No }}</td>
                     </tr>
                     </tbody>
+                    <tbody>
                     <tr>
                         <td>A.16 Gestión de incidentes de Seguridad de la Información</td>
                         <td>{{ $A16 }}</td>
                         <td>{{ $A16No }}</td>
                     </tr>
                     </tbody>
+                    <tbody>
                     <tr>
 
                         <td>A.17 Aspectos de seguridad de la información para la gestión de la continuidad del Instituto
@@ -168,6 +177,7 @@
                         <td>{{ $A17No }}</td>
                     </tr>
                     </tbody>
+                    <tbody>
                     <tr>
 
                         <td>A.18 Cumplimiento</td>

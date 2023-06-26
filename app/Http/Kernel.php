@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 class Kernel extends HttpKernel
 {
     protected $middleware = [
-        \Fruitcake\Cors\HandleCors::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
@@ -61,5 +61,7 @@ class Kernel extends HttpKernel
         '2fa' => \App\Http\Middleware\TwoFactorMiddleware::class,
         'cors' => \App\Http\Middleware\Cors::class,
         'primeros.pasos' => \App\Http\Middleware\PrimerosPasos::class,
+        'version_iso_2013' => \App\Http\Middleware\VersionIso2013::class,
+        'version_iso_2022' => \App\Http\Middleware\VersionIso2022::class,
     ];
 }

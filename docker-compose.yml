@@ -15,6 +15,8 @@ services:
       - postgres
     networks:
       - tabantajnetwork
+    # deploy:
+    #   replicas: 1 # Set the desired number of replicas
 
   postgres:
     image: postgres:13-alpine
@@ -22,21 +24,29 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-          - "./infra/postgres/data:/var/lib/postgresql/data"
+      - "./infra/postgres/data:/var/lib/postgresql/data"
     environment:
-          - POSTGRES_USER=homestead
-          - POSTGRES_PASSWORD=secret
-          - POSTGRES_DB=homestead
+      - POSTGRES_USER=homestead
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=homestead
     ports:
-          - "5432:5432"
+      - "5432:5432"
     networks:
-          - tabantajnetwork
+      - tabantajnetwork
+    # deploy:
+    #   replicas: 1 # Set the desired number of replicas
 
   php:
+    #uncomment this if you will use only docker compose
     build:
       context: .
       dockerfile: Dockerfile
+      # target: php-production  # Specify the target build stage if applicable
+      # args:
+      # - BUILD_ENV=production  # Pass any necessary build arguments
     container_name: php
+    #uncomment this if you will use only docker compose
+    #image: tabantaj_php:latest
     restart: unless-stopped
     tty: true
     volumes:
@@ -45,6 +55,8 @@ services:
       - 9000:80
     networks:
       - tabantajnetwork
+    # deploy:
+    #   replicas: 1 # Set the desired number of replicas
 
 networks:
   tabantajnetwork:
