@@ -57,6 +57,7 @@
         .custom-file-input~.custom-file-label::after {
             content: "Elegir";
         }
+
         .printModal {
             font-family: sans-serif;
             display: flex;
@@ -1328,19 +1329,23 @@
     </div>
 
     <div class="barra-herramientas-bottom-molbile">
-        <a href="{{ route('admin.inicio-Usuario.index') }}#datos" class="btn-barra-bottom-mobile" {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'style=color:#3086AF !important;"' : '' }}>
+        <a href="{{ route('admin.inicio-Usuario.index') }}#datos" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-file-person"></i>
             <p>Perfil</p>
         </a>
-        <a href="{{ route('admin.timesheet-inicio') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'style=color:#3086AF !important;"' : '' }}>
+        <a href="{{ route('admin.timesheet-inicio') }}" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-calendar3-range"></i>
             <p>Timesheet</p>
         </a>
-        <a href="{{ route('admin.systemCalendar') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'style=color:#3086AF !important;"' : '' }}>
+        <a href="{{ route('admin.systemCalendar') }}" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-calendar3"></i>
             <p>Calendario</p>
         </a>
-        <a href="{{ route('admin.portal-comunicacion.index') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'style=color:#3086AF !important;"' : '' }}>
+        <a href="{{ route('admin.portal-comunicacion.index') }}" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-newspaper"></i>
             <p>Comunicación</p>
         </a>
@@ -1660,19 +1665,19 @@
     {{-- responsive --}}
     <script type="text/javascript">
         $(document).ready(function() {
-            if($(window).width() <= 800){
+            if ($(window).width() <= 800) {
                 $('body').addClass('body-responsive-mobile');
             }
         });
-        $(window).resize(function(){
-            if($(window).width() <= 800){
+        $(window).resize(function() {
+            if ($(window).width() <= 800) {
                 $('body').addClass('body-responsive-mobile');
-            }else{
+            } else {
                 $('body').removeClass('body-responsive-mobile');
             }
         });
     </script>
-    
+
     <script>
         $(document).ready(function() {
             $(".notifications-menu").on('click', function() {
@@ -1843,18 +1848,20 @@
             var id_seccion = $(".caja_botones_menu a:hover").attr('data-tabs');
             $(document.getElementById(id_seccion)).addClass("caja_tab_reveldada");
         });
-        $('.modal').on('shown.bs.modal', function (event) {
+        $('.modal').on('shown.bs.modal', function(event) {
             let modalBackDrop = document.querySelector('.modal-backdrop');
             if (modalBackDrop) {
-                modalBackDrop.style.width="100%";
-                modalBackDrop.style.height="100%"
+                modalBackDrop.style.width = "100%";
+                modalBackDrop.style.height = "100%"
             }
         })
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     @yield('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-idletimer/1.0.0/idle-timer.min.js" integrity="sha512-hh4Bnn1GtJOoCXufO1cvrBF6BzRWBp7rFiQCEdSRwwxJVdCIlrp6AWeD8GJVbnLO9V1XovnJSylI5/tZGOzVAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-idletimer/1.0.0/idle-timer.min.js"
+        integrity="sha512-hh4Bnn1GtJOoCXufO1cvrBF6BzRWBp7rFiQCEdSRwwxJVdCIlrp6AWeD8GJVbnLO9V1XovnJSylI5/tZGOzVAg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{--  <script src="{{ asset('/sw.js') }}"></script>
     <script>
         if (!navigator.serviceWorker?.controller) {

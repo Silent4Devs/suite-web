@@ -24,7 +24,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - "./infra/postgres/data:/var/lib/postgresql/data"
+      - "tabantaj:/var/lib/postgresql/data"
     environment:
       - POSTGRES_USER=homestead
       - POSTGRES_PASSWORD=secret
@@ -57,6 +57,9 @@ services:
       - tabantajnetwork
     # deploy:
     #   replicas: 1 # Set the desired number of replicas
+
+volumes:
+  tabantaj:
 
 networks:
   tabantajnetwork:

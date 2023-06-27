@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
 
 class Timesheet extends Model
 {
     use HasFactory;
+    use Filterable;
 
     protected $table = 'timesheet';
 
@@ -86,6 +88,11 @@ class Timesheet extends Model
         return $semana_rango;
     }
 
+    /**
+     * TODO: Esta funcion debería estar en la implementación de i18n
+     *
+     * @return void
+     */
     public function traducirDia($dia_seleccionado)
     {
         $dia = 'Monday';
@@ -117,6 +124,11 @@ class Timesheet extends Model
         return $this->hasMany(TimesheetHoras::class, 'timesheet_id', 'id')->orderBy('id');
     }
 
+    /**
+     * TODO: Esta funcion debería estar en un servicio
+     *
+     * @return void
+     */
     public function getProyectosAttribute()
     {
         $horas_id_proyectos = TimesheetHoras::where('timesheet_id', $this->id)->get();
@@ -131,6 +143,11 @@ class Timesheet extends Model
         return $proyectos;
     }
 
+    /**
+     * TODO: Esta funcion debería estar en un servicio
+     *
+     * @return void
+     */
     public function getTotalHorasAttribute()
     {
         $total_horas = 0;

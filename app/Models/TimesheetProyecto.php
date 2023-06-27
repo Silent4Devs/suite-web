@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
 
 class TimesheetProyecto extends Model
 {
     use HasFactory;
+    use Filterable;
 
     protected $table = 'timesheet_proyectos';
 
