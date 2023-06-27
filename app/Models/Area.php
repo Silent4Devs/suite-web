@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use EloquentFilter\Filterable;
 
 /**
  * Class Area.
@@ -38,7 +39,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Area extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use SoftDeletes, MultiTenantModelTrait, HasFactory, Filterable;
 
     protected $table = 'areas';
 

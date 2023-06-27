@@ -181,7 +181,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Geocoder\GeocoderServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-
+        EloquentFilter\ServiceProvider::class,
     ],
 
     /*
@@ -243,7 +243,6 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Date' => Jenssegers\Date\Date::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-
     ],
 
 
