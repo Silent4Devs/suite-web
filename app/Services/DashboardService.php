@@ -52,9 +52,13 @@ class DashboardService
 
         $areas = $this->areaRepo->find();
         $areas_array = collect();
+
+        // Primero iteramos el total de las areas
         foreach($areas as $area){
             $times_complit_esperados_area = 0;
             $empleados_area = $this->empleadoRepo->find(['*'], ['area', $area->id]);
+
+            // Obtenemos la antiguedad de los empleados
             foreach ($empleados_area as $empleado) {
                 $fecha_inicio = date_create($empleado->antiguedad->format('d-m-Y'));
                 $fecha_fin = date_create($hoy->format('d-m-Y'));
@@ -67,6 +71,7 @@ class DashboardService
                 $times_complit_esperados_area = 1;
             }
 
+            // Obtenemos el nivel de participacion de los empleados por area
             $total_times_complit_area = 0;
             $empleados_times_atrasados = 0;
             foreach ($empleados_partisipacion as $emp_part_area) {
@@ -83,6 +88,7 @@ class DashboardService
                 $total_times_complit_area += $times_empleado_part_area;
             }
 
+            // Obtenemos el porcentaje de participacion por área
             $porcentaje_participacion_area = round((($total_times_complit_area * 100) / $times_complit_esperados_area), 2);
             if ($total_times_complit_area >= $times_complit_esperados_area) {
                 $porcentaje_participacion_area = 100;
@@ -119,6 +125,7 @@ class DashboardService
                 'times_esperados' => $times_complit_esperados_area,
             ]);
         }
+        
         $empleados_count = $this->empleadoRepo->count([]);
         $times_por_mes_esperados = $semanas_del_mes * $empleados_count;
         if ($times_por_mes_esperados == 0) {
