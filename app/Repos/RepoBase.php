@@ -27,7 +27,7 @@ abstract class RepoBase
      * @param array $filter
      * @return void
      */
-    public function find($select = ['*'], $filter = []): Collection
+    public function find($select = ['*'], $filter = [])
     {
         return $this->model->select($select)->filter($filter)->orderBy(
             $this->getParamOrder(), 
@@ -35,7 +35,7 @@ abstract class RepoBase
             )->get();
     }
 
-    public function count($filter)
+    public function count($filter = [])
     {
         return $this->model->select(['id'])->filter($filter)->get()->count();
     }

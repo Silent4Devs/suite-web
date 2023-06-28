@@ -10,31 +10,31 @@
                 <div class="col-12 row d-flex justify-content-center">
                     <div class="card col-2 bg-secondary text-center text-light m-1 p-3">
                         <span>
-                            <strong>{{ $aprobados_contador + $rechazos_contador + $pendientes_contador + $borrador_contador }}</strong>
+                            <strong>{{ $counters['totales'] }}</strong>
                         </span>
                         <span>Totales</span>
                     </div>
                     <div class="card col-2 bg-success text-center text-light m-1 p-3">
                         <span>
-                            <strong>{{ $aprobados_contador }}</strong>
+                            <strong>{{ $counters['aprobados_contador'] }}</strong>
                         </span>
                         <span>Aprobados</span>
                     </div>
                     <div class="card col-2 bg-primary text-center text-light m-1 p-3">
                         <span>
-                            <strong>{{ $pendientes_contador }}</strong>
+                            <strong>{{ $counters['pendientes_contador'] }}</strong>
                         </span>
                         <span>Pendientes</span>
                     </div>
                     <div class="card col-2 bg-warning text-center text-light m-1 p-3">
                         <span>
-                            <strong>{{ $rechazos_contador }}</strong>
+                            <strong>{{ $counters['rechazos_contador'] }}</strong>
                         </span>
                         <span>Rechazados</span>
                     </div>
                     <div class="card col-2 bg-danger text-center text-light m-1 p-3">
                         <span>
-                            <strong>{{ $borrador_contador }}</strong>
+                            <strong>{{ $counters['borrador_contador'] }}</strong>
                         </span>
                         <span>Borradores</span>
                     </div>
@@ -52,7 +52,7 @@
                     <i class="fa-solid fa-circle mr-3" style="color:#8BE578;"></i>Registros de Timesheet por Área
                 </div>
                 <div class="row">
-                    <div class="form-group col-6">
+                    <div class="form-group col-12">
                         <select class="form-control" id="areas-graf-areas-time">
                             <option value="todas">Todas</option>
                             @foreach ($areas_array as $area)
@@ -60,6 +60,7 @@
                             @endforeach
                         </select>
                     </div>
+                    <!--
                     <div class="form-group col-3">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -78,7 +79,7 @@
                             <input type="date" class="form-control" placeholder="Fin"
                                 aria-label="Recipient's username" aria-describedby="basic-addon2">
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </h5>
             <canvas id="graf-areas-times-estatus-general" width="400" height="200"></canvas>
@@ -97,19 +98,13 @@
                 <a href="{{ asset('admin/timesheet/reportes') }}">Ver&nbsp;detalle</a>
             </h5>
             <div class="row p-4">
-                <div class="form-group row">
-                    <div class="input-group col-6">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Inicio</div>
-                        </div>
-                        <input type="date" class="form-control">
-                    </div>
-                    <div class="input-group col-6">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Fin</div>
-                        </div>
-                        <input type="date" class="form-control">
-                    </div>
+                <div class="form-group col-12">
+                    <select class="form-control" id="areas-graf-registros-general">
+                        <option value="todas">Todas</option>
+                        @foreach ($areas_array as $area)
+                            <option value="{{ $area['area'] }}">{{ $area['area'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <canvas id="graf-registros-general" width="400" height="400"></canvas>
@@ -134,6 +129,15 @@
                 </div>
                 <a href="{{ asset('admin/timesheet/reportes') }}">Ver&nbsp;detalle</a>
             </h5>
+            <div class="form-group col-12 p-4">
+                <select class="form-control" id="graf-registros-area">
+                    <option value="todas">Todas</option>
+                    @foreach ($areas_array as $area)
+                        <option value="{{ $area['area'] }}">{{ $area['area'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <!--
             <div class="row p-4">
                 <div class="form-group row">
                     <div class="input-group col-6">
@@ -149,7 +153,7 @@
                         <input type="date" class="form-control">
                     </div>
                 </div>
-            </div>
+            </div>-->
             <canvas id="graf-registros-por-area"></canvas>
         </div>
     </div>
@@ -216,20 +220,120 @@
 </div>
 
 <script>
-    // TODO: Hay que estructurar los datos que recibimos para esto
-    new Chart(document.getElementById('graf-registros-por-area'), {
+    let areas_array = @json($areas_array);
+    let proyectos = @json($proyectos);
+    document.addEventListener('DOMContentLoaded', function() {
+        const areas_labels = (area) => {
+            const areas = areas_array.filter(item => item.area === area)
+            chart.data.labels = areas.map(item => item['area'])
+            chart.data.datasets[0].data = areas.map(item => item['times_aprobados'])
+            chart.data.datasets[1].data = areas.map(item => item['times_pendientes'])
+            chart.data.datasets[2].data = areas.map(item => item['times_rechazados'])
+            chart.data.datasets[3].data = areas.map(item => item['times_papelera'])
+            chart.update()
+        }
+        $('#areas-graf-areas-time').on('change', function(event) {
+            if (event.target.value != 'todas') {
+                areas_labels(event.target.value)
+            } else {
+                chart.data.labels = areas_array.map(item => item['area'])
+                chart.data.datasets[0].data = areas_array.map(item => item['times_aprobados'])
+                chart.data.datasets[1].data = areas_array.map(item => item['times_pendientes'])
+                chart.data.datasets[2].data = areas_array.map(item => item['times_rechazados'])
+                chart.data.datasets[3].data = areas_array.map(item => item['times_papelera'])
+                chart.update()
+            }
+        });
+
+        $('#areas-graf-registros-general').on('change', function(event) {
+            if (event.target.value === 'todas') {
+                graf_general.data.datasets[0].data = [{{ $counters['aprobados_contador'] }},
+                    {{ $counters['rechazos_contador'] }},
+                    {{ $counters['pendientes_contador'] }}, {{ $counters['borrador_contador'] }}
+                ]
+                graf_general.update()
+            } else {
+                const area = areas_array.filter(item => item.area == event.target.value)
+                graf_general.data.datasets[0].data = [
+                    area[0].times_aprobados,
+                    area[0].times_rechazados,
+                    area[0].times_pendientes,
+                    area[0].times_papelera
+                ]
+                graf_general.update();
+            }
+        });
+
+        $('#graf-registros-area').on('change', function() {
+            if (event.target.value != 'todas') {
+                const area = areas_array.filter(item => item['area'] == event.target.value)
+                registros_area.data.labels = [area[0].area]
+                registros_area.data.datasets[0].data = area.map(item => item.times_aprobados)
+                registros_area.update();
+            } else {
+                registros_area.data.labels = areas_array.map(item => item['area'])
+                registros_area.data.datasets[0].data = areas_array.map(item => item.times_aprobados)
+                registros_area.update()
+            }
+        });
+
+        $('#empleados-area').on('change', function(event) {
+            const area = areas_array.filter(item => item.area == event.target.value)
+            const test = area[0].empleados.map(item => item.aprobado)
+            empleados_general.data.labels = area[0].empleados.map(item => item.empleado)
+            empleados_general.data.datasets[0].data = area[0].empleados.map(item => item.aprobado)
+            empleados_general.data.datasets[1].data = area[0].empleados.map(item => item.pendiente)
+            empleados_general.data.datasets[2].data = area[0].empleados.map(item => item.rechazado)
+            empleados_general.data.datasets[3].data = area[0].empleados.map(item => item.papelera)
+            empleados_general.update()
+        });
+
+        $('#registros-atrazados-empleado').on('change', function() {
+            const area = areas_array.filter(item => item.area == event.target.value)
+            registros_atrazados.data.datasets[0].data = [
+                area[0].times_esperados,
+                area[0].times_rechazados
+            ]
+            registros_atrazados.update()
+        })
+
+        $('#registros-rechazados-empleado').on('change', function() {
+            const area = areas_array.filter(item => item.area == event.target.value)
+            grafica_rechazados.data.datasets[0].data = [
+                area[0].times_esperados,
+                area[0].times_aprobados
+            ]
+            grafica_rechazados.update()
+        })
+
+        $('#proyectos-en-proceso').on('change', function(event) {
+            const proyecto = proyectos.proyectos_lista.proceso.filter(item => item.proyecto == event
+                .target.value)
+            grafica_proyectos.data.labels = [proyecto[0].proyecto]
+            grafica_proyectos.data.datasets[0].data = [proyecto[0].horas_totales]
+            grafica_proyectos.data.datasets[1].data = [proyecto[0].tareas_count]
+            grafica_proyectos.update()
+        })
+        $('#proyectos-terminados').on('change', function(event) {
+            const proyecto = proyectos.proyectos_lista.terminados.filter(item => item.proyecto == event
+                .target.value)
+            grafica_proyectos.data.labels = [proyecto[0].proyecto]
+            grafica_proyectos.data.datasets[0].data = [proyecto[0].horas_totales]
+            grafica_proyectos.data.datasets[1].data = [proyecto[0].tareas_count]
+            grafica_proyectos.update()
+        })
+        $('#proyectos-cancelados').on('change', function(event) {})
+    });
+</script>
+
+<script>
+    let registros_area = new Chart(document.getElementById('graf-registros-por-area'), {
         type: 'bar',
         data: {
-            labels: [
-                @foreach ($areas_array as $area_a)
-                    '{{ $area_a['area'] }}',
-                @endforeach
-            ],
+            labels: areas_array.map(item => item.area),
             datasets: [{
                 label: null,
-                data: [{{ $aprobados_contador }}, {{ $rechazos_contador }},
-                    {{ $pendientes_contador }}, {{ $borrador_contador }}
-                ],
+                data: areas_array.map(item => item.times_aprobados),
                 backgroundColor: '#25A0E2',
             }]
         },
@@ -268,25 +372,13 @@
 </script>
 
 <script>
-    const legendMargin = {
-        id: 'legendMargin',
-        beforeInit(chart, legend, options) {
-            const fitValue = chart.legend.fit;
-
-            chart.legend.fit = function fit() {
-                fitValue.bind(chart.legend)();
-                return this.height += 20;
-            }
-        }
-    };
-    new Chart(document.getElementById('graf-registros-general'), {
+    let graf_general = new Chart(document.getElementById('graf-registros-general'), {
         type: 'doughnut',
         data: {
             labels: ['Aprobados', 'Rechazados', 'Pendientes', 'Borradores'],
             datasets: [{
-                label: '# of Votes',
-                data: [{{ $aprobados_contador }}, {{ $rechazos_contador }},
-                    {{ $pendientes_contador }}, {{ $borrador_contador }}
+                data: [{{ $counters['aprobados_contador'] }}, {{ $counters['rechazos_contador'] }},
+                    {{ $counters['pendientes_contador'] }}, {{ $counters['borrador_contador'] }}
                 ],
                 backgroundColor: [
                     '#61CB5C',
@@ -328,148 +420,9 @@
             },
         }
     });
-
-    // Chart.pluginService.register({
-    //   beforeDraw: function(chart) {
-    //     var width = chart.chart.width,
-    //         height = chart.chart.height,
-    //         ctx = chart.chart.ctx;
-    //     ctx.restore();
-    //     var fontSize = (height / 114).toFixed(2);
-    //     ctx.font = fontSize + "em sans-serif";
-    //     ctx.textBaseline = "middle";
-    //     var text = "{{ $aprobados_contador + $rechazos_contador + $pendientes_contador + $borrador_contador }}",
-    //         textX = Math.round((width - ctx.measureText(text).width) / 2),
-    //         textY = height / 2;
-    //     ctx.fillText(text, textX, textY);
-    //     ctx.save();
-    //   }
-    // });
-</script>
-<script>
-    new Chart(document.getElementById('graf-areas-aprobadas-general'), {
-        type: 'bar',
-        data: {
-            labels: [
-                @foreach ($areas_array as $area_a)
-                    '{{ $area_a['area'] }}',
-                @endforeach
-            ],
-            datasets: [{
-                label: '',
-                data: [
-                    @foreach ($areas_array as $area_a)
-                        {{ $area_a['times_aprobados'] }},
-                    @endforeach
-                ],
-                backgroundColor: [
-                    @foreach ($areas_array as $area_a)
-                        '#61CB5C',
-                    @endforeach
-                ],
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
-<script>
-    new Chart(document.getElementById('graf-areas-pendientes-general'), {
-        type: 'bar',
-        data: {
-            labels: [
-                @foreach ($areas_array as $area_a)
-                    '{{ $area_a['area'] }}',
-                @endforeach
-            ],
-            datasets: [{
-                label: '',
-                data: [
-                    @foreach ($areas_array as $area_a)
-                        {{ $area_a['times_pendientes'] }},
-                    @endforeach
-                ],
-                backgroundColor: [
-                    @foreach ($areas_array as $area_a)
-                        '#F48C16',
-                    @endforeach
-                ],
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
-<script>
-    new Chart(document.getElementById('graf-areas-rechazadas-general'), {
-        type: 'bar',
-        data: {
-            labels: [
-                @foreach ($areas_array as $area_a)
-                    '{{ $area_a['area'] }}',
-                @endforeach
-            ],
-            datasets: [{
-                label: '',
-                data: [
-                    @foreach ($areas_array as $area_a)
-                        {{ $area_a['times_rechazados'] }},
-                    @endforeach
-                ],
-                backgroundColor: [
-                    @foreach ($areas_array as $area_a)
-                        '#EA7777',
-                    @endforeach
-                ],
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 </script>
 
 <script>
-    let areas_array = @json($areas_array);
-    console.log(areas_array, 'test')
-    document.addEventListener('DOMContentLoaded', function() {
-        const areas_labels = (area) => {
-            const areas = areas_array.filter(item => item.area === area)
-            chart.data.labels = areas.map(item => item['area'])
-            chart.data.datasets[0].data = areas.map(item => item['times_aprobados'])
-            chart.data.datasets[1].data = areas.map(item => item['times_pendientes'])
-            chart.data.datasets[2].data = areas.map(item => item['times_rechazados'])
-            chart.data.datasets[3].data = areas.map(item => item['times_papelera'])
-            chart.update()
-        }
-        $('#areas-graf-areas-time').on('change', function(event) {
-            if (event.target.value != 'todas') {
-                areas_labels(event.target.value)
-            } else {
-                chart.data.labels = areas_array.map(item => item['area'])
-                chart.data.datasets[0].data = areas_array.map(item => item['times_aprobados'])
-                chart.data.datasets[1].data = areas_array.map(item => item['times_pendientes'])
-                chart.data.datasets[2].data = areas_array.map(item => item['times_rechazados'])
-                chart.data.datasets[3].data = areas_array.map(item => item['times_papelera'])
-                chart.update()
-            }
-        });
-    });
-
     var chart = new Chart(document.getElementById("graf-areas-times-estatus-general"), {
         type: "horizontalBar",
         data: {

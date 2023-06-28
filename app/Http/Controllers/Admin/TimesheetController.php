@@ -18,6 +18,7 @@ use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetTarea;
 use App\Services\DashboardService;
+use App\Services\TimesheetService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -27,11 +28,12 @@ use Illuminate\Support\Facades\Mail;
 class TimesheetController extends Controller
 {
 
-    private $dashboardService;
 
-    public function __construct(DashboardService $dashboardService)
+    private $timesheetService;
+
+    public function __construct(TimesheetService $timesheetService)
     {
-        $this->dashboardService = $dashboardService;
+        $this->timesheetService = $timesheetService;
     }
 
     /**
@@ -920,46 +922,12 @@ class TimesheetController extends Controller
 
     public function dashboard()
     {
-        //dd($this->dashboardService->timesheetsDashboard());
-        [
-            'borrador_contador' => $borrador_contador, 
-            'pendientes_contador' => $pendientes_contador, 
-            'aprobados_contador' => $aprobados_contador, 
-            'rechazos_contador' => $rechazos_contador, 
-            'areas_array' => $areas_array, 
-            'porcentaje_participacion' => $porcentaje_participacion, 
-            'empleados_times_atrasados' => $empleados_times_atrasados,
-            'empleados_count' => $empleados_count, 
-            'areas' => $areas, 
-            'proyectos_proceso_c' => $proyectos_proceso_c, 
-            'proyectos_cancelados_c' => $proyectos_cancelados_c, 
-            'proyectos_terminados_c' => $proyectos_terminados_c, 
-            'proyectos_array' => $proyectos_array, 
-            'proyectos_proceso_array' => $proyectos_proceso_array, 
-            'proyectos_cancelado_array' => $proyectos_cancelado_array, 
-            'proyectos_terminado_array' => $proyectos_terminado_array
-        ] = $this->dashboardService->timesheetsDashboard();
+        $counters = $this->timesheetService->totalCounters();
+        $areas_array = $this->timesheetService->totalRegisterByAreas();
+        $proyectos = $this->timesheetService->getRegistersByProyects();
 
-        //dd($areas_array);
         return view('admin.timesheet.dashboard',
-            compact(
-                'borrador_contador', 
-                'pendientes_contador', 
-                'aprobados_contador', 
-                'rechazos_contador', 
-                'areas_array', 
-                'porcentaje_participacion', 
-                'empleados_times_atrasados',
-                'empleados_count', 
-                'areas', 
-                'proyectos_proceso_c', 
-                'proyectos_cancelados_c', 
-                'proyectos_terminados_c', 
-                'proyectos_array', 
-                'proyectos_proceso_array', 
-                'proyectos_cancelado_array', 
-                'proyectos_terminado_array'
-            )
+            compact('counters', 'areas_array', 'proyectos')
         );
     }
 

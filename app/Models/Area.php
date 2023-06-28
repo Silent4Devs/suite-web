@@ -117,6 +117,11 @@ class Area extends Model
         return $this->hasMany(Empleado::class)->alta();
     }
 
+    public function totalEmpleados()
+    {
+        return $this->hasMany(Empleado::class, 'area_id');
+    }
+
     public function material_iso_veinticientes()
     {
         return $this->hasMany(MaterialIsoVeinticiente::class, 'arearesponsable_id');
