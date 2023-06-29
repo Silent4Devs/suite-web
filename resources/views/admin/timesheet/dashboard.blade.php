@@ -28,12 +28,6 @@
                     Proyectos
                 </a>
             </div>
-            <div>
-                <a class="nav-link btn btn-outline-secondary" id="nav-proyectos-tab">
-                    <i class="fa-solid fa-file-excel"></i>
-                    Exportar a XLSX
-                </a>
-            </div>
         </nav>
 
         <div class="tab-content" id="nav-tabContent">

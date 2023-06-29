@@ -233,7 +233,7 @@ class TimesheetService
         ];
     }
 
-    private function calcularHorasProyecto($tareas)
+    private function calcularHorasProyecto($tareas): int
     {
         $total = 0;    
         foreach($tareas as $tarea){
