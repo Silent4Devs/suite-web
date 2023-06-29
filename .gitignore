@@ -32,6 +32,17 @@ storage/logs/laravel.log
 *.cache
 
 infra/postgres/
+infra/postgres/*
+infra/postgres/data/
+infra/postgres/data/*
+infra
+/infra/mysql/*
+/infra/mysql
+/storage/app/public/users-avatar/*
+/storage/app/public/*
+# MySQL infra files
+/infra/mysql/data/
+/infra/mysql/data/*
 
 storage/app/public/activos/
 storage/app/livewire-tmp/
