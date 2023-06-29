@@ -1483,8 +1483,32 @@ class EV360EvaluacionesController extends Controller
         return response()->json(['deleted' => true]);
     }
 
-    // public function show()
-    // {
+    public function objetivosTemporal()
+    {
+
+        $reacLA=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '140')->where('evaluador_id', '=', '132')
+        ->where('tipo', '=', '1')->first();
+        $reacLA->update([
+            'firma_evaluado' => null,
+            'firma_evaluador' => null,
+            'tipo' => '2',
+            'evaluado' => 'false',
+        ]);
+
+        $reacAL=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '140')->where('evaluador_id', '=', '193')
+        ->where('tipo', '=', '2')->first();
+        $reacAL->update([
+            'firma_evaluado' => null,
+            'firma_evaluador' => null,
+            'tipo' => '1',
+            'evaluado' => 'false',
+        ]);
+
+        $cambioLA = ObjetivoRespuesta::where('evaluado_id', '=', 140)->where('evaluacion_id', '=', '24')->where('evaluador_id', '=', '132');
+        $cambioLA->update([
+            'evaluador_id' => '193',
+            'evaluado' => 'false',
+        ]);
 
     //Cambio de fecha
     // $fecha=Evaluacion::find('24');
@@ -2468,5 +2492,5 @@ class EV360EvaluacionesController extends Controller
     //             }
     //         }
     //     }
-    // }
+    }
 }
