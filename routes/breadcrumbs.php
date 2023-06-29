@@ -185,9 +185,9 @@ Breadcrumbs::for('AIA', function ($trail) {
 });
 
 Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
-    $trail->push('BIA', route('admin.analisis-impacto.menu-BIA'));
-    $trail->push('Cuestionario', route('admin.analisis-impacto.index'));
+    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
+    $trail->push('Cuestionario');
 });
 
 Breadcrumbs::for('cuestionario-AIA', function ($trail) {
