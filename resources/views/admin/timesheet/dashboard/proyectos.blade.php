@@ -49,7 +49,7 @@
             <div class="d-flex mt-4">
                 Horas invertidas totales:
                 <strong class="ml-3">
-                    {{ $proyectos['proyectos_en_proceso'] + $proyectos['proyectos_cancelados'] + $proyectos['proyectos_terminados'] }}
+                    {{ $proyectos['horas_totales'] }}
                 </strong>
             </div>
         </div>
