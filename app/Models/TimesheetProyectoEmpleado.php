@@ -17,6 +17,7 @@ class TimesheetProyectoEmpleado extends Model
         'area_id',
         'horas_asignadas',
         'costo_hora',
+        'correo_enviado',
     ];
 
     public function empleado()

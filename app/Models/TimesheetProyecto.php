@@ -44,6 +44,18 @@ class TimesheetProyecto extends Model
         return $areas;
     }
 
+    public function getEmpleadosAttribute()
+    {
+        $ids_emp = TimesheetProyectoEmpleado::where('proyecto_id', $this->id)->get();
+
+        $emps = collect();
+        foreach ($ids_emp as $key => $emp_p) {
+            $emps->push(Empleado::select('id')->find($emp_p->empleado_id));
+        }
+
+        return $emps;
+    }
+
     public function sede()
     {
         return $this->belongsTo(Sede::class, 'sede_id');
@@ -61,16 +73,11 @@ class TimesheetProyecto extends Model
 
     public function proyectos()
     {
-        return $this->hasMany(QuejasCliente::class, 'proyectos_id');
-    }
-
-    public function empleados()
-    {
         return $this->hasMany(TimesheetProyectoEmpleado::class, 'proyecto_id', 'id');
     }
 
     public function proveedores()
     {
-        return $this->hasMany(TimesheetProyectoEmpleado::class, 'proyecto_id', 'id');
+        return $this->hasMany(TimesheetProyectoProveedor::class, 'proyecto_id', 'id');
     }
 }
