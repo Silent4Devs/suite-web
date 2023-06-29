@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <form wire:submit.prevent="addExterno">
+    <form wire:submit.prevent="addExterno" wire:ignore>
         <div class="row mt-4">
             <div class="form-group col-md-7">
                 <label for="">Externo<sup>*</sup> </label><br>
@@ -50,10 +50,15 @@
                         <td>{{ ($proyecto_proveedor->horas_tercero * $proyecto_proveedor->costo_tercero) ?? ''}}</td>
                         <td>
                             <button class="btn" data-toggle="modal"
+                            data-target="#modal_proyecto_externo_editar_{{ $proyecto_proveedor->id }}">
+                            <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size: 15pt;"
+                                title="Editar"></i>
+                            </button>
+                            {{-- <button class="btn" data-toggle="modal"
                                 data-target="#modal_proyecto_externo_eliminar_{{ $proyecto_proveedor->id }}">
                                 <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
                                     title="Eliminar"></i>
-                            </button>
+                            </button> --}}
                         </td>
                     </tr>
                 @endforeach
@@ -61,7 +66,7 @@
         </table>
     </div>
 
-    @foreach($proyecto_proveedores as $proyecto_proveedor)
+    {{-- @foreach($proyecto_proveedores as $proyecto_proveedor)
         <div class="modal fade" id="modal_proyecto_externo_eliminar_{{ $proyecto_proveedor->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -85,6 +90,49 @@
                                     wire:click="externoProyectoRemove({{ $proyecto_proveedor->id }})" data-dismiss="modal">
                                     Eliminar Proyecto
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach --}}
+
+    @foreach($proyecto_proveedores as $proyecto_proveedor)
+        <div class="modal fade" id="modal_proyecto_externo_editar_{{ $proyecto_proveedor->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button class="btn btn-tache-cerrar" data-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <div class="edit">
+                            <div class="text-center">
+                                <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size:60pt;"></i>
+                                <h1 class="my-4" style="font-size:14pt;">Editar Externo de Proyecto:
+                                    <small>{{ $proyecto_proveedor->proveedor_tercero }}</small></h1>
+                                <form wire:submit.prevent="editExterno({{$proyecto_proveedor->id}})">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="">Horas asignadas</label>
+                                            <input wire:model="horas_tercero_edit" name="" id="" type="number" min="1" class="form-control">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="">Costo por hora</label>
+                                            <input wire:model="costo_tercero_edit" name="" id="" type="number" min="1" class="form-control">
+                                        </div>
+                                        <div class="mt-4 d-flex justify-content-between">
+                                            <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
+                                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                            <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
+                                                <button class="btn btn-success">Editar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

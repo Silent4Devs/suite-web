@@ -91,9 +91,13 @@
                         </div>
                     </div>
                     <div class="col-8">
-                        <div class="col-12" style="text-align: end">
+                        <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
+                            <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                            Exportar Excel
+                        </button>
+                        {{-- <div class="col-12" style="text-align: end">
                             @livewire('timesheet.empleados-timesheet-export', ['tipo' => 'xlsx'])
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -107,7 +111,7 @@
             </div>
         </div>
         <div class="datatable-fix w-100 mt-2">
-            <table class="table w-100 datatable_timesheet_registros_reportes">
+            <table class="table w-100 datatable_timesheet_registros_reportes" id="reportes">
                 {{-- id="datatable_timesheet" --}}
                 <thead class="w-100">
                     <tr>
@@ -194,4 +198,34 @@
             });
         });
     </script>
+
+    <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+
+    <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
+
+    <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <script>
+        const $btnExportar = document.querySelector("#btnExportar"),
+            $tabla = document.querySelector("#reportes");
+
+        $btnExportar.addEventListener("click", function() {
+            let tableExport = new TableExport($tabla, {
+                exportButtons: false, // No queremos botones
+                filename: "Reporte Timesheet", //Nombre del archivo de Excel
+                sheetname: "Reporte", //Título de la hoja
+            });
+            let datos = tableExport.getExportData();
+            // console.log(datos.tblobjetivos.xlsx.data);
+
+            // console.log(datos.tblobjetivos);
+            // console.log(datos.tblobjetivos.xlsx);
+            // console.log(datos.tblobjetivos.xlsx.data);
+            let preferenciasDocumento = datos.reportes.xlsx;
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+
+        });
+        </script>
 </div>
