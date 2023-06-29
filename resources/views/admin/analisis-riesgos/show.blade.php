@@ -35,7 +35,7 @@
                                 Fecha de creación:
                             </th>
                             <td>
-                                <p>{{ $analisis->fecha }}</p>
+                                <p>{{ \Carbon\Carbon::parse($analisis->fecha)->format('d-m-Y') }}</p>
                             </td>
                         </tr>
                         <tr>

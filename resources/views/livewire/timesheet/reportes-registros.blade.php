@@ -19,6 +19,17 @@
             <input class="form-control date_librery" type="date" name="fecha_fin" wire:model="fecha_fin">
         </div>
     </div>
+    <div class="row" wire:ignore>
+        <div class="col-md-4 form-group" style="padding-left:0px !important;">
+            <label class="form-label">Colaborador</label>
+            <select class="form-control" wire:model="emp_id">
+                <option selected value="0">Todos</option>
+                @foreach ($emp as $em)
+                    <option value="{{ $em->id }}">{{ $em->name }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
     <div class="row mt-5">
         @include('partials.flashMessages')
         <div class="col-12 d-flex justify-content-between"
