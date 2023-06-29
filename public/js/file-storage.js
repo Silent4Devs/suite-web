@@ -61441,13 +61441,14 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(laravel_file_manager__WEBPACK_IM
   store: store
 }); // Vue.component('file-managers',require("./components/FileManagers.vue").default);
 
+var origin = window.location.origin;
 var app = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
   el: "#app",
   store: store,
   data: function data() {
     return {
       settings: {
-        baseUrl: 'http://tabantaj.test/file-manager',
+        baseUrl: "".concat(origin, "/file-manager"),
         lang: 'es'
       }
     };
