@@ -24,6 +24,9 @@ class TimesheetProyectoExternosComponent extends Component
     public $horas_tercero;
     public $costo_tercero;
 
+    public $horas_tercero_edit;
+    public $costo_tercero_edit;
+
     public function mount($proyecto_id)
     {
         $this->proyecto = TimesheetProyecto::find($proyecto_id);
@@ -44,6 +47,15 @@ class TimesheetProyectoExternosComponent extends Component
             'proveedor_tercero' => $this->externo_añadido,
             'horas_tercero' => $this->horas_tercero,
             'costo_tercero' => $this->costo_tercero,
+        ]);
+    }
+
+    public function editExterno($id)
+    {
+        $edit_time_externo = TimesheetProyectoProveedor::find($id);
+        $edit_time_externo->update([
+            'horas_tercero' => $this->horas_tercero_edit,
+            'costo_tercero' => $this->costo_tercero_edit,
         ]);
     }
 

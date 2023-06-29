@@ -26,6 +26,7 @@ class TimesheetHoras extends Model
         'horas_sabado',
         'horas_domingo',
         'descripcion',
+        'empleado_id'
     ];
 
     public function timesheet()

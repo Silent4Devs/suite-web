@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
+use App\Mail\TimesheetHorasSobrepasadas;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Sede;
@@ -15,6 +16,7 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoEmpleado;
+use App\Models\TimesheetProyectoProveedor;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetTarea;
 use App\Services\DashboardService;
@@ -274,6 +276,7 @@ class TimesheetController extends Controller
                     'horas_sabado' => $hora['sabado'],
                     'horas_domingo' => $hora['domingo'],
                     'descripcion' => $hora['descripcion'],
+                    'empleado_id' => auth()->user()->empleado->id,
                 ]);
             }
         }
@@ -285,6 +288,8 @@ class TimesheetController extends Controller
 
             Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
         }
+
+        $this->notificacionhorassobrepasadas(auth()->user()->empleado->id);
 
         return response()->json(['status' => 200]);
         // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
@@ -471,6 +476,7 @@ class TimesheetController extends Controller
                         'horas_sabado' => $hora['sabado'],
                         'horas_domingo' => $hora['domingo'],
                         'descripcion' => $hora['descripcion'],
+                        'empleado_id' => auth()->user()->empleado->id,
                     ]);
                 } else {
                     TimesheetHoras::create([
@@ -486,6 +492,7 @@ class TimesheetController extends Controller
                         'horas_sabado' => $hora['sabado'],
                         'horas_domingo' => $hora['domingo'],
                         'descripcion' => $hora['descripcion'],
+                        'empleado_id' => auth()->user()->empleado->id,
                     ]);
                 }
             }
@@ -498,6 +505,8 @@ class TimesheetController extends Controller
 
             Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
         }
+
+        $this->notificacionhorassobrepasadas(auth()->user()->empleado->id);
 
         return response()->json(['status' => 200]);
     }
@@ -1038,5 +1047,56 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes', 'tipos'));
+    }
+
+    public function notificacionhorassobrepasadas($id){
+        // dd("Si llega a la funcion");
+        $verificacion_proyectos = TimesheetProyectoEmpleado::
+        where('empleado_id', '=', $id)->
+        with('empleado', 'proyecto')->exists();
+        // dd($emp_proyectos);
+        if($verificacion_proyectos === false){
+            return null;
+        }else{
+            $emp_proyectos = TimesheetProyectoEmpleado::
+            where('empleado_id', '=', $id)->
+            with('empleado', 'proyecto')->get();
+        }
+
+
+        foreach($emp_proyectos as $ep){
+            $times = TimesheetHoras::where('proyecto_id','=', $ep->proyecto_id)
+            ->where('empleado_id','=', $ep->empleado_id)
+            ->get();
+
+            $tot_horas_proyecto=0;
+
+            $sumalun = $times->sum('horas_lunes');
+            $sumamar = $times->sum('horas_martes');
+            $sumamie = $times->sum('horas_miercoles');
+            $sumajue = $times->sum('horas_jueves');
+            $sumavie = $times->sum('horas_viernes');
+
+            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie;
+
+            if($ep->proyecto->tipo === "Externo"){
+                if($tot_horas_proyecto > $ep->horas_asignadas){
+                    if($ep->correo_enviado == false){
+
+                        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
+
+                        $empleado = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
+
+                        // Mail::to(['marco.luna@silent4business.com', 'eugenia.gomez@silent4business.com', $aprobador->email, $empleado->email])
+                        Mail::to('karen.rodriguez@silent4business.com')
+                        ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
+
+                        $ep->update([
+                            'correo_enviado' => true,
+                        ]);
+                    }
+                }
+            }
+        }
     }
 }

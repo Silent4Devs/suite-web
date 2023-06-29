@@ -9,14 +9,18 @@
         <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
         </div>
     </div>
-    <form wire:submit.prevent="addEmpleado">
+    <form wire:submit.prevent="addEmpleado" wire:ignore>
         <div class="row mt-4">
             <div class="form-group col-md-7">
                 <label for="">Empleado<sup>*</sup></label>
                 <select wire:model="empleado_añadido" name="" id="" class="select2" required>
-                    <option value="" selected disabled></option>
+                    <option value="" selected disabled>Seleccione un empleado</option>
                     @foreach ($empleados as $empleado)
-                        <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                        @foreach ($areasempleado as $ae)
+                            @if($empleado->area_id === $ae->area_id)
+                                <option value="{{ $empleado->id }}">{{ $empleado->name }}</option>
+                            @endif
+                        @endforeach
                     @endforeach
                 </select>
             </div>
@@ -48,9 +52,11 @@
                     <th>Nombre </th>
                     <th>Área </th>
                     <th>Puesto </th>
+                @if($proyecto->tipo === "Externo")
                     <th>Horas asignadas </th>
                     <th>Costo por hora </th>
                     <th>Costo total estimado</th>
+                @endif
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
             </thead>
@@ -61,15 +67,22 @@
                         <td>{{ $proyect_empleado->empleado->name }} </td>
                         <td>{{ $proyect_empleado->empleado->area->area }} </td>
                         <td>{{ $proyect_empleado->empleado->puesto }} </td>
+                    @if($proyecto->tipo === "Externo")
                         <td>{{ $proyect_empleado->horas_asignadas ?? '0'}} </td>
                         <td>{{ $proyect_empleado->costo_hora ?? '0'}} </td>
                         <td>{{($proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora) ?? ''}}</td>
+                    @endif
                         <td>
                             <button class="btn" data-toggle="modal"
+                            data-target="#modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}">
+                            <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size: 15pt;"
+                                title="Editar"></i>
+                            </button>
+                            {{-- <button class="btn" data-toggle="modal"
                                 data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
                                 <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
                                     title="Eliminar"></i>
-                            </button>
+                            </button> --}}
                         </td>
                     </tr>
                 @endforeach
@@ -77,7 +90,51 @@
         </table>
     </div>
 
-    @foreach($proyecto_empleados as $proyect_empleado)
+        @foreach($proyecto_empleados as $proyect_empleado)
+        <div class="modal fade" id="modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button class="btn btn-tache-cerrar" data-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <div>
+                            <div class="text-center">
+                                <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size:60pt;"></i>
+                                <h1 class="my-4" style="font-size:14pt;">Editar empleado:
+                                    <small>{{ $proyect_empleado->empleado->name }}</small></h1>
+                            </div>
+                            <form wire:submit.prevent="editEmpleado({{$proyect_empleado->id}})">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="">Horas asignadas</label>
+                                        <input wire:model="horas_edit" name="" id="" type="number" min="1" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="">Costo por hora</label>
+                                        <input wire:model="costo_edit" name="" id="" type="number" min="1" class="form-control">
+                                    </div>
+                                    <div class="mt-4 d-flex justify-content-between">
+                                        <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
+                                            <button class="btn btn_cancelar" data-dismiss="modal">
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                        <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
+                                            <button class="btn btn-success">Editar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    {{-- @foreach($proyecto_empleados as $proyect_empleado)
         <div class="modal fade" id="modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -107,7 +164,7 @@
                 </div>
             </div>
         </div>
-    @endforeach
+    @endforeach --}}
 
     @section('scripts')
     @parent
