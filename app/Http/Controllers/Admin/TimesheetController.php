@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
+use App\Mail\TimesheetHorasSobrepasadas;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Sede;
@@ -15,8 +16,11 @@ use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoEmpleado;
+use App\Models\TimesheetProyectoProveedor;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetTarea;
+use App\Services\DashboardService;
+use App\Services\TimesheetService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -25,6 +29,15 @@ use Illuminate\Support\Facades\Mail;
 
 class TimesheetController extends Controller
 {
+
+
+    private $timesheetService;
+
+    public function __construct(TimesheetService $timesheetService)
+    {
+        $this->timesheetService = $timesheetService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -263,6 +276,7 @@ class TimesheetController extends Controller
                     'horas_sabado' => $hora['sabado'],
                     'horas_domingo' => $hora['domingo'],
                     'descripcion' => $hora['descripcion'],
+                    'empleado_id' => auth()->user()->empleado->id,
                 ]);
             }
         }
@@ -274,6 +288,8 @@ class TimesheetController extends Controller
 
             Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
         }
+
+        $this->notificacionhorassobrepasadas(auth()->user()->empleado->id);
 
         return response()->json(['status' => 200]);
         // return redirect()->route('admin.timesheet')->with('success', 'Registro Enviado');
@@ -460,6 +476,7 @@ class TimesheetController extends Controller
                         'horas_sabado' => $hora['sabado'],
                         'horas_domingo' => $hora['domingo'],
                         'descripcion' => $hora['descripcion'],
+                        'empleado_id' => auth()->user()->empleado->id,
                     ]);
                 } else {
                     TimesheetHoras::create([
@@ -475,6 +492,7 @@ class TimesheetController extends Controller
                         'horas_sabado' => $hora['sabado'],
                         'horas_domingo' => $hora['domingo'],
                         'descripcion' => $hora['descripcion'],
+                        'empleado_id' => auth()->user()->empleado->id,
                     ]);
                 }
             }
@@ -487,6 +505,8 @@ class TimesheetController extends Controller
 
             Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
         }
+
+        $this->notificacionhorassobrepasadas(auth()->user()->empleado->id);
 
         return response()->json(['status' => 200]);
     }
@@ -911,152 +931,13 @@ class TimesheetController extends Controller
 
     public function dashboard()
     {
-        $borrador_contador = Timesheet::where('estatus', 'papelera')->count();
-        $pendientes_contador = Timesheet::where('estatus', 'pendiente')->count();
-        $aprobados_contador = Timesheet::where('estatus', 'aprobado')->count();
-        $rechazos_contador = Timesheet::where('estatus', 'rechazado')->count();
+        $counters = $this->timesheetService->totalCounters();
+        $areas_array = $this->timesheetService->totalRegisterByAreas();
+        $proyectos = $this->timesheetService->getRegistersByProyects();
 
-        // graf areas ------------
-        $hoy = Carbon::now();
-        $semanas_del_mes = intval(($hoy->format('d') * 4) / 29);
-        $empleados_partisipacion = Empleado::get();
-
-        $areas = Area::get();
-
-        $areas_array = collect();
-        foreach ($areas as $area) {
-            $times_complit_esperados_area = 0;
-
-            $empleados_area = Empleado::where('area_id', $area->id)->get();
-            foreach ($empleados_area as $empleado) {
-                $fecha_inicio = date_create($empleado->antiguedad->format('d-m-Y'));
-                $fecha_fin = date_create($hoy->format('d-m-Y'));
-                $times_esperados_empleado = intval(date_diff($fecha_inicio, $fecha_fin)->format('%R%a') / 7);
-
-                $times_complit_esperados_area += $times_esperados_empleado;
-            }
-
-            if ($times_complit_esperados_area == 0) {
-                $times_complit_esperados_area = 1;
-            }
-
-            $total_times_complit_area = 0;
-            $empleados_times_atrasados = 0;
-            foreach ($empleados_partisipacion as $emp_part_area) {
-                if ($emp_part_area->area_id == $area->id) {
-                    $times_empleado_part_area = Timesheet::where('empleado_id', $emp_part_area->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->where('estatus', '!=', 'pendiente')->count();
-                } else {
-                    $times_empleado_part_area = 0;
-                }
-                $total_times_complit_area += $times_empleado_part_area;
-            }
-
-            $porcentaje_participacion_area = round((($total_times_complit_area * 100) / $times_complit_esperados_area), 2);
-            if ($total_times_complit_area >= $times_complit_esperados_area) {
-                $porcentaje_participacion_area = 100;
-            }
-            if ($porcentaje_participacion_area <= 44) {
-                $nivel_participacion = 'baja';
-            }
-            if (($porcentaje_participacion_area > 45) && ($porcentaje_participacion_area < 89)) {
-                $nivel_participacion = 'media';
-            }
-            if ($porcentaje_participacion_area >= 90) {
-                $nivel_participacion = 'alta';
-            }
-
-            $contador_times_aprobados_areas = 0;
-            $contador_times_pendientes_areas = 0;
-            $contador_times_rechazados_areas = 0;
-            $contador_times_papelera_areas = 0;
-            foreach ($area->empleados as $key => $empleado_t) {
-                $contador_times_aprobados_areas += Timesheet::where('empleado_id', $empleado_t->id)->where('estatus', 'aprobado')->count();
-                $contador_times_pendientes_areas += Timesheet::where('empleado_id', $empleado_t->id)->where('estatus', 'pendiente')->count();
-                $contador_times_rechazados_areas += Timesheet::where('empleado_id', $empleado_t->id)->where('estatus', 'rechazado')->count();
-                $contador_times_papelera_areas += Timesheet::where('empleado_id', $empleado_t->id)->where('estatus', 'papelera')->count();
-            }
-
-            $areas_array->push([
-                'area' => $area->area,
-                'times_aprobados' => $contador_times_aprobados_areas,
-                'times_pendientes' => $contador_times_pendientes_areas,
-                'times_rechazados' => $contador_times_rechazados_areas,
-                'times_papelera' => $contador_times_papelera_areas,
-                'partisipacion' => $porcentaje_participacion_area,
-                'nivel_p' => $nivel_participacion,
-                'times_esperados' => $times_complit_esperados_area,
-            ]);
-        }
-
-        // graf empleados ---------------------
-        $empleados_count = Empleado::count();
-        $times_por_mes_esperados = $semanas_del_mes * $empleados_count;
-        if ($times_por_mes_esperados == 0) {
-            $times_por_mes_esperados = 1;
-        }
-        $total_times_mes = 0;
-        $empleados_times_atrasados = 0;
-        foreach ($empleados_partisipacion as $emp_part) {
-            $times_empleado_part = Timesheet::whereMonth('fecha_dia', $hoy)->where('empleado_id', $emp_part->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
-            $total_times_mes += $times_empleado_part;
-
-            if ($times_empleado_part < ($semanas_del_mes)) {
-                $empleados_times_atrasados++;
-            }
-        }
-
-        $porcentaje_participacion = round((($total_times_mes * 100) / $times_por_mes_esperados), 2);
-        if ($total_times_mes >= $times_por_mes_esperados) {
-            $porcentaje_participacion = 100;
-        }
-
-        // graf proyectos -----------------------
-        $proyectos_proceso_c = TimesheetProyecto::where('estatus', 'proceso')->count();
-        $proyectos_cancelados_c = TimesheetProyecto::where('estatus', 'cancelado')->count();
-        $proyectos_terminados_c = TimesheetProyecto::where('estatus', 'terminado')->count();
-
-        $proyectos_proceso = TimesheetProyecto::get();
-        $proyectos_array = collect();
-        foreach ($proyectos_proceso as $proyect) {
-            $horas_totales_proyecto = 0;
-            $tareas_proyecto = TimesheetTarea::where('proyecto_id', $proyect->id)->get();
-            foreach ($tareas_proyecto as $tarea_p) {
-                $horas_proyecto = TimesheetHoras::where('tarea_id', $tarea_p->id)->get();
-                foreach ($horas_proyecto as $horas_p) {
-                    $horas_totales_proyecto += $horas_p->horas_lunes;
-                    $horas_totales_proyecto += $horas_p->horas_martes;
-                    $horas_totales_proyecto += $horas_p->horas_miercoles;
-                    $horas_totales_proyecto += $horas_p->horas_jueves;
-                    $horas_totales_proyecto += $horas_p->horas_viernes;
-                    $horas_totales_proyecto += $horas_p->horas_sabado;
-                    $horas_totales_proyecto += $horas_p->horas_domingo;
-                }
-            }
-            $proyectos_array->push([
-                'proyecto' => $proyect->proyecto,
-                'horas' => $horas_totales_proyecto,
-                'tareas' => $tareas_proyecto,
-                'tareas_count' => $tareas_proyecto->count(),
-                'estatus' => $proyect->estatus,
-            ]);
-        }
-
-        $proyectos_proceso_array = 0;
-        $proyectos_cancelado_array = 0;
-        $proyectos_terminado_array = 0;
-        foreach ($proyectos_array as $proyect_array) {
-            if ($proyect_array['estatus'] == 'proceso') {
-                $proyectos_proceso_array += $proyect_array['horas'];
-            }
-            if ($proyect_array['estatus'] == 'cancelado') {
-                $proyectos_cancelado_array += $proyect_array['horas'];
-            }
-            if ($proyect_array['estatus'] == 'terminado') {
-                $proyectos_terminado_array += $proyect_array['horas'];
-            }
-        }
-
-        return view('admin.timesheet.dashboard', compact('borrador_contador', 'pendientes_contador', 'aprobados_contador', 'rechazos_contador', 'areas_array', 'porcentaje_participacion', 'empleados_times_atrasados', 'empleados_count', 'areas', 'proyectos_proceso_c', 'proyectos_cancelados_c', 'proyectos_terminados_c', 'proyectos_array', 'proyectos_proceso_array', 'proyectos_cancelado_array', 'proyectos_terminado_array'));
+        return view('admin.timesheet.dashboard',
+            compact('counters', 'areas_array', 'proyectos')
+        );
     }
 
     public function reportes()
@@ -1166,5 +1047,56 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes', 'tipos'));
+    }
+
+    public function notificacionhorassobrepasadas($id){
+        // dd("Si llega a la funcion");
+        $verificacion_proyectos = TimesheetProyectoEmpleado::
+        where('empleado_id', '=', $id)->
+        with('empleado', 'proyecto')->exists();
+        // dd($emp_proyectos);
+        if($verificacion_proyectos === false){
+            return null;
+        }else{
+            $emp_proyectos = TimesheetProyectoEmpleado::
+            where('empleado_id', '=', $id)->
+            with('empleado', 'proyecto')->get();
+        }
+
+
+        foreach($emp_proyectos as $ep){
+            $times = TimesheetHoras::where('proyecto_id','=', $ep->proyecto_id)
+            ->where('empleado_id','=', $ep->empleado_id)
+            ->get();
+
+            $tot_horas_proyecto=0;
+
+            $sumalun = $times->sum('horas_lunes');
+            $sumamar = $times->sum('horas_martes');
+            $sumamie = $times->sum('horas_miercoles');
+            $sumajue = $times->sum('horas_jueves');
+            $sumavie = $times->sum('horas_viernes');
+
+            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie;
+
+            if($ep->proyecto->tipo === "Externo"){
+                if($tot_horas_proyecto > $ep->horas_asignadas){
+                    if($ep->correo_enviado == false){
+
+                        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
+
+                        $empleado = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
+
+                        // Mail::to(['marco.luna@silent4business.com', 'eugenia.gomez@silent4business.com', $aprobador->email, $empleado->email])
+                        Mail::to('karen.rodriguez@silent4business.com')
+                        ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
+
+                        $ep->update([
+                            'correo_enviado' => true,
+                        ]);
+                    }
+                }
+            }
+        }
     }
 }

@@ -31,6 +31,8 @@ storage/logs/laravel.log
 
 *.cache
 
+infra/postgres/
+
 storage/app/public/activos/
 storage/app/livewire-tmp/
 storage/app/public/expedientes/
