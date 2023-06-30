@@ -35077,6 +35077,19 @@ h3 {
   margin-right: 0 !important;
 }
 
+/* footer -------------------------- */
+.app-footer{
+  background-color: #788BAC;
+  color: #fff;
+  padding: 0px 40px;
+  box-sizing: border-box;
+  height: 50px;
+  font-size: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 /* @media(max-width: 2000px){
   body{
