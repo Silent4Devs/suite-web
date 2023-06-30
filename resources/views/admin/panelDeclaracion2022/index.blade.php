@@ -156,7 +156,7 @@
                 <th>
                     No
                 </th>
-                <th>
+                <th scope="col" colspan="2">
                     Control
                 </th>
                 <th>

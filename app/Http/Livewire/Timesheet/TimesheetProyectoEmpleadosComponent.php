@@ -20,6 +20,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public $horas_asignadas;
     public $costo_hora;
 
+    public $empleado_editado;
     public $horas_edit;
     public $costo_edit;
 
@@ -40,6 +41,12 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function addEmpleado()
     {
         $empleado_add_proyecto = Empleado::find($this->empleado_añadido);
+        if($this->proyecto->tipo === "Externo"){
+            $this->validate([
+                'horas_asignadas' => ['required'],
+                'costo_hora' => ['required'],
+            ]);
+        }
         $time_proyect_empleado = TimesheetProyectoEmpleado::create([
             'proyecto_id' => $this->proyecto->id,
             'empleado_id'=> $empleado_add_proyecto->id,
@@ -52,8 +59,17 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function editEmpleado($id)
     {
         // dd("Llega al edit", $id,$this->horas_edit, $this->costo_edit);
+        if($this->proyecto->tipo === "Externo"){
+            $this->validate([
+                'horas_edit' => ['required'],
+                'costo_edit' => ['required'],
+            ]);
+        }
+        $emp_upd_proyecto = Empleado::find($this->empleado_editado);
         $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
         $empleado_edit_proyecto->update([
+            'empleado_id'=> $emp_upd_proyecto->id,
+            'area_id' => $emp_upd_proyecto->area_id,
             'horas_asignadas' => $this->horas_edit,
             'costo_hora' => $this->costo_edit,
         ]);

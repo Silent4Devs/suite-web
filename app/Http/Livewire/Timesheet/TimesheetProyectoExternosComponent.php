@@ -42,6 +42,12 @@ class TimesheetProyectoExternosComponent extends Component
 
     public function addExterno()
     {
+        if($this->proyecto->tipo === "Externo"){
+            $this->validate([
+                'horas_tercero' => ['required'],
+                'costo_tercero' => ['required'],
+            ]);
+        }
         $time_proyect_externo = TimesheetProyectoProveedor::create([
             'proyecto_id' => $this->proyecto->id,
             'proveedor_tercero' => $this->externo_añadido,
@@ -52,6 +58,12 @@ class TimesheetProyectoExternosComponent extends Component
 
     public function editExterno($id)
     {
+        if($this->proyecto->tipo === "Externo"){
+            $this->validate([
+                'horas_tercero_edit' => ['required'],
+                'costo_tercero_edit' => ['required'],
+            ]);
+        }
         $edit_time_externo = TimesheetProyectoProveedor::find($id);
         $edit_time_externo->update([
             'horas_tercero' => $this->horas_tercero_edit,

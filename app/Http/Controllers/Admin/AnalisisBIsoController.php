@@ -37,22 +37,22 @@ class AnalisisBIsoController extends Controller
 
         $gapa5 = GapDosConcentradoIso::where('id_analisis_brechas', request()->id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
         ->whereHas('gap_dos_catalogo', function($query){
-            return $query->where('control_iso', 'LIKE', "A.5.".'%');
+            return $query->where('control_iso', 'LIKE', "5.".'%');
         })->orderBy('id', 'ASC')->get();
 
         $gapa6 = GapDosConcentradoIso::where('id_analisis_brechas', request()->id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
         ->whereHas('gap_dos_catalogo', function($query){
-            return $query->where('control_iso', 'LIKE', "A.6.".'%');
+            return $query->where('control_iso', 'LIKE', "6.".'%');
         })->orderBy('id', 'ASC')->get();
 
         $gapa7 = GapDosConcentradoIso::where('id_analisis_brechas', request()->id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
         ->whereHas('gap_dos_catalogo', function($query){
-            return $query->where('control_iso', 'LIKE', "A.7.".'%');
+            return $query->where('control_iso', 'LIKE', "7.".'%');
         })->orderBy('id', 'ASC')->get();
 
         $gapa8 = GapDosConcentradoIso::where('id_analisis_brechas', request()->id)->with('gap_dos_catalogo')->with('gap_dos_catalogo.clasificacion')
         ->whereHas('gap_dos_catalogo', function($query){
-            return $query->where('control_iso', 'LIKE', "A.8.".'%');
+            return $query->where('control_iso', 'LIKE', "8.".'%');
         })->orderBy('id', 'ASC')->get();
 
 
