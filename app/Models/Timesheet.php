@@ -54,6 +54,23 @@ class Timesheet extends Model
         return $semana_rango;
     }
 
+    public function getFinAttribute()
+    {
+        $fin = $this->traducirDia($this->fin_semana);
+
+        $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
+
+        return $fin_dia;
+    }
+
+    public function getInicioAttribute()
+    {
+        $inicio = $this->traducirDia($this->inicio_semana);
+
+        $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")->format('d/m/Y');
+
+        return $inicio_dia;
+    }
     public function getSemanaTextAttribute()
     {
         $inicio = $this->traducirDia($this->inicio_semana);
