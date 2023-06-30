@@ -49,22 +49,22 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         $gapa5 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')
         ->with('gapdos.clasificacion')
         ->whereHas('gapdos', function($query){
-            return $query->where('control_iso', 'LIKE', "A.5.".'%');
+            return $query->where('control_iso', 'LIKE', "5.".'%');
         })->orderBy('id', 'ASC')->get();
 
         $gapa6 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
         ->whereHas('gapdos', function($query){
-            return $query->where('control_iso', 'LIKE', "A.6.".'%');
+            return $query->where('control_iso', 'LIKE', "6.".'%');
         })->orderBy('id', 'ASC')->get();
 
         $gapa7 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
         ->whereHas('gapdos', function($query){
-            return $query->where('control_iso', 'LIKE', "A.7.".'%');
+            return $query->where('control_iso', 'LIKE', "7.".'%');
         })->orderBy('id', 'ASC')->get();
 
         $gapa8 = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->with('gapdos.clasificacion')
         ->whereHas('gapdos', function($query){
-            return $query->where('control_iso', 'LIKE', "A.8.".'%');
+            return $query->where('control_iso', 'LIKE', "8.".'%');
         })->orderBy('id', 'ASC')->get();
 
         $responsables = DeclaracionAplicabilidadResponsableIso::with(['empleado' => function ($q) {
@@ -106,16 +106,16 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
         // dd($conteoAprobado, $conteoNoaprobado);
 
         $gap5 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function($query){
-            return $query->where('control_iso', 'LIKE', "A.5.".'%');
+            return $query->where('control_iso', 'LIKE', "5.".'%');
         })->get();
         $gap6 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function($query){
-            return $query->where('control_iso', 'LIKE', "A.6.".'%');
+            return $query->where('control_iso', 'LIKE', "6.".'%');
         })->get();
         $gap7 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function($query){
-            return $query->where('control_iso', 'LIKE', "A.7.".'%');
+            return $query->where('control_iso', 'LIKE', "7.".'%');
         })->get();
         $gap8 = DeclaracionAplicabilidadResponsableIso::with('gapdos')->whereHas('gapdos', function($query){
-            return $query->where('control_iso', 'LIKE', "A.8.".'%');
+            return $query->where('control_iso', 'LIKE', "8.".'%');
         })->get();
 
                 // dd($gap5, $gap6, $gap7, $gap8);

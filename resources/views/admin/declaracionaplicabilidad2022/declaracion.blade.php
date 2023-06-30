@@ -114,13 +114,7 @@
 
                                     <tr class="negras">
                                         <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="11">
-                                            A.5
-                                            Políticas de Seguridad de Información</td>
-                                    </tr>
-                                    <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;" colspan="11">
-                                            A.5.1 Directivas de la gestión para seguridad de la
-                                            información</td>
+                                            CONTROLES ORGANIZACIONALES</td>
                                     </tr>
                                     @foreach ($gapda5s as $g5s)
                                         <tr>
@@ -406,13 +400,8 @@
                                     <tr class="negras">
                                         <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
                                             colspan="11">
-                                            A.6
-                                            Organización de la seguridad de la información</td>
-                                    </tr>
-                                    <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="11">
-                                            A.6.1 organización interna</td>
+                                            CONTROLES PERSONALES
+                                        </td>
                                     </tr>
 
                                     @foreach ($gapda6s as $g6s)
@@ -690,15 +679,8 @@
                                     <tr class="negras">
                                         <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
                                             colspan="11">
-                                            A.7
-                                            seguridad de los recursos humanos</td>
+                                            CONTROLES FISICOS</td>
                                     </tr>
-                                    <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="11">
-                                            A.7.1 Antes de empleo</td>
-                                    </tr>
-
 
                                     @foreach ($gapda7s as $g7s)
                                         <tr>
@@ -972,13 +954,7 @@
                                     <tr class="negras">
                                         <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
                                             colspan="11">
-                                            A.8
-                                            Administración de activos</td>
-                                    </tr>
-                                    <tr class="verdes">
-                                        <td class="p-2 mb-2 text-white bg-info" style="font-size: 12px;"
-                                            colspan="11">
-                                            A.8.1 Responsabilidad sobre los activos</td>
+                                            CONTROLES TECNOLOGICOS</td>
                                     </tr>
 
                                     @foreach ($gapda8s as $g8s)

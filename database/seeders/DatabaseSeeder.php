@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
             Declaracion_aplicabilidad_concentrado_Seeder::class,
             Declaracion_aplicabilidad_responsable_Seeder::class,
             Declaracion_aplicabilidad_aprobador_Seeder::class,
-            // PermissionVersionesIso::class,
+            PermissionVersionesIso::class,
             ]
         );
     }
