@@ -9,19 +9,19 @@
     </div>
 
     <form wire:submit.prevent="addExterno" wire:ignore>
-        <div class="row mt-4">
+        <div class="row mt-8">
             <div class="form-group col-md-7">
-                <label for="">Externo<sup>*</sup> </label><br>
+                <label for="">Externo<sup>*</sup>(obligatorio)</label><br>
                 <input wire:model="externo_añadido" name="" id=""type="text" required>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-4">
-                <label for="">Horas asignadas</label>
+                <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
                 <input wire:model="horas_tercero" name="" id="" type="number" min="1" class="form-control">
             </div>
             <div class="form-group col-md-4">
-                <label for="">Costo por hora</label>
+                <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
                 <input wire:model="costo_tercero" name="" id="" type="number" min="1" class="form-control">
             </div>
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
@@ -114,11 +114,11 @@
                                 <form wire:submit.prevent="editExterno({{$proyecto_proveedor->id}})">
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <label for="">Horas asignadas</label>
+                                            <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
                                             <input wire:model="horas_tercero_edit" name="" id="" type="number" min="1" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="">Costo por hora</label>
+                                            <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
                                             <input wire:model="costo_tercero_edit" name="" id="" type="number" min="1" class="form-control">
                                         </div>
                                         <div class="mt-4 d-flex justify-content-between">
