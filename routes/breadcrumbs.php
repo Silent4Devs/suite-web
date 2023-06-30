@@ -187,7 +187,7 @@ Breadcrumbs::for('AIA', function ($trail) {
 Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
     $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
     $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
-    $trail->push('Cuestionario');
+    $trail->push('Matriz de Riesgo');
 });
 
 Breadcrumbs::for('cuestionario-AIA', function ($trail) {
