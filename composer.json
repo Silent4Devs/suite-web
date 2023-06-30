@@ -34,6 +34,7 @@
         "rappasoft/laravel-livewire-tables": "^2.8",
         "renatomarinho/laravel-page-speed": "^2.0",
         "rennokki/laravel-eloquent-query-cache": "^3.1",
+        "sentry/sentry-laravel": "^3.6",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/calendar-links": "^1.6",
         "spatie/geocoder": "^3.10",
@@ -63,7 +64,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true
         }
     },
     "extra": {
