@@ -77,7 +77,7 @@
                                         <th scope="col">INDICE</th>
                                         <th scope="col">CLASIFICACIÓN</th>
                                         <th scope="col">ANEXO INDICE</th>
-                                        <th colspan="2">CONTROL</th>
+                                        <th scope="col">CONTROL</th>
                                         <th scope="col">VALORACIÓN</th>
                                         <th scope="col">EVIDENCIA DE
                                             CUMPLIMIENTO</th>
