@@ -1242,8 +1242,20 @@
         {{ csrf_field() }}
     </form>
     </div>
-    <!-- incluir de footer -->
-    {{-- @include('partials.footer') --}}
+        <!-- incluir de footer -->
+        {{-- @include('partials.footer') --}}
+        <footer class="app-footer">
+            <font>
+                TABANTAJ
+                <font style="margin: 0px 20px;"> | </font> 
+                SILENT4BUSINESS 
+            </font>
+            <font>
+                2023
+                <font style="margin: 0px 20px;"> | </font> 
+                Version: 4.8.8 
+            </font>
+        </footer>
     </div>
     <style>
         #contenido_imprimir {
