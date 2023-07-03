@@ -36,7 +36,6 @@ infra/postgres/
 infra/postgres/*
 infra/postgres/data/
 infra/postgres/data/*
-infra
 /infra/mysql/*
 /infra/mysql
 /storage/app/public/users-avatar/*
