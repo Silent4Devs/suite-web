@@ -9,10 +9,10 @@
     </div>
 
     <form wire:submit.prevent="addExterno" wire:ignore>
-        <div class="row mt-8">
-            <div class="form-group col-md-7">
+        <div class="row">
+            <div class="form-group col-md-8">
                 <label for="">Externo<sup>*</sup>(obligatorio)</label><br>
-                <input wire:model="externo_añadido" name="" id=""type="text" required>
+                <input wire:model="externo_añadido" name="" id=""type="text" class="form-control" required>
             </div>
         </div>
         <div class="row">
