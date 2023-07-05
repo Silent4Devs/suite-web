@@ -1081,20 +1081,20 @@ class TimesheetController extends Controller
 
             if($ep->proyecto->tipo === "Externo"){
                 if($tot_horas_proyecto > $ep->horas_asignadas){
-                    if($ep->correo_enviado == false){
+                    // if($ep->correo_enviado == false){
 
                         $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
 
                         $empleado = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
-
+                        //Se comentaron los correos a quienes se les enviara al final
                         // Mail::to(['marco.luna@silent4business.com', 'eugenia.gomez@silent4business.com', $aprobador->email, $empleado->email])
-                        Mail::to('karen.rodriguez@silent4business.com')
+                        Mail::to(['marco.luna@silent4business.com', 'rosario.palomero@silent4business.com'])
                         ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
 
-                        $ep->update([
-                            'correo_enviado' => true,
-                        ]);
-                    }
+                    //     $ep->update([
+                    //         'correo_enviado' => true,
+                    //     ]);
+                    // }
                 }
             }
         }

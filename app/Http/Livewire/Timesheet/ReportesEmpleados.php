@@ -617,13 +617,13 @@ class ReportesEmpleados extends Component
         $this->reporte_general = true;
     }
 
-    public function correoRetraso($id)
+    public function correoRetraso($id, $sem_falt)
     {
         $empleado = Empleado::select('id', 'name', 'email', 'antiguedad')->find($id);
 
         foreach ($this->empleados as $key => $empleado_a) {
             if ($empleado_a['id'] == $id) {
-                $semanas_faltantes = $empleado_a['times_faltantes'];
+                $semanas_faltantes = $sem_falt;
             }
         }
         Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
@@ -637,7 +637,7 @@ class ReportesEmpleados extends Component
     {
         foreach ($this->empleados as $empleado) {
             if ($empleado['times_atrasados'] > 0) {
-                $this->correoRetraso($empleado['id']);
+                $this->correoRetraso($empleado['id'], $empleado['times_atrasados']);
             }
         }
 

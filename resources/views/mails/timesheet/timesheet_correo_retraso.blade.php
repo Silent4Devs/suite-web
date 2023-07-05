@@ -138,15 +138,15 @@
                                     </hr>
 
                                     @php
-                                        
+
                                         use App\Models\Organizacion;
-                                        
+
                                         $organizacion = Organizacion::first();
-                                        
+
                                         $logotipo = $organizacion->logotipo;
-                                        
+
                                         $empresa = $organizacion->empresa;
-                                        
+
                                     @endphp
 
                                     <h2 style="padding-top:3px; color:#153643; text-align:center">
@@ -188,10 +188,10 @@
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p
                                                 style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
-                                                Semanas faltantes:
+                                                Semanas faltantes: {{ $times_faltantes_empleado }}
                                             </p>
                                         </div>
-                                        <style type="text/css">
+                                        {{-- <style type="text/css">
                                             .list_times_faltantes {
                                                 list-style: none;
                                                 padding: 0;
@@ -257,7 +257,7 @@
                                                 style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
                                                 Registrar Horas Faltantes
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </td>
 
                                 </tr>
