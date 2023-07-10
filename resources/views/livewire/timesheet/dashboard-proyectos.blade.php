@@ -1,7 +1,7 @@
 <div>
     <x-loading-indicator />
     <div class="row" wire:ignore>
-        <div class="col-md-4 form-group" style="padding-left:0px !important;">
+        <div class="col-md-6 form-group" style="padding-left:0px !important;">
             <label class="form-label">Estatus</label>
             <select class="form-control" wire:model="estatus">
                 <option selected value="0">Todos</option>
@@ -10,11 +10,9 @@
                 <option value="cancelado">Cancelados</option>
             </select>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 form-group" style="padding-left:0px !important;">
+        <div class="col-md-6 form-group" style="padding-left:0px !important;">
         <label class="form-label">Proyecto</label>
-        <select class="form-control" wire:model="proy_id">
+        <select class="form-control" wire:model="proy_id" id="proyectos">
             <option value="0" selected>Seleccione un proyecto</option>
             @foreach ($lista_proyectos as $pro)
                 <option value="{{ $pro->id }}">{{ $pro->proyecto }}</option>
@@ -22,6 +20,7 @@
         </select>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-4 form-group" style="padding-left:0px !important;">
         <label class="form-label">Areas</label>
@@ -33,49 +32,58 @@
         </select>
         </div>
     </div>
+    {{-- <canvas id="graf-proyectos-area"></canvas> --}}
 </div>
 
-{{-- <script>
-    var array = @json($grafico);
-    console.log(array);
-</script> --}}
-
-{{-- 
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-            Livewire.on('scriptTabla', () => {
-                tablaLivewire('datatable_timesheet');
-            });
+<script>
+            // console.log({{$lista_proyectos}});
+    document.addEventListener('DOMContentLoaded', function() {
+        // console.log('test');
+        // const areas_labels = (datos_areas) => {
+        //     const areas = array.filter(item => item.area === area)
+        //     chart.data.labels = areas.map(item => item['area'])
+        //     chart.data.datasets[0].data = areas.map(item => item['times_aprobados'])
+        //     chart.data.datasets[1].data = areas.map(item => item['times_pendientes'])
+        //     chart.data.datasets[2].data = areas.map(item => item['times_rechazados'])
+        //     chart.data.datasets[3].data = areas.map(item => item['times_papelera'])
+        //     chart.update()
+        // }
+        // $('#proyectos').on('change', function(event) {
+            // if (event.target.value != 'todas') {
+            //     areas_labels(event.target.value)
+            // } else {
+            //     chart.data.labels = array.map(item => item['area'])
+            //     chart.data.datasets[0].data = array.map(item => item['times_aprobados'])
+            //     chart.data.datasets[1].data = array.map(item => item['times_pendientes'])
+            //     chart.data.datasets[2].data = array.map(item => item['times_rechazados'])
+            //     chart.data.datasets[3].data = array.map(item => item['times_papelera'])
+            //     chart.update()
+            // }
+        // });
+        Livewire.on('renderAreas', (datos_areas) => {
+            console.log(datos_areas);
         });
-    </script>
+    });
+</script>
 
-    <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+{{-- // $('#areas-graf-registros-general').on('change', function(event) {
+    //     if (event.target.value === 'todas') {
+    //         graf_general.data.datasets[0].data = [{{ $counters['aprobados_contador'] }},
+    //             {{ $counters['rechazos_contador'] }},
+    //             {{ $counters['pendientes_contador'] }}, {{ $counters['borrador_contador'] }}
+    //         ]
+    //         graf_general.update()
+    //     } else {
+    //         const area = array.filter(item => item.area == event.target.value)
+    //         graf_general.data.datasets[0].data = [
+    //             area[0].times_aprobados,
+    //             area[0].times_rechazados,
+    //             area[0].times_pendientes,
+    //             area[0].times_papelera
+    //         ]
+    //         graf_general.update();
+    //     }
+    // }); --}}
 
-    <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
 
-    <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-
-    <script>
-        const $btnExportar = document.querySelector("#btnExportar"),
-            $tabla = document.querySelector("#proyemp");
-
-        $btnExportar.addEventListener("click", function() {
-            let tableExport = new TableExport($tabla, {
-                exportButtons: false, // No queremos botones
-                filename: "Reporte Colaborador-Tareas", //Nombre del archivo de Excel
-                sheetname: "Horas trabajadas por Tarea", //Título de la hoja
-            });
-            let datos = tableExport.getExportData();
-            // console.log(datos.tblobjetivos.xlsx.data);
-
-            // console.log(datos.tblobjetivos);
-            // console.log(datos.tblobjetivos.xlsx);
-            // console.log(datos.tblobjetivos.xlsx.data);
-            let preferenciasDocumento = datos.proyemp.xlsx;
-            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
-
-        });
-        </script>
-</div> --}}
+{{--</div> --}}

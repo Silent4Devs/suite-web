@@ -10,6 +10,7 @@ use Livewire\WithPagination;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyectoArea;
+use App\Models\TimesheetTarea;
 
 class DashboardProyectos extends Component
 {
@@ -35,7 +36,7 @@ class DashboardProyectos extends Component
     public $apr_id;
     public $proy;
     public $proy_id;
-    public $datos_dash;
+    public $datos_areas;
 
     public function mount()
     {
@@ -70,6 +71,8 @@ class DashboardProyectos extends Component
 
     public function render()
     {
+        $this->datos_areas = collect();
+        $area_individual;
         //Query para obtener los timesheet y filtrarlo
         if($this->estatus === 0){
             $this->proy = TimesheetProyecto::orderBy('proyecto')->get();
@@ -88,33 +91,71 @@ class DashboardProyectos extends Component
         $lista_areas = $this->areas;
 
         $grafico = [];
-        if($this->proy_id != 0){
-            $this->datos_dash = TimesheetHoras::where('proyecto_id', $this->proy_id)->get();
+        if($this->proy_id != 0 ){
+            if($this->area_id === 0){
+                $this->datos_dash = TimesheetProyecto::find($this->proy_id);
 
-            $p = TimesheetProyecto::find($this->proy_id);
-            // dump($this->proy_id,$p);
+                $this->datos_areas= collect();
+                foreach($lista_areas as $ar){
+                    $tareas = TimesheetTarea::with('proyecto', 'horas')->where('proyecto_id', $this->proy_id)->where('area_id', $ar->area->id)->groupBy('id', 'area_id')->get();
+                    // dd($p);
+                    $total_h = 0;
+                    $t = 0;
+                    foreach($tareas as $tarea){
+                        $sumalun = ($tarea->horas)->sum('horas_lunes');
+                        $sumamar = ($tarea->horas)->sum('horas_martes');
+                        $sumamie = ($tarea->horas)->sum('horas_miercoles');
+                        $sumajue = ($tarea->horas)->sum('horas_jueves');
+                        $sumavie = ($tarea->horas)->sum('horas_viernes');
 
-            $sumalun = ($this->datos_dash)->sum('horas_lunes');
-            $sumamar = ($this->datos_dash)->sum('horas_martes');
-            $sumamie = ($this->datos_dash)->sum('horas_miercoles');
-            $sumajue = ($this->datos_dash)->sum('horas_jueves');
-            $sumavie = ($this->datos_dash)->sum('horas_viernes');
+                        $total_h = $total_h + $sumalun + $sumamar + $sumamie + $sumajue + $sumavie;
+                        $t++;
+                    }
 
-            $total_h = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie;
-            array_push($grafico, [
-                'proyecto' => $p->proyecto,
-                'horas_totales' => $total_h,
-            ]);
-            // dump($grafico);
+                    $this->datos_areas->push([
+                        'proyecto' => $this->datos_dash->proyecto,
+                        'area' => $ar->area->area,
+                        'total_horas_area' => $total_h,
+                        'tareas' => $t,
+                    ]);
+
+                }
+                // dd($this->datos_areas);
+                $this->emit('renderAreas', $this->datos_areas);
+            }else{
+                $this->datos_dash = TimesheetProyecto::find($this->proy_id);
+                $area_individual = Area::find($this->area_id);
+
+                $this->datos_areas= collect();
+                    $tareas = TimesheetTarea::with('proyecto', 'horas', 'area')->where('proyecto_id', $this->proy_id)->where('area_id', $this->area_id)->groupBy('id', 'area_id')->get();
+                    // dd($p);
+                    $total_h = 0;
+                    $t = 0;
+                    foreach($tareas as $tarea){
+                        // dd($tarea->area->area);
+                        $sumalun = ($tarea->horas)->sum('horas_lunes');
+                        $sumamar = ($tarea->horas)->sum('horas_martes');
+                        $sumamie = ($tarea->horas)->sum('horas_miercoles');
+                        $sumajue = ($tarea->horas)->sum('horas_jueves');
+                        $sumavie = ($tarea->horas)->sum('horas_viernes');
+
+                        $total_h = $total_h + $sumalun + $sumamar + $sumamie + $sumajue + $sumavie;
+                        $t++;
+                    }
+
+                    $this->datos_areas->push([
+                        'proyecto' => $this->datos_dash->proyecto,
+                        'area' => $area_individual->area,
+                        'total_horas_area' => $total_h,
+                        'tareas' => $t,
+                    ]);
+
+                // dd($this->datos_areas);
+                $this->emit('renderAreas', $this->datos_areas);
+
+            }
         }
-        //else{
-        //     // foreach($lista_areas as $ar){
-        //         $this->datos_dash = TimesheetHoras::with('proyecto')->where('proyecto_id', $this->proy_id)->get();
-        //     // }
-        //     // dd($this->proy_id, $this->area_id, $this->datos_dash);
-
-
-        // }
+        // dd($datos_areas);
         // dd($lista_areas);
 
         return view('livewire.timesheet.dashboard-proyectos', compact('lista_proyectos', 'lista_areas'));
