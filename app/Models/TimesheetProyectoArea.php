@@ -15,4 +15,9 @@ class TimesheetProyectoArea extends Model
         'area_id',
         'proyecto_id',
     ];
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_id', 'id');
+    }
 }
