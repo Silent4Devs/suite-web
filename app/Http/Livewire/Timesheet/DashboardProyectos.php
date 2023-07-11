@@ -26,7 +26,7 @@ class DashboardProyectos extends Component
     public $search;
     // public $times;
     public $areas;
-    public $area_id = 0;
+    public $area_id = 'todas';
     public $estatus;
     public $fecha_inicio;
     public $fecha_fin;

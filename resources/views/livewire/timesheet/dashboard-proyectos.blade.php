@@ -32,16 +32,44 @@
         </select>
         </div>
     </div>
-    <div wire:ignore>
+    <div class="card card-body" style="min-height:330px !important; min-width:1200px;" id="contenedor-principal">
         <canvas id="graf-proyectos-area"></canvas>
+    </div>
+    <div class="row">
+        <div class=" col-lg-6">
+            <div class="card card-body" style="min-height:500px !important; min-width:500px !important;" id="contenedor-areas">
+                <h3>Horas Invertidas en el Proyecto por Área</h3>
+                <canvas id="graf-participacion-areas" width="600" height="600"></canvas>
+            </div>
+        </div>
+        <div class=" col-lg-6">
+            <div class="card card-body" style="min-height:500px !important; min-width:500px !important;" id="contenedor-tareas">
+                <h3>Tareas en el Proyecto por Área</h3>
+                <canvas id="graf-participacion-tareas" width="600" height="600"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
+    function getRandomColor() {
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+        }
 
     document.addEventListener('DOMContentLoaded', function() {
         Livewire.on('renderAreas', (datos_areas) => {
-            console.log(datos_areas);
+            // console.log(datos_areas);
+            document.getElementById('graf-proyectos-area').remove();
+
+            var canvas = document.createElement("canvas");
+            canvas.id = "graf-proyectos-area";
+            document.getElementById("contenedor-principal").appendChild(canvas);
+
             let grafica_proyectos = new Chart(document.getElementById('graf-proyectos-area'), {
                 type: 'horizontalBar',
         data: {
@@ -102,6 +130,104 @@
                 },
             }
         });
+
+        document.getElementById('graf-participacion-areas').remove();
+
+        var donareas = document.createElement("canvas");
+        donareas.id = "graf-participacion-areas";
+        document.getElementById("contenedor-areas").appendChild(donareas);
+
+        let colores = [];
+
+        for (let j = 0; j < datos_areas.length; j++) {
+            colores[j] = getRandomColor();
+        }
+
+        let grafica_areas = new Chart(document.getElementById('graf-participacion-areas'), {
+        type: 'doughnut',
+        data: {
+            labels: datos_areas.map(item => item.area),
+            datasets: [{
+                label: 'Total Horas',
+                data: datos_areas.map(item => item.total_horas_area),
+                backgroundColor: colores,
+            }]
+        },
+        options: {
+            aspectRatio: 1.6,
+        },
+        layout: {
+            padding: {
+                top: 20
+            }
+        },
+        legend: {
+            display: true,
+            position: 'bottom',
+            align: 'start',
+            labels: {
+                fontColor: "black",
+                boxWidth: 30,
+                padding: 10
+            }
+        },
+        plugins: {
+            datalabels: {
+                color: '#fff',
+                display: true,
+                font: {
+                    size: 20
+                }
+                },
+            },
+        });
+
+
+        document.getElementById('graf-participacion-tareas').remove();
+
+        var dontareas = document.createElement("canvas");
+        dontareas.id = "graf-participacion-tareas";
+        document.getElementById("contenedor-tareas").appendChild(dontareas);
+
+        let grafica_tareas = new Chart(document.getElementById('graf-participacion-tareas'), {
+        type: 'doughnut',
+        data: {
+            labels: datos_areas.map(item => item.area),
+            datasets: [{
+                label: 'Total Tareas',
+                data: datos_areas.map(item => item.tareas),
+                backgroundColor: colores,
+            }]
+        },
+        options: {
+            aspectRatio: 1.6,
+        },
+        layout: {
+            padding: {
+                top: 20
+            }
+        },
+        legend: {
+            display: true,
+            position: 'bottom',
+            align: 'start',
+            labels: {
+                fontColor: "black",
+                boxWidth: 30,
+                padding: 10
+            }
+        },
+        plugins: {
+            datalabels: {
+                color: '#fff',
+                display: true,
+                font: {
+                    size: 20
+                }
+                },
+            },
+    });
+
     });
 });
 </script>
