@@ -27,7 +27,8 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - "./infra/postgres/data:/var/lib/postgresql/data"
+      # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
+      - tabantaj-db:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=homestead
       - POSTGRES_PASSWORD=secret
@@ -37,6 +38,22 @@ services:
     networks:
       - tabantajnetwork
     mem_limit: 6g
+
+  pgadmin-tabantaj:
+    depends_on:
+      - postgres-tabantaj
+    image: dpage/pgadmin4:latest
+    ports:
+      - "8050:80"
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - tabantajnetwork
 
   php:
     #uncomment this if you will use only docker compose
