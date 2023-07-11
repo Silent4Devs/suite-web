@@ -45,6 +45,11 @@ class TimesheetTarea extends Model
         return $this->belongsTo(Area::class);
     }
 
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_id', 'id');
+    }
+
     public function horas()
     {
         return $this->hasMany(TimesheetHoras::class, 'tarea_id', 'id');
