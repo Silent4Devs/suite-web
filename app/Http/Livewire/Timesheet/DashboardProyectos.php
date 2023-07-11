@@ -90,9 +90,8 @@ class DashboardProyectos extends Component
 
         $lista_areas = $this->areas;
 
-        $grafico = [];
         if($this->proy_id != 0 ){
-            if($this->area_id === 0){
+            if($this->area_id === 'todas'){
                 $this->datos_dash = TimesheetProyecto::find($this->proy_id);
 
                 $this->datos_areas= collect();
@@ -126,6 +125,12 @@ class DashboardProyectos extends Component
                 $this->datos_dash = TimesheetProyecto::find($this->proy_id);
                 $area_individual = Area::find($this->area_id);
 
+                if(!isset($area_individual->area)){
+                    $area_individual = 'Sin definir';
+                }else{
+                    $area_individual = $area_individual->area;
+                }
+
                 $this->datos_areas= collect();
                     $tareas = TimesheetTarea::with('proyecto', 'horas', 'area')->where('proyecto_id', $this->proy_id)->where('area_id', $this->area_id)->groupBy('id', 'area_id')->get();
                     // dd($p);
@@ -145,7 +150,7 @@ class DashboardProyectos extends Component
 
                     $this->datos_areas->push([
                         'proyecto' => $this->datos_dash->proyecto,
-                        'area' => $area_individual->area,
+                        'area' => $area_individual,
                         'total_horas_area' => $total_h,
                         'tareas' => $t,
                     ]);
