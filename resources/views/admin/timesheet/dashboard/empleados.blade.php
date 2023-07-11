@@ -33,8 +33,8 @@
     </div>
 </div>
 
-<div class="row">
-    <div class=" col-lg-4">
+<div class="row" style="display: flex; justify-content:center">
+    <div class=" col-lg-7">
         <div class="card card-body" style="min-height:330px !important;">
             <h4 class="titulo-grafica d-flex justify-content-between">
                 Participación de empleados
@@ -43,7 +43,10 @@
             <canvas id="graf-participacion-de-empleados" width="400" height="400"></canvas>
         </div>
     </div>
-    <div class=" col-lg-4">
+</div>
+
+<div class="row">
+    <div class=" col-lg-6">
         <div class="card card-body">
             <h4 class="titulo-grafica d-flex justify-content-between">
                 Registros aprobados este mes
@@ -61,7 +64,7 @@
             <canvas id="graf-registros-atrasados" width="400" height="400"></canvas>
         </div>
     </div>
-    <div class=" col-lg-4">
+    <div class=" col-lg-6">
         <div class="card card-body" style="min-height:330px !important;">
             <h4 class="titulo-grafica d-flex justify-content-between">
                 Registros en rechazados
@@ -167,14 +170,33 @@
 </script>
 
 <script>
+    function getRandomColor() {
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    let colores = [];
+
+    for (let k = 0; k < areas_array.length; k++) {
+        colores[k] = getRandomColor();
+    }
+
     new Chart(document.getElementById('graf-participacion-de-empleados'), {
         type: 'doughnut',
         data: {
             labels: areas_array.map(item => item.area),
             datasets: [{
                 label: null,
-                data: areas_array.map(item => item.total_participacion_porcentaje)
+                data: areas_array.map(item => item.total_participacion_porcentaje),
+                backgroundColor: colores,
             }]
+        },
+        options: {
+            aspectRatio: 1,
         },
         layout: {
             padding: {

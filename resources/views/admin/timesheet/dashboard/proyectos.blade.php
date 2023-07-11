@@ -1,4 +1,8 @@
 <div class="row">
+    @livewire('timesheet.dashboard-proyectos')
+</div>
+
+{{-- <div class="row">
     <div class="col-12">
         <div class="card-body card">
             <h5 class="titulo-grafica d-flex justify-content-between">
@@ -228,4 +232,4 @@
             },
         },
     });
-</script>
+</script> --}}
