@@ -72,8 +72,6 @@
 
                         Teléfono*
                     </label>
-                    {{-- <input type="tel" class="browser-default modal-telefono" placeholder="Número" pattern="/^[0-9\s]+$/" name="contacto_telefono_{{$i}}"
-                        required> --}}
                         <select class="form-control"  id="mySelect">
                             <option value="+54">Argentina +54</option>
                             <option value="+591">Bolivia +591</option>
@@ -114,7 +112,7 @@
 
                 <div class="form-group col-md-6">
                     <label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electronico</label>
-                    <input type="email" id="foo" class="form-control"   placeholder="example@example.com" name="correo_contacto"
+                    <input type="email" id="foo" class="form-control" value="{{ old('correo_contacto') }}"   placeholder="example@example.com" name="correo_contacto"
                         required>
 
                     <h6 id="emailV"></h6>
@@ -122,7 +120,7 @@
 
                 <div class="form-group col-md-6">
                     <label class="form-label"><i class="fas fa-mobile-alt iconos-crear"></i> Celular </label>
-                    <input type="" required name="celular_contacto" class="form-control" value="{{ $cliente->celular_contacto }}">
+                    <input  pattern="[0-9]{10}" required name="celular_contacto" class="form-control" value="{{ $cliente->celular_contacto }}">
                 </div>
             </div>
 
