@@ -72,7 +72,7 @@ class ProcesosOctaveController extends Controller
     public function create($matriz)
     {
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $proceso_octave = MatrizOctaveProceso::where('matriz_id', $matriz)->pluck('id_proceso')->toArray();
         $procesos = $procesos->filter(function ($item) use ($proceso_octave) {
@@ -100,7 +100,7 @@ class ProcesosOctaveController extends Controller
     public function edit($procesosOctave, $matriz)
     {
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $activosInfo = ActivoInformacion::get();
         $servicios = MatrizOctaveServicio::get();
         $procesosOctave = MatrizOctaveProceso::find($procesosOctave);

@@ -97,7 +97,7 @@ class TimesheetController extends Controller
             'semanas_adicionales' => $semanasAdicionales,
         ]);
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         foreach ($empleados as $key => $empleado) {
             $empleado->update([
                 'semanas_min_timesheet' => $request->semanas_min_timesheet,

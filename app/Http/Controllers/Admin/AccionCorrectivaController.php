@@ -189,7 +189,7 @@ class AccionCorrectivaController extends Controller
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Tipoactivo::get();
 
@@ -264,7 +264,7 @@ class AccionCorrectivaController extends Controller
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Tipoactivo::get();
 

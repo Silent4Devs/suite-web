@@ -184,7 +184,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $amenazas = Amenaza::get();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
         $responsables = Empleado::alta()->get();
@@ -392,7 +392,7 @@ class MatrizRiesgosController extends Controller
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
@@ -477,7 +477,7 @@ class MatrizRiesgosController extends Controller
         $matriz_heat = MatrizRiesgosSistemaGestion::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgosSistemaGestion::count();
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
@@ -826,7 +826,7 @@ class MatrizRiesgosController extends Controller
         $matrizRiesgo = new MatrizRiesgosSistemaGestion();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
         $activos = SubcategoriaActivo::get();
         $amenazas = Amenaza::get();
@@ -914,7 +914,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $amenazas = Amenaza::get();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
         $responsables = Empleado::alta()->get();
@@ -1083,7 +1083,7 @@ class MatrizRiesgosController extends Controller
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         // $numero_matriz = MatrizRiesgo::count();
         $numero_matriz = MatrizOctave::count();
@@ -1095,8 +1095,8 @@ class MatrizRiesgosController extends Controller
     {
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
-        // $responsables = Empleado::get();
+        $procesos = Proceso::getAll();
+        // $responsables = Empleado::getAll();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
         $duenos = Empleado::alta()->get();
@@ -1115,7 +1115,7 @@ class MatrizRiesgosController extends Controller
     {
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
         $duenos = Empleado::alta()->get();
@@ -1225,7 +1225,7 @@ class MatrizRiesgosController extends Controller
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         // $numero_matriz = MatrizRiesgo::count();
         $numero_matriz = MatrizIso31000::count();
@@ -1237,7 +1237,7 @@ class MatrizRiesgosController extends Controller
     {
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
@@ -1253,7 +1253,7 @@ class MatrizRiesgosController extends Controller
     {
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
@@ -1363,7 +1363,7 @@ class MatrizRiesgosController extends Controller
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
 
@@ -1374,7 +1374,7 @@ class MatrizRiesgosController extends Controller
     {
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
@@ -1389,7 +1389,7 @@ class MatrizRiesgosController extends Controller
     {
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
         $activos = Activo::get();
         $amenazas = Amenaza::get();

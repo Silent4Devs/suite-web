@@ -38,7 +38,7 @@ class UsersController extends Controller
             //     $editGate      = 'user_edit';
             //     $deleteGate    = 'user_delete';
             //     $crudRoutePart = 'users';
-            //     $empleados = Empleado::get();
+            //     $empleados = Empleado::getAll();
             //     return view('partials.datatablesActions', compact(
             //         'viewGate',
             //         'editGate',
@@ -100,7 +100,7 @@ class UsersController extends Controller
         $areas = Area::getAll();
         $puestos = Puesto::get();
         $teams = Team::get();
-        $empleadosNoAsignados = Empleado::get();
+        $empleadosNoAsignados = Empleado::getAll();
         $empleados = $empleadosNoAsignados->filter(function ($item) {
             return !User::where('n_empleado', $item->n_empleado)->exists();
         })->values();

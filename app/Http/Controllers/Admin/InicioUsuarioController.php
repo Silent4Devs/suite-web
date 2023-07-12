@@ -616,7 +616,7 @@ class InicioUsuarioController extends Controller
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 
@@ -683,7 +683,7 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_denuncia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         $sedes = Sede::getAll();
 
@@ -743,7 +743,7 @@ class InicioUsuarioController extends Controller
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         return view('admin.inicioUsuario.formularios.mejoras', compact('areas', 'procesos'));
     }
@@ -787,9 +787,9 @@ class InicioUsuarioController extends Controller
 
         $areas = Area::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::alta()->getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         return view('admin.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
@@ -823,7 +823,7 @@ class InicioUsuarioController extends Controller
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 
@@ -920,7 +920,7 @@ class InicioUsuarioController extends Controller
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 

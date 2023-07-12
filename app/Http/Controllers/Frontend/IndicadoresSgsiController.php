@@ -98,8 +98,8 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $responsables = Empleado::get();
-        $procesos = Proceso::get();
+        $responsables = Empleado::getAll();
+        $procesos = Proceso::getAll();
 
         return view('admin.indicadoresSgsis.create', compact('responsables', 'procesos'));
     }
@@ -113,8 +113,8 @@ class IndicadoresSgsiController extends Controller
 
     public function edit(IndicadoresSgsi $indicadoresSgsi)
     {
-        $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $procesos = Proceso::getAll();
+        $responsables = Empleado::getAll();
 
         return view('admin.indicadoresSgsis.edit', compact('procesos', 'indicadoresSgsi', 'responsables'));
     }

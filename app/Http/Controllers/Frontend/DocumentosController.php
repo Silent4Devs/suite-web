@@ -35,8 +35,8 @@ class DocumentosController extends Controller
     {
         //abort_if(Gate::denies('documentos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
-        $procesos = Proceso::get();
-        $empleados = Empleado::get();
+        $procesos = Proceso::getAll();
+        $empleados = Empleado::getAll();
         $documentoActual = new Documento;
 
         return view('frontend.documentos.create', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));
@@ -165,8 +165,8 @@ class DocumentosController extends Controller
     {
         //abort_if(Gate::denies('documentos_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
-        $procesos = Proceso::get();
-        $empleados = Empleado::get();
+        $procesos = Proceso::getAll();
+        $empleados = Empleado::getAll();
         $documentoActual = $documento;
 
         return view('frontend.documentos.edit', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual'));

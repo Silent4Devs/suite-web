@@ -99,8 +99,8 @@ class MatrizRiesgosController extends Controller
 
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
-        $responsables = Empleado::get();
+        $procesos = Proceso::getAll();
+        $responsables = Empleado::getAll();
         $activos = Activo::get();
         $amenazas = Amenaza::get();
 
@@ -142,10 +142,10 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $amenazas = Amenaza::get();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $responsables = Empleado::get();
+        $responsables = Empleado::getAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
@@ -409,7 +409,7 @@ class MatrizRiesgosController extends Controller
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
 

@@ -149,8 +149,8 @@ class ReportesEmpleados extends Component
             $empleados_list = Empleado::where('estatus', $this->empleados_estatus)->get();
             $this->empleados_list_global = Empleado::where('estatus', $this->empleados_estatus)->get();
         } else {
-            $empleados_list = Empleado::get();
-            $this->empleados_list_global = Empleado::get();
+            $empleados_list = Empleado::getAll();
+            $this->empleados_list_global = Empleado::getAll();
         }
         // $empleados_list = Empleado::where('id', 222)->get();
 
