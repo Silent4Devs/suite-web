@@ -30,6 +30,7 @@
         "nuovo/spreadsheet-reader": "^0.5.11",
         "opcodesio/log-viewer": "^2.4",
         "phpoffice/phpword": "^1.0",
+        "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^4.1",
         "rappasoft/laravel-livewire-tables": "^2.8",
         "renatomarinho/laravel-page-speed": "^2.0",

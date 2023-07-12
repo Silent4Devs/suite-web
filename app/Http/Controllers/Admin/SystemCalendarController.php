@@ -24,7 +24,7 @@ class SystemCalendarController extends Controller
         $empleado = auth()->user()->empleado;
         $usuario = auth()->user();
 
-        $implementaciones = PlanImplementacion::get();
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
 
         if ($implementaciones) {

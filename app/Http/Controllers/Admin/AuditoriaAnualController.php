@@ -73,7 +73,7 @@ class AuditoriaAnualController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
         $auditoriaAnual = AuditoriaAnual::with('documentos_material')->get();
         $documentoAuditoriaAnuals = AuditoriaAnualDocumento::get();

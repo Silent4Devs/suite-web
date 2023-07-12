@@ -81,8 +81,7 @@ class AuditoriaInternaController extends Controller
         }
 
         $controles = Controle::get();
-        $users = User::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.auditoriaInternas.index', compact('controles', 'users', 'users', 'teams'));

@@ -67,7 +67,8 @@ class InicioUsuarioController extends Controller
         // dd($usuarioVinculadoConEmpleado);
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];
-        $implementaciones = PlanImplementacion::get();
+        // Check if the result is already cached
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {
@@ -621,7 +622,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         return view('admin.inicioUsuario.formularios.quejas', compact('areas', 'procesos', 'empleados', 'activos', 'sedes'));
     }
@@ -684,7 +685,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         return view('admin.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
     }
@@ -828,7 +829,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         $subcategorias = SubcategoriaIncidente::get();
 
@@ -925,7 +926,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         return view('admin.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }
@@ -1041,7 +1042,7 @@ class InicioUsuarioController extends Controller
         $usuario = auth()->user();
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];
-        $implementaciones = PlanImplementacion::get();
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {

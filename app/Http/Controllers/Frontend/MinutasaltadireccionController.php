@@ -87,7 +87,7 @@ class MinutasaltadireccionController extends Controller
             return datatables()->of($query)->toJson();
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('frontend.minutasaltadireccions.index', compact('users', 'teams'));

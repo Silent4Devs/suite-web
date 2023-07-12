@@ -56,7 +56,7 @@ class TeamController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
 
         return view('admin.teams.index', compact('users'));
     }
