@@ -243,6 +243,8 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Date' => Jenssegers\Date\Date::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
+
     ],
 
 
