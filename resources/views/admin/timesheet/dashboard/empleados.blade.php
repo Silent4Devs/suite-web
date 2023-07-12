@@ -159,7 +159,7 @@
             plugins: {
                 datalabels: {
                     color: '#fff',
-                    display: true,
+                    display: false,
                     font: {
                         size: 20
                     }
