@@ -45,7 +45,7 @@ services:
       - postgres-tabantaj
     image: dpage/pgadmin4:latest
     ports:
-      - "8050:80"
+      - "5480:80"
     environment:
       - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
       - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
@@ -90,6 +90,7 @@ services:
       - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
     networks:
       - tabantajnetwork
+    mem_limit: 2g
 
   rdadmin-tabantaj:
     image: erikdubbelboer/phpredisadmin:latest
@@ -97,11 +98,11 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - 8060:80
+      - 6360:80
     environment:
       - REDIS_1_HOST=redis-tabantaj # Replace with your Redis container name
       - REDIS_1_PORT=6379 # Replace with your Redis container port
-      - REDIS_1_AUTH=silent11!
+      #- REDIS_1_AUTH=silent11!
     networks:
       - tabantajnetwork
 
