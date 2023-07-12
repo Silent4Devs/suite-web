@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Events\AuditoriaAnualEvent;
 use App\Models\AuditoriaAnual;
+use Illuminate\Support\Facades\Cache;
 
 class AuditoriaAnualObserver
 {
@@ -16,6 +17,7 @@ class AuditoriaAnualObserver
     public function created(AuditoriaAnual $auditoriaAnual)
     {
         event(new AuditoriaAnualEvent($auditoriaAnual, 'create', 'auditoria-anual', 'Auditoria Anual'));
+        $this->forgetCache();
     }
 
     /**
@@ -27,6 +29,7 @@ class AuditoriaAnualObserver
     public function updated(AuditoriaAnual $auditoriaAnual)
     {
         event(new AuditoriaAnualEvent($auditoriaAnual, 'update', 'auditoria-anual', 'Auditoria Anual'));
+        $this->forgetCache();
     }
 
     /**
@@ -38,6 +41,7 @@ class AuditoriaAnualObserver
     public function deleted(AuditoriaAnual $auditoriaAnual)
     {
         event(new AuditoriaAnualEvent($auditoriaAnual, 'delete', 'auditoria-anual', 'Auditoria Anual'));
+        $this->forgetCache();
     }
 
     /**
@@ -48,7 +52,7 @@ class AuditoriaAnualObserver
      */
     public function restored(AuditoriaAnual $auditoriaAnual)
     {
-        //
+        $this->forgetCache();
     }
 
     /**
@@ -59,6 +63,11 @@ class AuditoriaAnualObserver
      */
     public function forceDeleted(AuditoriaAnual $auditoriaAnual)
     {
-        //
+        $this->forgetCache();
+    }
+
+    private function forgetCache()
+    {
+        Cache::forget('auditoriaanual_all');
     }
 }
