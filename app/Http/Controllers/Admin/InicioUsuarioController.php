@@ -167,7 +167,7 @@ class InicioUsuarioController extends Controller
         if ($usuario->empleado) {
             $contador_recursos = Recurso::whereHas('empleados', function ($query) use ($empleado) {
                 $query->where('empleados.id', $empleado->id);
-            })->where('fecha_fin', '>=', $hoy->toDateString())->count();
+            })->where('fecha_fin', '>=', Carbon::now()->toDateString())->count();
         }
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
         $revisiones = [];
@@ -193,8 +193,8 @@ class InicioUsuarioController extends Controller
             if ($last_evaluacion) {
                 $evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
                     $q->where('estatus', Evaluacion::ACTIVE)
-                        ->where('fecha_inicio', '<=', $hoy)
-                        ->where('fecha_fin', '>', $hoy)
+                        ->where('fecha_inicio', '<=', Carbon::now())
+                        ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
                 })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)
                     ->where('evaluado_id', '!=', auth()->user()->empleado->id)
@@ -202,8 +202,8 @@ class InicioUsuarioController extends Controller
                     ->get();
                 $mis_evaluaciones = EvaluadoEvaluador::whereHas('evaluacion', function ($q) use ($last_evaluacion) {
                     $q->where('estatus', Evaluacion::ACTIVE)
-                        ->where('fecha_inicio', '<=', $hoy)
-                        ->where('fecha_fin', '>', $hoy)
+                        ->where('fecha_inicio', '<=', Carbon::now())
+                        ->where('fecha_fin', '>', Carbon::now())
                         ->where('id', $last_evaluacion->id);
                 })->with('empleado_evaluado', 'evaluador')->where('evaluador_id', auth()->user()->empleado->id)
                     ->where('evaluado_id', auth()->user()->empleado->id)
