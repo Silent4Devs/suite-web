@@ -17,11 +17,13 @@ use App\Listeners\TaskRecursosListener;
 use App\Models\AccionCorrectiva;
 use App\Models\AuditoriaAnual;
 use App\Models\IncidentesDeSeguridad;
+use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 use App\Models\Registromejora;
 use App\Observers\AccionCorrectivaObserver;
 use App\Observers\AuditoriaAnualObserver;
 use App\Observers\IncidentesDeSeguridadObserver;
+use App\Observers\PlanImplementacionObserver;
 use App\Observers\RecursosObserver;
 use App\Observers\RegistroMejoraObserver;
 use Illuminate\Auth\Events\Registered;
@@ -72,5 +74,6 @@ class EventServiceProvider extends ServiceProvider
         AccionCorrectiva::observe(AccionCorrectivaObserver::class);
         Registromejora::observe(RegistroMejoraObserver::class);
         Recurso::observe(RecursosObserver::class);
+        PlanImplementacion::observe(PlanImplementacionObserver::class);
     }
 }

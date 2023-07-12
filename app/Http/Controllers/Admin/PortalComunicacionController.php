@@ -32,7 +32,7 @@ class PortalComunicacionController extends Controller
         $nuevos = Cache::remember('portal_nuevos', 3600, function () use ($hoy) {
             return Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         });
-    
+
         $nuevos_contador_circulo = Cache::remember('portal_nuevos_contador_circulo', 3600, function () use ($hoy) {
             return Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
         });

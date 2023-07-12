@@ -50,8 +50,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Cache;
 
 class InicioUsuarioController extends Controller
 {
@@ -70,16 +68,7 @@ class InicioUsuarioController extends Controller
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];
         // Check if the result is already cached
-        $cachedImplementaciones = Cache::get('implementaciones');
-        if ($cachedImplementaciones) {
-            $implementaciones = unserialize($cachedImplementaciones);
-        } else {
-            // Fetch the data using Eloquent
-            $implementaciones = PlanImplementacion::get();
-    
-            // Cache the result for future use
-            Cache::put('implementaciones', serialize($implementaciones), 7200); // Set an expiration time, such as 1 hour
-        }
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {
@@ -1053,7 +1042,7 @@ class InicioUsuarioController extends Controller
         $usuario = auth()->user();
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];
-        $implementaciones = PlanImplementacion::get();
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {

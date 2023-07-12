@@ -43,7 +43,7 @@ class InicioUsuarioController extends Controller
         $usuario = auth()->user();
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];
-        $implementaciones = PlanImplementacion::get();
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {
