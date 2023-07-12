@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class Calendario extends Model
 {
@@ -54,4 +55,12 @@ class Calendario extends Model
     /*
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('calendario_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 }

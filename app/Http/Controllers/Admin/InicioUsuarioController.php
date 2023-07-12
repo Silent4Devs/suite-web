@@ -127,11 +127,11 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        $auditorias_anual = AuditoriaAnual::get();
+        $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = new AuditoriaInterna;
         $empleado = auth()->user()->empleado;
         $recursos = collect();
-        $eventos = Calendario::get();
+        $eventos = Calendario::getAll();
         $oficiales = CalendarioOficial::get();
         $cumples_aniversarios = Empleado::with('area')->alta()->get();
         $mis_quejas = collect();
@@ -1270,12 +1270,13 @@ class InicioUsuarioController extends Controller
         return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
     }
 
-    public function updateVersionIso(Request $request){
+    public function updateVersionIso(Request $request)
+    {
 
-        foreach($request->toArray() as $var){
-            if($var === false){
+        foreach ($request->toArray() as $var) {
+            if ($var === false) {
                 $valor = false;
-            }else{
+            } else {
                 $valor = true;
             }
         }
