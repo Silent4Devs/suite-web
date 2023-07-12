@@ -166,7 +166,7 @@ class EmpleadoController extends Controller
         //abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $sedes = Sede::getAll();
         $experiencias = ExperienciaEmpleados::get();
         $educacions = EducacionEmpleados::get();
@@ -390,7 +390,7 @@ class EmpleadoController extends Controller
         // dd($empleado);
         $empleados = Empleado::get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $area = Area::findOrfail($empleado->area_id);
         $sedes = Sede::getAll();
         $sede = Sede::findOrfail($empleado->sede_id);

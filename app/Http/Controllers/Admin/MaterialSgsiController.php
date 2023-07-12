@@ -20,7 +20,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class MaterialSgsiController extends Controller
 {
-    use MediaUploadingTrait,ObtenerOrganizacion;
+    use MediaUploadingTrait, ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -81,7 +81,7 @@ class MaterialSgsiController extends Controller
             // return datatables()->of($materialSgsi)->toJson();
         }
 
-        $areas = Area::get();
+        $areas = Area::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;

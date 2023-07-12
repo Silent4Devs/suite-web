@@ -188,7 +188,7 @@ class DeskController extends Controller
 
         $sedes = Sede::getAll();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 
@@ -202,7 +202,7 @@ class DeskController extends Controller
     public function updateSeguridad(Request $request, $id_incidente)
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-    //    dd($request->all());
+        //    dd($request->all());
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
         // dd( $incidentesSeguridad);
 
@@ -375,7 +375,7 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $sedes = Sede::getAll();
 
@@ -488,7 +488,7 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'queja')->where('quejas_id', intval($id_quejas))->first();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $sedes = Sede::getAll();
 
@@ -709,7 +709,7 @@ class DeskController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 
@@ -821,7 +821,7 @@ class DeskController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 
@@ -897,7 +897,7 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_clientes_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 
@@ -1019,7 +1019,7 @@ class DeskController extends Controller
 
         $analisis = AnalisisQuejasClientes::where('formulario', '=', 'quejaCliente')->where('quejas_clientes_id', intval($id_quejas))->first();
         // dd($analisis);
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $empleados = Empleado::orderBy('name')->get();
 

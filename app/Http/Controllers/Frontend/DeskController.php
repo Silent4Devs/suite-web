@@ -142,7 +142,7 @@ class DeskController extends Controller
 
         $sedes = Sede::getAll();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 
@@ -166,7 +166,7 @@ class DeskController extends Controller
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
-            'fecha_cierre'=>$request->fecha_cierre,
+            'fecha_cierre' => $request->fecha_cierre,
             'areas_afectados' => $request->areas_afectados,
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
@@ -242,7 +242,7 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $sedes = Sede::getAll();
 
@@ -312,7 +312,7 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'queja')->where('quejas_id', intval($id_quejas))->first();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $sedes = Sede::getAll();
 
@@ -336,7 +336,7 @@ class DeskController extends Controller
             'procesos_quejado' => $request->procesos_quejado,
             'externo_quejado' => $request->externo_quejado,
             'comentarios' => $request->comentarios,
-            'fecha_cierre'=>$request->fecha_cierre,
+            'fecha_cierre' => $request->fecha_cierre,
         ]);
 
         return redirect()->route('desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
@@ -368,7 +368,7 @@ class DeskController extends Controller
             'metodos_b' => $request->metodos_b,
             'ambiente_a' => $request->ambiente_a,
             'ambiente_b' => $request->ambiente_b,
-            'fecha_cierre'=>$request->fecha_cierre,
+            'fecha_cierre' => $request->fecha_cierre,
         ]);
 
         return redirect()->route('desk.quejas-edit', $analisis_seguridad->quejas_id)->with('success', 'Reporte actualizado');
@@ -398,7 +398,7 @@ class DeskController extends Controller
             'area_denunciado' => $request->area_denunciado,
             'tipo' => $request->tipo,
             'estatus' => $request->estatus,
-            'fecha_cierre'=>$request->fecha_cierre,
+            'fecha_cierre' => $request->fecha_cierre,
         ]);
 
         return redirect()->route('desk.index')->with('success', 'Reporte actualizado');
@@ -443,7 +443,7 @@ class DeskController extends Controller
 
         $empleados = Empleado::get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 
@@ -509,7 +509,7 @@ class DeskController extends Controller
 
         $empleados = Empleado::get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 

@@ -32,7 +32,7 @@ class ReportesRegistros extends Component
     public function mount()
     {
         $this->estatus = null;
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
         $this->emp = Empleado::orderBy('name', 'ASC')->get();
     }
 

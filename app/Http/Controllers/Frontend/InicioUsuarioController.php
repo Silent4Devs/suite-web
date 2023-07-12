@@ -459,7 +459,7 @@ class InicioUsuarioController extends Controller
 
     public function quejas()
     {
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 
@@ -582,7 +582,7 @@ class InicioUsuarioController extends Controller
 
     public function mejoras()
     {
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 
@@ -615,7 +615,7 @@ class InicioUsuarioController extends Controller
 
     public function sugerencias()
     {
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $empleados = Empleado::get();
 
@@ -647,7 +647,7 @@ class InicioUsuarioController extends Controller
 
     public function seguridad()
     {
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 
@@ -716,7 +716,7 @@ class InicioUsuarioController extends Controller
 
     public function riesgos()
     {
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 

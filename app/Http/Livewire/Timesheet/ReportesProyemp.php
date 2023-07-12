@@ -39,10 +39,9 @@ class ReportesProyemp extends Component
     public function mount()
     {
         $this->estatus = null;
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
         $this->emp = Empleado::orderBy('name', 'ASC')->get();
         $this->proy = TimesheetProyecto::orderBy('proyecto', 'ASC')->get();
-
     }
 
     public function updatedFechaInicio($value)
@@ -96,7 +95,6 @@ class ReportesProyemp extends Component
     public function updatedProyectoId($value)
     {
         $this->proy_id = $value;
-
     }
 
     // public function updatedAprobadorId($value)
@@ -108,16 +106,16 @@ class ReportesProyemp extends Component
     public function render()
     {
         //Query para obtener los timesheet y filtrarlo
-            $query = TimesheetHoras::with('proyecto', 'timesheet', 'tarea.areaData')
+        $query = TimesheetHoras::with('proyecto', 'timesheet', 'tarea.areaData')
             ->whereHas('timesheet', function ($query) {
-                if ($this->emp_id == 0){
+                if ($this->emp_id == 0) {
                     return $query;
                 } else {
                     $query->where('empleado_id', $this->emp_id);
                 }
             })
             ->whereHas('timesheet', function ($query) {
-                    $query->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia');
+                $query->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia');
             })
             ->whereHas('proyecto', function ($query) {
                 if ($this->proy_id == 0) {

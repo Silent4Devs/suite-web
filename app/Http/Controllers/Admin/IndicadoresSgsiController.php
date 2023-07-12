@@ -121,7 +121,7 @@ class IndicadoresSgsiController extends Controller
         abort_if(Gate::denies('indicadores_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $responsables = Empleado::alta()->get();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $procesos = Proceso::get();
 
         return view('admin.indicadoresSgsis.create', compact('areas', 'responsables', 'procesos'));
@@ -157,7 +157,7 @@ class IndicadoresSgsiController extends Controller
 
         $procesos = Proceso::get();
         $responsables = Empleado::alta()->get();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $procesos = Proceso::get();
         if ($indicadoresSgsi->formula_raw == null) {
             $indicadoresSgsi->update(['formula_raw' => $indicadoresSgsi->formula]);
@@ -273,7 +273,7 @@ class IndicadoresSgsiController extends Controller
 
         $variables = $request->all('variables');
         // dd($variables);
-        if($variables['variables'] == null){
+        if ($variables['variables'] == null) {
 
             $indicadoresSgsi = IndicadoresSgsi::find($id['id']);
 
@@ -299,8 +299,8 @@ class IndicadoresSgsiController extends Controller
             }
 
             return view('admin.indicadoresSgsis.evaluacion')
-            ->with('indicadoresSgsis', $indicadoresSgsis)
-            ->with('variables', $finish_array);
+                ->with('indicadoresSgsis', $indicadoresSgsis)
+                ->with('variables', $finish_array);
         }
 
         return view('admin.indicadoresSgsis.evaluacion')
@@ -317,14 +317,14 @@ class IndicadoresSgsiController extends Controller
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
         return view('admin.indicadoresSgsis.evaluacion')->with('indicadoresSgsis', $indicadoresSgsis)
-        ->with('variables', $variables);
+            ->with('variables', $variables);
     }
 
     public function indicadoresDashboard(Request $request)
     {
         $indicadores = IndicadoresSgsi::with('evaluacion_indicadors')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $porcentajeCumplimiento = DashboardIndicadorSG::first();
 
