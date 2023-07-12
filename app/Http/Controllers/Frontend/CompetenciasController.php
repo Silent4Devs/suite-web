@@ -181,7 +181,7 @@ class CompetenciasController extends Controller
     {
         // dd($request->all());
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.competencia.buscarCV', compact('areas'));
     }

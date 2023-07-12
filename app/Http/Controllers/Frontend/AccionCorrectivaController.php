@@ -145,7 +145,7 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::alta()->with('area')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 
@@ -208,7 +208,7 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::alta()->with('area')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $procesos = Proceso::get();
 

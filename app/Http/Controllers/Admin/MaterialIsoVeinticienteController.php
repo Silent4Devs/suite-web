@@ -72,7 +72,7 @@ class MaterialIsoVeinticienteController extends Controller
             return $table->make(true);
         }
 
-        $areas = Area::get();
+        $areas = Area::getAll();
         $teams = Team::get();
 
         return view('admin.materialIsoVeinticientes.index', compact('areas', 'teams'));

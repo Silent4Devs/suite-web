@@ -98,7 +98,7 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sedes = Sede::getAll();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $procesos = Proceso::get();
         $responsables = Empleado::get();
         $activos = Activo::get();
@@ -140,7 +140,7 @@ class MatrizRiesgosController extends Controller
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $sedes = Sede::getAll();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $amenazas = Amenaza::get();
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
@@ -408,7 +408,7 @@ class MatrizRiesgosController extends Controller
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();

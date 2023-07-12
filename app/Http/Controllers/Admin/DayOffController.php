@@ -83,7 +83,7 @@ class DayOffController extends Controller
     public function create()
     {
         abort_if(Gate::denies('reglas_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $areas = Area::get();
+        $areas = Area::getAll();
         $vacacion = new DayOff();
         $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
 
@@ -128,7 +128,7 @@ class DayOffController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('reglas_dayoff_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $areas = Area::get();
+        $areas = Area::getAll();
         $vacacion = DayOff::with('areas')->find($id);
         if (empty($vacacion)) {
             Flash::error('Days Off´s not found');

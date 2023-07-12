@@ -78,7 +78,7 @@ class ConcientizacionSgiController extends Controller
             return $table->make(true);
         }
 
-        $areas = Area::get();
+        $areas = Area::getAll();
         $teams = Team::get();
 
         return view('admin.concientizacionSgis.index', compact('areas', 'teams'));

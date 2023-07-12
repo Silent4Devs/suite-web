@@ -149,7 +149,7 @@ class ActivosController extends Controller
         $empleados = Empleado::alta()->with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
         $marcas = Marca::get();
 
@@ -236,7 +236,7 @@ class ActivosController extends Controller
 
         $procesos = Proceso::with('macroproceso')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
         $marcas = Marca::get();
 

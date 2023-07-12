@@ -53,7 +53,7 @@ class ReportesProyectos extends Component
 
     public function mount()
     {
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
         $this->organizacion = Organizacion::first();
     }
 
@@ -126,7 +126,7 @@ class ReportesProyectos extends Component
 
         $this->emit('scriptTabla');
 
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
 
         $this->horas_totales_todos_proyectos = 0;
 

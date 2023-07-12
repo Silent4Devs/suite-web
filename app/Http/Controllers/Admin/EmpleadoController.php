@@ -105,7 +105,7 @@ class EmpleadoController extends Controller
         abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $sedes = Sede::getAll();
         $experiencias = ExperienciaEmpleados::get();
         $educacions = EducacionEmpleados::get();
@@ -920,7 +920,7 @@ class EmpleadoController extends Controller
         $empleado = Empleado::find(intval($id));
         $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $area = Area::find($empleado->area_id);
         $sedes = Sede::getAll();
         $sede = Sede::find($empleado->sede_id);

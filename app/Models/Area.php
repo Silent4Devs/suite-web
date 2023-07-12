@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
@@ -14,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use EloquentFilter\Filterable;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Area.
@@ -66,6 +63,14 @@ class Area extends Model
     ];
 
     protected $appends = ['grupo_name', 'foto_ruta'];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('areas_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

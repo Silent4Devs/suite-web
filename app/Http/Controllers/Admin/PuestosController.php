@@ -73,7 +73,7 @@ class PuestosController extends Controller
         }
 
         $teams = Team::get();
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.puestos.index', compact('teams', 'areas'));
     }
@@ -117,7 +117,7 @@ class PuestosController extends Controller
         ';
 
         $lenguajes = (json_decode($json));
-        $areas = Area::get();
+        $areas = Area::getAll();
         $reportas = Empleado::alta()->get();
         $idis = Language::all();
         $competencias = Competencia::all();
@@ -195,7 +195,7 @@ class PuestosController extends Controller
         ';
         // $this->saveOrUpdateSchedule($request, $puesto);
         $lenguajes = (json_decode($json));
-        $areas = Area::get();
+        $areas = Area::getAll();
         $reportas = Empleado::alta()->get();
         $puesto->load(['contactos' => function ($query) {
             $query->with(['puesto' => function ($query) {
@@ -254,7 +254,7 @@ class PuestosController extends Controller
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
         $empleados = Empleado::alta()->get();
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas'));
     }

@@ -32,7 +32,7 @@ class Ev360EvaluadosSelect extends Component
     {
         $grupos_evaluados = GruposEvaluado::get();
         $empleados = Empleado::alta()->get();
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('livewire.ev360-evaluados-select', ['grupos_evaluados' => $grupos_evaluados, 'areas' => $areas, 'empleados' => $empleados]);
     }
