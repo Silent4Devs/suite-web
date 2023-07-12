@@ -38,7 +38,7 @@
             <div id="registro_completo" class="d-none w-100 row" style="margin:0 !important;">
                 <div class="form-group col-md-6">
                     <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> RFC</label>
-                    <input type="" required name="rfc" class="form-control" value="{{ old('rfc') }}">
+                    <input  required name="rfc" pattern="^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$" class="form-control" value="{{ old('rfc') }}">
                 </div>
 
                 <div class="col-md-12 col-sm-12 mt-4">
@@ -72,8 +72,6 @@
 
                         Teléfono*
                     </label>
-                    {{-- <input type="tel" class="browser-default modal-telefono" placeholder="Número" pattern="/^[0-9\s]+$/" name="contacto_telefono_{{$i}}"
-                        required> --}}
                         <select class="form-control"  id="mySelect">
                             <option value="+54">Argentina +54</option>
                             <option value="+591">Bolivia +591</option>
@@ -113,7 +111,7 @@
 
                 <div class="form-group col-md-6">
                     <label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electronico</label>
-                    <input type="email" id="foo" class="form-control"   placeholder="example@example.com" name="correo_contacto"
+                    <input type="email" id="foo" class="form-control"  value="{{ old('correo_contacto') }}"  placeholder="example@example.com" name="correo_contacto"
                         required>
 
                     <h6 id="emailV"></h6>
@@ -121,7 +119,7 @@
 
                 <div class="form-group col-md-6">
                     <label class="form-label"><i class="fas fa-mobile-alt iconos-crear"></i> Celular </label>
-                    <input type="tel" name="celular_contacto" class="form-control" required value="{{ old('celular_contacto') }}">
+                    <input type="tel" name="celular_contacto" pattern="[0-9]{10}" class="form-control" required value="{{ old('celular_contacto') }}">
                 </div>
             </div>
 
@@ -138,9 +136,9 @@
 @section('scripts')
     @parent
     <script>
-         var emailV = document.getElementById('emailV');
-        $(function(){
-       $(document).on('keyup','#foo',function(){
+    var emailV = document.getElementById('emailV');
+    $(function(){
+    $(document).on('keyup','#foo',function(){
     var val = $(this).val().trim(),
         reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if( reg.test(val) == false ){

@@ -5,7 +5,7 @@ use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetProyectoArea;
 use App\Models\Empleado;
-
+use Illuminate\Http\Request;
 use Livewire\Component;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\F;
 
@@ -56,23 +56,27 @@ class TimesheetProyectoEmpleadosComponent extends Component
         ]);
     }
 
-    public function editEmpleado($id)
+    public function editEmpleado($id, Request $request)
     {
-        // dd("Llega al edit", $id,$this->horas_edit, $this->costo_edit);
         if($this->proyecto->tipo === "Externo"){
             $this->validate([
                 'horas_edit' => ['required'],
                 'costo_edit' => ['required'],
             ]);
         }
-        $emp_upd_proyecto = Empleado::find($this->empleado_editado);
+        $empleado_añadido = $request->input('serverMemo')['data'];
+        $id_empleado = $empleado_añadido['empleado_editado'];
+
+        $emp_upd_proyecto = Empleado::find($id_empleado);
         $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
         $empleado_edit_proyecto->update([
             'empleado_id'=> $emp_upd_proyecto->id,
             'area_id' => $emp_upd_proyecto->area_id,
-            'horas_asignadas' => $this->horas_edit,
-            'costo_hora' => $this->costo_edit,
+            'horas_asignadas' => $empleado_añadido['horas_edit'],
+            'costo_hora' => $empleado_añadido['costo_edit'],
         ]);
+
+        //  return redirect('/admin/timesheet/proyecto-empleados/', [$empleado_edit_proyecto->proyecto_id]);
     }
 
     public function empleadoProyectoRemove($id)
