@@ -205,7 +205,7 @@ class SedeController extends Controller
     public function obtenerListaSedes(Sede $sedes)
     {
         abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //$sede = Sede::get();
+        //$sede = Sede::getAll();
         $sede = Sede::paginate(3);
         $organizacions = Organizacion::all();
         $teams = Team::get();

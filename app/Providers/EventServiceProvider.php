@@ -21,6 +21,7 @@ use App\Models\Organizacion;
 use App\Models\PlanImplementacion;
 use App\Models\Recurso;
 use App\Models\Registromejora;
+use App\Models\Sede;
 use App\Observers\AccionCorrectivaObserver;
 use App\Observers\AuditoriaAnualObserver;
 use App\Observers\IncidentesDeSeguridadObserver;
@@ -28,6 +29,7 @@ use App\Observers\OrganizacionObserver;
 use App\Observers\PlanImplementacionObserver;
 use App\Observers\RecursosObserver;
 use App\Observers\RegistroMejoraObserver;
+use App\Observers\SedesObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -79,5 +81,6 @@ class EventServiceProvider extends ServiceProvider
         #Redis
         PlanImplementacion::observe(PlanImplementacionObserver::class);
         Organizacion::observe(OrganizacionObserver::class);
+        Sede::observe(SedesObserver::class);
     }
 }

@@ -622,7 +622,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         return view('admin.inicioUsuario.formularios.quejas', compact('areas', 'procesos', 'empleados', 'activos', 'sedes'));
     }
@@ -685,7 +685,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         return view('admin.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
     }
@@ -829,7 +829,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         $subcategorias = SubcategoriaIncidente::get();
 
@@ -926,7 +926,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         return view('admin.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }
