@@ -136,7 +136,7 @@ class AuditoriaInternaHallazgos extends Component
     public function render()
     {
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         return view('livewire.auditoria-interna-hallazgos', compact('procesos', 'areas'));
     }

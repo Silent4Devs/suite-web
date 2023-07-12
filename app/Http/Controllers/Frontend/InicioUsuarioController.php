@@ -461,11 +461,11 @@ class InicioUsuarioController extends Controller
     {
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         $sedes = Sede::getAll();
 
@@ -526,7 +526,7 @@ class InicioUsuarioController extends Controller
 
     public function denuncias()
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         $sedes = Sede::getAll();
 
@@ -584,7 +584,7 @@ class InicioUsuarioController extends Controller
     {
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         abort_if(Gate::denies('mejoras_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -617,9 +617,9 @@ class InicioUsuarioController extends Controller
     {
         $areas = Area::getAll();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         return view('frontend.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
@@ -649,11 +649,11 @@ class InicioUsuarioController extends Controller
     {
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         $sedes = Sede::getAll();
 
@@ -718,11 +718,11 @@ class InicioUsuarioController extends Controller
     {
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         $sedes = Sede::getAll();
 

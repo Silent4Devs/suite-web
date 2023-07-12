@@ -31,7 +31,7 @@ class ProcesoController extends Controller
     {
         //abort_if(Gate::denies('configuracion_procesos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = Proceso::get();
+            $query = Proceso::getAll();
             $table = DataTables::of($query);
 
             $table->addColumn('actions', '&nbsp;');
@@ -177,7 +177,7 @@ class ProcesoController extends Controller
         }])->get();
 
         $macros_mapa = Macroproceso::get();
-        $procesos_mapa = Proceso::get();
+        $procesos_mapa = Proceso::getAll();
         $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();
 
         return view('frontend.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado'));
@@ -193,12 +193,12 @@ class ProcesoController extends Controller
         // dd($revisiones);
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
         $indicadores = IndicadoresSgsi::get();
-        $riesgos = MatrizRiesgo::with(['analisis_de_riesgo'=>function ($q) {
+        $riesgos = MatrizRiesgo::with(['analisis_de_riesgo' => function ($q) {
             $q->select('id', 'nombre');
         }])->where('id_proceso', $proceso->id)->get();
         $analisis_collect = collect();
         foreach ($riesgos as $riesgo) {
-            $analisis_collect->push(['id'=>$riesgo->analisis_de_riesgo->id, 'nombre'=>$riesgo->analisis_de_riesgo->nombre]);
+            $analisis_collect->push(['id' => $riesgo->analisis_de_riesgo->id, 'nombre' => $riesgo->analisis_de_riesgo->nombre]);
         }
         $analisis_collect = $analisis_collect->unique('id');
         $primer_analisis = [];

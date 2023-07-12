@@ -1571,7 +1571,7 @@ class EmpleadoController extends Controller
     //     $certificados = CertificacionesEmpleados::where('empleado_id', $id)->get();
     //     $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
     //     $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
-    //     $empleado = Empleado::get();
+    //     $empleado = Empleado::getAll();
 
     //     $pdf = PDF::loadView('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'contactos','dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes', 'empleado'))->setOptions(['defaultFont' => 'sans-serif'])->render();;
     //     $dompdf->loadHtml($pdf);

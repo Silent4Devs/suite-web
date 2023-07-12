@@ -13,7 +13,7 @@ class ReportesSemanas extends Component
 
     public function render()
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $timeSheetEmpleados = collect();
         $timeSheetHorasCollection = collect();
 

@@ -122,7 +122,7 @@ class IndicadoresSgsiController extends Controller
 
         $responsables = Empleado::alta()->get();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         return view('admin.indicadoresSgsis.create', compact('areas', 'responsables', 'procesos'));
     }
@@ -155,10 +155,9 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
         $areas = Area::getAll();
-        $procesos = Proceso::get();
         if ($indicadoresSgsi->formula_raw == null) {
             $indicadoresSgsi->update(['formula_raw' => $indicadoresSgsi->formula]);
         }

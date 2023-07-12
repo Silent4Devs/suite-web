@@ -190,7 +190,7 @@ class DeskController extends Controller
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $subcategorias = SubcategoriaIncidente::get();
 
@@ -371,7 +371,7 @@ class DeskController extends Controller
         if (is_null($analisis)) {
             $analisis = collect();
         }
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 
@@ -482,7 +482,7 @@ class DeskController extends Controller
 
         $quejas = Quejas::findOrfail(intval($id_quejas))->load('evidencias_quejas');
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 
@@ -711,7 +711,7 @@ class DeskController extends Controller
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'mejora')->where('mejoras_id', intval($id_mejoras))->first();
 
@@ -823,7 +823,7 @@ class DeskController extends Controller
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'sugerencia')->where('sugerencias_id', intval($id_sugerencias))->first();
 
@@ -899,7 +899,7 @@ class DeskController extends Controller
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 
@@ -1013,7 +1013,7 @@ class DeskController extends Controller
 
         $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos');
         // dd($quejasClientes);
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 

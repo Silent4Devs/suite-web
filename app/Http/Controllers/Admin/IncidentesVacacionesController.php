@@ -75,7 +75,7 @@ class IncidentesVacacionesController extends Controller
     {
         abort_if(Gate::denies('incidentes_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new IncidentesVacaciones();
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
 
         return view('admin.incidentesVacaciones.create', compact('vacacion', 'empleados', 'empleados_seleccionados'));
@@ -113,7 +113,7 @@ class IncidentesVacacionesController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('incidentes_vacaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $vacacion = IncidentesVacaciones::with('empleados')->find($id);
 
         if (empty($vacacion)) {

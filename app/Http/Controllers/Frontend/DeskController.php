@@ -138,13 +138,13 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         $sedes = Sede::getAll();
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $subcategorias = SubcategoriaIncidente::get();
 
@@ -238,7 +238,7 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->where('riesgos_id', intval($id_riesgos))->first();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 
@@ -246,7 +246,7 @@ class DeskController extends Controller
 
         $sedes = Sede::getAll();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('frontend.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
@@ -306,7 +306,7 @@ class DeskController extends Controller
     {
         $quejas = Quejas::findOrfail(intval($id_quejas))->load('evidencias_quejas');
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Activo::get();
 
@@ -316,7 +316,7 @@ class DeskController extends Controller
 
         $sedes = Sede::getAll();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
@@ -382,7 +382,7 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('frontend.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados', 'analisis'));
     }
@@ -441,11 +441,11 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'mejora')->where('mejoras_id', intval($id_mejoras))->first();
 
@@ -507,11 +507,11 @@ class DeskController extends Controller
 
         $activos = Activo::get();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'sugerencia')->where('sugerencias_id', intval($id_sugerencias))->first();
 

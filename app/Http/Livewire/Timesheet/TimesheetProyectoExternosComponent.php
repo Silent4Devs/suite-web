@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Timesheet;
+
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoProveedor;
 use App\Models\Empleado;
@@ -30,7 +31,7 @@ class TimesheetProyectoExternosComponent extends Component
     public function mount($proyecto_id)
     {
         $this->proyecto = TimesheetProyecto::find($proyecto_id);
-        $this->empleados = Empleado::get();
+        $this->empleados = Empleado::getAll();
     }
 
     public function render()
@@ -42,7 +43,7 @@ class TimesheetProyectoExternosComponent extends Component
 
     public function addExterno()
     {
-        if($this->proyecto->tipo === "Externo"){
+        if ($this->proyecto->tipo === "Externo") {
             $this->validate([
                 'horas_tercero' => ['required'],
                 'costo_tercero' => ['required'],
@@ -58,7 +59,7 @@ class TimesheetProyectoExternosComponent extends Component
 
     public function editExterno($id)
     {
-        if($this->proyecto->tipo === "Externo"){
+        if ($this->proyecto->tipo === "Externo") {
             $this->validate([
                 'horas_tercero_edit' => ['required'],
                 'costo_tercero_edit' => ['required'],
@@ -77,5 +78,4 @@ class TimesheetProyectoExternosComponent extends Component
 
         $externo_remov->delete();
     }
-
 }

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Area;
 use App\Models\Sede;
 use App\Models\User;
+use App\Models\Proceso;
 use App\Models\Recurso;
 use App\Models\Calendario;
 use App\Models\Organizacion;
@@ -20,6 +21,7 @@ use App\Models\PlanImplementacion;
 use App\Events\AuditoriaAnualEvent;
 use App\Events\RegistroMejoraEvent;
 use App\Listeners\RecursosListener;
+use App\Observers\ProcesosObserver;
 use App\Observers\RecursosObserver;
 use App\Events\AccionCorrectivaEvent;
 use App\Models\IncidentesDeSeguridad;
@@ -92,5 +94,6 @@ class EventServiceProvider extends ServiceProvider
         Calendario::observe(CalendarioObserver::class);
         AuditoriaAnual::observe(AuditoriaAnualObserver::class);
         Area::observe(AreasObserver::class);
+        Proceso::observe(ProcesosObserver::class);
     }
 }
