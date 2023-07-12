@@ -88,7 +88,7 @@ class IndicadoresSgsiController extends Controller
             return $table->make(true);
         }
 
-        /*$users = User::get();
+        /*$users = User::getAll();
         $teams = Team::get();*/
 
         return view('admin.indicadoresSgsis.index');

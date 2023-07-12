@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class PlanImplementacion extends Model
 {
@@ -45,6 +46,14 @@ class PlanImplementacion extends Model
     // {
     //     return $this->hasMany(PlanImplementacionTask::class, 'plan_implementacion_id', 'id')->with('assigs');
     // }
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('implementaciones', 3600*24, function () {
+            return self::get();
+        });
+    }
 
     public function getRolesAttribute()
     {

@@ -65,7 +65,7 @@ class UserAlertsController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('frontend.userAlerts.index', compact('users', 'teams'));

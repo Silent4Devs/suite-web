@@ -140,7 +140,7 @@ class DeskController extends Controller
 
         $empleados = Empleado::get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         $areas = Area::get();
 
@@ -244,7 +244,7 @@ class DeskController extends Controller
 
         $areas = Area::get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         $empleados = Empleado::get();
 
@@ -314,7 +314,7 @@ class DeskController extends Controller
 
         $areas = Area::get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         $empleados = Empleado::get();
 

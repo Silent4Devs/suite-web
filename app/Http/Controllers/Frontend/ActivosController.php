@@ -122,8 +122,8 @@ class ActivosController extends Controller
 
         $tipoactivos = Tipoactivo::get();
         $tipoactivos = Tipoactivo::get();
-        $users = User::get();
-        $sedes = Sede::get();
+        $users = User::getAll();
+        $sedes = Sede::getAll();
         $teams = Team::get();
 
         return view('admin.activos.index', compact('tipoactivos', 'tipoactivos', 'users', 'sedes', 'teams'));
