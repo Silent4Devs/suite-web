@@ -85,7 +85,7 @@ class PlanBaseActividadesController extends Controller
         $plan_base_actividades = PlanBaseActividade::get();
         $enlaces_ejecutars = EnlacesEjecutar::get();
         $estatus_plan_trabajos = EstatusPlanTrabajo::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.planBaseActividades.index', compact('plan_base_actividades', 'enlaces_ejecutars', 'estatus_plan_trabajos', 'users', 'users', 'teams'));

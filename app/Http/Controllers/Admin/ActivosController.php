@@ -126,7 +126,7 @@ class ActivosController extends Controller
 
         $tipoactivos = Tipoactivo::get();
         $subtipo = SubcategoriaActivo::get();
-        $users = User::get();
+        $users = User::getAll();
         $sedes = Sede::getAll();
         $teams = Team::get();
         $activos_nuevo = Activo::get();

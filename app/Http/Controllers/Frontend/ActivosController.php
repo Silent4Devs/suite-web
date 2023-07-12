@@ -122,7 +122,7 @@ class ActivosController extends Controller
 
         $tipoactivos = Tipoactivo::get();
         $tipoactivos = Tipoactivo::get();
-        $users = User::get();
+        $users = User::getAll();
         $sedes = Sede::getAll();
         $teams = Team::get();
 
