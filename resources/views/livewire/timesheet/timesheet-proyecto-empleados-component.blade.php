@@ -97,7 +97,7 @@
     </div>
 
         @foreach($proyecto_empleados as $proyect_empleado)
-        <div class="modal fade" id="modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}" tabindex="-1" role="dialog"
+        <div class="modal fade modalclose" id="modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -129,11 +129,11 @@
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                                        <input wire:model="horas_edit" name="" id="" type="number" min="1" class="form-control">
+                                        <input wire:model.defer="horas_edit" required name="" id="" type="number" min="1" class="form-control">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                                        <input wire:model="costo_edit" name="" id="" type="number" min="1" class="form-control">
+                                        <input wire:model.defer="costo_edit" required name="" id="" type="number" min="1" class="form-control">
                                     </div>
                                     <div class="mt-4 d-flex justify-content-between">
                                         <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
@@ -142,7 +142,7 @@
                                             </button>
                                         </div>
                                         <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
-                                            <button class="btn btn-success">Editar</button>
+                                            <button class="btn btn-success"  type="submit">Editar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -189,6 +189,13 @@
 
     @section('scripts')
     @parent
+    {{-- <script type="text/javascript">
+        function close() {
+      $(function () {
+      $('.modalclose').modal(toggle)
+    })
+        }
+    </script> --}}
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', () => {
 
