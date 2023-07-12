@@ -181,7 +181,7 @@ class MatrizRiesgosController extends Controller
             $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
         }
         // dd($matrizRiesgo->version_historico, $controles);
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $amenazas = Amenaza::get();
         $procesos = Proceso::get();
@@ -390,7 +390,7 @@ class MatrizRiesgosController extends Controller
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
@@ -475,7 +475,7 @@ class MatrizRiesgosController extends Controller
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgosSistemaGestion::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
@@ -824,7 +824,7 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('analisis_de_riesgo_integral_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $matrizRiesgo = new MatrizRiesgosSistemaGestion();
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $responsables = Empleado::alta()->get();
@@ -911,7 +911,7 @@ class MatrizRiesgosController extends Controller
             $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
         }
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $amenazas = Amenaza::get();
         $procesos = Proceso::get();
@@ -1081,7 +1081,7 @@ class MatrizRiesgosController extends Controller
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
@@ -1093,7 +1093,7 @@ class MatrizRiesgosController extends Controller
 
     public function octave(Request $request)
     {
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         // $responsables = Empleado::get();
@@ -1113,7 +1113,7 @@ class MatrizRiesgosController extends Controller
 
     public function octaveEdit(Request $request, $id)
     {
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $activos = Activo::get();
@@ -1223,7 +1223,7 @@ class MatrizRiesgosController extends Controller
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
@@ -1235,7 +1235,7 @@ class MatrizRiesgosController extends Controller
 
     public function ISO31000Create(Request $request)
     {
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $responsables = Empleado::alta()->get();
@@ -1251,7 +1251,7 @@ class MatrizRiesgosController extends Controller
 
     public function ISO31000Edit(Request $request, $id)
     {
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $responsables = Empleado::alta()->get();
@@ -1361,7 +1361,7 @@ class MatrizRiesgosController extends Controller
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $numero_sedes = Sede::count();
@@ -1372,7 +1372,7 @@ class MatrizRiesgosController extends Controller
 
     public function NISTCreate(Request $request)
     {
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $responsables = Empleado::alta()->get();
@@ -1387,7 +1387,7 @@ class MatrizRiesgosController extends Controller
 
     public function NISTEdit(Request $request, $id)
     {
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $procesos = Proceso::get();
         $responsables = Empleado::alta()->get();

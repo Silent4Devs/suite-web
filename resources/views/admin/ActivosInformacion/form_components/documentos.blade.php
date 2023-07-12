@@ -83,8 +83,8 @@
             @php
                 use App\Models\Organizacion;
                 use App\Models\EvidenciasDocumentosEmpleados;
-                
-                $organizacion = Organizacion::select('id', 'logotipo')->first();
+
+                $organizacion = Organizacion::getLogo();
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {

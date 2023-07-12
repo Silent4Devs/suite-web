@@ -23,7 +23,7 @@ class ImplementacionController extends Controller
         $path_asset = asset($gantt_path);
         $gant_readed = end($archivos_gantt);
         $planbase = PlanBaseActividade::with('actividad_fase')->get();
-        $responsable = User::get();
+        $responsable = User::getAll();
         $responsablenom = User::select('name')->where('id', '=', '3');
         //dd($planbase, $responsable, $responsablenom);
         return view('admin.implementacions.index', compact('planbase', 'responsable', 'fases', 'archivos_gantt', 'path_asset', 'gant_readed'))

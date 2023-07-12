@@ -98,7 +98,7 @@ class TratamientoRiesgosController extends Controller
         }
 
         $controles = DeclaracionAplicabilidad::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
