@@ -119,7 +119,7 @@ class MatrizRiesgosController extends Controller
             $version_historico = "false";
         }
 
-        $sedes = Sede::select('id', 'sede')->get();
+        $sedes = Sede::getAll(['id', 'sede']);
         //$areas = Area::getAll();
         $procesos = Proceso::select('id', 'codigo', 'nombre')->get();
         $responsables = Empleado::select('id', 'name', 'area_id', 'puesto_id')->alta()->get();

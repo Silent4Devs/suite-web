@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TimesheetTarea extends Model
 {
@@ -21,6 +22,14 @@ class TimesheetTarea extends Model
         'area_id',
         'todos',
     ];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('timesheettarea_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function proyecto()
     {

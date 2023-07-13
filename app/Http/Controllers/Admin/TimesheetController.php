@@ -116,7 +116,7 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $proyectos = TimesheetProyecto::getAll();
-        // $tareas = TimesheetTarea::get();
+        // $tareas = TimesheetTarea::getAll();
 
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
 
@@ -147,7 +147,7 @@ class TimesheetController extends Controller
         }
         $proyectos = $proyectos_array->unique();
 
-        $tareas = TimesheetTarea::get();
+        $tareas = TimesheetTarea::getAll();
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::first();
@@ -341,7 +341,7 @@ class TimesheetController extends Controller
         }
         $proyectos = $proyectos_array->unique();
 
-        $tareas = TimesheetTarea::get();
+        $tareas = TimesheetTarea::getAll();
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::first();
@@ -532,7 +532,7 @@ class TimesheetController extends Controller
 
     public function proyectos()
     {
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
 
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {
@@ -548,7 +548,7 @@ class TimesheetController extends Controller
 
     public function createProyectos()
     {
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $tipos = TimesheetProyecto::TIPOS;
@@ -943,11 +943,11 @@ class TimesheetController extends Controller
 
     public function reportes()
     {
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
 
         $proyectos = TimesheetProyecto::getAll();
 
-        $tareas = TimesheetTarea::get();
+        $tareas = TimesheetTarea::getAll();
 
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {
@@ -1032,7 +1032,7 @@ class TimesheetController extends Controller
     public function editProyectos($id)
     {
         $proyecto = TimesheetProyecto::find($id);
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
         $areas = Area::getAll();
         $sedes = Sede::getAll();
         $tipos = TimesheetProyecto::TIPOS;

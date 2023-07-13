@@ -905,7 +905,7 @@ class DeskController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
 
         $proyectos = TimesheetProyecto::getAll();
 
@@ -1023,7 +1023,7 @@ class DeskController extends Controller
 
         $empleados = Empleado::orderBy('name')->get();
 
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
 
         $proyectos = TimesheetProyecto::getAll();
 

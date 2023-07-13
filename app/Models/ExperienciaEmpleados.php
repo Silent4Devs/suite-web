@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Rennokki\QueryCache\Traits\QueryCacheable;
@@ -39,6 +40,14 @@ class ExperienciaEmpleados extends Model
         'trabactualmente',
 
     ];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('experienciaempleados_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function empleado_experiencia()
     {
