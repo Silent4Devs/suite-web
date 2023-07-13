@@ -47,7 +47,7 @@ class TablaProyectosTimesheet extends Component
 
         $this->emit('cerrarModal');
 
-        $this->sedes = Sede::get();
+        $this->sedes = Sede::getAll();
 
         $this->areas = Area::get();
 

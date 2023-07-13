@@ -25,7 +25,7 @@
     <div class="caja_form">
         @php
             use App\Models\Organizacion;
-            $organizacion = Organizacion::select('id', 'logotipo')->first();
+            $organizacion = Organizacion::getLogo();
             if (!is_null($organizacion)) {
                 $logotipo = $organizacion->logotipo;
             } else {

@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 // use App\Models\Schedule;
@@ -74,6 +75,14 @@ class Organizacion extends Model
         'semanas_min_timesheet',
         'semanas_faltantes',
     ];
+
+    #Redis methods
+    public static function getLogo()
+    {
+        return Cache::remember('getLogo_organizacion', 3600*24, function () {
+            return self::select('id', 'logotipo')->first();
+        });
+    }
 
     public function getLogotipoAttribute($value)
     {

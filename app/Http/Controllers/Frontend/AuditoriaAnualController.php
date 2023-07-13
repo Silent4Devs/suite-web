@@ -71,7 +71,7 @@ class AuditoriaAnualController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.auditoriaAnuals.index', compact('users', 'teams'));

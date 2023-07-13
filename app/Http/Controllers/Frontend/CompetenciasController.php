@@ -76,7 +76,7 @@ class CompetenciasController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.competencia.index', compact('users', 'teams'));

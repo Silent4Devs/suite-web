@@ -91,7 +91,7 @@ class TratamientoRiesgosController extends Controller
         }
 
         $controles = Controle::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.tratamientoRiesgos.index', compact('controles', 'users', 'teams'));

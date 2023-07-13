@@ -43,7 +43,7 @@ class InicioUsuarioController extends Controller
         $usuario = auth()->user();
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];
-        $implementaciones = PlanImplementacion::get();
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {
@@ -467,7 +467,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         abort_if(Gate::denies('quejas_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -528,7 +528,7 @@ class InicioUsuarioController extends Controller
     {
         $empleados = Empleado::get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         abort_if(Gate::denies('denuncias_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -655,7 +655,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         $subcategorias = SubcategoriaIncidente::get();
 
@@ -724,7 +724,7 @@ class InicioUsuarioController extends Controller
 
         $empleados = Empleado::get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         abort_if(Gate::denies('riesgos_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

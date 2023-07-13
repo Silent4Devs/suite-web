@@ -51,7 +51,7 @@ class SystemCalendarController extends Controller
     public function index()
     {
         abort_if(Gate::denies('agenda_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $implementaciones = PlanImplementacion::get();
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
 
         if ($implementaciones) {

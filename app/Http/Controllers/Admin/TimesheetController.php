@@ -547,7 +547,7 @@ class TimesheetController extends Controller
     public function createProyectos()
     {
         $clientes = TimesheetCliente::get();
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $areas = Area::get();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
@@ -1032,7 +1032,7 @@ class TimesheetController extends Controller
         $proyecto = TimesheetProyecto::find($id);
         $clientes = TimesheetCliente::get();
         $areas = Area::get();
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
 
