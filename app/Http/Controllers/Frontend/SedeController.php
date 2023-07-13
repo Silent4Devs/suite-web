@@ -204,7 +204,7 @@ class SedeController extends Controller
         //abort_if(Gate::denies('organizacion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //$sede = Sede::getAll();
         $sede = Sede::paginate(3);
-        $organizacions = Organizacion::get();
+        $organizacions = Organizacion::getAll();
         $teams = Team::get();
         $numero_sedes = Sede::count();
 
