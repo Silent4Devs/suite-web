@@ -72,21 +72,7 @@
 
                         Teléfono*
                     </label>
-                        <select class="form-control"  id="mySelect">
-                            <option value="+54">Argentina +54</option>
-                            <option value="+591">Bolivia +591</option>
-                            <option value="+55">Brasil +55</option>
-                            <option value="+56">Chile +56</option>
-                            <option value="+593">Ecuador +593</option>
-                            <option value="+502">Guatemala +502</option>
-                            <option value="+52">México +52</option>
-                            <option value="+507">Panamá +507</option>
-                            <option value="+51">Perú +51</option>
-                            <option value="+598">Uruguay +598</option>
-                            <option value="+58">Venezuela +58</option>
-                          </select>
-
-                          <input id="phone" required value="+" type="text" class="form-control" name="telefono" pattern="\x2b[0-9]+" size="20" placeholder="+54976284353">
+                    <input id="phone" type="text" name="telefono" value="{{ $cliente->telefono }}" class="form-control" pattern="\x2b[0-9]+" size="20" placeholder="+54976284353" required>
                 </div>
 
                 <div class="form-group col-md-4">
@@ -112,7 +98,7 @@
 
                 <div class="form-group col-md-6">
                     <label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electronico</label>
-                    <input type="email" id="foo" class="form-control" value="{{ old('correo_contacto') }}"   placeholder="example@example.com" name="correo_contacto"
+                    <input type="email" id="foo" class="form-control"  value="{{ $cliente->correo_contacto }}"   placeholder="example@example.com" name="correo_contacto"
                         required>
 
                     <h6 id="emailV"></h6>
@@ -151,14 +137,6 @@
    }
  });
 });
-       $(function() {
-         $(document).on('change', '#mySelect', function() {
-           $("#phone").focus();
-           var value = $(this).val();
-           $('#phone').val(value);
-
-         });
-       });
    </script>
     <script type="text/javascript">
         $('#btn_registro_completo').click(function(){
