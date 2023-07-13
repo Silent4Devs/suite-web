@@ -73,7 +73,7 @@ class SedeController extends Controller
             return $table->make(true);
         }
 
-        $organizacions = Organizacion::all();
+        $organizacions = Organizacion::getAll();
         //$org = $organizacions->organizacion;
         //dd($organizacions->organizacion, $organizacions);
         $teams = Team::get();

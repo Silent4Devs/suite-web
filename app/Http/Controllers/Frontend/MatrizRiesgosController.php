@@ -105,7 +105,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
 
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
 
         return view('frontend.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
@@ -134,7 +134,7 @@ class MatrizRiesgosController extends Controller
 
     public function edit(MatrizRiesgo $matrizRiesgo)
     {
-        $organizacions = Organizacion::all();
+        $organizacions = Organizacion::getAll();
         $teams = Team::get();
         $activos = Activo::getAll();
         $tipoactivos = Tipoactivo::get();
@@ -402,7 +402,7 @@ class MatrizRiesgosController extends Controller
             return $table->make(true);
         }
 
-        $organizacions = Organizacion::all();
+        $organizacions = Organizacion::getAll();
         $teams = Team::get();
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();

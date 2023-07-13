@@ -68,10 +68,10 @@ class Proceso extends Model
     }
 
     #Redis methods
-    public static function getAll()
+    public static function getAll($columns = ['id', 'codigo', 'nombre'])
     {
-        return Cache::remember('procesos_all', 3600 * 24, function () {
-            return self::get();
+        return Cache::remember('procesos_all', 3600 * 24, function () use ($columns) {
+            return self::select($columns)->get();
         });
     }
 
