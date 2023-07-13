@@ -1021,29 +1021,7 @@
             background-color: white !important;
         }
     </style>
-    <style>
-        #preloading {
-            position: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            opacity: 0.8;
-            background-color: #fff;
-            z-index: 990000;
-        }
 
-        #preloading-image {
-            position: absolute;
-            z-index: 100;
-        }
-    </style>
-    <div id="preloading">
-        <img id="preloading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
-            alt="Loading..." />
-    </div>
     @yield('styles')
     @livewireStyles
 </head>
@@ -1423,11 +1401,6 @@
         @else
             window.NotificationUser = 1
         @endif
-    </script>
-    <script>
-        $(window).on('load', function() {
-            $('#preloading').hide();
-        })
     </script>
     {{-- Librerías para visualizar en campo el dolar --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
