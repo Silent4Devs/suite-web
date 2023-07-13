@@ -98,14 +98,14 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sedes = Sede::getAll();
-        $areas = Area::get();
-        $procesos = Proceso::get();
-        $responsables = Empleado::get();
-        $activos = Activo::get();
+        $areas = Area::getAll();
+        $procesos = Proceso::getAll();
+        $responsables = Empleado::getAll();
+        $activos = Activo::getAll();
         $amenazas = Amenaza::get();
 
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
 
         return view('frontend.matrizRiesgos.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', \request()->idAnalisis);
     }
@@ -134,18 +134,18 @@ class MatrizRiesgosController extends Controller
 
     public function edit(MatrizRiesgo $matrizRiesgo)
     {
-        $organizacions = Organizacion::all();
+        $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $activos = Activo::get();
+        $activos = Activo::getAll();
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $sedes = Sede::getAll();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $amenazas = Amenaza::get();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $responsables = Empleado::get();
+        $responsables = Empleado::getAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
@@ -402,14 +402,14 @@ class MatrizRiesgosController extends Controller
             return $table->make(true);
         }
 
-        $organizacions = Organizacion::all();
+        $organizacions = Organizacion::getAll();
         $teams = Team::get();
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
-        $areas = Area::get();
-        $procesos = Proceso::get();
+        $areas = Area::getAll();
+        $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
 

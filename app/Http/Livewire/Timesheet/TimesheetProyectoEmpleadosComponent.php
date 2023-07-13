@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Timesheet;
+
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetProyectoArea;
@@ -28,7 +29,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $this->proyecto = TimesheetProyecto::find($proyecto_id);
         $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $proyecto_id)->get();
-        $this->empleados = Empleado::get();
+        $this->empleados = Empleado::getAll();
     }
 
     public function render()
@@ -41,7 +42,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function addEmpleado()
     {
         $empleado_add_proyecto = Empleado::find($this->empleado_añadido);
-        if($this->proyecto->tipo === "Externo"){
+        if ($this->proyecto->tipo === "Externo") {
             $this->validate([
                 'horas_asignadas' => ['required'],
                 'costo_hora' => ['required'],
@@ -49,7 +50,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
         }
         $time_proyect_empleado = TimesheetProyectoEmpleado::create([
             'proyecto_id' => $this->proyecto->id,
-            'empleado_id'=> $empleado_add_proyecto->id,
+            'empleado_id' => $empleado_add_proyecto->id,
             'area_id' => $empleado_add_proyecto->area_id,
             'horas_asignadas' => $this->horas_asignadas,
             'costo_hora' => $this->costo_hora,
@@ -58,7 +59,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function editEmpleado($id, Request $request)
     {
-        if($this->proyecto->tipo === "Externo"){
+        if ($this->proyecto->tipo === "Externo") {
             $this->validate([
                 'horas_edit' => ['required'],
                 'costo_edit' => ['required'],
@@ -70,7 +71,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $emp_upd_proyecto = Empleado::find($id_empleado);
         $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
         $empleado_edit_proyecto->update([
-            'empleado_id'=> $emp_upd_proyecto->id,
+            'empleado_id' => $emp_upd_proyecto->id,
             'area_id' => $emp_upd_proyecto->area_id,
             'horas_asignadas' => $empleado_añadido['horas_edit'],
             'costo_hora' => $empleado_añadido['costo_edit'],

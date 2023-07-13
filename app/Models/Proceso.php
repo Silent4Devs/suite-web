@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Proceso.
@@ -64,6 +65,14 @@ class Proceso extends Model
         } else {
             return '#FF0000';
         }
+    }
+
+    #Redis methods
+    public static function getAll($columns = ['id', 'codigo', 'nombre'])
+    {
+        return Cache::remember('procesos_all', 3600 * 24, function () use ($columns) {
+            return self::select($columns)->get();
+        });
     }
 
     public function getProcesoOctaveRiesgoAttribute()

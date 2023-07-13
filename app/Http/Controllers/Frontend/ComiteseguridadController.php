@@ -138,7 +138,7 @@ class ComiteseguridadController extends Controller
     {
         $comiteseguridads = Comiteseguridad::get();
 
-        $organizacion = Organizacion::get();
+        $organizacion = Organizacion::getAll();
 
         return view('frontend.comiteseguridads.visualizacion', compact('comiteseguridads', 'organizacion'));
     }

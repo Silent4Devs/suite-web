@@ -97,7 +97,7 @@ class TimesheetController extends Controller
             'semanas_adicionales' => $semanasAdicionales,
         ]);
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         foreach ($empleados as $key => $empleado) {
             $empleado->update([
                 'semanas_min_timesheet' => $request->semanas_min_timesheet,
@@ -129,7 +129,7 @@ class TimesheetController extends Controller
 
         // areas proyectos
         $proyectos_array = collect();
-        $proyectos_totales = TimesheetProyecto::get();
+        $proyectos_totales = TimesheetProyecto::getAll();
         foreach ($proyectos_totales as $key => $proyecto) {
             if ($proyecto->estatus == 'proceso') {
                 foreach ($proyecto->areas as $key => $area) {
@@ -145,7 +145,7 @@ class TimesheetController extends Controller
         }
         $proyectos = $proyectos_array->unique();
 
-        $tareas = TimesheetTarea::get();
+        $tareas = TimesheetTarea::getAll();
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::first();
@@ -323,7 +323,7 @@ class TimesheetController extends Controller
 
         // areas proyectos
         $proyectos_array = collect();
-        $proyectos_totales = TimesheetProyecto::get();
+        $proyectos_totales = TimesheetProyecto::getAll();
         foreach ($proyectos_totales as $key => $proyecto) {
             if ($proyecto->estatus == 'proceso') {
                 foreach ($proyecto->areas as $key => $area) {
@@ -339,7 +339,7 @@ class TimesheetController extends Controller
         }
         $proyectos = $proyectos_array->unique();
 
-        $tareas = TimesheetTarea::get();
+        $tareas = TimesheetTarea::getAll();
         $timesheet = Timesheet::find($id);
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
         $organizacion = Organizacion::first();
@@ -530,7 +530,7 @@ class TimesheetController extends Controller
 
     public function proyectos()
     {
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
 
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {
@@ -546,9 +546,9 @@ class TimesheetController extends Controller
 
     public function createProyectos()
     {
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
         $sedes = Sede::getAll();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
         return view('admin.timesheet.create-proyectos', compact('clientes', 'areas', 'sedes', 'tipos', 'tipo'));
@@ -602,16 +602,16 @@ class TimesheetController extends Controller
     {
         $proyecto = TimesheetProyecto::find($id);
         $areas = TimesheetProyectoArea::where('proyecto_id', $id)
-        ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
-        ->get('areas.area');
+            ->join('areas', 'timesheet_proyectos_areas.area_id', '=', 'areas.id')
+            ->get('areas.area');
 
         $sedes = TimesheetProyecto::where('timesheet_proyectos.id', $id)
-        ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
-        ->get('sedes.sede');
+            ->join('sedes', 'timesheet_proyectos.sede_id', '=', 'sedes.id')
+            ->get('sedes.sede');
 
         $clientes = TimesheetProyecto::where('timesheet_proyectos.id', $id)
-        ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
-        ->get('timesheet_clientes.nombre');
+            ->join('timesheet_clientes', 'timesheet_proyectos.cliente_id', '=', 'timesheet_clientes.id')
+            ->get('timesheet_clientes.nombre');
 
         // dd($proyecto, $areas, $sedes);
 
@@ -934,18 +934,19 @@ class TimesheetController extends Controller
         $areas_array = $this->timesheetService->totalRegisterByAreas();
         $proyectos = $this->timesheetService->getRegistersByProyects();
 
-        return view('admin.timesheet.dashboard',
+        return view(
+            'admin.timesheet.dashboard',
             compact('counters', 'areas_array', 'proyectos')
         );
     }
 
     public function reportes()
     {
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
 
-        $proyectos = TimesheetProyecto::get();
+        $proyectos = TimesheetProyecto::getAll();
 
-        $tareas = TimesheetTarea::get();
+        $tareas = TimesheetTarea::getAll();
 
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {
@@ -1030,8 +1031,8 @@ class TimesheetController extends Controller
     public function editProyectos($id)
     {
         $proyecto = TimesheetProyecto::find($id);
-        $clientes = TimesheetCliente::get();
-        $areas = Area::get();
+        $clientes = TimesheetCliente::getAll();
+        $areas = Area::getAll();
         $sedes = Sede::getAll();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
@@ -1048,27 +1049,24 @@ class TimesheetController extends Controller
         return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes', 'tipos'));
     }
 
-    public function notificacionhorassobrepasadas($id){
+    public function notificacionhorassobrepasadas($id)
+    {
         // dd("Si llega a la funcion");
-        $verificacion_proyectos = TimesheetProyectoEmpleado::
-        where('empleado_id', '=', $id)->
-        with('empleado', 'proyecto')->exists();
+        $verificacion_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
         // dd($emp_proyectos);
-        if($verificacion_proyectos === false){
+        if ($verificacion_proyectos === false) {
             return null;
-        }else{
-            $emp_proyectos = TimesheetProyectoEmpleado::
-            where('empleado_id', '=', $id)->
-            with('empleado', 'proyecto')->get();
+        } else {
+            $emp_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->get();
         }
 
 
-        foreach($emp_proyectos as $ep){
-            $times = TimesheetHoras::where('proyecto_id','=', $ep->proyecto_id)
-            ->where('empleado_id','=', $ep->empleado_id)
-            ->get();
+        foreach ($emp_proyectos as $ep) {
+            $times = TimesheetHoras::where('proyecto_id', '=', $ep->proyecto_id)
+                ->where('empleado_id', '=', $ep->empleado_id)
+                ->get();
 
-            $tot_horas_proyecto=0;
+            $tot_horas_proyecto = 0;
 
             $sumalun = $times->sum('horas_lunes');
             $sumamar = $times->sum('horas_martes');
@@ -1078,16 +1076,16 @@ class TimesheetController extends Controller
 
             $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie;
 
-            if($ep->proyecto->tipo === "Externo"){
-                if($tot_horas_proyecto > $ep->horas_asignadas){
+            if ($ep->proyecto->tipo === "Externo") {
+                if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
 
-                        $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
+                    $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
 
-                        $empleado = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
-                        //Se comentaron los correos a quienes se les enviara al final
-                        // Mail::to(['marco.luna@silent4business.com', 'eugenia.gomez@silent4business.com', $aprobador->email, $empleado->email])
-                        Mail::to('marco.luna@silent4business.com')
+                    $empleado = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
+                    //Se comentaron los correos a quienes se les enviara al final
+                    // Mail::to(['marco.luna@silent4business.com', 'eugenia.gomez@silent4business.com', $aprobador->email, $empleado->email])
+                    Mail::to('marco.luna@silent4business.com')
                         ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
 
                     //     $ep->update([

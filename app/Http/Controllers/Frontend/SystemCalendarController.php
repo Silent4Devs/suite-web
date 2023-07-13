@@ -85,10 +85,10 @@ class SystemCalendarController extends Controller
         // $actividades = $actividades->flatten(1);
 
         $plan_base = PlanBaseActividade::get();
-        $auditorias_anual = AuditoriaAnual::get();
+        $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = AuditoriaInterna::get();
         // dd($auditoria_internas);
-        $recursos = Recurso::get();
+        $recursos = Recurso::getAll();
 
         return view('fontend.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas'));
     }

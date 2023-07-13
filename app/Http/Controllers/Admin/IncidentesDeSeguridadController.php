@@ -77,7 +77,7 @@ class IncidentesDeSeguridadController extends Controller
             return $table->make(true);
         }
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
         $estado_incidentes = EstadoIncidente::get();
         $teams = Team::get();
 

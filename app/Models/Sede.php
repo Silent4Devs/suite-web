@@ -56,10 +56,11 @@ class Sede extends Model
     ];
 
     #Redis methods
-    public static function getAll()
+    public static function getAll($columns = ['id', 'sede'])
     {
-        return Cache::remember('sedes_all', 3600*24, function () {
-            return self::get();
+        #retrieve all data or can pass columns to retrieve
+        return Cache::remember('sedes_all', 3600 * 24, function () use ($columns) {
+            return self::select($columns)->get();
         });
     }
 

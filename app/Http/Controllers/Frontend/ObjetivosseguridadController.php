@@ -87,7 +87,7 @@ class ObjetivosseguridadController extends Controller
     public function create()
     {
         abort_if(Gate::denies('objetivosseguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $responsables = Empleado::get();
+        $responsables = Empleado::getAll();
         $tiposObjetivosSistemas = TiposObjetivosSistema::get();
 
         return view('admin.objetivosseguridads.create', compact('responsables', 'tiposObjetivosSistemas'));
@@ -105,7 +105,7 @@ class ObjetivosseguridadController extends Controller
     {
         abort_if(Gate::denies('objetivosseguridad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $responsables = Empleado::get();
+        $responsables = Empleado::getAll();
 
         return view('admin.objetivosseguridads.edit', compact('objetivosseguridad', 'responsables'));
     }

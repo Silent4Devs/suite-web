@@ -32,19 +32,19 @@ class TimesheetHorasFilas extends Component
 
         // areas proyectos
         $proyectos_array = collect();
-        $proyectos_totales = TimesheetProyecto::get();
+        $proyectos_totales = TimesheetProyecto::getAll();
         $proyectoempleado = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->exists();
-        if($proyectoempleado === true){
+        if ($proyectoempleado === true) {
             foreach ($proyectos_totales as $key => $proyecto) {
                 if ($proyecto->estatus == 'proceso') {
-                    foreach($proyecto->empleados as $key => $emp){
-                        if($emp['id'] == $empleado->id){
+                    foreach ($proyecto->empleados as $key => $emp) {
+                        if ($emp['id'] == $empleado->id) {
                             foreach ($proyecto->areas as $key => $area) {
                                 if (($area['id'] == $empleado->area_id)) {
                                     $proyectos_array->push([
-                                        'id'=>$proyecto->id,
-                                        'identificador'=>$proyecto->identificador,
-                                        'proyecto'=>$proyecto->proyecto,
+                                        'id' => $proyecto->id,
+                                        'identificador' => $proyecto->identificador,
+                                        'proyecto' => $proyecto->proyecto,
                                     ]);
                                 }
                             }
@@ -52,15 +52,15 @@ class TimesheetHorasFilas extends Component
                     }
                 }
             }
-        }else{
+        } else {
             foreach ($proyectos_totales as $key => $proyecto) {
                 if ($proyecto->estatus == 'proceso') {
                     foreach ($proyecto->areas as $key => $area) {
                         if (($area['id'] == $empleado->area_id)) {
                             $proyectos_array->push([
-                                'id'=>$proyecto->id,
-                                'identificador'=>$proyecto->identificador,
-                                'proyecto'=>$proyecto->proyecto,
+                                'id' => $proyecto->id,
+                                'identificador' => $proyecto->identificador,
+                                'proyecto' => $proyecto->proyecto,
                             ]);
                         }
                     }

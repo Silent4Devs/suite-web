@@ -49,6 +49,9 @@
             </div>
         </div>
     </div>
+    <div class="card card-body" style="min-height:330px !important; min-width:1200px;" id="contenedor-empleados">
+        <canvas id="graf-proyectos-empleado"></canvas>
+    </div>
 </div>
 
 <script>
@@ -62,8 +65,10 @@
         }
 
     document.addEventListener('DOMContentLoaded', function() {
-        Livewire.on('renderAreas', (datos_areas) => {
+        Livewire.on('renderAreas', (datos_areas, datos_empleados) => {
             // console.log(datos_areas);
+            // console.log(datos_empleados);
+
             document.getElementById('graf-proyectos-area').remove();
 
             var canvas = document.createElement("canvas");
@@ -88,7 +93,7 @@
                 {
                     type: "horizontalBar",
                     backgroundColor: "#F48C16",
-                    label: "Tareas del Proyecto",
+                    label: "Tareas Realizadas del Proyecto",
                     data: datos_areas.map(item => item.tareas),
                     lineTension: 0,
                     fill: true,
@@ -100,9 +105,31 @@
         },
             options: {
                 scales: {
-                    y: {
+                    yAxes: [{
+                    ticks: {
                         beginAtZero: true
-                    }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Áreas',
+                        fontSize: 15,
+                        fontColor: "#345183"
+                    },
+                    gridLines: {
+                        color: "#ccc"
+                    },
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Horas Trabajadas en el Proyecto',
+                        fontSize: 15,
+                        fontColor: "#345183"
+                    },
+                    gridLines: {
+                        color: "#ccc"
+                    },
+                }]
                 },
                 layout: {
                     padding: {
@@ -226,6 +253,73 @@
                 }
                 },
             },
+    });
+
+    document.getElementById('graf-proyectos-empleado').remove();
+
+    var baremp = document.createElement("canvas");
+    baremp.id = "graf-proyectos-empleado";
+    document.getElementById("contenedor-empleados").appendChild(baremp);
+
+    let grafica_empleados = new Chart(document.getElementById('graf-proyectos-empleado'), {
+        type: 'bar',
+    data: {
+    labels: datos_empleados.map(item => item.empleado),
+    datasets: [{
+            // type: "bar",
+            backgroundColor: "#61CB5C",
+            label: "Horas Trabajadas en Proyecto",
+            data: datos_empleados.map(item => item.horas_proyecto),
+            lineTension: 0,
+            fill: true,
+            options: {
+                indexAxis: 'y',
+            }
+        },
+    ]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Horas',
+                        fontSize: 15,
+                        fontColor: "#345183"
+                    },
+                    gridLines: {
+                        color: "#ccc"
+                    },
+                }],
+        },
+        layout: {
+            padding: {
+                top: 20
+            }
+        },
+        legend: {
+            display: true,
+            position: 'bottom',
+            align: 'start',
+            labels: {
+                fontColor: "black",
+                boxWidth: 20,
+                padding: 10
+            }
+        },
+        plugins: {
+            datalabels: {
+                color: '#fff',
+                display: true,
+                font: {
+                    size: 20
+                }
+            },
+        },
+    }
     });
 
     });

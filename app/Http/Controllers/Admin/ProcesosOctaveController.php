@@ -71,8 +71,8 @@ class ProcesosOctaveController extends Controller
 
     public function create($matriz)
     {
-        $areas = Area::get();
-        $procesos = Proceso::get();
+        $areas = Area::getAll();
+        $procesos = Proceso::getAll();
 
         $proceso_octave = MatrizOctaveProceso::where('matriz_id', $matriz)->pluck('id_proceso')->toArray();
         $procesos = $procesos->filter(function ($item) use ($proceso_octave) {
@@ -94,13 +94,13 @@ class ProcesosOctaveController extends Controller
         $procesosOctave = MatrizOctaveProceso::create($request->all());
         $matriz = $request->matriz_id;
 
-        return redirect()->route('admin.procesos-octave.index', ['matriz'=>$matriz])->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.procesos-octave.index', ['matriz' => $matriz])->with('success', 'Guardado con éxito');
     }
 
     public function edit($procesosOctave, $matriz)
     {
-        $areas = Area::get();
-        $procesos = Proceso::get();
+        $areas = Area::getAll();
+        $procesos = Proceso::getAll();
         $activosInfo = ActivoInformacion::get();
         $servicios = MatrizOctaveServicio::get();
         $procesosOctave = MatrizOctaveProceso::find($procesosOctave);
@@ -124,12 +124,12 @@ class ProcesosOctaveController extends Controller
         $matriz = $request->matriz_id;
         $old_proceso = $this->obtenerRamas($procesosOctave);
         ProcesosOctaveHistoricos::create([
-            'proceso_id'=>$procesosOctave->id,
-            'matriz_id'=>$matriz,
-            'historico'=>$old_proceso,
+            'proceso_id' => $procesosOctave->id,
+            'matriz_id' => $matriz,
+            'historico' => $old_proceso,
         ]);
 
-        return redirect()->route('admin.procesos-octave.index', ['matriz'=>$matriz])->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.procesos-octave.index', ['matriz' => $matriz])->with('success', 'Guardado con éxito');
     }
 
     public function obtenerRamas($proceso)

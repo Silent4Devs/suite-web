@@ -49,7 +49,7 @@ class TablaProyectosTimesheet extends Component
 
         $this->sedes = Sede::getAll();
 
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
 
         $this->clientes = TimesheetCliente::orderBy('nombre')->get();
 

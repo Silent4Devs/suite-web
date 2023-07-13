@@ -91,7 +91,7 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function create()
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -141,7 +141,7 @@ class AnalisisdeRiesgosController extends Controller
      */
     public function edit($id)
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $analisis = AnalisisDeRiesgo::find($id);
 
         return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));

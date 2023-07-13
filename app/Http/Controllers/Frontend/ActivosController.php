@@ -143,7 +143,7 @@ class ActivosController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
         $marcas = Marca::get();
 
@@ -229,7 +229,7 @@ class ActivosController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
         $marcas = Marca::get();
 

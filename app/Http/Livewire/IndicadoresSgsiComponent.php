@@ -62,16 +62,17 @@ class IndicadoresSgsiComponent extends Component
 
         $finish_array = [];
         // dd('Como llega?', $inpvar);
-        if(array_key_exists('variables', $inpvar) === true){
+        if (array_key_exists('variables', $inpvar) === true) {
             foreach ($inpvar['variables'] as $result) {
-                if(strstr($result, '$')){
-                array_push($finish_array, $result);
-            }
-        };
-        }else{
+                if (strstr($result, '$')) {
+                    array_push($finish_array, $result);
+                }
+            };
+        } else {
             foreach ($inpvar as $result) {
                 array_push($finish_array, $result);
-        }}
+            }
+        }
 
         $this->customFields = $finish_array;
 
@@ -87,7 +88,7 @@ class IndicadoresSgsiComponent extends Component
     public function render()
     {
         $responsables = Empleado::alta()->get();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
         $evaluaciones = EvaluacionIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->get();
 
         return view('livewire.indicadores-sgsi-component', [

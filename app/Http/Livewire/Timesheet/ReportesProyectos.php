@@ -53,7 +53,7 @@ class ReportesProyectos extends Component
 
     public function mount()
     {
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
         $this->organizacion = Organizacion::first();
     }
 
@@ -126,7 +126,7 @@ class ReportesProyectos extends Component
 
         $this->emit('scriptTabla');
 
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
 
         $this->horas_totales_todos_proyectos = 0;
 
@@ -220,7 +220,7 @@ class ReportesProyectos extends Component
                 return $item->areas->contains(Area::select('id', 'area')->find($this->area_id));
             });
         } else {
-            $this->proyectos = TimesheetProyecto::get();
+            $this->proyectos = TimesheetProyecto::getAll();
         }
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
