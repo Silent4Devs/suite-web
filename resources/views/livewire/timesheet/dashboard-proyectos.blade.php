@@ -105,9 +105,31 @@
         },
             options: {
                 scales: {
-                    y: {
+                    yAxes: [{
+                    ticks: {
                         beginAtZero: true
-                    }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Áreas',
+                        fontSize: 15,
+                        fontColor: "#345183"
+                    },
+                    gridLines: {
+                        color: "#ccc"
+                    },
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Horas Trabajadas en el Proyecto',
+                        fontSize: 15,
+                        fontColor: "#345183"
+                    },
+                    gridLines: {
+                        color: "#ccc"
+                    },
+                }]
                 },
                 layout: {
                     padding: {
@@ -240,11 +262,11 @@
     document.getElementById("contenedor-empleados").appendChild(baremp);
 
     let grafica_empleados = new Chart(document.getElementById('graf-proyectos-empleado'), {
-        type: 'horizontalBar',
+        type: 'bar',
     data: {
     labels: datos_empleados.map(item => item.empleado),
     datasets: [{
-            type: "horizontalBar",
+            // type: "bar",
             backgroundColor: "#61CB5C",
             label: "Horas Trabajadas en Proyecto",
             data: datos_empleados.map(item => item.horas_proyecto),
@@ -258,9 +280,20 @@
     },
     options: {
         scales: {
-            y: {
-                beginAtZero: true
-            }
+            yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Horas',
+                        fontSize: 15,
+                        fontColor: "#345183"
+                    },
+                    gridLines: {
+                        color: "#ccc"
+                    },
+                }],
         },
         layout: {
             padding: {

@@ -86,40 +86,57 @@ class DashboardProyectos extends Component
 
                 $this->datos_areas= collect();
                 foreach($lista_areas as $ar){
-                    $tareas = TimesheetTarea::with('proyecto', 'horas')
-                    ->where('proyecto_id', $this->proy_id)
-                    ->where('area_id', $ar->area->id)
-                    ->whereHas('horas.timesheet', function ($q) {
-                        $q->where('estatus', 'aprobado');
+                    $timesheet = Timesheet::with('horas')
+                    ->where('estatus', 'aprobado')
+                    ->whereHas('horas', function ($q) {
+                        $q->where('proyecto_id', $this->proy_id);
+                            // ->orWhere('estatus', 'pendiente');
+                      })
+                    ->whereHas('empleado', function ($q) use($ar){
+                        $q->where('area_id', $ar->area->id);
                             // ->orWhere('estatus', 'pendiente');
                       })
                     ->get();
-                    // dd($tareas);
+                    // dd($timesheet);
                     $total_h = 0;
+                    $total_he = 0;
                     $t = 0;
-                    foreach($tareas as $tarea){
-                        // dd($tarea);
-                        foreach($tarea->horas as $key => $timehoras){
-                            // dd($timehoras);
-                            if($timehoras->timesheet->estatus === 'aprobado'){
-                                $sumalun = $timehoras->horas_lunes;
-                                $sumamar = $timehoras->horas_martes;
-                                $sumamie = $timehoras->horas_miercoles;
-                                $sumajue = $timehoras->horas_jueves;
-                                $sumavie = $timehoras->horas_viernes;
-                                $sumasab = $timehoras->horas_sabado;
-                                $sumadom = $timehoras->horas_domingo;
+                    foreach($timesheet as $ts){
+                        $total_h = 0;
+                        foreach($ts->horas as $key => $tsh){
+                                // dd($tsh->proyecto_id, $this->proy_id);
+                            if($tsh->proyecto_id == $this->proy_id){
+                                $sumalun = $tsh->horas_lunes;
+                                $sumamar = $tsh->horas_martes;
+                                $sumamie = $tsh->horas_miercoles;
+                                $sumajue = $tsh->horas_jueves;
+                                $sumavie = $tsh->horas_viernes;
+                                $sumasab = $tsh->horas_sabado;
+                                $sumadom = $tsh->horas_domingo;
 
                                 $total_h = $total_h + $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
                             }
                         }
-                        $t++;
+                        $total_he = $total_he + $total_h;
+                    }
+
+                    $total_h = round($total_h, 2);
+                    $total_he = round($total_he, 2);
+
+                    $tareas = TimesheetTarea::where('proyecto_id', '=', $this->proy_id)->get();
+
+                    foreach($tareas as $tar){
+                        if($tar->todos == true){
+                            $t++;
+                        }elseif($tar->area_id == $ar->area->id){
+                            $t++;
+                        }
                     }
 
                     $this->datos_areas->push([
                         'proyecto' => $this->datos_dash->proyecto,
                         'area' => $ar->area->area,
-                        'total_horas_area' => $total_h,
+                        'total_horas_area' => $total_he,
                         'tareas' => $t,
                     ]);
 
@@ -155,6 +172,9 @@ class DashboardProyectos extends Component
                         $sdom = $emphoras->sum('horas_domingo');
 
                         $total_emp = $total_emp + $slun + $smar + $smie + $sjue + $svie +$ssab + $sdom;
+
+                        $total_emp = round($total_emp, 2);
+
                         $this->datos_empleados->push([
                             'horas_proyecto' => $total_emp,
                             'proyecto' => $this->datos_dash->proyecto,
@@ -176,33 +196,48 @@ class DashboardProyectos extends Component
                 }
 
                 $this->datos_areas= collect();
-                    $tareas = TimesheetTarea::with('proyecto', 'horas', 'area')
-                    ->where('proyecto_id', $this->proy_id)
-                    ->where('area_id', $this->area_id)
+                    $timesheet = Timesheet::with('horas', 'empleado')
+                    ->where('estatus', 'aprobado')
                     ->whereHas('horas.timesheet', function ($q) {
-                        $q->where('estatus', 'aprobado');
+                        $q->where('proyecto_id', $this->proy_id);
+                            // ->orWhere('estatus', 'pendiente');
                       })
-                    ->groupBy('id', 'area_id')->get();
-                    // dd($p);
+                    ->whereHas('empleado', function ($q){
+                        $q->where('area_id', $this->area_id);
+                            // ->orWhere('estatus', 'pendiente');
+                      })
+                    ->get();
+                    // dd($timesheet);
                     $total_h = 0;
                     $t = 0;
-                    foreach($tareas as $tarea){
-                        // dd($tarea->area->area);
-                        foreach($tarea->horas as $key => $timehoras){
-                            // dd($timehoras);
-                            if($timehoras->timesheet->estatus === 'aprobado'){
-                                $sumalun = $timehoras->horas_lunes;
-                                $sumamar = $timehoras->horas_martes;
-                                $sumamie = $timehoras->horas_miercoles;
-                                $sumajue = $timehoras->horas_jueves;
-                                $sumavie = $timehoras->horas_viernes;
-                                $sumasab = $timehoras->horas_sabado;
-                                $sumadom = $timehoras->horas_domingo;
+                    foreach($timesheet as $ts){
+                        foreach($ts->horas as $key => $tsh){
+                            // dd($tsh->proyecto_id, $this->proy_id);
+                            if($tsh->proyecto_id == $this->proy_id){
+                                $sumalun = $tsh->horas_lunes;
+                                $sumamar = $tsh->horas_martes;
+                                $sumamie = $tsh->horas_miercoles;
+                                $sumajue = $tsh->horas_jueves;
+                                $sumavie = $tsh->horas_viernes;
+                                $sumasab = $tsh->horas_sabado;
+                                $sumadom = $tsh->horas_domingo;
 
                                 $total_h = $total_h + $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
                             }
                         }
-                        $t++;
+
+                    }
+
+                    $total_h = round($total_h, 2);
+
+                    $tareas = TimesheetTarea::where('proyecto_id', '=', $this->proy_id)->get();
+
+                    foreach($tareas as $tar){
+                        if($tar->todos == true){
+                            $t++;
+                        }elseif($tar->area_id == $this->area_id){
+                            $t++;
+                        }
                     }
 
                     $this->datos_areas->push([
@@ -246,6 +281,9 @@ class DashboardProyectos extends Component
                         $sdom = $emphoras->sum('horas_domingo');
 
                         $total_emp = $total_emp + $slun + $smar + $smie + $sjue + $svie +$ssab + $sdom;
+
+                        $total_emp = round($total_emp, 2);
+
                         $this->datos_empleados->push([
                             'horas_proyecto' => $total_emp,
                             'proyecto' => $this->datos_dash->proyecto,
