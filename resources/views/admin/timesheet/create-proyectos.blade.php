@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="form-group col-md-2">
                     <label><i class="fas fa-list iconos-crear"></i>ID<sup>*</sup></label>
-                    <input id="identificador_proyect" name="identificador" class="form-control" required>
+                    <input type="text" id="identificador_proyect" name="identificador" class="form-control" maxlength="150" required>
                     @if ($errors->has('identificador'))
                         <div class="invalid-feedback">
                             {{ $errors->first('identificador') }}
@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto<sup>*</sup></label>
-                    <input id="name_proyect" name="proyecto_name" class="form-control" required>
+                    <input type="text" id="name_proyect" name="proyecto_name" class="form-control" maxlength="150" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente<sup>*</sup></label>
