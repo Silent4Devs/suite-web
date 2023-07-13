@@ -463,7 +463,7 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::getAll();
 
@@ -651,7 +651,7 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::getAll();
 
@@ -660,7 +660,6 @@ class InicioUsuarioController extends Controller
         $subcategorias = SubcategoriaIncidente::get();
 
         abort_if(Gate::denies('incidentes_seguridad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $activos = Activo::get();
 
         return view('frontend.inicioUsuario.formularios.seguridad', compact('activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
     }
@@ -720,7 +719,7 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::getAll();
 

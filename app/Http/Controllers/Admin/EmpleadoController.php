@@ -957,7 +957,7 @@ class EmpleadoController extends Controller
 
     public function getListaDocumentos($id_empleado)
     {
-        $lista_docs_model = ListaDocumentoEmpleado::get();
+        $lista_docs_model = ListaDocumentoEmpleado::getAll();
         $lista_docs = collect();
         $documento_versiones = '';
         foreach ($lista_docs_model as $doc) {

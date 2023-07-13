@@ -101,7 +101,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $responsables = Empleado::getAll();
-        $activos = Activo::get();
+        $activos = Activo::getAll();
         $amenazas = Amenaza::get();
 
         $vulnerabilidades = Vulnerabilidad::get();
@@ -136,7 +136,7 @@ class MatrizRiesgosController extends Controller
     {
         $organizacions = Organizacion::all();
         $teams = Team::get();
-        $activos = Activo::get();
+        $activos = Activo::getAll();
         $tipoactivos = Tipoactivo::get();
         $controles = Controle::get();
         $sedes = Sede::getAll();

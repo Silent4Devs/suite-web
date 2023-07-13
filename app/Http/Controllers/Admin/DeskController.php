@@ -182,7 +182,7 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'seguridad')->where('seguridad_id', intval($id_incidente))->first();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
@@ -373,7 +373,7 @@ class DeskController extends Controller
         }
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $areas = Area::getAll();
 
@@ -484,7 +484,7 @@ class DeskController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'queja')->where('quejas_id', intval($id_quejas))->first();
 
@@ -602,7 +602,7 @@ class DeskController extends Controller
 
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
@@ -705,7 +705,7 @@ class DeskController extends Controller
 
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
@@ -817,7 +817,7 @@ class DeskController extends Controller
 
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
@@ -901,13 +901,13 @@ class DeskController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
         $clientes = TimesheetCliente::get();
 
-        $proyectos = TimesheetProyecto::get();
+        $proyectos = TimesheetProyecto::getAll();
 
         return view('admin.desk.clientes.quejasclientes', compact('areas', 'procesos', 'empleados', 'activos', 'clientes', 'proyectos'));
     }
@@ -1015,7 +1015,7 @@ class DeskController extends Controller
         // dd($quejasClientes);
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $analisis = AnalisisQuejasClientes::where('formulario', '=', 'quejaCliente')->where('quejas_clientes_id', intval($id_quejas))->first();
         // dd($analisis);
@@ -1025,7 +1025,7 @@ class DeskController extends Controller
 
         $clientes = TimesheetCliente::get();
 
-        $proyectos = TimesheetProyecto::get();
+        $proyectos = TimesheetProyecto::getAll();
 
         $cierre = EvidenciasQuejasClientesCerrado::where('quejas_clientes_id', '=', $quejasClientes->id)->get();
 

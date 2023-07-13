@@ -220,7 +220,7 @@ class ReportesProyectos extends Component
                 return $item->areas->contains(Area::select('id', 'area')->find($this->area_id));
             });
         } else {
-            $this->proyectos = TimesheetProyecto::get();
+            $this->proyectos = TimesheetProyecto::getAll();
         }
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana

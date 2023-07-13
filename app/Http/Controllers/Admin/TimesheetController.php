@@ -115,7 +115,7 @@ class TimesheetController extends Controller
     public function create()
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $proyectos = TimesheetProyecto::get();
+        // $proyectos = TimesheetProyecto::getAll();
         // $tareas = TimesheetTarea::get();
 
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
@@ -131,7 +131,7 @@ class TimesheetController extends Controller
 
         // areas proyectos
         $proyectos_array = collect();
-        $proyectos_totales = TimesheetProyecto::get();
+        $proyectos_totales = TimesheetProyecto::getAll();
         foreach ($proyectos_totales as $key => $proyecto) {
             if ($proyecto->estatus == 'proceso') {
                 foreach ($proyecto->areas as $key => $area) {
@@ -325,7 +325,7 @@ class TimesheetController extends Controller
 
         // areas proyectos
         $proyectos_array = collect();
-        $proyectos_totales = TimesheetProyecto::get();
+        $proyectos_totales = TimesheetProyecto::getAll();
         foreach ($proyectos_totales as $key => $proyecto) {
             if ($proyecto->estatus == 'proceso') {
                 foreach ($proyecto->areas as $key => $area) {
@@ -945,7 +945,7 @@ class TimesheetController extends Controller
     {
         $clientes = TimesheetCliente::get();
 
-        $proyectos = TimesheetProyecto::get();
+        $proyectos = TimesheetProyecto::getAll();
 
         $tareas = TimesheetTarea::get();
 
