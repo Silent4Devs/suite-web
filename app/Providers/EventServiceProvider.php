@@ -55,6 +55,7 @@ use App\Models\Marca;
 use App\Models\Modelo;
 use App\Models\RH\Competencia;
 use App\Models\RH\Evaluacion;
+use App\Models\RH\TipoObjetivo;
 use App\Models\SubcategoriaActivo;
 use App\Models\Tipoactivo;
 use App\Observers\CompetenciaObserver;
@@ -65,6 +66,7 @@ use App\Observers\MarcasObserver;
 use App\Observers\ModelosObserver;
 use App\Observers\SubCategoriaActivoObserver;
 use App\Observers\TipoActivoObserver;
+use App\Observers\tipoObjetivoObserver;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -133,5 +135,6 @@ class EventServiceProvider extends ServiceProvider
         Evaluacion::observe(EvaluacionObserver::class);
         Competencia::observe(CompetenciaObserver::class);
         SubcategoriaActivo::observe(SubCategoriaActivoObserver::class);
+        TipoObjetivo::observe(tipoObjetivoObserver::class);
     }
 }

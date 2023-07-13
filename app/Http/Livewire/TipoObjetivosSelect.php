@@ -19,7 +19,7 @@ class TipoObjetivosSelect extends Component
 
     public function render()
     {
-        $this->tipos = TipoObjetivo::all();
+        $this->tipos = TipoObjetivo::getAll();
 
         return view('livewire.tipo-objetivos-select', ['tipos' => $this->tipos]);
     }
