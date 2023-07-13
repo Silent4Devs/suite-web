@@ -107,7 +107,7 @@ class EmpleadoController extends Controller
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::getAll();
         $sedes = Sede::getAll();
-        $experiencias = ExperienciaEmpleados::get();
+        $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
@@ -116,7 +116,6 @@ class EmpleadoController extends Controller
         $perfiles = PerfilEmpleado::get();
         $perfiles_seleccionado = null;
         $puestos_seleccionado = null;
-        $puestos = Puesto::all();
         $perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'slug', 'description')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
@@ -924,7 +923,7 @@ class EmpleadoController extends Controller
         $area = Area::find($empleado->area_id);
         $sedes = Sede::getAll();
         $sede = Sede::find($empleado->sede_id);
-        $experiencias = ExperienciaEmpleados::get();
+        $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();

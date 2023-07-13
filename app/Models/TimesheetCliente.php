@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class TimesheetCliente extends Model
 {
@@ -29,6 +30,14 @@ class TimesheetCliente extends Model
         'correo_contacto',
         'celular_contacto',
     ];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('timesheetcliente_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function cliente()
     {

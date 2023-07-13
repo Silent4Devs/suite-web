@@ -104,7 +104,7 @@ class SistemaGestionHeatmap extends Component
 
     public function render()
     {
-        $sedes = Sede::select('id', 'sede')->get();
+        $sedes = Sede::getAll(['id', 'sede']);
         $areas = Area::select('id', 'area')->get();
         $procesos = Proceso::select('id', 'nombre')->get();
 

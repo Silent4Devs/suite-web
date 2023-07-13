@@ -125,7 +125,6 @@ class AccionCorrectivaController extends Controller
 
         $users = User::getAll();
         $puestos = Puesto::get();
-        $puestos = Puesto::get();
         $teams = Team::get();
 
         $total_AC = AccionCorrectiva::get()->count();
@@ -272,7 +271,7 @@ class AccionCorrectivaController extends Controller
 
         $quejasClientes = QuejasCliente::where('accion_correctiva_id', '=', $accionCorrectiva->id)->get();
 
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
 
         $proyectos = TimesheetProyecto::getAll();
 
