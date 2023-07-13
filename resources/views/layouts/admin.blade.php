@@ -50,7 +50,7 @@
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
     <style>
-        #loading {
+        #preloading {
             position: fixed;
             display: flex;
             justify-content: center;
@@ -63,7 +63,7 @@
             z-index: 990000;
         }
 
-        #loading-image {
+        #preloading-image {
             position: absolute;
             z-index: 100;
         }
@@ -1044,13 +1044,13 @@
     @yield('styles')
     @livewireStyles
 </head>
-<div id="loading">
-
-    <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
-        alt="Loading..." />
-</div>
 
 <body class="">
+    <div id="preloading">
+
+        <img id="preloading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
+            alt="Loading..." />
+    </div>
     @php
         use App\Models\Organizacion;
         $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
@@ -1382,11 +1382,6 @@
             <p>Comunicación</p>
         </a>
     </div>
-    <script>
-        $(window).on('load', function() {
-            $('#loading').hide();
-        })
-    </script>
 
     <script>
         function imprimirElemento(elemento) {
@@ -1429,6 +1424,11 @@
         @else
             window.NotificationUser = 1
         @endif
+    </script>
+    <script>
+        $(window).on('load', function() {
+            $('#preloading').hide();
+        })
     </script>
     {{-- Librerías para visualizar en campo el dolar --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
