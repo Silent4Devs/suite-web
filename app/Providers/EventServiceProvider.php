@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\TaskRecursosListener;
 use App\Observers\OrganizacionObserver;
+use App\Models\DeclaracionAplicabilidad;
 use App\Listeners\AuditoriaAnualListener;
 use App\Listeners\RegistroMejoraListener;
 use App\Observers\AuditoriaAnualObserver;
@@ -51,6 +52,7 @@ use App\Observers\PlanImplementacionObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
 use App\Listeners\IncidentesDeSeguridadListener;
 use App\Observers\IncidentesDeSeguridadObserver;
+use App\Observers\DeclaracionAplicabilidadObserver;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -112,5 +114,6 @@ class EventServiceProvider extends ServiceProvider
         TimesheetTarea::observe(TimeSheetTareaObserver::class);
         TimesheetCliente::observe(TimeSheetClienteObserver::class);
         ExperienciaEmpleados::observe(ExperienciaEmpleadosObserver::class);
+        DeclaracionAplicabilidad::observe(DeclaracionAplicabilidadObserver::class);
     }
 }

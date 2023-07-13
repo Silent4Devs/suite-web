@@ -97,7 +97,7 @@ class TratamientoRiesgosController extends Controller
             return $table->make(true);
         }
 
-        $controles = DeclaracionAplicabilidad::get();
+        $controles = DeclaracionAplicabilidad::getAll();
         $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
