@@ -25,7 +25,7 @@ class EV360EvaluacionesController extends Controller
         $empleados = Empleado::all();
 
         if ($request->ajax()) {
-            $evaluaciones = Evaluacion::all();
+            $evaluaciones = Evaluacion::getAll();
 
             return datatables()->of($evaluaciones)->toJson();
         }

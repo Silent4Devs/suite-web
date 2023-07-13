@@ -52,7 +52,7 @@ class ConsultaDeEvaluciones extends Component
         $this->calificaciones_area_competencias = $this->calificaciones['calificaciones_area_competencias'];
         $this->calificaciones_meta_competencias = $this->calificaciones['calificaciones_meta_competencias'];
         $this->competencias_lista_nombre = $this->calificaciones['competencias_lista_nombre'];
-        $evaluaciones = Evaluacion::all();
+        $evaluaciones = Evaluacion::getAll();
         $this->emit('renderCharts');
 
         if ($this->equipo) {

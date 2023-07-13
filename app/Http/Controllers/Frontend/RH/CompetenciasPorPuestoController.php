@@ -50,7 +50,7 @@ class CompetenciasPorPuestoController extends Controller
     public function create($puesto)
     {
         $puesto = Puesto::find(intval($puesto));
-        $competencias = Competencia::all();
+        $competencias = Competencia::getAll();
 
         return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.create', compact('puesto', 'competencias'));
     }

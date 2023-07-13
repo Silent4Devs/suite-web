@@ -169,8 +169,8 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('iso_27001_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $activos = SubcategoriaActivo::get();
-        $tipoactivos = Tipoactivo::get();
+        $activos = SubcategoriaActivo::getAll();
+        $tipoactivos = Tipoactivo::getAll();
         $controlesSeleccionado = [];
         if ($matrizRiesgo->matriz_riesgos_controles_pivots != null) {
             $controlesSeleccionado = $matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray();
@@ -387,7 +387,7 @@ class MatrizRiesgosController extends Controller
 
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $tipoactivos = Tipoactivo::get();
+        $tipoactivos = Tipoactivo::getAll();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
@@ -472,7 +472,7 @@ class MatrizRiesgosController extends Controller
 
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $tipoactivos = Tipoactivo::get();
+        $tipoactivos = Tipoactivo::getAll();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgosSistemaGestion::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
@@ -828,7 +828,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
-        $activos = SubcategoriaActivo::get();
+        $activos = SubcategoriaActivo::getAll();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
 
@@ -898,8 +898,8 @@ class MatrizRiesgosController extends Controller
         $matrizRiesgo = MatrizRiesgosSistemaGestion::with('matriz_riesgos_controles_pivots')->find($id);
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $activos = SubcategoriaActivo::get();
-        $tipoactivos = Tipoactivo::get();
+        $activos = SubcategoriaActivo::getAll();
+        $tipoactivos = Tipoactivo::getAll();
         // $controles = Controle::get();
         $controlesSeleccionado = [];
         if ($matrizRiesgo->matriz_riesgos_controles_pivots != null) {
@@ -1078,7 +1078,7 @@ class MatrizRiesgosController extends Controller
 
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $tipoactivos = Tipoactivo::get();
+        $tipoactivos = Tipoactivo::getAll();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
@@ -1220,7 +1220,7 @@ class MatrizRiesgosController extends Controller
 
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $tipoactivos = Tipoactivo::get();
+        $tipoactivos = Tipoactivo::getAll();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();
@@ -1358,7 +1358,7 @@ class MatrizRiesgosController extends Controller
 
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $tipoactivos = Tipoactivo::get();
+        $tipoactivos = Tipoactivo::getAll();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();

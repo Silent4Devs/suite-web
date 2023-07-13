@@ -65,5 +65,6 @@ class OrganizacionObserver
     private function forgetCache()
     {
         Cache::forget('getLogo_organizacion');
+        Cache::forget('organization_all');
     }
 }

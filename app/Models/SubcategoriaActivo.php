@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Facades\Cache;
 /**
  * Class SubcategoriaActivo.
  *
@@ -31,6 +31,14 @@ class SubcategoriaActivo extends Model
         'subcategoria',
         'categoria_id',
     ];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('SubCategoriaActivo_all', 3600*24, function () {
+            return self::get();
+        });
+    }
 
     public function tipoactivo()
     {
