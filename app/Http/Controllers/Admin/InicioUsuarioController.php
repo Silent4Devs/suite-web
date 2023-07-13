@@ -618,7 +618,7 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
@@ -787,7 +787,7 @@ class InicioUsuarioController extends Controller
 
         $areas = Area::getAll();
 
-        $empleados = Empleado::alta()->getAll();
+        $empleados = Empleado::alta()->get();
 
         $procesos = Proceso::getAll();
 
@@ -825,7 +825,7 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
@@ -834,8 +834,6 @@ class InicioUsuarioController extends Controller
         $subcategorias = SubcategoriaIncidente::get();
 
         $incidentes_seguridad = IncidentesSeguridad::get();
-
-        $activos = Activo::get();
 
         return view('admin.inicioUsuario.formularios.seguridad', compact('incidentes_seguridad', 'activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
     }
@@ -922,7 +920,7 @@ class InicioUsuarioController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
@@ -1003,7 +1001,7 @@ class InicioUsuarioController extends Controller
 
     public function archivoCapacitacion()
     {
-        $recursos = Recurso::get();
+        $recursos = Recurso::getAll();
 
         return view('admin.inicioUsuario.capacitaciones_archivo', compact('recursos'));
     }
@@ -1202,7 +1200,7 @@ class InicioUsuarioController extends Controller
 
         $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->get();
 
-        $lista_docs_model = ListaDocumentoEmpleado::get();
+        $lista_docs_model = ListaDocumentoEmpleado::getAll();
         $lista_docs = collect();
         foreach ($lista_docs_model as $doc) {
             $documentos_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();

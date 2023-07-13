@@ -136,7 +136,7 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'seguridad')->where('seguridad_id', intval($id_incidente))->first();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::getAll();
 
@@ -240,7 +240,7 @@ class DeskController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $areas = Area::getAll();
 
@@ -308,7 +308,7 @@ class DeskController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'queja')->where('quejas_id', intval($id_quejas))->first();
 
@@ -380,7 +380,7 @@ class DeskController extends Controller
 
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::getAll();
 
@@ -439,7 +439,7 @@ class DeskController extends Controller
     {
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::getAll();
 
@@ -505,7 +505,7 @@ class DeskController extends Controller
     {
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::getAll();
 

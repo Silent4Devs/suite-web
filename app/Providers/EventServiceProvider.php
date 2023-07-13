@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Area;
 use App\Models\Sede;
 use App\Models\User;
+use App\Models\Activo;
 use App\Models\Proceso;
 use App\Models\Recurso;
 use App\Models\Calendario;
@@ -17,7 +18,10 @@ use App\Observers\AreasObserver;
 use App\Observers\SedesObserver;
 use App\Observers\UsersObserver;
 use App\Events\TaskRecursosEvent;
+use App\Models\TimesheetProyecto;
 use App\Models\PlanImplementacion;
+use App\Observers\ActivosObserver;
+use App\Observers\RecursoObserver;
 use App\Events\AuditoriaAnualEvent;
 use App\Events\RegistroMejoraEvent;
 use App\Listeners\RecursosListener;
@@ -37,6 +41,7 @@ use App\Observers\RegistroMejoraObserver;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Listeners\AccionCorrectivaListener;
 use App\Observers\AccionCorrectivaObserver;
+use App\Observers\TimeSheetProyectoObserver;
 use App\Observers\PlanImplementacionObserver;
 use App\Listeners\IncidentesDeSeguridadListener;
 use App\Observers\IncidentesDeSeguridadObserver;
@@ -95,5 +100,8 @@ class EventServiceProvider extends ServiceProvider
         AuditoriaAnual::observe(AuditoriaAnualObserver::class);
         Area::observe(AreasObserver::class);
         Proceso::observe(ProcesosObserver::class);
+        Activo::observe(ActivosObserver::class);
+        Recurso::observe(RecursoObserver::class);
+        TimesheetProyecto::observe(TimeSheetProyectoObserver::class);
     }
 }

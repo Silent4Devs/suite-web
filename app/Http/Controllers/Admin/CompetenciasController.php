@@ -210,7 +210,7 @@ class CompetenciasController extends Controller
         $empleado->load('idiomas');
         // dd($empleado);
         abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $lista_docs = ListaDocumentoEmpleado::get();
+        $lista_docs = ListaDocumentoEmpleado::getAll();
 
         return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
     }

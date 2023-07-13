@@ -274,7 +274,7 @@ class AccionCorrectivaController extends Controller
 
         $clientes = TimesheetCliente::get();
 
-        $proyectos = TimesheetProyecto::get();
+        $proyectos = TimesheetProyecto::getAll();
 
         $analisis = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accionCorrectiva->id)->first();
 

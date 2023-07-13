@@ -129,7 +129,7 @@ class ActivosController extends Controller
         $users = User::getAll();
         $sedes = Sede::getAll();
         $teams = Team::get();
-        $activos_nuevo = Activo::get();
+        $activos_nuevo = Activo::getAll();
 
         return view('admin.activos.index', compact('tipoactivos', 'users', 'sedes', 'teams', 'subtipo', 'activos_nuevo'));
     }

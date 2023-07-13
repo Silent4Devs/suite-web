@@ -47,7 +47,7 @@ class TablaTareasTimesheet extends Component
     public function render()
     {
         if ($this->origen == 'tareas') {
-            $this->proyectos = TimesheetProyecto::get();
+            $this->proyectos = TimesheetProyecto::getAll();
 
             if ($this->proyecto_filtro) {
                 $this->tareas = TimesheetTarea::where('proyecto_id', $this->proyecto_filtro)->orderByDesc('id')->get();

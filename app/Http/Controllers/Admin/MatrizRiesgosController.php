@@ -1097,7 +1097,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
         // $responsables = Empleado::getAll();
-        $activos = Activo::get();
+        $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $duenos = Empleado::alta()->get();
         $custodios = Empleado::alta()->get();
@@ -1116,7 +1116,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $activos = Activo::get();
+        $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $duenos = Empleado::alta()->get();
         $custodios = Empleado::alta()->get();
@@ -1239,7 +1239,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
-        $activos = Activo::get();
+        $activos = Activo::getAll();
         $amenazas = Amenaza::get();
 
         $vulnerabilidades = Vulnerabilidad::get();
@@ -1255,7 +1255,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
-        $activos = Activo::get();
+        $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
@@ -1376,7 +1376,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
-        $activos = Activo::get();
+        $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $matrizNist = new MatrizNist();
         $vulnerabilidades = Vulnerabilidad::get();
@@ -1391,7 +1391,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $responsables = Empleado::alta()->get();
-        $activos = Activo::get();
+        $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $matrizNist = MatrizNist::find($id);
         $vulnerabilidades = Vulnerabilidad::get();

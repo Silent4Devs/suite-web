@@ -13,6 +13,7 @@ use Jenssegers\Date\Date;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Support\Facades\Cache;
 
 class Recurso extends Model implements HasMedia
 {
@@ -89,6 +90,14 @@ class Recurso extends Model implements HasMedia
         'lista_asistencia',
         'is_sync_elearning',
     ];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('recursos_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     // SCOPES
     public function scopeCapacitacionesProximas($query)
