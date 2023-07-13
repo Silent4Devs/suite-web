@@ -49,25 +49,6 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
-    <style>
-        #preloading {
-            position: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            opacity: 0.8;
-            background-color: #fff;
-            z-index: 990000;
-        }
-
-        #preloading-image {
-            position: absolute;
-            z-index: 100;
-        }
-    </style>
     <style type="text/css">
         .custom-file-input~.custom-file-label::after {
             content: "Elegir";
@@ -1040,17 +1021,35 @@
             background-color: white !important;
         }
     </style>
+    <style>
+        #preloading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            opacity: 0.8;
+            background-color: #fff;
+            z-index: 990000;
+        }
 
+        #preloading-image {
+            position: absolute;
+            z-index: 100;
+        }
+    </style>
+    <div id="preloading">
+        <img id="preloading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
+            alt="Loading..." />
+    </div>
     @yield('styles')
     @livewireStyles
 </head>
 
 <body class="">
-    <div id="preloading">
 
-        <img id="preloading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
-            alt="Loading..." />
-    </div>
     @php
         use App\Models\Organizacion;
         $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
