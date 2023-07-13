@@ -17,7 +17,7 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
      */
     public function collection()
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         // $empleado = Empleado::find(156);
         $timeSheetEmpleados = collect();
         foreach ($empleados as $empleado) {

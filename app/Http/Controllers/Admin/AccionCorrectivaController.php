@@ -123,12 +123,8 @@ class AccionCorrectivaController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $puestos = Puesto::get();
-        $users = User::get();
-        $puestos = Puesto::get();
-        $users = User::get();
-        $users = User::get();
         $teams = Team::get();
 
         $total_AC = AccionCorrectiva::get()->count();
@@ -190,9 +186,9 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::alta()->with('area')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Tipoactivo::get();
 
@@ -265,9 +261,9 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::with('area')->orderBy('name')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Tipoactivo::get();
 
@@ -275,9 +271,9 @@ class AccionCorrectivaController extends Controller
 
         $quejasClientes = QuejasCliente::where('accion_correctiva_id', '=', $accionCorrectiva->id)->get();
 
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
 
-        $proyectos = TimesheetProyecto::get();
+        $proyectos = TimesheetProyecto::getAll();
 
         $analisis = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accionCorrectiva->id)->first();
 
@@ -397,14 +393,14 @@ class AccionCorrectivaController extends Controller
     public function storeAnalisis(Request $request, $accion)
     {
         $request->validate([
-                'control_a'=>'nullable|string|max:350',
-                'proceso_a'=>'nullable|string|max:350',
-                'personas_a'=>'nullable|string|max:350',
-                'tecnologia_a'=>'nullable|string|max:350',
-                'ambiente_a'=>'nullable|string|max:350',
-                'metodos_a'=>'nullable|string|max:350',
-                'problema_diagrama'=>'nullable|string|max:350',
-            ]);
+            'control_a' => 'nullable|string|max:350',
+            'proceso_a' => 'nullable|string|max:350',
+            'personas_a' => 'nullable|string|max:350',
+            'tecnologia_a' => 'nullable|string|max:350',
+            'ambiente_a' => 'nullable|string|max:350',
+            'metodos_a' => 'nullable|string|max:350',
+            'problema_diagrama' => 'nullable|string|max:350',
+        ]);
         $exist_accion_id = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accion)->exists();
         if ($exist_accion_id) {
             $analisis = AnalisisAccionCorrectiva::where('accion_correctiva_id', $accion)->first();

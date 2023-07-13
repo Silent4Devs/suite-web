@@ -71,7 +71,7 @@ class AuditoriaAnualController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.auditoriaAnuals.index', compact('users', 'teams'));
@@ -82,7 +82,7 @@ class AuditoriaAnualController extends Controller
         abort_if(Gate::denies('auditoria_anual_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('admin.auditoriaAnuals.create', compact('auditorliders', 'empleados'));
     }
@@ -102,7 +102,7 @@ class AuditoriaAnualController extends Controller
 
         $auditoriaAnual->load('auditorlider', 'team');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('admin.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual', 'empleados'));
     }

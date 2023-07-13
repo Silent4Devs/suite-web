@@ -58,7 +58,7 @@ class PerfilController extends Controller
     public function create()
     {
         abort_if(Gate::denies('niveles_jerarquicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('admin.perfiles.create', compact('empleados'));
     }

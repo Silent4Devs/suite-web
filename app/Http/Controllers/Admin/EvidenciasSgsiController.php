@@ -23,7 +23,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class EvidenciasSgsiController extends Controller
 {
-    use MediaUploadingTrait,ObtenerOrganizacion;
+    use MediaUploadingTrait, ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -81,7 +81,7 @@ class EvidenciasSgsiController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -96,7 +96,7 @@ class EvidenciasSgsiController extends Controller
 
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::alta()->with('area')->get();
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.evidenciasSgsis.create', compact('responsables', 'empleados', 'areas'));
     }
@@ -136,7 +136,7 @@ class EvidenciasSgsiController extends Controller
 
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::alta()->with('area')->get();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $evidenciasSgsi->load('responsable', 'team');
 
         return view('admin.evidenciasSgsis.edit', compact('responsables', 'evidenciasSgsi', 'empleados', 'areas'));

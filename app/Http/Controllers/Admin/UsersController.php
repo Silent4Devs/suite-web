@@ -27,7 +27,7 @@ class UsersController extends Controller
 
         $roles = Role::get();
         $organizaciones = Organizacione::get();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $puestos = Puesto::get();
         $teams = Team::get();
         // $empleadosNoAsignados = Empleado::alta()->get();

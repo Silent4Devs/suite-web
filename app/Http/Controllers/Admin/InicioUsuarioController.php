@@ -67,7 +67,8 @@ class InicioUsuarioController extends Controller
         // dd($usuarioVinculadoConEmpleado);
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];
-        $implementaciones = PlanImplementacion::get();
+        // Check if the result is already cached
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {
@@ -126,11 +127,11 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        $auditorias_anual = AuditoriaAnual::get();
+        $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = new AuditoriaInterna;
         $empleado = auth()->user()->empleado;
         $recursos = collect();
-        $eventos = Calendario::get();
+        $eventos = Calendario::getAll();
         $oficiales = CalendarioOficial::get();
         $cumples_aniversarios = Empleado::with('area')->alta()->get();
         $mis_quejas = collect();
@@ -613,15 +614,15 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_queja'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         return view('admin.inicioUsuario.formularios.quejas', compact('areas', 'procesos', 'empleados', 'activos', 'sedes'));
     }
@@ -682,9 +683,9 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_denuncia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         return view('admin.inicioUsuario.formularios.denuncias', compact('empleados', 'sedes'));
     }
@@ -740,9 +741,9 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_propuesta_de_mejora'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         return view('admin.inicioUsuario.formularios.mejoras', compact('areas', 'procesos'));
     }
@@ -784,11 +785,11 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $empleados = Empleado::alta()->get();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         return view('admin.inicioUsuario.formularios.sugerencias', compact('areas', 'empleados', 'procesos'));
     }
@@ -820,21 +821,19 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_sugerencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         $subcategorias = SubcategoriaIncidente::get();
 
         $incidentes_seguridad = IncidentesSeguridad::get();
-
-        $activos = Activo::get();
 
         return view('admin.inicioUsuario.formularios.seguridad', compact('incidentes_seguridad', 'activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
     }
@@ -917,15 +916,15 @@ class InicioUsuarioController extends Controller
     {
         abort_if(Gate::denies('mi_perfil_mis_reportes_realizar_reporte_de_riesgo_identificado'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $empleados = Empleado::alta()->get();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
         return view('admin.inicioUsuario.formularios.riesgos', compact('activos', 'areas', 'procesos', 'sedes'));
     }
@@ -1002,7 +1001,7 @@ class InicioUsuarioController extends Controller
 
     public function archivoCapacitacion()
     {
-        $recursos = Recurso::get();
+        $recursos = Recurso::getAll();
 
         return view('admin.inicioUsuario.capacitaciones_archivo', compact('recursos'));
     }
@@ -1041,7 +1040,7 @@ class InicioUsuarioController extends Controller
         $usuario = auth()->user();
         $empleado_id = $usuario->empleado ? $usuario->empleado->id : 0;
         $actividades = [];
-        $implementaciones = PlanImplementacion::get();
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
         if ($implementaciones) {
             foreach ($implementaciones as $implementacion) {
@@ -1201,7 +1200,7 @@ class InicioUsuarioController extends Controller
 
         $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->get();
 
-        $lista_docs_model = ListaDocumentoEmpleado::get();
+        $lista_docs_model = ListaDocumentoEmpleado::getAll();
         $lista_docs = collect();
         foreach ($lista_docs_model as $doc) {
             $documentos_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('lista_documentos_empleados_id', $doc->id)->first();
@@ -1269,12 +1268,13 @@ class InicioUsuarioController extends Controller
         return response()->json(['status' => 200, 'message' => 'Registro Actualizado']);
     }
 
-    public function updateVersionIso(Request $request){
+    public function updateVersionIso(Request $request)
+    {
 
-        foreach($request->toArray() as $var){
-            if($var === false){
+        foreach ($request->toArray() as $var) {
+            if ($var === false) {
                 $valor = false;
-            }else{
+            } else {
                 $valor = true;
             }
         }

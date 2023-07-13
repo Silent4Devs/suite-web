@@ -66,7 +66,7 @@ class ComiteseguridadController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('frontend.comiteseguridads.index', compact('users', 'teams'));
@@ -138,7 +138,7 @@ class ComiteseguridadController extends Controller
     {
         $comiteseguridads = Comiteseguridad::get();
 
-        $organizacion = Organizacion::get();
+        $organizacion = Organizacion::getAll();
 
         return view('frontend.comiteseguridads.visualizacion', compact('comiteseguridads', 'organizacion'));
     }

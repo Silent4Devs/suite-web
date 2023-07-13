@@ -91,7 +91,7 @@ class CartaAceptacionRiesgosController extends Controller
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;
         $vicepresidentes = $responsables;
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
 
         return view('admin.CartaAceptacionRiesgos.create', compact('controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }
@@ -178,7 +178,7 @@ class CartaAceptacionRiesgosController extends Controller
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;
         $vicepresidentes = $responsables;
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
 
         return view('admin.CartaAceptacionRiesgos.edit', compact('cartaAceptacion', 'controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }

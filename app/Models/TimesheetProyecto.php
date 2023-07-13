@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use Illuminate\Support\Facades\Cache;
 
 class TimesheetProyecto extends Model
 {
@@ -31,6 +32,14 @@ class TimesheetProyecto extends Model
         'Interno' => 'Interno',
         'Externo' => 'Externo',
     ];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('timesheetproyecto_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function getAreasAttribute()
     {

@@ -72,7 +72,7 @@ class PlanaccionCorrectivaController extends Controller
         }
 
         $accion_correctivas = AccionCorrectiva::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.planaccionCorrectivas.index', compact('accion_correctivas', 'users', 'teams'));

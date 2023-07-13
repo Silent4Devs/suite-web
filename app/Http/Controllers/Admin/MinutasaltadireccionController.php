@@ -42,7 +42,7 @@ class MinutasaltadireccionController extends Controller
             return datatables()->of($query)->toJson();
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;

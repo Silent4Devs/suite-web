@@ -80,7 +80,7 @@ class EvidenciasSgsiController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('frontend.evidenciasSgsis.index', compact('users', 'teams'));
@@ -92,7 +92,7 @@ class EvidenciasSgsiController extends Controller
 
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('frontend.evidenciasSgsis.create', compact('responsables', 'empleados', 'areas'));
     }
@@ -131,7 +131,7 @@ class EvidenciasSgsiController extends Controller
 
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::with('area')->get();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $evidenciasSgsi->load('responsable', 'team');
 
         return view('frontend.evidenciasSgsis.edit', compact('responsables', 'evidenciasSgsi', 'empleados', 'areas'));

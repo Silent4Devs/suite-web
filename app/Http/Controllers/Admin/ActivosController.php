@@ -126,10 +126,10 @@ class ActivosController extends Controller
 
         $tipoactivos = Tipoactivo::get();
         $subtipo = SubcategoriaActivo::get();
-        $users = User::get();
-        $sedes = Sede::get();
+        $users = User::getAll();
+        $sedes = Sede::getAll();
         $teams = Team::get();
-        $activos_nuevo = Activo::get();
+        $activos_nuevo = Activo::getAll();
 
         return view('admin.activos.index', compact('tipoactivos', 'users', 'sedes', 'teams', 'subtipo', 'activos_nuevo'));
     }
@@ -149,7 +149,7 @@ class ActivosController extends Controller
         $empleados = Empleado::alta()->with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
         $marcas = Marca::get();
 
@@ -236,7 +236,7 @@ class ActivosController extends Controller
 
         $procesos = Proceso::with('macroproceso')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
         $marcas = Marca::get();
 

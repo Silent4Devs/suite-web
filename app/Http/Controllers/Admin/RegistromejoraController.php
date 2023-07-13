@@ -84,9 +84,7 @@ class RegistromejoraController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
-        $users = User::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.registromejoras.index', compact('users', 'users', 'users', 'teams'));

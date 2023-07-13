@@ -90,8 +90,8 @@ class PlanAuditoriaController extends Controller
             return $table->make(true);
         }
 
-        $auditoria_anuals = AuditoriaAnual::get();
-        $users = User::get();
+        $auditoria_anuals = AuditoriaAnual::getAll();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.planAuditoria.index', compact('auditoria_anuals', 'users', 'teams'));

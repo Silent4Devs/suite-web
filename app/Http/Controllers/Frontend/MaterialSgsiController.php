@@ -80,7 +80,7 @@ class MaterialSgsiController extends Controller
             // return datatables()->of($materialSgsi)->toJson();
         }
 
-        $areas = Area::get();
+        $areas = Area::getAll();
         $teams = Team::get();
 
         return view('admin.materialSgsis.index', compact('areas', 'teams'));

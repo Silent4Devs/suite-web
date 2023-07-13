@@ -75,7 +75,7 @@ class EntendimientoOrganizacionController extends Controller
         }
 
         $obtener_FODA = EntendimientoOrganizacion::first();
-        $empleado = Empleado::get();
+        $empleado = Empleado::getAll();
         $teams = Team::get();
 
         return view('admin.entendimientoOrganizacions.index', compact('obtener_FODA', 'teams', 'empleado'));
@@ -85,7 +85,7 @@ class EntendimientoOrganizacionController extends Controller
     {
         abort_if(Gate::denies('entendimiento_organizacion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entendimientoOrganizacion = new EntendimientoOrganizacion;
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('admin.entendimientoOrganizacions.create', compact('entendimientoOrganizacion', 'empleados'));
     }
@@ -111,7 +111,7 @@ class EntendimientoOrganizacionController extends Controller
     {
         abort_if(Gate::denies('entendimiento_organizacion_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('admin.entendimientoOrganizacions.edit', compact('entendimientoOrganizacion', 'empleados'));
     }
@@ -138,7 +138,7 @@ class EntendimientoOrganizacionController extends Controller
     {
         abort_if(Gate::denies('entendimiento_organizacion_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $obtener_FODA = $entendimientoOrganizacion;
 
         return view('admin.entendimientoOrganizacions.show', compact('empleados', 'obtener_FODA'));

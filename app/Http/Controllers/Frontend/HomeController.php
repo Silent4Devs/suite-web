@@ -265,7 +265,7 @@ class HomeController
         $auditinterna = AuditoriaAnual::select('id')->where('tipo', '=', 'Externa')->count('id');
 
         $exist_doc = ControlDocumento::select('deleted_at')->where('deleted_at', '=', null)->count();
-        $capacitaciones = Recurso::get();
+        $capacitaciones = Recurso::getAll();
         $categorias_arr = [];
         $recursos_categoria_arr = [];
         $categorias = CategoriaCapacitacion::with('recursos')->get();
@@ -277,7 +277,7 @@ class HomeController
         $diplomado = 0;
         $certificado = 0;
         $curso = 0;
-        $tipos = Recurso::get();
+        $tipos = Recurso::getAll();
 
         foreach ($tipos as $tipo) {
             if ($tipo->tipo == 'diplomado') {

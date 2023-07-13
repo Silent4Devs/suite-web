@@ -88,7 +88,7 @@ class RecursosController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.recursos.index', compact('users', 'teams'));

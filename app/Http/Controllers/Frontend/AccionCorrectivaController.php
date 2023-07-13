@@ -119,12 +119,9 @@ class AccionCorrectivaController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $puestos = Puesto::get();
-        $users = User::get();
         $puestos = Puesto::get();
-        $users = User::get();
-        $users = User::get();
         $teams = Team::get();
 
         return view('admin.accionCorrectivas.index', compact('users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
@@ -148,9 +145,9 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::alta()->with('area')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Tipoactivo::get();
 
@@ -211,9 +208,9 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::alta()->with('area')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $activos = Tipoactivo::get();
 

@@ -104,9 +104,7 @@ class InformacionDocumetadaController extends Controller
         }
 
         $politica_sgsis = PoliticaSgsi::get();
-        $users = User::get();
-        $users = User::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.informacionDocumetadas.index', compact('politica_sgsis', 'users', 'users', 'users', 'teams'));
