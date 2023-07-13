@@ -43,16 +43,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     {{-- <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css"> --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- PWA  -->
-    {{--  <meta name="theme-color" content="#6777ef" />
-    <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">  --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <style>
+        #loading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            opacity: 0.8;
+            background-color: #fff;
+            z-index: 990000;
+        }
+
+        #loading-image {
+            position: absolute;
+            z-index: 100;
+        }
+    </style>
     <style type="text/css">
         .custom-file-input~.custom-file-label::after {
             content: "Elegir";
@@ -1029,6 +1044,11 @@
     @yield('styles')
     @livewireStyles
 </head>
+<div id="loading">
+
+    <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
+        alt="Loading..." />
+</div>
 
 <body class="">
     @php
@@ -1242,20 +1262,20 @@
         {{ csrf_field() }}
     </form>
     </div>
-        <!-- incluir de footer -->
-        {{-- @include('partials.footer') --}}
-        <footer class="app-footer">
-            <font>
-                TABANTAJ
-                <font style="margin: 0px 20px;"> | </font> 
-                SILENT4BUSINESS 
-            </font>
-            <font>
-                2023
-                <font style="margin: 0px 20px;"> | </font> 
-                Version: 4.8.8 
-            </font>
-        </footer>
+    <!-- incluir de footer -->
+    {{-- @include('partials.footer') --}}
+    <footer class="app-footer">
+        <font>
+            TABANTAJ
+            <font style="margin: 0px 20px;"> | </font>
+            SILENT4BUSINESS
+        </font>
+        <font>
+            2023
+            <font style="margin: 0px 20px;"> | </font>
+            Version: 4.8.8
+        </font>
+    </footer>
     </div>
     <style>
         #contenido_imprimir {
@@ -1362,6 +1382,11 @@
             <p>Comunicación</p>
         </a>
     </div>
+    <script>
+        $(window).on('load', function() {
+            $('#loading').hide();
+        })
+    </script>
 
     <script>
         function imprimirElemento(elemento) {
