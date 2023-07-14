@@ -64,7 +64,7 @@ class SubcategoriaActivoContoller extends Controller
     public function create()
     {
         abort_if(Gate::denies('subcategoria_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $tipos = Tipoactivo::get();
+        $tipos = Tipoactivo::getAll();
 
         return view('admin.SubtipoActivos.create', compact('tipos'));
     }
@@ -88,7 +88,7 @@ class SubcategoriaActivoContoller extends Controller
     {
         abort_if(Gate::denies('subcategoria_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $subcategoria = SubcategoriaActivo::find($subcategoria);
-        $categorias = Tipoactivo::get();
+        $categorias = Tipoactivo::getAll();
 
         return view('admin.SubtipoActivos.edit', compact('categorias'))->with('subcategoria', $subcategoria);
     }
@@ -116,7 +116,7 @@ class SubcategoriaActivoContoller extends Controller
         abort_if(Gate::denies('subcategoria_activos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $subcategoria = SubcategoriaActivo::find($id);
         $subcategoria->delete();
-        $subcategoria = SubcategoriaActivo::get();
+        $subcategoria = SubcategoriaActivo::getAll();
 
         return view('admin.SubtipoActivos.index', compact('subcategoria'));
     }

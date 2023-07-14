@@ -72,21 +72,7 @@
 
                         Teléfono*
                     </label>
-                        <select class="form-control"  id="mySelect">
-                            <option value="+54">Argentina +54</option>
-                            <option value="+591">Bolivia +591</option>
-                            <option value="+55">Brasil +55</option>
-                            <option value="+56">Chile +56</option>
-                            <option value="+593">Ecuador +593</option>
-                            <option value="+502">Guatemala +502</option>
-                            <option value="+52">México +52</option>
-                            <option value="+507">Panamá +507</option>
-                            <option value="+51">Perú +51</option>
-                            <option value="+598">Uruguay +598</option>
-                            <option value="+58">Venezuela +58</option>
-                          </select>
-
-                          <input id="phone" value="+" required type="text" class="form-control" name="telefono" pattern="\x2b[0-9]+" size="20" placeholder="+54976284353">
+                    <input id="phone" type="text" name="telefono" value="{{ old('telefono') }}" class="form-control" pattern="\x2b[0-9]+" size="20" placeholder="+54976284353" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label"><i class="fas fa-laptop iconos-crear"></i> Página Web</label>
@@ -125,7 +111,7 @@
 
             <div class="form-group col-12 text-right mt-4">
                 <a href="{{ route('admin.timesheet-clientes') }}" class="btn btn_cancelar">Cancelar</a>
-                <button class="btn btn-success">Guardar</button>
+                <button  class="btn btn-success">Guardar</button>
             </div>
 		</form>
 	</div>
@@ -136,9 +122,11 @@
 @section('scripts')
     @parent
     <script>
+
+    //funcion que valida correo
     var emailV = document.getElementById('emailV');
-    $(function(){
-    $(document).on('keyup','#foo',function(){
+     $(function(){
+     $(document).on('keyup','#foo',function(){
     var val = $(this).val().trim(),
         reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if( reg.test(val) == false ){
@@ -147,17 +135,14 @@
 
     else{
         emailV.innerHTML =  "";
-    }
-  });
-});
-        $(function() {
-          $(document).on('change', '#mySelect', function() {
-            $("#phone").focus();
-            var value = $(this).val();
-            $('#phone').val(value);
+     }
+     });
+    });
 
-          });
-        });
+    function myFunction() {
+    window.alert('Input validado');
+    }
+
     </script>
     <script type="text/javascript">
         $('#btn_registro_completo').click(function(){

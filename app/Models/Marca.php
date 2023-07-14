@@ -6,8 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
-
+use Illuminate\Support\Facades\Cache;
 /**
  * Class Marca.
  *
@@ -24,10 +23,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Marca extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'marca';
 
     protected $casts = [
@@ -38,6 +34,14 @@ class Marca extends Model
         'activo_id',
         'nombre',
     ];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Marcas_all', 3600*24, function () {
+            return self::get();
+        });
+    }
 
     public function tipoactivo()
     {

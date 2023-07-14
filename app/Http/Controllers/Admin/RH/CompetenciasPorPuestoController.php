@@ -77,7 +77,7 @@ class CompetenciasPorPuestoController extends Controller
     {
         abort_if(Gate::denies('lista_de_perfiles_de_puesto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto = Puesto::find(intval($puesto));
-        $competencias = Competencia::all();
+        $competencias = Competencia::getAll();
 
         return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.create', compact('puesto', 'competencias'));
     }

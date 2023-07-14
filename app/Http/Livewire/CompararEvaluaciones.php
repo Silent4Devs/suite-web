@@ -29,7 +29,7 @@ class CompararEvaluaciones extends Component
     public function render()
     {
         $evaluacionController = new EV360EvaluacionesController;
-        $evaluaciones = Evaluacion::all();
+        $evaluaciones = Evaluacion::getAll();
         $jefe = Empleado::select('id', 'name')->with('children')->find($this->evaluador);
         $equipo_a_cargo = $evaluacionController->obtenerEquipoACargo($jefe->children);
         $equipo_a_cargo = Empleado::select('id', 'name')->find($equipo_a_cargo);

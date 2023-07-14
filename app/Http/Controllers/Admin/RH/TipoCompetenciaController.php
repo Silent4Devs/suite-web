@@ -10,7 +10,7 @@ class TipoCompetenciaController extends Controller
 {
     public function index()
     {
-        $tipos = TipoCompetencia::get();
+        $tipos = TipoCompetencia::getAll();
 
         return view('admin.recursos-humanos.evaluacion-360.competencias.tipo.index', compact('tipos'));
     }
@@ -54,7 +54,7 @@ class TipoCompetenciaController extends Controller
     {
         $tipos = TipoCompetencia::find($id);
         $tipos->delete();
-        $tipos = TipoCompetencia::get();
+        $tipos = TipoCompetencia::getAll();
 
         return view('admin.recursos-humanos.evaluacion-360.competencias.tipo.index', compact('tipos'));
     }

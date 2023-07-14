@@ -51,8 +51,26 @@ use App\Observers\TimeSheetProyectoObserver;
 use App\Observers\PlanImplementacionObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
 use App\Listeners\IncidentesDeSeguridadListener;
+use App\Models\Marca;
+use App\Models\Modelo;
+use App\Models\RH\Competencia;
+use App\Models\RH\Evaluacion;
+use App\Models\RH\MetricasObjetivo;
+use App\Models\RH\TipoCompetencia;
+use App\Models\RH\TipoObjetivo;
+use App\Models\SubcategoriaActivo;
+use App\Models\Tipoactivo;
+use App\Observers\CompetenciaObserver;
 use App\Observers\IncidentesDeSeguridadObserver;
 use App\Observers\DeclaracionAplicabilidadObserver;
+use App\Observers\EvaluacionObserver;
+use App\Observers\MarcasObserver;
+use App\Observers\MetricasObjetivoObserver;
+use App\Observers\ModelosObserver;
+use App\Observers\SubCategoriaActivoObserver;
+use App\Observers\TipoActivoObserver;
+use App\Observers\TipoCompetenciaObserver;
+use App\Observers\tipoObjetivoObserver;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -115,5 +133,15 @@ class EventServiceProvider extends ServiceProvider
         TimesheetCliente::observe(TimeSheetClienteObserver::class);
         ExperienciaEmpleados::observe(ExperienciaEmpleadosObserver::class);
         DeclaracionAplicabilidad::observe(DeclaracionAplicabilidadObserver::class);
+        Tipoactivo::observe(TipoActivoObserver::class);
+        Marca::observe(MarcasObserver::class);
+        Modelo::observe(ModelosObserver::class);
+        Evaluacion::observe(EvaluacionObserver::class);
+        Competencia::observe(CompetenciaObserver::class);
+        SubcategoriaActivo::observe(SubCategoriaActivoObserver::class);
+        TipoObjetivo::observe(tipoObjetivoObserver::class);
+        Evaluacion::observe(EvaluacionObserver::class);
+        MetricasObjetivo::observe(MetricasObjetivoObserver::class);
+        TipoCompetencia::observe(TipoCompetenciaObserver::class);
     }
 }

@@ -17,7 +17,7 @@ class ModeloController extends Controller
     public function index()
     {
         if ($request->ajax()) {
-            $query = Marca::get();
+            $query = Marca::getAll();
             $table = DataTables::of($query);
 
             $table->addColumn('actions', '&nbsp;');
@@ -54,7 +54,7 @@ class ModeloController extends Controller
             return $table->make(true);
         }
 
-        $marca = Marca::get();
+        $marca = Marca::getAll();
 
         return view('admin.modelo.index', compact('marca'));
     }
@@ -66,7 +66,7 @@ class ModeloController extends Controller
      */
     public function create()
     {
-        $marca = Marca::get();
+        $marca = Marca::getAll();
 
         return view('admin.modelo.create', compact('marca'));
     }
@@ -115,7 +115,7 @@ class ModeloController extends Controller
      */
     public function edit(Modelo $modelo)
     {
-        $marca = Marca::get();
+        $marca = Marca::getAll();
 
         return view('admin.modelo.edit', compact('tipoactivos'));
     }
@@ -164,9 +164,9 @@ class ModeloController extends Controller
     public function getModelos(Request $request, $id = null)
     {
         if ($request->ajax()) {
-            $modelo_seleccionado = Modelo::find($id);
+            $modelo_seleccionado = Modelo::getById($id);
             $modelos_arr = [];
-            $modelos = Modelo::get();
+            $modelos = Modelo::getAll();
             // dd($marcas);
             foreach ($modelos as $modelo) {
                 if ($modelo_seleccionado) {

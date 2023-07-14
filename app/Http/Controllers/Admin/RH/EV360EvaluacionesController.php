@@ -51,7 +51,7 @@ class EV360EvaluacionesController extends Controller
     public function create()
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $evaluacion = Evaluacion::all();
+        $evaluacion = Evaluacion::getAll();
         $areas = Area::all();
         $empleados = Empleado::alta()->get();
 

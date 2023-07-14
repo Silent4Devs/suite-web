@@ -115,8 +115,6 @@ class TimesheetController extends Controller
     public function create()
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $proyectos = TimesheetProyecto::getAll();
-        // $tareas = TimesheetTarea::getAll();
 
         $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
 
@@ -897,6 +895,7 @@ class TimesheetController extends Controller
                 'identificador.unique' => 'El ID ya esta en uso',
             ],
         );
+
 
         $cliente_nuevo = TimesheetCliente::create($request->all());
 

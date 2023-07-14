@@ -137,7 +137,7 @@ class MatrizRiesgosController extends Controller
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
         $activos = Activo::getAll();
-        $tipoactivos = Tipoactivo::get();
+        $tipoactivos = Tipoactivo::getAll();
         $controles = Controle::get();
         $sedes = Sede::getAll();
         $areas = Area::getAll();
@@ -404,7 +404,7 @@ class MatrizRiesgosController extends Controller
 
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $tipoactivos = Tipoactivo::get();
+        $tipoactivos = Tipoactivo::getAll();
         $controles = Controle::get();
         $matriz_heat = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
         $sedes = Sede::getAll();

@@ -120,7 +120,7 @@ class PuestosController extends Controller
         $areas = Area::getAll();
         $reportas = Empleado::alta()->get();
         $idis = Language::all();
-        $competencias = Competencia::all();
+        $competencias = Competencia::getAll();
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
         $herramientas = HerramientasPuestos::get();
@@ -205,7 +205,7 @@ class PuestosController extends Controller
         $contactosEdit = $puesto->contactos;
         // dd($puesto);
         $reportaras = Puesto::get();
-        $competencias = Competencia::all();
+        $competencias = Competencia::getAll();
         $idis = Language::all();
         $responsabilidades = PuestoResponsabilidade::get();
         // dd($puesto);
@@ -247,7 +247,7 @@ class PuestosController extends Controller
         $puesto->load('team');
         // $empleados = Empleado::with('area')->get();
         // $idiomas = PuestoIdiomaPorcentajePivot::get();
-        $competencias = Competencia::get();
+        $competencias = Competencia::getAll();
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
         $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();

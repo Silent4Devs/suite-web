@@ -102,7 +102,7 @@ class MarcaController extends Controller
     {
         if ($request->ajax()) {
             $marcas_arr = [];
-            $marcas = Marca::get();
+            $marcas = Marca::getAll();
             // dd($marcas);
             foreach ($marcas as $marca) {
                 $marcas_arr[] = ['id'=>$marca->id, 'text'=>$marca->nombre];

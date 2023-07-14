@@ -190,7 +190,7 @@ class AccionCorrectivaController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Tipoactivo::get();
+        $activos = Tipoactivo::getAll();
 
         return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'empleados', 'areas', 'procesos', 'activos'));
     }
@@ -265,7 +265,7 @@ class AccionCorrectivaController extends Controller
 
         $procesos = Proceso::getAll();
 
-        $activos = Tipoactivo::get();
+        $activos = Tipoactivo::getAll();
 
         $id = $accionCorrectiva->id;
 

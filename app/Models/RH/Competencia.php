@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class Competencia extends Model
 {
@@ -21,6 +22,14 @@ class Competencia extends Model
     const POR_PUESTO = 1;
     const POR_AREA = 2;
     const POR_PERFIL = 3;
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Competencias_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function getTipoCompetenciaAttribute()
     {

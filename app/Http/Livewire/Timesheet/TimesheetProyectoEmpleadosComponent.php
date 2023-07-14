@@ -76,8 +76,6 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'horas_asignadas' => $empleado_añadido['horas_edit'],
             'costo_hora' => $empleado_añadido['costo_edit'],
         ]);
-
-        //  return redirect('/admin/timesheet/proyecto-empleados/', [$empleado_edit_proyecto->proyecto_id]);
     }
 
     public function empleadoProyectoRemove($id)
