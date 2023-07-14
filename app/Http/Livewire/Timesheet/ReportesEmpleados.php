@@ -339,6 +339,7 @@ class ReportesEmpleados extends Component
             $fecha_ingre = date("Y-m-d", strtotime($fecha_ing));
 
 
+            $horas_totales_empleado_calendar = 0;
             $calendario_tabla_empleado = [];
             foreach ($calendario_array as $key => $año) {
                 foreach ($año['months'] as $key => $mes) {
@@ -357,6 +358,7 @@ class ReportesEmpleados extends Component
                             if (count($time) > 0) {
                                 foreach ($time as $key => $t) {
                                     array_push($calendario_tabla_empleado, $t['horas_semana']);
+                                    $horas_totales_empleado_calendar += $t['horas_semana'];
                                 }
                             } elseif ($entro_esta_semana === true) {
                                 array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">No&nbsp;Aplica</span>');
@@ -382,7 +384,10 @@ class ReportesEmpleados extends Component
                 'id' => $empleado_list->id,
                 'avatar_ruta' => $empleado_list->avatar_ruta,
                 'estatus' => $empleado_list->estatus,
-                'horas_totales' => $horas_total_time,
+
+                'horas_totales' => $horas_totales_empleado_calendar,
+                // 'horas_totales' => $horas_total_time,
+
                 'name' => $empleado_list->name,
                 'area' => $empleado_list->area ? $empleado_list->area->area : '',
                 'puesto' => $empleado_list->puesto,
