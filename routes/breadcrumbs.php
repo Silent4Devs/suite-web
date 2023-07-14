@@ -1026,6 +1026,19 @@ Breadcrumbs::for('timesheet-tareas-proyecto', function ($trail) {
     $trail->push('Proyectos', route('admin.timesheet-proyectos'));
     $trail->push('Tareas');
 });
+
+Breadcrumbs::for('timesheet-empleados-proyecto', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Proyectos', route('admin.timesheet-proyectos'));
+    $trail->push('Empleados Asignados');
+});
+
+Breadcrumbs::for('timesheet-externos-proyecto', function ($trail) {
+    $trail->push('Timesheet', route('admin.timesheet-inicio'));
+    $trail->push('Proyectos', route('admin.timesheet-proyectos'));
+    $trail->push('Externos Asignados');
+});
+
 Breadcrumbs::for('timesheet-tareas', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Tareas');

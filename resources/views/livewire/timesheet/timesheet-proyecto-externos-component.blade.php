@@ -9,20 +9,21 @@
     </div>
 
     <form wire:submit.prevent="addExterno" wire:ignore>
+        <x-loading-indicator />
         <div class="row">
             <div class="form-group col-md-8">
                 <label for="">Externo<sup>*</sup>(obligatorio)</label><br>
-                <input wire:model="externo_añadido" name="" id=""type="text" class="form-control" required>
+                <input wire:model.defer="externo_añadido" name="" id=""type="text" class="form-control" required>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                <input wire:model="horas_tercero" name="" id="" type="number" min="1" class="form-control">
+                <input wire:model.defer="horas_tercero" name="" id="" type="number" min="1" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                <input wire:model="costo_tercero" name="" id="" type="number" min="1" class="form-control">
+                <input wire:model.defer="costo_tercero" name="" id="" type="number" min="1" class="form-control">
             </div>
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
                 <button class="btn btn-success">Agregar</button>
@@ -101,6 +102,7 @@
     @foreach($proyecto_proveedores as $proyecto_proveedor)
         <div class="modal fade" id="modal_proyecto_externo_editar_{{ $proyecto_proveedor->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
+            <x-loading-indicator />
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -111,16 +113,24 @@
                                 <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size:60pt;"></i>
                                 <h1 class="my-4" style="font-size:14pt;">Editar Externo de Proyecto:
                                     <small>{{ $proyecto_proveedor->proveedor_tercero }}</small></h1>
-                                <form wire:submit.prevent="editExterno({{$proyecto_proveedor->id}})">
+                                <form wire:submit.prevent="editExterno({{$proyecto_proveedor->id}}, Object.fromEntries(new FormData($event.target)))">
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="">Externo<sup>*</sup>(obligatorio)</label>
+                                            <input name="externo_editado" id="" value="{{ $proyecto_proveedor->proveedor_tercero }}" type="text" maxlength="255" class="form-control">
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                                            <input wire:model="horas_tercero_edit" name="" id="" type="number" min="1" class="form-control">
+                                            <input value="{{ $proyecto_proveedor->horas_tercero}}" name="horas_tercero_edit" id="" type="number" min="1" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                                            <input wire:model="costo_tercero_edit" name="" id="" type="number" min="1" class="form-control">
+                                            <input value="{{ $proyecto_proveedor->costo_tercero}}" name="costo_tercero_edit" id="" type="number" min="1" class="form-control">
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="mt-4 d-flex justify-content-between">
                                             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
                                                 <button class="btn btn_cancelar" data-dismiss="modal">
@@ -140,6 +150,17 @@
             </div>
         </div>
     @endforeach
+
+    @section('js')
+    <script>
+        window.addEventListener('closeModal', event => {
+            $('.modal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+
+        })
+    </script>
+    @stop
 
     @section('scripts')
     @parent

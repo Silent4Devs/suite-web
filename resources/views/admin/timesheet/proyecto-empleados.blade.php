@@ -2,7 +2,7 @@
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
-    {{ Breadcrumbs::render('timesheet-tareas-proyecto') }}
+    {{ Breadcrumbs::render('timesheet-empleados-proyecto') }}
 
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Asignacion de Empleados por Proyecto</font>
     </h5>
@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
                                         <p>${empresa_actual}</p>
-                                        <strong style="color:#345183">Timesheet: Tareas</strong>
+                                        <strong style="color:#345183">Timesheet: Empleados en Proyecto</strong>
                                     </div>
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
                                         Fecha: ${jsDate}

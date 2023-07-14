@@ -8,9 +8,12 @@ use App\Models\Empleado;
 
 use Livewire\Component;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\F;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class TimesheetProyectoExternosComponent extends Component
 {
+    use LivewireAlert;
+
     public $proyecto;
     public $empleados;
     public $proyecto_empleados;
@@ -37,7 +40,7 @@ class TimesheetProyectoExternosComponent extends Component
     public function render()
     {
         $this->proyecto_proveedores = TimesheetProyectoProveedor::where('proyecto_id', $this->proyecto->id)->get();
-        $this->emit('tablaLivewire');
+        $this->emit('scriptTabla');
         return view('livewire.timesheet.timesheet-proyecto-externos-component');
     }
 
@@ -57,19 +60,37 @@ class TimesheetProyectoExternosComponent extends Component
         ]);
     }
 
-    public function editExterno($id)
+    public function editExterno($id, $datos)
     {
+        // dd($datos);
         if ($this->proyecto->tipo === "Externo") {
-            $this->validate([
-                'horas_tercero_edit' => ['required'],
-                'costo_tercero_edit' => ['required'],
-            ]);
+            if(empty($datos['horas_tercero_edit']) || empty($datos['costo_tercero_edit']) || empty($datos['externo_editado'])){
+                // dd('Llega nulo');
+                // $this->dispatchBrowserEvent('closeModal');
+                $this->alert('error', 'No debe contener datos vacios', [
+                    'position' => 'top-end',
+                    'timer' => 3000,
+                    'toast' => true,
+                    'timerProgressBar' => true,
+                   ]);
+
+                   return null;
+            }
         }
         $edit_time_externo = TimesheetProyectoProveedor::find($id);
         $edit_time_externo->update([
-            'horas_tercero' => $this->horas_tercero_edit,
-            'costo_tercero' => $this->costo_tercero_edit,
+            'proveedor_tercero' => $datos['externo_editado'],
+            'horas_tercero' => $datos['horas_tercero_edit'],
+            'costo_tercero' => $datos['costo_tercero_edit'],
         ]);
+        $this->dispatchBrowserEvent('closeModal');
+        // $this->resetInput();
+        $this->alert('success', 'Editado exitosamente', [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+            'timerProgressBar' => true,
+           ]);
     }
 
     public function externoProyectoRemove($id)
