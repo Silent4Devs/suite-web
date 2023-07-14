@@ -2,8 +2,9 @@
 
 namespace App\Models\RH;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MetricasObjetivo extends Model
 {
@@ -13,4 +14,12 @@ class MetricasObjetivo extends Model
 
     protected $table = 'ev360_metricas_objetivos';
     protected $guarded = ['id'];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('MetricasObjetivos_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 }
