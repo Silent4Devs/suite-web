@@ -173,7 +173,7 @@ class EmpleadoController extends Controller
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
         $certificaciones = CertificacionesEmpleados::get();
-        $puestos = Puesto::all();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::all();
 
         return view('frontend.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles'));
@@ -398,7 +398,7 @@ class EmpleadoController extends Controller
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
-        $puestos = Puesto::all();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::all();
 
         return view('frontend.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles'));

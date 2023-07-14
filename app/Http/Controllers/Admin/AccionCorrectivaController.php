@@ -124,7 +124,7 @@ class AccionCorrectivaController extends Controller
         }
 
         $users = User::getAll();
-        $puestos = Puesto::get();
+        $puestos = Puesto::getAll();
         $teams = Team::get();
 
         $total_AC = AccionCorrectiva::get()->count();
