@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\MultiTenantModelTrait;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Puesto extends Model
 {
@@ -55,6 +56,14 @@ class Puesto extends Model
         'autoriza_id',
         'reporta_puesto_id',
     ];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Puestos_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

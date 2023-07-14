@@ -112,7 +112,7 @@ class EmpleadoController extends Controller
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
         $certificaciones = CertificacionesEmpleados::get();
-        $puestos = Puesto::get();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::get();
         $perfiles_seleccionado = null;
         $puestos_seleccionado = null;
@@ -927,11 +927,11 @@ class EmpleadoController extends Controller
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
-        $puestos = Puesto::all();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
-        $puestos = Puesto::get();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::get();
         $perfiles_seleccionado = $empleado->perfil_empleado_id;
         $puestos_seleccionado = $empleado->puesto_id;

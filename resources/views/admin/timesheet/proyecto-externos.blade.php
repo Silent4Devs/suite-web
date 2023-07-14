@@ -2,7 +2,7 @@
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
-    {{ Breadcrumbs::render('timesheet-tareas-proyecto') }}
+    {{ Breadcrumbs::render('timesheet-externos-proyecto') }}
 
     <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Asignacion de Proveedores/Consultores por Proyecto</font>
     </h5>
@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
                                         <p>${empresa_actual}</p>
-                                        <strong style="color:#345183">Timesheet: Tareas</strong>
+                                        <strong style="color:#345183">Timesheet: Externos en Proyecto</strong>
                                     </div>
                                     <div class="col-4 text-center p-2" style="border:2px solid #CCCCCC">
                                         Fecha: ${jsDate}
@@ -135,7 +135,7 @@
         }
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                tablaLivewire('tabla_time_poyect_empleados');
+                tablaLivewire('tabla_time_proyect_externos');
             }, 100);
         });
     </script>

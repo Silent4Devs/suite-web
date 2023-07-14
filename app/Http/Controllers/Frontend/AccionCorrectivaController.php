@@ -120,8 +120,7 @@ class AccionCorrectivaController extends Controller
         }
 
         $users = User::getAll();
-        $puestos = Puesto::get();
-        $puestos = Puesto::get();
+        $puestos = Puesto::getAll();
         $teams = Team::get();
 
         return view('admin.accionCorrectivas.index', compact('users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));

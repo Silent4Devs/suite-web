@@ -67,7 +67,7 @@ class ConsultaPerfilComponent extends Component
         if ($value == '') {
             $this->area_id = null;
             $this->reporta_id = null;
-            $this->puestos = Puesto::get();
+            $this->puestos = Puesto::getAll();
         } else {
             $this->area_id = $value;
             $this->empleado_id = null;

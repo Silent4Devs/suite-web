@@ -30,7 +30,7 @@ class ActivosInformacionController extends Controller
         $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $area = Area::getAll();
         $procesos = Proceso::with('macroproceso')->get();
-        $confidencials = activoConfidencialidad::get();
+        $confidencials = activoConfidencialidad::getAll();
         $integridads = activoIntegridad::get();
         $disponibilidads = activoDisponibilidad::get();
         $contenedores = MatrizOctaveContenedor::get();
@@ -60,7 +60,7 @@ class ActivosInformacionController extends Controller
         $activos = ActivoInformacion::find($activos);
         $empleados = Empleado::alta()->with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
-        $confidencials = activoConfidencialidad::get();
+        $confidencials = activoConfidencialidad::getAll();
         $integridads = activoIntegridad::get();
         $disponibilidads = activoDisponibilidad::get();
         $contenedores = MatrizOctaveContenedor::get();

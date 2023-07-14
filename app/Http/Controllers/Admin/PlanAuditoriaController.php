@@ -98,7 +98,7 @@ class PlanAuditoriaController extends Controller
 
         $empleados = Empleado::alta()->get();
 
-        $puesto = Puesto::get();
+        $puesto = Puesto::getAll();
 
         $actividadesAuditoria = ActividadesPlanAuditorium::get();
 

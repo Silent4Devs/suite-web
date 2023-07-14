@@ -82,7 +82,7 @@ class EmpleadoCreateEditComponent extends Component
         $this->ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $this->areas = Area::getAll();
         $this->sedes = Sede::getAll();
-        $this->puestos = Puesto::all();
+        $this->puestos = Puesto::getAll();
         $this->perfiles = PerfilEmpleado::all();
         $this->tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description')->get();
         $this->entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
