@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Modelo.
@@ -22,10 +22,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Modelo extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'modelo';
 
     protected $casts = [
@@ -36,6 +32,23 @@ class Modelo extends Model
         'marca_id',
         'nombre',
     ];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Modelos_all', 3600*24, function () {
+            return self::get();
+        });
+    }
+
+    public static function getById($id)
+    {
+        $cacheKey = 'Modelos_' . $id;
+
+            return Cache::remember($cacheKey, 3600 * 24, function () use ($id) {
+                return self::find($id);
+            });
+    }
 
     public function marca()
     {

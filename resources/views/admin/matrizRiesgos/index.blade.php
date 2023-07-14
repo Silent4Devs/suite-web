@@ -3,7 +3,7 @@
 @section('content')
 
 <style>
-    
+
     @page{
         size:landscape;
     }
@@ -22,7 +22,7 @@
             <h3 class="mb-2 text-center text-white"><strong>Matriz Riesgo
                 </strong></h3>
         </div>
-      
+
             <div style="margin-bottom: 10px; margin-left:10px;" class="row">
                 <div class="col-lg-12">
                     @include('csvImport.modal', [
@@ -31,7 +31,7 @@
                     ])
                 </div>
             </div>
-      
+
         @if ($numero_sedes > 0)
             <div class="px-1 py-2 mx-3 rounded shadow" style="background-color: #DBEAFE; border-top:solid 1px #3B82F6;">
                 <div class="row w-100">
@@ -66,7 +66,7 @@
                             </th>
                             <th class="text-center" style="background-color:#1168af;" colspan="4">CID</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="3">Riesgo Inicial
-                            <th class="text-center" style="background-color:#1168af;" colspan="2">Acciones</th>
+                            <th class="text-center" style="background-color:#1168af;" colspan="3">Acciones</th>
                             <th class="text-center" style="background-color:#217bc5;" colspan="4">CID Residual</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="3">Riesgo Residual</th>
                             <th class="text-center" style="background-color:#1168af;" colspan="1">Opciones</th>
@@ -117,9 +117,12 @@
                             <th style="min-width:120px;">
                                 Nivel riesgo
                             </th>
+                            <th>
+                                Versión ISO
+                            </th>
                             <!--<th>
-                                                                                                                                    Riesgo total
-                                                                                                                                </th>-->
+                                Riesgo total
+                            </th>-->
                             <th>
                                 Control
                             </th>
@@ -480,6 +483,17 @@
                                     break;
                                 default:
                                     break;
+                            }
+                        }
+                    },
+                    {
+                        data: 'version_historico',
+                        name: 'version_historico',
+                        render: function(data) {
+                            if(data === true) {
+                                return `<div style="text-align:center"><div>27001:2013</div></div>`;
+                            }else{
+                                return `<div style="text-align:center"><div>27001:2022</div></div>`;
                             }
                         }
                     },

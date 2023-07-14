@@ -105,18 +105,17 @@ class EmpleadoController extends Controller
         abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $areas = Area::get();
-        $sedes = Sede::get();
-        $experiencias = ExperienciaEmpleados::get();
+        $areas = Area::getAll();
+        $sedes = Sede::getAll();
+        $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
         $certificaciones = CertificacionesEmpleados::get();
-        $puestos = Puesto::get();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::get();
         $perfiles_seleccionado = null;
         $puestos_seleccionado = null;
-        $puestos = Puesto::all();
         $perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'slug', 'description')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
@@ -920,19 +919,19 @@ class EmpleadoController extends Controller
         $empleado = Empleado::find(intval($id));
         $empleados = Empleado::alta()->get();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $area = Area::find($empleado->area_id);
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $sede = Sede::find($empleado->sede_id);
-        $experiencias = ExperienciaEmpleados::get();
+        $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
-        $puestos = Puesto::all();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::all();
         $tipoContratoEmpleado = TipoContratoEmpleado::select('id', 'name', 'description', 'slug')->get();
         $entidadesCrediticias = EntidadCrediticia::select('id', 'entidad')->get();
-        $puestos = Puesto::get();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::get();
         $perfiles_seleccionado = $empleado->perfil_empleado_id;
         $puestos_seleccionado = $empleado->puesto_id;
@@ -957,7 +956,7 @@ class EmpleadoController extends Controller
 
     public function getListaDocumentos($id_empleado)
     {
-        $lista_docs_model = ListaDocumentoEmpleado::get();
+        $lista_docs_model = ListaDocumentoEmpleado::getAll();
         $lista_docs = collect();
         $documento_versiones = '';
         foreach ($lista_docs_model as $doc) {
@@ -1571,7 +1570,7 @@ class EmpleadoController extends Controller
     //     $certificados = CertificacionesEmpleados::where('empleado_id', $id)->get();
     //     $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
     //     $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
-    //     $empleado = Empleado::get();
+    //     $empleado = Empleado::getAll();
 
     //     $pdf = PDF::loadView('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'contactos','dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes', 'empleado'))->setOptions(['defaultFont' => 'sans-serif'])->render();;
     //     $dompdf->loadHtml($pdf);

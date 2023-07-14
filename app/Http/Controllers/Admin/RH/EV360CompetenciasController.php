@@ -127,7 +127,7 @@ class EV360CompetenciasController extends Controller
         }
         // Almacenamos la competencia en todos los puestos
         if ($request->toda_la_empresa) {
-            $puestos = Puesto::all();
+            $puestos = Puesto::getAll();
             foreach ($puestos as $puesto) {
                 $exists = CompetenciaPuesto::where('puesto_id', '=', $puesto->id)
                     ->where('competencia_id', '=', $competencia->id)

@@ -3,12 +3,21 @@
             class="far fa-play-circle mr-2"></i> GUÍA DE USO</div>
     <ul class="mt-4">
         @can('analisis_de_brechas_acceder')
+        @if($version_iso === true)
             <li><a href="{{ url('/admin/analisisdebrechas') }}">
                     <div>
                         <i class="bi bi-binoculars"></i><br>
                         Análisis de brechas
                     </div>
                 </a></li>
+        @else
+            <li><a href="{{ url('/admin/analisisdebrechas-2022') }}">
+                <div>
+                    <i class="bi bi-binoculars"></i><br>
+                    Análisis de brechas
+                </div>
+            </a></li>
+        @endif
         @endcan
         @can('plan_de_implementacion_acceder')
             <li><a href="{{ route('admin.planTrabajoBase.index') }}">

@@ -55,10 +55,10 @@
                     role="tab" aria-controls="nav-proyectos" aria-selected="false">
                     Proyectos
                 </a>
-                {{-- <a class="nav-link" id="nav-semanas-tab" data-type="semanas" data-toggle="tab"
-                    href="#nav-semanas" role="tab" aria-controls="nav-semanas" aria-selected="false">
-                    Semanas
-                </a> --}}
+                <a class="nav-link" id="nav-proyemp-tab" data-type="proyemp" data-toggle="tab"
+                    href="#nav-proyemp" role="tab" aria-controls="nav-proyemp" aria-selected="false">
+                    Registros Colaboradores-Tareas
+                </a>
             </div>
         </nav>
 
@@ -73,9 +73,9 @@
             <div class="tab-pane mb-4 fade p-4" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
                 @livewire('timesheet.reportes-proyectos')
             </div>
-            {{-- <div class="tab-pane mb-4 fade p-4" id="nav-semanas" role="tabpanel" aria-labelledby="nav-semanas-tab">
-                @livewire('timesheet.reportes-semanas')
-            </div> --}}
+            <div class="tab-pane mb-4 fade p-4" id="nav-proyemp" role="tabpanel" aria-labelledby="nav-proyemp-tab">
+                @livewire('timesheet.reportes-proyemp')
+            </div>
         </div>
     </div>
 @endsection

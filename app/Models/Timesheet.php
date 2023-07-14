@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
 
 class Timesheet extends Model
 {
     use HasFactory;
+    use Filterable;
 
     protected $table = 'timesheet';
 
@@ -48,16 +50,27 @@ class Timesheet extends Model
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
 
         $semana_rango = '
-            <font style="font-weight: lighter !important;"> Del </font>
-            <font style="font-weight: bolder !important;">' . $inicio_dia . '</font> 
-            <font style="font-weight: lighter !important;"> al </font> 
-            <font style="font-weight: bolder !important;">' . $fin_dia . '</font>
-
-            ';
-
+            <font style="font-weight: lighter !important;"> Del </font><font style="font-weight: bolder !important;">' . $inicio_dia . '</font><font style="font-weight: lighter !important;"> al </font><font style="font-weight: bolder !important;">' . $fin_dia . '</font>';
         return $semana_rango;
     }
 
+    public function getFinAttribute()
+    {
+        $fin = $this->traducirDia($this->fin_semana);
+
+        $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
+
+        return $fin_dia;
+    }
+
+    public function getInicioAttribute()
+    {
+        $inicio = $this->traducirDia($this->inicio_semana);
+
+        $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")->format('d/m/Y');
+
+        return $inicio_dia;
+    }
     public function getSemanaTextAttribute()
     {
         $inicio = $this->traducirDia($this->inicio_semana);
@@ -86,6 +99,11 @@ class Timesheet extends Model
         return $semana_rango;
     }
 
+    /**
+     * TODO: Esta funcion debería estar en la implementación de i18n
+     *
+     * @return void
+     */
     public function traducirDia($dia_seleccionado)
     {
         $dia = 'Monday';
@@ -117,6 +135,11 @@ class Timesheet extends Model
         return $this->hasMany(TimesheetHoras::class, 'timesheet_id', 'id')->orderBy('id');
     }
 
+    /**
+     * TODO: Esta funcion debería estar en un servicio
+     *
+     * @return void
+     */
     public function getProyectosAttribute()
     {
         $horas_id_proyectos = TimesheetHoras::where('timesheet_id', $this->id)->get();
@@ -131,6 +154,11 @@ class Timesheet extends Model
         return $proyectos;
     }
 
+    /**
+     * TODO: Esta funcion debería estar en un servicio
+     *
+     * @return void
+     */
     public function getTotalHorasAttribute()
     {
         $total_horas = 0;

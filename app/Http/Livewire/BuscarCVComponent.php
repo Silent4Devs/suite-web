@@ -103,7 +103,7 @@ class BuscarCVComponent extends Component
 
     public function render()
     {
-        $this->lista_docs = ListaDocumentoEmpleado::get();
+        $this->lista_docs = ListaDocumentoEmpleado::getAll();
         $empleadosCV = Empleado::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
             ->when($this->empleado_id, function ($q3) {
                 $q3->where('id', $this->empleado_id);

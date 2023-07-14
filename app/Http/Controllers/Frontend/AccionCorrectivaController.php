@@ -119,12 +119,8 @@ class AccionCorrectivaController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
-        $puestos = Puesto::get();
-        $users = User::get();
-        $puestos = Puesto::get();
-        $users = User::get();
-        $users = User::get();
+        $users = User::getAll();
+        $puestos = Puesto::getAll();
         $teams = Team::get();
 
         return view('admin.accionCorrectivas.index', compact('users', 'puestos', 'users', 'puestos', 'users', 'users', 'teams'));
@@ -148,11 +144,11 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::alta()->with('area')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Tipoactivo::get();
+        $activos = Tipoactivo::getAll();
 
         return view('admin.accionCorrectivas.create', compact('nombrereportas', 'puestoreportas', 'nombreregistras', 'puestoregistras', 'responsable_accions', 'nombre_autorizas', 'empleados', 'areas', 'procesos', 'activos'));
     }
@@ -211,11 +207,11 @@ class AccionCorrectivaController extends Controller
 
         $empleados = Empleado::alta()->with('area')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Tipoactivo::get();
+        $activos = Tipoactivo::getAll();
 
         $id = $accionCorrectiva->id;
 

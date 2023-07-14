@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
 
 class TimesheetHoras extends Model
 {
     use HasFactory;
+    use Filterable;
 
     protected $table = 'timesheet_horas';
 
@@ -24,6 +26,7 @@ class TimesheetHoras extends Model
         'horas_sabado',
         'horas_domingo',
         'descripcion',
+        'empleado_id'
     ];
 
     public function timesheet()

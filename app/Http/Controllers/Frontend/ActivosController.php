@@ -120,10 +120,9 @@ class ActivosController extends Controller
             return $table->make(true);
         }
 
-        $tipoactivos = Tipoactivo::get();
-        $tipoactivos = Tipoactivo::get();
-        $users = User::get();
-        $sedes = Sede::get();
+        $tipoactivos = Tipoactivo::getAll();
+        $users = User::getAll();
+        $sedes = Sede::getAll();
         $teams = Team::get();
 
         return view('admin.activos.index', compact('tipoactivos', 'tipoactivos', 'users', 'sedes', 'teams'));
@@ -143,11 +142,11 @@ class ActivosController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
-        $marcas = Marca::get();
+        $marcas = Marca::getAll();
 
-        $modelos = Modelo::get();
+        $modelos = Modelo::getAll();
 
         return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos'));
     }
@@ -229,11 +228,11 @@ class ActivosController extends Controller
 
         $empleados = Empleado::with('area')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
-        $marcas = Marca::get();
+        $marcas = Marca::getAll();
 
-        $modelos = Modelo::get();
+        $modelos = Modelo::getAll();
 
         $marca_seleccionada = Marca::select('id', 'nombre')->find($activo->marca);
 

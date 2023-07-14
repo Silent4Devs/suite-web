@@ -136,15 +136,15 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'seguridad')->where('seguridad_id', intval($id_incidente))->first();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $subcategorias = SubcategoriaIncidente::get();
 
@@ -166,7 +166,7 @@ class DeskController extends Controller
             'sede' => $request->sede,
             'ubicacion' => $request->ubicacion,
             'descripcion' => $request->descripcion,
-            'fecha_cierre'=>$request->fecha_cierre,
+            'fecha_cierre' => $request->fecha_cierre,
             'areas_afectados' => $request->areas_afectados,
             'procesos_afectados' => $request->procesos_afectados,
             'activos_afectados' => $request->activos_afectados,
@@ -238,15 +238,15 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'riesgo')->where('riesgos_id', intval($id_riesgos))->first();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('frontend.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
@@ -306,17 +306,17 @@ class DeskController extends Controller
     {
         $quejas = Quejas::findOrfail(intval($id_quejas))->load('evidencias_quejas');
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'queja')->where('quejas_id', intval($id_quejas))->first();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
@@ -336,7 +336,7 @@ class DeskController extends Controller
             'procesos_quejado' => $request->procesos_quejado,
             'externo_quejado' => $request->externo_quejado,
             'comentarios' => $request->comentarios,
-            'fecha_cierre'=>$request->fecha_cierre,
+            'fecha_cierre' => $request->fecha_cierre,
         ]);
 
         return redirect()->route('desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
@@ -368,7 +368,7 @@ class DeskController extends Controller
             'metodos_b' => $request->metodos_b,
             'ambiente_a' => $request->ambiente_a,
             'ambiente_b' => $request->ambiente_b,
-            'fecha_cierre'=>$request->fecha_cierre,
+            'fecha_cierre' => $request->fecha_cierre,
         ]);
 
         return redirect()->route('desk.quejas-edit', $analisis_seguridad->quejas_id)->with('success', 'Reporte actualizado');
@@ -380,9 +380,9 @@ class DeskController extends Controller
 
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
         return view('frontend.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados', 'analisis'));
     }
@@ -398,7 +398,7 @@ class DeskController extends Controller
             'area_denunciado' => $request->area_denunciado,
             'tipo' => $request->tipo,
             'estatus' => $request->estatus,
-            'fecha_cierre'=>$request->fecha_cierre,
+            'fecha_cierre' => $request->fecha_cierre,
         ]);
 
         return redirect()->route('desk.index')->with('success', 'Reporte actualizado');
@@ -439,13 +439,13 @@ class DeskController extends Controller
     {
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'mejora')->where('mejoras_id', intval($id_mejoras))->first();
 
@@ -505,13 +505,13 @@ class DeskController extends Controller
     {
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'sugerencia')->where('sugerencias_id', intval($id_sugerencias))->first();
 

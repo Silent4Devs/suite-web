@@ -76,7 +76,7 @@ class CompetenciasController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.competencia.index', compact('users', 'teams'));
@@ -181,7 +181,7 @@ class CompetenciasController extends Controller
     {
         // dd($request->all());
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.competencia.buscarCV', compact('areas'));
     }

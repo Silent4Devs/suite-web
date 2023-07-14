@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DeclaracionAplicabilidad extends Model
 {
@@ -29,6 +30,15 @@ class DeclaracionAplicabilidad extends Model
         'created_at',
         'updated_at',
     ];
+
+    #Redis methods
+    public static function getAll($columns = ['id', 'columna1', 'columna2'])
+    {
+        #retrieve all data or can pass columns to retrieve
+        return Cache::remember('declaracionaplicabilidad_all', 3600 * 24, function () use ($columns) {
+            return self::select($columns)->get();
+        });
+    }
 
     public function getNameAttribute()
     {

@@ -73,7 +73,7 @@ class PuestosController extends Controller
         }
 
         $teams = Team::get();
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.puestos.index', compact('teams', 'areas'));
     }
@@ -117,18 +117,18 @@ class PuestosController extends Controller
         ';
 
         $lenguajes = (json_decode($json));
-        $areas = Area::get();
+        $areas = Area::getAll();
         $reportas = Empleado::alta()->get();
         $idis = Language::all();
-        $competencias = Competencia::all();
+        $competencias = Competencia::getAll();
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
-        $puesto = Puesto::get();
+        $puesto = Puesto::getAll();
         $empleados = Empleado::alta()->get();
         $perfiles = PerfilEmpleado::all();
-        $puestos = Puesto::all();
+        $puestos = Puesto::getAll();
         $externos = ContactosExternosPuestos::all();
         // dd($idis);
 
@@ -195,7 +195,7 @@ class PuestosController extends Controller
         ';
         // $this->saveOrUpdateSchedule($request, $puesto);
         $lenguajes = (json_decode($json));
-        $areas = Area::get();
+        $areas = Area::getAll();
         $reportas = Empleado::alta()->get();
         $puesto->load(['contactos' => function ($query) {
             $query->with(['puesto' => function ($query) {
@@ -204,8 +204,8 @@ class PuestosController extends Controller
         }]);
         $contactosEdit = $puesto->contactos;
         // dd($puesto);
-        $reportaras = Puesto::get();
-        $competencias = Competencia::all();
+        $reportaras = Puesto::getAll();
+        $competencias = Competencia::getAll();
         $idis = Language::all();
         $responsabilidades = PuestoResponsabilidade::get();
         // dd($puesto);
@@ -214,7 +214,7 @@ class PuestosController extends Controller
         $contactos = PuestoContactos::get();
         $empleados = Empleado::alta()->get();
         $language = PuestoIdiomaPorcentajePivot::get();
-        $puestos = Puesto::get();
+        $puestos = Puesto::getAll();
         $externos = ContactosExternosPuestos::all();
 
         return view('admin.puestos.edit', compact('reportaras', 'externos', 'contactosEdit', 'puesto', 'areas', 'reportas', 'lenguajes', 'competencias', 'idis', 'responsabilidades', 'certificados', 'herramientas', 'contactos', 'empleados', 'language', 'puestos'));
@@ -247,14 +247,14 @@ class PuestosController extends Controller
         $puesto->load('team');
         // $empleados = Empleado::with('area')->get();
         // $idiomas = PuestoIdiomaPorcentajePivot::get();
-        $competencias = Competencia::get();
+        $competencias = Competencia::getAll();
         $responsabilidades = PuestoResponsabilidade::get();
         $certificados = PuestosCertificado::get();
         $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
         $empleados = Empleado::alta()->get();
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas'));
     }

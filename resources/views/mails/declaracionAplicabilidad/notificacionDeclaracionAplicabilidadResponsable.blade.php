@@ -144,7 +144,7 @@
                                                 @elseif($control->estatus == 3)
                                                     rechazado su justificación.
                                                 @endif
-                                                del control {{$aplicabilidad->anexo_indice}}
+                                                del control {{$aplicabilidad->anexo_indice ?: $aplicabilidad->gapdos->control_iso}}
                                             </p>
                                             <br>
                                             <div style="text-align:center; margin-top:20px">

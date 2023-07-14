@@ -97,8 +97,8 @@ class TratamientoRiesgosController extends Controller
             return $table->make(true);
         }
 
-        $controles = DeclaracionAplicabilidad::get();
-        $users = User::get();
+        $controles = DeclaracionAplicabilidad::getAll();
+        $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -146,7 +146,7 @@ class TratamientoRiesgosController extends Controller
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::alta()->with('area')->get();
         $registros = Empleado::alta()->with('area')->get();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         return view('admin.tratamientoRiesgos.edit', compact('registros', 'procesos', 'tratamientos', 'controls', 'responsables', 'empleados'));
     }
@@ -183,8 +183,8 @@ class TratamientoRiesgosController extends Controller
 
         if ($tratamientoRiesgo->es_aprobado == 'rechazado') {
             $tratamientoRiesgo->update([
-                'es_aprobado'=>'pendiente',
-                'comentarios'=>null,
+                'es_aprobado' => 'pendiente',
+                'comentarios' => null,
             ]);
             $empleado_email = Empleado::select('name', 'email')->find($request->id_dueno);
             $empleado_copia = auth()->user()->empleado;
@@ -257,14 +257,14 @@ class TratamientoRiesgosController extends Controller
 
         if ($request->aprobado != null) {
             $tratamientoRiesgo->update([
-                'es_aprobado'=>$request->aprobado == '1' ? 'aprobado' : 'rechazado',
-                'comentarios'=>$request->comentarios,
+                'es_aprobado' => $request->aprobado == '1' ? 'aprobado' : 'rechazado',
+                'comentarios' => $request->comentarios,
             ]);
         }
 
         // dd($tratamientoRiesgo);
         Mail::to($tratamientoRiesgo->responsable->email)->send(new RiesgoAceptadoRechazado($tratamientoRiesgo));
 
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 }

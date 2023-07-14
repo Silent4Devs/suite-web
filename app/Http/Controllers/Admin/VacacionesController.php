@@ -86,7 +86,7 @@ class VacacionesController extends Controller
     public function create()
     {
         abort_if(Gate::denies('reglas_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $areas = Area::get();
+        $areas = Area::getAll();
         $vacacion = new Vacaciones();
         $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
 
@@ -132,7 +132,7 @@ class VacacionesController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('reglas_vacaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $areas = Area::get();
+        $areas = Area::getAll();
         $vacacion = Vacaciones::with('areas')->find($id);
         if (empty($vacacion)) {
             Flash::error('Vacación not found');

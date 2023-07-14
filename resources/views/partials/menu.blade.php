@@ -9,7 +9,7 @@
         <div class="caja_img_logo">
             @php
                 use App\Models\Organizacion;
-                $organizacion = Organizacion::select('id', 'logotipo')->first();
+                $organizacion = Organizacion::getLogo();
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {

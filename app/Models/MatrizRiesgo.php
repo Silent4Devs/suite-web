@@ -136,6 +136,7 @@ class MatrizRiesgo extends Model
         'id_amenaza' => 'int',
         'id_area' => 'int',
         'id_vulnerabilidad' => 'int',
+        'version_historico' => 'boolean'
     ];
 
     protected $fillable = [
@@ -172,6 +173,7 @@ class MatrizRiesgo extends Model
         'riesgo_total_residual',
         'tipo_tratamiento',
         'aceptar_transferir',
+        'version_historico'
     ];
 
     /*protected function serializeDate(DateTimeInterface $date)

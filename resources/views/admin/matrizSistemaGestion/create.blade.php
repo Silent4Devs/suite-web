@@ -574,7 +574,7 @@
                         <select class="responsableSelect form-control" name="id_responsable" id="id_responsable">
                             <option value="">Seleccione una opción</option>
                             @foreach ($responsables as $responsable)
-                                <option {{ old('id_responsable') == $responsable->id ? ' selected="selected"' : '' }} 
+                                <option {{ old('id_responsable') == $responsable->id ? ' selected="selected"' : '' }}
                                 data-puesto="{{ $responsable->puesto }}" value="{{ $responsable->id }}"
                                     data-area="{{ $responsable->area->area }}">{{ $responsable->name }}
                                 </option>
@@ -801,12 +801,23 @@
                     </div>
                     {{-- 27001:2013 --}}
                     <hr>
+                    @if ($version_historico === "true")
                     <div class="text-center form-group"
                         style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
                         ISO 27001:2013
                     </div>
+                    @else
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
+                                border-radius: 100px;
+                                color: #681818;">
+                        ISO 27001:2022
+                    </div>
+                    @endif
+
+
                     <hr>
                     <div class="row">
                         <div class="form-group col-sm-4">
@@ -1145,12 +1156,22 @@
                     </div>
                     {{-- 27001:2013 --}}
                     <hr>
+                    @if ($version_historico === "true")
                     <div class="text-center form-group"
                         style="background-color: #e3e6eb;
                                 border-radius: 100px;
                                 color: #681818;">
                         ISO 27001:2013
                     </div>
+                    @else
+                    <div class="text-center form-group"
+                        style="background-color: #e3e6eb;
+                                border-radius: 100px;
+                                color: #681818;">
+                        ISO 27001:2022
+                    </div>
+                    @endif
+
                     <hr>
                     <div class="row">
                         <div class="form-group col-sm-4">
@@ -1336,7 +1357,14 @@
                 <hr>
                 {{-- Acciones --}}
                 <p class="font-weight-bold" style="font-size:11pt;">Acciones</p>
+                <input class="form-control" type="text" id="version_historico"
+                name="version_historico" value="{{ $version_historico}}" readonly hidden>
                 <div class="row">
+                    @if ($version_historico === "true")
+                        <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2013</p><br>
+                    @else
+                        <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2022</p><br>
+                    @endif
                     <div class="form-group col-sm-12">
                         <div class="row">
                             <label for="controles_id" style="margin-left: 15px; margin-bottom:5px; margin-right: 0px;"><i
@@ -1349,11 +1377,19 @@
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
                                         Selecciona una opción</option>
-                                    @foreach ($controles as $control)
+                                        @if ($version_historico === "true")
+                                        @foreach ($controles as $control)
                                         <option value="{{ $control->id }}">
                                             {{ $control->anexo_indice }} {{ $control->anexo_politica }}
                                         </option>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        @foreach ($controles as $control)
+                                        <option value="{{ $control->id }}">
+                                            {{ $control->control_iso }} {{ $control->anexo_politica }}
+                                        </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                                 @if ($errors->has('controles_id'))
                                     <div class="invalid-feedback">
@@ -1388,7 +1424,7 @@
                     <div class="form-group col-sm-12" id="modulo_planaccion" style="display: none;">
 
                         {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
-                        <div class="row w-100">
+                        {{-- <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i
                                     class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
                             @livewire('planes-implementacion-select', ['planes_seleccionados' => []])
@@ -1404,7 +1440,7 @@
                                                         riesgos',
                                 'id_matriz' => $id_analisis,
                             ])
-                        </div>
+                        </div> --}}
                         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
                     <!-- hasta aqui -->

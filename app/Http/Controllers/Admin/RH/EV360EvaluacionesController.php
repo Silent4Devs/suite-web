@@ -51,7 +51,7 @@ class EV360EvaluacionesController extends Controller
     public function create()
     {
         abort_if(Gate::denies('seguimiento_evaluaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $evaluacion = Evaluacion::all();
+        $evaluacion = Evaluacion::getAll();
         $areas = Area::all();
         $empleados = Empleado::alta()->get();
 
@@ -1483,7 +1483,7 @@ class EV360EvaluacionesController extends Controller
         return response()->json(['deleted' => true]);
     }
 
-    public function objetivosTemporal()
+    public function objetivostemporal()
     {
 
         $reacLA=EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '140')->where('evaluador_id', '=', '132')

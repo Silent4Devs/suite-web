@@ -185,7 +185,7 @@ class EnvioDocumentosController extends Controller
 
             return redirect(route('admin.Ausencias.index'));
         }
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         // dd($ajustes);
 
         return view('admin.envio-documentos.ajustesEdit', compact('ajustes', 'empleados'));
@@ -278,22 +278,22 @@ class EnvioDocumentosController extends Controller
         return view('admin.envio-documentos.seguimiento', compact('solicitud', 'fecha_solicitud', 'operadores'));
     }
 
-public function seguimientoUpdate(Request $request, $id)
-{
-    abort_if(Gate::denies('solicitud_mensajeria_atencion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    public function seguimientoUpdate(Request $request, $id)
+    {
+        abort_if(Gate::denies('solicitud_mensajeria_atencion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $solicitud = EnvioDocumentos::find($id);
+        $solicitud = EnvioDocumentos::find($id);
 
-    if (empty($solicitud)) {
-        Flash::error('Error al actualizar');
+        if (empty($solicitud)) {
+            Flash::error('Error al actualizar');
 
-        return redirect(route('admin.envio-documentos.index'));
+            return redirect(route('admin.envio-documentos.index'));
+        }
+
+        $solicitud->update($request->all());
+
+        Flash::success('Solicitud actualizada correctamente.');
+
+        return redirect(route('admin.envio-documentos.atencion'));
     }
-
-    $solicitud->update($request->all());
-
-    Flash::success('Solicitud actualizada correctamente.');
-
-    return redirect(route('admin.envio-documentos.atencion'));
-}
 }

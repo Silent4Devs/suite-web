@@ -5,6 +5,9 @@
 .text-eliminar-actividad-mobile{
     display: none;
 }
+.barra-herramientas-bottom-molbile{
+    display: none;
+}
 @media(max-width: 800px){
     .d-mobile{
         display: block;
@@ -110,7 +113,7 @@
     }
     #layout-app-body .caja_form{
         background-color: rgba(0, 0, 0, 0);
-        top: 0;  
+        top: 0;
     }
     #layout-app-body .caja_form .btn_enviar{
         margin-bottom: 50px;
@@ -174,7 +177,7 @@
     .tabla-llenar-horas tr::after{
         font-family: 'Font Awesome 5 Free';
         font-weight: 900;
-        font-size: 14px; 
+        font-size: 14px;
         content: "\f078";
         position: absolute;
         right: 16px;
@@ -285,7 +288,7 @@
     #inicio_usuario .img_empleado_presentacion_mis_datos{
         margin-left: 50%;
         margin-top: -90px;
-        transform: translate(-50%);   
+        transform: translate(-50%);
     }
 
     .caja-cards-mobile-datos{

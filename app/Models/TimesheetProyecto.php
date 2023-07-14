@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
+use Illuminate\Support\Facades\Cache;
 
 class TimesheetProyecto extends Model
 {
     use HasFactory;
+    use Filterable;
 
     protected $table = 'timesheet_proyectos';
 
@@ -22,12 +25,21 @@ class TimesheetProyecto extends Model
         'identificador',
         'sede_id',
         'tipo',
+        'horas_proyecto',
     ];
 
     const TIPOS = [
         'Interno' => 'Interno',
         'Externo' => 'Externo',
     ];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('timesheetproyecto_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function getAreasAttribute()
     {
@@ -39,6 +51,18 @@ class TimesheetProyecto extends Model
         }
 
         return $areas;
+    }
+
+    public function getEmpleadosAttribute()
+    {
+        $ids_emp = TimesheetProyectoEmpleado::where('proyecto_id', $this->id)->get();
+
+        $emps = collect();
+        foreach ($ids_emp as $key => $emp_p) {
+            $emps->push(Empleado::select('id')->find($emp_p->empleado_id));
+        }
+
+        return $emps;
     }
 
     public function sede()
@@ -58,6 +82,11 @@ class TimesheetProyecto extends Model
 
     public function proyectos()
     {
-        return $this->hasMany(QuejasCliente::class, 'proyectos_id');
+        return $this->hasMany(TimesheetProyectoEmpleado::class, 'proyecto_id', 'id');
+    }
+
+    public function proveedores()
+    {
+        return $this->hasMany(TimesheetProyectoProveedor::class, 'proyecto_id', 'id');
     }
 }

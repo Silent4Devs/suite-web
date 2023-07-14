@@ -227,4 +227,16 @@ class FileManagerRepository implements ConfigRepository
     {
         return config('file-manager.aclRulesCache');
     }
+
+    /**
+     * Whether to slugify filenames
+     *
+     * boolean
+     *
+     * @return bool|null
+     */
+    final public function getSlugifyNames(): ?bool
+    {
+        return config('file-manager.slugifyNames', false);
+    }
 }

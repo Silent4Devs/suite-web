@@ -67,7 +67,7 @@ class ReporteAprobador extends Component
     public function mount()
     {
         $this->habilitarTodos = false;
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
 
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(2)->format('Y-m-d');
         $this->fecha_fin = Carbon::now()->format('Y-m-d');

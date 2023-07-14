@@ -2,15 +2,14 @@
 
 namespace App\Models\RH;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Evaluacion extends Model
 {
     use HasFactory, SoftDeletes;
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
     protected $table = 'ev360_evaluaciones';
     protected $guarded = ['id'];
     protected $appends = ['estatus_formateado', 'color_estatus', 'color_estatus_text'];
@@ -27,6 +26,14 @@ class Evaluacion extends Model
     const GRUPO_DINAMICO = '3';
     const POR_AREA = '1';
     const SELECCION_MANUAL = '2';
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Evaluacion_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function getEstatusFormateadoAttribute()
     {

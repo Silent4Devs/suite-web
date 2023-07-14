@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
@@ -13,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use EloquentFilter\Filterable;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Area.
@@ -38,7 +36,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Area extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use SoftDeletes, MultiTenantModelTrait, HasFactory, Filterable;
 
     protected $table = 'areas';
 
@@ -65,6 +63,14 @@ class Area extends Model
     ];
 
     protected $appends = ['grupo_name', 'foto_ruta'];
+
+    #Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('areas_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -114,6 +120,11 @@ class Area extends Model
     public function empleados()
     {
         return $this->hasMany(Empleado::class)->alta();
+    }
+
+    public function totalEmpleados()
+    {
+        return $this->hasMany(Empleado::class, 'area_id');
     }
 
     public function material_iso_veinticientes()

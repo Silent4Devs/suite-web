@@ -316,4 +316,28 @@
         });
 
     </script>
+
+    <script>
+        // Definimos una variable para almacenar el tiempo de inactividad
+        let inactivityTimeout;
+        const time = 1800000;
+
+
+
+        function showInactiveMessage() {
+            alert("Demasiado tiempo de inactividad al registrar horas");
+            window.location.href = "{{ route('admin.timesheet-inicio') }}";
+        }
+
+        function resetInactivityTimeout() {
+        clearTimeout(inactivityTimeout);
+
+        inactivityTimeout = setTimeout(showInactiveMessage, time); // 60000 ms = 1 minuto
+        }
+
+        document.addEventListener("mousemove", resetInactivityTimeout);
+
+        resetInactivityTimeout();
+
+    </script>
 @endsection

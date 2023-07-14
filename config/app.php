@@ -180,9 +180,8 @@ return [
         // Jenssegers\Date\DAteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Geocoder\GeocoderServiceProvider::class,
-        Ladumor\LaravelPwa\PWAServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-
+        EloquentFilter\ServiceProvider::class,
     ],
 
     /*
@@ -243,8 +242,8 @@ return [
         'Flash' => Laracasts\Flash\Flash::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Date' => Jenssegers\Date\Date::class,
-        'LaravelPwa' => \Ladumor\LaravelPwa\LaravelPwa::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
 
     ],
 

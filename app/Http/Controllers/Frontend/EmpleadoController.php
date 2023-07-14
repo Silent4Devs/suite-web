@@ -52,7 +52,7 @@ class EmpleadoController extends Controller
             // estatus,
             // n_registro
             // '))->whereNull('deleted_at')->get();
-            $query = Empleado::get();
+            $query = Empleado::getAll();
             $table = DataTables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -164,16 +164,16 @@ class EmpleadoController extends Controller
     public function create()
     {
         //abort_if(Gate::denies('configuracion_empleados_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $areas = Area::get();
-        $sedes = Sede::get();
-        $experiencias = ExperienciaEmpleados::get();
+        $areas = Area::getAll();
+        $sedes = Sede::getAll();
+        $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
         $certificaciones = CertificacionesEmpleados::get();
-        $puestos = Puesto::all();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::all();
 
         return view('frontend.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles'));
@@ -388,17 +388,17 @@ class EmpleadoController extends Controller
         //abort_if(Gate::denies('configuracion_empleados_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::findOrfail($id);
         // dd($empleado);
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
-        $areas = Area::get();
+        $areas = Area::getAll();
         $area = Area::findOrfail($empleado->area_id);
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
         $sede = Sede::findOrfail($empleado->sede_id);
-        $experiencias = ExperienciaEmpleados::get();
+        $experiencias = ExperienciaEmpleados::getAll();
         $educacions = EducacionEmpleados::get();
         $cursos = CursosDiplomasEmpleados::get();
         $documentos = EvidenciasDocumentosEmpleados::get();
-        $puestos = Puesto::all();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::all();
 
         return view('frontend.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles'));

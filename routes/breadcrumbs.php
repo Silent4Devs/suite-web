@@ -10,6 +10,12 @@ Breadcrumbs::for('admin.analisisdebrechas.index', function ($trail) {
     $trail->push('Análisis de Brechas', route('admin.analisis-brechas.index'));
 });
 
+Breadcrumbs::for('admin.analisisdebrechas-2022.index', function ($trail) {
+    $trail->push('Sistema de Gestión', route('admin.iso27001.index'));
+    $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
+    $trail->push('Análisis de Brechas-2022', route('admin.analisis-brechas-2022.index'));
+});
+
 Breadcrumbs::for('dashboard-iso27001', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Dashboard', route('admin.home'));
@@ -18,6 +24,12 @@ Breadcrumbs::for('admin.analisis-brechas.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
     $trail->push('Análisis de Brechas', route('admin.analisis-brechas.index'));
+});
+
+Breadcrumbs::for('admin.analisis-brechas-2022.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Contexto', route('admin.iso27001.index') . '#contexto');
+    $trail->push('Análisis de Brechas-2022', route('admin.analisis-brechas-2022.index'));
 });
 
 Breadcrumbs::for('admin.planTrabajoBase.index', function ($trail) {
@@ -30,6 +42,12 @@ Breadcrumbs::for('admin.declaracion-aplicabilidad.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
     $trail->push('Declaración de Aplicabilidad', route('admin.declaracion-aplicabilidad.index'));
+});
+
+Breadcrumbs::for('admin.declaracion-aplicabilidad-2022.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Declaración de Aplicabilidad 2022', route('admin.declaracion-aplicabilidad-2022.index'));
 });
 
 Breadcrumbs::for('admin.partes-interesadas.index', function ($trail) {
@@ -167,9 +185,9 @@ Breadcrumbs::for('AIA', function ($trail) {
 });
 
 Breadcrumbs::for('admin.analisis-riesgos.index', function ($trail) {
-    $trail->push('Análisis de Impacto', route('admin.analisis-impacto.menu'));
-    $trail->push('BIA', route('admin.analisis-impacto.menu-BIA'));
-    $trail->push('Cuestionario', route('admin.analisis-impacto.index'));
+    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Análisis de Riesgos', route('admin.analisis-riesgos.menu'));
+    $trail->push('Matriz de Riesgo');
 });
 
 Breadcrumbs::for('cuestionario-AIA', function ($trail) {
@@ -196,6 +214,12 @@ Breadcrumbs::for('admin.paneldeclaracion.index', function ($trail) {
     $trail->parent('admin.iso27001.index');
     $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
     $trail->push('Asignación Controles', route('admin.paneldeclaracion.index'));
+});
+
+Breadcrumbs::for('admin.paneldeclaracion-2022.index', function ($trail) {
+    $trail->parent('admin.iso27001.index');
+    $trail->push('Planificación', route('admin.iso27001.index') . '#planificacion');
+    $trail->push('Asignación Controles 2022', route('admin.paneldeclaracion-2022.index'));
 });
 
 Breadcrumbs::for('admin.objetivosseguridads.index', function ($trail) {

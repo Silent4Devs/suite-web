@@ -45,7 +45,7 @@ class NotificarEvaluacion360 extends Command
         //One hour is added to compensate for PHP being one hour faster
         $now = date('Y-m-d', strtotime(Carbon::now()));
         logger($now);
-        $evaluaciones_no_enviadas = Evaluacion::get();
+        $evaluaciones_no_enviadas = Evaluacion::getAll();
         if (!$evaluaciones_no_enviadas) {
             $evaluaciones_no_enviadas->where('fecha_inicio', $now)
                 ->where('email_sended', false)->each(function ($evaluacion) {

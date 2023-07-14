@@ -6,6 +6,7 @@ use App\Models\Empleado;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoEmpleado;
 use Livewire\Component;
 
 class TimesheetHorasFilas extends Component
@@ -31,20 +32,42 @@ class TimesheetHorasFilas extends Component
 
         // areas proyectos
         $proyectos_array = collect();
-        $proyectos_totales = TimesheetProyecto::get();
-        foreach ($proyectos_totales as $key => $proyecto) {
-            if ($proyecto->estatus == 'proceso') {
-                foreach ($proyecto->areas as $key => $area) {
-                    if (($area['id'] == $empleado->area_id)) {
-                        $proyectos_array->push([
-                            'id'=>$proyecto->id,
-                            'identificador'=>$proyecto->identificador,
-                            'proyecto'=>$proyecto->proyecto,
-                        ]);
+        $proyectos_totales = TimesheetProyecto::getAll();
+        $proyectoempleado = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->exists();
+        if ($proyectoempleado === true) {
+            foreach ($proyectos_totales as $key => $proyecto) {
+                if ($proyecto->estatus == 'proceso') {
+                    foreach ($proyecto->empleados as $key => $emp) {
+                        if ($emp['id'] == $empleado->id) {
+                            foreach ($proyecto->areas as $key => $area) {
+                                if (($area['id'] == $empleado->area_id)) {
+                                    $proyectos_array->push([
+                                        'id' => $proyecto->id,
+                                        'identificador' => $proyecto->identificador,
+                                        'proyecto' => $proyecto->proyecto,
+                                    ]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            foreach ($proyectos_totales as $key => $proyecto) {
+                if ($proyecto->estatus == 'proceso') {
+                    foreach ($proyecto->areas as $key => $area) {
+                        if (($area['id'] == $empleado->area_id)) {
+                            $proyectos_array->push([
+                                'id' => $proyecto->id,
+                                'identificador' => $proyecto->identificador,
+                                'proyecto' => $proyecto->proyecto,
+                            ]);
+                        }
                     }
                 }
             }
         }
+
         $this->proyectos = $proyectos_array->unique();
 
         $this->tareas = collect();

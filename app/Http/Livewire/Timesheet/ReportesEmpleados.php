@@ -67,7 +67,7 @@ class ReportesEmpleados extends Component
 
     public function mount()
     {
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
         $this->empleados_estatus = 'alta';
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
         $this->fecha_fin = Carbon::now()->format('Y-m-d');
@@ -149,8 +149,8 @@ class ReportesEmpleados extends Component
             $empleados_list = Empleado::where('estatus', $this->empleados_estatus)->get();
             $this->empleados_list_global = Empleado::where('estatus', $this->empleados_estatus)->get();
         } else {
-            $empleados_list = Empleado::get();
-            $this->empleados_list_global = Empleado::get();
+            $empleados_list = Empleado::getAll();
+            $this->empleados_list_global = Empleado::getAll();
         }
         // $empleados_list = Empleado::where('id', 222)->get();
 
@@ -334,6 +334,10 @@ class ReportesEmpleados extends Component
             }
             // registro de horas en calendario
             // dd($times_empleado_array);
+            //Fecha de ingreso para saber si aplica el registro de semanas
+            $fecha_ing = Carbon::parse($empleado_list->antiguedad);
+            $fecha_ingre = date("Y-m-d", strtotime($fecha_ing));
+
 
             $horas_totales_empleado_calendar = 0;
             $calendario_tabla_empleado = [];
@@ -356,11 +360,20 @@ class ReportesEmpleados extends Component
                                     array_push($calendario_tabla_empleado, $t['horas_semana']);
                                     $horas_totales_empleado_calendar += $t['horas_semana'];
                                 }
+                            } elseif ($entro_esta_semana === true) {
+                                array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">No&nbsp;Aplica</span>');
                             } else {
                                 array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
+                                $times_atrasados = ($times_atrasados + 1);
                             }
                         } else {
-                            array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
+                            $s = explode('|', $semana);
+                            if (Carbon::parse($s[0])->lt($fecha_ingre)) {
+                                array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">No&nbsp;Aplica</span>');
+                            } else {
+                                array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
+                                $times_atrasados = ($times_atrasados + 1);
+                            }
                         }
                     }
                 }
@@ -609,13 +622,13 @@ class ReportesEmpleados extends Component
         $this->reporte_general = true;
     }
 
-    public function correoRetraso($id)
+    public function correoRetraso($id, $sem_falt)
     {
         $empleado = Empleado::select('id', 'name', 'email', 'antiguedad')->find($id);
 
         foreach ($this->empleados as $key => $empleado_a) {
             if ($empleado_a['id'] == $id) {
-                $semanas_faltantes = $empleado_a['times_faltantes'];
+                $semanas_faltantes = $sem_falt;
             }
         }
         Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
@@ -629,7 +642,7 @@ class ReportesEmpleados extends Component
     {
         foreach ($this->empleados as $empleado) {
             if ($empleado['times_atrasados'] > 0) {
-                $this->correoRetraso($empleado['id']);
+                $this->correoRetraso($empleado['id'], $empleado['times_atrasados']);
             }
         }
 

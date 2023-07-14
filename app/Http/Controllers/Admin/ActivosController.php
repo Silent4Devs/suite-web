@@ -124,12 +124,12 @@ class ActivosController extends Controller
             return $table->make(true);
         }
 
-        $tipoactivos = Tipoactivo::get();
-        $subtipo = SubcategoriaActivo::get();
-        $users = User::get();
-        $sedes = Sede::get();
+        $tipoactivos = Tipoactivo::getAll();
+        $subtipo = SubcategoriaActivo::getAll();
+        $users = User::getAll();
+        $sedes = Sede::getAll();
         $teams = Team::get();
-        $activos_nuevo = Activo::get();
+        $activos_nuevo = Activo::getAll();
 
         return view('admin.activos.index', compact('tipoactivos', 'users', 'sedes', 'teams', 'subtipo', 'activos_nuevo'));
     }
@@ -149,12 +149,12 @@ class ActivosController extends Controller
         $empleados = Empleado::alta()->with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
-        $marcas = Marca::get();
+        $marcas = Marca::getAll();
 
-        $modelos = Modelo::get();
-        $tipos = Tipoactivo::get();
+        $modelos = Modelo::getAll();
+        $tipos = Tipoactivo::getAll();
 
         return view('admin.activos.create', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'procesos'));
     }
@@ -236,12 +236,12 @@ class ActivosController extends Controller
 
         $procesos = Proceso::with('macroproceso')->get();
 
-        $area = Area::get();
+        $area = Area::getAll();
 
-        $marcas = Marca::get();
+        $marcas = Marca::getAll();
 
-        $modelos = Modelo::get();
-        $tipos = Tipoactivo::get();
+        $modelos = Modelo::getAll();
+        $tipos = Tipoactivo::getAll();
         $categoriasSeleccionado = $activo->tipoactivo_id;
         $subcategoriaSeleccionado = $activo->subtipo_id;
         // dd($subcategoriaSeleccionado);

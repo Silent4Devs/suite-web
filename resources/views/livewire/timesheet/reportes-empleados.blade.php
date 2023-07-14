@@ -389,7 +389,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
                             <button type="button" class="btn btn-success"
-                                wire:click="correoRetraso({{ $empleado_md['id'] }})" data-dismiss="modal">Notificar
+                                wire:click="correoRetraso({{ $empleado_md['id']}}, {{$empleado_md['times_atrasados'] }})" data-dismiss="modal">Notificar
                                 Retrasos al Colaborador</button>
                         </div>
                     </div>

@@ -24,7 +24,7 @@ class SystemCalendarController extends Controller
         $empleado = auth()->user()->empleado;
         $usuario = auth()->user();
 
-        $implementaciones = PlanImplementacion::get();
+        $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();
 
         if ($implementaciones) {
@@ -58,7 +58,7 @@ class SystemCalendarController extends Controller
         // $actividades = $actividades->flatten(1);
 
         $plan_base = PlanBaseActividade::get();
-        $auditorias_anual = AuditoriaAnual::get();
+        $auditorias_anual = AuditoriaAnual::getAll();
         $auditoria_internas = AuditoriaInterna::get();
         // dd($auditoria_internas);
 
@@ -69,7 +69,7 @@ class SystemCalendarController extends Controller
             })->get();
         }
 
-        $eventos = Calendario::get();
+        $eventos = Calendario::getAll();
         $oficiales = CalendarioOficial::get();
 
         $cumples_aniversarios = Empleado::alta()->get();

@@ -127,7 +127,7 @@ class TipoactivoController extends Controller
     {
         if ($request->ajax()) {
             $tipos_arr = [];
-            $tipos = Tipoactivo::get();
+            $tipos = Tipoactivo::getAll();
             // dd($tipos);
             foreach ($tipos as $tipo) {
                 $tipos_arr[] = ['id'=>$tipo->id, 'text'=>$tipo->tipo];

@@ -67,7 +67,7 @@ class PlanMejoraController extends Controller
         }
 
         $registromejoras = Registromejora::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.planMejoras.index', compact('registromejoras', 'users', 'teams'));
