@@ -8,9 +8,12 @@ use App\Models\Empleado;
 
 use Livewire\Component;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\F;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class TimesheetProyectoExternosComponent extends Component
 {
+    use LivewireAlert;
+
     public $proyecto;
     public $empleados;
     public $proyecto_empleados;
@@ -57,6 +60,13 @@ class TimesheetProyectoExternosComponent extends Component
         ]);
     }
 
+    private function resetInput()
+    {
+        $this->empleado_editado = null;
+        $this->horas_edit = null;
+        $this->costo_edit = null;
+    }
+
     public function editExterno($id)
     {
         if ($this->proyecto->tipo === "Externo") {
@@ -70,6 +80,14 @@ class TimesheetProyectoExternosComponent extends Component
             'horas_tercero' => $this->horas_tercero_edit,
             'costo_tercero' => $this->costo_tercero_edit,
         ]);
+        $this->dispatchBrowserEvent('closeModal');
+        $this->resetInput();
+        $this->alert('success', 'Editado exitosamente', [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+            'timerProgressBar' => true,
+           ]);
     }
 
     public function externoProyectoRemove($id)

@@ -37,8 +37,8 @@
 
             <div id="registro_completo" class="d-none w-100 row" style="margin:0 !important;">
                 <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> RFC</label>
-                    <input type="" required name="rfc" class="form-control" value="{{ $cliente->rfc }}">
+                    <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> RFC<sup style="color: red;">*</sup></label>
+                    <input type="text" placeholder="QUMA470929F37" pattern="^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$" required name="rfc" class="form-control" value="{{ $cliente->rfc }}">
                 </div>
 
                 <div class="col-md-12 col-sm-12 mt-4">
@@ -48,36 +48,36 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Calle y Número</label>
+                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Calle y Número<sup style="color: red;">*</sup></label>
                     <input type="" required name="calle" class="form-control" value="{{ $cliente->calle }}">
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Colonia</label>
-                    <input type="" required name="colonia" class="form-control" value="{{ $cliente->colonia }}">
+                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Colonia<sup style="color: red;">*</sup></label>
+                    <input type="text" maxlength="255" required name="colonia" class="form-control" value="{{ $cliente->colonia }}">
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Ciudad o Municipio/ País</label>
-                    <input type="" required name="ciudad" class="form-control" value="{{ $cliente->ciudad }}">
+                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Ciudad o Municipio/ País<sup style="color: red;">*</sup></label>
+                    <input type="text" maxlength="255" required name="ciudad" class="form-control" value="{{ $cliente->ciudad }}">
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i>  Código Postal </label>
-                    <input type="" required name="codigo_postal" class="form-control" value="{{ $cliente->codigo_postal }}">
+                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i>  Código Postal<sup style="color: red;">*</sup> </label>
+                    <input type="text" maxlength="20" required name="codigo_postal" class="form-control" value="{{ $cliente->codigo_postal }}">
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="" class="txt-tamaño">
 
-                        Teléfono*
+                        Teléfono* <sup style="color: red;">*</sup>
                     </label>
                     <input id="phone" type="text" name="telefono" value="{{ $cliente->telefono }}" class="form-control" pattern="\x2b[0-9]+" size="20" placeholder="+54976284353" required>
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fas fa-laptop iconos-crear"></i> Página Web</label>
-                    <input type="" required name="pagina_web" class="form-control" value="{{ $cliente->pagina_web }}">
+                    <label class="form-label"><i class="fas fa-laptop iconos-crear"></i> Página Web<sup style="color: red;">*</sup></label>
+                    <input type="text" required name="pagina_web" class="form-control" value="{{ $cliente->pagina_web }}">
                 </div>
 
                 <div class="col-md-12 col-sm-12 mt-4">
@@ -87,26 +87,26 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fas fa-user iconos-crear"></i> Nombre Completo del contacto</label>
-                    <input type=""  required name="nombre_contacto" class="form-control" value="{{ $cliente->nombre_contacto }}">
+                    <label class="form-label"><i class="fas fa-user iconos-crear"></i> Nombre Completo del contacto<sup style="color: red;">*</sup></label>
+                    <input type="text" maxlength="255" required name="nombre_contacto" class="form-control" value="{{ $cliente->nombre_contacto }}">
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i> Puesto </label>
-                    <input type="" required name="puesto_contacto" class="form-control" value="{{ $cliente->puesto_contacto }}">
+                    <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i> Puesto<sup style="color: red;">*</sup> </label>
+                    <input type="text" maxlength="255" required name="puesto_contacto" class="form-control" value="{{ $cliente->puesto_contacto }}">
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electronico</label>
-                    <input type="email" id="foo" class="form-control"  value="{{ $cliente->correo_contacto }}"   placeholder="example@example.com" name="correo_contacto"
+                    <label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electronico<sup style="color: red;">*</sup></label>
+                    <input type="email" id="foo" maxlength="255" class="form-control"  value="{{ $cliente->correo_contacto }}"   placeholder="example@example.com" name="correo_contacto"
                         required>
 
                     <h6 id="emailV"></h6>
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fas fa-mobile-alt iconos-crear"></i> Celular </label>
-                    <input  pattern="[0-9]{10}" required name="celular_contacto" class="form-control" value="{{ $cliente->celular_contacto }}">
+                    <label class="form-label"><i class="fas fa-mobile-alt iconos-crear"></i> Celular<sup style="color: red;">*</sup> </label>
+                    <input type="tel" pattern="[0-9]{10}" required name="celular_contacto" class="form-control" placeholder="54976284353" value="{{ $cliente->celular_contacto }}">
                 </div>
             </div>
 
@@ -129,7 +129,7 @@
    var val = $(this).val().trim(),
        reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
    if( reg.test(val) == false ){
-       emailV.innerHTML =  "correo incorrecto";
+       emailV.innerHTML =  "Correo no valido";
    }
 
    else{

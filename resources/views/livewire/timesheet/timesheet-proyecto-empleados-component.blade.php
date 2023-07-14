@@ -13,7 +13,7 @@
         <div class="row mt-4">
             <div class="form-group col-md-7">
                 <label for="">Empleado<sup>*</sup></label>
-                <select wire:model="empleado_añadido" name="" id="" class="select2" required>
+                <select wire:model.defer="empleado_añadido" name="" id="" class="select2" required>
                     <option value="" selected readonly>Seleccione un empleado</option>
                     @foreach ($empleados as $empleado)
                         @foreach ($areasempleado as $ae)
@@ -33,14 +33,14 @@
             @if($proyecto->tipo === "Externo")
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                <input wire:model="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number" min="1" class="form-control">
+                <input wire:model.defer="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number" min="1" class="form-control">
             </div>
             @error('horas_asignadas')
                 <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
             @enderror
             <div class="form-group col-md-4">
                 <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                <input wire:model="costo_hora" name="costo_hora" id="costo_hora" type="number" min="1" class="form-control">
+                <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora" type="number" min="1" class="form-control">
             </div>
             @error('costo_hora')
                 <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
@@ -99,7 +99,7 @@
         @foreach($proyecto_empleados as $proyect_empleado)
         <div class="modal fade" id="modal_proyecto_empleado_editar_{{ $proyect_empleado->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
                         <button class="btn btn-tache-cerrar" data-dismiss="modal"><i
@@ -126,28 +126,40 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                                        <input wire:model.defer="horas_edit"  name="" id="" type="number" min="1" class="form-control">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                                        <input wire:model.defer="costo_edit"  name="" id="" type="number" min="1" class="form-control">
-                                    </div>
-                                    <div class="mt-4 d-flex justify-content-between">
-                                        <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
-                                            <button class="btn btn_cancelar" data-dismiss="modal">
-                                                Cancelar
-                                            </button>
+                                @if($proyecto->tipo === "Externo")
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
+                                            <input
+                                            {{-- value="{{ old('horas_edit', $proyect_empleado->horas_asignadas) }}" --}}
+                                            wire:model.defer="horas_edit"
+                                            name="horas_edit" id="horas_edit" type="number" min="1" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
-                                            <button onclick="cerrar();" class="btn btn-success" >Editar</button>
+                                        <div class="form-group col-md-6">
+                                            <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
+                                            <input
+                                            {{-- value="{{ old('horas_edit', $proyect_empleado->costo_hora) }}" --}}
+                                            wire:model.defer="costo_edit"
+                                            name="costo_edit" id="costo_edit" type="number" min="1" value="{{$proyect_empleado->costo_hora}}"  class="form-control">
                                         </div>
                                     </div>
-                                </div>
+                                @endif
+                                    <div class="row">
+                                        <div class="mt-4 d-flex justify-content-between">
+                                            <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
+                                                <button class="btn btn_cancelar" data-dismiss="modal">
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                            <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
+                                                <button class="btn btn-success" >Editar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div wire:loading>
+                                        <h5 style="color:rgb(34, 56, 91)"><i class="fas fa-circle-notch fa-spin"></i> Modificando Datos...</h5>
+                                    </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -187,15 +199,21 @@
         </div>
     @endforeach --}}
 
+    @section('js')
+    <script>
+        window.addEventListener('closeModal', event => {
+            $('.modal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+
+        })
+    </script>
+    @stop
+
+
     @section('scripts')
     @parent
-     <script>
-        function cerrar() {
-            location.reload();
-        }
-
-    </script>
-        <script type="text/javascript">
+    <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', () => {
 
                 Livewire.on('scriptTabla', () => {

@@ -9,9 +9,12 @@ use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\F;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class TimesheetProyectoEmpleadosComponent extends Component
 {
+    use LivewireAlert;
+
     public $proyecto;
     public $empleados;
     public $proyecto_empleados;
@@ -37,6 +40,13 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $this->proyecto_empleados = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->get();
         $this->emit('tablaLivewire');
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
+    }
+
+    private function resetInput()
+    {
+        $this->empleado_editado = null;
+        $this->horas_edit = null;
+        $this->costo_edit = null;
     }
 
     public function addEmpleado()
@@ -65,17 +75,39 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 'costo_edit' => ['required'],
             ]);
         }
-        $empleado_añadido = $request->input('serverMemo')['data'];
-        $id_empleado = $empleado_añadido['empleado_editado'];
+        // dd($request);
+        // $empleado_añadido = $request->input('serverMemo')['data'];
+        // dd($empleado_añadido);
+        // $id_empleado = $empleado_añadido['empleado_editado'];
+        if($this->empleado_editado != null){
+            // dd($this->empleado_editado);
+            $emp_upd_proyecto = Empleado::find($this->empleado_editado);
+            // dd($emp_upd_proyecto);
+            $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
+            $empleado_edit_proyecto->update([
+                'empleado_id' => $emp_upd_proyecto->id,
+                'area_id' => $emp_upd_proyecto->area_id,
+                'horas_asignadas' => $this->horas_edit,
+                'costo_hora' => $this->costo_edit,
+            ]);
+        }else{
+            // dd("Esta nulo");
+            $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
+            $empleado_edit_proyecto->update([
+                'horas_asignadas' => $this->horas_edit,
+                'costo_hora' => $this->costo_edit,
+            ]);
+        }
 
-        $emp_upd_proyecto = Empleado::find($id_empleado);
-        $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
-        $empleado_edit_proyecto->update([
-            'empleado_id' => $emp_upd_proyecto->id,
-            'area_id' => $emp_upd_proyecto->area_id,
-            'horas_asignadas' => $empleado_añadido['horas_edit'],
-            'costo_hora' => $empleado_añadido['costo_edit'],
-        ]);
+        $this->dispatchBrowserEvent('closeModal');
+        $this->resetInput();
+        $this->alert('success', 'Editado exitosamente', [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+            'timerProgressBar' => true,
+           ]);
+
     }
 
     public function empleadoProyectoRemove($id)
