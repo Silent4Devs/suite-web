@@ -39,15 +39,23 @@ class TimesheetProyectoExternosComponent extends Component
 
     public function render()
     {
-        $this->proyecto_proveedores = TimesheetProyectoProveedor::where('proyecto_id', $this->proyecto->id)->get();
+        $this->proyecto_proveedores = TimesheetProyectoProveedor::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
         $this->emit('scriptTabla');
         return view('livewire.timesheet.timesheet-proyecto-externos-component');
+    }
+
+    private function resetInput()
+    {
+        $this->externo_añadido = null;
+        $this->horas_tercero = null;
+        $this->costo_tercero = null;
     }
 
     public function addExterno()
     {
         if ($this->proyecto->tipo === "Externo") {
             $this->validate([
+                'externo_añadido' => ['required'],
                 'horas_tercero' => ['required'],
                 'costo_tercero' => ['required'],
             ]);
@@ -58,6 +66,13 @@ class TimesheetProyectoExternosComponent extends Component
             'horas_tercero' => $this->horas_tercero,
             'costo_tercero' => $this->costo_tercero,
         ]);
+        $this->resetInput();
+        $this->alert('success', 'Agregado exitosamente', [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+            'timerProgressBar' => true,
+           ]);
     }
 
     public function editExterno($id, $datos)
