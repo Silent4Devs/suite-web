@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="col-8">
-                        <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
+                        <button id="btnExportarproyemp" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
                             <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                             Exportar Excel
                         </button>
@@ -170,11 +170,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <script>
-        const $btnExportar = document.querySelector("#btnExportar"),
-            $tabla = document.querySelector("#proyemp");
+        const $btnExportarproyemp = document.querySelector("#btnExportarproyemp"),
+            $tablaproyemp = document.querySelector("#proyemp");
 
-        $btnExportar.addEventListener("click", function() {
-            let tableExport = new TableExport($tabla, {
+        $btnExportarproyemp.addEventListener("click", function() {
+            let tableExport = new TableExport($tablaproyemp, {
                 exportButtons: false, // No queremos botones
                 filename: "Reporte Colaborador-Tareas", //Nombre del archivo de Excel
                 sheetname: "Horas trabajadas por Tarea", //Título de la hoja
