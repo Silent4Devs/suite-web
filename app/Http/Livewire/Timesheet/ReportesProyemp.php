@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetHoras;
+use Carbon\Carbon;
 
 class ReportesProyemp extends Component
 {
@@ -46,7 +47,9 @@ class ReportesProyemp extends Component
 
     public function updatedFechaInicio($value)
     {
-        $this->fecha_inicio = $value;
+        $fi = Carbon::parse($value)->format('Y-m-d');
+        $this->fecha_inicio = $fi;
+        // dd($value, $this->fecha_inicio);
         // $this->times = Timesheet::whereHas('empleado', function ($query) {
         //     if ($this->area_id == 0) {
         //         return $query;
@@ -58,7 +61,8 @@ class ReportesProyemp extends Component
 
     public function updatedFechaFin($value)
     {
-        $this->fecha_fin = $value;
+        $ff = Carbon::parse($value)->format('Y-m-d');
+        $this->fecha_fin = $ff;
         // $this->times = Timesheet::whereHas('empleado', function ($query) {
         //     if ($this->area_id == 0) {
         //         return $query;
@@ -105,6 +109,7 @@ class ReportesProyemp extends Component
 
     public function render()
     {
+        // dd($this->fecha_inicio);
         //Query para obtener los timesheet y filtrarlo
         $query = TimesheetHoras::with('proyecto', 'timesheet', 'tarea.areaData')
             ->whereHas('timesheet', function ($query) {

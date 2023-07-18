@@ -7,6 +7,7 @@ use App\Models\Timesheet;
 use App\Models\Empleado;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Carbon\Carbon;
 
 class ReportesRegistros extends Component
 {
@@ -38,7 +39,8 @@ class ReportesRegistros extends Component
 
     public function updatedFechaInicio($value)
     {
-        $this->fecha_inicio = $value;
+        $fi = Carbon::parse($value)->format('Y-m-d');
+        $this->fecha_inicio = $fi;
         // $this->times = Timesheet::whereHas('empleado', function ($query) {
         //     if ($this->area_id == 0) {
         //         return $query;
@@ -50,7 +52,8 @@ class ReportesRegistros extends Component
 
     public function updatedFechaFin($value)
     {
-        $this->fecha_fin = $value;
+        $ff = Carbon::parse($value)->format('Y-m-d');
+        $this->fecha_fin = $ff;
         // $this->times = Timesheet::whereHas('empleado', function ($query) {
         //     if ($this->area_id == 0) {
         //         return $query;
