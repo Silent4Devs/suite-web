@@ -81,7 +81,7 @@
         <div class="row w-100 mt-4" style="align-items: end">
             <div class="col-6">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="row" style="justify-content: center">
                             <div class="col-4 p-0" style="font-size: 11px;align-self: center">
                                 <p class="m-0">Mostrando</p>
@@ -101,7 +101,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-6">
                         <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
                             <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                             Exportar Excel
@@ -182,7 +182,7 @@
                                 @endif
                             </td>
                             <td>
-                                {{ $time->total_horas }} <small>h</small>
+                                {{ $time->total_horas }}
                             </td>
                             <td>
                                 <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar"

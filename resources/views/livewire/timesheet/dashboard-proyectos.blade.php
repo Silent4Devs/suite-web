@@ -4,7 +4,7 @@
         <div class="col-md-6 form-group" style="padding-left:0px !important;">
             <label class="form-label">Estatus</label>
             <select class="form-control" wire:model="estatus">
-                <option selected value="0">Todos</option>
+                <option selected value="todos">Todos</option>
                 <option value="proceso">En Proceso</option>
                 <option value="terminado">Terminados</option>
                 <option value="cancelado">Cancelados</option>
@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-6 form-group" style="padding-left:0px !important;">
         <label class="form-label">Proyecto</label>
-        <select class="form-control" wire:model="proy_id" id="proyectos">
+        <select class="form-control" wire:model="proy_id">
             <option value="0" selected>Seleccione un proyecto</option>
             @foreach ($lista_proyectos as $pro)
                 <option value="{{ $pro->id }}">{{ $pro->proyecto }}</option>
@@ -149,7 +149,7 @@
                 plugins: {
                     datalabels: {
                         color: '#fff',
-                        display: true,
+                        display: false,
                         font: {
                             size: 20
                         }

@@ -16,13 +16,9 @@ class DashboardProyectos extends Component
     // public $times;
     public $areas;
     public $area_id = 'todas';
-    public $estatus;
+    public $estatus = "todos";
     public $fecha_inicio;
     public $fecha_fin;
-    public $emp;
-    public $emp_id;
-    public $apr;
-    public $apr_id;
     public $proy;
     public $proy_id;
     public $datos_areas;
@@ -30,10 +26,10 @@ class DashboardProyectos extends Component
 
     public function mount()
     {
-        $this->estatus = 0;
+        // $this->estatus = 0;
         // $this->areas = Area::get();
         // $this->emp = Empleado::orderBy('name', 'ASC')->get();
-        $this->proy = TimesheetProyecto::orderBy('proyecto', 'ASC')->get();
+        // $this->proy = TimesheetProyecto::orderBy('proyecto', 'ASC')->get();
 
     }
 
@@ -41,11 +37,6 @@ class DashboardProyectos extends Component
     {
         $this->estatus = $value;
 
-    }
-
-    public function updatedFechaFin($value)
-    {
-        $this->fecha_fin = $value;
     }
 
     public function updatedAreaId($value)
@@ -64,13 +55,14 @@ class DashboardProyectos extends Component
         $this->datos_areas = collect();
         $area_individual;
         //Query para obtener los timesheet y filtrarlo
-        if($this->estatus === 0){
+        if($this->estatus === "todos"){
             $this->proy = TimesheetProyecto::orderBy('proyecto')->get();
         }else{
-            $this->proy = TimesheetProyecto::where('estatus', $this->estatus)->orderBy('proyecto')->get();
+            $this->proy = TimesheetProyecto::where('estatus', $this->estatus)->get();
         }
 
         $lista_proyectos = $this->proy;
+        // dd($lista_proyectos);
 
         if($this->proy_id === 0){
             $this->areas = TimesheetProyectoArea::with('area')->get();
@@ -300,18 +292,6 @@ class DashboardProyectos extends Component
         // dd($lista_areas);
 
         return view('livewire.timesheet.dashboard-proyectos', compact('lista_proyectos', 'lista_areas'));
-    }
-
-    public function todos()
-    {
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
-        $this->estatus = null;
     }
 
 }
