@@ -119,9 +119,6 @@
                             <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                             Exportar Excel
                         </button> --}}
-                        {{-- <div class="col-12" style="text-align: end">
-                            @livewire('timesheet.empleados-timesheet-export', ['tipo' => 'xlsx'])
-                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -143,7 +140,7 @@
                         <th>Fecha Fin </th>
                         <th>Empleado</th>
                         <th>Aprobador</th>
-                        <th style="min-width:250px;">Área</th>
+                        <th style="min-width:250px;">Area</th>
                         <th>Estatus</th>
                         <th>Horas Totales</th>
                         <th>Opciones</th>
@@ -317,6 +314,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> --}}
 
+
     <script>
 
     function exportTableToExcel(tableID, filename){
@@ -324,15 +322,15 @@
         var dataType = 'application/vnd.ms-excel';
         var tableSelect = document.getElementById(tableID);
         var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-        
+
         // Specify file name
         filename = filename?filename+'.xls':'excel_data.xls';
-        
+
         // Create download link element
         downloadLink = document.createElement("a");
-        
+
         document.body.appendChild(downloadLink);
-        
+
         if(navigator.msSaveOrOpenBlob){
             var blob = new Blob(['\ufeff', tableHTML], {
                 type: dataType
@@ -341,10 +339,10 @@
         }else{
             // Create a link to the file
             downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-        
+
             // Setting the file name
             downloadLink.download = filename;
-            
+
             //triggering the function
             downloadLink.click();
         }

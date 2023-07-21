@@ -16,7 +16,7 @@ class DashboardProyectos extends Component
     // public $times;
     public $areas;
     public $area_id = 'todas';
-    public $estatus = "todos";
+    public $estatus = 'todos';
     public $fecha_inicio;
     public $fecha_fin;
     public $proy;
@@ -47,6 +47,7 @@ class DashboardProyectos extends Component
     public function updatedProyectoId($value)
     {
         $this->proy_id = $value;
+        $this->area_id = "todas";
 
     }
 
@@ -54,11 +55,11 @@ class DashboardProyectos extends Component
     {
         $this->datos_areas = collect();
         $area_individual;
-        //Query para obtener los timesheet y filtrarlo
+
         if($this->estatus === "todos"){
             $this->proy = TimesheetProyecto::orderBy('proyecto')->get();
         }else{
-            $this->proy = TimesheetProyecto::where('estatus', $this->estatus)->get();
+            $this->proy = TimesheetProyecto::where('estatus', $this->estatus)->orderBy('proyecto')->get();
         }
 
         $lista_proyectos = $this->proy;
@@ -171,6 +172,7 @@ class DashboardProyectos extends Component
                             'horas_proyecto' => $total_emp,
                             'proyecto' => $this->datos_dash->proyecto,
                             'empleado' => $ep->empleado->name,
+                            'area' => $ep->empleado->area->area,
                         ]);
                     }
 
