@@ -23,59 +23,56 @@
         p {
             font-family: Arial, sans-serif;
         }
-
     </style>
 
-<style>
-    /* Remove space around the email design. */
+    <style>
+        /* Remove space around the email design. */
 
-    html,
+        html,
 
-    body {
+        body {
 
-        margin: 0 auto !important;
+            margin: 0 auto !important;
 
-        padding: 0 !important;
+            padding: 0 !important;
 
-        height: 100% !important;
+            height: 100% !important;
 
-        width: 100% !important;
-    }
+            width: 100% !important;
+        }
 
-    /* Stop Outlook resizing small text. */
-    * {
-        -ms-text-size-adjust: 100%;
-    }
-
-
-    /* Stop Outlook from adding extra spacing to tables. */
-    table,
-    td {
-        mso-table-lspace: 0pt !important;
-        mso-table-rspace: 0pt !important;
-    }
-
-    /* Use a better rendering method when resizing images in Outlook IE. */
-
-    img {
-        -ms-interpolation-mode: bicubic;
-    }
+        /* Stop Outlook resizing small text. */
+        * {
+            -ms-text-size-adjust: 100%;
+        }
 
 
-    /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+        /* Stop Outlook from adding extra spacing to tables. */
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
 
-    a {
+        /* Use a better rendering method when resizing images in Outlook IE. */
 
-        text-decoration: none;
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
 
-    }
 
-</style>
+        /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+
+        a {
+
+            text-decoration: none;
+
+        }
+    </style>
 </head>
 
 <body style="margin:0;padding:0;">
-    <table role="presentation"
-        style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
         <tr>
             <td align="center" style="padding:0;">
                 <table role="presentation"
@@ -101,7 +98,7 @@
                                     </hr>
                                     @php
                                         use App\Models\Organizacion;
-                                        $organizacion = Organizacion::first();
+                                        $organizacion = Organizacion::getFirst();
                                         $logotipo = $organizacion->logotipo;
                                         $empresa = $organizacion->empresa;
                                     @endphp
@@ -121,7 +118,7 @@
                                         <div style="margin-top:50px;">
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{$quejas->nombre}},
+                                                Estimado(a) {{ $quejas->nombre }},
                                             </strong>
                                         </div>
 
@@ -137,11 +134,16 @@
                                             </strong>
 
                                             <ul style="font-size:11pt; color:#153643;">
-                                                <li style="font-size:11pt;">Ticket ID:<strong style="font-size:10pt;"> {{$quejas->folio}}</strong></li>
+                                                <li style="font-size:11pt;">Ticket ID:<strong style="font-size:10pt;">
+                                                        {{ $quejas->folio }}</strong></li>
                                                 <li style="font-size:11pt;">Fecha y hora de registro del
-                                                    reporte:<strong style="font-size:10pt;"> {{ \Carbon\Carbon::parse($quejas->fecha)->format('d-m-Y H:i:s') }}</strong></li>
-                                                <li style="font-size:11pt;">Título:<strong style="font-size:10pt;"> {{$quejas->titulo}}</strong></li>
-                                                <li style="font-size:11pt;">Descripción:<strong style="font-size:10pt;"> {{$quejas->descripcion}}</strong></li>
+                                                    reporte:<strong style="font-size:10pt;">
+                                                        {{ \Carbon\Carbon::parse($quejas->fecha)->format('d-m-Y H:i:s') }}</strong>
+                                                </li>
+                                                <li style="font-size:11pt;">Título:<strong style="font-size:10pt;">
+                                                        {{ $quejas->titulo }}</strong></li>
+                                                <li style="font-size:11pt;">Descripción:<strong style="font-size:10pt;">
+                                                        {{ $quejas->descripcion }}</strong></li>
                                             </ul>
                                             </p>
                                             <p style="font-size:11pt; color:#153643;">Lo mantendremos informado

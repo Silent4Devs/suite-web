@@ -134,7 +134,7 @@ class SolicitudVacacionesController extends Controller
 
                 return redirect(route('admin.solicitud-vacaciones.index'));
             }
-        // Inician vacaciones a los 6 meses
+            // Inician vacaciones a los 6 meses
         } else {
             $tipo_conteo = null;
             $fecha_limite = Vacaciones::where('inicio_conteo', '=', $año)->pluck('fin_conteo')->first();
@@ -144,7 +144,7 @@ class SolicitudVacacionesController extends Controller
             $autoriza = auth()->user()->empleado->supervisor_id;
             $vacacion = new SolicitudVacaciones();
             $dias_disponibles = null;
-            $organizacion = Organizacion::first();
+            $organizacion = Organizacion::getFirst();
             $dias_pendientes = null;
             $mostrar_reclamo = false;
             $año_pasado = 0;
@@ -163,7 +163,7 @@ class SolicitudVacacionesController extends Controller
         $vacacion = new SolicitudVacaciones();
 
         $dias_disponibles = $this->diasDisponibles();
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $dias_pendientes = SolicitudVacaciones::where('empleado_id', '=', auth()->user()->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
 
         // Funcion para dias dias disponibles año pasado
@@ -231,7 +231,7 @@ class SolicitudVacacionesController extends Controller
         $autoriza = auth()->user()->empleado->supervisor_id;
         $vacacion = new SolicitudVacaciones();
         $dias_disponibles = $this->diasDisponiblesAñopasado();
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $dias_pendientes = SolicitudVacaciones::where('empleado_id', '=', auth()->user()->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
 
         return view('admin.solicitudVacaciones.periodoAdicional', compact('vacacion', 'dias_disponibles', 'año', 'autoriza', 'no_vacaciones', 'organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo'));

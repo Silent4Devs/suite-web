@@ -56,7 +56,7 @@ class OrganigramaController extends Controller
             }
         }
         $rutaImagenes = asset('storage/empleados/imagenes/');
-        $organizacionDB = Organizacion::first();
+        $organizacionDB = Organizacion::getFirst();
         $organizacion = !is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
         $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas = Area::getAll();

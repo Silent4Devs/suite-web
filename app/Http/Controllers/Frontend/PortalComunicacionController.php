@@ -106,7 +106,7 @@ class PortalComunicacionController extends Controller
 
     public function reportes()
     {
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
 
         return view('frontend.portal-comunicacion.reportes', compact('organizacions'));
     }

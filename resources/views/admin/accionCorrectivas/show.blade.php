@@ -79,7 +79,7 @@
 
                     @php
                         use App\Models\Organizacion;
-                        $organizacion = Organizacion::first();
+                        $organizacion = Organizacion::getFirst();
                         $logotipo = $organizacion->logotipo;
                         $empresa = $organizacion->empresa;
                     @endphp
@@ -164,16 +164,16 @@
                                     {{ $accionCorrectiva->estatus }}</strong>
                             @elseif ($accionCorrectiva->estatus == 'En curso')
                                 <i class="fas fa-circle" style="color:"#AC84FF;font-size:10pt;"></i><strong>
-                                    {{ $accionCorrectiva->estatus}}</strong>
-                            @elseif ($accionCorrectiva->estatus ='En espera')
+                                    {{ $accionCorrectiva->estatus }}</strong>
+                            @elseif ($accionCorrectiva->estatus = 'En espera')
                                 <i class="fas fa-circle" style="color:#6863FF;font-size:10pt;"></i><strong>
                                     {{ $accionCorrectiva->estatus }}</strong>
                             @elseif ($accionCorrectiva->estatus == 'Cerrado')
                                 <i class="fas fa-circle" style="color: #6DC866;font-size:10pt;"></i><strong>
                                     {{ $accionCorrectiva->estatus }}</strong>
                             @elseif ($accionCorrectiva->estatus == 'No procedente')
-                            <i class="fas fa-circle" style="color: #6DC866;font-size:10pt;"></i><strong>
-                                {{ $accionCorrectiva->estatus }}</strong>
+                                <i class="fas fa-circle" style="color: #6DC866;font-size:10pt;"></i><strong>
+                                    {{ $accionCorrectiva->estatus }}</strong>
                             @endif
                         @endif
                     </div>
@@ -198,41 +198,36 @@
                     <br>
                     <br>
                     @foreach ($accionCorrectiva->analisis as $analisis)
-
-                    @if($analisis->metodo == "5 Porqués (5 Why)")
-                        <div style="color:#18183c">
-                            <p>{{ $analisis->problema_porque ? $analisis->problema_porque : 'Sin registro' }}</p>
-                        </div>
-                        <div style="color:#18183c">
-                            <strong>1. ¿Por qué? </strong>
-                            <p>{{ $analisis->porque_1 ? $analisis->porque_1 : 'Sin registro' }}</p>
-                        </div>
-                        <div style="color:#18183c">
-                            <strong>2. ¿Por qué? </strong>
-                            <p>{{ $analisis->porque_2 ? $analisis->porque_2 : 'Sin registro' }}</p>
-                        </div>
-                        <div style="color:#18183c">
-                            <strong>3. ¿Por qué? </strong>
-                            <p>{{ $analisis->porque_3 ? $analisis->porque_3 : 'Sin registro' }}</p>
-                        </div>
-                        <div style="color:#18183c">
-                            <strong>4. ¿Por qué? </strong>
-                            <p>{{ $analisis->porque_4 ? $analisis->porque_4 : 'Sin registro' }}</p>
-                        </div>
-                        <div style="color:#18183c">
-                            <strong>5. ¿Por qué? </strong>
-                            <p>{{ $analisis->porque_5 ? $analisis->porque_5 : 'Sin registro' }}</p>
-                        </div>
-
-                    @elseif($analisis->metodo == "Lluvia de ideas (Brainstorming)" )
-
-                        <div style="color:#18183c">
-                            <span style="text-align: justify">{!! $analisis->ideas ? $analisis->ideas : 'sin registro' !!}
-                            </span>
-                        </div>
-
-                    @elseif($analisis->metodo == "Diagrama causa efecto (Ishikawa)")
-
+                        @if ($analisis->metodo == '5 Porqués (5 Why)')
+                            <div style="color:#18183c">
+                                <p>{{ $analisis->problema_porque ? $analisis->problema_porque : 'Sin registro' }}</p>
+                            </div>
+                            <div style="color:#18183c">
+                                <strong>1. ¿Por qué? </strong>
+                                <p>{{ $analisis->porque_1 ? $analisis->porque_1 : 'Sin registro' }}</p>
+                            </div>
+                            <div style="color:#18183c">
+                                <strong>2. ¿Por qué? </strong>
+                                <p>{{ $analisis->porque_2 ? $analisis->porque_2 : 'Sin registro' }}</p>
+                            </div>
+                            <div style="color:#18183c">
+                                <strong>3. ¿Por qué? </strong>
+                                <p>{{ $analisis->porque_3 ? $analisis->porque_3 : 'Sin registro' }}</p>
+                            </div>
+                            <div style="color:#18183c">
+                                <strong>4. ¿Por qué? </strong>
+                                <p>{{ $analisis->porque_4 ? $analisis->porque_4 : 'Sin registro' }}</p>
+                            </div>
+                            <div style="color:#18183c">
+                                <strong>5. ¿Por qué? </strong>
+                                <p>{{ $analisis->porque_5 ? $analisis->porque_5 : 'Sin registro' }}</p>
+                            </div>
+                        @elseif($analisis->metodo == 'Lluvia de ideas (Brainstorming)')
+                            <div style="color:#18183c">
+                                <span style="text-align: justify">{!! $analisis->ideas ? $analisis->ideas : 'sin registro' !!}
+                                </span>
+                            </div>
+                        @elseif($analisis->metodo == 'Diagrama causa efecto (Ishikawa)')
                             <div class="mt-3 mb-5 col-md-12">
                                 <div style="width: 100%;">
                                     <img src="{{ asset('img/diagrama_causa_raiz.png') }}"
@@ -275,27 +270,31 @@
                                     </div>
                                     <div class="p-2"
                                         style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; top:40px; left:5px; position: absolute; height:90px !important; width:180px;">
-                                        <span  style="font-size:5pt;">{!!$analisis->control_a  ? $analisis->control_a : 'Sin registro' !!}</span>
+                                        <span style="font-size:5pt;">{!! $analisis->control_a ? $analisis->control_a : 'Sin registro' !!}</span>
                                     </div>
                                     <div class="p-2"
-                                    style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; top:40px; left:195px; position: absolute; height:90px !important; width:180px;">
-                                    <span style="font-size:5pt;">{!! $analisis->proceso_a  ? $analisis->proceso_a : 'Sin registro' !!}</span>
+                                        style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; top:40px; left:195px; position: absolute; height:90px !important; width:180px;">
+                                        <span style="font-size:5pt;">{!! $analisis->proceso_a ? $analisis->proceso_a : 'Sin registro' !!}</span>
                                     </div>
                                     <div class="p-2"
-                                    style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; top:40px; left:385px; position: absolute; height:90px !important; width:180px;">
-                                    <span style="font-size:5pt;">{!! $analisis->personas_a ? $analisis->personas_a : 'Sin registro' !!}</span>
+                                        style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; top:40px; left:385px; position: absolute; height:90px !important; width:180px;">
+                                        <span style="font-size:5pt;">{!! $analisis->personas_a ? $analisis->personas_a : 'Sin registro' !!}</span>
                                     </div>
-                                    <div class="p-2" style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:15px; right:510px; position: absolute; height:95px !important; width:180px;">
+                                    <div class="p-2"
+                                        style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:15px; right:510px; position: absolute; height:95px !important; width:180px;">
                                         <span style="font-size:5pt;">{!! $analisis->tecnologia_a ? $analisis->tecnologia_a : 'Sin registro' !!}</span>
                                     </div>
-                                    <div class="p-2" style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:15px; right:320px; position: absolute; height:95px !important; width:180px;">
+                                    <div class="p-2"
+                                        style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:15px; right:320px; position: absolute; height:95px !important; width:180px;">
                                         <span style="font-size:5pt;">{!! $analisis->metodos_a ? $analisis->metodos_a : 'Sin registro' !!}</span>
                                     </div>
-                                    <div class="p-2" style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:15px; right:125px; position: absolute; height:95px !important; width:180px;">
+                                    <div class="p-2"
+                                        style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:15px; right:125px; position: absolute; height:95px !important; width:180px;">
                                         <span style="font-size:5pt;">{!! $analisis->ambiente_a ? $analisis->ambiente_a : 'Sin registro' !!}</span>
                                     </div>
 
-                                    <div class="p-2" style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:90px; right:-30px; position: absolute; height:95px !important; width:150px;">
+                                    <div class="p-2"
+                                        style="border: 1px solid rgb(48, 247, 230); border-radius: 5px; background-color:white;color:#18183c; bottom:90px; right:-30px; position: absolute; height:95px !important; width:150px;">
                                         <span style="font-size:5pt;">{!! $analisis->problema_diagrama ? $analisis->problema_diagrama : 'Sin registro' !!}</span>
                                     </div>
 
@@ -312,93 +311,84 @@
 
                     <div class="row medidas d-flex" style="justify-content: space-between;">
 
-                        @if($accionCorrectiva->planes->count()>0)
-                        <div class="mt-2 mb-3 ">
-                           <div class="datatable-fix" style="width: 100%;">
-                                <table id="tabla_plan_accion" class="table w-100">
-                                    <thead style="background-color:#0CA193;color:#fff">
-                                        <tr>
-                                            <th>Actividad</th>
-                                            <th>Fecha&nbsp;de&nbsp;inicio</th>
-                                            <th>Fecha&nbsp;de&nbsp;fin</th>
-                                            <th>Estatus</th>
-                                            <th>Responsable(s)</th>
-                                            <th>Descripción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($accionCorrectiva->planes as $plan)
-                                            @php
-                                                $actividades=($plan->tasks);
-                                            @endphp
-                                            @foreach($actividades as $actividad)
+                        @if ($accionCorrectiva->planes->count() > 0)
+                            <div class="mt-2 mb-3 ">
+                                <div class="datatable-fix" style="width: 100%;">
+                                    <table id="tabla_plan_accion" class="table w-100">
+                                        <thead style="background-color:#0CA193;color:#fff">
                                             <tr>
-                                                <td>
-                                               <span style="color:#18183c">{{ $actividad->name ? $actividad->name : 'Sin registro' }}</span>
-                                                </td>
-                                                <td>
-                                                    <span style="color:#18183c">{{ Carbon\Carbon::parse($actividad->start)->format('d-m-Y')}}</span>
-
-                                                </td>
-                                                <td>
-                                                    <span style="color:#18183c" >{{ Carbon\Carbon::parse($actividad->end)->format('d-m-Y')}}</span>
-
-                                                </td>
-                                                <td>
-                                                    @if ($actividad->status  == 'STATUS_UNDEFINED')
-
-                                                            <span  class="badge badge-primary">Sin iniciar</span>
-
-                                                   @elseif ($actividad->status  == 'STATUS_ACTIVE')
-
-                                                            <span class="badge badge-warning">En proceso</span>
-
-
-                                                   @elseif ($actividad->status  == 'STATUS_DONE')
-
-                                                            <span class="badge badge-success">Completado</span>
-
-
-                                                   @elseif ($actividad->status  == 'STATUS_FAILED')
-
-                                                            <span class="badge badge-danger">Retraso</span>
-
-
-                                                   @elseif ($actividad->status  == 'STATUS_SUSPENDED')
-
-                                                            <span class="badge badge-secondary">Suspendido</span>
-
-                                                    @endif
-
-                                                </td>
-                                                <td>
-                                                    <ul>
-                                                      @forelse($actividad->assigs as $empleado_id)
-                                                      @php
-                                                          $empleado=$Empleado::select('id','name')->find($empleado_id->resourceId);
-                                                      @endphp
-                                                      <li>
-                                                        <span style="color:#18183c">{{ $empleado->name }}</span>
-                                                      </li>
-                                                      @empty
-                                                      <span style="color:#18183c">Sin registros</span>
-                                                      @endforelse
-                                                    </ul>
-                                                </td>
-                                                <td>
-                                                    <span style="color:#18183c">
-                                                        {{ $actividad->description ? $actividad->description : 'Sin registro' }}
-                                                    </span>
-                                                </td>
+                                                <th>Actividad</th>
+                                                <th>Fecha&nbsp;de&nbsp;inicio</th>
+                                                <th>Fecha&nbsp;de&nbsp;fin</th>
+                                                <th>Estatus</th>
+                                                <th>Responsable(s)</th>
+                                                <th>Descripción</th>
                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($accionCorrectiva->planes as $plan)
+                                                @php
+                                                    $actividades = $plan->tasks;
+                                                @endphp
+                                                @foreach ($actividades as $actividad)
+                                                    <tr>
+                                                        <td>
+                                                            <span
+                                                                style="color:#18183c">{{ $actividad->name ? $actividad->name : 'Sin registro' }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                style="color:#18183c">{{ Carbon\Carbon::parse($actividad->start)->format('d-m-Y') }}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                style="color:#18183c">{{ Carbon\Carbon::parse($actividad->end)->format('d-m-Y') }}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            @if ($actividad->status == 'STATUS_UNDEFINED')
+                                                                <span class="badge badge-primary">Sin iniciar</span>
+                                                            @elseif ($actividad->status == 'STATUS_ACTIVE')
+                                                                <span class="badge badge-warning">En proceso</span>
+                                                            @elseif ($actividad->status == 'STATUS_DONE')
+                                                                <span class="badge badge-success">Completado</span>
+                                                            @elseif ($actividad->status == 'STATUS_FAILED')
+                                                                <span class="badge badge-danger">Retraso</span>
+                                                            @elseif ($actividad->status == 'STATUS_SUSPENDED')
+                                                                <span class="badge badge-secondary">Suspendido</span>
+                                                            @endif
+
+                                                        </td>
+                                                        <td>
+                                                            <ul>
+                                                                @forelse($actividad->assigs as $empleado_id)
+                                                                    @php
+                                                                        $empleado = $Empleado::select('id', 'name')->find($empleado_id->resourceId);
+                                                                    @endphp
+                                                                    <li>
+                                                                        <span
+                                                                            style="color:#18183c">{{ $empleado->name }}</span>
+                                                                    </li>
+                                                                @empty
+                                                                    <span style="color:#18183c">Sin registros</span>
+                                                                @endforelse
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <span style="color:#18183c">
+                                                                {{ $actividad->description ? $actividad->description : 'Sin registro' }}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @endforeach
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
                             </div>
-
-
-                        </div>
                         @endif
                     </div>
                 </div>

@@ -73,7 +73,7 @@ class SystemCalendarController extends Controller
         $oficiales = CalendarioOficial::get();
 
         $cumples_aniversarios = Empleado::alta()->get();
-        $nombre_organizacion = Organizacion::first();
+        $nombre_organizacion = Organizacion::getFirst();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
 
         return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas', 'eventos', 'oficiales', 'cumples_aniversarios', 'nombre_organizacion'));
