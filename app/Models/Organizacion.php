@@ -79,7 +79,7 @@ class Organizacion extends Model
     #Redis methods
     public static function getLogo()
     {
-        return Cache::remember('getLogo_organizacion', 3600 * 24, function () {
+        return Cache::remember('getLogo_organizacion_' . auth()->user()->id, 3600 * 24, function () {
             return self::select('id', 'logotipo')->first();
         });
     }
@@ -89,6 +89,14 @@ class Organizacion extends Model
     {
         return Cache::remember('organizacion_all', 3600 * 24, function () {
             return self::get();
+        });
+    }
+
+    #Redis methods
+    public static function getFirst()
+    {
+        return Cache::remember('organizacion_first', 3600 * 24, function () {
+            return self::get()->first();
         });
     }
 

@@ -33,55 +33,53 @@
         p {
             font-family: Arial, sans-serif;
         }
-
     </style>
 
 
-<style>
-    /* Remove space around the email design. */
+    <style>
+        /* Remove space around the email design. */
 
-    html,
+        html,
 
-    body {
+        body {
 
-        margin: 0 auto !important;
+            margin: 0 auto !important;
 
-        padding: 0 !important;
+            padding: 0 !important;
 
-        height: 100% !important;
+            height: 100% !important;
 
-        width: 100% !important;
-    }
+            width: 100% !important;
+        }
 
-    /* Stop Outlook resizing small text. */
-    * {
-        -ms-text-size-adjust: 100%;
-    }
-
-
-    /* Stop Outlook from adding extra spacing to tables. */
-    table,
-    td {
-        mso-table-lspace: 0pt !important;
-        mso-table-rspace: 0pt !important;
-    }
-
-    /* Use a better rendering method when resizing images in Outlook IE. */
-
-    img {
-        -ms-interpolation-mode: bicubic;
-    }
+        /* Stop Outlook resizing small text. */
+        * {
+            -ms-text-size-adjust: 100%;
+        }
 
 
-    /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+        /* Stop Outlook from adding extra spacing to tables. */
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
 
-    a {
+        /* Use a better rendering method when resizing images in Outlook IE. */
 
-        text-decoration: none;
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
 
-    }
 
-</style>
+        /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+
+        a {
+
+            text-decoration: none;
+
+        }
+    </style>
 </head>
 
 <body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly;">
@@ -112,7 +110,7 @@
                                     </hr>
                                     @php
                                         use App\Models\Organizacion;
-                                        $organizacion = Organizacion::first();
+                                        $organizacion = Organizacion::getFirst();
                                         $logotipo = $organizacion->logotipo;
                                         $empresa = $organizacion->empresa;
                                     @endphp
@@ -138,11 +136,14 @@
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; color:#153643;">
-                                                Le informamos que {{ $responsable->name}}, responsable de darle seguimiento al control {{$aplicabilidad->anexo_indice}}, ha añadido información que necesita ser aprobada.
+                                                Le informamos que {{ $responsable->name }}, responsable de darle
+                                                seguimiento al control {{ $aplicabilidad->anexo_indice }}, ha añadido
+                                                información que necesita ser aprobada.
                                             </p>
                                             <br>
                                             <div style="text-align:center; margin-top:20px">
-                                                <a  href="{{route('admin.declaracion-aplicabilidad-2022.index') }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                                <a href="{{ route('admin.declaracion-aplicabilidad-2022.index') }}"
+                                                    style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
                                                     Revisar Control
                                                 </a>
                                             </div>

@@ -122,7 +122,7 @@ class EmpleadoController extends Controller
         $empleado = new Empleado;
         $idiomas = Language::get();
         $globalCountries = new CountriesFunction;
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $countries = $globalCountries->getCountries('ES');
 
         return view('admin.empleados.create', compact('empleados', 'ceo_exists', 'areas', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'certificaciones', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'empleado', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'idiomas', 'organizacion'));
@@ -936,7 +936,7 @@ class EmpleadoController extends Controller
         $perfiles_seleccionado = $empleado->perfil_empleado_id;
         $puestos_seleccionado = $empleado->puesto_id;
         $idiomas = Language::get();
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $globalCountries = new CountriesFunction;
         $countries = $globalCountries->getCountries('ES');
         $isEditAdmin = true;
@@ -948,7 +948,7 @@ class EmpleadoController extends Controller
         $docs_empleado = EvidenciasDocumentosEmpleados::where('empleado_id', $id_empleado)->where('archivado', false)->get();
         // expediente ------------------------------------------------------------
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         // $lista_docs = $lista_docs->sortBy('tipo');
 
         return view('admin.empleados.edit', compact('empleado', 'empleados', 'ceo_exists', 'areas', 'area', 'sede', 'sedes', 'experiencias', 'educacions', 'cursos', 'documentos', 'puestos', 'perfiles', 'tipoContratoEmpleado', 'entidadesCrediticias', 'countries', 'perfiles', 'perfiles_seleccionado', 'puestos_seleccionado', 'isEditAdmin', 'idiomas', 'lista_docs', 'docs_empleado', 'organizacion'));

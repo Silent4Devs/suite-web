@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use EloquentFilter\Filterable;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Timesheet extends Model
 {
@@ -29,6 +30,13 @@ class Timesheet extends Model
         'inicio_semana',
         'fin_semana',
     ];
+
+    public static function getPersonalTimesheet()
+    {
+        return Cache::remember('timesheet-' . auth()->user()->empleado->id, now()->addHours(24), function () {
+            return self::where('empleado_id', auth()->user()->empleado->id)->get();
+        });
+    }
 
     public function empleado()
     {

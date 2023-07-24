@@ -102,11 +102,11 @@
     </style>
 
 
-{{ Breadcrumbs::render('admin.comiteseguridads.visualizacion') }}
+    {{ Breadcrumbs::render('admin.comiteseguridads.visualizacion') }}
 
     @php
         use App\Models\Organizacion;
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         if (!is_null($organizacion->empresa)) {
             $nombre_organizacion = $organizacion->empresa;
         } else {
@@ -279,7 +279,7 @@
                 }
                 //dtButtons.push(deleteButton)
             @endcan
-          
+
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -332,7 +332,7 @@
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
                     }
-                    
+
                 ],
                 orderCellsTop: true,
                 order: [
@@ -340,7 +340,7 @@
                 ],
             };
             let table = $('.datatable-Comiteseguridad').DataTable(dtOverrideGlobals);
-           
+
         });
     </script>
 @endsection

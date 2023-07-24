@@ -23,7 +23,6 @@
             color: #345183;
             bottom: 0;
         }
-
     </style>
 @endsection
 {{-- {{ Breadcrumbs::render('frontend.politicaSgsis.visualizacion') }} --}}
@@ -34,7 +33,7 @@
 
             @php
                 use App\Models\Organizacion;
-                $organizacion = Organizacion::first();
+                $organizacion = Organizacion::getFirst();
                 $logotipo = $organizacion->logotipo;
             @endphp
             <img src="{{ asset($logotipo) }}" class="logo_organizacion_politica">

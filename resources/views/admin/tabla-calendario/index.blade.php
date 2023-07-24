@@ -1,29 +1,28 @@
 @extends('layouts.admin')
 
 @section('content')
-
-{{ Breadcrumbs::render('admin.CalendarioEventos.index') }}
+    {{ Breadcrumbs::render('admin.CalendarioEventos.index') }}
 
     @php
-    use App\Models\Organizacion;
-    $organizacion = Organizacion::first();
-    $empresa = $organizacion->empresa;
+        use App\Models\Organizacion;
+        $organizacion = Organizacion::getFirst();
+        $empresa = $organizacion->empresa;
     @endphp
-    <h5 class="col-12 titulo_general_funcion">Eventos de {{$empresa}}</h5>
+    <h5 class="col-12 titulo_general_funcion">Eventos de {{ $empresa }}</h5>
     <div class="mt-4 card">
-            <div class="card-body">
-                <div class="py-1 text-center form-group col-12" style="background-color:#345183; border-radius:100px; color: white;">Eventos</div>
-                    @include('partials.flashMessages')
-                    <div class="card-body datatable-fix">
-                    @include('admin.tabla-calendario.table')
-                    </div>
-                </div>
+        <div class="card-body">
+            <div class="py-1 text-center form-group col-12"
+                style="background-color:#345183; border-radius:100px; color: white;">Eventos</div>
+            @include('partials.flashMessages')
+            <div class="card-body datatable-fix">
+                @include('admin.tabla-calendario.table')
             </div>
         </div>
     </div>
-
-    @endsection
-    @section('scripts')
+    </div>
+    </div>
+@endsection
+@section('scripts')
     @parent
     <script>
         $(function() {
@@ -149,5 +148,4 @@
             let table = $('.datatable-calendario').DataTable(dtOverrideGlobals);
         });
     </script>
-
 @endsection

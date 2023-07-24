@@ -48,11 +48,7 @@ class TimesheetController extends Controller
     {
         $cacheKey = 'timesheet-' . auth()->user()->empleado->id;
 
-        $times = Cache::remember($cacheKey, now()->addHours(24), function () {
-            $times = Timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
-
-            return $times;
-        });
+        $times = Timesheet::getPersonalTimesheet();
 
         $todos_contador = $times->count();
         $borrador_contador = $times->where('estatus', 'papelera')->count();
@@ -60,14 +56,14 @@ class TimesheetController extends Controller
         $aprobados_contador = $times->where('estatus', 'aprobado')->count();
         $rechazos_contador = $times->where('estatus', 'rechazado')->count();
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
+        $organizacion_actual = Organizacion::getFirst();
+        if (!is_null($organizacion_actual)) {
+            $logo_actual = $organizacion_actual->logotipo;
+            $empresa_actual = $organizacion_actual->empresa;
+        } else {
+            $logo_actual = 'img/logo.png';
+            $empresa_actual = 'Silent4Business';
         }
-        $logo_actual = $organizacion_actual->logotipo;
-        $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.index', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual'));
     }
@@ -76,7 +72,7 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         if (Timesheet::count() > 0) {
             $time_viejo = Timesheet::orderBy('fecha_dia')->first()->fecha_dia;
@@ -86,7 +82,7 @@ class TimesheetController extends Controller
             $time_exist = false;
         }
 
-        $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
+        $rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
         $aprobar_contador = Timesheet::where('aprobador_id', auth()->user()->empleado->id)->where('estatus', 'pendiente')->count();
 
         return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador', 'time_viejo', 'time_exist'));
@@ -94,7 +90,7 @@ class TimesheetController extends Controller
 
     public function actualizarDia(Request $request)
     {
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $semanasAdicionales = $request->semanas_adicionales < 0 ? 0 : $request->semanas_adicionales;
         $organizacion->update([
             'dia_timesheet' => $request->dia_timesheet,
@@ -123,9 +119,9 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
+        $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
     }
@@ -154,8 +150,8 @@ class TimesheetController extends Controller
 
         $tareas = TimesheetTarea::getAll();
         $timesheet = Timesheet::find($id);
-        $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
-        $organizacion = Organizacion::first();
+        $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
+        $organizacion = Organizacion::getFirst();
         $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.create-copia', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
@@ -165,7 +161,7 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacion_semana = Organizacion::first();
+        $organizacion_semana = Organizacion::getFirst();
 
         $request->validate(
             [
@@ -348,8 +344,8 @@ class TimesheetController extends Controller
 
         $tareas = TimesheetTarea::getAll();
         $timesheet = Timesheet::find($id);
-        $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
-        $organizacion = Organizacion::first();
+        $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
+        $organizacion = Organizacion::getFirst();
         $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
@@ -366,7 +362,7 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacion_semana = Organizacion::first();
+        $organizacion_semana = Organizacion::getFirst();
 
         $request->validate(
             [

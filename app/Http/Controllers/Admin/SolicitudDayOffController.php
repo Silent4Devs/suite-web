@@ -124,7 +124,7 @@ class SolicitudDayOffController extends Controller
         $autoriza = auth()->user()->empleado->supervisor_id;
         $vacacion = new DayOff();
         $dias_disponibles = $this->diasDisponibles();
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $dias_pendientes = SolicitudDayOff::where('empleado_id', '=', auth()->user()->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
 
         return view('admin.solicitudDayoff.create', compact('vacacion', 'dias_disponibles', 'año', 'autoriza', 'organizacion', 'dias_pendientes', 'tipo_conteo'));

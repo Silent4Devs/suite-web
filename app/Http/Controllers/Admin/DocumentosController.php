@@ -732,10 +732,10 @@ class DocumentosController extends Controller
 
     public function publicados()
     {
-        $existsOrganizacion = Organizacion::first()->exists();
+        $existsOrganizacion = Organizacion::getFirst()->exists();
 
         if ($existsOrganizacion) {
-            $organizacion = Organizacion::first()->empresa;
+            $organizacion = Organizacion::getFirst()->empresa;
         } else {
             $organizacion = 'La Organización';
         }

@@ -19,7 +19,7 @@ class OrganizacionController extends Controller
 
     public function index(Request $request)
     {
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();

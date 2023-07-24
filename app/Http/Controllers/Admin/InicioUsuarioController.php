@@ -246,7 +246,7 @@ class InicioUsuarioController extends Controller
             $cumpleaños_felicitados_comentarios = collect();
         }
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $competencias = collect();
 
         if (auth()->user()->empleado) {

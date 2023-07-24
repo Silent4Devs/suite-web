@@ -17,7 +17,6 @@
                 display: none !important;
             }
         }
-
     </style>
     <div class="print-none">
         {{ Breadcrumbs::render('EV360-Evaluacion-Consulta-Evaluado', ['evaluacion' => $evaluacion, 'evaluado' => $evaluado]) }}
@@ -41,8 +40,8 @@
                     <div class="text-center border col-4">
                         @php
                             use App\Models\Organizacion;
-                            $organizacion = Organizacion::first();
-
+                            $organizacion = Organizacion::getFirst();
+                            
                         @endphp
                         <img src="{{ $organizacion->logotipo }}" class="img-fluid" alt="" width="70">
                     </div>
@@ -87,8 +86,8 @@
                             </div>
                             <div class="border col-9">
                                 <p class="m-0">{{ $evaluado->name }}</p>
-                                <input type="text" name="evaname" id="evaname"
-                                value="{{$evaluado->name}}" disabled hidden>
+                                <input type="text" name="evaname" id="evaname" value="{{ $evaluado->name }}" disabled
+                                    hidden>
                             </div>
                         </div>
                     </div>
@@ -187,10 +186,10 @@
                 Resultado de la evaluación por competencias
             </div>
             @if (session()->has('success'))
-                    <div class="alert alert-success">
-                        {{session()->get('success')}}
-                    </div>
-                @endif
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+            @endif
             <div class="col-12">
                 {{-- <div class="mt-2 row">
                     <div class="p-0 col-12 progress">
@@ -203,8 +202,10 @@
                 <div class="mt-2">
                     <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] }}</span>
                     <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] }}%</span>
-                    <button id="btnExportarAutoevaluacion" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
-                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel Autoevaluación"></i>
+                    <button id="btnExportarAutoevaluacion" class="btn-sm rounded pr-2"
+                        style="background-color:#fff; border: #fff">
+                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
+                            title="Exportar Excel Autoevaluación"></i>
                     </button>
                     @forelse ($lista_autoevaluacion->first()['evaluaciones'] as $evaluador)
                         @include(
@@ -225,7 +226,8 @@
                     <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['tipo'] }}</span>
                     <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['peso_general'] }}%</span>
                     <button id="btnExportarJefe" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
-                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel Jefe"></i>
+                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
+                            title="Exportar Excel Jefe"></i>
                     </button>
                     @forelse ($lista_jefe_inmediato->first()['evaluaciones'] as $evaluador)
                         @include(
@@ -243,8 +245,10 @@
                 <div class="mt-2">
                     <span style="font-size: 11px">Subordinado</span>
                     <span style="font-size: 11px">{{ $lista_equipo_a_cargo->first()['peso_general'] }}%</span>
-                    <button id="btnExportarSubordinado" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
-                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel Subordinado"></i>
+                    <button id="btnExportarSubordinado" class="btn-sm rounded pr-2"
+                        style="background-color:#fff; border: #fff">
+                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
+                            title="Exportar Excel Subordinado"></i>
                     </button>
                     @forelse ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluador)
                         @include(
@@ -263,7 +267,8 @@
                     <span style="font-size: 11px">Par</span>
                     <span style="font-size: 11px">{{ $lista_misma_area->first()['peso_general'] }}%</span>
                     <button id="btnExportarPar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
-                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel Colega"></i>
+                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
+                            title="Exportar Excel Colega"></i>
                     </button>
                     @forelse ($lista_misma_area->first()['evaluaciones'] as $evaluador)
                         @include(
@@ -347,70 +352,70 @@
                     número y dar doble clic, se habilitará un input y podrá realizar la edición.
                     Una vez que termine de editar recargue la página para que se vean reflejados los cambios. </small>
 
-<table id="tblobjetivos" hidden>
+                <table id="tblobjetivos" hidden>
                     <thead>
-                            <th>Evaluador</th>
-                            <th>
-                                Objetivo
-                            </th>
-                            <th>
-                                KPI
-                            </th>
-                            <th>
-                                Puesto
-                            </th>
-                            <th>
-                                Logrado
-                            </th>
-                            <th>
-                                <small>Descripción</small>
-                            </th>
-                            <th>
-                                Comentarios
-                            </th>
+                        <th>Evaluador</th>
+                        <th>
+                            Objetivo
+                        </th>
+                        <th>
+                            KPI
+                        </th>
+                        <th>
+                            Puesto
+                        </th>
+                        <th>
+                            Logrado
+                        </th>
+                        <th>
+                            <small>Descripción</small>
+                        </th>
+                        <th>
+                            Comentarios
+                        </th>
                     </thead>
-                        @forelse ($evaluadores_objetivos as $evaluador)
-                    <tbody>
-                        <div class="col-12" id="tblObjetivosSupervisor">
-                            @forelse ($evaluador['objetivos'] as $idx => $objetivo)
-                                <tr>
-                                    @if ($evaluador['esAutoevaluacion'])
-                                    <td>{{ $evaluador['nombre'] }}</td>
-                                    @endif
-                                    @if ($evaluador['esSupervisor'])
-                                        <td>{{ $jefe_evaluador->name }}</td>
-                                    @endif
-                                    <td>
-                                        {{ $objetivo['nombre'] }}
-                                    </td>
-                                    <td>
-                                        {{ $objetivo['KPI'] }}
-                                    </td>
-                                    <td>
-                                        {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
-                                    </td>
-                                    <td>
-                                        {{ $objetivo['calificacion'] }} {{ $objetivo['metrica'] }}
-                                    </td>
-                                    <td>
-                                        {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
-                                    </td>
-                                    <td>
-                                        {{ $objetivo['meta_alcanzada'] }}
-                                    </td>
-                                </tr>
+                    @forelse ($evaluadores_objetivos as $evaluador)
+                        <tbody>
+                            <div class="col-12" id="tblObjetivosSupervisor">
+                                @forelse ($evaluador['objetivos'] as $idx => $objetivo)
+                                    <tr>
+                                        @if ($evaluador['esAutoevaluacion'])
+                                            <td>{{ $evaluador['nombre'] }}</td>
+                                        @endif
+                                        @if ($evaluador['esSupervisor'])
+                                            <td>{{ $jefe_evaluador->name }}</td>
+                                        @endif
+                                        <td>
+                                            {{ $objetivo['nombre'] }}
+                                        </td>
+                                        <td>
+                                            {{ $objetivo['KPI'] }}
+                                        </td>
+                                        <td>
+                                            {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
+                                        </td>
+                                        <td>
+                                            {{ $objetivo['calificacion'] }} {{ $objetivo['metrica'] }}
+                                        </td>
+                                        <td>
+                                            {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
+                                        </td>
+                                        <td>
+                                            {{ $objetivo['meta_alcanzada'] }}
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <strong class="text-muted">
+                                            <i class="fas fa-info-circle"></i>
+                                            Sin objetivos a evaluar
+                                        </strong>
+                                    </tr>
+                                @endforelse
                             @empty
-                                <tr>
-                                    <strong class="text-muted">
-                                        <i class="fas fa-info-circle"></i>
-                                        Sin objetivos a evaluar
-                                    </strong>
-                                </tr>
-                            @endforelse
-                @empty
-                    <tr>Sin objetivos a evaluar</tr>
-                @endforelse
-                {{-- <tr></tr>
+                                <tr>Sin objetivos a evaluar</tr>
+                    @endforelse
+                    {{-- <tr></tr>
                 <tr>
                     <td>Objetivo</td>
                 </tr>
@@ -422,13 +427,13 @@
                 <td>% Participación</td>
                 <td>{{ number_format($promedio_objetivos, 2) }}%<td>
                 </tr> --}}
-                </tbody>
-</table>
-<div class="text-center">
-<button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
-    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-</button>
-</div>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
+                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                    </button>
+                </div>
                 @forelse ($evaluadores_objetivos as $evaluador)
                     <div class="row">
                         <div class="col-12">
@@ -512,7 +517,8 @@
                 <div class="mt-3 row" style="font-size:11px">
                     <div class="col-8"></div>
                     <div class="col-4">
-                        <p class="m-0 text-center text-white" style="background: #3e3e3e; border: 1px solid #fff">Objetivos
+                        <p class="m-0 text-center text-white" style="background: #3e3e3e; border: 1px solid #fff">
+                            Objetivos
                         </p>
                         <div class="col-12">
                             <div class="row">
@@ -585,14 +591,14 @@
 @endsection
 
 @section('scripts')
-
     <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
 
     <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
 
     <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <script>
         const $btnExportar = document.querySelector("#btnExportar"),
@@ -611,7 +617,9 @@
             // console.log(datos.tblobjetivos.xlsx);
             // console.log(datos.tblobjetivos.xlsx.data);
             let preferenciasDocumento = datos.tblobjetivos.xlsx;
-            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType,
+                preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento
+                .merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
         });
     </script>
 
@@ -623,7 +631,8 @@
             let nombeva = document.getElementById("evaname").value;
             let tableExport = new TableExport($tablaauto, {
                 exportButtons: false, // No queremos botones
-                filename: "Evaluacion Competencias de "+nombeva+"-Autoevaluacion", //Nombre del archivo de Excel
+                filename: "Evaluacion Competencias de " + nombeva +
+                "-Autoevaluacion", //Nombre del archivo de Excel
                 sheetname: "Evaluacion Competencias", //Título de la hoja
             });
             let datos = tableExport.getExportData();
@@ -633,7 +642,9 @@
             // console.log(datos.tblobjetivos.xlsx);
             // console.log(datos.tblobjetivos.xlsx.data);
             let preferenciasDocumento = datos.autoevaluacion.xlsx;
-            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType,
+                preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento
+                .merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
         });
     </script>
 
@@ -645,7 +656,7 @@
             let nombeva = document.getElementById("evaname").value;
             let tableExport = new TableExport($tablajefe, {
                 exportButtons: false, // No queremos botones
-                filename: "Evaluacion Competencias de "+nombeva+"-Jefe", //Nombre del archivo de Excel
+                filename: "Evaluacion Competencias de " + nombeva + "-Jefe", //Nombre del archivo de Excel
                 sheetname: "Evaluacion Competencias", //Título de la hoja
             });
             let datos = tableExport.getExportData();
@@ -655,7 +666,9 @@
             // console.log(datos.tblobjetivos.xlsx);
             // console.log(datos.tblobjetivos.xlsx.data);
             let preferenciasDocumento = datos.jefe.xlsx;
-            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType,
+                preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento
+                .merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
         });
     </script>
 
@@ -667,7 +680,8 @@
             let nombeva = document.getElementById("evaname").value;
             let tableExport = new TableExport($tablasub, {
                 exportButtons: false, // No queremos botones
-                filename: "Evaluacion Competencias de "+nombeva+"-Subordinado", //Nombre del archivo de Excel
+                filename: "Evaluacion Competencias de " + nombeva +
+                "-Subordinado", //Nombre del archivo de Excel
                 sheetname: "Evaluacion Competencias", //Título de la hoja
             });
             let datos = tableExport.getExportData();
@@ -677,7 +691,9 @@
             // console.log(datos.tblobjetivos.xlsx);
             // console.log(datos.tblobjetivos.xlsx.data);
             let preferenciasDocumento = datos.equipo.xlsx;
-            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType,
+                preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento
+                .merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
         });
     </script>
 
@@ -689,7 +705,7 @@
             let nombeva = document.getElementById("evaname").value;
             let tableExport = new TableExport($tablapar, {
                 exportButtons: false, // No queremos botones
-                filename: "Evaluacion Competencias de "+nombeva+"-Colega", //Nombre del archivo de Excel
+                filename: "Evaluacion Competencias de " + nombeva + "-Colega", //Nombre del archivo de Excel
                 sheetname: "Evaluacion Competencias", //Título de la hoja
             });
             let datos = tableExport.getExportData();
@@ -699,7 +715,9 @@
             // console.log(datos.tblobjetivos.xlsx);
             // console.log(datos.tblobjetivos.xlsx.data);
             let preferenciasDocumento = datos.misma_area.xlsx;
-            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+            tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType,
+                preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento
+                .merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
         });
     </script>
 

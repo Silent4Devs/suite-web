@@ -3,7 +3,6 @@
 
 @section('styles')
     <style type="text/css">
-
         .logo_organizacion_politica {
             width: 60%;
             float: right;
@@ -18,23 +17,25 @@
             bottom: 0;
         }
 
-        .a_reporte{
+        .a_reporte {
             display: inline-block !important;
             /*background-color: #001B44;*/
             color: unset;
-            margin-top:120px;
+            margin-top: 120px;
             text-align: center;
             transition: 0.1s;
             position: relative;
             padding-bottom: 60px;
             height: 450px;
         }
-        .a_reporte:hover{
+
+        .a_reporte:hover {
             color: unset;
             text-decoration: none;
             /*opacity: 0.9;*/
         }
-        .a_reporte:before{
+
+        .a_reporte:before {
             content: "";
             position: absolute;
             right: 0;
@@ -44,7 +45,8 @@
             background-color: #fff;
             opacity: 0.8;
         }
-        .a_reporte i{
+
+        .a_reporte i {
             width: 100px;
             height: 100px;
             margin: auto;
@@ -58,25 +60,27 @@
             transition: 0.1s;
             color: #fff;
         }
-        .a_reporte:hover i{
+
+        .a_reporte:hover i {
             font-size: 40pt;
         }
-        .a_reporte h4{
+
+        .a_reporte h4 {
             margin-top: 16px;
             /*font-weight: bold;*/
             color: #3086AF;
         }
-        .a_reporte p{
+
+        .a_reporte p {
             text-align: justify;
             font-size: 11px;
         }
-        .btn_g_r{
+
+        .btn_g_r {
             position: absolute;
             right: calc(50% - 69px);
             bottom: 15px;
         }
-
-
     </style>
 @endsection
 {{ Breadcrumbs::render('admin.portal-comunicacion.reportes') }}
@@ -86,7 +90,8 @@
         <div class="row">
 
             <div class="col-md-12">
-                <div class="px-1 py-2 rounded" style="background-color: #DBEAFE; border-top:solid 3px #3B82F6; margin: auto;">
+                <div class="px-1 py-2 rounded"
+                    style="background-color: #DBEAFE; border-top:solid 3px #3B82F6; margin: auto;">
                     <div class="row w-100">
                         <div class="text-center col-1 align-items-center d-flex justify-content-center">
                             <div class="w-100">
@@ -94,10 +99,13 @@
                             </div>
                         </div>
                         <div class="col-11">
-                            <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones</p>
-                            <p class="m-0" style="font-size: 14px; color:#1E3A8A; text-align: justify; ">Esta sección es un canal de comunicación para que los colaboradores de la organización puedan
-                            reportarnos un incidente de seguridad, un riesgo identificado o compartirnos sus sugerencias, quejas o denuncias.
-                            {{-- cuando se tengan ideas de mejora, se identifiquen casos que estén fuera de lo indicado en el manual de conducta y
+                            <p class="m-0" style="font-size: 16px; font-weight: bold; color: #1E3A8A">Instrucciones
+                            </p>
+                            <p class="m-0" style="font-size: 14px; color:#1E3A8A; text-align: justify; ">Esta sección
+                                es un canal de comunicación para que los colaboradores de la organización puedan
+                                reportarnos un incidente de seguridad, un riesgo identificado o compartirnos sus
+                                sugerencias, quejas o denuncias.
+                                {{-- cuando se tengan ideas de mejora, se identifiquen casos que estén fuera de lo indicado en el manual de conducta y
                             código de ética, o bien, fuera de los valores de la Organización. --}}
                             </p>
 
@@ -106,16 +114,17 @@
                 </div>
             </div>
 
-             {{-- <div class="col-md-3 caja_titulo">
+            {{-- <div class="col-md-3 caja_titulo">
                 @php
                     use App\Models\Organizacion;
-                    $organizacion = Organizacion::first();
+                    $organizacion = Organizacion::getFirst();
                     $logotipo = $organizacion->logotipo;
                 @endphp
                 <img src="{{ asset($logotipo) }}" class="logo_organizacion_politica">
 
             </div> --}}
-            <div style="margin: auto; text-align: center; margin-top: -40px !important;" class="container row mt-4 justify-content-center">
+            <div style="margin: auto; text-align: center; margin-top: -40px !important;"
+                class="container row mt-4 justify-content-center">
 
 
                 <div class=" col-center col-lg-4 col-md-4 col-sm-12">
@@ -239,7 +248,7 @@
                 </div>
                 <div class=" col-center col-lg-4 col-md-4 col-sm-12">
                     <a href="{{ asset('admin/inicioUsuario/reportes/riesgos') }}" class="a_reporte card card-body">
-                       <i class="bi bi-shield-exclamation"></i>
+                        <i class="bi bi-shield-exclamation"></i>
                         <h4>Riesgo</h4>
                         <p>
                             Aquí podrás reportar un riesgo en caso de presentarse un evento que

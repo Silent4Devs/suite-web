@@ -48,7 +48,6 @@
             color: #345183;
             border: 1px solid #345183;
         }
-
     </style>
 @endsection
 {{ Breadcrumbs::render('portal-comunicacion.reportes') }}
@@ -59,7 +58,7 @@
 
             @php
                 use App\Models\Organizacion;
-                $organizacion = Organizacion::first();
+                $organizacion = Organizacion::getFirst();
                 $logotipo = $organizacion->logotipo;
             @endphp
             <img src="{{ asset($logotipo) }}" class="logo_organizacion_politica">
