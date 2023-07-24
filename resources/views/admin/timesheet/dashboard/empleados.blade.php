@@ -197,6 +197,15 @@
         },
         options: {
             aspectRatio: 1,
+            plugins: {
+            datalabels: {
+                color: '#fff',
+                display: false,
+                font: {
+                    size: 20
+                }
+            },
+        },
         },
         layout: {
             padding: {
@@ -212,15 +221,6 @@
                 boxWidth: 20,
                 padding: 10
             }
-        },
-        plugins: {
-            datalabels: {
-                color: '#fff',
-                display: true,
-                font: {
-                    size: 20
-                }
-            },
         },
     });
 </script>
@@ -247,8 +247,17 @@
                 y: {
                     beginAtZero: true
                 }
+            },
+            plugins: {
+                datalabels: {
+                    color: '#fff',
+                    display: false,
+                    font: {
+                        size: 20
+                    }
+                },
             }
-        }
+        },
     });
 </script>
 
@@ -273,7 +282,16 @@
                 y: {
                     beginAtZero: true
                 }
-            }
-        }
+            },
+            plugins: {
+                    datalabels: {
+                        color: '#fff',
+                        display: false,
+                        font: {
+                            size: 20
+                        }
+                    },
+                }
+        },
     });
 </script>

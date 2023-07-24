@@ -560,6 +560,9 @@ class TimesheetController extends Controller
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador',
                 'proyecto_name' => 'required',
+                'cliente_id' => 'required',
+                'sede_id' => 'required',
+                'tipo' => 'required',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
@@ -595,7 +598,8 @@ class TimesheetController extends Controller
             ]);
         }
 
-        return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
+        // return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
+        return redirect('admin/timesheet/proyectos');
     }
 
     public function showProyectos($id)
@@ -624,6 +628,9 @@ class TimesheetController extends Controller
             [
                 'identificador' => 'required',
                 'proyecto_name' => 'required',
+                'cliente_id' => 'required',
+                'sede_id' => 'required',
+                'tipo' => 'required',
             ],
         );
 
@@ -1073,8 +1080,10 @@ class TimesheetController extends Controller
             $sumamie = $times->sum('horas_miercoles');
             $sumajue = $times->sum('horas_jueves');
             $sumavie = $times->sum('horas_viernes');
+            $sumasab = $times->sum('horas_sabado');
+            $sumadom = $times->sum('horas_domingo');
 
-            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie;
+            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
 
             if ($ep->proyecto->tipo === "Externo") {
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {

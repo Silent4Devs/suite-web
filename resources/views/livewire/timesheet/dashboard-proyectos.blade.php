@@ -1,10 +1,10 @@
 <div>
     <x-loading-indicator />
-    <div class="row" wire:ignore>
+    <div class="row">
         <div class="col-md-6 form-group" style="padding-left:0px !important;">
             <label class="form-label">Estatus</label>
             <select class="form-control" wire:model="estatus">
-                <option selected value="0">Todos</option>
+                <option selected value="todos">Todos</option>
                 <option value="proceso">En Proceso</option>
                 <option value="terminado">Terminados</option>
                 <option value="cancelado">Cancelados</option>
@@ -12,10 +12,10 @@
         </div>
         <div class="col-md-6 form-group" style="padding-left:0px !important;">
         <label class="form-label">Proyecto</label>
-        <select class="form-control" wire:model="proy_id" id="proyectos">
+        <select class="form-control" wire:model="proy_id">
             <option value="0" selected>Seleccione un proyecto</option>
             @foreach ($lista_proyectos as $pro)
-                <option value="{{ $pro->id }}">{{ $pro->proyecto }}</option>
+                <option value="{{ $pro->id }}">{{$pro->identificador}} - {{ $pro->proyecto }}</option>
             @endforeach
         </select>
         </div>
@@ -120,6 +120,9 @@
                     },
                 }],
                 xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
                     scaleLabel: {
                         display: true,
                         labelString: 'Horas Trabajadas en el Proyecto',
@@ -149,7 +152,7 @@
                 plugins: {
                     datalabels: {
                         color: '#fff',
-                        display: true,
+                        display: false,
                         font: {
                             size: 20
                         }
@@ -182,6 +185,15 @@
         },
         options: {
             aspectRatio: 1.6,
+            plugins: {
+                datalabels: {
+                    color: '#fff',
+                    display: false,
+                    font: {
+                        size: 20
+                    }
+                    },
+                }
         },
         layout: {
             padding: {
@@ -197,17 +209,8 @@
                 boxWidth: 30,
                 padding: 10
             }
-        },
-        plugins: {
-            datalabels: {
-                color: '#fff',
-                display: true,
-                font: {
-                    size: 20
-                }
-                },
-            },
-        });
+        }
+    });
 
 
         document.getElementById('graf-participacion-tareas').remove();
@@ -228,6 +231,15 @@
         },
         options: {
             aspectRatio: 1.6,
+            plugins: {
+                datalabels: {
+                    color: '#fff',
+                    display: false,
+                    font: {
+                        size: 20
+                    }
+                    },
+                }
         },
         layout: {
             padding: {
@@ -244,15 +256,6 @@
                 padding: 10
             }
         },
-        plugins: {
-            datalabels: {
-                color: '#fff',
-                display: true,
-                font: {
-                    size: 20
-                }
-                },
-            },
     });
 
     document.getElementById('graf-proyectos-empleado').remove();
@@ -264,7 +267,7 @@
     let grafica_empleados = new Chart(document.getElementById('graf-proyectos-empleado'), {
         type: 'bar',
     data: {
-    labels: datos_empleados.map(item => item.empleado),
+    labels: datos_empleados.map(item => [item.empleado, item.area]),
     datasets: [{
             // type: "bar",
             backgroundColor: "#61CB5C",
@@ -313,7 +316,7 @@
         plugins: {
             datalabels: {
                 color: '#fff',
-                display: true,
+                display: false,
                 font: {
                     size: 20
                 }

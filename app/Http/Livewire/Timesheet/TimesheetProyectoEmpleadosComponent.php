@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Timesheet;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetProyectoArea;
+use App\Models\TimesheetHoras;
 use App\Models\Empleado;
 use Livewire\Component;
 use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\F;
@@ -23,6 +24,8 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public $horas_asignadas;
     public $costo_hora;
 
+    public $areasempleado;
+
     // public $empleado_editado;
     // public $horas_edit;
     // public $costo_edit;
@@ -31,12 +34,43 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $this->proyecto = TimesheetProyecto::find($proyecto_id);
         $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $proyecto_id)->get();
-        $this->empleados = Empleado::where('estatus', '=', 'alta')->get();
+        $this->empleados = Empleado::alta()->get();
     }
 
     public function render()
     {
-        $this->proyecto_empleados = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
+        $emp_proy = TimesheetProyectoEmpleado::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
+
+        foreach ($emp_proy as $ep) {
+            $times = TimesheetHoras::where('proyecto_id', '=', $ep->proyecto_id)
+                ->where('empleado_id', '=', $ep->empleado_id)
+                ->get();
+
+            $tot_horas_proyecto = 0;
+
+            $sumalun = $times->sum('horas_lunes');
+            $sumamar = $times->sum('horas_martes');
+            $sumamie = $times->sum('horas_miercoles');
+            $sumajue = $times->sum('horas_jueves');
+            $sumavie = $times->sum('horas_viernes');
+            $sumasab = $times->sum('horas_sabado');
+            $sumadom = $times->sum('horas_domingo');
+
+            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
+
+            $resta = $tot_horas_proyecto - $ep->horas_asignadas;
+
+            if($resta > 0){
+                $sobre = $resta;
+            }else{
+                $sobre = 'No se han excedido';
+            }
+
+            $ep->totales = $tot_horas_proyecto;
+            $ep->sobrepasadas = $sobre;
+        }
+         $this->proyecto_empleados = $emp_proy;
+        // dd($this->proyecto_empleados);
         $this->emit('scriptTabla');
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
     }
@@ -132,6 +166,35 @@ class TimesheetProyectoEmpleadosComponent extends Component
            ]);
 
     }
+
+    // public function bloquearEmpleado($id)
+    // {
+    //     $emp_bloq = TimesheetProyectoEmpleado::find($id);
+    //     if($emp_bloq->usuario_bloqueado == false){
+    //         // dd($emp_bloq->usuario_bloqueado);
+    //         $emp_bloq->update([
+    //             'usuario_bloqueado' => true,
+    //         ]);
+    //         $this->alert('success', 'El Usuario ha sido Bloqueado', [
+    //             'position' => 'top-end',
+    //             'timer' => 3000,
+    //             'toast' => true,
+    //             'timerProgressBar' => true,
+    //            ]);
+    //            dd($emp_bloq->usuario_bloqueado);
+    //     }elseif($emp_bloq->usuario_bloqueado == true){
+    //         $emp_bloq->update([
+    //             'usuario_bloqueado' => false,
+    //         ]);
+    //         $this->alert('success', 'El Usuario ha sido Desloqueado', [
+    //             'position' => 'top-end',
+    //             'timer' => 3000,
+    //             'toast' => true,
+    //             'timerProgressBar' => true,
+    //            ]);
+    //     }
+    //     // dd($emp_bloq->usuario_bloqueado);
+    // }
 
     public function empleadoProyectoRemove($id)
     {
