@@ -4,15 +4,10 @@ namespace App\Models\RH;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class ObjetivoRespuesta extends Model
 {
     use HasFactory;
-    // use QueryCacheable;
-
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
     protected $table = 'ev360_objetivos_calificaciones';
     protected $guarded = ['id'];
 

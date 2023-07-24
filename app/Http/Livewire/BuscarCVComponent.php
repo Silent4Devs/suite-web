@@ -4,9 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Empleado;
 use App\Models\ListaDocumentoEmpleado;
+use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
 
 class BuscarCVComponent extends Component
 {
@@ -51,7 +55,7 @@ class BuscarCVComponent extends Component
     {
         $this->empleado_id = '';
         $this->area_id = '';
-        $this->empleados = Empleado::alta()->select('id', 'area_id', 'name')->get();
+        $this->empleados = Empleado::getAltaEmpleados();
         //$this->conteo = '';
         $this->callAlert('info', 'Los filtros se han restablecido', true, 'La información volvio a su estado original');
     }
@@ -97,14 +101,15 @@ class BuscarCVComponent extends Component
     public function mount()
     {
         if (!$this->isPersonal) {
-            $this->empleados = Empleado::alta()->select('id', 'area_id', 'name')->get();
+            $this->empleados = Empleado::getAltaEmpleados();
         }
     }
 
     public function render()
     {
-        $this->lista_docs = ListaDocumentoEmpleado::getAll();
-        $empleadosCV = Empleado::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
+        $cacheKey = 'empleadosCV_data_'. Auth::user()->id;
+        $empleadosCV = Cache::remember('empleadosCV_data_'.$cacheKey, 3600 * 60, function () {
+        return Empleado::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
             ->when($this->empleado_id, function ($q3) {
                 $q3->where('id', $this->empleado_id);
             })
@@ -119,11 +124,6 @@ class BuscarCVComponent extends Component
                             $queryArr->orWhere('nombre', 'ILIKE', "%{$busqueda}%");
                         }
                     });
-                });
-            })
-            ->when($this->curso, function ($qCurso) {
-                $qCurso->whereHas('empleado_cursos', function ($queryCurso) {
-                    $queryCurso->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
                 });
             })
             ->when($this->curso, function ($qCurso) {
@@ -175,7 +175,7 @@ class BuscarCVComponent extends Component
                 $this->empleados = Empleado::select('id', 'area_id', 'name')->get();
             }
         }*/
-
+        $this->lista_docs = ListaDocumentoEmpleado::getAll();
         return view('livewire.buscar-c-v-component', [
             // 'empleadoget' => $empleadoget->get()->first(),
             'empleadosCV' => $empleadosCV,

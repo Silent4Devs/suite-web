@@ -6,15 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class HistorialVersionesDocumento extends Model
 {
     use HasFactory, SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $dates = ['fecha'];
     protected $appends = ['estatus_formateado', 'path_document', 'cambios', 'fecha_dmy', 'day_localized'];
     protected $fillable = [
