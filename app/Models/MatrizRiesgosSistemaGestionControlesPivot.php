@@ -3,14 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class MatrizRiesgosSistemaGestionControlesPivot extends Model
 {
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'matriz_riesgos_sistema_gestion_controles_pivot';
 
     protected $casts = [

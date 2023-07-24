@@ -5,15 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class EvidenciasDocumentosEmpleados extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'evidencias_documentos_empleados';
 
     protected $dates = [
