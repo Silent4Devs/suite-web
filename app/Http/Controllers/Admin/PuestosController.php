@@ -118,7 +118,7 @@ class PuestosController extends Controller
 
         $lenguajes = (json_decode($json));
         $areas = Area::getAll();
-        $reportas = Empleado::alta()->get();
+        $reportas = Empleado::getaltaAll();
         $idis = Language::all();
         $competencias = Competencia::getAll();
         $responsabilidades = PuestoResponsabilidade::get();
@@ -126,7 +126,7 @@ class PuestosController extends Controller
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
         $puesto = Puesto::getAll();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $perfiles = PerfilEmpleado::all();
         $puestos = Puesto::getAll();
         $externos = ContactosExternosPuestos::all();
@@ -196,7 +196,7 @@ class PuestosController extends Controller
         // $this->saveOrUpdateSchedule($request, $puesto);
         $lenguajes = (json_decode($json));
         $areas = Area::getAll();
-        $reportas = Empleado::alta()->get();
+        $reportas = Empleado::getaltaAll();
         $puesto->load(['contactos' => function ($query) {
             $query->with(['puesto' => function ($query) {
                 $query->with('area');
@@ -212,7 +212,7 @@ class PuestosController extends Controller
         $certificados = PuestosCertificado::get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $language = PuestoIdiomaPorcentajePivot::get();
         $puestos = Puesto::getAll();
         $externos = ContactosExternosPuestos::all();
@@ -253,7 +253,7 @@ class PuestosController extends Controller
         $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $areas = Area::getAll();
 
         return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas'));

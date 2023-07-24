@@ -30,7 +30,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RecursosController extends Controller
 {
-    use MediaUploadingTrait,ObtenerOrganizacion;
+    use MediaUploadingTrait, ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -107,7 +107,7 @@ class RecursosController extends Controller
         $recurso = new Recurso;
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.recursos.create', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
@@ -265,7 +265,7 @@ class RecursosController extends Controller
         $categorias = CategoriaCapacitacion::get();
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.recursos.edit', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
@@ -361,7 +361,7 @@ class RecursosController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-//        abort_if(Gate::denies('recurso_create') && Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('recurso_create') && Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Recurso();
         $model->id = $request->input('crud_id', 0);

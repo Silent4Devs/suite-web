@@ -113,7 +113,7 @@ class AnalisisBrechaController extends Controller
     public function create()
     {
         abort_if(Gate::denies('analisis_de_brechas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.analisisdebrechas.create', compact('empleados'));
     }
@@ -151,7 +151,7 @@ class AnalisisBrechaController extends Controller
     {
         abort_if(Gate::denies('analisis_de_brechas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $analisisBrecha = AnalisisBrecha::find($id);
 

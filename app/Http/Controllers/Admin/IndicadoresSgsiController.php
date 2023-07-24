@@ -120,7 +120,7 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
 
@@ -156,7 +156,7 @@ class IndicadoresSgsiController extends Controller
         abort_if(Gate::denies('indicadores_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $areas = Area::getAll();
         if ($indicadoresSgsi->formula_raw == null) {
             $indicadoresSgsi->update(['formula_raw' => $indicadoresSgsi->formula]);
