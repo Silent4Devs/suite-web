@@ -15,14 +15,14 @@
 
         <div class="row">
             <div class="form-group col-12 text-right">
-            @can('asignar_empleados')
+            {{-- @can('asignar_empleados') --}}
                 <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-success">Asignar Empleados</a>
-            @endcan
-            @can('asignar_externos')
+            {{-- @endcan
+            @can('asignar_externos') --}}
             @if($proyecto->tipo === "Externo")
                 <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-success">Asignar Proveedores/Consultores</a>
             @endif
-            @endcan
+            {{-- @endcan --}}
             </div>
         </div>
 
