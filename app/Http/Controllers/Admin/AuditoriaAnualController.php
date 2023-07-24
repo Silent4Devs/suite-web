@@ -121,7 +121,7 @@ class AuditoriaAnualController extends Controller
 
         $auditoriaAnual->load('auditorlider', 'team');
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual', 'empleados'));
     }

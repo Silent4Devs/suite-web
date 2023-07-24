@@ -20,7 +20,7 @@ class GruposComunicacion extends Component
     {
         $grupos_evaluados = GruposEvaluado::all();
         $areas = Area::all();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('livewire.grupos-comunicacion', ['grupos_evaluados' => $grupos_evaluados, 'areas' => $areas, 'empleados' => $empleados]);
     }

@@ -103,7 +103,7 @@ class EmpleadoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('bd_empleados_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::getAll();
         $sedes = Sede::getAll();
@@ -902,7 +902,7 @@ class EmpleadoController extends Controller
         $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
-        $empleado = Empleado::alta()->get();
+        $empleado = Empleado::getaltaAll();
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }
@@ -917,7 +917,7 @@ class EmpleadoController extends Controller
     {
         abort_if(Gate::denies('bd_empleados_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $empleado = Empleado::find(intval($id));
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $ceo_exists = Empleado::select('supervisor_id')->whereNull('supervisor_id')->exists();
         $areas = Area::getAll();
         $area = Area::find($empleado->area_id);
@@ -1533,7 +1533,7 @@ class EmpleadoController extends Controller
         $certificados = CertificacionesEmpleados::where('empleado_id', intval($id))->get();
         $capacitaciones = CursosDiplomasEmpleados::where('empleado_id', intval($id))->get();
         $expedientes = EvidenciasDocumentosEmpleados::where('empleado_id', intval($id))->get();
-        $empleado = Empleado::alta()->get();
+        $empleado = Empleado::getaltaAll();
 
         return view('admin.empleados.datosEmpleado', compact('visualizarEmpleados', 'empleado', 'contactos', 'dependientes', 'beneficiarios', 'certificados', 'capacitaciones', 'expedientes'));
     }

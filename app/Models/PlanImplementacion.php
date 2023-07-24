@@ -50,7 +50,7 @@ class PlanImplementacion extends Model
     #Redis methods
     public static function getAll()
     {
-        return Cache::remember('implementaciones', 3600*24, function () {
+        return Cache::remember('implementaciones', 3600 * 24, function () {
             return self::get();
         });
     }
@@ -64,7 +64,7 @@ class PlanImplementacion extends Model
 
     public function getResourcesAttribute()
     {
-        $empleado = Empleado::alta()->get();
+        $empleado = Empleado::getaltaAll();
 
         return $empleado;
     }

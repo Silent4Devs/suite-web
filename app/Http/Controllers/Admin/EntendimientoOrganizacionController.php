@@ -79,7 +79,7 @@ class EntendimientoOrganizacionController extends Controller
         }
 
         $obtener_FODA = EntendimientoOrganizacion::first();
-        $empleado = Empleado::alta()->get();
+        $empleado = Empleado::getaltaAll();
         $teams = Team::get();
 
         return view('admin.entendimientoOrganizacions.index', compact('obtener_FODA', 'teams', 'empleado'));
@@ -89,7 +89,7 @@ class EntendimientoOrganizacionController extends Controller
     {
         abort_if(Gate::denies('analisis_foda_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $entendimientoOrganizacion = new EntendimientoOrganizacion;
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $isEdit = false;
         $esta_vinculado = auth()->user()->empleado ? true : false;
 
@@ -142,7 +142,7 @@ class EntendimientoOrganizacionController extends Controller
 
         $entendimientoOrganizacion->load('participantes');
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $isEdit = true;
 
@@ -182,7 +182,7 @@ class EntendimientoOrganizacionController extends Controller
     {
         abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $obtener_FODA = $entendimientoOrganizacion;
         $fortalezas = FortalezasEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();
         $oportunidades = OportunidadesEntendimientoOrganizacion::where('foda_id', $entendimientoOrganizacion->id)->get();

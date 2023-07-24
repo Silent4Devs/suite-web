@@ -86,7 +86,7 @@ class CartaAceptacionRiesgosController extends Controller
 
     public function create(Request $request)
     {
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $directoresRiesgo = $responsables;
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;
@@ -173,7 +173,7 @@ class CartaAceptacionRiesgosController extends Controller
     public function edit($cartaAceptacion)
     {
         $cartaAceptacion = CartaAceptacion::find($cartaAceptacion);
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $directoresRiesgo = $responsables;
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;
@@ -189,7 +189,7 @@ class CartaAceptacionRiesgosController extends Controller
         $cartaAceptacion = CartaAceptacion::with(['aprobaciones' => function ($query) {
             $query->with('empleado', 'aprobacionesActivo')->orderBy('nivel');
         }])->find($cartaAceptacion);
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $directoresRiesgo = $responsables;
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;

@@ -94,9 +94,9 @@ class PlanAuditoriaController extends Controller
 
         // $fechas = AuditoriaAnual::all()->pluck('fechainicio', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $equipoauditorias = Empleado::alta()->get();
+        $equipoauditorias = Empleado::getaltaAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $puesto = Puesto::getAll();
 
@@ -139,7 +139,7 @@ class PlanAuditoriaController extends Controller
         $equipo_seleccionado = $planAuditorium->auditados->pluck('id')->toArray();
         // dd($equipo_seleccionado);
 
-        $equipoauditorias = Empleado::alta()->get();
+        $equipoauditorias = Empleado::getaltaAll();
 
         $actividadesAuditoria = ActividadesPlanAuditorium::get();
 

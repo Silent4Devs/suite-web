@@ -30,11 +30,11 @@ class UsersController extends Controller
         $areas = Area::getAll();
         $puestos = Puesto::getAll();
         $teams = Team::get();
-        // $empleadosNoAsignados = Empleado::alta()->get();
+        // $empleadosNoAsignados = Empleado::getaltaAll();
         // $empleados = $empleadosNoAsignados->filter(function ($item) {
         //     return !User::where('n_empleado', $item->n_empleado)->exists();
         // })->values();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
 
         return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados', 'existsVinculoEmpleadoAdmin'));
