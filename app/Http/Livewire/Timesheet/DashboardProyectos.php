@@ -282,6 +282,7 @@ class DashboardProyectos extends Component
                             'horas_proyecto' => $total_emp,
                             'proyecto' => $this->datos_dash->proyecto,
                             'empleado' => $ep->empleado->name,
+                            'area' => $area_individual,
                         ]);
                     }
 

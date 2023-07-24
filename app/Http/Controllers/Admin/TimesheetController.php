@@ -1073,8 +1073,10 @@ class TimesheetController extends Controller
             $sumamie = $times->sum('horas_miercoles');
             $sumajue = $times->sum('horas_jueves');
             $sumavie = $times->sum('horas_viernes');
+            $sumasab = $times->sum('horas_sabado');
+            $sumadom = $times->sum('horas_domingo');
 
-            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie;
+            $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
 
             if ($ep->proyecto->tipo === "Externo") {
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {

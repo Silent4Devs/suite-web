@@ -60,9 +60,11 @@
                     <th>Área </th>
                     <th>Puesto </th>
                 @if($proyecto->tipo === "Externo")
-                    <th>Horas asignadas </th>
-                    <th>Costo por hora </th>
-                    <th>Costo total estimado</th>
+                    <th>Horas Asignadas </th>
+                    <th>Horas Totales </th>
+                    <th>Horas Sobrepasadas </th>
+                    <th>Costo por Hora </th>
+                    <th>Costo Total Estimado</th>
                 @endif
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
@@ -76,8 +78,10 @@
                         <td>{{ $proyect_empleado->empleado->puesto }} </td>
                     @if($proyecto->tipo === "Externo")
                         <td>{{ $proyect_empleado->horas_asignadas ?? '0'}} </td>
+                        <td>{{ $proyect_empleado->totales ?? '0'}} </td>
+                        <td>{{ $proyect_empleado->sobrepasadas ?? '0'}} </td>
                         <td>{{ $proyect_empleado->costo_hora ?? '0'}} </td>
-                        <td>{{($proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora) ?? ''}}</td>
+                        <td>{{($proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora) ?? '0'}}</td>
                     @endif
                         <td>
                             <button class="btn" data-toggle="modal"
