@@ -60,9 +60,11 @@
                     <th>Área </th>
                     <th>Puesto </th>
                 @if($proyecto->tipo === "Externo")
-                    <th>Horas asignadas </th>
-                    <th>Costo por hora </th>
-                    <th>Costo total estimado</th>
+                    <th>Horas Asignadas </th>
+                    <th>Horas Totales </th>
+                    <th>Horas Sobrepasadas </th>
+                    <th>Costo por Hora </th>
+                    <th>Costo Total Estimado</th>
                 @endif
                     <th style="max-width:150px !important; width:150px ;">Opciones</th>
                 </tr>
@@ -76,8 +78,10 @@
                         <td>{{ $proyect_empleado->empleado->puesto }} </td>
                     @if($proyecto->tipo === "Externo")
                         <td>{{ $proyect_empleado->horas_asignadas ?? '0'}} </td>
+                        <td>{{ $proyect_empleado->totales ?? '0'}} </td>
+                        <td>{{ $proyect_empleado->sobrepasadas ?? '0'}} </td>
                         <td>{{ $proyect_empleado->costo_hora ?? '0'}} </td>
-                        <td>{{($proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora) ?? ''}}</td>
+                        <td>{{($proyect_empleado->horas_asignadas * $proyect_empleado->costo_hora) ?? '0'}}</td>
                     @endif
                         <td>
                             <button class="btn" data-toggle="modal"
@@ -85,6 +89,13 @@
                             <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size: 15pt;"
                                 title="Editar"></i>
                             </button>
+                            {{-- <a wire:click="bloquearEmpleado({{ $proyect_empleado->id }})" class="btn btn-sm">
+                                @if ($proyect_empleado->usuario_bloqueado == false)
+                                    <i class="fas fa-unlock"></i>
+                                @else
+                                    <i class="fas fa-lock"></i>
+                                @endif
+                            </a> --}}
                             {{-- <button class="btn" data-toggle="modal"
                                 data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
                                 <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"

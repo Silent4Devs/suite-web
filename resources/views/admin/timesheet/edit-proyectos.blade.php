@@ -15,10 +15,14 @@
 
         <div class="row">
             <div class="form-group col-12 text-right">
-            <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-success">Asignar Empleados</a>
+            {{-- @can('asignar_empleados') --}}
+                <a href="{{ route('admin.timesheet-proyecto-empleados', $proyecto->id) }}" class="btn btn-success">Asignar Empleados</a>
+            {{-- @endcan
+            @can('asignar_externos') --}}
             @if($proyecto->tipo === "Externo")
                 <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-success">Asignar Proveedores/Consultores</a>
             @endif
+            {{-- @endcan --}}
             </div>
         </div>
 
@@ -26,7 +30,7 @@
             @csrf
             <div class="row mt-4">
                 <div class="form-group col-md-2">
-                    <label><i class="fas fa-list iconos-crear"></i> ID</label>
+                    <label><i class="fas fa-list iconos-crear"></i> ID<sup>*</sup></label>
                     <input id="identificador_proyect" name="identificador" class="form-control" required
                     value="{{ old("identificador", $proyecto->identificador, '') }}">
                     @if ($errors->has('identificador'))
@@ -38,44 +42,14 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-10">
-                    <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto</label>
+                <div class="form-group col-md-6">
+                    <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto<sup>*</sup></label>
                     <input id="name_proyect" name="proyecto_name" class="form-control" required
                     value="{{ old("proyecto_name", $proyecto->proyecto, '') }}">
                 </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio <small>(opcional)</small></label>
-                    <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control"
-                    value="{{ old( 'fecha_inicio', $proyecto->fecha_inicio, '') }}">
-                    @if ($errors->has('fecha_inicio'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fecha_inicio') }}
-                        </div>
-                    @endif
-                    @error('fecha_inicio')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-                <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de fin <small>(opcional)</small></label>
-                    <input type="date" name="fecha_fin" id="fecha_fin" class="form-control"
-                    value="{{ old( 'fecha_fin', $proyecto->fecha_fin, '') }}">
-                    @if ($errors->has('fecha_fin'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('fecha_fin') }}
-                        </div>
-                    @endif
-                    @error('fecha_fin')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-5">
-                    <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente</label>
-                    <select name="cliente_id" id="cliente_id" class="form-control">
+                <div class="form-group col-md-4">
+                    <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente<sup>*</sup></label>
+                    <select name="cliente_id" id="cliente_id" class="form-control" required>
                         <option selected value="{{old("cliente_id", $proyecto->cliente_id, '')}}">
                             {{$proyecto->cliente_id ?? ''}}-{{ $proyecto->cliente_id ? $proyecto->cliente->nombre : '' }}</option>
                         @foreach ($clientes as $cliente)
@@ -84,8 +58,10 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-7" wire:ignore id="caja_areas_seleccionadas_create">
-                    <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)</label>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4" wire:ignore id="caja_areas_seleccionadas_create">
+                    <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)<sup>*</sup></label>
                     <select class="select2-multiple form-control" multiple="multiple"
                     id="areas_seleccionadas" name="areas_seleccionadas[]" required>
                         @foreach ($proyecto->areas as $area)
@@ -102,11 +78,37 @@
                         <input id="chkall" name="chkall" type="checkbox" value="todos"> Seleccionar Todas
                     </div>
                 </div>
+                <div class="form-group col-md-4">
+                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio <small>(opcional)</small></label>
+                    <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control"
+                    value="{{ old( 'fecha_inicio', $proyecto->fecha_inicio, '') }}">
+                    @if ($errors->has('fecha_inicio'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_inicio') }}
+                        </div>
+                    @endif
+                    @error('fecha_inicio')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de fin <small>(opcional)</small></label>
+                    <input type="date" name="fecha_fin" id="fecha_fin" class="form-control"
+                    value="{{ old( 'fecha_fin', $proyecto->fecha_fin, '') }}">
+                    @if ($errors->has('fecha_fin'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('fecha_fin') }}
+                        </div>
+                    @endif
+                    @error('fecha_fin')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede</label>
-                    <select class="form-control" name="sede_id" id="sede_id">
+                    <label class="form-label"><i class="fa-solid fa-building iconos-crear"></i>Sede<sup>*</sup></label>
+                    <select class="form-control" name="sede_id" id="sede_id" required>
                         <option selected value="{{old("sede_id", $proyecto->sede_id, '')}}">{{$proyecto->sede->sede ?? ''}}</option>
                         @foreach ($sedes as $sede)
                             <option value="{{ $sede->id }}">{{ $sede->sede }}</option>
@@ -115,8 +117,8 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label"><i
-                            class="fa-solid fa-info-circle iconos-crear"></i>Tipo</label>
-                    <select class="form-control" name="tipo" id="tipo">
+                            class="fa-solid fa-info-circle iconos-crear"></i>Tipo<sup>*</sup></label>
+                    <select class="form-control" name="tipo" id="tipo" required>
                         <option selected value="{{old("tipo", $proyecto->tipo, '')}}">{{$proyecto->tipo ?? ''}}</option>
                         @foreach ($tipos as $tipo_it)
                             <option value="{{ $tipo_it }}">{{ $tipo_it }}</option>

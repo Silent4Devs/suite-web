@@ -128,7 +128,7 @@
                                 {{ $time->descripcion }}
                             </td>
                             <td>
-                                {{ ($time->horas_lunes)+($time->horas_martes)+($time->horas_miercoles)+($time->horas_jueves)+($time->horas_viernes) }}
+                                {{ ($time->horas_lunes)+($time->horas_martes)+($time->horas_miercoles)+($time->horas_jueves)+($time->horas_viernes)+($time->horas_sabado)+($time->horas_domingo) }}
                             </td>
                             {{-- <td>
                                 <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar"

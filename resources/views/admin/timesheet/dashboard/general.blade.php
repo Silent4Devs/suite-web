@@ -332,7 +332,7 @@
         data: {
             labels: areas_array.map(item => item.area),
             datasets: [{
-                label: null,
+                label: 'Áreas',
                 data: areas_array.map(item => item.times_aprobados),
                 backgroundColor: '#25A0E2',
             }]
@@ -349,7 +349,7 @@
                 }
             },
             legend: {
-                display: true,
+                display: false,
                 position: 'bottom',
                 align: 'start',
                 labels: {
@@ -361,7 +361,7 @@
             plugins: {
                 datalabels: {
                     color: '#fff',
-                    display: true,
+                    display: false,
                     font: {
                         size: 20
                     }
@@ -412,7 +412,7 @@
             plugins: {
                 datalabels: {
                     color: '#fff',
-                    display: true,
+                    display: false,
                     font: {
                         size: 20
                     }
@@ -517,7 +517,7 @@
             plugins: {
                 datalabels: {
                     color: '#000',
-                    display: true,
+                    display: false,
                     font: {
                         size: 8
                     },
