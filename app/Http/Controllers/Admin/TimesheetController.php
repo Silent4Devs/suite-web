@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Mail\TimesheetHorasSolicitudAprobacion;
-use App\Mail\TimesheetSolicitudAprobada;
-use App\Mail\TimesheetSolicitudRechazada;
-use App\Mail\TimesheetHorasSobrepasadas;
-use App\Models\Area;
-use App\Models\Empleado;
-use App\Models\Sede;
-use App\Models\Organizacion;
-use App\Models\Timesheet;
-use App\Models\TimesheetCliente;
-use App\Models\TimesheetHoras;
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetProyectoEmpleado;
-use App\Models\TimesheetProyectoProveedor;
-use App\Models\TimesheetProyectoArea;
-use App\Models\TimesheetTarea;
-use App\Services\DashboardService;
-use App\Services\TimesheetService;
 use Carbon\Carbon;
+use App\Models\Area;
+use App\Models\Sede;
+use App\Models\Empleado;
+use App\Models\Timesheet;
+use App\Models\Organizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\TimesheetHoras;
+use App\Models\TimesheetTarea;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
+use App\Services\DashboardService;
+use App\Services\TimesheetService;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Models\TimesheetProyectoArea;
+use Illuminate\Support\Facades\Cache;
+use App\Mail\TimesheetHorasSobrepasadas;
+use App\Mail\TimesheetSolicitudAprobada;
+use App\Mail\TimesheetSolicitudRechazada;
+use App\Models\TimesheetProyectoEmpleado;
+use App\Models\TimesheetProyectoProveedor;
+use App\Mail\TimesheetHorasSolicitudAprobacion;
 
 class TimesheetController extends Controller
 {
@@ -45,13 +46,19 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $times = timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
+        $cacheKey = 'timesheet-' . auth()->user()->empleado->id;
 
-        $todos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->count();
-        $borrador_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'papelera')->count();
-        $pendientes_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'pendiente')->count();
-        $aprobados_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'aprobado')->count();
-        $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
+        $times = Cache::remember($cacheKey, now()->addHours(24), function () {
+            $times = Timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
+
+            return $times;
+        });
+
+        $todos_contador = $times->count();
+        $borrador_contador = $times->where('estatus', 'papelera')->count();
+        $pendientes_contador = $times->where('estatus', 'pendiente')->count();
+        $aprobados_contador = $times->where('estatus', 'aprobado')->count();
+        $rechazos_contador = $times->where('estatus', 'rechazado')->count();
 
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {
