@@ -560,6 +560,9 @@ class TimesheetController extends Controller
             [
                 'identificador' => 'required|unique:timesheet_proyectos,identificador',
                 'proyecto_name' => 'required',
+                'cliente_id' => 'required',
+                'sede_id' => 'required',
+                'tipo' => 'required',
             ],
             [
                 'identificador.unique' => 'El ID ya esta en uso',
@@ -595,7 +598,8 @@ class TimesheetController extends Controller
             ]);
         }
 
-        return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
+        // return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
+        return redirect('admin/timesheet/proyectos');
     }
 
     public function showProyectos($id)
@@ -624,6 +628,9 @@ class TimesheetController extends Controller
             [
                 'identificador' => 'required',
                 'proyecto_name' => 'required',
+                'cliente_id' => 'required',
+                'sede_id' => 'required',
+                'tipo' => 'required',
             ],
         );
 

@@ -167,6 +167,35 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     }
 
+    // public function bloquearEmpleado($id)
+    // {
+    //     $emp_bloq = TimesheetProyectoEmpleado::find($id);
+    //     if($emp_bloq->usuario_bloqueado == false){
+    //         // dd($emp_bloq->usuario_bloqueado);
+    //         $emp_bloq->update([
+    //             'usuario_bloqueado' => true,
+    //         ]);
+    //         $this->alert('success', 'El Usuario ha sido Bloqueado', [
+    //             'position' => 'top-end',
+    //             'timer' => 3000,
+    //             'toast' => true,
+    //             'timerProgressBar' => true,
+    //            ]);
+    //            dd($emp_bloq->usuario_bloqueado);
+    //     }elseif($emp_bloq->usuario_bloqueado == true){
+    //         $emp_bloq->update([
+    //             'usuario_bloqueado' => false,
+    //         ]);
+    //         $this->alert('success', 'El Usuario ha sido Desloqueado', [
+    //             'position' => 'top-end',
+    //             'timer' => 3000,
+    //             'toast' => true,
+    //             'timerProgressBar' => true,
+    //            ]);
+    //     }
+    //     // dd($emp_bloq->usuario_bloqueado);
+    // }
+
     public function empleadoProyectoRemove($id)
     {
         $empleado_remov = TimesheetProyectoEmpleado::find($id);
