@@ -92,7 +92,7 @@ class ReportesRegistros extends Component
     public function render()
     {
         //Query para obtener los timesheet y filtrarlo
-        $query = Timesheet::getAll()->orderByDesc('fecha_dia')
+        $query = Timesheet::orderByDesc('fecha_dia')
             ->whereHas('empleado', function ($query) {
                 if ($this->emp_id == 0) {
                     return $query->where('name', 'ILIKE', "%{$this->search}%");
