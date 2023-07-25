@@ -10,15 +10,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class RevisionMinuta extends Model
 {
     use HasFactory, SoftDeletes;
+
     // REVISION ESTATUS
     const SOLICITUD_REVISION = 1;
+
     const APROBADO = 2;
+
     const RECHAZADO = 3;
+
     const RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR = 4;
+
     const RECHAZADO_POR_NUEVA_EDICION = 5;
 
     //ARCHIVADO?
     const ARCHIVADO = '1';
+
     const NO_ARCHIVADO = '0';
 
     protected $fillable = [

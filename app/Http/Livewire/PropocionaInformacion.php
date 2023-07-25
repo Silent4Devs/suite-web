@@ -8,6 +8,7 @@ use Livewire\Component;
 class PropocionaInformacion extends Component
 {
     public $cuestionario_id;
+
     protected $listeners = ['render' => 'render'];
 
     public function render()

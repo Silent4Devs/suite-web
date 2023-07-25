@@ -8,15 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class EvaluadoEvaluador extends Model
 {
     use HasFactory;
+
     // public $cacheFor = 3600;
     // protected static $flushCacheOnUpdate = true;
     protected $table = 'ev360_evaluado_evaluador';
+
     protected $guarded = ['id'];
+
     protected $appends = ['progreso_competencias', 'progreso_objetivos'];
 
     const AUTOEVALUACION = 0;
+
     const JEFE_INMEDIATO = 1;
+
     const MISMA_AREA = 2;
+
     const EQUIPO = 3;
 
     public function getTipoFormateadoAttribute()

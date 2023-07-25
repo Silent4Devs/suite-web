@@ -19,7 +19,7 @@ class UpdateCompetenciumRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'perfilpuesto'         => [
+            'perfilpuesto' => [
                 'string',
                 'nullable',
             ],

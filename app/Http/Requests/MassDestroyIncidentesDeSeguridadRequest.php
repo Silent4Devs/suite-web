@@ -18,7 +18,7 @@ class MassDestroyIncidentesDeSeguridadRequest extends FormRequest
     public function rules()
     {
         return [
-            'ids'   => 'required|array',
+            'ids' => 'required|array',
             'ids.*' => 'exists:incidentes_de_seguridads,id',
         ];
     }

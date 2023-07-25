@@ -16,16 +16,16 @@ class ClasificacionSeeder extends Seeder
     {
         $clasificacion = [
             [
-                'nombre' => "Organizacionales"
+                'nombre' => 'Organizacionales',
             ],
             [
-                'nombre' => "Personales"
+                'nombre' => 'Personales',
             ],
             [
-                'nombre' => "Fisicas"
+                'nombre' => 'Fisicas',
             ],
             [
-                'nombre' => "Tecnólogicas"
+                'nombre' => 'Tecnólogicas',
             ],
 
         ];

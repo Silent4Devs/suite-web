@@ -14,6 +14,7 @@ class EnviarMailCapacitacionesJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $email;
+
     protected $emailClass;
 
     public function __construct($email, $emailClass)

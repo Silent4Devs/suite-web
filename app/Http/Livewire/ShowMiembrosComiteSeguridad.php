@@ -8,6 +8,7 @@ use Livewire\Component;
 class ShowMiembrosComiteSeguridad extends Component
 {
     public $id_comite;
+
     protected $listeners = ['render' => 'render'];
 
     public function render()

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VistaDocumento extends Model
 {
     use HasFactory;
+
     protected $table = 'vistas_documentos';
 
     protected $guarded = [

@@ -7,19 +7,19 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\CreateAmenazaRequest;
 use App\Http\Requests\UpdateAmenazaRequest;
 use App\Models\Amenaza;
-use App\Models\Organizacion;
 use App\Repositories\AmenazaRepository;
+use App\Traits\ObtenerOrganizacion;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
-use App\Traits\ObtenerOrganizacion;
 
 class AmenazaController extends AppBaseController
 {
     use CsvImportTrait;
     use ObtenerOrganizacion;
+
     /** @var AmenazaRepository */
     private $amenazaRepository;
 
@@ -74,7 +74,6 @@ class AmenazaController extends AppBaseController
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-
         return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual'));
     }
 
@@ -94,7 +93,6 @@ class AmenazaController extends AppBaseController
     /**
      * Store a newly created Amenaza in storage.
      *
-     * @param CreateAmenazaRequest $request
      *
      * @return Response
      */
@@ -152,8 +150,7 @@ class AmenazaController extends AppBaseController
     /**
      * Remove the specified Amenaza from storage.
      *
-     * @param  int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function destroy($id)

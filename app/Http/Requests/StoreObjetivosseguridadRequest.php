@@ -19,12 +19,12 @@ class StoreObjetivosseguridadRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'indicador'         => [
+            'indicador' => [
                 'string',
                 'nullable',
             ],
-            'anio'              => [
-                'date_format:' . config('panel.date_format'),
+            'anio' => [
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
         ];

@@ -58,7 +58,6 @@ class CompetenciasPorPuestoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $puesto)
@@ -70,7 +69,7 @@ class CompetenciasPorPuestoController extends Controller
         $exists = CompetenciaPuesto::where('puesto_id', '=', intval($puesto))
             ->where('competencia_id', '=', $request->competencia_id)
             ->exists();
-        if (!$exists) {
+        if (! $exists) {
             $puestoCompetencia = CompetenciaPuesto::create([
                 'puesto_id' => intval($puesto),
                 'competencia_id' => $request->competencia_id,
@@ -109,7 +108,6 @@ class CompetenciasPorPuestoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

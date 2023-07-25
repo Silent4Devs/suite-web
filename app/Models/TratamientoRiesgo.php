@@ -28,9 +28,9 @@ class TratamientoRiesgo extends Model
 
     const PRIORIDAD_SELECT = [
         'Critica' => 'Crítica',
-        'Alta'    => 'Alta',
-        'Media'   => 'Media',
-        'Baja'    => 'Baja',
+        'Alta' => 'Alta',
+        'Media' => 'Media',
+        'Baja' => 'Baja',
     ];
 
     const TIPO_INVERSION_SELECT = [

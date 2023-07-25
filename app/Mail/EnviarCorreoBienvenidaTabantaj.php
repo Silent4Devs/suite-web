@@ -11,6 +11,7 @@ class EnviarCorreoBienvenidaTabantaj extends Mailable
     use Queueable, SerializesModels;
 
     public $empleado;
+
     public $password;
 
     /**

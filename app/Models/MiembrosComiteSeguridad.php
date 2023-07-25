@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class MiembrosComiteSeguridad extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'miembros_comite_seguridad';
 
     public static $searchable = [

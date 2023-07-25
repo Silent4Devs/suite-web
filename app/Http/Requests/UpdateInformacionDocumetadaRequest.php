@@ -19,19 +19,19 @@ class UpdateInformacionDocumetadaRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'identificador'   => [
+            'identificador' => [
                 'string',
                 'nullable',
             ],
-            'version'         => [
+            'version' => [
                 'numeric',
                 'min:1',
                 'max:99',
             ],
-            'politicas.*'     => [
+            'politicas.*' => [
                 'integer',
             ],
-            'politicas'       => [
+            'politicas' => [
                 'array',
             ],
         ];

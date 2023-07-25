@@ -10,6 +10,7 @@ class BeneficiariosEmpleado extends Model
     use HasFactory;
 
     protected $table = 'beneficiarios_empleados';
+
     protected $fillable = [
         'empleado_id',
         'nombre',

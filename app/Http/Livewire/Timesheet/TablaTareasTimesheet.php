@@ -12,13 +12,21 @@ class TablaTareasTimesheet extends Component
     use LivewireAlert;
 
     public $tareas;
+
     public $proyectos;
+
     public $proyecto_seleccionado;
+
     public $tarea_name;
+
     public $area_select;
+
     public $proyecto_id;
+
     public $origen;
+
     public $tareas_proyecto;
+
     public $area_seleccionar;
 
     public $proyecto_filtro;

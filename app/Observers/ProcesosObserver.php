@@ -10,7 +10,6 @@ class ProcesosObserver
     /**
      * Handle the Proceso "created" event.
      *
-     * @param  \App\Models\Proceso  $proceso
      * @return void
      */
     public function created(Proceso $proceso)
@@ -21,7 +20,6 @@ class ProcesosObserver
     /**
      * Handle the Proceso "updated" event.
      *
-     * @param  \App\Models\Proceso  $proceso
      * @return void
      */
     public function updated(Proceso $proceso)
@@ -32,7 +30,6 @@ class ProcesosObserver
     /**
      * Handle the Proceso "deleted" event.
      *
-     * @param  \App\Models\Proceso  $proceso
      * @return void
      */
     public function deleted(Proceso $proceso)
@@ -43,7 +40,6 @@ class ProcesosObserver
     /**
      * Handle the Proceso "restored" event.
      *
-     * @param  \App\Models\Proceso  $proceso
      * @return void
      */
     public function restored(Proceso $proceso)
@@ -54,7 +50,6 @@ class ProcesosObserver
     /**
      * Handle the Proceso "force deleted" event.
      *
-     * @param  \App\Models\Proceso  $proceso
      * @return void
      */
     public function forceDeleted(Proceso $proceso)

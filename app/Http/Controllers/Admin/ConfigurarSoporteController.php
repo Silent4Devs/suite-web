@@ -106,7 +106,7 @@ class ConfigurarSoporteController extends Controller
             'extension' => $request->extension,
             'tel_celular' => $request->tel_celular,
             'correo' => $request->correo,
-            'id_elaboro' =>  $request->id_elaboro,
+            'id_elaboro' => $request->id_elaboro,
         ]);
         // $ConfigurarSoporteModel= new ConfigurarSoporteModel;
         // $ConfigurarSoporteModel->puesto = $request->puesto;

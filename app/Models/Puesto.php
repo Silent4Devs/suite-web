@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
 use App\Traits\MultiTenantModelTrait;
-use Illuminate\Support\Facades\Cache;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 
 class Puesto extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'puestos';
 
     protected $dates = [
@@ -57,7 +58,7 @@ class Puesto extends Model
         'reporta_puesto_id',
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
         return Cache::remember('Puestos_all', 3600 * 24, function () {

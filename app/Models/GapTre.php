@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class GapTre extends Model
 {
     use MultiTenantModelTrait, HasFactory;
+
     public $table = 'gap_logro_tres';
 
     protected $dates = [
@@ -31,8 +32,8 @@ class GapTre extends Model
 
     const VALORACION_SELECT = [
         'Cumple satisfactoriamente' => 'Cumple satisfactoriamente',
-        'Cumple parcialmente'       => 'Cumple parcialmente',
-        'No cumple'                 => 'No cumple',
+        'Cumple parcialmente' => 'Cumple parcialmente',
+        'No cumple' => 'No cumple',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -44,7 +45,7 @@ class GapTre extends Model
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format').' '.config('panel.time_format'));
         $this->save();
     }
 

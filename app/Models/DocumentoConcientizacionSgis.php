@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DocumentoConcientizacionSgis extends Model
 {
     use SoftDeletes;
+
     protected $table = 'documento_concientizacion_sgis';
 
     protected $dates = [
@@ -15,6 +16,7 @@ class DocumentoConcientizacionSgis extends Model
         'updated_at',
         'deleted_at',
     ];
+
     protected $cast = [
         'concientSgsi_id',
         'documento',

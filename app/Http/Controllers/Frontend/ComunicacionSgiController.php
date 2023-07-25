@@ -92,11 +92,11 @@ class ComunicacionSgiController extends Controller
         $comunicacionSgi = ComunicacionSgi::create($request->all());
 
         $image = null;
-        if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
+        if ($request->file('imagen') != null or ! empty($request->file('imagen'))) {
             $extension = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
+            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+            $new_name_image = 'UID_'.$comunicacionSgi->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path().'/app/public/imagen_comunicado_SGI/'.$new_name_image;
             $image = $new_name_image;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('imagen'));
@@ -129,7 +129,7 @@ class ComunicacionSgiController extends Controller
         $comunicacionSgi->empleados()->sync($request->empleados);
 
         if ($request->input('archivo', false)) {
-            $comunicacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+            $comunicacionSgi->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -161,11 +161,11 @@ class ComunicacionSgiController extends Controller
 
         $comunicacionSgi->update($request->all());
         // $image = $comunicacionSgi->imagen;
-        if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
+        if ($request->file('imagen') != null or ! empty($request->file('imagen'))) {
             $extension = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
+            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+            $new_name_image = 'UID_'.$comunicacionSgi->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path().'/app/public/imagen_comunicado_SGI/'.$new_name_image;
             $image = $new_name_image;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('imagen'));
@@ -205,12 +205,12 @@ class ComunicacionSgiController extends Controller
         $comunicacionSgi->empleados()->sync($request->empleados);
 
         if ($request->input('archivo', false)) {
-            if (!$comunicacionSgi->archivo || $request->input('archivo') !== $comunicacionSgi->archivo->file_name) {
+            if (! $comunicacionSgi->archivo || $request->input('archivo') !== $comunicacionSgi->archivo->file_name) {
                 if ($comunicacionSgi->archivo) {
                     $comunicacionSgi->archivo->delete();
                 }
 
-                $comunicacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+                $comunicacionSgi->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
             }
         } elseif ($comunicacionSgi->archivo) {
             $comunicacionSgi->archivo->delete();

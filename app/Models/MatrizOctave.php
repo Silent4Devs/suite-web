@@ -24,7 +24,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $id_analisis
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Area|null $area
  * @property Sede|null $sede
  * @property Proceso|null $proceso

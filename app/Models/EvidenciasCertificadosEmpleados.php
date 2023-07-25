@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EvidenciasCertificadosEmpleados extends Model
 {
     use SoftDeletes;
+
     protected $table = 'evidencias_certificados_empleados';
 
     protected $dates = [

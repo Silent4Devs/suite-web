@@ -12,21 +12,31 @@ use Livewire\Component;
 class EventosPortal extends Component
 {
     public $nuevos;
+
     public $cumpleaños;
+
     public $aniversarios;
+
     public $empleado_asignado;
+
     public $hoy;
+
     public $cumpleañero_id;
+
     public $comentario_id;
 
     public $comentarios;
+
     public $comentarios_update;
 
     public $nuevos_contador_circulo;
+
     public $cumpleaños_contador_circulo;
+
     public $aniversarios_contador_circulo;
 
     public $politica_existe;
+
     public $comite_existe;
 
     public function mount()

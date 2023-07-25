@@ -26,7 +26,6 @@ class VulnerabilidadController extends AppBaseController
     /**
      * Display a listing of the Vulnerabilidad.
      *
-     * @param Request $request
      *
      * @return Response
      */
@@ -91,7 +90,6 @@ class VulnerabilidadController extends AppBaseController
     /**
      * Store a newly created Vulnerabilidad in storage.
      *
-     * @param CreateVulnerabilidadRequest $request
      *
      * @return Response
      */
@@ -109,8 +107,7 @@ class VulnerabilidadController extends AppBaseController
     /**
      * Display the specified Vulnerabilidad.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function show($id)
@@ -129,8 +126,7 @@ class VulnerabilidadController extends AppBaseController
     /**
      * Show the form for editing the specified Vulnerabilidad.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function edit($id)
@@ -151,9 +147,7 @@ class VulnerabilidadController extends AppBaseController
     /**
      * Update the specified Vulnerabilidad in storage.
      *
-     * @param int $id
-     * @param UpdateVulnerabilidadRequest $request
-     *
+     * @param  int  $id
      * @return Response
      */
     public function update($id, UpdateVulnerabilidadRequest $request)
@@ -176,11 +170,10 @@ class VulnerabilidadController extends AppBaseController
     /**
      * Remove the specified Vulnerabilidad from storage.
      *
-     * @param int $id
+     * @param  int  $id
+     * @return Response
      *
      * @throws \Exception
-     *
-     * @return Response
      */
     public function destroy($id)
     {

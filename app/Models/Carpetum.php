@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Carpetum extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'carpeta';
 
     protected $dates = [

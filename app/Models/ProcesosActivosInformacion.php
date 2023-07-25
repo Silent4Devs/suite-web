@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $id_activos_informacion
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Proceso|null $proceso
  * @property ActivosInformacion|null $activos_informacion
  */

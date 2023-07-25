@@ -24,7 +24,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $evaluacion_riesgo
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Amenaza|null $amenaza
  * @property MatrizOctave|null $matriz_octave
  * @property Vulnerabilidad|null $vulnerabilidad

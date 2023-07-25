@@ -8,6 +8,7 @@ use Livewire\Component;
 class TablePlanAuditoriaComponent extends Component
 {
     public $plan_auditoria_id;
+
     protected $listeners = ['render' => 'render'];
 
     public function render()

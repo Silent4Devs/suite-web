@@ -17,14 +17,23 @@ class BajaEmpleadoComponent extends Component
     use ObtenerOrganizacion, EmpleadoFunciones;
 
     public $empleado;
+
     public $empleados;
+
     public $fechaBaja;
+
     public $razonBaja;
+
     public $nuevoSupervisor;
+
     public $comites;
+
     public $documentosQueDeboAprobar;
+
     public $documentosQueMeDebenAprobar;
+
     public $misActivos;
+
     public $misCapacitaciones;
 
     protected $rules = [

@@ -10,7 +10,6 @@ class AccionCorrectivaObserver
     /**
      * Handle the AccionCorrectiva "created" event.
      *
-     * @param  \App\Models\AccionCorrectiva  $accionCorrectiva
      * @return void
      */
     public function created(AccionCorrectiva $accionCorrectiva)
@@ -21,7 +20,6 @@ class AccionCorrectivaObserver
     /**
      * Handle the AccionCorrectiva "updated" event.
      *
-     * @param  \App\Models\AccionCorrectiva  $accionCorrectiva
      * @return void
      */
     public function updated(AccionCorrectiva $accionCorrectiva)
@@ -32,7 +30,6 @@ class AccionCorrectivaObserver
     /**
      * Handle the AccionCorrectiva "deleted" event.
      *
-     * @param  \App\Models\AccionCorrectiva  $accionCorrectiva
      * @return void
      */
     public function deleted(AccionCorrectiva $accionCorrectiva)
@@ -43,7 +40,6 @@ class AccionCorrectivaObserver
     /**
      * Handle the AccionCorrectiva "restored" event.
      *
-     * @param  \App\Models\AccionCorrectiva  $accionCorrectiva
      * @return void
      */
     public function restored(AccionCorrectiva $accionCorrectiva)
@@ -54,7 +50,6 @@ class AccionCorrectivaObserver
     /**
      * Handle the AccionCorrectiva "force deleted" event.
      *
-     * @param  \App\Models\AccionCorrectiva  $accionCorrectiva
      * @return void
      */
     public function forceDeleted(AccionCorrectiva $accionCorrectiva)

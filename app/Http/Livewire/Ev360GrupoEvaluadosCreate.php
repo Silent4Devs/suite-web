@@ -10,7 +10,9 @@ use Livewire\Component;
 class Ev360GrupoEvaluadosCreate extends Component
 {
     public $open = false;
+
     public $empleados = [];
+
     public $nombreGrupo;
 
     protected $rules = [

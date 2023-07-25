@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $controles_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  */
 class CartaAceptacionPivot extends Model

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EducacionEmpleados extends Model
 {
     use SoftDeletes;
+
     protected $table = 'educacion_empleados';
 
     const NivelSelect = [
@@ -19,8 +20,8 @@ class EducacionEmpleados extends Model
         'Técnico' => 'Técnico',
         'Ingeniería' => 'Ingeniería',
         'Licenciatura' => 'Licenciatura',
-        'Maestria'     => 'Maestria',
-        'Doctorado'    => 'Doctorado',
+        'Maestria' => 'Maestria',
+        'Doctorado' => 'Doctorado',
     ];
 
     protected $dates = [

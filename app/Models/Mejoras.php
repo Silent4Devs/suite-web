@@ -20,7 +20,7 @@ class Mejoras extends Model
 
     public function getFolioAttribute()
     {
-        return  sprintf('MJA-%04d', $this->id);
+        return sprintf('MJA-%04d', $this->id);
     }
 
     public function getBeneficioHtmlAttribute()

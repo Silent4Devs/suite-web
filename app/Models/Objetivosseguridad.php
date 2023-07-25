@@ -26,7 +26,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property character varying|null $frecuencia
  * @property character varying|null $revisiones
  * @property int|null $ano
- *
  * @property Team|null $team
  * @property Empleado|null $empleado
  * @property Collection|VariablesObjetivosseguridad[] $variables_objetivosseguridads
@@ -35,11 +34,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Objetivosseguridad extends Model
 {
     use SoftDeletes;
+
     protected $table = 'objetivosseguridads';
 
     protected $dates = ['deleted_at'];
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $casts = [

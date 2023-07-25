@@ -19,6 +19,7 @@ class DocumentoRechazadoMail extends Mailable implements ShouldQueue
      * @return void
      */
     public $documento;
+
     public $revision;
 
     public function __construct(Documento $documento, RevisionDocumento $revision)

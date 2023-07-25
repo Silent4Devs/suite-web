@@ -10,14 +10,23 @@ use Livewire\Component;
 class CompararEvaluaciones extends Component
 {
     public $evaluador;
+
     public $calificaciones_autoevaluacion_competencias_compare_first;
+
     public $calificaciones_autoevaluacion_competencias_compare;
+
     public $competencias_lista_nombre_max;
+
     public $calificaciones_compare_first;
+
     public $calificaciones_compare;
+
     public $informacion_obtenida_compare_first;
+
     public $informacion_obtenida_compare;
+
     public $evaluacion1;
+
     public $evaluacion2;
 
     public function mount($evaluacion, $evaluador)

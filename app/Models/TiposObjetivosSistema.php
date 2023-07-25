@@ -10,6 +10,7 @@ class TiposObjetivosSistema extends Model
     use HasFactory;
 
     protected $table = 'tipo_objetivo_sistema';
+
     protected $fillable = ['nombre', 'slug', 'descripcion'];
 
     public function objetivosseguridad()

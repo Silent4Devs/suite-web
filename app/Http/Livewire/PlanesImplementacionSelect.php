@@ -8,7 +8,9 @@ use Livewire\Component;
 class PlanesImplementacionSelect extends Component
 {
     protected $listeners = ['render-select' => 'render'];
+
     public $planes_implementacion;
+
     public $planes_seleccionados;
 
     public function mount($planes_seleccionados)

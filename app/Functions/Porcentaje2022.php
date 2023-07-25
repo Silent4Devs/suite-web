@@ -6,8 +6,8 @@ class Porcentaje2022
 {
     public function GapUnoPorc($gap1porcentaje)
     {
-        $valorgap1cump = 30/15;
-        $valorgap1parc = $valorgap1cump/2;
+        $valorgap1cump = 30 / 15;
+        $valorgap1parc = $valorgap1cump / 2;
         $gap1cont = 0;
         foreach ($gap1porcentaje as $gap1) {
             if ($gap1->valoracion == '1') {
@@ -46,8 +46,7 @@ class Porcentaje2022
         $gap3parcialmente,
         $gap3asatisfactorios,
         $gap3aparcialmente
-    )
-    {
+    ) {
         //Sacar el valor correspondiente
         $valor = 30 / $gap3porcentaje;
         //Valor de satisfactoriamente y de parcialmente

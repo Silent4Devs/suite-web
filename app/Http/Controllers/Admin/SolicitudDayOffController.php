@@ -10,13 +10,13 @@ use App\Models\Empleado;
 use App\Models\IncidentesDayoff;
 use App\Models\Organizacion;
 use App\Models\SolicitudDayOff;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use App\Traits\ObtenerOrganizacion;
 
 class SolicitudDayOffController extends Controller
 {

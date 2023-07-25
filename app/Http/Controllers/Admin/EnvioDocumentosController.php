@@ -7,14 +7,13 @@ use App\Mail\SolicitudMensajeria as MailMensajeria;
 use App\Models\Empleado;
 use App\Models\EnvioDocumentos;
 use App\Models\EnvioDocumentosAjustes;
-use App\Models\Organizacion;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use App\Traits\ObtenerOrganizacion;
 
 class EnvioDocumentosController extends Controller
 {

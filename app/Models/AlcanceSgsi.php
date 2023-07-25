@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $fecha_revision
  * @property int|null $id_reviso_alcance
  * @property int|null $norma_id
- *
  * @property Team|null $team
  * @property Empleado|null $empleado
  * @property Norma|null $norma

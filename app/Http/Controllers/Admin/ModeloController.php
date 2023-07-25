@@ -74,24 +74,23 @@ class ModeloController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         if ($request->ajax()) {
             $request->validate([
-                'nombre'=>'required|string|unique:modelo,nombre',
+                'nombre' => 'required|string|unique:modelo,nombre',
             ]);
             $nombre = $request->nombre;
             // dd($request->all());
             $modelo = Modelo::create([
-                'nombre'=>$nombre,
+                'nombre' => $nombre,
             ]);
             if ($modelo) {
-                return response()->json(['success'=>true, 'modelo'=>$modelo]);
+                return response()->json(['success' => true, 'modelo' => $modelo]);
             } else {
-                return response()->json(['success'=>false]);
+                return response()->json(['success' => false]);
             }
         }
     }
@@ -99,7 +98,6 @@ class ModeloController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
     public function show(Modelo $modelo)
@@ -110,7 +108,6 @@ class ModeloController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
     public function edit(Modelo $modelo)
@@ -123,25 +120,23 @@ class ModeloController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Modelo $modelo)
     {
         if ($request->ajax()) {
             $request->validate([
-                'nombre'=>'required|string|unique:modelo,nombre',
+                'nombre' => 'required|string|unique:modelo,nombre',
             ]);
             $nombre = $request->nombre;
             // dd($request->all());
             $modelo = Modelo::create([
-                'nombre'=>$nombre,
+                'nombre' => $nombre,
             ]);
             if ($modelo) {
-                return response()->json(['success'=>true]);
+                return response()->json(['success' => true]);
             } else {
-                return response()->json(['success'=>false]);
+                return response()->json(['success' => false]);
             }
         }
     }
@@ -149,7 +144,6 @@ class ModeloController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Modelo  $modelo
      * @return \Illuminate\Http\Response
      */
     public function destroy(Modelo $modelo)
@@ -171,15 +165,15 @@ class ModeloController extends Controller
             foreach ($modelos as $modelo) {
                 if ($modelo_seleccionado) {
                     if ($modelo->id == $modelo_seleccionado->id) {
-                        $modelos_arr[] = ['id'=>$modelo->id, 'text'=>$modelo->nombre, 'selected'=>true];
+                        $modelos_arr[] = ['id' => $modelo->id, 'text' => $modelo->nombre, 'selected' => true];
                     }
                 }
-                $modelos_arr[] = ['id'=>$modelo->id, 'text'=>$modelo->nombre];
+                $modelos_arr[] = ['id' => $modelo->id, 'text' => $modelo->nombre];
             }
 
             $array_m = [];
             $array_m['results'] = $modelos_arr;
-            $array_m['pagination'] = ['more'=>false];
+            $array_m['pagination'] = ['more' => false];
 
             return $array_m;
         }

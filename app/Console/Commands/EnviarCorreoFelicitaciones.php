@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Mail;
 class EnviarCorreoFelicitaciones extends Command
 {
     protected $nombre;
+
     protected $correodestinatario;
+
     protected $cumplehoy;
+
     /**
      * The name and signature of the console command.
      *

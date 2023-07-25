@@ -10,7 +10,6 @@ class ModelosObserver
     /**
      * Handle the Modelo "created" event.
      *
-     * @param  \App\Models\Modelo  $modelo
      * @return void
      */
     public function created(Modelo $modelo)
@@ -21,7 +20,6 @@ class ModelosObserver
     /**
      * Handle the Modelo "updated" event.
      *
-     * @param  \App\Models\Modelo  $modelo
      * @return void
      */
     public function updated(Modelo $modelo)
@@ -32,7 +30,6 @@ class ModelosObserver
     /**
      * Handle the Modelo "deleted" event.
      *
-     * @param  \App\Models\Modelo  $modelo
      * @return void
      */
     public function deleted(Modelo $modelo)
@@ -43,7 +40,6 @@ class ModelosObserver
     /**
      * Handle the Modelo "restored" event.
      *
-     * @param  \App\Models\Modelo  $modelo
      * @return void
      */
     public function restored(Modelo $modelo)
@@ -54,7 +50,6 @@ class ModelosObserver
     /**
      * Handle the Modelo "force deleted" event.
      *
-     * @param  \App\Models\Modelo  $modelo
      * @return void
      */
     public function forceDeleted(Modelo $modelo)

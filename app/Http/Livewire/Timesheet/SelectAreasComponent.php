@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class SelectAreasComponent extends Component
 {
-
     protected $listeners = ['render' => 'render'];
 
     public function render()
@@ -16,5 +15,4 @@ class SelectAreasComponent extends Component
 
         return view('livewire.timesheet.select-areas-component', compact('areas'));
     }
-
 }

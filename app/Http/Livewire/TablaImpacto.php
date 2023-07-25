@@ -11,22 +11,34 @@ class TablaImpacto extends Component
 {
     public $columnas = [
     ];
+
     public $indexColumna = 1;
+
     public $clasificacionImpacto;
+
     public $nivelImpacto;
+
     public $colorImpacto;
+
     public $tablaImpacto = 1;
+
     protected $rules = [
         'nivelImpacto' => 'required|numeric|min:0',
         'clasificacionImpacto' => 'required|string|max:255',
         'colorImpacto' => 'required',
     ];
+
     public $filas = [
     ];
+
     public $indexRow = 1;
+
     public $nombreImpacto;
+
     public $criterioImpacto;
+
     public $baseImpacto;
+
     public $tablaImpactoId = 1;
     // public $contenidos =[];
 
@@ -34,7 +46,7 @@ class TablaImpacto extends Component
     {
         $tipos = TipoImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
         $impactos = NivelesImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
-        foreach ($impactos as $index=>$impacto) {
+        foreach ($impactos as $index => $impacto) {
             // array_push($this->contenidos,["i{$impacto->id}"=>[]]);
             // dd($this->contenidos);
             // foreach($tipos as $tipo)
@@ -44,8 +56,8 @@ class TablaImpacto extends Component
             //     // $this->contenidos["i{$impacto->id}"]["t{$tipo->id}"]=['contenido'=>$contenido];
             // }
             $columna = [
-                'id'=>$impacto->id,
-                'nivel'=>$impacto->nivel,
+                'id' => $impacto->id,
+                'nivel' => $impacto->nivel,
                 'clasificacion' => $impacto->clasificacion,
                 'color' => $impacto->color,
             ];
@@ -55,10 +67,10 @@ class TablaImpacto extends Component
         // dd($this->contenidos);
         foreach ($tipos as $tipo) {
             $fila = [
-                'id'=>$tipo->id,
-                'nombre_impacto'=>$tipo->nombre_impacto,
-                'criterio'=> $tipo->criterio,
-                'base'=>$tipo->base,
+                'id' => $tipo->id,
+                'nombre_impacto' => $tipo->nombre_impacto,
+                'criterio' => $tipo->criterio,
+                'base' => $tipo->base,
             ];
 
             array_push($this->filas, $fila);
@@ -101,8 +113,8 @@ class TablaImpacto extends Component
         $this->validate();
         $nivelCreado = $this->crearNivel($this->nivelImpacto, $this->clasificacionImpacto, $this->colorImpacto, $this->tablaImpacto);
         $columna = [
-            'id'=>$nivelCreado->id,
-            'nivel'=>$this->nivelImpacto,
+            'id' => $nivelCreado->id,
+            'nivel' => $this->nivelImpacto,
             'clasificacion' => $this->clasificacionImpacto,
             'color' => $this->colorImpacto,
         ];
@@ -117,10 +129,10 @@ class TablaImpacto extends Component
     public function crearNivel($nivel, $clasificacion, $color, $tabla_impacto)
     {
         $nivelImpacto = NivelesImpacto::create([
-            'nivel'=>$nivel,
-            'clasificacion' =>$clasificacion,
-            'color'=>$color,
-            'tabla_impacto_id'=>$tabla_impacto,
+            'nivel' => $nivel,
+            'clasificacion' => $clasificacion,
+            'color' => $color,
+            'tabla_impacto_id' => $tabla_impacto,
         ]);
 
         return $nivelImpacto;
@@ -133,13 +145,13 @@ class TablaImpacto extends Component
         // dd($fila);
         $impactos = NivelesImpacto::where('tabla_impacto_id', $this->tablaImpacto)->get();
         foreach ($impactos as $impacto) {
-            $this->contenidos["i{$impacto->id}"]["t{$tipoCreado->id}"] = ['contenido'=>''];
+            $this->contenidos["i{$impacto->id}"]["t{$tipoCreado->id}"] = ['contenido' => ''];
         }
         $fila = [
-            'id'=>$tipoCreado->id,
-            'nombre_impacto'=>$this->nombreImpacto,
-            'criterio'=> $this->criterioImpacto,
-            'base'=>$this->baseImpacto,
+            'id' => $tipoCreado->id,
+            'nombre_impacto' => $this->nombreImpacto,
+            'criterio' => $this->criterioImpacto,
+            'base' => $this->baseImpacto,
         ];
         $this->indexRow = $indexRow;
         array_push($this->filas, $fila);
@@ -151,10 +163,10 @@ class TablaImpacto extends Component
     public function crearTipo($nombre, $criterio, $base, $tabla_impacto)
     {
         $tipoImpacto = TipoImpacto::create([
-            'nombre_impacto'=>$nombre,
-            'criterio'=> $criterio,
-            'base'=>$base,
-            'tabla_impacto_id'=>$tabla_impacto,
+            'nombre_impacto' => $nombre,
+            'criterio' => $criterio,
+            'base' => $base,
+            'tabla_impacto_id' => $tabla_impacto,
 
         ]);
         $this->emit('cerrarModalImpacto');
@@ -165,7 +177,7 @@ class TablaImpacto extends Component
     public function guardarContenido($tipo, $nivel, $contenido)
     {
         //Guarda el contenido sino hay un registro existente de eso, en caso de haber sólo lo actualiza
-        $tipoNivel = TipoNivelImpacto::updateOrCreate(['tipo_impacto_id'=>$tipo, 'niveles_impacto_id'=>$nivel], ['contenido' => $contenido]);
+        $tipoNivel = TipoNivelImpacto::updateOrCreate(['tipo_impacto_id' => $tipo, 'niveles_impacto_id' => $nivel], ['contenido' => $contenido]);
 
         return $tipoNivel;
     }

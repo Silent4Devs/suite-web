@@ -15,7 +15,7 @@ class UpdateControleRequest extends FormRequest
     public function rules()
     {
         return [
-            'numero'  => [
+            'numero' => [
                 'string',
                 'nullable',
             ],

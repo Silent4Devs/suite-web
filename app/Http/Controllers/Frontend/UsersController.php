@@ -102,7 +102,7 @@ class UsersController extends Controller
         $teams = Team::get();
         $empleadosNoAsignados = Empleado::getAll();
         $empleados = $empleadosNoAsignados->filter(function ($item) {
-            return !User::where('n_empleado', $item->n_empleado)->exists();
+            return ! User::where('n_empleado', $item->n_empleado)->exists();
         })->values();
 
         return view('frontend.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados'));
@@ -189,10 +189,10 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
-            $usuarios = User::select('id', 'name', 'email')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
+            $usuarios = User::select('id', 'name', 'email')->where('name', 'LIKE', '%'.$nombre.'%')->take(5)->get();
             $lista = "<ul class='list-group' id='empleados-lista'>";
             foreach ($usuarios as $usuario) {
-                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . '</button>';
+                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
             }
             $lista .= '</ul>';
 

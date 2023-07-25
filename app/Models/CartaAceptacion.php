@@ -40,7 +40,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $fecha_aut_viceoperaciones
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Empleado|null $empleado
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  */

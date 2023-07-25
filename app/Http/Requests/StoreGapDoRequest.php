@@ -15,11 +15,11 @@ class StoreGapDoRequest extends FormRequest
     public function rules()
     {
         return [
-            'anexo_indice'        => [
+            'anexo_indice' => [
                 'string',
                 'nullable',
             ],
-            'control'             => [
+            'control' => [
                 'string',
                 'nullable',
             ],
@@ -27,11 +27,11 @@ class StoreGapDoRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'evidencia'           => [
+            'evidencia' => [
                 'string',
                 'nullable',
             ],
-            'recomendacion'       => [
+            'recomendacion' => [
                 'string',
                 'nullable',
             ],

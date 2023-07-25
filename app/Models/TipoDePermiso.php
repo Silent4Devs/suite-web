@@ -10,6 +10,7 @@ class TipoDePermiso extends Model
     use HasFactory;
 
     protected $table = 'tipo_permiso';
+
     protected $fillable = ['nombre', 'slug', 'descripcion'];
 
     public function controlacceso()

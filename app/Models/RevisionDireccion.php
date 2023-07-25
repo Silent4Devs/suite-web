@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class RevisionDireccion extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'revision_direccions';
 
     protected $dates = [

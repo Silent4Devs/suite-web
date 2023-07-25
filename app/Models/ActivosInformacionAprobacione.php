@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $activoInformacion_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Empleado $empleado
  * @property ActivosInformacion $activos_informacion
  */

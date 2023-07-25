@@ -15,6 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class PlanBaseActividade extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+
     protected $appends = [
         'guia',
     ];

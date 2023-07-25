@@ -11,7 +11,9 @@ class SolicitudMensajeria extends Mailable
     use Queueable, SerializesModels;
 
     public $coordinador;
+
     public $solicitante;
+
     public $solicitud;
 
     public function __construct($solicitante, $coordinador, $solicitud)
@@ -28,6 +30,6 @@ class SolicitudMensajeria extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.mensajeria.solicitud')->subject('Solicitud de Mensajería de: ' . $this->solicitante->name);
+        return $this->view('mails.mensajeria.solicitud')->subject('Solicitud de Mensajería de: '.$this->solicitante->name);
     }
 }

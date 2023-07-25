@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $contenido
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property TablaImpacto|null $tabla_impacto
  * @property NivelesImpacto|null $niveles_impacto
  */

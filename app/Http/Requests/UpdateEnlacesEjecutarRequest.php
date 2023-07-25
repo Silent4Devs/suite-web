@@ -15,7 +15,7 @@ class UpdateEnlacesEjecutarRequest extends FormRequest
     public function rules()
     {
         return [
-            'ejecutar'    => [
+            'ejecutar' => [
                 'string',
                 'nullable',
             ],
@@ -23,7 +23,7 @@ class UpdateEnlacesEjecutarRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'enlace'      => [
+            'enlace' => [
                 'string',
                 'nullable',
             ],

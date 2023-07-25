@@ -32,7 +32,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $amarillo_dos
  * @property string|null $rojo_uno
  * @property string|null $rojo_dos
- *
  * @property Empleado|null $empleado
  * @property Proceso|null $proceso
  * @property User|null $user

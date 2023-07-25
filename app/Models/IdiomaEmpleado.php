@@ -30,7 +30,7 @@ class IdiomaEmpleado extends Model
 
     public function getRutaDocumentoAttribute()
     {
-        return asset('storage/cursos_empleados/') . '/' . $this->certificado;
+        return asset('storage/cursos_empleados/').'/'.$this->certificado;
     }
 
     public function getRutaAbsolutaDocumentoAttribute()

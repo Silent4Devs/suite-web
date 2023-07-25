@@ -10,7 +10,6 @@ class IncidentesDeSeguridadObserver
     /**
      * Handle the IncidentesDeSeguridad "created" event.
      *
-     * @param  \App\Models\IncidentesDeSeguridad  $incidentesDeSeguridad
      * @return void
      */
     public function created(IncidentesDeSeguridad $incidentesDeSeguridad)
@@ -21,7 +20,6 @@ class IncidentesDeSeguridadObserver
     /**
      * Handle the IncidentesDeSeguridad "updated" event.
      *
-     * @param  \App\Models\IncidentesDeSeguridad  $incidentesDeSeguridad
      * @return void
      */
     public function updated(IncidentesDeSeguridad $incidentesDeSeguridad)
@@ -32,7 +30,6 @@ class IncidentesDeSeguridadObserver
     /**
      * Handle the IncidentesDeSeguridad "deleted" event.
      *
-     * @param  \App\Models\IncidentesDeSeguridad  $incidentesDeSeguridad
      * @return void
      */
     public function deleted(IncidentesDeSeguridad $incidentesDeSeguridad)
@@ -43,7 +40,6 @@ class IncidentesDeSeguridadObserver
     /**
      * Handle the IncidentesDeSeguridad "restored" event.
      *
-     * @param  \App\Models\IncidentesDeSeguridad  $incidentesDeSeguridad
      * @return void
      */
     public function restored(IncidentesDeSeguridad $incidentesDeSeguridad)
@@ -54,7 +50,6 @@ class IncidentesDeSeguridadObserver
     /**
      * Handle the IncidentesDeSeguridad "force deleted" event.
      *
-     * @param  \App\Models\IncidentesDeSeguridad  $incidentesDeSeguridad
      * @return void
      */
     public function forceDeleted(IncidentesDeSeguridad $incidentesDeSeguridad)

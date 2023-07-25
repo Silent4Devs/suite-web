@@ -10,5 +10,6 @@ class ObjetivoCalificacion extends Model
     use HasFactory;
 
     protected $table = 'ev360_objetivos_calificaciones';
+
     protected $guarded = ['id'];
 }

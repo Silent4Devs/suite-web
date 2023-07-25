@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PanelInicioRule extends Model
 {
     use HasFactory;
+
     protected $table = 'panel_inicio_rules';
 }

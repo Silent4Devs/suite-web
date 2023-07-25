@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Organizacione extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'organizaciones';
 
     protected $dates = [
@@ -22,6 +23,7 @@ class Organizacione extends Model
     ];
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $fillable = [

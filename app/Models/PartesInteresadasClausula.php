@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $partesint_id
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
- *
  * @property Clausula $clausula
  * @property PartesInteresada $partes_interesada
  */

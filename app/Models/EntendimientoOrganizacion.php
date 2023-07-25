@@ -10,7 +10,9 @@ class EntendimientoOrganizacion extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $table = 'entendimiento_organizacions';
+
     protected $fillable = [
         'fortalezas',
         'oportunidades',

@@ -7,10 +7,10 @@ use App\Functions\Porcentaje2022;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAnalisisBrechasRequest;
 use App\Models\Empleado;
-use App\Models\Iso27\GapUnoConcentratoIso;
+use App\Models\Iso27\AnalisisBrechasIso;
 use App\Models\Iso27\GapDosConcentradoIso;
 use App\Models\Iso27\GapTresConcentradoIso;
-use App\Models\Iso27\AnalisisBrechasIso;
+use App\Models\Iso27\GapUnoConcentratoIso;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -101,7 +101,7 @@ class AnalisisBrechaIsoController extends Controller
 
                 $cuentas = $gapunoPorc->GAPTotal($porcentajeGap1, $porcentajeGap2['Avance'], $porcentajeGap3['porcentaje']);
 
-                return $cuentas . '%' ? $cuentas . '%' : '';
+                return $cuentas.'%' ? $cuentas.'%' : '';
             });
 
             $table->editColumn('elaboro', function ($row) {
@@ -234,11 +234,11 @@ class AnalisisBrechaIsoController extends Controller
         $analisisBrecha = AnalisisBrechasIso::find($id);
 
         $analisisBrecha->update([
-            'nombre' =>  $request->nombre,
-            'fecha' =>  $request->fecha,
-            'id_elaboro' =>  $request->id_elaboro,
+            'nombre' => $request->nombre,
+            'fecha' => $request->fecha,
+            'id_elaboro' => $request->id_elaboro,
             'porcentaje_implementacion' => $request->porcentaje_implementacion,
-            'estatus' =>  $request->estatus,
+            'estatus' => $request->estatus,
         ]);
 
         return redirect()->route('admin.analisisdebrechas-2022.index')->with('success', 'Editado con éxito');

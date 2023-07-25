@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DashboardIndicadorSG extends Model
 {
     use HasFactory;
+
     protected $table = 'dashboard_indicadores_sgi';
 
     protected $dates = [

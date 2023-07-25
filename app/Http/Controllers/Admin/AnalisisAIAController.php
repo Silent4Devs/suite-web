@@ -5,13 +5,12 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\AjustesAIA;
 use App\Models\AnalisisAIA;
-use App\Models\Organizacion;
+use App\Traits\ObtenerOrganizacion;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
-use App\Traits\ObtenerOrganizacion;
 
 class AnalisisAIAController extends Controller
 {
@@ -77,7 +76,6 @@ class AnalisisAIAController extends Controller
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
-
 
         return view('admin.analisis-aia.index', compact('logo_actual', 'empresa_actual'));
     }

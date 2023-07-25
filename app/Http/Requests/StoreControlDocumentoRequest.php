@@ -15,19 +15,19 @@ class StoreControlDocumentoRequest extends FormRequest
     public function rules()
     {
         return [
-            'clave'          => [
+            'clave' => [
                 'string',
                 'nullable',
             ],
-            'nombre'         => [
+            'nombre' => [
                 'string',
                 'nullable',
             ],
             'fecha_creacion' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
-            'version'        => [
+            'version' => [
                 'string',
                 'nullable',
             ],

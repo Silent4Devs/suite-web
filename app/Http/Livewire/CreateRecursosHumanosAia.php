@@ -8,18 +8,29 @@ use Livewire\Component;
 class CreateRecursosHumanosAia extends Component
 {
     public $miembroID;
+
     public $empresa;
+
     public $nombre;
+
     public $a_paterno;
+
     public $a_materno;
+
     public $puesto;
+
     public $rol;
+
     public $tel;
+
     public $correo;
+
     public $escenario;
+
     public $cuestionario_id;
 
     public $view = 'create';
+
     protected $listeners = ['editarRecursos' => 'edit', 'eliminarRecursos' => 'destroy'];
 
     public function validarMiembro()

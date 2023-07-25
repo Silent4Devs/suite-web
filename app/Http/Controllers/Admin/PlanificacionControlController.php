@@ -150,7 +150,7 @@ class PlanificacionControlController extends Controller
             'descripcion' => $request->descripcion,
             'origen_id' => $request->origen_id,
             'descripcion' => $request->descripcion,
-            'id_responsable_aprobar'=> $request->id_responsable_aprobar,
+            'id_responsable_aprobar' => $request->id_responsable_aprobar,
         ]);
 
         Mail::to($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl));
@@ -226,9 +226,9 @@ class PlanificacionControlController extends Controller
             'descripcion' => $request->descripcion,
             'origen_id' => $request->origen_id,
             'descripcion' => $request->descripcion,
-            'id_responsable_aprobar'=> $request->id_responsable_aprobar,
-            'es_aprobado'=>'pendiente',
-            'comentarios'=>null,
+            'id_responsable_aprobar' => $request->id_responsable_aprobar,
+            'es_aprobado' => 'pendiente',
+            'comentarios' => null,
         ]);
 
         // dd($planificacionControl);
@@ -252,7 +252,7 @@ class PlanificacionControlController extends Controller
 
         $planificacionControl->load('empleado', 'responsable', 'origen', 'team', 'participantes');
         // dd( $planificacionControl);
-        $route = 'storage/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id) . '/';
+        $route = 'storage/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id).'/';
 
         return view('admin.planificacionControls.show', compact('route', 'planificacionControl'));
     }
@@ -286,27 +286,27 @@ class PlanificacionControlController extends Controller
     {
         // dd($request->all());
         $planificacionControl = PlanificacionControl::find($request->id)->load('responsableAprobar');
-        $existsFolderFirmasCartas = Storage::exists('public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
-        if (!$existsFolderFirmasCartas) {
-            Storage::makeDirectory('public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
+        $existsFolderFirmasCartas = Storage::exists('public/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
+        if (! $existsFolderFirmasCartas) {
+            Storage::makeDirectory('public/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
         }
         if (preg_match('/^data:image\/(\w+);base64,/', $request->firma)) {
             $value = substr($request->firma, strpos($request->firma, ',') + 1);
             $value = base64_decode($value);
-            $new_name_image = $request->tipo . $planificacionControl->id . time() . '.png';
+            $new_name_image = $request->tipo.$planificacionControl->id.time().'.png';
             $image = $new_name_image;
-            $route = 'public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id) . '/' . $new_name_image;
+            $route = 'public/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id).'/'.$new_name_image;
             Storage::put($route, $value);
             // dd($request->aprobado);
 
             if ($request->tipo == 'responsable_aprobador') {
                 $planificacionControl->update([
-                    'firma_' . $request->tipo => $image,
+                    'firma_'.$request->tipo => $image,
 
                 ]);
             } else {
                 $planificacionControl->update([
-                    'firma_' . $request->tipo => $image,
+                    'firma_'.$request->tipo => $image,
 
                 ]);
             }
@@ -322,12 +322,12 @@ class PlanificacionControlController extends Controller
         // dd($request->aprobado);
         if ($request->aprobado != null) {
             $planificacionControl->update([
-                'es_aprobado'=>$request->aprobado == '1' ? 'aprobado' : 'rechazado',
-                'comentarios'=>$request->comentarios,
+                'es_aprobado' => $request->aprobado == '1' ? 'aprobado' : 'rechazado',
+                'comentarios' => $request->comentarios,
             ]);
             Mail::to($planificacionControl->empleado->email)->cc([$planificacionControl->responsableAprobar->email, $planificacionControl->responsable->email])->send(new PlanificacionAceptadaRechazada($planificacionControl));
         }
 
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 }

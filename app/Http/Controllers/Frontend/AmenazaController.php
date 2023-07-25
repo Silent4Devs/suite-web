@@ -16,6 +16,7 @@ use Yajra\DataTables\Facades\DataTables;
 class AmenazaController extends AppBaseController
 {
     use CsvImportTrait;
+
     /** @var AmenazaRepository */
     private $amenazaRepository;
 
@@ -82,7 +83,6 @@ class AmenazaController extends AppBaseController
     /**
      * Store a newly created Amenaza in storage.
      *
-     * @param CreateAmenazaRequest $request
      *
      * @return Response
      */
@@ -100,8 +100,7 @@ class AmenazaController extends AppBaseController
     /**
      * Display the specified Amenaza.
      *
-     * @param  int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function show(Amenaza $amenaza)
@@ -112,8 +111,7 @@ class AmenazaController extends AppBaseController
     /**
      * Show the form for editing the specified Amenaza.
      *
-     * @param  int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function edit($id)
@@ -132,9 +130,7 @@ class AmenazaController extends AppBaseController
     /**
      * Update the specified Amenaza in storage.
      *
-     * @param  int              $id
-     * @param UpdateAmenazaRequest $request
-     *
+     * @param  int  $id
      * @return Response
      */
     public function update($id, UpdateAmenazaRequest $request)
@@ -157,8 +153,7 @@ class AmenazaController extends AppBaseController
     /**
      * Remove the specified Amenaza from storage.
      *
-     * @param  int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function destroy($id)

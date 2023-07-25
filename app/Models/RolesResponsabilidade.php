@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class RolesResponsabilidade extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'roles_responsabilidades';
 
     protected $dates = [

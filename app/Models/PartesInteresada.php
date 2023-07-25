@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  * @property int|null $team_id
  * @property int|null $norma_id
- *
  * @property Team|null $team
  * @property Norma|null $norma
  * @property Collection|Clausula[] $clausulas

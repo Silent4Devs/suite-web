@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\Cache;
  * @property int|null $organizacion_id
  * @property int|null $team_id
  * @property string|null $direccion
- *
  * @property Organizacion|null $organizacion
  * @property Team|null $team
  * @property Collection|Activo[] $activos
@@ -55,10 +54,10 @@ class Sede extends Model
         'longitud',
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll($columns = ['id', 'sede'])
     {
-        #retrieve all data or can pass columns to retrieve
+        //retrieve all data or can pass columns to retrieve
         return Cache::remember('sedes_all', 3600 * 24, function () use ($columns) {
             return self::select($columns)->get();
         });

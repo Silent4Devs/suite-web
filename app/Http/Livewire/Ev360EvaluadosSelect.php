@@ -10,8 +10,11 @@ use Livewire\Component;
 class Ev360EvaluadosSelect extends Component
 {
     protected $listeners = ['grupoEvaluadosSaved' => 'render'];
+
     public $evaluados_objetivo;
+
     public $habilitarSelectManual = false;
+
     public $habilitarSelectAreas = false;
 
     public function habilitarSelectAlternativo()

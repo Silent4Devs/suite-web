@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CuestionarioProporcionaInformacion extends Model
 {
     use HasFactory;
+
     public $table = 'cuestionario_proporciona_informacion';
 
     public $fillable = [

@@ -8,7 +8,9 @@ use Livewire\Component;
 class MetricaObjetivoSelect extends Component
 {
     protected $listeners = ['render-metrica-objetivo-select' => 'render'];
+
     public $metricas;
+
     public $metrica_seleccionada;
 
     public function mount($metrica_seleccionada)

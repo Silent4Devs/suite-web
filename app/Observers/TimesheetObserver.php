@@ -10,7 +10,6 @@ class TimesheetObserver
     /**
      * Handle the Timesheet "created" event.
      *
-     * @param  \App\Models\Timesheet  $timesheet
      * @return void
      */
     public function created(Timesheet $timesheet)
@@ -21,7 +20,6 @@ class TimesheetObserver
     /**
      * Handle the Timesheet "updated" event.
      *
-     * @param  \App\Models\Timesheet  $timesheet
      * @return void
      */
     public function updated(Timesheet $timesheet)
@@ -32,7 +30,6 @@ class TimesheetObserver
     /**
      * Handle the Timesheet "deleted" event.
      *
-     * @param  \App\Models\Timesheet  $timesheet
      * @return void
      */
     public function deleted(Timesheet $timesheet)
@@ -43,7 +40,6 @@ class TimesheetObserver
     /**
      * Handle the Timesheet "restored" event.
      *
-     * @param  \App\Models\Timesheet  $timesheet
      * @return void
      */
     public function restored(Timesheet $timesheet)
@@ -54,7 +50,6 @@ class TimesheetObserver
     /**
      * Handle the Timesheet "force deleted" event.
      *
-     * @param  \App\Models\Timesheet  $timesheet
      * @return void
      */
     public function forceDeleted(Timesheet $timesheet)
@@ -64,6 +59,6 @@ class TimesheetObserver
 
     private function forgetCache()
     {
-        Cache::forget('timesheet-' . auth()->user()->empleado->id);
+        Cache::forget('timesheet-'.auth()->user()->empleado->id);
     }
 }

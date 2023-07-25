@@ -8,7 +8,9 @@ use Livewire\Component;
 class CategoriaCapacitacionSelect extends Component
 {
     protected $listeners = ['render-categorias-capacitacion-select' => 'render'];
+
     public $categorias;
+
     public $categoria_seleccionada;
 
     public function mount($categoria_seleccionada)

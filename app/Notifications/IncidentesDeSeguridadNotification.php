@@ -12,9 +12,13 @@ use Illuminate\Support\Facades\Auth;
 class IncidentesDeSeguridadNotification extends Notification
 {
     use Queueable;
+
     public $incidentesDeSeguridad;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     /**

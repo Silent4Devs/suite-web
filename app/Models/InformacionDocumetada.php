@@ -14,6 +14,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class InformacionDocumetada extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+
     protected $appends = [
         'logotipo',
     ];
@@ -27,12 +28,12 @@ class InformacionDocumetada extends Model implements HasMedia
     ];
 
     const TIPODOCUMENTO_SELECT = [
-        'M'  => 'Manual',
+        'M' => 'Manual',
         'PL' => 'Plan',
-        'P'  => 'Proceso',
+        'P' => 'Proceso',
         'PR' => 'Procedimiento',
-        'I'  => 'Instructivo',
-        'F'  => 'Formato',
+        'I' => 'Instructivo',
+        'F' => 'Formato',
     ];
 
     protected $fillable = [

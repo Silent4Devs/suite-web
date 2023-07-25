@@ -11,6 +11,7 @@ class InvitacionCapacitaciones extends Mailable
     use Queueable, SerializesModels;
 
     protected $capacitacion;
+
     protected $empleado;
 
     public function __construct($empleado, $capacitacion)

@@ -16,7 +16,9 @@ class DeclaracionAplicabilidadIso extends Mailable
      * @return void
      */
     public $tipo;
+
     public $nombre;
+
     public $controles_name;
 
     //inicializa de la clase

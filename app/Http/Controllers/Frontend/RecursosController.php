@@ -70,14 +70,14 @@ class RecursosController extends Controller
                 return $row->instructor ? $row->instructor : '';
             });
             $table->editColumn('certificado', function ($row) {
-                if (!$row->certificado) {
+                if (! $row->certificado) {
                     return '';
                 }
 
                 $links = [];
 
                 foreach ($row->certificado as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                    $links[] = '<a href="'.$media->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>';
                 }
 
                 return implode(', ', $links);
@@ -157,8 +157,8 @@ class RecursosController extends Controller
             $duracion = Carbon::parse($request->fecha_curso)->diffInHours(Carbon::parse($request->fecha_fin));
 
             if ($recurso->cursoscapacitaciones != $request->cursoscapacitaciones) {
-                if (Storage::exists('public/capacitaciones/certificados/' . $recurso->cursoscapacitaciones)) {
-                    Storage::move('public/capacitaciones/certificados/' . $recurso->cursoscapacitaciones, 'public/capacitaciones/certificados/' . $request->cursoscapacitaciones); //rename folder
+                if (Storage::exists('public/capacitaciones/certificados/'.$recurso->cursoscapacitaciones)) {
+                    Storage::move('public/capacitaciones/certificados/'.$recurso->cursoscapacitaciones, 'public/capacitaciones/certificados/'.$request->cursoscapacitaciones); //rename folder
                 }
             }
             $recurso_actualizado = $recurso->update([
@@ -235,7 +235,7 @@ class RecursosController extends Controller
             $recurso = Recurso::find(intval($request->id_recurso));
             // dd($recurso->empleados);
             $exists = $recurso->empleados()->where('empleado_id', intval($request->id_empleado))->exists();
-            if (!$exists) {
+            if (! $exists) {
                 $recurso->empleados()->attach($request->id_empleado);
 
                 return response()->json(['success' => true]);
@@ -283,25 +283,25 @@ class RecursosController extends Controller
                 }
             }
 
-            if (!Storage::exists('public/capacitaciones/certificados')) {
+            if (! Storage::exists('public/capacitaciones/certificados')) {
                 Storage::makeDirectory('public/capacitaciones/certificados');
             }
 
-            if ($request->file('certificado') != null or !empty($request->file('certificado'))) {
-                if (!Storage::exists('public/capacitaciones/certificados/' . $recurso->cursoscapacitaciones)) {
-                    Storage::makeDirectory('public/capacitaciones/certificados/' . $recurso->cursoscapacitaciones);
+            if ($request->file('certificado') != null or ! empty($request->file('certificado'))) {
+                if (! Storage::exists('public/capacitaciones/certificados/'.$recurso->cursoscapacitaciones)) {
+                    Storage::makeDirectory('public/capacitaciones/certificados/'.$recurso->cursoscapacitaciones);
                 }
 
-                $isExists = Storage::disk('public')->exists('capacitaciones/certificados/' . $recurso->cursoscapacitaciones . '/' . $image);
+                $isExists = Storage::disk('public')->exists('capacitaciones/certificados/'.$recurso->cursoscapacitaciones.'/'.$image);
                 if ($isExists) {
                     if ($image != null) {
-                        unlink(storage_path('/app/public/capacitaciones/certificados/' . $recurso->cursoscapacitaciones . '/' . $image));
+                        unlink(storage_path('/app/public/capacitaciones/certificados/'.$recurso->cursoscapacitaciones.'/'.$image));
                     }
                 }
                 $extension = pathinfo($request->file('certificado')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $name_image = basename(pathinfo($request->file('certificado')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-                $new_name_image = 'CERTIFICADO_' . $nombre_empleado . '_' . $recurso->cursoscapacitaciones . '.' . $extension;
-                $route = storage_path() . '/app/public/capacitaciones/certificados/' . $recurso->cursoscapacitaciones . '/' . $new_name_image;
+                $name_image = basename(pathinfo($request->file('certificado')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $new_name_image = 'CERTIFICADO_'.$nombre_empleado.'_'.$recurso->cursoscapacitaciones.'.'.$extension;
+                $route = storage_path().'/app/public/capacitaciones/certificados/'.$recurso->cursoscapacitaciones.'/'.$new_name_image;
                 $image = $new_name_image;
                 //Usamos image_intervention para disminuir el peso de la imagen
                 $img_intervention = Image::make($request->file('certificado'));

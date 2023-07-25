@@ -18,7 +18,7 @@ class MassDestroyEstatusPlanTrabajoRequest extends FormRequest
     public function rules()
     {
         return [
-            'ids'   => 'required|array',
+            'ids' => 'required|array',
             'ids.*' => 'exists:estatus_plan_trabajos,id',
         ];
     }

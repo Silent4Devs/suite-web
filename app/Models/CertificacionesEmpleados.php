@@ -48,7 +48,7 @@ class CertificacionesEmpleados extends Model
 
     public function getRutaDocumentoAttribute()
     {
-        return asset('storage/certificados_empleados/') . '/' . $this->documento;
+        return asset('storage/certificados_empleados/').'/'.$this->documento;
     }
 
     public function getVigenciaYmdAttribute()
