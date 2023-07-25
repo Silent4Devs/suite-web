@@ -11,6 +11,7 @@ use App\Models\Modelo;
 use App\Models\Puesto;
 use App\Models\Proceso;
 use App\Models\Recurso;
+use App\Models\Timesheet;
 use App\Models\Calendario;
 use App\Models\Tipoactivo;
 use App\Models\Organizacion;
@@ -44,6 +45,7 @@ use App\Models\RH\MetricasObjetivo;
 use App\Observers\ProcesosObserver;
 use App\Observers\RecursosObserver;
 use App\Models\ExperienciaEmpleados;
+use App\Observers\TimesheetObserver;
 use App\Events\AccionCorrectivaEvent;
 use App\Models\IncidentesDeSeguridad;
 use App\Observers\CalendarioObserver;
@@ -150,5 +152,6 @@ class EventServiceProvider extends ServiceProvider
         TipoCompetencia::observe(TipoCompetenciaObserver::class);
         Puesto::observe(PuestosObserver::class);
         activoConfidencialidad::observe(ActivoConfidencialObserver::class);
+        Timesheet::observe(TimesheetObserver::class);
     }
 }

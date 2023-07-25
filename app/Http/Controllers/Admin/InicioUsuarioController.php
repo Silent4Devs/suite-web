@@ -246,7 +246,7 @@ class InicioUsuarioController extends Controller
             $cumpleaños_felicitados_comentarios = collect();
         }
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $competencias = collect();
 
         if (auth()->user()->empleado) {
@@ -620,7 +620,7 @@ class InicioUsuarioController extends Controller
 
         $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $sedes = Sede::getAll();
 
@@ -787,7 +787,7 @@ class InicioUsuarioController extends Controller
 
         $areas = Area::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $procesos = Proceso::getAll();
 
@@ -827,7 +827,7 @@ class InicioUsuarioController extends Controller
 
         $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $sedes = Sede::getAll();
 
@@ -922,7 +922,7 @@ class InicioUsuarioController extends Controller
 
         $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $sedes = Sede::getAll();
 

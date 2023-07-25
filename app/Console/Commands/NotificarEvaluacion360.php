@@ -53,8 +53,8 @@ class NotificarEvaluacion360 extends Command
                     foreach ($evaluadores as $evaluador) {
                         $evaluados = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)
                             ->where('evaluador_id', $evaluador)->pluck('evaluado_id')->unique()->toArray();
-                        $evaluados = Empleado::alta()->find($evaluados);
-                        $evaluador_model = Empleado::alta()->find($evaluador);
+                        $evaluados = Empleado::getaltaAll()->find($evaluados);
+                        $evaluador_model = Empleado::getaltaAll()->find($evaluador);
                         dispatch(
                             new NotificacionEvaluacion360(
                                 $evaluador_model->email,

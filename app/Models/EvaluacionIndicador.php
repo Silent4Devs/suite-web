@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class EvaluacionIndicador.
@@ -27,10 +26,6 @@ class EvaluacionIndicador extends Model
 {
     use SoftDeletes;
     use HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'evaluacion_indicador';
 
     protected $casts = [
@@ -39,7 +34,7 @@ class EvaluacionIndicador extends Model
     ];
 
     protected $dates = [
-        'fecha'=>'date:d F Y',
+        'fecha' => 'date:d F Y',
     ];
 
     protected $dateFormat = 'd F Y';

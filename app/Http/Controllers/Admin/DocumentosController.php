@@ -41,7 +41,7 @@ class DocumentosController extends Controller
         abort_if(Gate::denies('control_documentar_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
         $procesos = Proceso::getAll();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $documentoActual = new Documento;
         $newversdoc = '1';
 
@@ -198,7 +198,7 @@ class DocumentosController extends Controller
         abort_if(Gate::denies('control_documentar_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $macroprocesos = Macroproceso::get();
         $procesos = Proceso::getAll();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $documentoActual = $documento;
         $newversdoc = (intval($documentoActual->version) + 1);
 
@@ -732,10 +732,10 @@ class DocumentosController extends Controller
 
     public function publicados()
     {
-        $existsOrganizacion = Organizacion::first()->exists();
+        $existsOrganizacion = Organizacion::getFirst()->exists();
 
         if ($existsOrganizacion) {
-            $organizacion = Organizacion::first()->empresa;
+            $organizacion = Organizacion::getFirst()->empresa;
         } else {
             $organizacion = 'La Organización';
         }

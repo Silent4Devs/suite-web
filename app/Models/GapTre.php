@@ -6,15 +6,10 @@ use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class GapTre extends Model
 {
     use MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'gap_logro_tres';
 
     protected $dates = [

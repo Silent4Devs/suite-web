@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Vulnerabilidad.
@@ -18,10 +17,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Vulnerabilidad extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'vulnerabilidads';
 
     const CREATED_AT = 'created_at';

@@ -5,15 +5,10 @@ namespace App\Models;
 //use Eloquent as Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class Amenaza extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'amenazas';
 
     const CREATED_AT = 'created_at';

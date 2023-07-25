@@ -12,7 +12,7 @@ class ArbolRiesgosOctaveController extends Controller
     public function index(Request $request, $matriz)
     {
         $procesosTree = $this->obtenerRamas();
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $existeArbol = $procesosTree['children']->count() > 0;
         $rutaImagenes = asset('storage/empleados/imagenes/');
 

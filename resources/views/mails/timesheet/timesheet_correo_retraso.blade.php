@@ -138,15 +138,15 @@
                                     </hr>
 
                                     @php
-
+                                        
                                         use App\Models\Organizacion;
-
-                                        $organizacion = Organizacion::first();
-
+                                        
+                                        $organizacion = Organizacion::getFirst();
+                                        
                                         $logotipo = $organizacion->logotipo;
-
+                                        
                                         $empresa = $organizacion->empresa;
-
+                                        
                                     @endphp
 
                                     <h2 style="padding-top:3px; color:#153643; text-align:center">

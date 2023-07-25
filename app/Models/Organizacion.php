@@ -92,6 +92,14 @@ class Organizacion extends Model
         });
     }
 
+    #Redis methods
+    public static function getFirst()
+    {
+        return Cache::remember('organizacion_first', 3600 * 24, function () {
+            return self::get()->first();
+        });
+    }
+
     public function getLogotipoAttribute($value)
     {
         $logotipo = asset('img/logo_policromatico_2.png');

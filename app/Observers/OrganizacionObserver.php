@@ -48,7 +48,7 @@ class OrganizacionObserver
      */
     public function restored(Organizacion $organizacion)
     {
-        //
+        $this->forgetCache();
     }
 
     /**
@@ -59,12 +59,13 @@ class OrganizacionObserver
      */
     public function forceDeleted(Organizacion $organizacion)
     {
-        //
+        $this->forgetCache();
     }
 
     private function forgetCache()
     {
         Cache::forget('getLogo_organizacion');
         Cache::forget('organization_all');
+        Cache::forget('organizacion_first');
     }
 }

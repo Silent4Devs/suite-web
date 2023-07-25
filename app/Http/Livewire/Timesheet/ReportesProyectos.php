@@ -54,7 +54,7 @@ class ReportesProyectos extends Component
     public function mount()
     {
         $this->areas = Area::getAll();
-        $this->organizacion = Organizacion::first();
+        $this->organizacion = Organizacion::getFirst();
     }
 
     public function updatedAreaId($value)

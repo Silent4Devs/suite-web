@@ -115,7 +115,7 @@
 
                     @php
                         use App\Models\Organizacion;
-                        $organizacion = Organizacion::first();
+                        $organizacion = Organizacion::getFirst();
                         $logotipo = $organizacion->logotipo;
                         $empresa = $organizacion->empresa;
                     @endphp
@@ -151,13 +151,13 @@
 
                     <div style="color:#18183c">
                         <span class="p-1" style="text-align:center">Fecha de auditoría </span>
-                        <strong>{{ $planAuditorium->fecha_inicio_auditoria ? \Carbon\Carbon::parse($planAuditorium->fecha_inicio_auditoria)->format('d-m-Y'): 'Sin registro' }}</strong>
+                        <strong>{{ $planAuditorium->fecha_inicio_auditoria ? \Carbon\Carbon::parse($planAuditorium->fecha_inicio_auditoria)->format('d-m-Y') : 'Sin registro' }}</strong>
                         </span>
                     </div>
 
                     <div style="color:#18183c">
                         <span class="p-1" style="text-align:center">Fecha fin </span>
-                        <strong>{{ $planAuditorium->fecha_fin_auditoria ? \Carbon\Carbon::parse($planAuditorium->fecha_fin_auditoria)->format('d-m-Y'): 'Sin registro' }}</strong>
+                        <strong>{{ $planAuditorium->fecha_fin_auditoria ? \Carbon\Carbon::parse($planAuditorium->fecha_fin_auditoria)->format('d-m-Y') : 'Sin registro' }}</strong>
                         </span>
                     </div>
 
@@ -221,17 +221,19 @@
                         <tbody>
                             @forelse ($planAuditorium->actividadesPlan as $actividades)
                                 <tr>
-                                    <td style="min-width:130px;">{{ $actividades->actividad_auditar}}</td>
-                                    <td style="min-width:100px;">{{ $actividades->fecha_auditoria ? \Carbon\Carbon::parse($actividades->fecha_auditoria)->format('d-m-Y') : null }}</td>
+                                    <td style="min-width:130px;">{{ $actividades->actividad_auditar }}</td>
+                                    <td style="min-width:100px;">
+                                        {{ $actividades->fecha_auditoria ? \Carbon\Carbon::parse($actividades->fecha_auditoria)->format('d-m-Y') : null }}
+                                    </td>
                                     <td style="min-width:100px;">{{ $actividades->horario_inicio }}</td>
                                     <td style="min-width:100px;">{{ $actividades->horario_termino }}</td>
                                     <td style="min-width:130px;"><img class="img_empleado"
                                             src="{{ asset('storage/empleados/imagenes') }}/{{ $actividades->auditado ? $actividades->auditado->avatar : 'user.png' }}"
-                                            title="{{$actividades->auditado->name }}"></td>
-                                    <td style="min-width:100px;">{{$actividades->nombre_auditor}}</td>
+                                            title="{{ $actividades->auditado->name }}"></td>
+                                    <td style="min-width:100px;">{{ $actividades->nombre_auditor }}</td>
 
                                 </tr>
-                                @empty
+                            @empty
                                 <strong>Sin registro</strong>
                             @endforelse
 

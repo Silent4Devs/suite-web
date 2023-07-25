@@ -5,15 +5,10 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class Sugerencias extends Model
 {
     use HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     const ARCHIVADO = '1';
     const NO_ARCHIVADO = '0';
     protected $table = 'sugerencias';

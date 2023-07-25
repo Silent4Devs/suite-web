@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use EloquentFilter\Filterable;
 use Illuminate\Support\Facades\Cache;
-// use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Empleado.
@@ -58,10 +57,7 @@ class Empleado extends Model
     use SoftDeletes;
     use HasFactory;
     use Filterable;
-    // use QueryCacheable;
 
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
     const BAJA = 'baja';
     const ALTA = 'alta';
 
@@ -158,6 +154,20 @@ class Empleado extends Model
     {
         return Cache::remember('empleados_all', 3600 * 24, function () {
             return self::get();
+        });
+    }
+
+    public static function getAltaEmpleados()
+    {
+        return Cache::remember('empleados_alta', 3600 * 24, function () {
+            return self::alta()->select('id', 'area_id', 'name')->get();
+        });
+    }
+
+    public static function getaltaAll()
+    {
+        return Cache::remember('empleados_alta_all', 3600 * 24, function () {
+            return self::alta()->get();
         });
     }
 

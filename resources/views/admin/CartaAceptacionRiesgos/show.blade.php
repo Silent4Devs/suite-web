@@ -34,7 +34,6 @@
             height: 50px;
             background-color: rgb(255, 136, 0);
         }
-
     </style>
 
 
@@ -47,7 +46,7 @@
                 {{-- <div style="width: 100%; background-color: rgb(220, 255, 255);"> --}}
                 @php
                     use App\Models\Organizacion;
-                    $organizacion = Organizacion::first();
+                    $organizacion = Organizacion::getFirst();
                     $logotipo = $organizacion->logotipo;
                 @endphp
                 <div>
@@ -74,8 +73,7 @@
                             <div class="row">
 
 
-                                @livewire('body-carta-aceptacion',['proceso'=>$cartaAceptacion->proceso_id,'tipo'=>'show',
-                                'cartaAceptacion'=>$cartaAceptacion,'aprobadores'=>$aprobadores])
+                                @livewire('body-carta-aceptacion', ['proceso' => $cartaAceptacion->proceso_id, 'tipo' => 'show', 'cartaAceptacion' => $cartaAceptacion, 'aprobadores' => $aprobadores])
 
                                 <div class="row col-12 mt-2 pl-0 ml-2">
                                     <div class="col-4" style="color:#345183;background-color: rgb(220, 255, 255);">
@@ -123,7 +121,8 @@
                                             interna / externa</strong>
                                     </div>
                                     <div class="col-5 p-4">
-                                        <span style="font-size:12px; width:100%;color:#345183;">{!!$cartaAceptacion->hallazgos_auditoria!!}</span>
+                                        <span
+                                            style="font-size:12px; width:100%;color:#345183;">{!! $cartaAceptacion->hallazgos_auditoria !!}</span>
                                     </div>
 
                                 </div>
@@ -155,7 +154,9 @@
                                                                 style="font-size:12px; width:100%;color:#345183;">{{ $aprobador->empleado ? $aprobador->empleado->name : 'Sin registrar' }}</span>
                                                         </td>
                                                         <td style="min-width:250px;">
-                                                            <textarea {{ $aprobador->empleado->id == auth()->user()->empleado->id ? '' : 'disabled' }} {{ $aprobador->estado>0 ? 'disabled' : '' }} name="comentarios" id="comentarios-{{ $aprobador->nivel }}" class="form-control">{{$aprobador->comentarios}}</textarea>
+                                                            <textarea {{ $aprobador->empleado->id == auth()->user()->empleado->id ? '' : 'disabled' }}
+                                                                {{ $aprobador->estado > 0 ? 'disabled' : '' }} name="comentarios" id="comentarios-{{ $aprobador->nivel }}"
+                                                                class="form-control">{{ $aprobador->comentarios }}</textarea>
                                                         </td>
                                                         <td style="min-width:90px;">
                                                             <span style="font-size:12px; width:100%;color:#345183;">
@@ -166,12 +167,11 @@
                                                         </td>
                                                         <td style="min-width:90px;">
                                                             @if ($aprobador->empleado->id == auth()->user()->empleado->id)
-                                                                @if($aprobador->estado == 0)
-                                                                <i style="font-size:20px; cursor:pointer"
-                                                                id="btnEnviarRespuesta{{ $aprobador->nivel }}"
-                                                                class="text-success fas fa-check-circle"></i>
+                                                                @if ($aprobador->estado == 0)
+                                                                    <i style="font-size:20px; cursor:pointer"
+                                                                        id="btnEnviarRespuesta{{ $aprobador->nivel }}"
+                                                                        class="text-success fas fa-check-circle"></i>
                                                                 @endif
-
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -180,23 +180,24 @@
                                                             <td colspan="4">
                                                                 <div class="row">
                                                                     <div class="col-md-12">
-                                                                    @if($aprobador->firma == null)
-                                                                        <canvas style="background-color:#fff"
-                                                                            id="sig-{{ $aprobador->nivel }}-canvas">
-                                                                            Navegador no compatible
-                                                                        </canvas>
-                                                                    @else
-                                                                    <img src="{{asset($route.$aprobador->firma)}}"></img>
-                                                                    @endif
+                                                                        @if ($aprobador->firma == null)
+                                                                            <canvas style="background-color:#fff"
+                                                                                id="sig-{{ $aprobador->nivel }}-canvas">
+                                                                                Navegador no compatible
+                                                                            </canvas>
+                                                                        @else
+                                                                            <img
+                                                                                src="{{ asset($route . $aprobador->firma) }}"></img>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-12"
                                                                         style="display: flex;align-items: center;justify-content: center;">
-                                                                        @if($aprobador->estado == 0)
+                                                                        @if ($aprobador->estado == 0)
                                                                             <button class="btn btn-sm"
-                                                                            id="sig-{{ $aprobador->nivel }}-clearBtn"><i
-                                                                                class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
+                                                                                id="sig-{{ $aprobador->nivel }}-clearBtn"><i
+                                                                                    class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -663,12 +664,12 @@
                                         'content')
                                 },
                                 success: function(response) {
-                                    if(response.status == 200){
+                                    if (response.status == 200) {
                                         toastr.success('Respuesta enviada con éxito')
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 1500);
-                                    }else{
+                                    } else {
                                         toastr.error('Ocurrio un error');
                                     }
                                 }
@@ -729,12 +730,12 @@
                                         'content')
                                 },
                                 success: function(response) {
-                                    if(response.status == 200){
+                                    if (response.status == 200) {
                                         toastr.success('Respuesta enviada con éxito')
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 1500);
-                                    }else{
+                                    } else {
                                         toastr.error('Ocurrio un error');
                                     }
                                 }
@@ -792,12 +793,12 @@
                                         'content')
                                 },
                                 success: function(response) {
-                                    if(response.status == 200){
+                                    if (response.status == 200) {
                                         toastr.success('Respuesta enviada con éxito')
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 1500);
-                                    }else{
+                                    } else {
                                         toastr.error('Ocurrio un error');
                                     }
                                 }
@@ -856,12 +857,12 @@
                                         'content')
                                 },
                                 success: function(response) {
-                                    if(response.status == 200){
+                                    if (response.status == 200) {
                                         toastr.success('Respuesta enviada con éxito')
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 1500);
-                                    }else{
+                                    } else {
                                         toastr.error('Ocurrio un error');
                                     }
                                 }
@@ -919,12 +920,12 @@
                                         'content')
                                 },
                                 success: function(response) {
-                                    if(response.status == 200){
+                                    if (response.status == 200) {
                                         toastr.success('Respuesta enviada con éxito')
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 1500);
-                                    }else{
+                                    } else {
                                         toastr.error('Ocurrio un error');
                                     }
                                 }

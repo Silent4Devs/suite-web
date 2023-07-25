@@ -93,9 +93,9 @@ class AuditoriaInternaController extends Controller
 
         $clausulas = Clausula::all();
 
-        $auditorliders = Empleado::alta()->get();
+        $auditorliders = Empleado::getaltaAll();
 
-        $equipoauditorias = Empleado::alta()->get();
+        $equipoauditorias = Empleado::getaltaAll();
 
         return view('admin.auditoriaInternas.create', compact('clausulas', 'auditorliders', 'equipoauditorias'));
     }
@@ -129,9 +129,9 @@ class AuditoriaInternaController extends Controller
 
         $clausulas = Clausula::all();
 
-        $auditorliders = Empleado::alta()->get();
+        $auditorliders = Empleado::getaltaAll();
 
-        $equipoauditorias = Empleado::alta()->get();
+        $equipoauditorias = Empleado::getaltaAll();
 
         return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'));
     }

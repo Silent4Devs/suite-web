@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class MatrizRiesgosControlesPivot.
@@ -20,10 +19,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  */
 class MatrizRiesgosControlesPivot extends Model
 {
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'matriz_riesgos_controles_pivot';
 
     protected $casts = [

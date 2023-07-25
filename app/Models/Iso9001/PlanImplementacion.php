@@ -52,7 +52,7 @@ class PlanImplementacion extends Model
 
     public function getResourcesAttribute()
     {
-        $empleado = Empleado::alta()->get();
+        $empleado = Empleado::getaltaAll();
 
         return $empleado;
     }

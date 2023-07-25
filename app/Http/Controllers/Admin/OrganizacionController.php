@@ -26,7 +26,7 @@ class OrganizacionController extends Controller
     {
         abort_if(Gate::denies('mi_organizacion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
 
         $schedule = collect();
         if ($organizacions) {
@@ -236,7 +236,7 @@ class OrganizacionController extends Controller
 
     public function visualizarOrganizacion()
     {
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
         // dd($organizacions);
         $schedule = collect();
         if ($organizacions) {

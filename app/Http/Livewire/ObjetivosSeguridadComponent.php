@@ -68,7 +68,7 @@ class ObjetivosSeguridadComponent extends Component
 
     public function render()
     {
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $evaluaciones = EvaluacionObjetivo::where('id_objetivo', '=', $this->objetivos->id)->get();
 
         return view('livewire.objetivos-seguridad-component', [

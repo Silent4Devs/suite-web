@@ -187,7 +187,7 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
@@ -827,7 +827,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $activos = SubcategoriaActivo::getAll();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
@@ -917,7 +917,7 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
@@ -1099,8 +1099,8 @@ class MatrizRiesgosController extends Controller
         // $responsables = Empleado::getAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
-        $duenos = Empleado::alta()->get();
-        $custodios = Empleado::alta()->get();
+        $duenos = Empleado::getaltaAll();
+        $custodios = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
         $activosoctave = MatrizOctave::get();
@@ -1118,8 +1118,8 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::getAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
-        $duenos = Empleado::alta()->get();
-        $custodios = Empleado::alta()->get();
+        $duenos = Empleado::getaltaAll();
+        $custodios = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
         $activosoctave = MatrizOctave::get();
@@ -1238,7 +1238,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
 
@@ -1254,7 +1254,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
@@ -1375,7 +1375,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $matrizNist = new MatrizNist();
@@ -1390,7 +1390,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $matrizNist = MatrizNist::find($id);

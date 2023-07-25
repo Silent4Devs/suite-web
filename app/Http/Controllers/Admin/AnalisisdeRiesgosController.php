@@ -102,7 +102,7 @@ class AnalisisdeRiesgosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('matriz_de_riesgo_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -137,7 +137,7 @@ class AnalisisdeRiesgosController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $analisis = AnalisisDeRiesgo::find($id);
 
         return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));

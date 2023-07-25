@@ -77,12 +77,11 @@
             border-top: solid 1px #e3e3e3;
             border-bottom: solid 1px #e3e3e3;
         }
-
     </style>
-    <x-loading-indicator/>
+    <x-loading-indicator />
     @php
         use App\Models\Organizacion;
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $logotipo = $organizacion->logotipo;
     @endphp
 
@@ -97,14 +96,14 @@
                     class="btn btn-danger btn-md"><i class="fas fa-plus mr-1"></i>Documento</button>
             @endcan --}}
 
-                <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-danger btn-md"><i
-                        class="fas fa-plus mr-1"></i>Certificación</button>
+            <button onclick="$('#modalCertificaciones').modal('show');" class="btn btn-danger btn-md"><i
+                    class="fas fa-plus mr-1"></i>Certificación</button>
 
 
-                <button onclick="event.preventDefault();return false;" data-toggle="modal" data-target="#modalcursoIt"
-                    class="btn btn-danger btn-md"><i class="fas fa-plus mr-1"></i>Capacitación</button>
+            <button onclick="event.preventDefault();return false;" data-toggle="modal" data-target="#modalcursoIt"
+                class="btn btn-danger btn-md"><i class="fas fa-plus mr-1"></i>Capacitación</button>
 
-                <a class="btn btn-danger btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
+            <a class="btn btn-danger btn-md " href="{{ route('admin.editarCompetencias', $empleadoModel) }}">Editar</a>
 
         </div>
     @endif
@@ -136,8 +135,7 @@
                     </div>
 
                     <div class="col-sm-12 col-md-12">
-                        <label class="text-muted" for="tipoactivo_id"><i
-                                class="fas fa-user mr-2"></i>Empleado</label>
+                        <label class="text-muted" for="tipoactivo_id"><i class="fas fa-user mr-2"></i>Empleado</label>
                         <select class="form-control {{ $errors->has('tipoactivo') ? 'is-invalid' : '' }}"
                             wire:model.debounce.800ms="empleado_id" id="tipoactivo_id">
                             <option value="">-- Seleccionar --</option>
@@ -158,14 +156,17 @@
                     </div>
                     <div class="col-12">
                         <label class="text-muted" for=""><i class="fas fa-award mr-2"></i>Certificación</label>
-                        <input type="text" class="form-control" placeholder="Certificación" wire:model.debounce.800ms="certificacion">
+                        <input type="text" class="form-control" placeholder="Certificación"
+                            wire:model.debounce.800ms="certificacion">
                     </div>
                     <div class="col-12 mt-3">
                         <p class="text-muted" style="border-bottom: 2px solid #345183">CURSOS / DIPLOMADOS</p>
                     </div>
                     <div class="col-12">
-                        <label class="text-muted" for=""><i class="fas fa-chalkboard-teacher mr-2"></i>Curso</label>
-                        <input type="text" class="form-control" placeholder="Curso" wire:model.debounce.800ms="curso">
+                        <label class="text-muted" for=""><i
+                                class="fas fa-chalkboard-teacher mr-2"></i>Curso</label>
+                        <input type="text" class="form-control" placeholder="Curso"
+                            wire:model.debounce.800ms="curso">
                     </div>
                     {{-- <div class="col-12 mt-3">
                         <p class="text-muted" style="border-bottom: 2px solid #345183">EXPERIENCIA</p>
@@ -300,7 +301,6 @@
                                         margin-top: 25px;
                                     }
                                 }
-
                             </style>
                             <div class="caja_img_logo mt-4">
                                 <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width: 100px;">
@@ -351,7 +351,8 @@
                                         </p>
                                     @endforelse
 
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg "
+                                        style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Certificaciones</span>
                                     </div>
@@ -375,7 +376,8 @@
                                         </p>
                                     @endforelse
 
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg "
+                                        style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Capacitaciones</span>
                                     </div>
@@ -400,7 +402,8 @@
                                         </p>
                                     @endforelse
 
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg "
+                                        style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Educación Académica</span>
                                     </div>
@@ -430,7 +433,8 @@
                                             registrada
                                         </p>
                                     @endforelse
-                                    <div class="mt-4 mb-3 w-100 dato_mairg " style="border-bottom: solid 2px #345183;">
+                                    <div class="mt-4 mb-3 w-100 dato_mairg "
+                                        style="border-bottom: solid 2px #345183;">
                                         <span style="font-size: 17px; font-weight: bold;">
                                             Idiomas</span>
                                     </div>
@@ -664,12 +668,12 @@
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i
                                                     class="fas iconos-crear"
-                                                    x-bind:class="! open ? 'fa-folder' : 'fa-folder-open'"></i>Certificados
+                                                    x-bind:class="!open ? 'fa-folder' : 'fa-folder-open'"></i>Certificados
                                             </span>
                                         </div>
                                         <div class="col text-center">
                                             <i class="fas text-muted"
-                                                x-bind:class="! open ? 'fa-plus-circle' : 'fa-minus-circle'"
+                                                x-bind:class="!open ? 'fa-plus-circle' : 'fa-minus-circle'"
                                                 x-on:click="open = ! open"></i>
                                         </div>
                                     </div>
@@ -698,7 +702,8 @@
                                             <div class="modal-body">
                                                 <form
                                                     action="{{ route('admin.cargarCertificacion', $empleadoModel) }}"
-                                                    method="POST" id="formCargarCertificacion" class="form-group m-0">
+                                                    method="POST" id="formCargarCertificacion"
+                                                    class="form-group m-0">
                                                     <div class="row" x-data="{ open: false }">
                                                         <div class="form-group col-sm-12 col-lg-12 col-md-12">
                                                             <label for="nombre"><i
@@ -792,9 +797,8 @@
                                                     <h6 class="mb-1">{{ $certificaciones->nombre }}</h6>
                                                     <small>{{ $certificaciones->created_at->diffForHumans() }}</small>
                                                 </div>
-                                                <small class="mb-1"><strong
-                                                        style="text-transform: capitalize">
-                                                        {{ $certificaciones->vigencia? \Carbon\Carbon::parse($certificaciones->vigencia_string_formated)->format('F d, Y'): '' }}</strong></small>
+                                                <small class="mb-1"><strong style="text-transform: capitalize">
+                                                        {{ $certificaciones->vigencia ? \Carbon\Carbon::parse($certificaciones->vigencia_string_formated)->format('F d, Y') : '' }}</strong></small>
                                                 <p class="my-1">
                                                     @if (Str::lower($certificaciones->estatus) == 'vencida')
                                                         <strong
@@ -826,12 +830,12 @@
                                         <div class="col-10" style="white-space: nowrap;">
                                             <span style="font-size: 17px; font-weight: bold;"><i
                                                     class="fas iconos-crear"
-                                                    x-bind:class="! open ? 'fa-folder' : 'fa-folder-open'"></i>Capacitaciones
+                                                    x-bind:class="!open ? 'fa-folder' : 'fa-folder-open'"></i>Capacitaciones
                                             </span>
                                         </div>
                                         <div class="col text-center">
                                             <i class="fas text-muted"
-                                                x-bind:class="! open ? 'fa-plus-circle' : 'fa-minus-circle'"
+                                                x-bind:class="!open ? 'fa-plus-circle' : 'fa-minus-circle'"
                                                 x-on:click="open = ! open"></i>
                                         </div>
                                     </div>
@@ -866,7 +870,8 @@
                                                                     class="fas fa-certificate iconos-crear"></i>Nombre</label>
                                                             <input
                                                                 class="form-control {{ $errors->has('curso_diplomado') ? 'is-invalid' : '' }}"
-                                                                type="text" name="curso_diploma" id="curso_diplomado"
+                                                                type="text" name="curso_diploma"
+                                                                id="curso_diplomado"
                                                                 value="{{ old('curso_diplomado', '') }}">
                                                             <span
                                                                 class="errors curso_diploma_error text-danger"></span>

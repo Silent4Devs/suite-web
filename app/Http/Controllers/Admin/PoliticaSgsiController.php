@@ -138,7 +138,7 @@ class PoliticaSgsiController extends Controller
         $request->validate([
             'nombre_politica' => 'required',
             'politicasgsi' => 'required',
-/*            'fecha_publicacion' => 'required|date',
+            /*            'fecha_publicacion' => 'required|date',
            'fecha_entrada' => 'required|date',
            'fecha_revision' => 'required|date',*/
             'id_reviso_politica' => 'required',
@@ -178,7 +178,7 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsis = PoliticaSgsi::all();
 
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
 
         return view('admin.politicaSgsis.visualizacion', compact('politicaSgsis', 'organizacions'));
     }
