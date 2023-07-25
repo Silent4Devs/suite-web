@@ -34,7 +34,7 @@ class ReportesRegistros extends Component
     {
         $this->estatus = null;
         $this->areas = Area::getAll();
-        $this->emp = Empleado::orderBy('name', 'ASC')->get();
+        $this->emp = Empleado::getAll()->orderBy('name', 'ASC')->get();
     }
 
     public function updatedFechaInicio($value)
@@ -92,7 +92,7 @@ class ReportesRegistros extends Component
     public function render()
     {
         //Query para obtener los timesheet y filtrarlo
-        $query = Timesheet::orderByDesc('fecha_dia')
+        $query = Timesheet::getAll()->orderByDesc('fecha_dia')
             ->whereHas('empleado', function ($query) {
                 if ($this->emp_id == 0) {
                     return $query->where('name', 'ILIKE', "%{$this->search}%");
@@ -126,7 +126,8 @@ class ReportesRegistros extends Component
     public function establecerContadores()
     {
         //Contador Todos los registros timesheet
-        $this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+        //$this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+        $this->todos_contador = Timesheet::getAll()->whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;
             } else {
@@ -136,7 +137,7 @@ class ReportesRegistros extends Component
             ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->count();
 
         //Contador Todos los registros timesheet en borrador
-        $this->borrador_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+        $this->borrador_contador = Timesheet::getAll()->whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;
             } else {
@@ -146,7 +147,7 @@ class ReportesRegistros extends Component
             ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->count();
 
         //Contador Todos los registros timesheet en penduente
-        $this->pendientes_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+        $this->pendientes_contador = Timesheet::getAll()->whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;
             } else {
@@ -157,7 +158,7 @@ class ReportesRegistros extends Component
                 $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->count();
 
         //Contador Todos los registros timesheet aprobados
-        $this->aprobados_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+        $this->aprobados_contador = Timesheet::getAll()->whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;
             } else {
@@ -167,7 +168,7 @@ class ReportesRegistros extends Component
             ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'aprobado')->count();
 
         //Contador Todos los registros timesheet rechazados
-        $this->rechazos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+        $this->rechazos_contador = Timesheet::getAll()->whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;
             } else {
