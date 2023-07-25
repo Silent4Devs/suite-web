@@ -23,7 +23,6 @@ use App\Models\EvidenciasQuejasClientesCerrado;
 use App\Models\EvidenciasSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
-use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\Quejas;
 use App\Models\QuejasCliente;
@@ -33,12 +32,12 @@ use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
-use App\Traits\ObtenerOrganizacion;
+use Illuminate\Support\Facades\Gate; //mejora apunta a este modelo
+use Illuminate\Support\Facades\Mail;
 
 class DeskController extends Controller
 {
@@ -237,13 +236,13 @@ class DeskController extends Controller
         // dd($incidentesSeguridad);
         $documento = $incidentesSeguridad->evidencia;
         // dd($documento);
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_documento = 'Seguridad_file_' . $incidentesSeguridad->id . '_' . $name_documento . '.' . $extension;
+                $new_name_documento = 'Seguridad_file_'.$incidentesSeguridad->id.'_'.$name_documento.'.'.$extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -977,13 +976,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1092,7 +1091,7 @@ class DeskController extends Controller
             'realizar_accion' => $realizar_accion,
             'cual_accion' => $request->cual_accion ? $request->cual_accion : $quejasClientes->cual_accion,
             'desea_levantar_ac' => $desea_levantar_ac,
-            'acciones_tomara_responsable' =>  $request->acciones_tomara_responsable ? $request->acciones_tomara_responsable : $quejasClientes->acciones_tomara_responsable,
+            'acciones_tomara_responsable' => $request->acciones_tomara_responsable ? $request->acciones_tomara_responsable : $quejasClientes->acciones_tomara_responsable,
             'fecha_limite' => $request->fecha_limite ? $request->fecha_limite : $quejasClientes->fecha_limite,
             'comentarios_atencion' => $request->comentarios_atencion ? $request->comentarios_atencion : $quejasClientes->comentarios_atencion,
             'responsable_sgi_id' => $request->responsable_sgi_id ? $request->responsable_sgi_id : $quejasClientes->responsable_sgi_id,
@@ -1105,19 +1104,19 @@ class DeskController extends Controller
             'cumplio_fecha' => $cumplio_fecha,
             'notificar_responsable' => $notificar_responsable,
             'notificar_registro_queja' => $notificar_registro_queja,
-            'porque_no_cierre_ticket' =>  $request->porque_no_cierre_ticket ? $request->porque_no_cierre_ticket : $quejasClientes->porque_no_cierre_ticket,
+            'porque_no_cierre_ticket' => $request->porque_no_cierre_ticket ? $request->porque_no_cierre_ticket : $quejasClientes->porque_no_cierre_ticket,
             'notificar_atencion_queja_no_aprobada' => $notificar_atencion_queja_no_aprobada,
         ]);
 
         $documento = null;
 
-        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_documento = 'Queja_file_' . $quejasClientes->id . '_' . $name_documento . '.' . $extension;
+                $new_name_documento = 'Queja_file_'.$quejasClientes->id.'_'.$name_documento.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1134,13 +1133,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('cierre') != null or !empty($request->file('cierre'))) {
+        if ($request->file('cierre') != null or ! empty($request->file('cierre'))) {
             foreach ($request->file('cierre') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
 
-                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
+                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
 
                 $route = 'public/evidencias_quejas_clientes_cerrado';
 
@@ -1170,7 +1169,7 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket == false) {
-                if (!$quejasClientes->email_env_resolucion_rechazada) {
+                if (! $quejasClientes->email_env_resolucion_rechazada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_rechazada' => true,
@@ -1183,7 +1182,7 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket) {
-                if (!$quejasClientes->email_env_resolucion_aprobada) {
+                if (! $quejasClientes->email_env_resolucion_aprobada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_aprobada' => true,
@@ -1194,8 +1193,8 @@ class DeskController extends Controller
             }
         }
 
-        if (!$email_realizara_accion_inmediata) {
-            if (!is_null($quejasClientes->acciones_tomara_responsable)) {
+        if (! $email_realizara_accion_inmediata) {
+            if (! is_null($quejasClientes->acciones_tomara_responsable)) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'email_realizara_accion_inmediata' => true,
@@ -1206,7 +1205,7 @@ class DeskController extends Controller
         }
 
         if ($notificar_registro_queja) {
-            if (!$quejasClientes->correo_enviado_registro) {
+            if (! $quejasClientes->correo_enviado_registro) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'correo_enviado_registro' => true,
@@ -1227,7 +1226,7 @@ class DeskController extends Controller
                 $query->where('acciones_correctivas_aprobacionables_id', $quejasClientes->id);
             })->exists();
 
-            if (!$existeAC) {
+            if (! $existeAC) {
                 $accion_correctiva = AccionCorrectiva::create([
                     'tema' => $request->titulo,
                     'causaorigen' => 'Queja de un cliente',
@@ -1254,7 +1253,7 @@ class DeskController extends Controller
                 $quejasClientes->accionCorrectivaAprobacional()->sync($accion_correctiva->id);
             }
 
-            if (!$quejasClientes->correoEnviado) {
+            if (! $quejasClientes->correoEnviado) {
                 $quejasClientes->update([
                     'correoEnviado' => true,
                 ]);
@@ -1560,7 +1559,7 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
-            if (!is_null($quejasClientes->responsable_atencion_queja_id)) {
+            if (! is_null($quejasClientes->responsable_atencion_queja_id)) {
                 if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id) {
                     $this->validateRequestRegistroQuejaCliente($request);
                     $this->validateRequestAnalisisQuejaCliente($request);
@@ -1675,8 +1674,8 @@ class DeskController extends Controller
 
             ],
             [
-                'porque_no_cumplio_responsable' =>  'El campo por qué no se cumplieron las acciones es obligatorio',
-                'porque_no_cierre_ticket' =>  'El campo por qué no se cierra el ticket es obligatorio',
+                'porque_no_cumplio_responsable' => 'El campo por qué no se cumplieron las acciones es obligatorio',
+                'porque_no_cierre_ticket' => 'El campo por qué no se cierra el ticket es obligatorio',
             ]
         );
     }

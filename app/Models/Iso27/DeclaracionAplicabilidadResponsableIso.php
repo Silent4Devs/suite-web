@@ -2,11 +2,10 @@
 
 namespace App\Models\Iso27;
 
+use App\Models\Empleado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Empleado;
-use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
 
 class DeclaracionAplicabilidadResponsableIso extends Model
 {
@@ -19,7 +18,7 @@ class DeclaracionAplicabilidadResponsableIso extends Model
         'fecha_aprobacion',
         'empleado_id',
         'declaracion_id',
-        'esta_correo_enviado'
+        'esta_correo_enviado',
     ];
 
     public function gapdos()

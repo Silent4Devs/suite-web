@@ -3,38 +3,59 @@
 namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Area;
-use App\Models\Timesheet;
 use App\Models\Empleado;
+use App\Models\Timesheet;
+use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetHoras;
-use Carbon\Carbon;
 
 class ReportesProyemp extends Component
 {
     use WithPagination;
+
     protected $paginationTheme = 'bootstrap';
+
     public $todos_contador;
+
     public $borrador_contador;
+
     public $pendientes_contador;
+
     public $aprobados_contador;
+
     public $rechazos_contador;
+
     public $totalRegistrosMostrando;
+
     public $perPage = 5;
+
     public $search;
+
     // public $times;
     public $areas;
+
     public $area_id = 0;
+
     public $estatus;
+
     public $fecha_inicio;
+
     public $fecha_fin;
+
     public $emp;
+
     public $emp_id;
+
     public $apr;
+
     public $apr_id;
+
     public $proy;
+
     public $proy_id;
+
     public $empleados_estatus;
 
     public function mount()

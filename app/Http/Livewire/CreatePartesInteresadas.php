@@ -11,11 +11,16 @@ class CreatePartesInteresadas extends Component
     public $expectativas;
 
     public $necesidades;
+
     public $id_interesado;
+
     public $parteInteresadaIdEN;
+
     public $view = 'create';
+
     public $normasModel = [];
-    protected $listeners = ['editarParteInteresada'=>'edit', 'eliminarParteInteresada'=>'destroy', 'agregarNormas'];
+
+    protected $listeners = ['editarParteInteresada' => 'edit', 'eliminarParteInteresada' => 'destroy', 'agregarNormas'];
 
     public function hydrate()
     {
@@ -47,7 +52,7 @@ class CreatePartesInteresadas extends Component
         $model->normas()->sync($this->normasModel);
         $this->reset('necesidades', 'expectativas');
         $this->emit('render');
-        $this->emit('cerrar-modal', ['editar'=>false]);
+        $this->emit('cerrar-modal', ['editar' => false]);
     }
 
     public function edit($id)
@@ -80,7 +85,7 @@ class CreatePartesInteresadas extends Component
             'id_interesada' => $this->id_interesado,
         ]);
         $model->normas()->sync($this->normasModel);
-        $this->emit('cerrar-modal', ['editar'=>true]);
+        $this->emit('cerrar-modal', ['editar' => true]);
         $this->default();
         $this->emit('render');
     }

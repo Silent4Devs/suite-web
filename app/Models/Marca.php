@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+
 /**
  * Class Marca.
  *
@@ -16,7 +17,6 @@ use Illuminate\Support\Facades\Cache;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Tipoactivo|null $tipoactivo
  * @property Collection|Modelo[] $modelos
  */
@@ -35,10 +35,10 @@ class Marca extends Model
         'nombre',
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
-        return Cache::remember('Marcas_all', 3600*24, function () {
+        return Cache::remember('Marcas_all', 3600 * 24, function () {
             return self::get();
         });
     }

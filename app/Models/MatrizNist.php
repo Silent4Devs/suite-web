@@ -11,5 +11,6 @@ class MatrizNist extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'matriz_nist';
+
     protected $guarded = ['id'];
 }

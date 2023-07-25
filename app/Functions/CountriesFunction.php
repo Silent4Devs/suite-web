@@ -5,7 +5,8 @@ namespace App\Functions;
 class CountriesFunction
 {
     /**
-     * @param string $language
+     * @param  string  $language
+     *
      * @options 'ES', 'EN'
      */
     public function getCountries($language = 'ES')

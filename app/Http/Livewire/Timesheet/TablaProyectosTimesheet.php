@@ -17,19 +17,31 @@ class TablaProyectosTimesheet extends Component
     public $proyectos;
 
     public $identificador;
+
     public $proyecto_name;
+
     public $areas_seleccionadas;
+
     public $cliente_id;
+
     public $fecha_inicio;
+
     public $fecha_fin;
+
     public $sede_id;
+
     public $tipo;
 
     public $proceso_count;
+
     public $cancelado_count;
+
     public $terminado_count;
+
     public $tipos;
+
     public $sedes;
+
     public $areas;
 
     public function mount()

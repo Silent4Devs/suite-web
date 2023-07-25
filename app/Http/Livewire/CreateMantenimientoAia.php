@@ -8,18 +8,29 @@ use Livewire\Component;
 class CreateMantenimientoAia extends Component
 {
     public $miembroID;
+
     public $nombre;
+
     public $puesto;
+
     public $correo_electronico;
+
     public $extencion;
+
     public $ubicacion;
+
     public $cuestionario_id;
+
     public $interno_externo;
 
     public $id_interesado;
+
     public $parteInteresadaIdEN;
+
     public $view = 'create';
+
     public $normasModel = [];
+
     protected $listeners = ['editarMantenimiento' => 'edit', 'eliminarMantenimiento' => 'destroy'];
 
     public function validarMiembro()
@@ -43,13 +54,13 @@ class CreateMantenimientoAia extends Component
         $this->validarMiembro();
         $extencion = $this->extencion == '' ? 0 : $this->extencion;
         $model = LiberaMantenimientoAIA::create([
-        'nombre'=> $this->nombre,
-        'puesto'=> $this->puesto,
-        'correo_electronico'=> $this->correo_electronico,
-        'extencion'=> $extencion,
-        'ubicacion'=> $this->ubicacion,
-        'cuestionario_id' => $this->cuestionario_id,
-        'interno_externo' => $this->interno_externo,
+            'nombre' => $this->nombre,
+            'puesto' => $this->puesto,
+            'correo_electronico' => $this->correo_electronico,
+            'extencion' => $extencion,
+            'ubicacion' => $this->ubicacion,
+            'cuestionario_id' => $this->cuestionario_id,
+            'interno_externo' => $this->interno_externo,
         ]);
 
         $this->reset('id', 'nombre', 'puesto', 'correo_electronico', 'extencion', 'ubicacion', 'interno_externo');
@@ -90,11 +101,11 @@ class CreateMantenimientoAia extends Component
         $model = LiberaMantenimientoAIA::find($this->miembroID);
         $extencion = $this->extencion == '' ? 0 : $this->extencion;
         $model->update([
-            'nombre'=> $this->nombre,
-            'puesto'=> $this->puesto,
-            'correo_electronico'=> $this->correo_electronico,
-            'extencion'=> $extencion,
-            'ubicacion'=> $this->ubicacion,
+            'nombre' => $this->nombre,
+            'puesto' => $this->puesto,
+            'correo_electronico' => $this->correo_electronico,
+            'extencion' => $extencion,
+            'ubicacion' => $this->ubicacion,
             'cuestionario_id' => $this->cuestionario_id,
             'interno_externo' => $this->interno_externo,
         ]);

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin\iso27;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Iso27\GapDosConcentradoIso;
+use Illuminate\Http\Request;
 
 class GapDosConcentradoIsoController extends Controller
 {
@@ -31,7 +31,6 @@ class GapDosConcentradoIsoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,7 +41,7 @@ class GapDosConcentradoIsoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -53,7 +52,7 @@ class GapDosConcentradoIsoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -64,8 +63,7 @@ class GapDosConcentradoIsoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -101,7 +99,7 @@ class GapDosConcentradoIsoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

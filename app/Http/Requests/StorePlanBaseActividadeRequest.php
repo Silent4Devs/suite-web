@@ -15,24 +15,24 @@ class StorePlanBaseActividadeRequest extends FormRequest
     public function rules()
     {
         return [
-            'actividad'    => [
+            'actividad' => [
                 'string',
                 'required',
             ],
             'fecha_inicio' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
-            'fecha_fin'    => [
-                'date_format:' . config('panel.date_format'),
+            'fecha_fin' => [
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
-            'compromiso'   => [
-                'date_format:' . config('panel.date_format'),
+            'compromiso' => [
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
-            'real'         => [
-                'date_format:' . config('panel.date_format'),
+            'real' => [
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
         ];

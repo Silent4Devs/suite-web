@@ -34,7 +34,6 @@ class IdiomasEmpleadosController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,7 +41,7 @@ class IdiomasEmpleadosController extends Controller
         // dd($request->all());
         $request->validate([
             // 'nombre' => 'required|string',
-            'id_language' =>'required',
+            'id_language' => 'required',
             'nivel' => 'required|string',
             'porcentaje' => 'nullable|numeric|min:1|max:100',
             'certificado' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf',
@@ -56,7 +55,7 @@ class IdiomasEmpleadosController extends Controller
             // Get just ext
             $extension = $request->file('certificado')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = $request->file('certificado')->storeAs('public/idiomas_empleados', $fileNameToStore);
 
@@ -71,7 +70,6 @@ class IdiomasEmpleadosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -118,7 +116,7 @@ class IdiomasEmpleadosController extends Controller
                 // Get just ext
                 $extension = $request->file('certificado')->getClientOriginalExtension();
                 // Filename to store
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                $fileNameToStore = $filename.'_'.time().'.'.$extension;
                 // Upload Image
                 $path = $request->file('certificado')->storeAs('public/idiomas_empleados', $fileNameToStore);
 

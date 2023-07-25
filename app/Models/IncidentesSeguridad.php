@@ -16,6 +16,7 @@ class IncidentesSeguridad extends Model implements HasMedia
     use SoftDeletes;
 
     const ARCHIVADO = '1';
+
     const NO_ARCHIVADO = '0';
 
     protected $table = 'incidentes_seguridad';
@@ -37,7 +38,7 @@ class IncidentesSeguridad extends Model implements HasMedia
 
     public function getFolioAttribute()
     {
-        return  sprintf('INC-%04d', $this->id);
+        return sprintf('INC-%04d', $this->id);
     }
 
     public function reporto()

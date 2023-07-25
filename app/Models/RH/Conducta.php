@@ -10,7 +10,9 @@ class Conducta extends Model
     use HasFactory;
 
     protected $table = 'ev360_competencias_opciones';
+
     protected $appends = ['definicion_h'];
+
     protected $guarded = ['id'];
 
     public function getDefinicionHAttribute()

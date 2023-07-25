@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool|null $indicador_aprobador
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
- *
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  * @property DeclaracionAplicabilidadAprobadores|null $declaracion_aplicabilidad_aprobadore
  * @property DeclaracionAplicabilidadResponsable|null $declaracion_aplicabilidad_responsable

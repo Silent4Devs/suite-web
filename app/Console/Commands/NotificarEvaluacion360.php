@@ -46,7 +46,7 @@ class NotificarEvaluacion360 extends Command
         $now = date('Y-m-d', strtotime(Carbon::now()));
         logger($now);
         $evaluaciones_no_enviadas = Evaluacion::getAll();
-        if (!$evaluaciones_no_enviadas) {
+        if (! $evaluaciones_no_enviadas) {
             $evaluaciones_no_enviadas->where('fecha_inicio', $now)
                 ->where('email_sended', false)->each(function ($evaluacion) {
                     $evaluadores = EvaluadoEvaluador::where('evaluacion_id', $evaluacion->id)->pluck('evaluador_id')->unique()->toArray();

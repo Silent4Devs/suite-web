@@ -10,21 +10,22 @@ use Illuminate\Support\Str;
 class LaravelChart
 {
     public $options = [];
+
     private $datasets = [];
 
     /**
      * Group Periods.
      */
     const GROUP_PERIODS = [
-        'day'   => 'Y-m-d',
-        'week'  => 'Y-W',
+        'day' => 'Y-m-d',
+        'week' => 'Y-W',
         'month' => 'Y-m',
-        'year'  => 'Y',
+        'year' => 'Y',
     ];
 
     /**
      * LaravelChart constructor.
-     * @param $chart_options
+     *
      * @throws \Exception
      */
     public function __construct($chart_options)
@@ -36,6 +37,7 @@ class LaravelChart
 
     /**
      * @return array
+     *
      * @throws \Exception
      */
     private function prepareData()
@@ -43,7 +45,7 @@ class LaravelChart
         $this->validateOptions($this->options);
 
         try {
-            if (!class_exists($this->options['model'])) {
+            if (! class_exists($this->options['model'])) {
                 return [];
             }
 
@@ -65,10 +67,10 @@ class LaravelChart
                                 $start = date('Y-m-d', strtotime('last Monday'));
                                 break;
                             case 'month':
-                                $start = date('Y-m') . '-01';
+                                $start = date('Y-m').'-01';
                                 break;
                             case 'year':
-                                $start = date('Y') . '-01-01';
+                                $start = date('Y').'-01-01';
                                 break;
                         }
                         if (isset($start)) {
@@ -157,7 +159,7 @@ class LaravelChart
                     $dates = $data->keys();
                     $interval = $this->options['group_by_period'] ?? 'day';
                     $newArr = [];
-                    if (!is_null($dates->first()) or !is_null($dates->last())) {
+                    if (! is_null($dates->first()) or ! is_null($dates->last())) {
                         $period = CarbonPeriod::since($dates->first())->$interval()->until($dates->last())
                             ->filter(function (Carbon $date) use ($data, &$newArr) {
                                 $key = $date->format($this->options['date_format'] ?? 'Y-m-d');
@@ -173,26 +175,25 @@ class LaravelChart
 
             return $datasets;
         } catch (\Error $ex) {
-            throw new \Exception('Laravel Charts error: ' . $ex->getMessage());
+            throw new \Exception('Laravel Charts error: '.$ex->getMessage());
         }
     }
 
     /**
-     * @param array $options
      * @throws \Exception
      */
     private function validateOptions(array $options)
     {
         $rules = [
-            'chart_title'           => 'required',
-            'report_type'           => 'required|in:group_by_date,group_by_string,group_by_relationship',
-            'model'                 => 'required|bail',
-            'group_by_field'        => 'required|bail',
-            'group_by_period'       => 'in:day,week,month,year|bail',
-            'aggregate_function'    => 'in:count,sum,avg|bail',
-            'chart_type'            => 'required|in:line,bar,pie,doughnut|bail',
-            'filter_days'           => 'integer',
-            'filter_period'         => 'in:week,month,year',
+            'chart_title' => 'required',
+            'report_type' => 'required|in:group_by_date,group_by_string,group_by_relationship',
+            'model' => 'required|bail',
+            'group_by_field' => 'required|bail',
+            'group_by_period' => 'in:day,week,month,year|bail',
+            'aggregate_function' => 'in:count,sum,avg|bail',
+            'chart_type' => 'required|in:line,bar,pie,doughnut|bail',
+            'filter_days' => 'integer',
+            'filter_period' => 'in:week,month,year',
         ];
 
         $messages = [
@@ -205,21 +206,21 @@ class LaravelChart
         ];
 
         $attributes = [
-            'chart_title'           => 'chart_title',
-            'report_type'           => 'report_type',
-            'group_by_field'        => 'group_by_field',
-            'group_by_period'       => 'group_by_period',
-            'aggregate_function'    => 'aggregate_function',
-            'chart_type'            => 'chart_type',
-            'filter_days'           => 'filter_days',
-            'filter_period'         => 'filter_period',
-            'field_distinct'        => 'field_distinct',
+            'chart_title' => 'chart_title',
+            'report_type' => 'report_type',
+            'group_by_field' => 'group_by_field',
+            'group_by_period' => 'group_by_period',
+            'aggregate_function' => 'aggregate_function',
+            'chart_type' => 'chart_type',
+            'filter_days' => 'filter_days',
+            'filter_period' => 'filter_period',
+            'field_distinct' => 'field_distinct',
         ];
 
         $validator = Validator::make($options, $rules, $messages, $attributes);
 
         if ($validator->fails()) {
-            throw new \Exception('Laravel Charts options validator: ' . $validator->errors()->first());
+            throw new \Exception('Laravel Charts options validator: '.$validator->errors()->first());
         }
     }
 

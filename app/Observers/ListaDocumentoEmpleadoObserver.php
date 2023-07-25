@@ -2,15 +2,14 @@
 
 namespace App\Observers;
 
-use Illuminate\Support\Facades\Cache;
 use App\Models\ListaDocumentoEmpleado;
+use Illuminate\Support\Facades\Cache;
 
 class ListaDocumentoEmpleadoObserver
 {
     /**
      * Handle the ListaDocumentoEmpleado "created" event.
      *
-     * @param  \App\Models\ListaDocumentoEmpleado  $listaDocumentoEmpleado
      * @return void
      */
     public function created(ListaDocumentoEmpleado $listaDocumentoEmpleado)
@@ -21,7 +20,6 @@ class ListaDocumentoEmpleadoObserver
     /**
      * Handle the ListaDocumentoEmpleado "updated" event.
      *
-     * @param  \App\Models\ListaDocumentoEmpleado  $listaDocumentoEmpleado
      * @return void
      */
     public function updated(ListaDocumentoEmpleado $listaDocumentoEmpleado)
@@ -32,7 +30,6 @@ class ListaDocumentoEmpleadoObserver
     /**
      * Handle the ListaDocumentoEmpleado "deleted" event.
      *
-     * @param  \App\Models\ListaDocumentoEmpleado  $listaDocumentoEmpleado
      * @return void
      */
     public function deleted(ListaDocumentoEmpleado $listaDocumentoEmpleado)
@@ -43,7 +40,6 @@ class ListaDocumentoEmpleadoObserver
     /**
      * Handle the ListaDocumentoEmpleado "restored" event.
      *
-     * @param  \App\Models\ListaDocumentoEmpleado  $listaDocumentoEmpleado
      * @return void
      */
     public function restored(ListaDocumentoEmpleado $listaDocumentoEmpleado)
@@ -54,7 +50,6 @@ class ListaDocumentoEmpleadoObserver
     /**
      * Handle the ListaDocumentoEmpleado "force deleted" event.
      *
-     * @param  \App\Models\ListaDocumentoEmpleado  $listaDocumentoEmpleado
      * @return void
      */
     public function forceDeleted(ListaDocumentoEmpleado $listaDocumentoEmpleado)

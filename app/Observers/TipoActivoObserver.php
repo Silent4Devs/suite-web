@@ -10,7 +10,6 @@ class TipoActivoObserver
     /**
      * Handle the Tipoactivo "created" event.
      *
-     * @param  \App\Models\Tipoactivo  $tipoactivo
      * @return void
      */
     public function created(Tipoactivo $tipoactivo)
@@ -21,7 +20,6 @@ class TipoActivoObserver
     /**
      * Handle the Tipoactivo "updated" event.
      *
-     * @param  \App\Models\Tipoactivo  $tipoactivo
      * @return void
      */
     public function updated(Tipoactivo $tipoactivo)
@@ -32,7 +30,6 @@ class TipoActivoObserver
     /**
      * Handle the Tipoactivo "deleted" event.
      *
-     * @param  \App\Models\Tipoactivo  $tipoactivo
      * @return void
      */
     public function deleted(Tipoactivo $tipoactivo)
@@ -43,7 +40,6 @@ class TipoActivoObserver
     /**
      * Handle the Tipoactivo "restored" event.
      *
-     * @param  \App\Models\Tipoactivo  $tipoactivo
      * @return void
      */
     public function restored(Tipoactivo $tipoactivo)
@@ -54,7 +50,6 @@ class TipoActivoObserver
     /**
      * Handle the Tipoactivo "force deleted" event.
      *
-     * @param  \App\Models\Tipoactivo  $tipoactivo
      * @return void
      */
     public function forceDeleted(Tipoactivo $tipoactivo)

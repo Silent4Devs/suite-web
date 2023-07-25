@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LiberaMantenimientoAIA extends Model
 {
     use HasFactory;
+
     public $table = 'libera_mantenimiento_aia';
 
     public $fillable = [

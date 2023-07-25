@@ -11,7 +11,9 @@ class ActividadAccionCorrectiva extends Model
     use HasFactory, SoftDeletes;
 
     public $cacheFor = 3600;
+
     protected static $flushCacheOnUpdate = true;
+
     protected $table = 'actividades_accion_correctiva';
 
     protected $guarded = ['id'];

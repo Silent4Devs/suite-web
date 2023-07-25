@@ -9,7 +9,9 @@ use Illuminate\Queue\SerializesModels;
 class InvitacionCapacitacionMail extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $empleado;
+
     public $recurso;
 
     /**

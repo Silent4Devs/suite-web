@@ -16,27 +16,27 @@ class CategoriaIncidenteSeeder extends Seeder
     {
         $categorias = [
             [
-                'id'    => 1,
+                'id' => 1,
                 'categoria' => 'Ataques',
             ],
             [
-                'id'    => 2,
+                'id' => 2,
                 'categoria' => 'Código malicioso',
             ],
             [
-                'id'    => 3,
+                'id' => 3,
                 'categoria' => 'Acceso no autorizado, robo o pérdida de datos',
             ],
             [
-                'id'    => 4,
+                'id' => 4,
                 'categoria' => 'Pruebas y reconocimientos',
             ],
             [
-                'id'    => 5,
+                'id' => 5,
                 'categoria' => 'Daños físicos',
             ],
             [
-                'id'    => 6,
+                'id' => 6,
                 'categoria' => 'Abuso de privilegios y usos inadecuados',
             ],
         ];

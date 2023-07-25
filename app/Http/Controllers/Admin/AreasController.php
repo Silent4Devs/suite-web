@@ -118,11 +118,11 @@ class AreasController extends Controller
         $area = Area::create($request->all());
 
         $image = null;
-        if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
+        if ($request->file('foto_area') != null or ! empty($request->file('foto_area'))) {
             $extension = pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/areas/' . $new_name_image;
+            $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+            $new_name_image = 'UID_'.$area->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path().'/app/public/areas/'.$new_name_image;
             $image = $new_name_image;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto_area'));
@@ -174,19 +174,19 @@ class AreasController extends Controller
         ]);
 
         $image = $area->foto_area;
-        if ($request->file('foto_area') != null or !empty($request->file('foto_area'))) {
+        if ($request->file('foto_area') != null or ! empty($request->file('foto_area'))) {
             //Si existe la imagen entonces se elimina al editarla
 
-            $isExists = Storage::disk('public')->exists('/app/public/areas/' . $area->foto_area);
+            $isExists = Storage::disk('public')->exists('/app/public/areas/'.$area->foto_area);
             if ($isExists) {
                 if ($area->foto_area != null) {
-                    unlink(storage_path('/app/public/areas/' . $area->foto_area));
+                    unlink(storage_path('/app/public/areas/'.$area->foto_area));
                 }
             }
             $extension = pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $area->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/areas/' . $new_name_image;
+            $name_image = basename(pathinfo($request->file('foto_area')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+            $new_name_image = 'UID_'.$area->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path().'/app/public/areas/'.$new_name_image;
             $image = $new_name_image;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto_area'));
@@ -197,10 +197,10 @@ class AreasController extends Controller
 
         $area->update([
             'area' => $request->area,
-            'id_grupo' =>  $request->id_grupo,
-            'id_reporta' =>  $request->id_reporta,
-            'descripcion' =>  $request->descripcion,
-            'empleados_id' =>  $request->empleados_id,
+            'id_grupo' => $request->id_grupo,
+            'id_reporta' => $request->id_reporta,
+            'descripcion' => $request->descripcion,
+            'empleados_id' => $request->empleados_id,
             'foto_area' => $image,
 
         ]);
@@ -252,8 +252,8 @@ class AreasController extends Controller
         $rutaImagenes = asset('storage/empleados/imagenes/');
         $grupos = Grupo::with('areas')->orderBy('id')->get();
         $organizacionDB = Organizacion::getFirst();
-        $organizacion = !is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
-        $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+        $organizacion = ! is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
+        $org_foto = ! is_null($organizacionDB) ? url('images/'.DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
         $organizacion = Organizacion::getFirst();
 

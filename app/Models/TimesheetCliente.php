@@ -31,7 +31,7 @@ class TimesheetCliente extends Model
         'celular_contacto',
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
         return Cache::remember('timesheetcliente_all', 3600 * 24, function () {

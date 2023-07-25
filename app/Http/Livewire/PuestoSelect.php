@@ -8,7 +8,9 @@ use Livewire\Component;
 class PuestoSelect extends Component
 {
     protected $listeners = ['render-puesto-select' => 'render', 'PuestoStore' => 'PuestoStore'];
+
     public $puestos;
+
     public $puestos_seleccionado;
 
     public function mount($puestos_seleccionado)

@@ -11,7 +11,6 @@ use App\Models\IndicadoresSgsi;
 use App\Models\Proceso;
 use App\Models\Team;
 use App\Models\User;
-use App\Models\VariablesIndicador;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
@@ -281,10 +280,10 @@ class IndicadoresSgsiController extends Controller
             }
 
             $formula_r = $indicadoresSgsi->formula_raw;
-            $chars = ["$", '/', '*', '-', '+'];
+            $chars = ['$', '/', '*', '-', '+'];
             $onlyconsonants = $formula_r;
             foreach ($chars as $key => $char) {
-                $onlyconsonants = str_replace($char, '!' . $char, $onlyconsonants);
+                $onlyconsonants = str_replace($char, '!'.$char, $onlyconsonants);
             }
 
             $formula_array = explode('!', $onlyconsonants);

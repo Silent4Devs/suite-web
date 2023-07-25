@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DocumentoComunicacionSgis extends Model
 {
     use SoftDeletes;
+
     public $table = 'documentos_comunicacion_sgis';
 
     protected $dates = [

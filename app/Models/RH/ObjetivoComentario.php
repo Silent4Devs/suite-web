@@ -10,9 +10,11 @@ class ObjetivoComentario extends Model
     use HasFactory;
 
     protected $table = 'ev360_objetivos_comentarios';
+
     protected $guarded = ['id'];
 
     const EVALUADOR = '1';
+
     const EVALUADO = '2';
 
     public function objetivos()

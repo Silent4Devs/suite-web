@@ -20,13 +20,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Empleado|null $empleado
  * @property Collection|MatrizRiesgo[] $matriz_riesgos
  */
 class AnalisisDeRiesgo extends Model
 {
     use SoftDeletes;
+
     protected $table = 'analisis_de_riesgo';
 
     protected $casts = [

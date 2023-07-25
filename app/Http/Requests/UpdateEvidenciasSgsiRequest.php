@@ -22,11 +22,11 @@ class UpdateEvidenciasSgsiRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'area_id'   => [
+            'area_id' => [
                 'string',
                 'required',
             ],
-            'fechadocumento'    => [
+            'fechadocumento' => [
                 // 'date_format:' . config('panel.date_format'),
                 'date',
                 'required',

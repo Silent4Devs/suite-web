@@ -15,12 +15,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property QuejasCliente $quejas_cliente
  */
 class SeguimientoQuejaCliente extends Model
 {
     use SoftDeletes;
+
     protected $table = 'seguimiento_queja_cliente';
 
     protected $casts = [

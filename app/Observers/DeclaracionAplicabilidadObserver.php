@@ -2,15 +2,14 @@
 
 namespace App\Observers;
 
-use Illuminate\Support\Facades\Cache;
 use App\Models\DeclaracionAplicabilidad;
+use Illuminate\Support\Facades\Cache;
 
 class DeclaracionAplicabilidadObserver
 {
     /**
      * Handle the DeclaracionAplicabilidad "created" event.
      *
-     * @param  \App\Models\DeclaracionAplicabilidad  $declaracionAplicabilidad
      * @return void
      */
     public function created(DeclaracionAplicabilidad $declaracionAplicabilidad)
@@ -21,7 +20,6 @@ class DeclaracionAplicabilidadObserver
     /**
      * Handle the DeclaracionAplicabilidad "updated" event.
      *
-     * @param  \App\Models\DeclaracionAplicabilidad  $declaracionAplicabilidad
      * @return void
      */
     public function updated(DeclaracionAplicabilidad $declaracionAplicabilidad)
@@ -32,7 +30,6 @@ class DeclaracionAplicabilidadObserver
     /**
      * Handle the DeclaracionAplicabilidad "deleted" event.
      *
-     * @param  \App\Models\DeclaracionAplicabilidad  $declaracionAplicabilidad
      * @return void
      */
     public function deleted(DeclaracionAplicabilidad $declaracionAplicabilidad)
@@ -43,7 +40,6 @@ class DeclaracionAplicabilidadObserver
     /**
      * Handle the DeclaracionAplicabilidad "restored" event.
      *
-     * @param  \App\Models\DeclaracionAplicabilidad  $declaracionAplicabilidad
      * @return void
      */
     public function restored(DeclaracionAplicabilidad $declaracionAplicabilidad)
@@ -54,7 +50,6 @@ class DeclaracionAplicabilidadObserver
     /**
      * Handle the DeclaracionAplicabilidad "force deleted" event.
      *
-     * @param  \App\Models\DeclaracionAplicabilidad  $declaracionAplicabilidad
      * @return void
      */
     public function forceDeleted(DeclaracionAplicabilidad $declaracionAplicabilidad)

@@ -12,6 +12,6 @@ class GapTresCatalogoIso extends Model
 
     protected $fillable = [
         'id',
-        'pregunta'
+        'pregunta',
     ];
 }

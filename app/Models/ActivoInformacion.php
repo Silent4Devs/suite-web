@@ -19,6 +19,7 @@ class ActivoInformacion extends Model
         'updated_at',
         'deleted_at',
     ];
+
     protected $appends = ['riesgo_activo', 'name', 'content', 'color', 'nivel_riesgo_ai'];
 
     protected $fillable = [
@@ -119,7 +120,7 @@ class ActivoInformacion extends Model
 
     public function getNameAttribute()
     {
-        return $this->identificador . ' ' . $this->activo_informacion;
+        return $this->identificador.' '.$this->activo_informacion;
     }
 
     public function getContentAttribute()

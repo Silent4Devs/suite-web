@@ -2,15 +2,14 @@
 
 namespace App\Observers;
 
-use Illuminate\Support\Facades\Cache;
 use App\Models\activoConfidencialidad;
+use Illuminate\Support\Facades\Cache;
 
 class ActivoConfidencialObserver
 {
     /**
      * Handle the activoConfidencialidad "created" event.
      *
-     * @param  \App\Models\activoConfidencialidad  $activoConfidencialidad
      * @return void
      */
     public function created(activoConfidencialidad $activoConfidencialidad)
@@ -21,7 +20,6 @@ class ActivoConfidencialObserver
     /**
      * Handle the activoConfidencialidad "updated" event.
      *
-     * @param  \App\Models\activoConfidencialidad  $activoConfidencialidad
      * @return void
      */
     public function updated(activoConfidencialidad $activoConfidencialidad)
@@ -32,7 +30,6 @@ class ActivoConfidencialObserver
     /**
      * Handle the activoConfidencialidad "deleted" event.
      *
-     * @param  \App\Models\activoConfidencialidad  $activoConfidencialidad
      * @return void
      */
     public function deleted(activoConfidencialidad $activoConfidencialidad)
@@ -43,7 +40,6 @@ class ActivoConfidencialObserver
     /**
      * Handle the activoConfidencialidad "restored" event.
      *
-     * @param  \App\Models\activoConfidencialidad  $activoConfidencialidad
      * @return void
      */
     public function restored(activoConfidencialidad $activoConfidencialidad)
@@ -54,7 +50,6 @@ class ActivoConfidencialObserver
     /**
      * Handle the activoConfidencialidad "force deleted" event.
      *
-     * @param  \App\Models\activoConfidencialidad  $activoConfidencialidad
      * @return void
      */
     public function forceDeleted(activoConfidencialidad $activoConfidencialidad)

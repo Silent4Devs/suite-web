@@ -8,6 +8,7 @@ use Livewire\Component;
 class AceptarPolitica extends Component
 {
     public $id_politica;
+
     public $acepto_politica;
 
     public function mount($id_politica)
@@ -31,6 +32,6 @@ class AceptarPolitica extends Component
         $aceptar = AceptoPolitica::updateOrCreate([
             'id_politica' => $id_politica,
             'id_empleado' => auth()->user()->empleado->id,
-        ], ['aceptado'=>true]);
+        ], ['aceptado' => true]);
     }
 }

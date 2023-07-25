@@ -12,9 +12,13 @@ use Illuminate\Support\Facades\Auth;
 class AccionCorrectivaNotification extends Notification
 {
     use Queueable;
+
     public $accion_correctiva;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     /**

@@ -15,12 +15,12 @@ class StoreMaterialIsoVeinticienteRequest extends FormRequest
     public function rules()
     {
         return [
-            'objetivo'                    => [
+            'objetivo' => [
                 'string',
                 'required',
             ],
             'fechacreacion_actualizacion' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
         ];

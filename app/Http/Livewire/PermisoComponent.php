@@ -9,7 +9,9 @@ use Livewire\Component;
 class PermisoComponent extends Component
 {
     public $nombre;
+
     public $descripcion;
+
     protected $rules = [
         'nombre' => 'required|string|max:255',
     ];
@@ -24,7 +26,7 @@ class PermisoComponent extends Component
         $this->validate();
         TipoDePermiso::create([
             'nombre' => $this->nombre,
-            'slug'=>Str::slug($this->nombre, '-'),
+            'slug' => Str::slug($this->nombre, '-'),
             'descripcion' => $this->descripcion,
         ]);
         $this->emit('tipoStore');

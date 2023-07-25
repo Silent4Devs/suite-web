@@ -19,7 +19,7 @@ class StoreMinutasaltadireccionRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'fechareunion'    => [
+            'fechareunion' => [
                 'date',
                 'nullable',
             ],

@@ -28,7 +28,7 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         $user->update([
-            'email' => time() . '_' . $user->email,
+            'email' => time().'_'.$user->email,
         ]);
 
         $user->delete();
@@ -53,7 +53,7 @@ class ProfileController extends Controller
             $message = __('global.two_factor.enabled');
         }
 
-        $user->two_factor = !$user->two_factor;
+        $user->two_factor = ! $user->two_factor;
 
         $user->save();
 

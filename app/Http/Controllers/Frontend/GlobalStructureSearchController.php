@@ -137,46 +137,46 @@ class GlobalStructureSearchController extends Controller
 
         $rutas_filtradas = collect($rutas_admin)->filter(function ($route) {
             if (
-                !Str::contains($route, '{') && !Str::contains($route, 'destroy') && !Str::contains($route, 'global')
-                && !Str::contains($route, 'quitar') && !Str::contains($route, 'locked')
-                && !Str::contains($route, 'media') && !Str::contains($route, 'save')
-                && !Str::contains($route, 'update')
-                && !Str::contains($route, 'create')
-                && !Str::contains($route, 'crear')
-                && !Str::contains($route, 'load')
-                && !Str::contains($route, 'export')
-                && !Str::contains($route, 'import')
-                && !Str::contains($route, 'cancel')
-                && !Str::contains($route, 'suscribir')
-                && !Str::contains($route, 'calificar')
-                && !Str::contains($route, 'registrar')
-                && !Str::contains($route, 'check')
-                && !Str::contains($route, 'descargar')
-                && !Str::contains($route, 'get')
-                && !Str::contains($route, 'relacionada')
-                && !Str::contains($route, 'store')
-                && !Str::contains($route, 'edit')
-                && !Str::contains($route, 'delete')
-                && !Str::contains($route, 'eliminar')
-                && !Str::contains($route, 'publish')
-                && !Str::contains($route, 'dependencies')
-                && !Str::contains($route, 'permissions')
+                ! Str::contains($route, '{') && ! Str::contains($route, 'destroy') && ! Str::contains($route, 'global')
+                && ! Str::contains($route, 'quitar') && ! Str::contains($route, 'locked')
+                && ! Str::contains($route, 'media') && ! Str::contains($route, 'save')
+                && ! Str::contains($route, 'update')
+                && ! Str::contains($route, 'create')
+                && ! Str::contains($route, 'crear')
+                && ! Str::contains($route, 'load')
+                && ! Str::contains($route, 'export')
+                && ! Str::contains($route, 'import')
+                && ! Str::contains($route, 'cancel')
+                && ! Str::contains($route, 'suscribir')
+                && ! Str::contains($route, 'calificar')
+                && ! Str::contains($route, 'registrar')
+                && ! Str::contains($route, 'check')
+                && ! Str::contains($route, 'descargar')
+                && ! Str::contains($route, 'get')
+                && ! Str::contains($route, 'relacionada')
+                && ! Str::contains($route, 'store')
+                && ! Str::contains($route, 'edit')
+                && ! Str::contains($route, 'delete')
+                && ! Str::contains($route, 'eliminar')
+                && ! Str::contains($route, 'publish')
+                && ! Str::contains($route, 'dependencies')
+                && ! Str::contains($route, 'permissions')
                 && $route !== 'admin/roles'
                 && $route !== 'admin/selectIndicador'
                 && $route !== 'admin/implementacions'
                 && $route !== 'dmin/team-members'
                 && $route !== 'admin/planaccion-correctivas'
                 && $route !== 'admin/indicadorincidentessis' // Remover cuando se trabaje con otro iso
-                && !Str::contains($route, 'selectindicador')
-                && !Str::contains($route, 'vincular')
-                && !Str::contains($route, 'alerts')
-                && !Str::contains($route, 'archivo')
-                && !Str::contains($route, 'actividades')
-                && !Str::contains($route, 'bloqueo')
-                && !Str::contains($route, 'sgsisInsertar')
-                && !Str::contains($route, 'sgsisUpdate')
-                && !Str::contains($route, 'archivar')
-                && !Str::contains($route, 'desarchivar')
+                && ! Str::contains($route, 'selectindicador')
+                && ! Str::contains($route, 'vincular')
+                && ! Str::contains($route, 'alerts')
+                && ! Str::contains($route, 'archivo')
+                && ! Str::contains($route, 'actividades')
+                && ! Str::contains($route, 'bloqueo')
+                && ! Str::contains($route, 'sgsisInsertar')
+                && ! Str::contains($route, 'sgsisUpdate')
+                && ! Str::contains($route, 'archivar')
+                && ! Str::contains($route, 'desarchivar')
                 && $route != 'admin/organizaciones'
             ) {
                 return $route;
@@ -184,7 +184,7 @@ class GlobalStructureSearchController extends Controller
         });
 
         $rutas = collect($rutas_filtradas)->map(function ($route) {
-            return '/' . $route;
+            return '/'.$route;
         })->unique();
 
         $rutas_arr = []; // Se guarda el array asociativo para filtrar por búsquedas
@@ -195,9 +195,9 @@ class GlobalStructureSearchController extends Controller
                 $ruta_admin = $ruta;
             }
 
-            $url = Url::fromString('https:/' . $ruta_admin);
+            $url = Url::fromString('https:/'.$ruta_admin);
             $clean_text = str_replace('-', '', str_replace('/', ' ', $url->getPath()));
-            $title = str_replace('-', ' ', $url->getHost()) . $clean_text;
+            $title = str_replace('-', ' ', $url->getHost()).$clean_text;
             $title = str_replace('iso27001 ', 'ISO 27001', $title);
             if ($title == 'entendimiento organizacions ') {
                 $title = 'Análisis FODA';

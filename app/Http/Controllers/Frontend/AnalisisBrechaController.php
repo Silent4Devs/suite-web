@@ -73,7 +73,7 @@ class AnalisisBrechaController extends Controller
                 $porcentajeGap3 = $gapunoPorc->GapTresPorc($gap3porcentaje, $gap31porcentaje);
                 $cuentas = number_format($porcentajeGap1, 2, '.', '') + (number_format($porcentajeGap3['porcentaje'], 2, '.', '')) + number_format($porcentajeGap2['Avance'], 2, '.', '');
 
-                return $cuentas . '%' ? $cuentas . '%' : '';
+                return $cuentas.'%' ? $cuentas.'%' : '';
             });
 
             $table->editColumn('elaboro', function ($row) {
@@ -114,7 +114,6 @@ class AnalisisBrechaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -136,7 +135,6 @@ class AnalisisBrechaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\AnalisisBrecha  $analisisBrecha
      * @return \Illuminate\Http\Response
      */
     public function show(AnalisisBrecha $analisisBrecha)
@@ -177,8 +175,6 @@ class AnalisisBrechaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AnalisisBrecha  $analisisBrecha
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, AnalisisBrecha $analisisBrecha)
@@ -186,11 +182,11 @@ class AnalisisBrechaController extends Controller
         $analisisBrecha = AnalisisDeRiesgo::find($id);
 
         $analisisBrecha->update([
-            'nombre' =>  $request->nombre,
-            'fecha' =>  $request->fecha,
-            'id_elaboro' =>  $request->id_elaboro,
+            'nombre' => $request->nombre,
+            'fecha' => $request->fecha,
+            'id_elaboro' => $request->id_elaboro,
             'porcentaje_implementacion' => $request->porcentaje_implementacion,
-            'estatus' =>  $request->estatus,
+            'estatus' => $request->estatus,
         ]);
 
         return redirect()->route('analisisdebrechas.index')->with('success', 'Editado con éxito');

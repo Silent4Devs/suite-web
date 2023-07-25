@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ProcesosOctaveHistoricos extends Model
 {
     use HasFactory;
+
     protected $table = 'procesos_octave_historicos';
+
     protected $fillable = [
         'proceso_id',
         'matriz_id',

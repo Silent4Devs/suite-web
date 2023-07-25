@@ -24,14 +24,14 @@ class EvidenciaDocumentoEmpleadoArchivo extends Model
     {
         $empleado = Empleado::select('id', 'name')->find($this->evidencia->empleados_documentos->id);
 
-        return asset('storage/expedientes/' . Str::slug($empleado->name) . '/' . $this->documento);
+        return asset('storage/expedientes/'.Str::slug($empleado->name).'/'.$this->documento);
     }
 
     public function getRutaAbsolutaDocumentoAttribute()
     {
         $empleado = Empleado::select('id', 'name')->find($this->evidencia->empleados_documentos->id);
 
-        return 'expedientes/' . Str::slug($empleado->name) . '/' . $this->documento;
+        return 'expedientes/'.Str::slug($empleado->name).'/'.$this->documento;
     }
 
     public function evidencia()

@@ -30,7 +30,7 @@ class PermisosMensajeriaSeeder extends Seeder
             ],
             [
                 'title' => 'solicitud_mensajeria_ver',
-                'name' =>'Este permiso permite al usuario ver solicitud de mensajeria',
+                'name' => 'Este permiso permite al usuario ver solicitud de mensajeria',
             ],
             [
                 'title' => 'solicitud_mensajeria_eliminar',

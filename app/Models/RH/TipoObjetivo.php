@@ -2,19 +2,21 @@
 
 namespace App\Models\RH;
 
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class TipoObjetivo extends Model
 {
     use HasFactory;
 
     protected $table = 'ev360_tipo_objetivos';
+
     protected $appends = ['imagen_ruta'];
+
     protected $guarded = ['id'];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
         return Cache::remember('TipoObjetivo_all', 3600 * 24, function () {
@@ -25,7 +27,7 @@ class TipoObjetivo extends Model
     public function getImagenRutaAttribute()
     {
         if ($this->imagen) {
-            return asset('storage/perspectivas/img/' . $this->imagen);
+            return asset('storage/perspectivas/img/'.$this->imagen);
         }
 
         return asset('img/bullseye.png');

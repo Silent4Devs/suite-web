@@ -17,7 +17,7 @@ class GapTresConcentradoIso extends Model
         'id_analisis_brechas',
         'valoracion',
         'evidencia',
-        'recomendacion'
+        'recomendacion',
     ];
 
     public function gap_tres_catalogo()

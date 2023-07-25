@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $descripcion
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Collection|MatrizOctaveProceso[] $matriz_octave_procesos
  */
 class MatrizOctaveServicio extends Model

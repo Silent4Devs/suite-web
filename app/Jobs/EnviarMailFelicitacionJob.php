@@ -18,7 +18,9 @@ class EnviarMailFelicitacionJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $nombre;
+
     protected $correodestinatario;
+
     protected $cumplehoy;
 
     /**
@@ -44,9 +46,9 @@ class EnviarMailFelicitacionJob implements ShouldQueue
         $cumplehoy->toDateString();
         // dd($cumplehoy);
         $cumpleañeros = Empleado::alta()
-        ->whereMonth('cumpleaños', '=', $cumplehoy->format('m'))
-        ->whereDay('cumpleaños', '=', $cumplehoy->format('d'))
-        ->get();
+            ->whereMonth('cumpleaños', '=', $cumplehoy->format('m'))
+            ->whereDay('cumpleaños', '=', $cumplehoy->format('d'))
+            ->get();
 
         $imgtab = public_path("img\icono_tabantaj.png");
         $imgpastel = public_path('img\pastel.png');
@@ -54,7 +56,7 @@ class EnviarMailFelicitacionJob implements ShouldQueue
         if ($cumpleañeros != null) {
             foreach ($cumpleañeros as $cumpleañero) {
                 $filtro = CorreoCumpleanos::where('empleado_id', $cumpleañero->id)
-                ->whereDate('fecha_envio', '=', $cumpleañero->cumpleaños);
+                    ->whereDate('fecha_envio', '=', $cumpleañero->cumpleaños);
                 if ($filtro->exists() == false) {
                     // dd("Si aparece");
                     $empcump = CorreoCumpleanos::firstOrCreate([

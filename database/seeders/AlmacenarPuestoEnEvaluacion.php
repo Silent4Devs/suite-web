@@ -20,7 +20,7 @@ class AlmacenarPuestoEnEvaluacion extends Seeder
         foreach ($evaluaciones as $evaluacion) {
             $evaluados = $evaluacion->evaluados;
             $evaluados_puesto = [];
-            foreach ($evaluados  as $evaluado) {
+            foreach ($evaluados as $evaluado) {
                 $evaluados_puesto[] = [
                     'evaluado_id' => $evaluado->id,
                     'puesto_id' => Empleado::with('puestoRelacionado')->find($evaluado->id)->puestoRelacionado->id,

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EvidenciasQueja extends Model
 {
     use SoftDeletes;
+
     protected $table = 'evidencias_quejas';
 
     protected $dates = [

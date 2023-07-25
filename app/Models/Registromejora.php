@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Registromejora extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'registromejoras';
 
     public static $searchable = [
@@ -24,9 +25,9 @@ class Registromejora extends Model
     ];
 
     const PRIORIDAD_SELECT = [
-        'alta'  => 'Alta',
+        'alta' => 'Alta',
         'media' => 'Media',
-        'Baja'  => 'Baja',
+        'Baja' => 'Baja',
     ];
 
     protected $fillable = [

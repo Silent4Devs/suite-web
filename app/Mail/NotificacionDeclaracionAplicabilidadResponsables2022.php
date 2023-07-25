@@ -2,8 +2,8 @@
 
 namespace App\Mail;
 
-use App\Models\Iso27\DeclaracionAplicabilidadConcentradoIso;
 use App\Models\Empleado;
+use App\Models\Iso27\DeclaracionAplicabilidadConcentradoIso;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -18,8 +18,11 @@ class NotificacionDeclaracionAplicabilidadResponsables2022 extends Mailable
      * @return void
      */
     public $aprobador;
+
     public $aplicabilidad;
+
     public $responsable;
+
     public $control;
 
     public function __construct(Empleado $aprobador, Empleado $responsable, DeclaracionAplicabilidadConcentradoIso $aplicabilidad, $control)
@@ -37,6 +40,6 @@ class NotificacionDeclaracionAplicabilidadResponsables2022 extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadResponsable')->subject('Aprobación/rechazo del control ' . $this->aplicabilidad->gapdos->control_iso);
+        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadResponsable')->subject('Aprobación/rechazo del control '.$this->aplicabilidad->gapdos->control_iso);
     }
 }

@@ -13,9 +13,13 @@ class TaskRecursosEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $tabla;
+
     public $slug;
+
     public $mensaje;
+
     public $user;
+
     public $tipo_notificacion;
 
     public function __construct($tabla, $slug, $mensaje, $user, $tipo_notificacion)
@@ -34,6 +38,6 @@ class TaskRecursosEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('App.Users.Models.' . $this->user);
+        return new PrivateChannel('App.Users.Models.'.$this->user);
     }
 }

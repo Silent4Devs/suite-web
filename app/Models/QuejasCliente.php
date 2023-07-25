@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class QuejasCliente extends Model
 {
     use SoftDeletes;
+
     protected $table = 'quejas_clientes';
 
     protected $casts = [
@@ -92,7 +93,7 @@ class QuejasCliente extends Model
 
     public function getFolioAttribute()
     {
-        return  sprintf('QUE-%04d', $this->id);
+        return sprintf('QUE-%04d', $this->id);
     }
 
     protected function serializeDate(DateTimeInterface $date)

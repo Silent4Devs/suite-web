@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $controles_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property DeclaracionAplicabilidad $declaracion_aplicabilidad
  * @property MatrizRiesgo $matriz_riesgo
  */

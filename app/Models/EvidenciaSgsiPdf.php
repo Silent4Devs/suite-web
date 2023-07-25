@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EvidenciaSgsiPdf extends Model
 {
     use SoftDeletes;
+
     protected $table = 'evidencias_evidencias_sgsis';
 
     protected $dates = [

@@ -15,12 +15,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Collection|PartesInteresada[] $partes_interesadas
  */
 class Norma extends Model
 {
     use SoftDeletes;
+
     protected $table = 'normas';
 
     protected $casts = [

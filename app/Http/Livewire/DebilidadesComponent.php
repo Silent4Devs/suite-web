@@ -8,9 +8,13 @@ use Livewire\Component;
 class DebilidadesComponent extends Component
 {
     public $foda_id;
+
     public $debilidad;
+
     public $riesgo;
+
     public $nombre;
+
     public $view = 'create';
 
     protected $rules = [

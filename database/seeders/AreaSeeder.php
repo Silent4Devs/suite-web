@@ -19,7 +19,7 @@ class AreaSeeder extends Seeder
             if ($idx != 0) {
                 $area->update(
                     [
-                    'id_reporta' => Area::all()->random()->id,
+                        'id_reporta' => Area::all()->random()->id,
                     ]
                 );
             }

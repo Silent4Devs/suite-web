@@ -66,7 +66,7 @@ class RegistrarCalendarioController extends Controller
     {
         $fecha = Calendario::create($request->all());
 
-        return redirect(route('admin.registrarGlosario.index'))->with(['success'=>'Registro guardado con exito']);
+        return redirect(route('admin.registrarGlosario.index'))->with(['success' => 'Registro guardado con exito']);
     }
 
     public function show(Calendario $calendario)
@@ -85,13 +85,13 @@ class RegistrarCalendarioController extends Controller
     {
         $fecha = $calendario->update($request->all());
 
-        return redirect(route('admin.registrarGlosario.index'))->with(['success'=>'Registro Actualizado']);
+        return redirect(route('admin.registrarGlosario.index'))->with(['success' => 'Registro Actualizado']);
     }
 
     public function destroy(Calendario $calendario)
     {
         $calendario->delete();
 
-        return redirect(route('admin.registrarGlosario.index'))->with(['success'=>'Registro Eliminado']);
+        return redirect(route('admin.registrarGlosario.index'))->with(['success' => 'Registro Eliminado']);
     }
 }

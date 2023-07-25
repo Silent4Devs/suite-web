@@ -18,9 +18,13 @@ class Minutasaltadireccion extends Model implements HasMedia
 
     // ESTATUS MINUTAS
     const EN_ELABORACION = 1;
+
     const EN_REVISION = 2;
+
     const PUBLICADO = 3;
+
     const DOCUMENTO_RECHAZADO = 4;
+
     const DOCUMENTO_OBSOLETO = 5;
 
     protected $appends = [

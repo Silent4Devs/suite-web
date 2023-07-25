@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Vulnerabilidad.
+ *
  * @version August 5, 2021, 7:45 pm UTC
  *
  * @property \App\Models\Amenaza $idAmenaza
@@ -17,9 +18,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Vulnerabilidad extends Model
 {
     use SoftDeletes;
+
     public $table = 'vulnerabilidads';
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $dates = ['deleted_at'];

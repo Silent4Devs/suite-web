@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EnlacesEjecutar extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'enlaces_ejecutars';
 
     protected $dates = [

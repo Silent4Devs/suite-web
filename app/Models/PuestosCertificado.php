@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $puesto_id
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
- *
  * @property Puesto|null $puesto
  */
 class PuestosCertificado extends Model

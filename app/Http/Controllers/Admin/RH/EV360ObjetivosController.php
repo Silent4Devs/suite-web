@@ -30,7 +30,7 @@ class EV360ObjetivosController extends Controller
         if ($request->ajax()) {
             $empleados = Empleado::alta()->with(['objetivos', 'area', 'perfil'])->get();
             $isAdmin = in_array('Admin', auth()->user()->roles->pluck('title')->toArray());
-            if (auth()->user()->empleado->children->count() > 0 && !$isAdmin) {
+            if (auth()->user()->empleado->children->count() > 0 && ! $isAdmin) {
                 return datatables()->of(auth()->user()->empleado->children)->toJson();
             } elseif ($isAdmin) {
                 return datatables()->of($empleados)->toJson();
@@ -107,8 +107,8 @@ class EV360ObjetivosController extends Controller
             if ($request->hasFile('foto')) {
                 Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $empleado->id . '.' . $extension;
-                $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+                $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$empleado->id.'.'.$extension;
+                $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
                 //Usamos image_intervention para disminuir el peso de la imagen
                 $img_intervention = Image::make($request->file('foto'));
                 $img_intervention->resize(720, null, function ($constraint) {
@@ -299,8 +299,8 @@ class EV360ObjetivosController extends Controller
         if ($request->hasFile('foto')) {
             Storage::makeDirectory('public/objetivos/img'); //Crear si no existe
             $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $nombre_imagen = 'OBJETIVO_' . $objetivo->id . '_' . $objetivo->nombre . 'EMPLEADO_' . $objetivo->empleado_id . '.' . $extension;
-            $route = storage_path() . '/app/public/objetivos/img/' . $nombre_imagen;
+            $nombre_imagen = 'OBJETIVO_'.$objetivo->id.'_'.$objetivo->nombre.'EMPLEADO_'.$objetivo->empleado_id.'.'.$extension;
+            $route = storage_path().'/app/public/objetivos/img/'.$nombre_imagen;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto'));
             $img_intervention->resize(720, null, function ($constraint) {

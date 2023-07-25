@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_porcentaje
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
- *
  * @property Language $language
  * @property Puesto $puesto
  * @property Porcentaje $porcentaje

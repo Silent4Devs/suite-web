@@ -11,7 +11,9 @@ class MatrizOctaveEscenario extends Model
     use SoftDeletes;
 
     protected $table = 'matriz_octave_escenarios';
+
     protected $appends = ['name', 'content', 'color', 'sumatoria'];
+
     protected $fillable = [
         'identificador_escenario',
         'nom_escenario',
@@ -41,7 +43,7 @@ class MatrizOctaveEscenario extends Model
 
     public function getNameAttribute()
     {
-        return $this->identificador_escenario . ' ' . $this->nom_escenario;
+        return $this->identificador_escenario.' '.$this->nom_escenario;
     }
 
     public function getContentAttribute()

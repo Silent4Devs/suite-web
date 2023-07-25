@@ -211,19 +211,19 @@ class EmpleadoController extends Controller
 
         $empleado = Empleado::create([
             'name' => $request->name,
-            'area_id' =>  $request->area_id,
-            'puesto_id' =>  $request->puesto_id,
+            'area_id' => $request->area_id,
+            'puesto_id' => $request->puesto_id,
             'perfil_empleado_id' => $request->perfil_empleado_id,
-            'supervisor_id' =>  $request->supervisor_id,
-            'antiguedad' =>  $request->antiguedad,
-            'estatus' =>  $request->estatus,
-            'email' =>  $request->email,
-            'telefono' =>  $request->telefono,
-            'genero' =>  $request->genero,
-            'n_empleado' =>  $request->n_empleado,
-            'n_registro' =>  $request->n_registro,
-            'sede_id' =>  $request->sede_id,
-            'resumen' =>  $request->resumen,
+            'supervisor_id' => $request->supervisor_id,
+            'antiguedad' => $request->antiguedad,
+            'estatus' => $request->estatus,
+            'email' => $request->email,
+            'telefono' => $request->telefono,
+            'genero' => $request->genero,
+            'n_empleado' => $request->n_empleado,
+            'n_registro' => $request->n_registro,
+            'sede_id' => $request->sede_id,
+            'resumen' => $request->resumen,
             'cumpleaños' => $request->cumpleaños,
             'direccion' => $request->direccion,
             'telefono_movil' => $request->telefono_movil,
@@ -238,24 +238,24 @@ class EmpleadoController extends Controller
                     $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
                     $value = base64_decode($value);
 
-                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
+                    $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
-                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                    $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                     $img_intervention = Image::make($request->snap_foto);
                     $img_intervention->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
                     })->save($route);
                 }
             }
-        } elseif ($request->snap_foto && !$request->file('foto')) {
+        } elseif ($request->snap_foto && ! $request->file('foto')) {
             if ($request->snap_foto) {
                 if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
                     $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
                     $value = base64_decode($value);
 
-                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
+                    $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
-                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                    $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                     $img_intervention = Image::make($request->snap_foto);
                     $img_intervention->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
@@ -263,11 +263,11 @@ class EmpleadoController extends Controller
                 }
             }
         } else {
-            if ($request->file('foto') != null or !empty($request->file('foto'))) {
+            if ($request->file('foto') != null or ! empty($request->file('foto'))) {
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-                $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.' . $extension;
-                $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.'.$extension;
+                $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                 $image = $new_name_image;
                 //Usamos image_intervention para disminuir el peso de la imagen
                 $img_intervention = Image::make($request->file('foto'));
@@ -287,7 +287,6 @@ class EmpleadoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -407,7 +406,6 @@ class EmpleadoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -427,7 +425,7 @@ class EmpleadoController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            'n_empleado' => 'unique:empleados,n_empleado,' . $id,
+            'n_empleado' => 'unique:empleados,n_empleado,'.$id,
             'area_id' => 'required|exists:areas,id',
             'supervisor_id' => $validateSupervisor,
             'puesto_id' => 'required|exists:puestos,id',
@@ -447,9 +445,9 @@ class EmpleadoController extends Controller
                     $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
                     $value = base64_decode($value);
 
-                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
+                    $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
-                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                    $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                     $img_intervention = Image::make($request->snap_foto);
                     $img_intervention->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
@@ -457,16 +455,16 @@ class EmpleadoController extends Controller
                 }
             }
         } elseif (
-            $request->snap_foto && !$request->file('foto')
+            $request->snap_foto && ! $request->file('foto')
         ) {
             if ($request->snap_foto) {
                 if (preg_match('/^data:image\/(\w+);base64,/', $request->snap_foto)) {
                     $value = substr($request->snap_foto, strpos($request->snap_foto, ',') + 1);
                     $value = base64_decode($value);
 
-                    $new_name_image = 'UID_' . $empleado->id . '_' . $empleado->name . '.png';
+                    $new_name_image = 'UID_'.$empleado->id.'_'.$empleado->name.'.png';
                     $image = $new_name_image;
-                    $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                    $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                     $img_intervention = Image::make($request->snap_foto);
                     $img_intervention->resize(480, null, function ($constraint) {
                         $constraint->aspectRatio();
@@ -475,12 +473,12 @@ class EmpleadoController extends Controller
             }
         } else {
             if (
-                $request->file('foto') != null or !empty($request->file('foto'))
+                $request->file('foto') != null or ! empty($request->file('foto'))
             ) {
                 $extension = pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_EXTENSION);
-                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-                $new_name_image = 'UID_' . $empleado->id . '_' . $request->name . '.' . $extension;
-                $route = storage_path() . '/app/public/empleados/imagenes/' . $new_name_image;
+                $name_image = basename(pathinfo($request->file('foto')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $new_name_image = 'UID_'.$empleado->id.'_'.$request->name.'.'.$extension;
+                $route = storage_path().'/app/public/empleados/imagenes/'.$new_name_image;
                 $image = $new_name_image;
                 //Usamos image_intervention para disminuir el peso de la imagen
                 $img_intervention = Image::make($request->file('foto'));
@@ -505,17 +503,17 @@ class EmpleadoController extends Controller
         $empleado->update([
 
             'name' => $request->name,
-            'area_id' =>  $request->area_id,
-            'puesto_id' =>  $request->puesto_id,
+            'area_id' => $request->area_id,
+            'puesto_id' => $request->puesto_id,
             'perfil_empleado_id' => $request->perfil_empleado_id,
-            'supervisor_id' =>  $request->supervisor_id,
-            'antiguedad' =>  $request->antiguedad,
-            'estatus' =>  $request->estatus,
-            'email' =>  $request->email,
-            'telefono' =>  $request->telefono,
-            'genero' =>  $request->genero,
-            'n_empleado' =>  $request->n_empleado,
-            'n_registro' =>  $request->n_empleado,
+            'supervisor_id' => $request->supervisor_id,
+            'antiguedad' => $request->antiguedad,
+            'estatus' => $request->estatus,
+            'email' => $request->email,
+            'telefono' => $request->telefono,
+            'genero' => $request->genero,
+            'n_empleado' => $request->n_empleado,
+            'n_registro' => $request->n_empleado,
             'foto' => $image,
             'sede_id' => $request->sede_id,
             'cumpleaños' => $request->cumpleaños,
@@ -606,10 +604,10 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%'.$nombre.'%')->take(5)->get();
                 $lista = "<ul class='list-group' id='empleados-lista'>";
                 foreach ($usuarios as $usuario) {
-                    $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'><i class='mr-2 fas fa-user-circle'></i>" . $usuario->name . '</button>';
+                    $lista .= "<button type='button' class='px-2 py-1 text-muted list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'><i class='mr-2 fas fa-user-circle'></i>".$usuario->name.'</button>';
                 }
                 $lista .= '</ul>';
 
@@ -623,7 +621,7 @@ class EmpleadoController extends Controller
         if ($request->ajax()) {
             $nombre = $request->nombre;
             if ($nombre != null) {
-                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+                $usuarios = Empleado::with('area')->where('name', 'ILIKE', '%'.$nombre.'%')->take(5)->get();
 
                 return json_encode($usuarios);
             }

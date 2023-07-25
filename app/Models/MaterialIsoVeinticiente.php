@@ -15,6 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class MaterialIsoVeinticiente extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+
     public static $searchable = [
         'objetivo',
     ];
@@ -28,7 +29,7 @@ class MaterialIsoVeinticiente extends Model implements HasMedia
 
     const TIPOIMPARTICION_SELECT = [
         'presencial' => 'Presencial',
-        'virtual'    => 'Virtual',
+        'virtual' => 'Virtual',
     ];
 
     protected $dates = [

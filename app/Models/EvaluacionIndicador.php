@@ -19,13 +19,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property IndicadoresSgsi|null $indicadores_sgsi
  */
 class EvaluacionIndicador extends Model
 {
     use SoftDeletes;
     use HasFactory;
+
     protected $table = 'evaluacion_indicador';
 
     protected $casts = [

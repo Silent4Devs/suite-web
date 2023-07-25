@@ -12,10 +12,15 @@ class Ev360TablaCompetencias extends Component
 {
     use LivewireAlert;
     use WithPagination;
+
     public $showTable = false;
+
     public $search = '';
+
     public $perPage = 10;
+
     public $filter = 1;
+
     public $selected = [];
 
     public function mount($showTable)

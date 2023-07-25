@@ -13,26 +13,47 @@ class ObjetivosSeguridadComponent extends Component
     use LivewireAlert;
 
     public $nombre;
+
     public $description;
+
     public $formula;
+
     public $frecuencia;
+
     public $unidadmedida;
+
     public $meta;
+
     public $no_revisiones;
+
     public $resultado;
+
     public $id_empleado;
+
     public $id_proceso;
+
     public $objetivos;
+
     public $view = 'create';
+
     public $formSlugs;
+
     public $customFields;
+
     public $fecha;
+
     public $id_evaluacion;
+
     public $variable;
+
     public $valor;
+
     public $formula_calcular;
+
     public $value;
+
     public $remplazo_formula;
+
     public $evaluacion;
 
     protected $rules = [
@@ -102,7 +123,7 @@ class ObjetivosSeguridadComponent extends Component
             }
         }
 
-        $result = eval('return ' . $formula_final . ';');
+        $result = eval('return '.$formula_final.';');
         EvaluacionObjetivo::create([
             'evaluacion' => $this->evaluacion,
             'fecha' => $this->fecha,
@@ -148,7 +169,7 @@ class ObjetivosSeguridadComponent extends Component
             }
         }
 
-        $result = eval('return ' . $formula_final . ';');
+        $result = eval('return '.$formula_final.';');
 
         $evaluaciones->update([
             'evaluacion' => $this->evaluacion,

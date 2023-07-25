@@ -12,6 +12,7 @@ class FileRevisionDireecionComponent extends Component
     use WithFileUploads;
 
     public $minutas;
+
     public $files = [];
 
     protected $listeners = ['render'];
@@ -36,7 +37,7 @@ class FileRevisionDireecionComponent extends Component
             if (Storage::putFileAs('public/FilesRevisionDireccion', $file, $file->getClientOriginalName())) {
                 FilesRevisonDireccion::create([
                     'name' => $file->getClientOriginalName(),
-                    'revision_id' =>$this->minutas->id,
+                    'revision_id' => $this->minutas->id,
                 ]);
             }
         }

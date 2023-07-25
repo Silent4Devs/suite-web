@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PlanaccionCorrectiva extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'planaccion_correctivas';
 
     public static $searchable = [
@@ -27,8 +28,8 @@ class PlanaccionCorrectiva extends Model
 
     const ESTATUS_SELECT = [
         'por_iniciar' => 'Por iniciar',
-        'en_proceso'  => 'En proceso',
-        'terminado'   => 'Terminado',
+        'en_proceso' => 'En proceso',
+        'terminado' => 'Terminado',
     ];
 
     protected $fillable = [

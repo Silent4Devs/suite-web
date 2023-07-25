@@ -65,7 +65,6 @@ class CategoriaCapacitacionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -81,7 +80,6 @@ class CategoriaCapacitacionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CategoriaCapacitacion  $categoriaCapacitacion
      * @return \Illuminate\Http\Response
      */
     public function show(CategoriaCapacitacion $categoriaCapacitacion)
@@ -92,7 +90,6 @@ class CategoriaCapacitacionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CategoriaCapacitacion  $categoriaCapacitacion
      * @return \Illuminate\Http\Response
      */
     public function edit(CategoriaCapacitacion $categoriaCapacitacion)
@@ -103,14 +100,12 @@ class CategoriaCapacitacionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CategoriaCapacitacion  $categoriaCapacitacion
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, CategoriaCapacitacion $categoriaCapacitacion)
     {
         $request->validate([
-            'nombre' => 'required|string|unique:categoria_capacitacions,nombre,' . $categoriaCapacitacion->id,
+            'nombre' => 'required|string|unique:categoria_capacitacions,nombre,'.$categoriaCapacitacion->id,
         ], ['nombre.unique' => 'Esta categoria ya ha sido utilizada']);
         $categoriaCapacitacion->update($request->all());
 
@@ -120,7 +115,6 @@ class CategoriaCapacitacionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CategoriaCapacitacion  $categoriaCapacitacion
      * @return \Illuminate\Http\Response
      */
     public function destroy(CategoriaCapacitacion $categoriaCapacitacion)

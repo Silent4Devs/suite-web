@@ -10,7 +10,6 @@ class TimeSheetTareaObserver
     /**
      * Handle the TimeSheetTarea "created" event.
      *
-     * @param  \App\Models\TimeSheetTarea  $timeSheetTarea
      * @return void
      */
     public function created(TimeSheetTarea $timeSheetTarea)
@@ -21,7 +20,6 @@ class TimeSheetTareaObserver
     /**
      * Handle the TimeSheetTarea "updated" event.
      *
-     * @param  \App\Models\TimeSheetTarea  $timeSheetTarea
      * @return void
      */
     public function updated(TimeSheetTarea $timeSheetTarea)
@@ -32,7 +30,6 @@ class TimeSheetTareaObserver
     /**
      * Handle the TimeSheetTarea "deleted" event.
      *
-     * @param  \App\Models\TimeSheetTarea  $timeSheetTarea
      * @return void
      */
     public function deleted(TimeSheetTarea $timeSheetTarea)
@@ -43,7 +40,6 @@ class TimeSheetTareaObserver
     /**
      * Handle the TimeSheetTarea "restored" event.
      *
-     * @param  \App\Models\TimeSheetTarea  $timeSheetTarea
      * @return void
      */
     public function restored(TimeSheetTarea $timeSheetTarea)
@@ -54,7 +50,6 @@ class TimeSheetTareaObserver
     /**
      * Handle the TimeSheetTarea "force deleted" event.
      *
-     * @param  \App\Models\TimeSheetTarea  $timeSheetTarea
      * @return void
      */
     public function forceDeleted(TimeSheetTarea $timeSheetTarea)

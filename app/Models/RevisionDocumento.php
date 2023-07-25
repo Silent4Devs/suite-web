@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class RevisionDocumento extends Model
 {
     use HasFactory, SoftDeletes;
+
     const ARCHIVADO = '1';
+
     const NO_ARCHIVADO = '0';
 
     protected $fillable = [

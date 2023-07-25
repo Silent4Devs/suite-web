@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $foda_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property EntendimientoOrganizacion|null $entendimiento_organizacion
  */
 class DebilidadesEntendimientoOrganizacion extends Model

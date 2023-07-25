@@ -12,6 +12,7 @@ class CompetenciaPuesto extends Model
     // protected static $flushCacheOnUpdate = true;
 
     protected $table = 'ev360_competencias_por_puesto';
+
     protected $fillable = [
         'competencia_id',
         'puesto_id',

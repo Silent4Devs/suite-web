@@ -5,13 +5,12 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\IncidentesDayoff;
-use App\Models\Organizacion;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use App\Traits\ObtenerOrganizacion;
 
 class IncidentesDayOffController extends Controller
 {

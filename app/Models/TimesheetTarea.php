@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use EloquentFilter\Filterable;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class TimesheetTarea extends Model
 {
@@ -23,7 +23,7 @@ class TimesheetTarea extends Model
         'todos',
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
         return Cache::remember('timesheettarea_all', 3600 * 24, function () {
@@ -46,6 +46,7 @@ class TimesheetTarea extends Model
         } else {
             $areas = [Area::find($this->area_id)];
         }
+
         return $areas;
     }
 
