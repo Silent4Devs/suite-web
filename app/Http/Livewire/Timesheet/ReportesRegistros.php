@@ -34,7 +34,7 @@ class ReportesRegistros extends Component
     {
         $this->estatus = null;
         $this->areas = Area::getAll();
-        $this->emp = Empleado::getAll()->orderBy('name', 'ASC')->get();
+        $this->emp = Empleado::orderBy('name', 'ASC')->get();
     }
 
     public function updatedFechaInicio($value)
