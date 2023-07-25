@@ -53,7 +53,7 @@ class BitacoraAccesos extends Component
     {
         $this->tipoVista = $tipoVista;
         $this->empleados = Empleado::select('id', 'name')->alta()->get();
-        $this->areas = Area::select('id', 'area')->get();
+        $this->areas = Area::getAll();
     }
 
     public function render()

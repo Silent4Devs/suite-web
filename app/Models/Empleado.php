@@ -164,6 +164,13 @@ class Empleado extends Model
         });
     }
 
+    public static function getaltaAll()
+    {
+        return Cache::remember('empleados_alta_all', 3600 * 24, function () {
+            return self::alta()->get();
+        });
+    }
+
     public function getActualBirdthdayAttribute()
     {
         $birdthday = date('Y') . '-' . Carbon::parse($this->cumpleaños)->format('m-d');

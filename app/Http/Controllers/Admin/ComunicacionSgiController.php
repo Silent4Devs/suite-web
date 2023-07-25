@@ -180,7 +180,7 @@ class ComunicacionSgiController extends Controller
     {
         abort_if(Gate::denies('comunicados_generales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
 

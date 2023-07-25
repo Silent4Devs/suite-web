@@ -139,7 +139,7 @@ class ObjetivosseguridadController extends Controller
         $normas_seleccionadas = $objetivosseguridad->normas->pluck('id')->toArray();
 
         $normas = Norma::get();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
 
         return view('admin.objetivosseguridads.edit', compact('normas_seleccionadas', 'normas', 'objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
     }

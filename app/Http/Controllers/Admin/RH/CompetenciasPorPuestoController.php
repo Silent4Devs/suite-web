@@ -54,7 +54,7 @@ class CompetenciasPorPuestoController extends Controller
 
         // $areas = Area::get();
 
-        $areas = Area::select('id', 'area')->get();
+        $areas = Area::getAll();
 
         return view('admin.recursos-humanos.evaluacion-360.competencias-por-puesto.index', compact('areas'));
     }

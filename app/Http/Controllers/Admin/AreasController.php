@@ -93,7 +93,7 @@ class AreasController extends Controller
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $area = new Area();
 
         return view('admin.areas.create', compact('grupoareas', 'direccion_exists', 'areas', 'empleados', 'area'));
@@ -145,7 +145,7 @@ class AreasController extends Controller
         $grupoareas = Grupo::get();
         $direccion_exists = Area::select('id_reporta')->whereNull('id_reporta')->exists();
         $areas = Area::with('areas')->get();
-        $reportas = Empleado::alta()->get();
+        $reportas = Empleado::getaltaAll();
 
         return view('admin.areas.edit', compact('grupoareas', 'direccion_exists', 'areas', 'area', 'reportas'));
     }

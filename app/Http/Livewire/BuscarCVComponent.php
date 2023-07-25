@@ -64,7 +64,7 @@ class BuscarCVComponent extends Component
     {
         if ($value == '') {
             $this->area_id = null;
-            $this->empleados = Empleado::alta()->get();
+            $this->empleados = Empleado::getaltaAll();
         } else {
             $this->area_id = $value;
             $this->empleado_id = null;

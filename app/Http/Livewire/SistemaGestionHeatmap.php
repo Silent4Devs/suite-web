@@ -105,7 +105,7 @@ class SistemaGestionHeatmap extends Component
     public function render()
     {
         $sedes = Sede::getAll(['id', 'sede']);
-        $areas = Area::select('id', 'area')->get();
+        $areas = Area::getAll();
         $procesos = Proceso::select('id', 'nombre')->get();
 
         $muy_alto = MatrizRiesgosSistemaGestion::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('probabilidad', 9)->where('impacto', 9)->orWhere(function ($query) {

@@ -184,7 +184,7 @@ class DeskController extends Controller
 
         $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $sedes = Sede::getAll();
 
@@ -379,7 +379,7 @@ class DeskController extends Controller
 
         $sedes = Sede::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
@@ -492,7 +492,7 @@ class DeskController extends Controller
 
         $sedes = Sede::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
@@ -604,7 +604,7 @@ class DeskController extends Controller
 
         $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados', 'analisis'));
     }
@@ -707,7 +707,7 @@ class DeskController extends Controller
 
         $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $areas = Area::getAll();
 
@@ -819,7 +819,7 @@ class DeskController extends Controller
 
         $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $areas = Area::getAll();
 
@@ -903,7 +903,7 @@ class DeskController extends Controller
 
         $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $clientes = TimesheetCliente::getAll();
 
