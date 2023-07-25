@@ -93,7 +93,7 @@
                 {
                     type: "horizontalBar",
                     backgroundColor: "#F48C16",
-                    label: "Tareas Realizadas del Proyecto",
+                    label: "Tareas Asignadas del Proyecto",
                     data: datos_areas.map(item => item.tareas),
                     lineTension: 0,
                     fill: true,
