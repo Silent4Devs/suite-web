@@ -1,6 +1,13 @@
 <div>
+    @php
+    $unwanted_array = array(    'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+                        'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
+                        'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
+                        'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
+                        'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y' );
+    @endphp
     <x-loading-indicator />
-    <div class="row" wire:ignore>
+    <div class="row">
         <div class="col-md-4 form-group" style="padding-left:0px !important;">
             <label class="form-label">Colaborador</label>
             <select class="form-control" wire:model="emp_id">
@@ -25,7 +32,7 @@
         <select class="form-control" wire:model="proy_id">
             <option selected value="0">Todos</option>
             @foreach ($proy as $pro)
-                <option value="{{ $pro->id }}">{{ $pro->proyecto }}</option>
+                <option value="{{ $pro->id }}">{{$pro->identificador}} - {{ $pro->proyecto }}</option>
             @endforeach
         </select>
     </div>
@@ -46,9 +53,9 @@
         <div class="row w-100 mt-4" style="align-items: end">
             <div class="col-6">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="row" style="justify-content: center">
-                            <div class="col-4 p-0" style="font-size: 11px;align-self: center">
+                            <div class="col-3 p-0" style="font-size: 11px;align-self: center">
                                 <p class="m-0">Mostrando</p>
                             </div>
                             <div class="col-4 p-0">
@@ -61,19 +68,20 @@
                                     <option value="-1">Todos</option>
                                 </select>
                             </div>
-                            <div class="col-4 p-0" style="font-size: 11px;align-self: center;text-align: end">
+                            <div class="col-5 p-0" style="font-size: 11px;align-self: center;text-align: end">
                                 <p class="m-0"> proyectos por página</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-8">
-                        <button id="btnExportarproyemp" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
+                    <div class="col-6">
+                        <button onclick="exportTableToExcel('proyemp', 'Reporte Colaborador-Tareas')"
+                        class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
+                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                        Exportar Excel</button>
+                        {{-- <button id="btnExportarproyemp" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
                             <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                             Exportar Excel
-                        </button>
-                        {{-- <div class="col-12" style="text-align: end">
-                            @livewire('timesheet.empleados-timesheet-export', ['tipo' => 'xlsx'])
-                        </div> --}}
+                        </button> --}}
                     </div>
                 </div>
             </div>
@@ -113,19 +121,19 @@
                                 {!! $time->timesheet->fin !!}
                             </td>
                             <td>
-                                    {{ $time->timesheet->empleado->name }}
+                                    {{ strtr($time->timesheet->empleado->name, $unwanted_array) }}
                             </td>
                             <td>
-                                    {{ $time->timesheet->aprobador->name }}
+                                    {{ strtr($time->timesheet->aprobador->name, $unwanted_array) }}
                             </td>
                             <td>
-                                    {{ $time->proyecto->proyecto }}
+                                    {{ strtr($time->proyecto->proyecto, $unwanted_array) }}
                             </td>
                             <td>
-                                    {{ $time->tarea->tarea }}
+                                    {{ strtr($time->tarea->tarea, $unwanted_array) }}
                             </td>
                             <td>
-                                {{ $time->descripcion }}
+                                {{ strtr($time->descripcion, $unwanted_array) }}
                             </td>
                             <td>
                                 {{ ($time->horas_lunes)+($time->horas_martes)+($time->horas_miercoles)+($time->horas_jueves)+($time->horas_viernes)+($time->horas_sabado)+($time->horas_domingo) }}
@@ -161,7 +169,41 @@
         });
     </script>
 
-    <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+    <script>
+            function exportTableToExcel(tableID, filename){
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+            // Specify file name
+            filename = filename?filename+'.xls':'excel_data.xls';
+
+            // Create download link element
+            downloadLink = document.createElement("a");
+
+            document.body.appendChild(downloadLink);
+
+            if(navigator.msSaveOrOpenBlob){
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob( blob, filename);
+            }else{
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+                // Setting the file name
+                downloadLink.download = filename;
+
+                //triggering the function
+                downloadLink.click();
+            }
+        }
+
+    </script>
+
+    {{-- <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
 
     <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
 
@@ -189,5 +231,5 @@
             tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
 
         });
-        </script>
+        </script> --}}
 </div>
