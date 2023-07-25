@@ -150,10 +150,20 @@ class Empleado extends Model
     ];
 
     #Redis methods
-    public static function getAll()
+    public static function getAll(array $options = [])
     {
-        return Cache::remember('empleados_all', 3600 * 24, function () {
-            return self::get();
+        // Generate a unique cache key based on the options provided
+        $cacheKey = 'empleados_all_' . md5(serialize($options));
+
+        return Cache::remember('empleados_all', 3600 * 24, function () use ($options) {
+            $query = self::query();
+
+            if (isset($options['orderBy'])) {
+                $orderBy = $options['orderBy'];
+                $query->orderBy($orderBy[0], $orderBy[1]);
+            }
+
+            return $query->get();
         });
     }
 
