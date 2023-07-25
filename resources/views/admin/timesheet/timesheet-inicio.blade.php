@@ -210,7 +210,7 @@
                         @endif
                     @endif
 
-                    @if(Auth::user()->can('timesheet_administrador_proyectos_access') || Auth::user()->can('timesheet_administrador_tareas_proyectos_access') || Auth::user()->can('timesheet_administrador_clientes_access'))
+                    @if(Auth::user()->can('timesheet_administrador_proyectos_access') || Auth::user()->can('timesheet_administrador_tareas_proyectos_access') || Auth::user()->can('timesheet_administrador_clientes_access') || Auth::user()->can('timesheet_administrador_dashboard_access'))
                         <a class="nav-link" id="nav-liderazgo-tab" data-type="liderazgo" data-toggle="tab"
                             href="#nav-liderazgo" role="tab" aria-controls="nav-liderazgo" aria-selected="false">
                             <i class="bi bi-person-lines-fill"></i>
@@ -325,7 +325,7 @@
                     @endif
                 @endif
 
-                @if(Auth::user()->can('timesheet_administrador_proyectos_access') || Auth::user()->can('timesheet_administrador_tareas_proyectos_access') || Auth::user()->can('timesheet_administrador_clientes_access'))
+                @if(Auth::user()->can('timesheet_administrador_proyectos_access') || Auth::user()->can('timesheet_administrador_tareas_proyectos_access') || Auth::user()->can('timesheet_administrador_clientes_access') || Auth::user()->can('timesheet_administrador_dashboard_access'))
                     <div class="tab-pane mb-4 fade" id="nav-liderazgo" role="tabpanel" aria-labelledby="nav-liderazgo-tab">
                         <ul class="mt-4">
                             @can('timesheet_administrador_configuracion_access')
