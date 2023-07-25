@@ -9,8 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class Sugerencias extends Model
 {
     use HasFactory;
+
     const ARCHIVADO = '1';
+
     const NO_ARCHIVADO = '0';
+
     protected $table = 'sugerencias';
 
     protected $guarded = [
@@ -21,7 +24,7 @@ class Sugerencias extends Model
 
     public function getFolioAttribute()
     {
-        return  sprintf('SUG-%04d', $this->id);
+        return sprintf('SUG-%04d', $this->id);
     }
 
     public function sugirio()

@@ -14,8 +14,11 @@ class RegistroMejoraNotification extends Notification
     use Queueable;
 
     public $registro_mejora;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     /**

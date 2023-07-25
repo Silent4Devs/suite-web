@@ -8,37 +8,69 @@ use Livewire\Component;
 class BodyCartaAceptacion extends Component
 {
     public $procesoId;
+
     public $proceso_data;
+
     public $operacional;
+
     public $legal;
+
     public $cumplimiento;
+
     public $reputacional;
+
     public $tecnologico;
+
     public $activos;
+
     public $escenarios;
+
     public $operacionalTxt;
+
     public $operacionalColor;
+
     public $operacionalTxtColor;
+
     public $legalTxt;
+
     public $legalColor;
+
     public $legalTxtColor;
+
     public $cumplimientoTxt;
+
     public $cumplimientoColor;
+
     public $cumplimientoTxtColor;
+
     public $reputacionalTxt;
+
     public $reputacionalColor;
+
     public $reputacionalTxtColor;
+
     public $tecnologicoTxt;
+
     public $tecnologicoColor;
+
     public $tecnologicoTxtColor;
+
     public $impacto;
+
     public $probabilidad;
+
     public $promedioDisponibilidad = [];
+
     public $promedioIntegridad = [];
+
     public $promedioConfidencialidad = [];
+
     public $coordenada_tabla = '4,5';
+
     public $tipo = 'create';
+
     public $cartaAceptacion;
+
     public $aprobadores;
 
     public function mount($proceso = 0, $tipo = 'create', $cartaAceptacion = null, $aprobadores = null)
@@ -233,7 +265,7 @@ class BodyCartaAceptacion extends Component
             $colorTxtvalor = 'white';
         }
 
-        return ['color'=>$color, 'colorTxt'=>$colorTxtvalor];
+        return ['color' => $color, 'colorTxt' => $colorTxtvalor];
     }
 
     public function obtenerTextoActivo($valor)
@@ -249,15 +281,15 @@ class BodyCartaAceptacion extends Component
             $txtvalor = 'Restringido';
         }
 
-        return ['txtvalor'=>$txtvalor];
+        return ['txtvalor' => $txtvalor];
     }
 
     private function buscarProceso($proceso)
     {
-        $proceso_data = MatrizOctaveProceso::with(['proceso'=>function ($query) {
-            $query->with(['activosAI'=>function ($q) {
-                $q->with(['contenedores'=>function ($q) {
-                    $q->with(['escenarios'=>function ($q) {
+        $proceso_data = MatrizOctaveProceso::with(['proceso' => function ($query) {
+            $query->with(['activosAI' => function ($q) {
+                $q->with(['contenedores' => function ($q) {
+                    $q->with(['escenarios' => function ($q) {
                         $q->with('contenedor');
                     }]);
                 }]);

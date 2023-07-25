@@ -57,7 +57,7 @@ return [
     |
     */
 
-    'middleware_group'  => 'web',
+    'middleware_group' => 'web',
     //multitenant
     /*'middleware_group' => [
         'web',

@@ -43,7 +43,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $impacto_residual
  * @property string|null $nivelriesgo_residual
  * @property string|null $riesgo_total_residual
- *
  * @property Controle|null $controle
  * @property Activo|null $activo
  * @property Amenaza|null $amenaza
@@ -74,36 +73,38 @@ class MatrizRiesgo extends Model
     ];
 
     const PROBABILIDAD_SELECT = [
-        '9'  => 'ALTA (9)',
+        '9' => 'ALTA (9)',
         '6' => 'MEDIA (6)',
-        '3'  => 'BAJA (3)',
-        '0'  => 'NULA (0)',
+        '3' => 'BAJA (3)',
+        '0' => 'NULA (0)',
     ];
+
     const PROBABILIDAD27000_SELECT = [
-        '5'  => 'MUY ALTA (5)',
-        '4'  => 'ALTA (4)',
+        '5' => 'MUY ALTA (5)',
+        '4' => 'ALTA (4)',
         '3' => 'MODERADA (3)',
-        '2'  => 'BAJA (2)',
-        '1'  => 'MUY BAJA (1)',
+        '2' => 'BAJA (2)',
+        '1' => 'MUY BAJA (1)',
     ];
+
     const IMPACTO27000_SELECT = [
-        '5'  => 'SIGNIFICATIVO (5)',
-        '4'  => 'MAYOR (4)',
+        '5' => 'SIGNIFICATIVO (5)',
+        '4' => 'MAYOR (4)',
         '3' => 'IMPORTANTE (3)',
-        '2'  => 'BAJO (2)',
-        '1'  => 'MENOR (1)',
+        '2' => 'BAJO (2)',
+        '1' => 'MENOR (1)',
     ];
 
     const IMPACTO_SELECT = [
         '9' => 'MUY ALTO (9)',
-        '6'     => 'ALTO (6)',
-        '3'    => 'MEDIO (3)',
-        '0'     => 'BAJO (0)',
+        '6' => 'ALTO (6)',
+        '3' => 'MEDIO (3)',
+        '0' => 'BAJO (0)',
     ];
 
     const EV_INICIAL_SELECT = [
         '11.1' => 'Sí',
-        '0'     => 'No',
+        '0' => 'No',
     ];
 
     const TIPO_TRATAMIENTO_SELECT = [
@@ -136,7 +137,7 @@ class MatrizRiesgo extends Model
         'id_amenaza' => 'int',
         'id_area' => 'int',
         'id_vulnerabilidad' => 'int',
-        'version_historico' => 'boolean'
+        'version_historico' => 'boolean',
     ];
 
     protected $fillable = [
@@ -173,7 +174,7 @@ class MatrizRiesgo extends Model
         'riesgo_total_residual',
         'tipo_tratamiento',
         'aceptar_transferir',
-        'version_historico'
+        'version_historico',
     ];
 
     /*protected function serializeDate(DateTimeInterface $date)
@@ -185,7 +186,7 @@ class MatrizRiesgo extends Model
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format').' '.config('panel.time_format'));
         $this->save();
     }
 

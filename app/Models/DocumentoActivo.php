@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DocumentoActivo extends Model
 {
     use SoftDeletes;
+
     public $table = 'documento_activos';
 
     protected $dates = [

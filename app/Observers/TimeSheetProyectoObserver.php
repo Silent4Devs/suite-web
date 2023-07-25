@@ -10,7 +10,6 @@ class TimeSheetProyectoObserver
     /**
      * Handle the TimeSheetProyecto "created" event.
      *
-     * @param  \App\Models\TimeSheetProyecto  $timeSheetProyecto
      * @return void
      */
     public function created(TimeSheetProyecto $timeSheetProyecto)
@@ -21,7 +20,6 @@ class TimeSheetProyectoObserver
     /**
      * Handle the TimeSheetProyecto "updated" event.
      *
-     * @param  \App\Models\TimeSheetProyecto  $timeSheetProyecto
      * @return void
      */
     public function updated(TimeSheetProyecto $timeSheetProyecto)
@@ -32,7 +30,6 @@ class TimeSheetProyectoObserver
     /**
      * Handle the TimeSheetProyecto "deleted" event.
      *
-     * @param  \App\Models\TimeSheetProyecto  $timeSheetProyecto
      * @return void
      */
     public function deleted(TimeSheetProyecto $timeSheetProyecto)
@@ -43,7 +40,6 @@ class TimeSheetProyectoObserver
     /**
      * Handle the TimeSheetProyecto "restored" event.
      *
-     * @param  \App\Models\TimeSheetProyecto  $timeSheetProyecto
      * @return void
      */
     public function restored(TimeSheetProyecto $timeSheetProyecto)
@@ -54,7 +50,6 @@ class TimeSheetProyectoObserver
     /**
      * Handle the TimeSheetProyecto "force deleted" event.
      *
-     * @param  \App\Models\TimeSheetProyecto  $timeSheetProyecto
      * @return void
      */
     public function forceDeleted(TimeSheetProyecto $timeSheetProyecto)

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Evidencia extends Model
 {
     use HasFactory;
+
     public function evidenciable()
     {
         return $this->morphTo();

@@ -13,16 +13,25 @@ class PlanAuditoriaActividadesComponent extends Component
     use LivewireAlert;
 
     public $actividad_auditar;
+
     public $fecha_auditoria;
+
     public $horario_inicio;
+
     public $horario_termino;
+
     public $nombre_auditor;
+
     public $auditado;
+
     public $plan_auditoria_id;
 
     public $actividadID;
+
     public $parteInteresadaIdEN;
+
     public $view = 'create';
+
     protected $listeners = ['editarParteInteresada' => 'edit', 'eliminarParteInteresada' => 'destroy', 'agregarNormas'];
 
     public function hydrate()
@@ -50,13 +59,13 @@ class PlanAuditoriaActividadesComponent extends Component
     {
         $this->validarActividades();
         $model = PlanAuditoriaActividades::create([
-            'id_auditado'=> $this->auditado,
-            'nombre_auditor'=> $this->nombre_auditor,
-            'horario_termino'=> $this->horario_termino,
-            'horario_inicio'=> $this->horario_inicio,
-            'fecha_auditoria'=> $this->fecha_auditoria,
-            'actividad_auditar'=> $this->actividad_auditar,
-            'plan_auditoria_id'=> $this->plan_auditoria_id,
+            'id_auditado' => $this->auditado,
+            'nombre_auditor' => $this->nombre_auditor,
+            'horario_termino' => $this->horario_termino,
+            'horario_inicio' => $this->horario_inicio,
+            'fecha_auditoria' => $this->fecha_auditoria,
+            'actividad_auditar' => $this->actividad_auditar,
+            'plan_auditoria_id' => $this->plan_auditoria_id,
         ]);
 
         $this->reset('nombre_auditor', 'horario_termino', 'horario_inicio', 'fecha_auditoria', 'actividad_auditar');
@@ -67,7 +76,7 @@ class PlanAuditoriaActividadesComponent extends Component
             'timer' => 3000,
             'toast' => true,
             'text' => 'Creado con éxito',
-           ]);
+        ]);
     }
 
     public function edit($id)
@@ -104,13 +113,13 @@ class PlanAuditoriaActividadesComponent extends Component
         $this->validarActividades();
         $model = PlanAuditoriaActividades::find($this->actividadID);
         $model->update([
-            'actividad_auditar'=> $this->actividad_auditar,
-            'fecha_auditoria'=> $this->fecha_auditoria,
-            'horario_inicio'=> $this->horario_inicio,
-            'horario_termino'=> $this->horario_termino,
-            'nombre_auditor'=> $this->nombre_auditor,
-            'id_auditado'=> $this->auditado,
-            'plan_auditoria_id'=> $this->plan_auditoria_id,
+            'actividad_auditar' => $this->actividad_auditar,
+            'fecha_auditoria' => $this->fecha_auditoria,
+            'horario_inicio' => $this->horario_inicio,
+            'horario_termino' => $this->horario_termino,
+            'nombre_auditor' => $this->nombre_auditor,
+            'id_auditado' => $this->auditado,
+            'plan_auditoria_id' => $this->plan_auditoria_id,
         ]);
 
         $this->emit('cerrar-modal', ['editar' => true]);
@@ -121,7 +130,7 @@ class PlanAuditoriaActividadesComponent extends Component
             'timer' => 3000,
             'toast' => true,
             'text' => 'Editado con éxito',
-           ]);
+        ]);
     }
 
     public function destroy($id)
@@ -134,7 +143,7 @@ class PlanAuditoriaActividadesComponent extends Component
             'timer' => 3000,
             'toast' => true,
             'text' => 'Registro eliminado',
-           ]);
+        ]);
     }
 
     public function render()

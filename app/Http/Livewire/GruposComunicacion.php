@@ -10,10 +10,15 @@ use Livewire\Component;
 class GruposComunicacion extends Component
 {
     protected $listeners = ['grupoEvaluadosSaved' => 'render'];
+
     public $evaluados_objetivo;
+
     public $by_manual;
+
     public $by_area;
+
     public $habilitarSelectManual = false;
+
     public $habilitarSelectAreas = false;
 
     public function render()

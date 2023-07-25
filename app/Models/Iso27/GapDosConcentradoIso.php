@@ -16,7 +16,7 @@ class GapDosConcentradoIso extends Model
         'id_analisis_brechas',
         'valoracion',
         'evidencia',
-        'recomendacion'
+        'recomendacion',
     ];
 
     public function gap_dos_catalogo()

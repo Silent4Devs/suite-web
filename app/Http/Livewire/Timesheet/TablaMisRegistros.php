@@ -8,10 +8,15 @@ use Livewire\Component;
 class TablaMisRegistros extends Component
 {
     public $todos_contador;
+
     public $borrador_contador;
+
     public $pendientes_contador;
+
     public $aprobados_contador;
+
     public $rechazos_contador;
+
     public $times;
 
     public function mount()

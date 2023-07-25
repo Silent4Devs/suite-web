@@ -8,7 +8,9 @@ use Livewire\Component;
 class TipoCompetenciaSelect extends Component
 {
     protected $listeners = ['render-tipo-competencia-select' => 'render'];
+
     public $tipos;
+
     public $tipo_seleccionado;
 
     public function mount($tipo_seleccionado)

@@ -8,14 +8,21 @@ use Livewire\Component;
 class CreateRecursosMateriales extends Component
 {
     public $recursoID;
+
     public $equipos;
+
     public $impresoras;
+
     public $telefono;
+
     public $otro;
+
     public $escenario;
+
     public $cuestionario_id;
 
     public $view = 'create';
+
     protected $listeners = ['editarMateriales' => 'edit', 'eliminarMateriales' => 'destroy'];
 
     public function validarMaterial()

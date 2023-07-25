@@ -6,13 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\AnalisisDeRiesgo;
 use App\Models\Area;
 use App\Models\Empleado;
-use App\Models\Organizacion;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Laracasts\Flash\Flash;
 use Yajra\DataTables\Facades\DataTables;
-use App\Traits\ObtenerOrganizacion;
 
 class AnalisisdeRiesgosController extends Controller
 {
@@ -148,12 +147,12 @@ class AnalisisdeRiesgosController extends Controller
         $analisis = AnalisisDeRiesgo::find($id);
 
         $analisis->update([
-            'nombre' =>  $request->nombre,
-            'tipo' =>  $request->tipo,
-            'fecha' =>  $request->fecha,
-            'id_elaboro' =>  $request->id_elaboro,
+            'nombre' => $request->nombre,
+            'tipo' => $request->tipo,
+            'fecha' => $request->fecha,
+            'id_elaboro' => $request->id_elaboro,
             'porcentaje_implementacion' => $request->porcentaje_implementacion,
-            'estatus' =>  $request->estatus,
+            'estatus' => $request->estatus,
         ]);
 
         return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Editado con éxito');

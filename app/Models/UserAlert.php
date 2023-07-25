@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserAlert extends Model
 {
     use MultiTenantModelTrait, HasFactory;
+
     public $table = 'user_alerts';
 
     protected $dates = [

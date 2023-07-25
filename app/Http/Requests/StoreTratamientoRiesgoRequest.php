@@ -15,23 +15,23 @@ class StoreTratamientoRiesgoRequest extends FormRequest
     public function rules()
     {
         return [
-            'nivelriesgo'         => [
+            'nivelriesgo' => [
                 'string',
                 'nullable',
             ],
-            'fechacompromiso'     => [
+            'fechacompromiso' => [
                 'date:',
                 'nullable',
             ],
-            'estatus'             => [
+            'estatus' => [
                 'string',
                 'nullable',
             ],
-            'probabilidad'        => [
+            'probabilidad' => [
                 'string',
                 'nullable',
             ],
-            'impacto'             => [
+            'impacto' => [
                 'string',
                 'nullable',
             ],

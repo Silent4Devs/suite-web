@@ -50,7 +50,6 @@ class TiposObjetivosSistemaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -104,7 +103,6 @@ class TiposObjetivosSistemaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\TiposObjetivosSistema  $tiposObjetivosSistema
      * @return \Illuminate\Http\Response
      */
@@ -116,7 +114,7 @@ class TiposObjetivosSistemaController extends Controller
         $request->validate([
             'nombre' => 'required|max:255',
             'descripcion' => 'nullable|max:10000',
-            'slug' => 'required|max:255|unique:tipo_objetivo_sistema,slug,' . $tiposObjetivosSistema->id,
+            'slug' => 'required|max:255|unique:tipo_objetivo_sistema,slug,'.$tiposObjetivosSistema->id,
         ], [
             'nombre.required' => 'El nombre es requerido',
             'nombre.max' => 'El nombre no puede tener más de 255 caracteres',

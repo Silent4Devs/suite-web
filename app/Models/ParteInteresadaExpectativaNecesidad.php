@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ParteInteresadaExpectativaNecesidad extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $table = 'interesadas_nececidades_expectativas';
     // protected $guarded = ['id'];
 

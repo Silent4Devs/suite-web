@@ -5,11 +5,11 @@ namespace App\Models;
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use EloquentFilter\Filterable;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -24,7 +24,6 @@ use Illuminate\Support\Facades\Cache;
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property int|null $team_id
- *
  * @property Grupo|null $grupo
  * @property Team|null $team
  * @property Collection|Area[] $areas
@@ -64,7 +63,7 @@ class Area extends Model
 
     protected $appends = ['grupo_name', 'foto_ruta'];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
         return Cache::remember('areas_all', 3600 * 24, function () {

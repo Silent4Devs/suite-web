@@ -101,7 +101,6 @@ class AnalisisdeRiesgosController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -150,7 +149,6 @@ class AnalisisdeRiesgosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -159,12 +157,12 @@ class AnalisisdeRiesgosController extends Controller
         $analisis = AnalisisDeRiesgo::find($id);
 
         $analisis->update([
-            'nombre' =>  $request->nombre,
-            'tipo' =>  $request->tipo,
-            'fecha' =>  $request->fecha,
-            'id_elaboro' =>  $request->id_elaboro,
+            'nombre' => $request->nombre,
+            'tipo' => $request->tipo,
+            'fecha' => $request->fecha,
+            'id_elaboro' => $request->id_elaboro,
             'porcentaje_implementacion' => $request->porcentaje_implementacion,
-            'estatus' =>  $request->estatus,
+            'estatus' => $request->estatus,
         ]);
 
         return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Editado con éxito');

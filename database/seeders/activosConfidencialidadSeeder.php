@@ -16,22 +16,22 @@ class activosConfidencialidadSeeder extends Seeder
     {
         $inputs = [
             [
-                'id'    => 1,
+                'id' => 1,
                 'confidencialidad' => 'Público',
                 'valor' => '1',
             ],
             [
-                'id'    => 2,
+                'id' => 2,
                 'confidencialidad' => 'Uso interno',
                 'valor' => '2',
             ],
             [
-                'id'    => 3,
+                'id' => 3,
                 'confidencialidad' => 'Confidencial',
                 'valor' => '3',
             ],
             [
-                'id'    => 4,
+                'id' => 4,
                 'confidencialidad' => 'Restringido',
                 'valor' => '4',
             ],

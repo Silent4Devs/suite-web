@@ -16,23 +16,39 @@ class BitacoraAccesos extends Component
 {
     use WithPagination;
     use LivewireAlert;
+
     protected $listeners = [
         'confirmarSalida',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $perPage = 5;
+
     public $colaborador = '';
+
     public $area = '';
+
     public $rangoFechas = '';
+
     public $fechaInicio;
+
     public $fechaFin;
+
     public $empleados;
+
     public $areas;
+
     public $textoFiltro;
+
     public $search = '';
+
     public $total = 0;
+
     public $tipoVista = 'bitacora';
+
     public $visitanteID;
+
     protected $queryString = [
         'colaborador' => ['except' => ''],
         'area' => ['except' => ''],
@@ -100,7 +116,7 @@ class BitacoraAccesos extends Component
     {
         $model = $this->getQueryFilter();
 
-        return Excel::download(new VisitanteExport($model->get()), 'Reporte de Visitantes ' . now()->format('d-m-Y h:i A') . '.xlsx');
+        return Excel::download(new VisitanteExport($model->get()), 'Reporte de Visitantes '.now()->format('d-m-Y h:i A').'.xlsx');
     }
 
     public function default()

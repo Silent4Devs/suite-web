@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+
 /**
  * Class Tipoactivo.
  *
@@ -15,7 +16,6 @@ use Illuminate\Support\Facades\Cache;
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
  * @property int|null $team_id
- *
  * @property Team|null $team
  * @property Collection|SubcategoriaActivo[] $subcategoria_activos
  * @property Collection|Marca[] $marcas
@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Cache;
 class Tipoactivo extends Model
 {
     use SoftDeletes;
+
     protected $table = 'tipoactivos';
 
     protected $casts = [
@@ -34,10 +35,10 @@ class Tipoactivo extends Model
         'tipo',
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
-        return Cache::remember('tipoactivos_all', 3600*24, function () {
+        return Cache::remember('tipoactivos_all', 3600 * 24, function () {
             return self::get();
         });
     }

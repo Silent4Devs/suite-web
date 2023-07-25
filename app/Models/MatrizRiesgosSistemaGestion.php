@@ -23,17 +23,17 @@ class MatrizRiesgosSistemaGestion extends Model
     ];
 
     const PROBABILIDAD_SELECT = [
-        '9'  => 'ALTA (9)',
+        '9' => 'ALTA (9)',
         '6' => 'MEDIA (6)',
-        '3'  => 'BAJA (3)',
-        '0'  => 'NULA (0)',
+        '3' => 'BAJA (3)',
+        '0' => 'NULA (0)',
     ];
 
     const IMPACTO_SELECT = [
         '9' => 'MUY ALTO (9)',
-        '6'     => 'ALTO (6)',
-        '3'    => 'MEDIO (3)',
-        '0'     => 'BAJO (0)',
+        '6' => 'ALTO (6)',
+        '3' => 'MEDIO (3)',
+        '0' => 'BAJO (0)',
     ];
 
     protected $casts = [
@@ -118,7 +118,7 @@ class MatrizRiesgosSistemaGestion extends Model
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format').' '.config('panel.time_format'));
         $this->save();
     }
 

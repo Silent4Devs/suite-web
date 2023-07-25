@@ -14,8 +14,11 @@ class AuditoriaAnualNotification extends Notification
     use Queueable;
 
     public $auditoria_anual;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     /**

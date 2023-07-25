@@ -28,7 +28,7 @@ class MaterialSgsi extends Model implements HasMedia
 
     const TIPOIMPARTICION_SELECT = [
         'presencial' => 'Presencial',
-        'virtual'    => 'Virtual',
+        'virtual' => 'Virtual',
     ];
 
     protected $dates = [
@@ -53,9 +53,9 @@ class MaterialSgsi extends Model implements HasMedia
     ];
 
     const PERSONALOBJETIVO_SELECT = [
-        'toda_organizacion'       => 'Toda la organización',
-        'proveedores'             => 'Proveedores',
-        'clientes'                => 'Clientes',
+        'toda_organizacion' => 'Toda la organización',
+        'proveedores' => 'Proveedores',
+        'clientes' => 'Clientes',
         'toda_partes_interesadas' => 'Todas las partes interesadas',
     ];
 

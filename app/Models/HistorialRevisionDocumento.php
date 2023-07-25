@@ -11,6 +11,7 @@ class HistorialRevisionDocumento extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $fillable = [
         'documento_id',
         'comentarios',

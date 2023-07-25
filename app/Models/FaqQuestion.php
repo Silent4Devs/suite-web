@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class FaqQuestion extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'faq_questions';
 
     protected $dates = [

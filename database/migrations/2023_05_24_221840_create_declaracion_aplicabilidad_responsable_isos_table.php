@@ -19,10 +19,10 @@ class CreateDeclaracionAplicabilidadResponsableIsosTable extends Migration
                 $table->string('aplica')->nullable();
                 $table->longText('justificacion')->nullable();
                 $table->boolean('esta_correo_enviado')->default(true);
-                 //foreign
+                //foreign
                 $table->unsignedBigInteger('empleado_id')->nullable();
                 $table->foreign('empleado_id')->references('id')->on('empleados')->nullable();
-                 //foreign
+                //foreign
                 $table->unsignedInteger('declaracion_id')->nullable();
                 $table->foreign('declaracion_id')->references('id')->on('declaracion_aplicabilidad_concentrado_isos')->nullable();
                 $table->timestamps();

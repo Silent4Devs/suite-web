@@ -8,10 +8,15 @@ use Livewire\Component;
 class PlanImplementacionCreate extends Component
 {
     public $parent;
+
     public $norma;
+
     public $modulo_origen;
+
     public $objetivo;
+
     public $referencia;
+
     public $matriz_id = '';
 
     protected $rules = [
@@ -51,7 +56,7 @@ class PlanImplementacionCreate extends Component
         PlanImplementacion::create([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
             'tasks' => [],
             'canAdd' => true,
-            'canWrite' =>  true,
+            'canWrite' => true,
             'canWriteOnParent' => true,
             'changesReasonWhy' => false,
             'selectedRow' => 0,

@@ -304,7 +304,7 @@ class AnalisisImpacto extends Model
             $texto = 'No definido';
         }
 
-        return  [$color,  $color_texto, $texto];
+        return [$color,  $color_texto, $texto];
     }
 
     public function getOperacionPromedioAttribute()
@@ -383,7 +383,7 @@ class AnalisisImpacto extends Model
             $texto = 'No definido';
         }
 
-        return  [$color,  $color_texto, $texto];
+        return [$color,  $color_texto, $texto];
     }
 
     public function getCriticidadProcesoAttribute()
@@ -432,7 +432,7 @@ class AnalisisImpacto extends Model
             $texto = 'Fuera de Rango';
         }
 
-        return  [$color,  $color_texto, $texto];
+        return [$color,  $color_texto, $texto];
     }
 
     // Appens 3.0 Entradas y salidas
@@ -469,7 +469,7 @@ class AnalisisImpacto extends Model
         }
         $diferencia = $proporciona - $recibe;
 
-        return  [$diferencia, 2];
+        return [$diferencia, 2];
     }
 
     // Appens 5.0 Requerimientos minimos

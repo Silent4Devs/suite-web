@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Riesgosoportunidade extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'riesgosoportunidades';
 
     const APLICAORGANIZACION_SELECT = [

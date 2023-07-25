@@ -15,10 +15,10 @@ class NecesidadExpectativaNorma extends Model
     ];
 
     protected $fillable = [
-    'id_norma',
-    'id_necesidad_expectativa',
-    'created_at',
-    'updated_at',
-    'deleted_at',
+        'id_norma',
+        'id_necesidad_expectativa',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 }

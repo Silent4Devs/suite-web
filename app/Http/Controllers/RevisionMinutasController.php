@@ -19,8 +19,8 @@ class RevisionMinutasController extends Controller
     public function edit(RevisionMinuta $revisionMinuta)
     {
         $minuta = Minutasaltadireccion::find(intval($revisionMinuta->minuta_id));
-        if (!$minuta) {
-            abort_if(!$minuta, 404);
+        if (! $minuta) {
+            abort_if(! $minuta, 404);
         }
         $empleado = Empleado::alta()->find(intval($revisionMinuta->empleado_id));
 
@@ -55,8 +55,8 @@ class RevisionMinutasController extends Controller
                             'estatus' => strval(Minutasaltadireccion::DOCUMENTO_RECHAZADO),
                         ]);
                     } else {
-                        $path_documento_aprobacion = 'public/minutas/en aprobacion/' . $minutaOriginal->documento;
-                        $ruta_publicacion = 'public/minutas/aprobadas/' . $minutaOriginal->documento;
+                        $path_documento_aprobacion = 'public/minutas/en aprobacion/'.$minutaOriginal->documento;
+                        $ruta_publicacion = 'public/minutas/aprobadas/'.$minutaOriginal->documento;
                         $minutaOriginal->update([
                             'estatus' => strval(Minutasaltadireccion::PUBLICADO),
                         ]);
@@ -181,8 +181,8 @@ class RevisionMinutasController extends Controller
                             'estatus' => strval(Minutasaltadireccion::DOCUMENTO_RECHAZADO),
                         ]);
                     } else {
-                        $path_documento_aprobacion = 'public/minutas/en aprobacion/' . $minutaOriginal->documento;
-                        $ruta_publicacion = 'public/minutas/aprobadas/' . $minutaOriginal->documento;
+                        $path_documento_aprobacion = 'public/minutas/en aprobacion/'.$minutaOriginal->documento;
+                        $ruta_publicacion = 'public/minutas/aprobadas/'.$minutaOriginal->documento;
                         $minutaOriginal->update([
                             'estatus' => strval(Minutasaltadireccion::PUBLICADO),
                         ]);

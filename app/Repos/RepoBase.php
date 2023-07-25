@@ -1,8 +1,7 @@
-<?php 
+<?php
 
 namespace App\Repos;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class RepoBase
@@ -23,16 +22,16 @@ abstract class RepoBase
     /**
      * Encuentra todos los elementos
      *
-     * @param array $select
-     * @param array $filter
+     * @param  array  $select
+     * @param  array  $filter
      * @return void
      */
     public function find($select = ['*'], $filter = [])
     {
         return $this->model->select($select)->filter($filter)->orderBy(
-            $this->getParamOrder(), 
+            $this->getParamOrder(),
             $this->getOrder()
-            )->get();
+        )->get();
     }
 
     public function count($filter = [])
@@ -43,16 +42,16 @@ abstract class RepoBase
     /**
      * Encuentra solo un elemento
      *
-     * @param array $select
-     * @param array $filter
+     * @param  array  $select
+     * @param  array  $filter
      * @return void
      */
     public function findFirst($select = ['*'], $filter = [])
     {
         return $this->model->select($select)->filter($filter)->orderBy(
-            $this->getParamOrder(), 
+            $this->getParamOrder(),
             $this->getOrder()
-            )->first();
+        )->first();
     }
 
     /**
@@ -81,7 +80,7 @@ abstract class RepoBase
      * Actualiza un elemento en la base de datos
      *
      * @param [type] $id
-     * @param array $data
+     * @param  array  $data
      * @return void
      */
     public function update($id, $data = [])
@@ -89,12 +88,13 @@ abstract class RepoBase
         $item = $this->model->where('id', $id)->first();
         $item->update($data);
         $item->save();
+
         return $item;
     }
 
     /**
      * Get the value of paramOrder
-     */ 
+     */
     public function getParamOrder()
     {
         return $this->paramOrder;
@@ -104,7 +104,7 @@ abstract class RepoBase
      * Set the value of paramOrder
      *
      * @return  self
-     */ 
+     */
     public function setParamOrder($paramOrder)
     {
         $this->paramOrder = $paramOrder;
@@ -114,7 +114,7 @@ abstract class RepoBase
 
     /**
      * Get the value of order
-     */ 
+     */
     public function getOrder()
     {
         return $this->order;
@@ -124,7 +124,7 @@ abstract class RepoBase
      * Set the value of order
      *
      * @return  self
-     */ 
+     */
     public function setOrder($order)
     {
         $this->order = $order;

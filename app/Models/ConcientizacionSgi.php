@@ -15,6 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class ConcientizacionSgi extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+
     public $table = 'concientizacion_sgis';
 
     // protected $appends = [
@@ -33,8 +34,8 @@ class ConcientizacionSgi extends Model implements HasMedia
     ];
 
     const MEDIO_ENVIO_SELECT = [
-        'Correo'  => 'Correo',
-        'Poster'  => 'Poster',
+        'Correo' => 'Correo',
+        'Poster' => 'Poster',
         'Revista' => 'Revista',
         'Folleto' => 'Folleto',
     ];
@@ -53,9 +54,9 @@ class ConcientizacionSgi extends Model implements HasMedia
     ];
 
     const PERSONALOBJETIVO_SELECT = [
-        'toda_organizacion'     => 'Toda la organización',
-        'proveedores'           => 'Proveedores',
-        'clientes'              => 'Clientes',
+        'toda_organizacion' => 'Toda la organización',
+        'proveedores' => 'Proveedores',
+        'clientes' => 'Clientes',
         'toda_parte_interesada' => 'Todas las partes interesadas',
     ];
 

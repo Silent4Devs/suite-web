@@ -10,7 +10,9 @@ class LockedPlanTrabajo extends Model
     use HasFactory;
 
     protected $table = 'locked_plan_trabajos_9001';
+
     protected $dates = ['locked_to'];
+
     protected $fillable = [
         'locked_to',
         'blocked',

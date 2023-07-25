@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DocumentoMaterialSgsi extends Model
 {
     use SoftDeletes;
+
     protected $table = 'documentos_material_sgsi';
 
     protected $dates = [
@@ -15,6 +16,7 @@ class DocumentoMaterialSgsi extends Model
         'updated_at',
         'deleted_at',
     ];
+
     protected $cast = [
         'material_id',
         'documento',

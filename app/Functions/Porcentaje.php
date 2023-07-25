@@ -57,8 +57,7 @@ class Porcentaje
         $gap31porcentaje,
         $gap3asatisfactorios,
         $gap3aparcialmente
-    )
-    {
+    ) {
         //Suma de los datos para sacar el total
         $suma = $gap3porcentaje + $gap31porcentaje;
         //Sacar el valor correspondiente

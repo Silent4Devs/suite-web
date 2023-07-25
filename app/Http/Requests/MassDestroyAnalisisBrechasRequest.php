@@ -27,7 +27,7 @@ class MassDestroyAnalisisBrechasRequest extends FormRequest
     public function rules()
     {
         return [
-            'ids'   => 'required|array',
+            'ids' => 'required|array',
             'ids.*' => 'exists:analisis_brechas,id',
         ];
     }

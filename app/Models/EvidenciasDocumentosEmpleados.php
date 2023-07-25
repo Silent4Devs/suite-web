@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 class EvidenciasDocumentosEmpleados extends Model
 {
     use SoftDeletes;
+
     protected $table = 'evidencias_documentos_empleados';
 
     protected $dates = [
@@ -38,14 +39,14 @@ class EvidenciasDocumentosEmpleados extends Model
     {
         $empleado = Empleado::select('id', 'name')->find($this->empleado_id);
 
-        return asset('storage/expedientes/' . Str::slug($empleado->name) . '/' . $this->documentos);
+        return asset('storage/expedientes/'.Str::slug($empleado->name).'/'.$this->documentos);
     }
 
     public function getRutaAbsolutaDocumentoAttribute()
     {
         $empleado = Empleado::select('id', 'name')->find($this->empleado_id);
 
-        return 'expedientes/' . Str::slug($empleado->name) . '/' . $this->documentos;
+        return 'expedientes/'.Str::slug($empleado->name).'/'.$this->documentos;
     }
 
     public function empleados_documentos()

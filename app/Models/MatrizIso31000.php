@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $id_analisis
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Proceso|null $proceso
  * @property AnalisisDeRiesgo|null $analisis_de_riesgo
  */

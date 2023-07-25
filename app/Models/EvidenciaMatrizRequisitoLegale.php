@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EvidenciaMatrizRequisitoLegale extends Model
 {
     use SoftDeletes;
+
     protected $table = 'evidencias_matriz_requisito_legales';
 
     protected $dates = [

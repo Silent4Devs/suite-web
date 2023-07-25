@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $impacto
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Collection|NivelesImpacto[] $niveles_impactos
  * @property Collection|TipoImpacto[] $tipo_impactos
  */

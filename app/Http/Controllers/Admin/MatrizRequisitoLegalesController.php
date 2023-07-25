@@ -236,7 +236,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
     }
 
     public function evaluar(MatrizRequisitoLegale $id)
@@ -254,7 +254,7 @@ class MatrizRequisitoLegalesController extends Controller
 
         $request->validate([
             'cumplerequisito' => ['required'],
-            'fechaverificacion'  => ['required', 'date'],
+            'fechaverificacion' => ['required', 'date'],
             'metodo' => ['required'],
             'descripcion_cumplimiento' => ['required'],
             'evidencia' => ['nullable'],

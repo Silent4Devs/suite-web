@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AnalisisAccionCorrectiva extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $table = 'analisis_accion_correctiva';
 
     protected $guarded = ['id'];

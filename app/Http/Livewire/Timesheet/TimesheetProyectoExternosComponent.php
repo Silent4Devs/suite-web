@@ -2,33 +2,40 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Models\Empleado;
 use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoProveedor;
-use App\Models\Empleado;
-
-use Livewire\Component;
-use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\F;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class TimesheetProyectoExternosComponent extends Component
 {
     use LivewireAlert;
 
     public $proyecto;
+
     public $empleados;
+
     public $proyecto_empleados;
+
     public $proyecto_proveedores;
+
     public $proyecto_id;
 
     public $empleado_añadido;
+
     public $horas_asignadas;
+
     public $costo_hora;
 
     public $externo_añadido;
+
     public $horas_tercero;
+
     public $costo_tercero;
 
     public $horas_tercero_edit;
+
     public $costo_tercero_edit;
 
     public function mount($proyecto_id)
@@ -41,6 +48,7 @@ class TimesheetProyectoExternosComponent extends Component
     {
         $this->proyecto_proveedores = TimesheetProyectoProveedor::where('proyecto_id', $this->proyecto->id)->orderBy('id')->get();
         $this->emit('scriptTabla');
+
         return view('livewire.timesheet.timesheet-proyecto-externos-component');
     }
 
@@ -53,7 +61,7 @@ class TimesheetProyectoExternosComponent extends Component
 
     public function addExterno()
     {
-        if ($this->proyecto->tipo === "Externo") {
+        if ($this->proyecto->tipo === 'Externo') {
             $this->validate([
                 'externo_añadido' => ['required'],
                 'horas_tercero' => ['required'],
@@ -72,14 +80,14 @@ class TimesheetProyectoExternosComponent extends Component
             'timer' => 3000,
             'toast' => true,
             'timerProgressBar' => true,
-           ]);
+        ]);
     }
 
     public function editExterno($id, $datos)
     {
         // dd($datos);
-        if ($this->proyecto->tipo === "Externo") {
-            if(empty($datos['horas_tercero_edit']) || empty($datos['costo_tercero_edit']) || empty($datos['externo_editado'])){
+        if ($this->proyecto->tipo === 'Externo') {
+            if (empty($datos['horas_tercero_edit']) || empty($datos['costo_tercero_edit']) || empty($datos['externo_editado'])) {
                 // dd('Llega nulo');
                 // $this->dispatchBrowserEvent('closeModal');
                 $this->alert('error', 'No debe contener datos vacios', [
@@ -87,9 +95,9 @@ class TimesheetProyectoExternosComponent extends Component
                     'timer' => 3000,
                     'toast' => true,
                     'timerProgressBar' => true,
-                   ]);
+                ]);
 
-                   return null;
+                return null;
             }
         }
         $edit_time_externo = TimesheetProyectoProveedor::find($id);
@@ -105,7 +113,7 @@ class TimesheetProyectoExternosComponent extends Component
             'timer' => 3000,
             'toast' => true,
             'timerProgressBar' => true,
-           ]);
+        ]);
     }
 
     public function externoProyectoRemove($id)

@@ -10,8 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class HistorialVersionesDocumento extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $dates = ['fecha'];
+
     protected $appends = ['estatus_formateado', 'path_document', 'cambios', 'fecha_dmy', 'day_localized'];
+
     protected $fillable = [
         'documento_id',
         'codigo',
@@ -106,7 +109,7 @@ class HistorialVersionesDocumento extends Model
             $archivo = str_replace('-publicado', '', $this->archivo);
         }
 
-        return asset($path_documento . '/' . $archivo);
+        return asset($path_documento.'/'.$archivo);
     }
 
     public function getCambiosAttribute()

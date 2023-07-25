@@ -13,6 +13,7 @@ class Calendario extends Model
     public $table = 'calendario';
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $dates = ['deleted_at'];
@@ -56,7 +57,7 @@ class Calendario extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
         return Cache::remember('calendario_all', 3600 * 24, function () {

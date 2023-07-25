@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $controles_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property MatrizIso31000|null $matriz_iso31000
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  */

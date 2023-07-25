@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EvidenciasRiesgo extends Model
 {
     use HasFactory;
+
     protected $table = 'evidencias_riesgos';
 
     protected $dates = [

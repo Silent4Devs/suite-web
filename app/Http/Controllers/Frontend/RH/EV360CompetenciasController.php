@@ -85,7 +85,7 @@ class EV360CompetenciasController extends Controller
                 $exists = CompetenciaPuesto::where('puesto_id', '=', $puesto->id)
                     ->where('competencia_id', '=', $competencia->id)
                     ->exists();
-                if (!$exists) {
+                if (! $exists) {
                     CompetenciaPuesto::create([
                         'puesto_id' => $puesto->id,
                         'competencia_id' => $competencia->id,

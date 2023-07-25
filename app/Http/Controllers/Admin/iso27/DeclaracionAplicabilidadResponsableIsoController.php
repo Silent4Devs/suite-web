@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\iso27;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class DeclaracionAplicabilidadResponsableIsoController extends Controller
 {
@@ -30,7 +30,6 @@ class DeclaracionAplicabilidadResponsableIsoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +40,7 @@ class DeclaracionAplicabilidadResponsableIsoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -52,7 +51,7 @@ class DeclaracionAplicabilidadResponsableIsoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -63,8 +62,7 @@ class DeclaracionAplicabilidadResponsableIsoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -75,7 +73,7 @@ class DeclaracionAplicabilidadResponsableIsoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

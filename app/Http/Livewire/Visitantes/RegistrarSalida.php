@@ -13,7 +13,9 @@ class RegistrarSalida extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
+
     public $visitante;
+
     public $perPage = 5;
 
     protected $listeners = ['salidaRegistrada' => 'render'];

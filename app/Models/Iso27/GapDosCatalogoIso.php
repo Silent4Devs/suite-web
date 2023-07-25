@@ -17,7 +17,7 @@ class GapDosCatalogoIso extends Model
         'id_clasificacion',
         'control_iso',
         'anexo_politica',
-        'anexo_descripcion'
+        'anexo_descripcion',
     ];
 
     public function clasificacion()

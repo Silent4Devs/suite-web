@@ -11,7 +11,9 @@ class RespuestaDayOff extends Mailable
     use Queueable, SerializesModels;
 
     public $solicitante;
+
     public $supervisor;
+
     public $solicitud;
 
     public function __construct($solicitante, $supervisor, $solicitud)

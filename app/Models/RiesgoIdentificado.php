@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class RiesgoIdentificado extends Model
 {
     use HasFactory;
+
     protected $table = 'riesgos_identificados';
 
     protected $dates = [
@@ -23,7 +24,7 @@ class RiesgoIdentificado extends Model
 
     public function getFolioAttribute()
     {
-        return  sprintf('RSG-%04d', $this->id);
+        return sprintf('RSG-%04d', $this->id);
     }
 
     public function reporto()

@@ -10,7 +10,6 @@ class TimeSheetClienteObserver
     /**
      * Handle the TimeSheetCliente "created" event.
      *
-     * @param  \App\Models\TimeSheetCliente  $timeSheetCliente
      * @return void
      */
     public function created(TimeSheetCliente $timeSheetCliente)
@@ -21,7 +20,6 @@ class TimeSheetClienteObserver
     /**
      * Handle the TimeSheetCliente "updated" event.
      *
-     * @param  \App\Models\TimeSheetCliente  $timeSheetCliente
      * @return void
      */
     public function updated(TimeSheetCliente $timeSheetCliente)
@@ -32,7 +30,6 @@ class TimeSheetClienteObserver
     /**
      * Handle the TimeSheetCliente "deleted" event.
      *
-     * @param  \App\Models\TimeSheetCliente  $timeSheetCliente
      * @return void
      */
     public function deleted(TimeSheetCliente $timeSheetCliente)
@@ -43,7 +40,6 @@ class TimeSheetClienteObserver
     /**
      * Handle the TimeSheetCliente "restored" event.
      *
-     * @param  \App\Models\TimeSheetCliente  $timeSheetCliente
      * @return void
      */
     public function restored(TimeSheetCliente $timeSheetCliente)
@@ -54,7 +50,6 @@ class TimeSheetClienteObserver
     /**
      * Handle the TimeSheetCliente "force deleted" event.
      *
-     * @param  \App\Models\TimeSheetCliente  $timeSheetCliente
      * @return void
      */
     public function forceDeleted(TimeSheetCliente $timeSheetCliente)

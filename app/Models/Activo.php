@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Cache;
 class Activo extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'activos';
 
     protected $dates = [
@@ -54,7 +55,7 @@ class Activo extends Model
         'marca' => 'int',
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
         return Cache::remember('activos_all', 3600 * 24, function () {

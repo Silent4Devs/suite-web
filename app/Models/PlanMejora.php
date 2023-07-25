@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PlanMejora extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'plan_mejoras';
 
     public static $searchable = [
@@ -27,8 +28,8 @@ class PlanMejora extends Model
 
     const ESTATUS_SELECT = [
         'por_iniciar' => 'Por iniciar',
-        'en_proceso'  => 'En proceso',
-        'terminado'   => 'Terminado',
+        'en_proceso' => 'En proceso',
+        'terminado' => 'Terminado',
     ];
 
     protected $fillable = [

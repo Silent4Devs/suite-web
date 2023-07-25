@@ -12,6 +12,7 @@ class AjustesAIA extends Model
     public $table = 'ajustes_aia';
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $dates = ['deleted_at'];

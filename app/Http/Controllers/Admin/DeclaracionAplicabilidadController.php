@@ -106,7 +106,7 @@ class DeclaracionAplicabilidadController extends Controller
         // dd($gap5total);
         $ISO27001_SoA_PATH = 'storage/Normas/ISO27001/Analísis Inicial/';
         $path = public_path($ISO27001_SoA_PATH);
-        $lista_archivos_declaracion = glob($path . 'Analisis Inicial*.pdf');
+        $lista_archivos_declaracion = glob($path.'Analisis Inicial*.pdf');
         $empleados = Empleado::select('id', 'name', 'genero', 'foto')->alta()->get();
         $responsables = DeclaracionAplicabilidadResponsable::with(['empleado' => function ($q) {
             $q->select('id', 'name', 'foto', 'estatus')->where('estatus', 'alta');
@@ -177,7 +177,6 @@ class DeclaracionAplicabilidadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\DeclaracionAplicabilidad  $declaracionAplicabilidad
      * @return \Illuminate\Http\Response
      */
@@ -195,7 +194,7 @@ class DeclaracionAplicabilidadController extends Controller
                         $aprobadorDeclaracion = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $id)->orderBy('created_at')->first();
                         $aprobador = Empleado::select('id', 'name', 'email')->find($aprobadorDeclaracion->aprobadores_id);
                         $responsable = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
-                        Mail::to($aprobador->email)->send(new  NotificacionDeclaracionAplicabilidadAprobadores($aprobador, $responsable, $aplicabilidad));
+                        Mail::to($aprobador->email)->send(new NotificacionDeclaracionAplicabilidadAprobadores($aprobador, $responsable, $aplicabilidad));
                     }
 
                     return response()->json(['success' => true, 'id' => $id]);
@@ -333,7 +332,7 @@ class DeclaracionAplicabilidadController extends Controller
         $logotipo = '';
         if (isset($logo)) {
             if ($logo->logotipo != null) {
-                $logotipo = 'images/' . $logo->logotipo;
+                $logotipo = 'images/'.$logo->logotipo;
             } else {
                 $logotipo = 'img/Silent4Business-Logo-Color.png';
             }
@@ -381,9 +380,9 @@ class DeclaracionAplicabilidadController extends Controller
             'logotipo',
         ));
 
-        $nombre_pdf = 'Analisis Inicial ' . Carbon::now()->format('d-m-Y') . '.pdf';
+        $nombre_pdf = 'Analisis Inicial '.Carbon::now()->format('d-m-Y').'.pdf';
         $content = $pdf->download()->getOriginalContent();
-        Storage::put('public/Normas/ISO27001/Analísis Inicial/' . $nombre_pdf, $content);
+        Storage::put('public/Normas/ISO27001/Analísis Inicial/'.$nombre_pdf, $content);
         //$pdf->download(storage_path('Normas/ISO27001/Analísis Inicial/' . $nombre_pdf));
         return $pdf->setPaper('a4', 'landscape')->stream();
 

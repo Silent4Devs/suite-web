@@ -13,6 +13,7 @@ class MinutaConfirmacionAprobacion extends Mailable
     use Queueable, SerializesModels;
 
     public $minuta;
+
     public $revision;
 
     public function __construct(Minutasaltadireccion $minuta, RevisionMinuta $revision)

@@ -6,15 +6,14 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateVulnerabilidadRequest;
 use App\Http\Requests\UpdateVulnerabilidadRequest;
 use App\Models\Amenaza;
-use App\Models\Organizacion;
 use App\Models\Vulnerabilidad;
 use App\Repositories\VulnerabilidadRepository;
+use App\Traits\ObtenerOrganizacion;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
-use App\Traits\ObtenerOrganizacion;
 
 class VulnerabilidadController extends AppBaseController
 {
@@ -31,7 +30,6 @@ class VulnerabilidadController extends AppBaseController
     /**
      * Display a listing of the Vulnerabilidad.
      *
-     * @param Request $request
      *
      * @return Response
      */

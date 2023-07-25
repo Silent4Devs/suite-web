@@ -5,12 +5,10 @@ namespace App\Http\Livewire;
 use App\Models\Empleado;
 use App\Models\ListaDocumentoEmpleado;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Response;
 
 class BuscarCVComponent extends Component
 {
@@ -20,24 +18,41 @@ class BuscarCVComponent extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $areas;
+
     public $empleado_id;
+
     public $area_id;
+
     public $empleado_experiencia;
+
     public $empleado_educacion;
+
     public $empleado_certificaciones;
+
     public $empleado_cursos;
+
     public $foto_organizacion;
+
     public $empleados;
+
     public $isPersonal;
+
     public $curriculums;
 
     public $empresaExperiencia;
+
     public $puestoExperiencia;
+
     public $descripcionExperiencia;
+
     public $certificacion;
+
     public $curso;
+
     public $empleadoModel;
+
     public $general;
+
     public $lista_docs;
 
     protected $queryString = [
@@ -100,14 +115,14 @@ class BuscarCVComponent extends Component
 
     public function mount()
     {
-        if (!$this->isPersonal) {
+        if (! $this->isPersonal) {
             $this->empleados = Empleado::getAltaEmpleados();
         }
     }
 
     public function render()
     {
-        $cacheKey = 'empleadosCV_data_' . Auth::user()->id;
+        $cacheKey = 'empleadosCV_data_'.Auth::user()->id;
 
         $empleadosCV = Cache::remember($cacheKey, 3600 * 60, function () {
             return Empleado::alta()
@@ -148,7 +163,6 @@ class BuscarCVComponent extends Component
         ]);
     }
 
-
     public function mostrarCurriculum($empleadoID)
     {
         $this->empleadoModel = Empleado::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->find($empleadoID);
@@ -158,14 +172,14 @@ class BuscarCVComponent extends Component
     public function callAlert($tipo, $mensaje, $bool, $test = '')
     {
         $this->alert($tipo, $mensaje, [
-            'position' =>  'top-end',
-            'timer' =>  2500,
-            'toast' =>  true,
-            'text' =>  $test,
-            'confirmButtonText' =>  'Entendido',
-            'cancelButtonText' =>  '',
-            'showCancelButton' =>  false,
-            'showConfirmButton' =>  $bool,
+            'position' => 'top-end',
+            'timer' => 2500,
+            'toast' => true,
+            'text' => $test,
+            'confirmButtonText' => 'Entendido',
+            'cancelButtonText' => '',
+            'showCancelButton' => false,
+            'showConfirmButton' => $bool,
         ]);
     }
 }

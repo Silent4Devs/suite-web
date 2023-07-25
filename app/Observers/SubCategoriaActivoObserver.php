@@ -10,7 +10,6 @@ class SubCategoriaActivoObserver
     /**
      * Handle the SubcategoriaActivo "created" event.
      *
-     * @param  \App\Models\SubcategoriaActivo  $subcategoriaActivo
      * @return void
      */
     public function created(SubcategoriaActivo $subcategoriaActivo)
@@ -21,7 +20,6 @@ class SubCategoriaActivoObserver
     /**
      * Handle the SubcategoriaActivo "updated" event.
      *
-     * @param  \App\Models\SubcategoriaActivo  $subcategoriaActivo
      * @return void
      */
     public function updated(SubcategoriaActivo $subcategoriaActivo)
@@ -32,7 +30,6 @@ class SubCategoriaActivoObserver
     /**
      * Handle the SubcategoriaActivo "deleted" event.
      *
-     * @param  \App\Models\SubcategoriaActivo  $subcategoriaActivo
      * @return void
      */
     public function deleted(SubcategoriaActivo $subcategoriaActivo)
@@ -43,7 +40,6 @@ class SubCategoriaActivoObserver
     /**
      * Handle the SubcategoriaActivo "restored" event.
      *
-     * @param  \App\Models\SubcategoriaActivo  $subcategoriaActivo
      * @return void
      */
     public function restored(SubcategoriaActivo $subcategoriaActivo)
@@ -54,7 +50,6 @@ class SubCategoriaActivoObserver
     /**
      * Handle the SubcategoriaActivo "force deleted" event.
      *
-     * @param  \App\Models\SubcategoriaActivo  $subcategoriaActivo
      * @return void
      */
     public function forceDeleted(SubcategoriaActivo $subcategoriaActivo)

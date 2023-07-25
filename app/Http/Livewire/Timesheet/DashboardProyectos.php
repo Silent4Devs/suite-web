@@ -3,25 +3,33 @@
 namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Area;
-use App\Models\Timesheet;
 use App\Models\Empleado;
-use Livewire\Component;
-use App\Models\TimesheetProyecto;
+use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetTarea;
+use Livewire\Component;
 
 class DashboardProyectos extends Component
 {
     // public $times;
     public $areas;
+
     public $area_id = 'todas';
+
     public $estatus = 'todos';
+
     public $fecha_inicio;
+
     public $fecha_fin;
+
     public $proy;
+
     public $proy_id;
+
     public $datos_areas;
+
     public $datos_empleados;
 
     public function mount()
@@ -46,15 +54,14 @@ class DashboardProyectos extends Component
     public function updatedProyectoId($value)
     {
         $this->proy_id = $value;
-        $this->area_id = "todas";
+        $this->area_id = 'todas';
     }
 
     public function render()
     {
         $this->datos_areas = collect();
-        $area_individual;
 
-        if ($this->estatus === "todos") {
+        if ($this->estatus === 'todos') {
             $this->proy = TimesheetProyecto::orderBy('proyecto')->get();
         } else {
             $this->proy = TimesheetProyecto::where('estatus', $this->estatus)->orderBy('proyecto')->get();
@@ -147,7 +154,7 @@ class DashboardProyectos extends Component
                             ->whereHas('timesheet', function ($query) use ($ep) {
                                 $query->where('empleado_id', $ep->empleado_id);
                             })
-                            ->whereHas('timesheet', function ($query) use ($ep) {
+                            ->whereHas('timesheet', function ($query) {
                                 $query->where('estatus', 'aprobado');
                                 // ->orWhere('estatus', 'pendiente');
                             })->get();
@@ -180,7 +187,7 @@ class DashboardProyectos extends Component
                 $this->datos_dash = TimesheetProyecto::find($this->proy_id);
                 $area_individual = Area::find($this->area_id);
 
-                if (!isset($area_individual->area)) {
+                if (! isset($area_individual->area)) {
                     $area_individual = 'Sin definir';
                 } else {
                     $area_individual = $area_individual->area;
@@ -256,7 +263,7 @@ class DashboardProyectos extends Component
                         ->whereHas('timesheet', function ($query) use ($ep) {
                             $query->where('empleado_id', $ep->empleado_id);
                         })
-                        ->whereHas('timesheet', function ($query) use ($ep) {
+                        ->whereHas('timesheet', function ($query) {
                             $query->where('estatus', 'aprobado');
                         })->get();
 

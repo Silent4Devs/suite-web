@@ -75,25 +75,25 @@ class AuditoriaInternaController extends Controller
                 return $row->hallazgos ? $row->hallazgos : '';
             });
             $table->editColumn('cheknoconformidadmenor', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->cheknoconformidadmenor ? 'checked' : null) . '>';
+                return '<input type="checkbox" disabled '.($row->cheknoconformidadmenor ? 'checked' : null).'>';
             });
             $table->editColumn('totalnoconformidadmenor', function ($row) {
                 return $row->totalnoconformidadmenor ? $row->totalnoconformidadmenor : '';
             });
             $table->editColumn('checknoconformidadmayor', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->checknoconformidadmayor ? 'checked' : null) . '>';
+                return '<input type="checkbox" disabled '.($row->checknoconformidadmayor ? 'checked' : null).'>';
             });
             $table->editColumn('totalnoconformidadmayor', function ($row) {
                 return $row->totalnoconformidadmayor ? $row->totalnoconformidadmayor : '';
             });
             $table->editColumn('checkobservacion', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->checkobservacion ? 'checked' : null) . '>';
+                return '<input type="checkbox" disabled '.($row->checkobservacion ? 'checked' : null).'>';
             });
             $table->editColumn('totalobservacion', function ($row) {
                 return $row->totalobservacion ? $row->totalobservacion : '';
             });
             $table->editColumn('checkmejora', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->checkmejora ? 'checked' : null) . '>';
+                return '<input type="checkbox" disabled '.($row->checkmejora ? 'checked' : null).'>';
             });
             $table->editColumn('totalmejora', function ($row) {
                 return $row->totalmejora ? $row->totalmejora : '';
@@ -128,7 +128,7 @@ class AuditoriaInternaController extends Controller
     {
         $request->validate([
 
-            'lider_id'=>'required|exists:empleados,id',
+            'lider_id' => 'required|exists:empleados,id',
         ]);
         // dd($request->all());
 
@@ -158,7 +158,7 @@ class AuditoriaInternaController extends Controller
     {
         $request->validate([
 
-            'lider_id'=>'required|exists:empleados,id',
+            'lider_id' => 'required|exists:empleados,id',
         ]);
 
         $auditoriaInterna->update($request->all());

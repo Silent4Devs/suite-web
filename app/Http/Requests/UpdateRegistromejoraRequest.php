@@ -15,7 +15,7 @@ class UpdateRegistromejoraRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre'        => [
+            'nombre' => [
                 'string',
                 'nullable',
             ],

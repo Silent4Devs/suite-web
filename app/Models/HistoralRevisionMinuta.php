@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class HistoralRevisionMinuta extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $fillable = [
         'minuta_id',
         'comentarios',

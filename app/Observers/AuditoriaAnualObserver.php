@@ -11,7 +11,6 @@ class AuditoriaAnualObserver
     /**
      * Handle the AuditoriaAnual "created" event.
      *
-     * @param  \App\Models\AuditoriaAnual  $auditoriaAnual
      * @return void
      */
     public function created(AuditoriaAnual $auditoriaAnual)
@@ -23,7 +22,6 @@ class AuditoriaAnualObserver
     /**
      * Handle the AuditoriaAnual "updated" event.
      *
-     * @param  \App\Models\AuditoriaAnual  $auditoriaAnual
      * @return void
      */
     public function updated(AuditoriaAnual $auditoriaAnual)
@@ -35,7 +33,6 @@ class AuditoriaAnualObserver
     /**
      * Handle the AuditoriaAnual "deleted" event.
      *
-     * @param  \App\Models\AuditoriaAnual  $auditoriaAnual
      * @return void
      */
     public function deleted(AuditoriaAnual $auditoriaAnual)
@@ -47,7 +44,6 @@ class AuditoriaAnualObserver
     /**
      * Handle the AuditoriaAnual "restored" event.
      *
-     * @param  \App\Models\AuditoriaAnual  $auditoriaAnual
      * @return void
      */
     public function restored(AuditoriaAnual $auditoriaAnual)
@@ -58,7 +54,6 @@ class AuditoriaAnualObserver
     /**
      * Handle the AuditoriaAnual "force deleted" event.
      *
-     * @param  \App\Models\AuditoriaAnual  $auditoriaAnual
      * @return void
      */
     public function forceDeleted(AuditoriaAnual $auditoriaAnual)

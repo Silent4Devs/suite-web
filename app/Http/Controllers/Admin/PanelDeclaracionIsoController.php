@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Mail\DeclaracionAplicabilidad as MailDeclaracionAplicabilidad;
 use App\Mail\DeclaracionAplicabilidadIso;
-use App\Models\Iso27\DeclaracionAplicabilidadConcentradoIso;
-use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
-use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
 use App\Models\Empleado;
-use App\Models\Iso27\GapDosConcentradoIso;
+use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
+use App\Models\Iso27\DeclaracionAplicabilidadConcentradoIso;
+use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
 use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -30,16 +28,16 @@ class PanelDeclaracionIsoController extends Controller
             'id',
             'id_gap_dos_catalogo',
         )->with('gapdos')
-        ->with('gapdos.clasificacion')
-        ->with(['responsables2022.responsable_declaracion' => function ($q) {
-            $q->select('empleados.id', 'empleados.name', 'foto');
-         }])
-        ->with('responsables2022.empleado')
-        ->with(['aprobadores2022.aprobador_declaracion' => function ($q) {
-            $q->select('empleados.id', 'empleados.name', 'foto');
-        }])
-        ->with('aprobadores2022.empleado')
-        ->orderBy('id')->get();
+            ->with('gapdos.clasificacion')
+            ->with(['responsables2022.responsable_declaracion' => function ($q) {
+                $q->select('empleados.id', 'empleados.name', 'foto');
+            }])
+            ->with('responsables2022.empleado')
+            ->with(['aprobadores2022.aprobador_declaracion' => function ($q) {
+                $q->select('empleados.id', 'empleados.name', 'foto');
+            }])
+            ->with('aprobadores2022.empleado')
+            ->orderBy('id')->get();
 
         return view('admin.panelDeclaracion2022.index', compact('empleados', 'organizacion_actual', 'logo_actual', 'empresa_actual', 'asignados'));
     }
@@ -50,14 +48,14 @@ class PanelDeclaracionIsoController extends Controller
             'id',
             'id_gap_dos_catalogo',
         )->with('gapdos')
-        ->with('gapdos.clasificacion')
-        ->with(['responsables2022.responsable_declaracion' => function ($q) {
-            $q->select('empleados.id', 'empleados.name', 'foto');
-         }])
-        ->with(['aprobadores2022.aprobador_declaracion' => function ($q) {
-            $q->select('empleados.id', 'empleados.name', 'foto');
-        }])
-        ->orderBy('id')->get();
+            ->with('gapdos.clasificacion')
+            ->with(['responsables2022.responsable_declaracion' => function ($q) {
+                $q->select('empleados.id', 'empleados.name', 'foto');
+            }])
+            ->with(['aprobadores2022.aprobador_declaracion' => function ($q) {
+                $q->select('empleados.id', 'empleados.name', 'foto');
+            }])
+            ->orderBy('id')->get();
 
         return datatables()->of($query)->toJson();
     }
@@ -93,7 +91,7 @@ class PanelDeclaracionIsoController extends Controller
     public function edit($id)
     {
         $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
-       // $controles = DeclaracionAplicabilidadConcentradoIso::get();
+        // $controles = DeclaracionAplicabilidadConcentradoIso::get();
 
         return view('admin.panelDeclaracion2022.edit', compact('empleados', 'controles'));
     }
@@ -125,17 +123,17 @@ class PanelDeclaracionIsoController extends Controller
         if ($readyExistResponsable) {
             return response()->json(['estatus' => 'ya_es_aprobador', 'message' => 'Ya fue asignado como aprobador'], 200);
         } else {
-            if (!$existResponsable) {
+            if (! $existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
-                if (!$exists) {
+                if (! $exists) {
                     DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)
-                    ->update([
-                        'declaracion_id' => $declaracion,
-                        'empleado_id' => $responsable,
-                    ], [
-                        'esta_correo_enviado' => false,
+                        ->update([
+                            'declaracion_id' => $declaracion,
+                            'empleado_id' => $responsable,
+                        ], [
+                            'esta_correo_enviado' => false,
 
-                    ]);
+                        ]);
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Responsable asignado'], 200);
                 } else {
@@ -180,16 +178,16 @@ class PanelDeclaracionIsoController extends Controller
         } else {
             if ($existAprobador) {
                 $exists = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->exists();
-                if (!$exists) {
+                if (! $exists) {
                     DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)
-                    ->update(
-                        [
-                            'declaracion_id' => $declaracion,
-                            'empleado_id' => $aprobador,
-                        ],
-                        [
-                            'esta_correo_enviado' => false,
-                        ]);
+                        ->update(
+                            [
+                                'declaracion_id' => $declaracion,
+                                'empleado_id' => $aprobador,
+                            ],
+                            [
+                                'esta_correo_enviado' => false,
+                            ]);
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Aprobador asignado'], 200);
                 } else {
@@ -244,6 +242,6 @@ class PanelDeclaracionIsoController extends Controller
             $responsable->update(['esta_correo_enviado' => true]);
         }
 
-         return response()->json(['message' => 'Correo enviado'], 200);
+        return response()->json(['message' => 'Correo enviado'], 200);
     }
 }

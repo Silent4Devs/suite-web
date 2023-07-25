@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EstatusPlanTrabajo extends Model
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+
     public $table = 'estatus_plan_trabajos';
 
     protected $dates = [

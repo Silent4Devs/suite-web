@@ -23,33 +23,33 @@ class HomeController
     public function index()
     {
         $settings1 = [
-            'chart_title'        => 'Actividades por colaborador',
-            'chart_type'         => 'bar',
-            'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\PlanBaseActividade',
-            'group_by_field'     => 'name',
+            'chart_title' => 'Actividades por colaborador',
+            'chart_type' => 'bar',
+            'report_type' => 'group_by_relationship',
+            'model' => 'App\Models\PlanBaseActividade',
+            'group_by_field' => 'name',
             'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
-            'filter_period'      => 'year',
-            'column_class'       => 'col-md-6',
-            'entries_number'     => '5',
-            'relationship_name'  => 'colaborador',
+            'filter_field' => 'created_at',
+            'filter_period' => 'year',
+            'column_class' => 'col-md-6',
+            'entries_number' => '5',
+            'relationship_name' => 'colaborador',
         ];
         // dd($settings1);
 
         $chart1 = new LaravelChart($settings1);
 
         $settings2 = [
-            'chart_title'        => 'Incidentes de seguridad',
-            'chart_type'         => 'bar',
-            'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\IncidentesDeSeguridad',
-            'group_by_field'     => 'estado',
+            'chart_title' => 'Incidentes de seguridad',
+            'chart_type' => 'bar',
+            'report_type' => 'group_by_relationship',
+            'model' => 'App\Models\IncidentesDeSeguridad',
+            'group_by_field' => 'estado',
             'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
-            'column_class'       => 'col-md-6',
-            'entries_number'     => '5',
-            'relationship_name'  => 'estado',
+            'filter_field' => 'created_at',
+            'column_class' => 'col-md-6',
+            'entries_number' => '5',
+            'relationship_name' => 'estado',
         ];
 
         // DB::enableQueryLog();
@@ -80,32 +80,32 @@ class HomeController
         // $chart3 = new LaravelChart($settings3);
 
         $settings4 = [
-            'chart_title'        => 'Documentación',
-            'chart_type'         => 'bar',
-            'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\ControlDocumento',
-            'group_by_field'     => 'estado',
+            'chart_title' => 'Documentación',
+            'chart_type' => 'bar',
+            'report_type' => 'group_by_relationship',
+            'model' => 'App\Models\ControlDocumento',
+            'group_by_field' => 'estado',
             'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
-            'column_class'       => 'col-md-12',
-            'entries_number'     => '5',
-            'relationship_name'  => 'estado',
+            'filter_field' => 'created_at',
+            'column_class' => 'col-md-12',
+            'entries_number' => '5',
+            'relationship_name' => 'estado',
         ];
 
         $chart4 = new LaravelChart($settings4);
 
         $settings5 = [
-            'chart_title'           => 'Total acciones correctivas',
-            'chart_type'            => 'number_block',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\AccionCorrectiva',
-            'group_by_field'        => 'fecharegistro',
-            'group_by_period'       => 'day',
-            'aggregate_function'    => 'count',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Total acciones correctivas',
+            'chart_type' => 'number_block',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\AccionCorrectiva',
+            'group_by_field' => 'fecharegistro',
+            'group_by_period' => 'day',
+            'aggregate_function' => 'count',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y',
-            'column_class'          => 'col-md-2',
-            'entries_number'        => '10',
+            'column_class' => 'col-md-2',
+            'entries_number' => '10',
         ];
 
         $settings5['total_number'] = 0;
@@ -124,10 +124,10 @@ class HomeController
                             $start = date('Y-m-d', strtotime('last Monday'));
                             break;
                         case 'month':
-                            $start = date('Y-m') . '-01';
+                            $start = date('Y-m').'-01';
                             break;
                         case 'year':
-                            $start = date('Y') . '-01-01';
+                            $start = date('Y').'-01-01';
                             break;
                     }
 
@@ -140,17 +140,17 @@ class HomeController
         }
 
         $settings6 = [
-            'chart_title'           => 'Total acciones de mejora',
-            'chart_type'            => 'number_block',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\Registromejora',
-            'group_by_field'        => 'created_at',
-            'group_by_period'       => 'day',
-            'aggregate_function'    => 'count',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Total acciones de mejora',
+            'chart_type' => 'number_block',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Registromejora',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'day',
+            'aggregate_function' => 'count',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y H:i:s',
-            'column_class'          => 'col-md-2',
-            'entries_number'        => '5',
+            'column_class' => 'col-md-2',
+            'entries_number' => '5',
         ];
 
         $settings6['total_number'] = 0;
@@ -169,10 +169,10 @@ class HomeController
                             $start = date('Y-m-d', strtotime('last Monday'));
                             break;
                         case 'month':
-                            $start = date('Y-m') . '-01';
+                            $start = date('Y-m').'-01';
                             break;
                         case 'year':
-                            $start = date('Y') . '-01-01';
+                            $start = date('Y').'-01-01';
                             break;
                     }
 
@@ -185,69 +185,69 @@ class HomeController
         }
 
         $settings7 = [
-            'chart_title'           => 'Auditoria Interna - Total No conformidad menor',
-            'chart_type'            => 'pie',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\AuditoriaInterna',
-            'group_by_field'        => 'fechaauditoria',
-            'group_by_period'       => 'year',
-            'aggregate_function'    => 'count',
-            'aggregate_field'       => 'totalnoconformidadmenor',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Auditoria Interna - Total No conformidad menor',
+            'chart_type' => 'pie',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\AuditoriaInterna',
+            'group_by_field' => 'fechaauditoria',
+            'group_by_period' => 'year',
+            'aggregate_function' => 'count',
+            'aggregate_field' => 'totalnoconformidadmenor',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y',
-            'column_class'          => 'col-md-12',
-            'entries_number'        => '5',
+            'column_class' => 'col-md-12',
+            'entries_number' => '5',
         ];
 
         $chart7 = new LaravelChart($settings7);
 
         $settings8 = [
-            'chart_title'           => 'Auditoria Interna - Total No conformidad mayor',
-            'chart_type'            => 'line',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\AuditoriaInterna',
-            'group_by_field'        => 'fechaauditoria',
-            'group_by_period'       => 'year',
-            'aggregate_function'    => 'sum',
-            'aggregate_field'       => 'totalnoconformidadmayor',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Auditoria Interna - Total No conformidad mayor',
+            'chart_type' => 'line',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\AuditoriaInterna',
+            'group_by_field' => 'fechaauditoria',
+            'group_by_period' => 'year',
+            'aggregate_function' => 'sum',
+            'aggregate_field' => 'totalnoconformidadmayor',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y',
-            'column_class'          => 'col-md-12',
-            'entries_number'        => '5',
+            'column_class' => 'col-md-12',
+            'entries_number' => '5',
         ];
 
         $chart8 = new LaravelChart($settings8);
 
         $settings9 = [
-            'chart_title'           => 'Auditoria Interna - Total Observación',
-            'chart_type'            => 'line',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\AuditoriaInterna',
-            'group_by_field'        => 'fechaauditoria',
-            'group_by_period'       => 'year',
-            'aggregate_function'    => 'sum',
-            'aggregate_field'       => 'totalobservacion',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Auditoria Interna - Total Observación',
+            'chart_type' => 'line',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\AuditoriaInterna',
+            'group_by_field' => 'fechaauditoria',
+            'group_by_period' => 'year',
+            'aggregate_function' => 'sum',
+            'aggregate_field' => 'totalobservacion',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y',
-            'column_class'          => 'col-md-12',
-            'entries_number'        => '5',
+            'column_class' => 'col-md-12',
+            'entries_number' => '5',
         ];
 
         $chart9 = new LaravelChart($settings9);
 
         $settings10 = [
-            'chart_title'           => 'Auditoria Interna - Total mejora',
-            'chart_type'            => 'pie',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\AuditoriaInterna',
-            'group_by_field'        => 'fechaauditoria',
-            'group_by_period'       => 'year',
-            'aggregate_function'    => 'sum',
-            'aggregate_field'       => 'totalmejora',
-            'filter_field'          => 'created_at',
+            'chart_title' => 'Auditoria Interna - Total mejora',
+            'chart_type' => 'pie',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\AuditoriaInterna',
+            'group_by_field' => 'fechaauditoria',
+            'group_by_period' => 'year',
+            'aggregate_function' => 'sum',
+            'aggregate_field' => 'totalmejora',
+            'filter_field' => 'created_at',
             'group_by_field_format' => 'd-m-Y',
-            'column_class'          => 'col-md-12',
-            'entries_number'        => '5',
+            'column_class' => 'col-md-12',
+            'entries_number' => '5',
         ];
 
         $chart10 = new LaravelChart($settings10);

@@ -20,7 +20,7 @@ class Denuncias extends Model
 
     public function getFolioAttribute()
     {
-        return  sprintf('DEN-%04d', $this->id);
+        return sprintf('DEN-%04d', $this->id);
     }
 
     public function denuncio()

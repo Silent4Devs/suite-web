@@ -14,59 +14,111 @@ class MatrizHeatmap extends Component
     use LivewireAlert;
 
     public $id_analisis;
+
     public $control;
+
     public $matriz;
+
     public $valor_riesgo;
+
     public $sede_id = '';
+
     public $area_id = '';
+
     public $proceso_id = '';
+
     public $listados = [];
+
     public $listados_residual = [];
+
     public $mensaje = '';
+
     public $changer;
+
     public $changer_residual;
+
     public $muy_alto;
+
     public $alto;
+
     public $medio;
+
     public $bajo;
+
     public $muy_alto_residual;
+
     public $alto_residual;
+
     public $medio_residual;
+
     public $bajo_residual;
+
     //var conta
     public $nula_muyalto = 0;
+
     public $nula_alto = 0;
+
     public $nula_medio = 0;
+
     public $nula_bajo = 0;
+
     public $baja_bajo = 0;
+
     public $baja_medio = 0;
+
     public $baja_alto = 0;
+
     public $baja_muyalto = 0;
+
     public $media_bajo = 0;
+
     public $media_medio = 0;
+
     public $media_alto = 0;
+
     public $media_muyalto = 0;
+
     public $alta_bajo = 0;
+
     public $alta_medio = 0;
+
     public $alta_alto = 0;
+
     public $alta_muyalto = 0;
+
     //var conta residual
     public $nula_muyalto_r = 0;
+
     public $nula_alto_r = 0;
+
     public $nula_medio_r = 0;
+
     public $nula_bajo_r = 0;
+
     public $baja_bajo_r = 0;
+
     public $baja_medio_r = 0;
+
     public $baja_alto_r = 0;
+
     public $baja_muyalto_r = 0;
+
     public $media_bajo_r = 0;
+
     public $media_medio_r = 0;
+
     public $media_alto_r = 0;
+
     public $media_muyalto_r = 0;
+
     public $alta_bajo_r = 0;
+
     public $alta_medio_r = 0;
+
     public $alta_alto_r = 0;
+
     public $alta_muyalto_r = 0;
+
     public $mapas = [];
 
     public function mount($mapas = [])
@@ -431,14 +483,14 @@ class MatrizHeatmap extends Component
     public function callAlert($tipo, $mensaje, $bool, $test = '')
     {
         $this->alert($tipo, $mensaje, [
-            'position' =>  'top-end',
-            'timer' =>  3100,
-            'toast' =>  true,
-            'text' =>  $test,
-            'confirmButtonText' =>  'Entendido',
-            'cancelButtonText' =>  '',
-            'showCancelButton' =>  false,
-            'showConfirmButton' =>  $bool,
+            'position' => 'top-end',
+            'timer' => 3100,
+            'toast' => true,
+            'text' => $test,
+            'confirmButtonText' => 'Entendido',
+            'cancelButtonText' => '',
+            'showCancelButton' => false,
+            'showConfirmButton' => $bool,
         ]);
         $this->cleanData();
     }

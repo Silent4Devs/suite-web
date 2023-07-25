@@ -107,7 +107,6 @@ class ProcesoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Proceso  $proceso
      * @return \Illuminate\Http\Response
      */
     public function show(Proceso $proceso)
@@ -120,7 +119,6 @@ class ProcesoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Proceso  $proceso
      * @return \Illuminate\Http\Response
      */
     public function edit(Proceso $proceso)
@@ -134,8 +132,6 @@ class ProcesoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Proceso  $proceso
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Proceso $proceso)
@@ -157,7 +153,6 @@ class ProcesoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Proceso  $proceso
      * @return \Illuminate\Http\Response
      */
     public function destroy(Proceso $proceso)

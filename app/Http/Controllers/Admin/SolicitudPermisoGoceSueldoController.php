@@ -6,15 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Mail\RespuestaPermisoGoceSueldo as MailRespuestaPermisoGoceSueldo;
 use App\Mail\SolicitudPermisoGoceSueldo as MailSolicitudPermisoGoceSueldo;
 use App\Models\Empleado;
-use App\Models\Organizacion;
 use App\Models\PermisosGoceSueldo;
 use App\Models\SolicitudPermisoGoceSueldo;
+use App\Traits\ObtenerOrganizacion;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use App\Traits\ObtenerOrganizacion;
 
 class SolicitudPermisoGoceSueldoController extends Controller
 {

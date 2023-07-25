@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CuestionarioRecursosMaterialesAIA extends Model
 {
     use HasFactory;
+
     public $table = 'recursos_materiales_aia';
 
     public $fillable = [

@@ -16,7 +16,6 @@ class VersionesIso extends Model
     ];
 
     protected $fillable = [
-        'version_historico'
+        'version_historico',
     ];
-
 }

@@ -11,7 +11,9 @@ class NotificacionEvaluador extends Mailable
     use Queueable, SerializesModels;
 
     public $evaluacion;
+
     public $evaluador;
+
     public $evaluados;
 
     /**

@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class EvaluacionCompetencia extends Model
 {
     use HasFactory;
+
     protected $table = 'ev360_competencia_evaluacion';
+
     protected $guarded = ['id'];
 
     public function competencia()

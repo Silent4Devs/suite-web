@@ -17,6 +17,7 @@ class AceptacionAccionCorrectivaEmail extends Mailable
      * @return void
      */
     public $quejas;
+
     public $evidencia;
 
     public function __construct(QuejasCliente $quejas, $evidencia = [])

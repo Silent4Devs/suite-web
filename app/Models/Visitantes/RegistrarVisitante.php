@@ -34,6 +34,7 @@ class RegistrarVisitante extends Model
         'uuid',
         'autorizado',
     ];
+
     protected $casts = [
         'empleado_id' => 'integer',
         'area_id' => 'integer',

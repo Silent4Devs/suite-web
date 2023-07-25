@@ -2,32 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\Empleado;
-use App\Models\Timesheet;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Models\TimesheetHoras;
-use App\Models\TimesheetTarea;
-use App\Models\TimesheetCliente;
-use App\Models\TimesheetProyecto;
-use App\Services\DashboardService;
-use App\Services\TimesheetService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
-use App\Models\TimesheetProyectoArea;
-use Illuminate\Support\Facades\Cache;
 use App\Mail\TimesheetHorasSobrepasadas;
+use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\Organizacion;
+use App\Models\Sede;
+use App\Models\Timesheet;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
-use App\Models\TimesheetProyectoProveedor;
-use App\Mail\TimesheetHorasSolicitudAprobacion;
+use App\Models\TimesheetTarea;
+use App\Services\TimesheetService;
 use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class TimesheetController extends Controller
 {
@@ -47,7 +44,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $cacheKey = 'timesheet-' . auth()->user()->empleado->id;
+        $cacheKey = 'timesheet-'.auth()->user()->empleado->id;
 
         $times = Timesheet::getPersonalTimesheet();
 
@@ -350,7 +347,6 @@ class TimesheetController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -545,6 +541,7 @@ class TimesheetController extends Controller
         $areas = Area::getAll();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
+
         return view('admin.timesheet.create-proyectos', compact('clientes', 'areas', 'sedes', 'tipos', 'tipo'));
     }
 
@@ -664,7 +661,7 @@ class TimesheetController extends Controller
         }
 
         // return back()->with('success', 'Guardado con éxito');
-        return redirect('admin/timesheet/proyecto-empleados/' . $edit_proyecto->id);
+        return redirect('admin/timesheet/proyecto-empleados/'.$edit_proyecto->id);
     }
 
     public function tareas()
@@ -862,7 +859,6 @@ class TimesheetController extends Controller
             ],
         );
 
-
         $cliente_nuevo = TimesheetCliente::create($request->all());
 
         return redirect()->route('admin.timesheet-clientes')->with('success', 'Guardado con éxito');
@@ -1001,7 +997,6 @@ class TimesheetController extends Controller
             $emp_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->get();
         }
 
-
         foreach ($emp_proyectos as $ep) {
             $times = TimesheetHoras::where('proyecto_id', '=', $ep->proyecto_id)
                 ->where('empleado_id', '=', $ep->empleado_id)
@@ -1019,7 +1014,7 @@ class TimesheetController extends Controller
 
             $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
 
-            if ($ep->proyecto->tipo === "Externo") {
+            if ($ep->proyecto->tipo === 'Externo') {
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
 

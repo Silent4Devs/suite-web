@@ -30,13 +30,13 @@ class EmpleadosTimesheetExcel implements FromCollection, WithHeadings, WithMappi
                     $existe_proyecto = in_array($horas->proyecto_id, array_column($timeSheetHorasCollection->toArray(), 'proyecto_id'));
                     $existe_tarea = $this->existsTask($timeSheetHorasCollection, $timesheet->fecha_dia, $horas->proyecto_id, $horas->tarea_id);
                     $existe_fecha_timesheet = in_array($timesheet->fecha_dia, array_column($timeSheetHorasCollection->toArray(), 'timesheet_fin'));
-                    if (!$existe_fecha_timesheet) {
+                    if (! $existe_fecha_timesheet) {
                         $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
                     } else {
-                        if (!$existe_proyecto) {
+                        if (! $existe_proyecto) {
                             $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
                         } else {
-                            if (!$existe_tarea) {
+                            if (! $existe_tarea) {
                                 $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
                             } else {
                                 $timeSheetHorasCollection = $this->addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas, $timesheet);

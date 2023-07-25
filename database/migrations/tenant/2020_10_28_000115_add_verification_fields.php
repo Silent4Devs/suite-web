@@ -8,7 +8,7 @@ class AddVerificationFields extends Migration
     {
         App\Models\User::all()->each(function (App\Models\User $user) {
             $user->update([
-                'verified'    => true,
+                'verified' => true,
                 'verified_at' => now(),
             ]);
         });

@@ -8,17 +8,27 @@ use Livewire\Component;
 class CreateInfraestructuraTecnologica extends Component
 {
     public $miembroID;
+
     public $sistemas;
+
     public $aplicativos;
+
     public $base_datos;
+
     public $otro;
+
     public $escenario;
+
     public $cuestionario_id;
 
     public $id_interesado;
+
     public $parteInteresadaIdEN;
+
     public $view = 'create';
+
     public $normasModel = [];
+
     protected $listeners = ['editarInfraestructura' => 'editInfraestructura', 'eliminarInfraestructura' => 'destroy'];
 
     public function validarTecnologia()
@@ -42,15 +52,15 @@ class CreateInfraestructuraTecnologica extends Component
     {
         $this->validarTecnologia();
         $model = CuestionarioInfraestructuraTecnologica::create([
-        'sistemas'=> $this->sistemas,
-        'aplicativos'=> $this->aplicativos,
-        'base_datos'=> $this->base_datos,
-        'otro'=> $this->otro,
-        'escenario'=> $this->escenario,
-        'cuestionario_id' => $this->cuestionario_id,
+            'sistemas' => $this->sistemas,
+            'aplicativos' => $this->aplicativos,
+            'base_datos' => $this->base_datos,
+            'otro' => $this->otro,
+            'escenario' => $this->escenario,
+            'cuestionario_id' => $this->cuestionario_id,
         ]);
 
-        $this->reset('id', 'sistemas', 'aplicativos', 'base_datos', 'otro', 'escenario', );
+        $this->reset('id', 'sistemas', 'aplicativos', 'base_datos', 'otro', 'escenario');
         $this->emit('render');
         $this->emit('cerrar-modal-infraestructura', ['editarInfraestructura' => false]);
     }
@@ -85,11 +95,11 @@ class CreateInfraestructuraTecnologica extends Component
         $this->validarTecnologia();
         $model = CuestionarioInfraestructuraTecnologica::find($this->miembroID);
         $model->update([
-            'sistemas'=> $this->sistemas,
-            'aplicativos'=> $this->aplicativos,
-            'base_datos'=> $this->base_datos,
-            'otro'=> $this->otro,
-            'escenario'=> $this->escenario,
+            'sistemas' => $this->sistemas,
+            'aplicativos' => $this->aplicativos,
+            'base_datos' => $this->base_datos,
+            'otro' => $this->otro,
+            'escenario' => $this->escenario,
             'cuestionario_id' => $this->cuestionario_id,
         ]);
         $this->emit('cerrar-modal-infraestructura', ['editarInfraestructura' => true]);

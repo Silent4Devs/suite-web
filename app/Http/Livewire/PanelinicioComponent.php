@@ -11,20 +11,35 @@ class PanelinicioComponent extends Component
     use LivewireAlert;
 
     public $panel;
+
     public $id_registro;
+
     public $nombre_id;
+
     public $nempleado_id;
+
     public $area_id;
+
     public $jefe_id;
+
     public $puesto_id;
+
     public $perfil_id;
+
     public $fechaingreso_id;
+
     public $genero_id;
+
     public $estatusemp_id;
+
     public $correo_id;
+
     public $telefono_id;
+
     public $sede_id;
+
     public $dire_id;
+
     public $cumpleanos_id;
 
     public function mount()
@@ -166,14 +181,14 @@ class PanelinicioComponent extends Component
     public function callAlert($tipo, $mensaje, $bool, $test = '')
     {
         $this->alert($tipo, $mensaje, [
-            'position' =>  'top-end',
-            'timer' =>  2500,
-            'toast' =>  true,
-            'text' =>  $test,
-            'confirmButtonText' =>  'Entendido',
-            'cancelButtonText' =>  '',
-            'showCancelButton' =>  false,
-            'showConfirmButton' =>  $bool,
+            'position' => 'top-end',
+            'timer' => 2500,
+            'toast' => true,
+            'text' => $test,
+            'confirmButtonText' => 'Entendido',
+            'cancelButtonText' => '',
+            'showCancelButton' => false,
+            'showConfirmButton' => $bool,
         ]);
     }
 }

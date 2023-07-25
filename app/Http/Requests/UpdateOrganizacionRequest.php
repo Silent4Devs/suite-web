@@ -15,14 +15,14 @@ class UpdateOrganizacionRequest extends FormRequest
     public function rules()
     {
         return [
-            'empresa'    => [
+            'empresa' => [
                 'string',
                 'required',
             ],
-            'direccion'  => [
+            'direccion' => [
                 'required',
             ],
-            'telefono'   => [
+            'telefono' => [
                 'nullable',
                 'string',
                 'min:10',
@@ -32,11 +32,11 @@ class UpdateOrganizacionRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'giro'       => [
+            'giro' => [
                 'string',
                 'nullable',
             ],
-            'servicios'  => [
+            'servicios' => [
                 'string',
                 'nullable',
             ],

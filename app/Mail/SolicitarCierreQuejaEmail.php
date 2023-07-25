@@ -17,6 +17,7 @@ class SolicitarCierreQuejaEmail extends Mailable
      * @return void
      */
     public $quejas;
+
     public $evidencia;
 
     public function __construct(QuejasCliente $quejas, $evidencia = [])
@@ -32,6 +33,6 @@ class SolicitarCierreQuejaEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.accioncorrectiva.SolicitarCierreQueja')->subject('Solicitud de cierre de queja con folio ' . $this->quejas->folio);
+        return $this->view('mails.accioncorrectiva.SolicitarCierreQueja')->subject('Solicitud de cierre de queja con folio '.$this->quejas->folio);
     }
 }
