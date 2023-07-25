@@ -598,6 +598,16 @@ class TimesheetController extends Controller
             ]);
         }
 
+        dispatch(
+            new NuevoProyectoJob(
+                'marco.luna@silent4business.com',
+                $nuevo_proyecto->proyecto,
+                $nuevo_proyecto->identificador,
+                $nuevo_proyecto->cliente->nombre,
+                auth()->user()->empleado->name
+            )
+        );
+
         // return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
         return redirect('admin/timesheet/proyectos');
     }

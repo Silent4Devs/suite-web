@@ -89,13 +89,13 @@
                             <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size: 15pt;"
                                 title="Editar"></i>
                             </button>
-                            {{-- <a wire:click="bloquearEmpleado({{ $proyect_empleado->id }})" class="btn btn-sm">
+                            <a wire:click="bloquearEmpleado({{ $proyect_empleado->id }})" class="btn btn-sm">
                                 @if ($proyect_empleado->usuario_bloqueado == false)
                                     <i class="fas fa-unlock"></i>
                                 @else
                                     <i class="fas fa-lock"></i>
                                 @endif
-                            </a> --}}
+                            </a>
                             {{-- <button class="btn" data-toggle="modal"
                                 data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
                                 <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
