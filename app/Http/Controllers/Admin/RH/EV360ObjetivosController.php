@@ -40,7 +40,7 @@ class EV360ObjetivosController extends Controller
         }
 
         $areas = Area::getAll();
-        $puestos = Puesto::select('id', 'puesto')->get();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::select('id', 'nombre')->get();
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.index', compact('areas', 'puestos', 'perfiles'));

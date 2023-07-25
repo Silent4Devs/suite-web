@@ -38,9 +38,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
+use App\Traits\ObtenerOrganizacion;
 
 class DeskController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index()
     {
         abort_if(Gate::denies('centro_de_atencion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -100,13 +103,8 @@ class DeskController extends Controller
         $cerrados_sugerencias = Sugerencias::where('estatus', 'cerrado')->get()->count();
         $cancelados_sugerencias = Sugerencias::where('estatus', 'cancelado')->get()->count();
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.desk.index', compact(

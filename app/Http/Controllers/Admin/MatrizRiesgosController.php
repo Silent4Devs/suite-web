@@ -42,9 +42,11 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Traits\ObtenerOrganizacion;
 
 class MatrizRiesgosController extends Controller
 {
+    use ObtenerOrganizacion;
     /*public function index(Request $request)
     {
         /*abort_if(Gate::denies('matriz_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -395,13 +397,8 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.matrizRiesgos.index', compact('empresa_actual', 'logo_actual', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
@@ -480,13 +477,8 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgosSistemaGestion::count();
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.matrizSistemaGestion.index', compact('empresa_actual', 'logo_actual', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);

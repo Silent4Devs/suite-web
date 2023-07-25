@@ -11,9 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
+use App\Traits\ObtenerOrganizacion;
 
 class AnalisisAIAController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('matriz_bia_cuestionario_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -71,14 +74,10 @@ class AnalisisAIAController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
+
 
         return view('admin.analisis-aia.index', compact('logo_actual', 'empresa_actual'));
     }
@@ -148,12 +147,12 @@ class AnalisisAIAController extends Controller
         abort_if(Gate::denies('matriz_bia_cuestionario_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([
-//            'id' => ['required'],
+            //            'id' => ['required'],
             'fecha_entrevista' => ['required', 'date'],
             'entrevistado' => ['required'],
             'puesto' => ['required'],
             'area' => ['required'],
-//            'direccion' => ['required'],
+            //            'direccion' => ['required'],
             'extencion' => ['nullable', 'numeric'],
             'correo' => ['required'],
             'aplicaciones_a_cargo' => ['required'],
@@ -161,7 +160,7 @@ class AnalisisAIAController extends Controller
             'id_aplicacion' => ['required'],
             'nombre_aplicacion' => ['required'],
             'version' => ['required'],
-//            'tipo' => ['required'],
+            //            'tipo' => ['required'],
             'objetivo_aplicacion' => ['required'],
             'periodicidad' => ['required'],
             'p_otro_txt' => ['nullable'],
