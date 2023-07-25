@@ -41,7 +41,7 @@ class ReportesProyemp extends Component
     {
         $this->estatus = null;
         $this->areas = Area::getAll();
-        $this->emp = Empleado::orderBy('name', 'ASC')->get();
+        $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
         $this->proy = TimesheetProyecto::orderBy('proyecto', 'ASC')->get();
     }
 
