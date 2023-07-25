@@ -55,8 +55,8 @@
                     role="tab" aria-controls="nav-proyectos" aria-selected="false">
                     Proyectos
                 </a>
-                <a class="nav-link" id="nav-proyemp-tab" data-type="proyemp" data-toggle="tab"
-                    href="#nav-proyemp" role="tab" aria-controls="nav-proyemp" aria-selected="false">
+                <a class="nav-link" id="nav-proyemp-tab" data-type="proyemp" data-toggle="tab" href="#nav-proyemp"
+                    role="tab" aria-controls="nav-proyemp" aria-selected="false">
                     Registros Colaboradores-Tareas
                 </a>
             </div>

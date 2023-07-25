@@ -38,6 +38,13 @@ class Timesheet extends Model
         });
     }
 
+    public static function getAll()
+    {
+        return Cache::remember('timesheet-all', now()->addHours(24), function () {
+            return self::get();
+        });
+    }
+
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');
