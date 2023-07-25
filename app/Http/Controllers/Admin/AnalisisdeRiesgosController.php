@@ -12,9 +12,12 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Laracasts\Flash\Flash;
 use Yajra\DataTables\Facades\DataTables;
+use App\Traits\ObtenerOrganizacion;
 
 class AnalisisdeRiesgosController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function menu()
     {
         // abort_if(Gate::denies('menu_analisis_riesgo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -87,13 +90,9 @@ class AnalisisdeRiesgosController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.analisis-riesgos.index', compact('empresa_actual', 'logo_actual'));

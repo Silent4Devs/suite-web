@@ -14,9 +14,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
+use App\Traits\ObtenerOrganizacion;
 
 class VulnerabilidadController extends AppBaseController
 {
+    use ObtenerOrganizacion;
+
     /** @var VulnerabilidadRepository */
     private $vulnerabilidadRepository;
 
@@ -75,13 +78,9 @@ class VulnerabilidadController extends AppBaseController
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.vulnerabilidads.index', compact('logo_actual', 'empresa_actual'));

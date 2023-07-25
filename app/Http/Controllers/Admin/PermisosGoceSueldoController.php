@@ -10,9 +10,12 @@ use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use App\Traits\ObtenerOrganizacion;
 
 class PermisosGoceSueldoController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('reglas_goce_sueldo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -55,13 +58,9 @@ class PermisosGoceSueldoController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.permisosGoceSueldo.index', compact('logo_actual', 'empresa_actual'));
@@ -179,13 +178,9 @@ class PermisosGoceSueldoController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.permisosGoceSueldo.solicitudes', compact('logo_actual', 'empresa_actual'));
