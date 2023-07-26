@@ -19,12 +19,13 @@ class NuevoProyectoJob implements ShouldQueue
     public $cliente;
     public $empleado;
     public $email;
+    public $id;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($email, $proyecto, $identificador, $cliente, $empleado)
+    public function __construct($email, $proyecto, $identificador, $cliente, $empleado, $id)
     {
         //
         $this->email = $email;
@@ -32,6 +33,7 @@ class NuevoProyectoJob implements ShouldQueue
         $this->identificador = $identificador;
         $this->cliente = $cliente;
         $this->empleado = $empleado;
+        $this->id = $id;
     }
 
     /**
@@ -42,6 +44,7 @@ class NuevoProyectoJob implements ShouldQueue
     public function handle()
     {
         //
-        Mail::to($this->email)->send(new NotificacionNuevoProyecto($this->proyecto, $this->identificador, $this->cliente, $this->empleado));
+        Mail::to($this->email)
+        ->send(new NotificacionNuevoProyecto($this->proyecto, $this->identificador, $this->cliente, $this->empleado, $this->id));
     }
 }

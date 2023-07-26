@@ -21,6 +21,7 @@ use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetTarea;
 use App\Services\DashboardService;
 use App\Services\TimesheetService;
+use App\Jobs\NuevoProyectoJob;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -600,11 +601,12 @@ class TimesheetController extends Controller
 
         dispatch(
             new NuevoProyectoJob(
-                'marco.luna@silent4business.com',
+                'karen.rodriguez@silent4business.com',
                 $nuevo_proyecto->proyecto,
                 $nuevo_proyecto->identificador,
                 $nuevo_proyecto->cliente->nombre,
-                auth()->user()->empleado->name
+                auth()->user()->empleado->name,
+                $nuevo_proyecto->id
             )
         );
 

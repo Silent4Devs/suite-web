@@ -188,9 +188,14 @@
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; fontcolor:#153643;">
-                                                Se le comunica que el colaborador: <strong>{{ $empleado->name }} </strong> ha creado el proyecto <span style="text-transform: lowercase !important;">{{$proyecto}}</span>
+                                                Se le comunica que el colaborador: <strong>{{ $empleado }} </strong> ha creado el proyecto <strong>{{$proyecto}}</strong>
                                                 con el identificador: <strong>{{ $identificador }}</strong>, para el cliente: <strong>{{$cliente}}</strong>
                                             </p>
+                                        </div>
+                                        <div style="text-align:center; margin-top:20px">
+                                            <a  href="{{ asset('admin/timesheet/proyectos/edit/'.$id) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                                Ver Proyecto
+                                            </a>
                                         </div>
                                     </td>
 
