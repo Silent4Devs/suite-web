@@ -6,10 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class HistorialVersionesDocumento extends Model
+class HistorialVersionesDocumento extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $dates = ['fecha'];
 
@@ -109,7 +111,7 @@ class HistorialVersionesDocumento extends Model
             $archivo = str_replace('-publicado', '', $this->archivo);
         }
 
-        return asset($path_documento.'/'.$archivo);
+        return asset($path_documento . '/' . $archivo);
     }
 
     public function getCambiosAttribute()
