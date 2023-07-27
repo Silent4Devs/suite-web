@@ -50,7 +50,7 @@ class ReportesRegistros extends Component
     {
         $this->estatus = null;
         $this->areas = Area::getAll();
-        $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
+        // $this->emp = Empleado::alta()->orderBy('name', 'ASC')->get();
     }
 
     public function updatedFechaInicio($value)
@@ -81,7 +81,13 @@ class ReportesRegistros extends Component
 
     public function updatedAreaId($value)
     {
-        $this->area_id = $value;
+        if($value == 0){
+            $this->area_id = $value;
+            $this->emp = 0;
+        }else{
+            $this->area_id = $value;
+        }
+
 
         // $this->times = Timesheet::whereHas('empleado', function ($query) {
         //     if ($this->area_id == 0) {
@@ -108,6 +114,13 @@ class ReportesRegistros extends Component
     public function render()
     {
         //Query para obtener los timesheet y filtrarlo
+        if($this->area_id == 0){
+            $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
+        }else{
+            $this->emp = Empleado::where('area_id', $this->area_id)->alta()->orderBy('name', 'ASC')->get();
+        }
+        $empleados = $this->emp;
+
         $query = Timesheet::orderByDesc('fecha_dia')
             ->whereHas('empleado', function ($query) {
                 if ($this->emp_id == 0) {
@@ -136,7 +149,7 @@ class ReportesRegistros extends Component
 
         $this->emit('scriptTabla');
 
-        return view('livewire.timesheet.reportes-registros', compact('times'));
+        return view('livewire.timesheet.reportes-registros', compact('times', 'empleados'));
     }
 
     public function establecerContadores()

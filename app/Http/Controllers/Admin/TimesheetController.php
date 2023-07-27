@@ -20,6 +20,7 @@ use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetTarea;
 use App\Services\TimesheetService;
 use App\Traits\ObtenerOrganizacion;
+use App\Jobs\NuevoProyectoJob;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -588,6 +589,17 @@ class TimesheetController extends Controller
                 'area_id' => $area_id,
             ]);
         }
+
+        dispatch(
+            new NuevoProyectoJob(
+                'marco.luna@silent4business.com',
+                $nuevo_proyecto->proyecto,
+                $nuevo_proyecto->identificador,
+                $nuevo_proyecto->cliente->nombre,
+                auth()->user()->empleado->name,
+                $nuevo_proyecto->id
+            )
+        );
 
         // return redirect('admin/timesheet/proyecto-empleados/' . $nuevo_proyecto->id);
         return redirect('admin/timesheet/proyectos');
