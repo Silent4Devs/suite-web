@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class PartesInteresadasClausula.
@@ -15,8 +16,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property Clausula $clausula
  * @property PartesInteresada $partes_interesada
  */
-class PartesInteresadasClausula extends Model
+class PartesInteresadasClausula extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'partes_interesadas_clausula';
 
     protected $casts = [

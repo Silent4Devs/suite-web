@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class ProcesosActivosInformacion.
@@ -20,8 +17,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property Proceso|null $proceso
  * @property ActivosInformacion|null $activos_informacion
  */
-class ProcesosActivosInformacion extends Model
+class ProcesosActivosInformacion extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'procesos_activos_informacion';
 
     protected $casts = [

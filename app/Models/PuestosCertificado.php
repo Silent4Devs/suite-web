@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class PuestosCertificado.
@@ -15,8 +16,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property timestamp without time zone|null $updated_at
  * @property Puesto|null $puesto
  */
-class PuestosCertificado extends Model
+class PuestosCertificado extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'puestos_certificados';
 
     protected $fillable = [

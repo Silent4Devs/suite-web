@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class MatrizIso31000.
@@ -26,8 +27,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property Proceso|null $proceso
  * @property AnalisisDeRiesgo|null $analisis_de_riesgo
  */
-class MatrizIso31000 extends Model
+class MatrizIso31000 extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'matriz_iso31000';
 
     protected $casts = [

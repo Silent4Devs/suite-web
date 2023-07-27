@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Team extends Model
+class Team extends Model implements Auditable
 {
-    use SoftDeletes, Auditable, HasFactory;
+    use SoftDeletes,  HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'teams';
 
@@ -37,7 +38,7 @@ class Team extends Model
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format').' '.config('panel.time_format'));
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
         $this->save();
     }
 

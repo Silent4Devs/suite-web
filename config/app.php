@@ -182,6 +182,7 @@ return [
         Spatie\Geocoder\GeocoderServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
     ],
 
     /*

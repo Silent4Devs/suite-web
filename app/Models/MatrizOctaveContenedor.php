@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class MatrizOctaveContenedor extends Model
+class MatrizOctaveContenedor extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'matriz_octave_contenedores';
 
@@ -51,7 +53,7 @@ class MatrizOctaveContenedor extends Model
 
     public function getNameAttribute()
     {
-        return $this->identificador_contenedor.' '.$this->nom_contenedor;
+        return $this->identificador_contenedor . ' ' . $this->nom_contenedor;
     }
 
     public function getContentAttribute()

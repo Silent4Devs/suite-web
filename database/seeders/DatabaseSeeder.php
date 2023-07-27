@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
                 // VacacionesPermisosSeeder::class,
                 // PermisosBIASeeder::class,
                 // AjustesAIASeeder::class,
-                // VersionIsoHistoricoSeeder::class,
+                VersionIsoHistoricoSeeder::class,
                 // GapUnoCatalogoIsoSeeder::class,
                 // GapTresCatalogoIsoSeeder::class,
                 // ClasificacionSeeder::class,
@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
                 // Declaracion_aplicabilidad_aprobador_Seeder::class,
                 // PermissionVersionesIso::class,
                 // PermissionsAgregarEmpExtProyectos::class,
-                PermisosDashboardTimesheet::class,
+                //PermisosDashboardTimesheet::class,
             ]
         );
     }

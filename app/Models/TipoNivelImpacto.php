@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class TipoNivelImpacto.
@@ -17,8 +18,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property TablaImpacto|null $tabla_impacto
  * @property NivelesImpacto|null $niveles_impacto
  */
-class TipoNivelImpacto extends Model
+class TipoNivelImpacto extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'tipo_nivel_impacto';
 
     protected $casts = [

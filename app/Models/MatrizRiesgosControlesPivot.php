@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class MatrizRiesgosControlesPivot.
@@ -16,8 +17,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property DeclaracionAplicabilidad $declaracion_aplicabilidad
  * @property MatrizRiesgo $matriz_riesgo
  */
-class MatrizRiesgosControlesPivot extends Model
+class MatrizRiesgosControlesPivot extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'matriz_riesgos_controles_pivot';
 
     protected $casts = [

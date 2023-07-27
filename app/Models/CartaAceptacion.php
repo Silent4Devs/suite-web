@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class CartaAceptacion.
@@ -43,8 +44,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property Empleado|null $empleado
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  */
-class CartaAceptacion extends Model
+class CartaAceptacion extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'carta_aceptacion';
 
     protected $casts = [

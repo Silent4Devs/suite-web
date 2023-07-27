@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Area.
@@ -33,9 +34,10 @@ use Illuminate\Support\Facades\Cache;
  * @property Collection|MaterialSgsi[] $material_sgsis
  * @property Collection|User[] $users
  */
-class Area extends Model
+class Area extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory, Filterable;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'areas';
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class AmenazasEntendimientoOrganizacion.
@@ -16,8 +17,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * @property EntendimientoOrganizacion|null $entendimiento_organizacion
  */
-class AmenazasEntendimientoOrganizacion extends Model
+class AmenazasEntendimientoOrganizacion extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'amenazas_entendimiento_organizacion';
 
     protected $casts = [
