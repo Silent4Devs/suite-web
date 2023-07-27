@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class AnalisisDeRiesgo.
@@ -23,9 +24,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Empleado|null $empleado
  * @property Collection|MatrizRiesgo[] $matriz_riesgos
  */
-class AnalisisDeRiesgo extends Model
+class AnalisisDeRiesgo extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'analisis_de_riesgo';
 

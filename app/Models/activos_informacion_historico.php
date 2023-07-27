@@ -6,10 +6,12 @@ use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class activos_informacion_historico extends Model
+class activos_informacion_historico extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'activos_informacion_historicos';
 
@@ -119,7 +121,7 @@ class activos_informacion_historico extends Model
 
     public function getNameAttribute()
     {
-        return $this->identificador.' '.$this->activo_informacion;
+        return $this->identificador . ' ' . $this->activo_informacion;
     }
 
     public function getContentAttribute()
