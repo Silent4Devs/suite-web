@@ -9,7 +9,7 @@
 
 
     <x-loading-indicator />
-    <div class="row" wire:ignore>
+    <div class="row">
         <div class="col-md-4 form-group" style="padding-left:0px !important;">
             <label class="form-label">Área</label>
             <select class="form-control" wire:model="area_id">
@@ -28,7 +28,7 @@
             <input class="form-control date_librery" type="date" name="fecha_fin" wire:model="fecha_fin">
         </div>
     </div>
-    <div class="row" wire:ignore>
+    <div class="row">
         <div class="col-md-4 form-group" style="padding-left:0px !important;">
             <label class="form-label">Colaborador</label>
             <select class="form-control" wire:model="emp_id">
