@@ -452,13 +452,13 @@
             </li>
         @endcan
 
-        <li class="c-sidebar-nav-item">
+        {{--  <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->is('admin/contratos') ? 'active' : '' }}"
                 href="{{ route('admin.contratos.index') }}#contexto">
                 <i class="bi bi-file-text iconos_menu letra_blanca"></i>
                 <font class="letra_blanca">Sistema de Contratos</font>
             </a>
-        </li>
+        </li>  --}}
         {{-- <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->is('admin/iso9001') ? 'active' : '' }}"
                 href="{{ route('admin.iso9001.index') }}#contexto">
