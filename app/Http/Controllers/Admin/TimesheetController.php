@@ -601,7 +601,7 @@ class TimesheetController extends Controller
 
         dispatch(
             new NuevoProyectoJob(
-                'karen.rodriguez@silent4business.com',
+                'marco.luna@silent4business.com',
                 $nuevo_proyecto->proyecto,
                 $nuevo_proyecto->identificador,
                 $nuevo_proyecto->cliente->nombre,
