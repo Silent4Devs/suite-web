@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class AnalisisDeRiesgo.
@@ -21,17 +20,13 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Empleado|null $empleado
  * @property Collection|MatrizRiesgo[] $matriz_riesgos
  */
 class AnalisisDeRiesgo extends Model
 {
     use SoftDeletes;
-    // use QueryCacheable;
 
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
     protected $table = 'analisis_de_riesgo';
 
     protected $casts = [

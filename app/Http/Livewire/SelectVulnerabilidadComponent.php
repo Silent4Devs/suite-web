@@ -9,8 +9,11 @@ use Livewire\Component;
 class SelectVulnerabilidadComponent extends Component
 {
     public $nombre;
+
     public $descripcion;
+
     public $valorAmenaza;
+
     protected $listeners = ['render' => 'render'];
 
     public function render()

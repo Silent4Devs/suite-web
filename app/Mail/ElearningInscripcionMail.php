@@ -9,6 +9,7 @@ use Illuminate\Queue\SerializesModels;
 class ElearningInscripcionMail extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $empleado;
 
     /**

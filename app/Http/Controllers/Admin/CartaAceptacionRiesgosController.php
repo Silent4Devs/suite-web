@@ -86,7 +86,7 @@ class CartaAceptacionRiesgosController extends Controller
 
     public function create(Request $request)
     {
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $directoresRiesgo = $responsables;
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;
@@ -173,7 +173,7 @@ class CartaAceptacionRiesgosController extends Controller
     public function edit($cartaAceptacion)
     {
         $cartaAceptacion = CartaAceptacion::find($cartaAceptacion);
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $directoresRiesgo = $responsables;
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;
@@ -189,7 +189,7 @@ class CartaAceptacionRiesgosController extends Controller
         $cartaAceptacion = CartaAceptacion::with(['aprobaciones' => function ($query) {
             $query->with('empleado', 'aprobacionesActivo')->orderBy('nivel');
         }])->find($cartaAceptacion);
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $directoresRiesgo = $responsables;
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;
@@ -202,7 +202,7 @@ class CartaAceptacionRiesgosController extends Controller
         $miAprobacion = $cartaAceptacion->aprobaciones->filter(function ($item) {
             return $item->aprobador_id == auth()->user()->empleado->id;
         });
-        $route = 'storage/cartasAceptacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->id) . '/';
+        $route = 'storage/cartasAceptacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->id).'/';
         // dd($cartaAceptacion->aprobaciones);
         $aprobadores = $cartaAceptacion->aprobaciones;
 
@@ -260,18 +260,18 @@ class CartaAceptacionRiesgosController extends Controller
     {
         // dd($request->all());
         $cartaAceptacion = CartaAceptacionAprobacione::where('aprobador_id', auth()->user()->empleado->id)->where('autoridad', $request->autoridad)->first();
-        $existsFolderFirmasCartas = Storage::exists('public/cartasAceptacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->carta_id));
-        if (!$existsFolderFirmasCartas) {
-            Storage::makeDirectory('public/cartasAceptacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->carta_id));
+        $existsFolderFirmasCartas = Storage::exists('public/cartasAceptacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->carta_id));
+        if (! $existsFolderFirmasCartas) {
+            Storage::makeDirectory('public/cartasAceptacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->carta_id));
         }
 
         if (isset($request->firma)) {
             if (preg_match('/^data:image\/(\w+);base64,/', $request->firma)) {
                 $value = substr($request->firma, strpos($request->firma, ',') + 1);
                 $value = base64_decode($value);
-                $new_name_image = 'FirmaAutoridad' . $cartaAceptacion->carta_id . auth()->user()->empleado->id . time() . '.png';
+                $new_name_image = 'FirmaAutoridad'.$cartaAceptacion->carta_id.auth()->user()->empleado->id.time().'.png';
                 $image = $new_name_image;
-                $route = 'public/cartasAceptacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->carta_id) . '/' . $new_name_image;
+                $route = 'public/cartasAceptacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->carta_id).'/'.$new_name_image;
                 Storage::put($route, $value);
                 $cartaAceptacion->update([
                     'comentarios' => $request->comentarios,
@@ -306,7 +306,7 @@ class CartaAceptacionRiesgosController extends Controller
                 foreach ($aprobadores as $aprobador) {
                     foreach ($aprobador->aprobacionesActivo as $aprobacionActivo) {
                         if ($activo->id == $aprobacionActivo->activoInformacion_id) {
-                            if (!$aprobacionActivo->aceptado) {
+                            if (! $aprobacionActivo->aceptado) {
                                 array_push($activosRechazados, false);
                             }
                         }
@@ -315,7 +315,7 @@ class CartaAceptacionRiesgosController extends Controller
             }
 
             $rechazado = $cartaAceptacionModel->proceso->proceso->activosAI->count() == count($activosRechazados);
-            if (!$rechazado) {
+            if (! $rechazado) {
                 $siguienteNivel = $cartaAceptacion->nivel + 1;
                 $siguienteCarta = CartaAceptacionAprobacione::where('carta_id', $cartaAceptacion->carta_id)->where('nivel', $siguienteNivel)->first();
                 if ($siguienteCarta) {

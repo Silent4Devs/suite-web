@@ -19,7 +19,7 @@ class OrganizacionController extends Controller
 
     public function index(Request $request)
     {
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
 
         if (empty($organizacions)) {
             $count = Organizacion::get()->count();
@@ -33,7 +33,7 @@ class OrganizacionController extends Controller
             $logotipo_organizacion = $organizacions->logotipo;
             $logotipo = 'img/logotipo-tabantaj.png';
             if ($logotipo_organizacion) {
-                $logotipo = 'images/' . $logotipo_organizacion;
+                $logotipo = 'images/'.$logotipo_organizacion;
             }
 
             return view('frontend.organizacions.index')->with('organizacion', $organizacions)->with('count', $count)->with('empty', $empty)->with('logotipo', $logotipo);
@@ -77,11 +77,11 @@ class OrganizacionController extends Controller
             ]);
         }
         $image = 'silent4business.png';
-        if ($request->file('logotipo') != null or !empty($request->file('logotipo'))) {
+        if ($request->file('logotipo') != null or ! empty($request->file('logotipo'))) {
             $extension = pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $organizacions->id . '_' . $name_image . '.' . $extension;
-            $route = public_path() . '/images/' . $new_name_image;
+            $name_image = basename(pathinfo($request->file('logotipo')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+            $new_name_image = 'UID_'.$organizacions->id.'_'.$name_image.'.'.$extension;
+            $route = public_path().'/images/'.$new_name_image;
             $image = $new_name_image;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('logotipo'));

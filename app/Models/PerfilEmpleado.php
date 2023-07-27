@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PerfilEmpleado extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $table = 'perfil_empleados';
     // protected $guarded = ['id'];
 

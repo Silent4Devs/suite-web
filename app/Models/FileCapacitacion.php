@@ -12,7 +12,9 @@ class FileCapacitacion extends Model
     use DateTranslator;
 
     protected $table = 'files_capacitaciones';
+
     protected $fillable = ['archivo', 'recurso_id'];
+
     protected $appends = ['ruta_archivo'];
 
     public function getRutaArchivoAttribute()

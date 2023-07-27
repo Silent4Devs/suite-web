@@ -11,7 +11,9 @@ class MatrizOctaveContenedor extends Model
     use SoftDeletes;
 
     protected $table = 'matriz_octave_contenedores';
+
     protected $appends = ['name', 'content', 'color'];
+
     protected $fillable = [
         'identificador_contenedor',
         'nom_contenedor',
@@ -49,7 +51,7 @@ class MatrizOctaveContenedor extends Model
 
     public function getNameAttribute()
     {
-        return $this->identificador_contenedor . ' ' . $this->nom_contenedor;
+        return $this->identificador_contenedor.' '.$this->nom_contenedor;
     }
 
     public function getContentAttribute()

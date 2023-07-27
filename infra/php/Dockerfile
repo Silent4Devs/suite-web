@@ -24,10 +24,10 @@ RUN apk add --no-cache \
     openssh-client \
     postgresql-libs \
     rsync \
-    zlib-dev \ 
+    zlib-dev \
     sudo \
     zip \
-    unzip  
+    unzip
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
@@ -48,7 +48,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     zip \
     apcu \
     opcache \
-    sockets 
+    sockets
 
 # Copy custom php.ini
 COPY php.ini /usr/local/etc/php/php.ini
@@ -62,3 +62,4 @@ RUN chown -R www-data:www-data /var/www \
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
     CMD curl --fail http://localhost/ || exit 1
+

@@ -10,8 +10,11 @@ use Livewire\Component;
 class Ev360EvaluadosSelect extends Component
 {
     protected $listeners = ['grupoEvaluadosSaved' => 'render'];
+
     public $evaluados_objetivo;
+
     public $habilitarSelectManual = false;
+
     public $habilitarSelectAreas = false;
 
     public function habilitarSelectAlternativo()
@@ -31,7 +34,7 @@ class Ev360EvaluadosSelect extends Component
     public function render()
     {
         $grupos_evaluados = GruposEvaluado::get();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $areas = Area::getAll();
 
         return view('livewire.ev360-evaluados-select', ['grupos_evaluados' => $grupos_evaluados, 'areas' => $areas, 'empleados' => $empleados]);

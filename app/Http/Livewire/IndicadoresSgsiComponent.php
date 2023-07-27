@@ -4,39 +4,62 @@ namespace App\Http\Livewire;
 
 use App\Models\Empleado;
 use App\Models\EvaluacionIndicador;
+use App\Models\IndicadoresSgsi;
 use App\Models\Proceso;
 use App\Models\VariablesIndicador;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
-use App\Models\IndicadoresSgsi;
 
 class IndicadoresSgsiComponent extends Component
 {
     use LivewireAlert;
 
     public $nombre;
+
     public $description;
+
     public $formula;
+
     public $frecuencia;
+
     public $unidadmedida;
+
     public $meta;
+
     public $no_revisiones;
+
     public $resultado;
+
     public $id_empleado;
+
     public $id_proceso;
+
     public $indicadoresSgsis;
+
     public $inpvar;
+
     public $view = 'create';
+
     public $formSlugs;
+
     public $customFields;
+
     public $fecha;
+
     public $id_evaluacion;
+
     public $variable;
+
     public $valor;
+
     public $formula_calcular;
+
     public $value;
+
     public $remplazo_formula;
+
     public $evaluacion;
+
     protected $rules = [
         'evaluacion' => 'required',
         'fecha' => 'required',
@@ -67,7 +90,7 @@ class IndicadoresSgsiComponent extends Component
                 if (strstr($result, '$')) {
                     array_push($finish_array, $result);
                 }
-            };
+            }
         } else {
             foreach ($inpvar as $result) {
                 array_push($finish_array, $result);
@@ -87,7 +110,7 @@ class IndicadoresSgsiComponent extends Component
 
     public function render()
     {
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $procesos = Proceso::getAll();
         $evaluaciones = EvaluacionIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->get();
 
@@ -116,7 +139,7 @@ class IndicadoresSgsiComponent extends Component
         $formula_final = str_replace($variables, $valores, $formula_sustitucion);
 
         try {
-            $result = eval('return ' . $formula_final . ';');
+            $result = eval('return '.$formula_final.';');
         } catch (\Throwable $th) {
             if ($th->getMessage() == 'Division by zero') {
                 $result = 0;
@@ -165,7 +188,7 @@ class IndicadoresSgsiComponent extends Component
         $formula_final = str_replace($variables, $valores, $formula_sustitucion);
         //dd($this->formSlugs, $variables, $valores, str_replace(".", "",$formula_final));
         try {
-            $result = eval('return ' . $formula_final . ';');
+            $result = eval('return '.$formula_final.';');
         } catch (\Throwable $th) {
             if ($th->getMessage() == 'Division by zero') {
                 $result = 0;

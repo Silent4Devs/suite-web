@@ -15,12 +15,12 @@ class UpdatePlanaccionCorrectivaRequest extends FormRequest
     public function rules()
     {
         return [
-            'actividad'       => [
+            'actividad' => [
                 'string',
                 'required',
             ],
             'fechacompromiso' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
         ];

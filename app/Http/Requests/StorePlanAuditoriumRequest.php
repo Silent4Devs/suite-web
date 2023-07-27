@@ -19,10 +19,10 @@ class StorePlanAuditoriumRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'auditados.*'   => [
+            'auditados.*' => [
                 'integer',
             ],
-            'auditados'     => [
+            'auditados' => [
                 'array',
             ],
         ];

@@ -26,7 +26,7 @@ class OrganizacionController extends Controller
     {
         abort_if(Gate::denies('mi_organizacion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
 
         $schedule = collect();
         if ($organizacions) {
@@ -236,7 +236,7 @@ class OrganizacionController extends Controller
 
     public function visualizarOrganizacion()
     {
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
         // dd($organizacions);
         $schedule = collect();
         if ($organizacions) {
@@ -282,16 +282,16 @@ class OrganizacionController extends Controller
                             $dataModel = $model->first();
 
                             $dataModel->update([
-                                'working_day'  => $w['day'][$i],
-                                'start_work_time' =>  $w['start_time'][$i],
+                                'working_day' => $w['day'][$i],
+                                'start_work_time' => $w['start_time'][$i],
                                 'end_work_time' => $w['end_time'][$i],
 
                             ]);
                         }
                     } else {
                         $schedule = Schedule::create([
-                            'working_day'  => $w['day'][$i],
-                            'start_work_time' =>  $w['start_time'][$i],
+                            'working_day' => $w['day'][$i],
+                            'start_work_time' => $w['start_time'][$i],
                             'end_work_time' => $w['end_time'][$i],
                             'organizacions_id' => $id,
                         ]);

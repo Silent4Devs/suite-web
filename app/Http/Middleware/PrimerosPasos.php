@@ -19,7 +19,6 @@ class PrimerosPasos
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
@@ -31,11 +30,11 @@ class PrimerosPasos
         $existsPuesto = Puesto::exists();
         $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
         if (
-            !$existsEmpleado ||
-            !$existsOrganizacion ||
-            !$existsAreas ||
-            !$existsPuesto ||
-            !$existsVinculoEmpleadoAdmin
+            ! $existsEmpleado ||
+            ! $existsOrganizacion ||
+            ! $existsAreas ||
+            ! $existsPuesto ||
+            ! $existsVinculoEmpleadoAdmin
         ) {
             return redirect()->route('admin.inicio-Usuario.index');
         }

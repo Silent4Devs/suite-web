@@ -9,7 +9,9 @@ use Livewire\Component;
 class PuestoCreate extends Component
 {
     public $puesto;
+
     public $descripcion;
+
     protected $rules = [
         'puesto' => 'required|string|max:255',
         'descripcion' => 'nullable|string|max:1500',

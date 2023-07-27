@@ -15,7 +15,7 @@ class StoreComiteseguridadRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombrerol'  => [
+            'nombrerol' => [
                 'string',
                 'required',
             ],

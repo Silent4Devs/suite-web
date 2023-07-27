@@ -23,100 +23,94 @@
         p {
             font-family: Arial, sans-serif;
         }
-
     </style>
     <style>
-
-    /* Remove space around the email design. */
-
-
-
-    html,
+        /* Remove space around the email design. */
 
 
 
-    body {
+        html,
 
 
 
-        margin: 0 auto !important;
+        body {
 
 
 
-        padding: 0 !important;
+            margin: 0 auto !important;
 
 
 
-        height: 100% !important;
+            padding: 0 !important;
 
 
 
-        width: 100% !important;
-
-    }
+            height: 100% !important;
 
 
 
-    /* Stop Outlook resizing small text. */
+            width: 100% !important;
 
-    * {
-
-        -ms-text-size-adjust: 100%;
-
-    }
+        }
 
 
 
+        /* Stop Outlook resizing small text. */
 
-    /* Stop Outlook from adding extra spacing to tables. */
+        * {
 
-    table,
+            -ms-text-size-adjust: 100%;
 
-    td {
-
-        mso-table-lspace: 0pt !important;
-
-        mso-table-rspace: 0pt !important;
-
-    }
-
-
-
-    /* Use a better rendering method when resizing images in Outlook IE. */
-
-
-
-    img {
-
-        -ms-interpolation-mode: bicubic;
-
-    }
+        }
 
 
 
 
-    /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+        /* Stop Outlook from adding extra spacing to tables. */
+
+        table,
+
+        td {
+
+            mso-table-lspace: 0pt !important;
+
+            mso-table-rspace: 0pt !important;
+
+        }
 
 
 
-    a {
+        /* Use a better rendering method when resizing images in Outlook IE. */
 
 
 
-        text-decoration: none;
+        img {
+
+            -ms-interpolation-mode: bicubic;
+
+        }
 
 
 
-    }
+
+        /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
 
 
 
-</style>
+        a {
+
+
+
+            text-decoration: none;
+
+
+
+        }
+    </style>
 </head>
 
 <body style="margin:0;padding:0;">
-    <table role="presentation"
-        style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
         <tr>
             <td align="center" style="padding:0;">
                 <table role="presentation"
@@ -142,15 +136,15 @@
                                     </div>
 
                                     @php
-
+                                        
                                         use App\Models\Organizacion;
-
-                                        $organizacion = Organizacion::first();
-
+                                        
+                                        $organizacion = Organizacion::getFirst();
+                                        
                                         $logotipo = $organizacion->logotipo;
-
+                                        
                                         $empresa = $organizacion->empresa;
-
+                                        
                                     @endphp
 
                                     <td style="padding:0 0 36px 0;">
@@ -161,8 +155,8 @@
                                         </div>
 
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img width="240" src="{{ asset('img/pastel_cumple.png') }}" class="mt-2 ml-4"
-                                                style="width:240px;">
+                                            <img width="240" src="{{ asset('img/pastel_cumple.png') }}"
+                                                class="mt-2 ml-4" style="width:240px;">
                                         </div>
 
                                         <strong>
@@ -173,20 +167,21 @@
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; color:#153643;text-align: left;">
 
-                                                <div>
-                                                    A nombre de <span style="color:#4580ff;font-weight: bold;">{{$empresa}}</span>
-                                                    te deseamos otro año
-                                                    de grandes oportunidades, logros
-                                                    y crecimiento personal.
-                                                </div>
+                                            <div>
+                                                A nombre de <span
+                                                    style="color:#4580ff;font-weight: bold;">{{ $empresa }}</span>
+                                                te deseamos otro año
+                                                de grandes oportunidades, logros
+                                                y crecimiento personal.
+                                            </div>
 
-                                                <br>
+                                            <br>
 
-                                                <div>
-                                                    Que hoy sea un día lleno de alegría,
-                                                    rodeado de tus seres queridos y que recibas muchos abrazos
-                                                    y buenos deseos.
-                                                </div>
+                                            <div>
+                                                Que hoy sea un día lleno de alegría,
+                                                rodeado de tus seres queridos y que recibas muchos abrazos
+                                                y buenos deseos.
+                                            </div>
                                             </p>
                                         </div>
                                     </td>
@@ -196,17 +191,17 @@
                         </td>
                     </tr>
                     <tr>
-                         <td style="padding:10px;background:#fff;">
+                        <td style="padding:10px;background:#fff;">
 
                             <table role="presentation"
-
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:30;font-size:9px;font-family:Arial,sans-serif;">
 
                                 <tr>
 
                                     <td style="padding:0;width:30%;" align="left">
 
-                                        <div style="width: 100%; height: 80px; background-color: #1288b6;
+                                        <div
+                                            style="width: 100%; height: 80px; background-color: #1288b6;
                                         text-align: center;">
                                             &nbsp;
                                         </div>
@@ -232,4 +227,5 @@
         </tr>
     </table>
 </body>
+
 </html>

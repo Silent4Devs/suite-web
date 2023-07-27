@@ -22,5 +22,4 @@ class TimesheetProyectoProveedor extends Model
     {
         return $this->belongsTo(TimesheetProyecto::class, 'proyecto_id');
     }
-
 }

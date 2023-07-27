@@ -10,7 +10,9 @@ class EvaluacionRequisitoLegal extends Model
     use HasFactory;
 
     public $cacheFor = 3600;
+
     protected static $flushCacheOnUpdate = true;
+
     protected $table = 'evaluacion_requisito_legal';
 
     protected $dates = [
@@ -18,6 +20,7 @@ class EvaluacionRequisitoLegal extends Model
         'updated_at',
         'deleted_at',
     ];
+
     protected $fillable = [
         'id',
         'cumplerequisito',

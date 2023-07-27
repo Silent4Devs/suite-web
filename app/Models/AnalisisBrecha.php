@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Empleado|null $empleado
  * @property Collection|GapLogroTre[] $gap_logro_tres
  * @property Collection|GapLogroDo[] $gap_logro_dos

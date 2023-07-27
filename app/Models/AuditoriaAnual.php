@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
-use App\Traits\MultiTenantModelTrait;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 
 class AuditoriaAnual extends Model
 {
@@ -40,7 +40,7 @@ class AuditoriaAnual extends Model
         'deleted_at',
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
         return Cache::remember('auditoriaanual_all', 3600 * 24, function () {

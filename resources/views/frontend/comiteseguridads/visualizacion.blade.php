@@ -46,7 +46,6 @@
             max-width: 140px !important;
             min-width: 140px !important;
         }
-
     </style>
 @endsection
 {{-- {{ Breadcrumbs::render('frontend.comiteseguridads.visualizacion') }} --}}
@@ -57,7 +56,7 @@
 
             @php
                 use App\Models\Organizacion;
-                $organizacion = Organizacion::first();
+                $organizacion = Organizacion::getFirst();
                 $logotipo = $organizacion->logotipo;
             @endphp
             <img src="{{ asset($logotipo) }}" class="logo_organizacion_politica">

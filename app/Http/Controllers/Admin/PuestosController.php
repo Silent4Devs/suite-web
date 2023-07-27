@@ -118,7 +118,7 @@ class PuestosController extends Controller
 
         $lenguajes = (json_decode($json));
         $areas = Area::getAll();
-        $reportas = Empleado::alta()->get();
+        $reportas = Empleado::getaltaAll();
         $idis = Language::all();
         $competencias = Competencia::getAll();
         $responsabilidades = PuestoResponsabilidade::get();
@@ -126,7 +126,7 @@ class PuestosController extends Controller
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
         $puesto = Puesto::getAll();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $perfiles = PerfilEmpleado::all();
         $puestos = Puesto::getAll();
         $externos = ContactosExternosPuestos::all();
@@ -196,7 +196,7 @@ class PuestosController extends Controller
         // $this->saveOrUpdateSchedule($request, $puesto);
         $lenguajes = (json_decode($json));
         $areas = Area::getAll();
-        $reportas = Empleado::alta()->get();
+        $reportas = Empleado::getaltaAll();
         $puesto->load(['contactos' => function ($query) {
             $query->with(['puesto' => function ($query) {
                 $query->with('area');
@@ -212,7 +212,7 @@ class PuestosController extends Controller
         $certificados = PuestosCertificado::get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $language = PuestoIdiomaPorcentajePivot::get();
         $puestos = Puesto::getAll();
         $externos = ContactosExternosPuestos::all();
@@ -225,7 +225,7 @@ class PuestosController extends Controller
         abort_if(Gate::denies('puestos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $puesto->update($request->all());
         $request->validate([
-            'puesto' => 'required|unique:puestos,puesto,' . $puesto->id,
+            'puesto' => 'required|unique:puestos,puesto,'.$puesto->id,
         ]);
         // $this->saveUpdateResponsabilidades($request->responsabilidades, $puesto);
         // $this->saveOrUpdateLanguage($request, $puesto);
@@ -253,7 +253,7 @@ class PuestosController extends Controller
         $idiomas = PuestoIdiomaPorcentajePivot::where('id_puesto', '=', $puesto->id)->get();
         $herramientas = HerramientasPuestos::get();
         $contactos = PuestoContactos::get();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $areas = Area::getAll();
 
         return view('admin.puestos.show', compact('puesto', 'idiomas', 'competencias', 'responsabilidades', 'certificados', 'idiomas', 'herramientas', 'contactos', 'empleados', 'areas'));
@@ -284,7 +284,7 @@ class PuestosController extends Controller
 
     public function saveOrUpdateLanguage($languajes, $puesto)
     {
-        if (!is_null($languajes)) {
+        if (! is_null($languajes)) {
             foreach ($languajes as $languaje) {
                 // dd($languaje);
                 // dd(PuestoResponsabilidade::exists($languaje['id']));
@@ -292,14 +292,14 @@ class PuestosController extends Controller
                     PuestoIdiomaPorcentajePivot::find($languaje['id'])->update([
                         'id_language' => $languaje['language'],
                         'porcentaje' => $languaje['porcentaje'],
-                        'nivel' =>  $languaje['nivel'],
+                        'nivel' => $languaje['nivel'],
                         'id_puesto' => $puesto->id,
                     ]);
                 } else {
                     PuestoIdiomaPorcentajePivot::create([
                         'id_puesto' => $puesto->id,
                         'porcentaje' => $languaje['porcentaje'],
-                        'nivel' =>  $languaje['nivel'],
+                        'nivel' => $languaje['nivel'],
                         'id_language' => $languaje['language'],
                     ]);
                 }
@@ -320,24 +320,24 @@ class PuestosController extends Controller
 
     public function saveUpdateResponsabilidades($responsabilidades, $puesto)
     {
-        if (!is_null($responsabilidades)) {
+        if (! is_null($responsabilidades)) {
             foreach ($responsabilidades as $responsabilidad) {
                 // dd($responsabilidad);
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (PuestoResponsabilidade::find($responsabilidad['id']) != null) {
                     PuestoResponsabilidade::find($responsabilidad['id'])->update([
                         'tiempo_asignado' => $responsabilidad['tiempo_asignado'],
-                        'indicador' =>  $responsabilidad['indicador'],
-                        'resultado' =>  $responsabilidad['resultado'],
-                        'actividad' =>  $responsabilidad['actividad'],
+                        'indicador' => $responsabilidad['indicador'],
+                        'resultado' => $responsabilidad['resultado'],
+                        'actividad' => $responsabilidad['actividad'],
                     ]);
                 } else {
                     PuestoResponsabilidade::create([
                         'puesto_id' => $puesto->id,
                         'tiempo_asignado' => $responsabilidad['tiempo_asignado'],
-                        'indicador' =>  $responsabilidad['indicador'],
-                        'resultado' =>  $responsabilidad['resultado'],
-                        'actividad' =>  $responsabilidad['actividad'],
+                        'indicador' => $responsabilidad['indicador'],
+                        'resultado' => $responsabilidad['resultado'],
+                        'actividad' => $responsabilidad['actividad'],
                     ]);
                 }
             }
@@ -355,19 +355,19 @@ class PuestosController extends Controller
 
     public function saveUpdateCertificados($certificados, $puesto)
     {
-        if (!is_null($certificados)) {
+        if (! is_null($certificados)) {
             foreach ($certificados as $certificado) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (PuestosCertificado::find($certificado['id']) != null) {
                     PuestosCertificado::find($certificado['id'])->update([
                         'nombre' => $certificado['nombre'],
-                        'requisito' =>  $certificado['requisito'],
+                        'requisito' => $certificado['requisito'],
                     ]);
                 } else {
                     PuestosCertificado::create([
                         'puesto_id' => $puesto->id,
                         'nombre' => $certificado['nombre'],
-                        'requisito' =>  $certificado['requisito'],
+                        'requisito' => $certificado['requisito'],
                     ]);
                 }
             }
@@ -385,19 +385,19 @@ class PuestosController extends Controller
 
     public function saveUpdateHerramientas($herramientas, $puesto)
     {
-        if (!is_null($herramientas)) {
+        if (! is_null($herramientas)) {
             foreach ($herramientas as $herramienta) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (HerramientasPuestos::find($herramienta['id']) != null) {
                     HerramientasPuestos::find($herramienta['id'])->update([
                         'nombre_herramienta' => $herramienta['nombre_herramienta'],
-                        'descripcion_herramienta' =>  $herramienta['descripcion_herramienta'],
+                        'descripcion_herramienta' => $herramienta['descripcion_herramienta'],
                     ]);
                 } else {
                     HerramientasPuestos::create([
                         'puesto_id' => $puesto->id,
                         'nombre_herramienta' => $herramienta['nombre_herramienta'],
-                        'descripcion_herramienta' =>  $herramienta['descripcion_herramienta'],
+                        'descripcion_herramienta' => $herramienta['descripcion_herramienta'],
                     ]);
                 }
             }
@@ -415,19 +415,19 @@ class PuestosController extends Controller
 
     public function saveUpdateContactos($contactos, $puesto)
     {
-        if (!is_null($contactos)) {
+        if (! is_null($contactos)) {
             foreach ($contactos as $contacto) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (PuestoContactos::find($contacto['id']) != null) {
                     PuestoContactos::find($contacto['id'])->update([
                         'contacto_puesto_id' => $contacto['contacto_puesto_id'],
-                        'descripcion_contacto' =>  $contacto['descripcion_contacto'],
+                        'descripcion_contacto' => $contacto['descripcion_contacto'],
                     ]);
                 } else {
                     PuestoContactos::create([
                         'puesto_id' => $puesto->id,
                         'contacto_puesto_id' => $contacto['contacto_puesto_id'],
-                        'descripcion_contacto' =>  $contacto['descripcion_contacto'],
+                        'descripcion_contacto' => $contacto['descripcion_contacto'],
                     ]);
                 }
             }
@@ -445,19 +445,19 @@ class PuestosController extends Controller
 
     public function saveUpdateContactosExternos($externos, $puesto)
     {
-        if (!is_null($externos)) {
+        if (! is_null($externos)) {
             foreach ($externos as $externo) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (ContactosExternosPuestos::find($externo['id']) != null) {
                     ContactosExternosPuestos::find($externo['id'])->update([
                         'nombre_contacto_int' => $externo['nombre_contacto_int'],
-                        'proposito' =>  $externo['proposito'],
+                        'proposito' => $externo['proposito'],
                     ]);
                 } else {
                     ContactosExternosPuestos::create([
                         'puesto_id' => $puesto->id,
                         'nombre_contacto_int' => $externo['nombre_contacto_int'],
-                        'proposito' =>  $externo['proposito'],
+                        'proposito' => $externo['proposito'],
                     ]);
                 }
             }

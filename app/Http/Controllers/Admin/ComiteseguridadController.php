@@ -90,7 +90,7 @@ class ComiteseguridadController extends Controller
         $comiteseguridad = Comiteseguridad::create($request->all());
         // $id = $request->id;
 
-        return redirect()->route('admin.comiteseguridads.edit', ['comiteseguridad'=>$comiteseguridad]);
+        return redirect()->route('admin.comiteseguridads.edit', ['comiteseguridad' => $comiteseguridad]);
     }
 
     public function edit(Request $request, $comiteseguridad)

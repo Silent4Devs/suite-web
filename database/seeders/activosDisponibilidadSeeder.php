@@ -16,22 +16,22 @@ class activosDisponibilidadSeeder extends Seeder
     {
         $inputs = [
             [
-                'id'    => 1,
+                'id' => 1,
                 'disponibilidad' => 'Baja',
                 'valor' => '1',
             ],
             [
-                'id'    => 2,
+                'id' => 2,
                 'disponibilidad' => 'Media',
                 'valor' => '2',
             ],
             [
-                'id'    => 3,
+                'id' => 3,
                 'disponibilidad' => 'Alta',
                 'valor' => '3',
             ],
             [
-                'id'    => 4,
+                'id' => 4,
                 'disponibilidad' => 'Crítica',
                 'valor' => '4',
             ],

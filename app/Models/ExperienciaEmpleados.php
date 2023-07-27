@@ -2,18 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
 
 class ExperienciaEmpleados extends Model
 {
     use SoftDeletes;
-    // use QueryCacheable;
 
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
     protected $table = 'experiencia_empleados';
 
     protected $dates = [
@@ -41,7 +37,7 @@ class ExperienciaEmpleados extends Model
 
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
         return Cache::remember('experienciaempleados_all', 3600 * 24, function () {

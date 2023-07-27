@@ -157,7 +157,7 @@ class ProcesoController extends Controller
 
         $macros_mapa = Macroproceso::get();
         $procesos_mapa = Proceso::getAll();
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();
 
         return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado', 'organizacion'));

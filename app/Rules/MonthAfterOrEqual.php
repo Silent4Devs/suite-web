@@ -12,6 +12,7 @@ class MonthAfterOrEqual implements Rule
      * @return void
      */
     public $inicio;
+
     public $fin;
 
     public function __construct($inicio, $fin)

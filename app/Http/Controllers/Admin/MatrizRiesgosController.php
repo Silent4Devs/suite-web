@@ -14,11 +14,12 @@ use App\Models\Area;
 use App\Models\Controle;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Empleado;
+use App\Models\Iso27\GapDosCatalogoIso;
 use App\Models\Matriz31000ActivosInfo;
 use App\Models\MatrizIso31000;
 use App\Models\MatrizIso31000ControlesPivot;
-use App\Models\MatrizNist;
 //use Illuminate\Support\Facades\Request;
+use App\Models\MatrizNist;
 use App\Models\MatrizOctave;
 use App\Models\MatrizoctaveActivosInfo;
 use App\Models\MatrizOctaveProceso;
@@ -34,9 +35,9 @@ use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\TratamientoRiesgo;
-use App\Models\Vulnerabilidad;
-use App\Models\Iso27\GapDosCatalogoIso;
 use App\Models\VersionesIso;
+use App\Models\Vulnerabilidad;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -45,6 +46,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class MatrizRiesgosController extends Controller
 {
+    use ObtenerOrganizacion;
     /*public function index(Request $request)
     {
         /*abort_if(Gate::denies('matriz_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -114,9 +116,9 @@ class MatrizRiesgosController extends Controller
 
         $ver = VersionesIso::select('version_historico')->first();
         if ($ver->version_historico === true) {
-            $version_historico = "true";
+            $version_historico = 'true';
         } elseif ($ver->version_historico === false) {
-            $version_historico = "false";
+            $version_historico = 'false';
         }
 
         $sedes = Sede::getAll(['id', 'sede']);
@@ -129,9 +131,9 @@ class MatrizRiesgosController extends Controller
 
         $vulnerabilidades = Vulnerabilidad::select('id', 'nombre')->get();
 
-        if ($version_historico === "true") {
+        if ($version_historico === 'true') {
             $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->orderBy('id')->get();
-        } elseif ($version_historico === "false") {
+        } elseif ($version_historico === 'false') {
             $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
         }
 
@@ -139,7 +141,7 @@ class MatrizRiesgosController extends Controller
         $probabilidad = MatrizRiesgo::PROBABILIDAD_SELECT;
         $impacto = MatrizRiesgo::IMPACTO_SELECT;
 
-        return view('admin.matrizRiesgos.create', compact('version_historico', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables', 'tipo_riesgo', 'probabilidad', 'impacto'))->with('id_analisis', \request()->idAnalisis,);
+        return view('admin.matrizRiesgos.create', compact('version_historico', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'procesos', 'controles', 'responsables', 'tipo_riesgo', 'probabilidad', 'impacto'))->with('id_analisis', \request()->idAnalisis);
     }
 
     public function store(StoreMatrizRiesgoRequest $request)
@@ -187,7 +189,7 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
@@ -337,6 +339,7 @@ class MatrizRiesgosController extends Controller
                         ->join('gap_dos_catalogo_isos', 'gap_dos_catalogo_isos.id', '=', 'matriz_riesgos_controles_pivot.controles_id')
                         ->orderBy('gap_dos_catalogo_isos.id')
                         ->get();
+
                     return $controles ? $controles : '';
                 }
             });
@@ -395,13 +398,8 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.matrizRiesgos.index', compact('empresa_actual', 'logo_actual', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
@@ -459,7 +457,7 @@ class MatrizRiesgosController extends Controller
         $matrizRequisitoLegal = $id;
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
-        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . ' creado');
+        return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.' creado');
     }
 
     public function ControlesGet()
@@ -480,13 +478,8 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgosSistemaGestion::count();
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.matrizSistemaGestion.index', compact('empresa_actual', 'logo_actual', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
@@ -691,6 +684,7 @@ class MatrizRiesgosController extends Controller
                         ->where('version_historico', '=', 'false')
                         ->orderBy('gap_dos_catalogo_isos.id')
                         ->get();
+
                     return $controles ? $controles : '';
                 }
             });
@@ -827,20 +821,20 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $activos = SubcategoriaActivo::getAll();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
 
         $ver = VersionesIso::first();
         if ($ver->version_historico === false) {
-            $version_historico = "false";
+            $version_historico = 'false';
         } elseif ($ver->version_historico === true) {
-            $version_historico = "true";
+            $version_historico = 'true';
         }
-        if ($version_historico === "true") {
+        if ($version_historico === 'true') {
             $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->orderBy('id')->get();
-        } elseif ($version_historico === "false") {
+        } elseif ($version_historico === 'false') {
             $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
         }
 
@@ -917,7 +911,7 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
         $numero_matriz = MatrizRiesgo::count();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
         $planes = $matrizRiesgo->load('planes');
@@ -935,7 +929,7 @@ class MatrizRiesgosController extends Controller
         abort_if(Gate::denies('analisis_de_riesgo_integral_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'controles_id' => 'required',
-            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador,' . $matrizRiesgo . ',id,deleted_at,NULL',
+            'identificador' => 'required|unique:matriz_riesgos_sistema_gestion,identificador,'.$matrizRiesgo.',id,deleted_at,NULL',
         ]);
 
         // dd($matrizRiesgo);
@@ -1099,8 +1093,8 @@ class MatrizRiesgosController extends Controller
         // $responsables = Empleado::getAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
-        $duenos = Empleado::alta()->get();
-        $custodios = Empleado::alta()->get();
+        $duenos = Empleado::getaltaAll();
+        $custodios = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
         $activosoctave = MatrizOctave::get();
@@ -1118,8 +1112,8 @@ class MatrizRiesgosController extends Controller
         $procesos = Proceso::getAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
-        $duenos = Empleado::alta()->get();
-        $custodios = Empleado::alta()->get();
+        $duenos = Empleado::getaltaAll();
+        $custodios = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
         $activosoctave = MatrizOctave::get();
@@ -1238,7 +1232,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
 
@@ -1254,7 +1248,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
@@ -1375,7 +1369,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $matrizNist = new MatrizNist();
@@ -1390,7 +1384,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $matrizNist = MatrizNist::find($id);
@@ -1441,40 +1435,40 @@ class MatrizRiesgosController extends Controller
 
     public function saveUpdateActivosOctave($activosoctave, $matrizRiesgoOctave)
     {
-        if (!is_null($activosoctave)) {
+        if (! is_null($activosoctave)) {
             foreach ($activosoctave as $activoctave) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
-                if (!is_null(MatrizoctaveActivosInfo::find($activoctave['id']))) {
+                if (! is_null(MatrizoctaveActivosInfo::find($activoctave['id']))) {
                     MatrizoctaveActivosInfo::find($activoctave['id'])->update([
                         'nombre_ai' => $activoctave['nombre_ai'],
-                        'valor_criticidad' =>  $activoctave['valor_criticidad'],
-                        'contenedor_activos' =>  $activoctave['contenedor_activos'],
-                        'id_amenaza' =>  $activoctave['id_amenaza'],
-                        'id_vulnerabilidad' =>  $activoctave['id_vulnerabilidad'],
-                        'escenario_riesgo' =>  $activoctave['escenario_riesgo'],
-                        'id_custodio' =>  $activoctave['id_custodio'],
-                        'id_dueno' =>  $activoctave['id_dueno'],
-                        'confidencialidad' =>  $activoctave['confidencialidad'],
-                        'disponibilidad' =>  $activoctave['disponibilidad'],
-                        'integridad' =>  $activoctave['integridad'],
-                        'evaluacion_riesgo' =>  $activoctave['evaluacion_riesgo'],
+                        'valor_criticidad' => $activoctave['valor_criticidad'],
+                        'contenedor_activos' => $activoctave['contenedor_activos'],
+                        'id_amenaza' => $activoctave['id_amenaza'],
+                        'id_vulnerabilidad' => $activoctave['id_vulnerabilidad'],
+                        'escenario_riesgo' => $activoctave['escenario_riesgo'],
+                        'id_custodio' => $activoctave['id_custodio'],
+                        'id_dueno' => $activoctave['id_dueno'],
+                        'confidencialidad' => $activoctave['confidencialidad'],
+                        'disponibilidad' => $activoctave['disponibilidad'],
+                        'integridad' => $activoctave['integridad'],
+                        'evaluacion_riesgo' => $activoctave['evaluacion_riesgo'],
 
                     ]);
                 } else {
                     MatrizoctaveActivosInfo::create([
                         'id_octave' => $matrizRiesgoOctave->id,
                         'nombre_ai' => $activoctave['nombre_ai'],
-                        'valor_criticidad' =>  $activoctave['valor_criticidad'],
-                        'contenedor_activos' =>  $activoctave['contenedor_activos'],
-                        'id_amenaza' =>  $activoctave['id_amenaza'],
-                        'id_vulnerabilidad' =>  $activoctave['id_vulnerabilidad'],
-                        'escenario_riesgo' =>  $activoctave['escenario_riesgo'],
-                        'id_custodio' =>  $activoctave['id_custodio'],
-                        'id_dueno' =>  $activoctave['id_dueno'],
-                        'confidencialidad' =>  $activoctave['confidencialidad'],
-                        'disponibilidad' =>  $activoctave['disponibilidad'],
-                        'integridad' =>  $activoctave['integridad'],
-                        'evaluacion_riesgo' =>  $activoctave['evaluacion_riesgo'],
+                        'valor_criticidad' => $activoctave['valor_criticidad'],
+                        'contenedor_activos' => $activoctave['contenedor_activos'],
+                        'id_amenaza' => $activoctave['id_amenaza'],
+                        'id_vulnerabilidad' => $activoctave['id_vulnerabilidad'],
+                        'escenario_riesgo' => $activoctave['escenario_riesgo'],
+                        'id_custodio' => $activoctave['id_custodio'],
+                        'id_dueno' => $activoctave['id_dueno'],
+                        'confidencialidad' => $activoctave['confidencialidad'],
+                        'disponibilidad' => $activoctave['disponibilidad'],
+                        'integridad' => $activoctave['integridad'],
+                        'evaluacion_riesgo' => $activoctave['evaluacion_riesgo'],
                     ]);
                 }
             }
@@ -1484,32 +1478,32 @@ class MatrizRiesgosController extends Controller
 
     public function saveUpdateMatriz31000ActivosInfo($activosmatriz31000, $matrizRiesgo31000)
     {
-        if (!is_null($activosmatriz31000)) {
+        if (! is_null($activosmatriz31000)) {
             foreach ($activosmatriz31000 as $activomatriz31000) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (Matriz31000ActivosInfo::find($activomatriz31000['id']) != null) {
                     Matriz31000ActivosInfo::find($activomatriz31000['id'])->update([
-                        'contenedor_activos' =>  $activomatriz31000['contenedor_activos'],
-                        'id_amenaza' =>  $activomatriz31000['id_amenaza'],
+                        'contenedor_activos' => $activomatriz31000['contenedor_activos'],
+                        'id_amenaza' => $activomatriz31000['id_amenaza'],
                         'id_vulnerabilidad' => $activomatriz31000['id_vulnerabilidad'],
-                        'escenario_riesgo' =>  $activomatriz31000['escenario_riesgo'],
-                        'confidencialidad' =>  $activomatriz31000['confidencialidad'],
-                        'disponibilidad' =>  $activomatriz31000['disponibilidad'],
-                        'integridad' =>  $activomatriz31000['integridad'],
-                        'evaluación_riesgo' =>  $activomatriz31000['evaluacion_riesgo'],
+                        'escenario_riesgo' => $activomatriz31000['escenario_riesgo'],
+                        'confidencialidad' => $activomatriz31000['confidencialidad'],
+                        'disponibilidad' => $activomatriz31000['disponibilidad'],
+                        'integridad' => $activomatriz31000['integridad'],
+                        'evaluación_riesgo' => $activomatriz31000['evaluacion_riesgo'],
                         // 'activo_id' =>  $activomatriz31000['activo_id']
                     ]);
                 } else {
                     Matriz31000ActivosInfo::create([
                         'id_matriz31000' => $matrizRiesgo31000->id,
-                        'contenedor_activos' =>  $activomatriz31000['contenedor_activos'],
-                        'id_amenaza' =>  $activomatriz31000['id_amenaza'],
+                        'contenedor_activos' => $activomatriz31000['contenedor_activos'],
+                        'id_amenaza' => $activomatriz31000['id_amenaza'],
                         'id_vulnerabilidad' => $activomatriz31000['id_vulnerabilidad'],
-                        'escenario_riesgo' =>  $activomatriz31000['escenario_riesgo'],
-                        'confidencialidad' =>  $activomatriz31000['confidencialidad'],
-                        'disponibilidad' =>  $activomatriz31000['disponibilidad'],
-                        'integridad' =>  $activomatriz31000['integridad'],
-                        'evaluación_riesgo' =>  $activomatriz31000['evaluacion_riesgo'],
+                        'escenario_riesgo' => $activomatriz31000['escenario_riesgo'],
+                        'confidencialidad' => $activomatriz31000['confidencialidad'],
+                        'disponibilidad' => $activomatriz31000['disponibilidad'],
+                        'integridad' => $activomatriz31000['integridad'],
+                        'evaluación_riesgo' => $activomatriz31000['evaluacion_riesgo'],
                         // 'activo_id' =>  $activomatriz31000['activo_id']
                     ]);
                 }

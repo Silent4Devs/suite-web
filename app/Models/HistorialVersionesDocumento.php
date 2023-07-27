@@ -6,17 +6,15 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class HistorialVersionesDocumento extends Model
 {
     use HasFactory, SoftDeletes;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $dates = ['fecha'];
+
     protected $appends = ['estatus_formateado', 'path_document', 'cambios', 'fecha_dmy', 'day_localized'];
+
     protected $fillable = [
         'documento_id',
         'codigo',
@@ -111,7 +109,7 @@ class HistorialVersionesDocumento extends Model
             $archivo = str_replace('-publicado', '', $this->archivo);
         }
 
-        return asset($path_documento . '/' . $archivo);
+        return asset($path_documento.'/'.$archivo);
     }
 
     public function getCambiosAttribute()

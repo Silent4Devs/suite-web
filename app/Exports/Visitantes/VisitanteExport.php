@@ -91,7 +91,7 @@ class VisitanteExport implements FromCollection, WithHeadings, WithMapping, With
     {
         return [
             // Style the first row as bold text.
-            1    => ['font' => ['bold' => true, 'color' => ['argb' => Color::COLOR_WHITE]], 'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => Color::COLOR_BLUE]]],
+            1 => ['font' => ['bold' => true, 'color' => ['argb' => Color::COLOR_WHITE]], 'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['argb' => Color::COLOR_BLUE]]],
         ];
     }
 

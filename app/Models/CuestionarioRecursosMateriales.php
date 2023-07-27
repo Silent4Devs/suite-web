@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CuestionarioRecursosMateriales extends Model
 {
     use HasFactory;
+
     public $table = 'cuestionario_recursos_materiales';
 
     public $fillable = [

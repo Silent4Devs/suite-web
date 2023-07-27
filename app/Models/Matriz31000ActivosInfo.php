@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $activo_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Amenaza|null $amenaza
  * @property Vulnerabilidad|null $vulnerabilidad
  * @property MatrizIso31000|null $matriz_iso31000

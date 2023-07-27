@@ -18,6 +18,7 @@ class SolicitudAceptacionTratamientoRiesgo extends Mailable
      * @return void
      */
     public $tratamientoRiesgo;
+
     public $empleado;
 
     public function __construct(TratamientoRiesgo $tratamientoRiesgo, Empleado $empleado)
@@ -33,6 +34,6 @@ class SolicitudAceptacionTratamientoRiesgo extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.tratamientoRiesgos.solicitud-aceptacion-riesgo')->subject('Solicitud de aprobación del riesgo ID ' . $this->tratamientoRiesgo->identificador);
+        return $this->view('mails.tratamientoRiesgos.solicitud-aceptacion-riesgo')->subject('Solicitud de aprobación del riesgo ID '.$this->tratamientoRiesgo->identificador);
     }
 }

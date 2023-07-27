@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use EloquentFilter\Filterable;
 use Illuminate\Support\Facades\Cache;
 
 class TimesheetProyecto extends Model
@@ -33,7 +33,7 @@ class TimesheetProyecto extends Model
         'Externo' => 'Externo',
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
         return Cache::remember('timesheetproyecto_all', 3600 * 24, function () {

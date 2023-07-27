@@ -9,12 +9,19 @@ use Livewire\Component;
 class TimesheetHorasCreateCopia extends Component
 {
     public $proyectos;
+
     public $tareas;
+
     public $horas;
+
     public $origen;
+
     public $timesheet;
+
     public $timesheet_id;
+
     public $contador;
+
     public $horas_excluidas;
 
     protected $listeners = ['removerFila'];

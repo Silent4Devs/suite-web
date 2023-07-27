@@ -146,7 +146,7 @@ class PoliticaSgsiController extends Controller
     {
         $politicaSgsis = PoliticaSgsi::first();
 
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
 
         return view('frontend.politicaSgsis.visualizacion', compact('politicaSgsis'));
     }

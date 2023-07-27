@@ -10,7 +10,6 @@ class ExperienciaEmpleadosObserver
     /**
      * Handle the ExperienciaEmpleados "created" event.
      *
-     * @param  \App\Models\ExperienciaEmpleados  $experienciaEmpleados
      * @return void
      */
     public function created(ExperienciaEmpleados $experienciaEmpleados)
@@ -21,7 +20,6 @@ class ExperienciaEmpleadosObserver
     /**
      * Handle the ExperienciaEmpleados "updated" event.
      *
-     * @param  \App\Models\ExperienciaEmpleados  $experienciaEmpleados
      * @return void
      */
     public function updated(ExperienciaEmpleados $experienciaEmpleados)
@@ -32,7 +30,6 @@ class ExperienciaEmpleadosObserver
     /**
      * Handle the ExperienciaEmpleados "deleted" event.
      *
-     * @param  \App\Models\ExperienciaEmpleados  $experienciaEmpleados
      * @return void
      */
     public function deleted(ExperienciaEmpleados $experienciaEmpleados)
@@ -43,7 +40,6 @@ class ExperienciaEmpleadosObserver
     /**
      * Handle the ExperienciaEmpleados "restored" event.
      *
-     * @param  \App\Models\ExperienciaEmpleados  $experienciaEmpleados
      * @return void
      */
     public function restored(ExperienciaEmpleados $experienciaEmpleados)
@@ -54,7 +50,6 @@ class ExperienciaEmpleadosObserver
     /**
      * Handle the ExperienciaEmpleados "force deleted" event.
      *
-     * @param  \App\Models\ExperienciaEmpleados  $experienciaEmpleados
      * @return void
      */
     public function forceDeleted(ExperienciaEmpleados $experienciaEmpleados)

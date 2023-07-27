@@ -145,9 +145,9 @@ class AreasController extends Controller
 
         $area->update([
             'area' => $request->area,
-            'id_grupo' =>  $request->id_grupo,
-            'id_reporta' =>  $request->id_reporta,
-            'descripcion' =>  $request->descripcion,
+            'id_grupo' => $request->id_grupo,
+            'id_reporta' => $request->id_reporta,
+            'descripcion' => $request->descripcion,
 
         ]);
 
@@ -203,9 +203,9 @@ class AreasController extends Controller
 
         $rutaImagenes = asset('storage/empleados/imagenes/');
         $grupos = Grupo::with('areas')->get();
-        $organizacionDB = Organizacion::first();
-        $organizacion = !is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
-        $org_foto = !is_null($organizacionDB) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
+        $organizacionDB = Organizacion::getFirst();
+        $organizacion = ! is_null($organizacionDB) ? Organizacion::select('empresa')->first()->empresa : 'la organización';
+        $org_foto = ! is_null($organizacionDB) ? url('images/'.DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
         $areas_sin_grupo = Area::whereDoesntHave('grupo')->get();
 
         return view('frontend.areas.jerarquia', compact('areasTree', 'rutaImagenes', 'organizacion', 'org_foto', 'grupos', 'numero_grupos', 'areas_sin_grupo'));

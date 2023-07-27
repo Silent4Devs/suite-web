@@ -20,7 +20,9 @@ class SolicitudAprobacionMail extends Mailable implements ShouldQueue
      * @return void
      */
     public $documento;
+
     public $revision;
+
     public $historialRevisionDocumento;
 
     public function __construct(Documento $documento, RevisionDocumento $revision, HistorialRevisionDocumento $historialRevisionDocumento)

@@ -30,11 +30,11 @@ class UsersController extends Controller
         $areas = Area::getAll();
         $puestos = Puesto::getAll();
         $teams = Team::get();
-        // $empleadosNoAsignados = Empleado::alta()->get();
+        // $empleadosNoAsignados = Empleado::getaltaAll();
         // $empleados = $empleadosNoAsignados->filter(function ($item) {
         //     return !User::where('n_empleado', $item->n_empleado)->exists();
         // })->values();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $existsVinculoEmpleadoAdmin = User::orderBy('id')->first()->empleado_id != null ? true : false;
 
         return view('admin.users.index', compact('roles', 'organizaciones', 'areas', 'puestos', 'teams', 'empleados', 'existsVinculoEmpleadoAdmin'));
@@ -136,10 +136,10 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $nombre = $request->nombre;
-            $usuarios = User::select('id', 'name', 'email')->where('name', 'LIKE', '%' . $nombre . '%')->take(5)->get();
+            $usuarios = User::select('id', 'name', 'email')->where('name', 'LIKE', '%'.$nombre.'%')->take(5)->get();
             $lista = "<ul class='list-group' id='empleados-lista'>";
             foreach ($usuarios as $usuario) {
-                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(" . $usuario . ");'>" . $usuario->name . '</button>';
+                $lista .= "<button type='button' class='list-group-item list-group-item-action' onClick='seleccionarUsuario(".$usuario.");'>".$usuario->name.'</button>';
             }
             $lista .= '</ul>';
 
@@ -181,7 +181,7 @@ class UsersController extends Controller
             $message = "Verificación por dos factores habilitada para el usuario {$user->name}";
         }
 
-        $user->two_factor = !$user->two_factor;
+        $user->two_factor = ! $user->two_factor;
 
         $user->save();
 
@@ -196,7 +196,7 @@ class UsersController extends Controller
             $message = "El usuario {$user->name} ha sido desbloqueado";
         }
 
-        $user->is_active = !$user->is_active;
+        $user->is_active = ! $user->is_active;
 
         $user->save();
 

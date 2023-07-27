@@ -9,8 +9,11 @@ use Livewire\WithPagination;
 class TareasComponent extends Component
 {
     use WithPagination;
+
     public $view = 'no-leidas';
+
     private $lista_tareas;
+
     protected $paginationTheme = 'bootstrap';
 
     protected $listeners = [

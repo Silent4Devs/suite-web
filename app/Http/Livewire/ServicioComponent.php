@@ -9,7 +9,9 @@ use Livewire\Component;
 class ServicioComponent extends Component
 {
     public $servicio;
+
     public $descripcion;
+
     protected $rules = [
         'servicio' => 'required|string|max:255',
         'descripcion' => 'nullable|string|max:1500',

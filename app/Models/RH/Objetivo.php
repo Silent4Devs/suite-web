@@ -13,11 +13,15 @@ class Objetivo extends Model
     // protected static $flushCacheOnUpdate = true;
 
     protected $table = 'ev360_objetivos';
+
     protected $appends = ['imagen_ruta'];
+
     protected $guarded = ['id'];
 
     const APROBADO = 1;
+
     const RECHAZADO = 2;
+
     const SIN_DEFINIR = 0;
 
     public function scopeAprobado($query)
@@ -28,7 +32,7 @@ class Objetivo extends Model
     public function getImagenRutaAttribute()
     {
         if ($this->imagen) {
-            return asset('storage/objetivos/img/' . $this->imagen);
+            return asset('storage/objetivos/img/'.$this->imagen);
         }
 
         return asset('img/bullseye.png');

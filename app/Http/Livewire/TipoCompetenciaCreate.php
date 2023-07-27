@@ -9,7 +9,9 @@ use Livewire\Component;
 class TipoCompetenciaCreate extends Component
 {
     public $nombre;
+
     public $descripcion;
+
     protected $rules = [
         'nombre' => 'required|string|max:255',
         'descripcion' => 'nullable|string|max:1500',

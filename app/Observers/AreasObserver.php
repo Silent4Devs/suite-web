@@ -10,7 +10,6 @@ class AreasObserver
     /**
      * Handle the Area "created" event.
      *
-     * @param  \App\Models\Area  $area
      * @return void
      */
     public function created(Area $area)
@@ -21,7 +20,6 @@ class AreasObserver
     /**
      * Handle the Area "updated" event.
      *
-     * @param  \App\Models\Area  $area
      * @return void
      */
     public function updated(Area $area)
@@ -32,7 +30,6 @@ class AreasObserver
     /**
      * Handle the Area "deleted" event.
      *
-     * @param  \App\Models\Area  $area
      * @return void
      */
     public function deleted(Area $area)
@@ -43,7 +40,6 @@ class AreasObserver
     /**
      * Handle the Area "restored" event.
      *
-     * @param  \App\Models\Area  $area
      * @return void
      */
     public function restored(Area $area)
@@ -54,7 +50,6 @@ class AreasObserver
     /**
      * Handle the Area "force deleted" event.
      *
-     * @param  \App\Models\Area  $area
      * @return void
      */
     public function forceDeleted(Area $area)

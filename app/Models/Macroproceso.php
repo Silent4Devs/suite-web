@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Macroproceso.
@@ -24,7 +23,6 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Grupo|null $grupo
  * @property Collection|Proceso[] $procesos
  */
@@ -32,16 +30,13 @@ class Macroproceso extends Model
 {
     use SoftDeletes;
     use HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
 
     protected $table = 'macroprocesos';
 
     protected $dates = ['deleted_at'];
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $casts = [

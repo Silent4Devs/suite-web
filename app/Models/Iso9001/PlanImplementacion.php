@@ -13,7 +13,9 @@ class PlanImplementacion extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'plan_implementacion_9001';
+
     protected $appends = ['roles', 'resources'];
+
     protected $fillable = [
         'tasks',
         'canAdd',
@@ -52,7 +54,7 @@ class PlanImplementacion extends Model
 
     public function getResourcesAttribute()
     {
-        $empleado = Empleado::alta()->get();
+        $empleado = Empleado::getaltaAll();
 
         return $empleado;
     }

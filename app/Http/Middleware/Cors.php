@@ -10,8 +10,6 @@ class Cors
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -21,9 +19,9 @@ class Cors
         $IlluminateResponse = 'Illuminate\Http\Response';
         $SymfonyResopnse = 'Symfony\Component\HttpFoundation\Response';
         $headers = [
-            'Access-Control-Allow-Headers' =>  'Content-Type, X-Auth-Token, Authorization, Origin',
-            'Access-Control-Allow-Methods' =>  'POST, PUT',
-            'Access-Control-Allow-Headers' =>  'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Authorization , Access-Control-Request-Headers',
+            'Access-Control-Allow-Headers' => 'Content-Type, X-Auth-Token, Authorization, Origin',
+            'Access-Control-Allow-Methods' => 'POST, PUT',
+            'Access-Control-Allow-Headers' => 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Authorization , Access-Control-Request-Headers',
         ];
 
         if ($request->getMethod() == 'OPTIONS') {

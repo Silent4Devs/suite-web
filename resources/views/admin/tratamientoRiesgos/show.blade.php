@@ -3,8 +3,6 @@
 
 
     <style>
-
-
         span.errors {
             font-size: 11px;
         }
@@ -98,29 +96,31 @@
             .table th td:nth-child(1) {
                 min-width: 100px;
             }
-            .print-none{
-            display: none !important;
+
+            .print-none {
+                display: none !important;
             }
         }
     </style>
 
-<div class="print-none">
-    {{ Breadcrumbs::render('admin.tratamiento-riesgos.show') }}
-</div>
+    <div class="print-none">
+        {{ Breadcrumbs::render('admin.tratamiento-riesgos.show') }}
+    </div>
 
     <div>
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
                     <a href="{{ route('admin.tratamiento-riesgos.index') }}" class="btn_cancelar">Regresar</a>
-                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;" onclick="javascript:window.print()">
+                    <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
+                        onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
                         Imprimir
                     </button>
 
                     @php
                         use App\Models\Organizacion;
-                        $organizacion = Organizacion::first();
+                        $organizacion = Organizacion::getFirst();
                         $logotipo = $organizacion->logotipo;
                         $empresa = $organizacion->empresa;
                     @endphp
@@ -216,43 +216,42 @@
                     <div style="color:#18183c">
                         <span class="p-1" style="text-align:center">Riesgo Total:</span>
                         @if ($tratamientoRiesgo->riesgototal == null)
-                        <span>Sin registro</span>
+                            <span>Sin registro</span>
                         @else
-                        @if ($tratamientoRiesgo->riesgototal >= 136 && $tratamientoRiesgo->riesgototal <= 185)
-                            <i class="fas fa-circle" style="color:#FF417B;font-size:10pt;"></i><strong>
+                            @if ($tratamientoRiesgo->riesgototal >= 136 && $tratamientoRiesgo->riesgototal <= 185)
+                                <i class="fas fa-circle" style="color:#FF417B;font-size:10pt;"></i><strong>
+                                    {{ $tratamientoRiesgo->riesgototal }}</strong>
+                            @elseif ($tratamientoRiesgo->riesgototal >= 91 && $tratamientoRiesgo->riesgototal <= 135)
+                                <i class="fas fa-circle" style="color:#FFAC6A;font-size:10pt;"></i><strong>
+                                    {{ $tratamientoRiesgo->riesgototal }}</strong>
+                            @elseif ($tratamientoRiesgo->riesgototal >= 46 && $tratamientoRiesgo->riesgototal >= 90)
+                                <i class="fas fa-circle" style="color:#FFCB63;font-size:10pt;"></i>
                                 {{ $tratamientoRiesgo->riesgototal }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgototal >= 91 && $tratamientoRiesgo->riesgototal <= 135)
-                            <i class="fas fa-circle" style="color:#FFAC6A;font-size:10pt;"></i><strong>
+                            @elseif ($tratamientoRiesgo->riesgototal >= 0 && $tratamientoRiesgo->riesgototal <= 45)
+                                <i class="fas fa-circle" style="color:#6DC866;font-size:10pt;"></i>
                                 {{ $tratamientoRiesgo->riesgototal }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgototal >= 46 && $tratamientoRiesgo->riesgototal >= 90)
-                            <i class="fas fa-circle" style="color:#FFCB63;font-size:10pt;"></i>
-                            {{ $tratamientoRiesgo->riesgototal }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgototal  >= 0 && $tratamientoRiesgo->riesgototal <= 45)
-                        <i class="fas fa-circle" style="color:#6DC866;font-size:10pt;"></i>
-                        {{ $tratamientoRiesgo->riesgototal }}</strong>
-                        @endif
+                            @endif
                         @endif
                     </div>
 
                     <div style="color:#18183c">
                         <span class="p-1" style="text-align:center">Riesgo Residual:</span>
                         @if ($tratamientoRiesgo->riesgo_total_residual == null)
-                        <span>Sin registro</span>
+                            <span>Sin registro</span>
                         @else
-                        @if ($tratamientoRiesgo->riesgo_total_residual >= 136 && $tratamientoRiesgo->riesgo_total_residual <= 185)
-                        <i class="fas fa-circle" style="color:#FF417B;font-size:10pt;"></i><strong>
-                            {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgo_total_residual >= 91 && $tratamientoRiesgo->riesgo_total_residual <= 135)
-                        <i class="fas fa-circle" style="color:#FFAC6A;font-size:10pt;"></i><strong>
-                            {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgo_total_residual >= 46 && $tratamientoRiesgo->riesgo_total_residual  >= 90)
-                            <i class="fas fa-circle" style="color:#FFCB63;font-size:10pt;"></i><strong>
-                                {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
-                        @elseif ($tratamientoRiesgo->riesgo_total_residual >= 0 && $tratamientoRiesgo->riesgo_total_residual <= 45)
-                            <i class="fas fa-circle" style="color: #6DC866;font-size:10pt;"></i><strong>
-                                {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
-
-                        @endif
+                            @if ($tratamientoRiesgo->riesgo_total_residual >= 136 && $tratamientoRiesgo->riesgo_total_residual <= 185)
+                                <i class="fas fa-circle" style="color:#FF417B;font-size:10pt;"></i><strong>
+                                    {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
+                            @elseif ($tratamientoRiesgo->riesgo_total_residual >= 91 && $tratamientoRiesgo->riesgo_total_residual <= 135)
+                                <i class="fas fa-circle" style="color:#FFAC6A;font-size:10pt;"></i><strong>
+                                    {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
+                            @elseif ($tratamientoRiesgo->riesgo_total_residual >= 46 && $tratamientoRiesgo->riesgo_total_residual >= 90)
+                                <i class="fas fa-circle" style="color:#FFCB63;font-size:10pt;"></i><strong>
+                                    {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
+                            @elseif ($tratamientoRiesgo->riesgo_total_residual >= 0 && $tratamientoRiesgo->riesgo_total_residual <= 45)
+                                <i class="fas fa-circle" style="color: #6DC866;font-size:10pt;"></i><strong>
+                                    {{ $tratamientoRiesgo->riesgo_total_residual }}</strong>
+                            @endif
                         @endif
                     </div>
 
@@ -286,67 +285,66 @@
 
                     <br>
                     <br>
-                    <div class="row col-12 ml-0" id="contenedor_firmas" >
+                    <div class="row col-12 ml-0" id="contenedor_firmas">
 
                         <div class="col-12 p-2" style="color:#18183c; text-align: center;">
                             @if ($tratamientoRiesgo->id_dueno == auth()->user()->empleado->id)
-                                    @if ($tratamientoRiesgo->es_aprobado == 'aprobado')
-                                        @if ($tratamientoRiesgo->firma_responsable_aprobador == null)
-                                            <div>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-md-6">
-                                                        <canvas id="sig-responsable-aprobar-canvas" style="width:100%;">
-                                                            Navegador no compatible
-                                                        </canvas>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        {{-- <button class="btn btn-sm btn-success"
-                                            id="sig-evaluador-submitBtn">Confirmar</button> --}}
-                                                        <button class="btn btn-sm" data-action="firmar"
-                                                            data-tipo="responsable_aprobador"
-                                                            id="sig-responsable-aprobar-guardar"><i
-                                                                class="mr-2 fas fa-check"></i>Guardar</button>
-                                                        <button class="btn btn-sm"
-                                                            id="sig-responsable-aprobar-clearBtn"><i
-                                                                class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
-
-                                                    </div>
-                                                </div>
-
-
-                                                <br />
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <textarea id="sig-responsable-aprobar-dataUrl" readonly class=" form-control d-none" rows="5">Data URL de tu firma será almacenada aquí</textarea>
-                                                    </div>
+                                @if ($tratamientoRiesgo->es_aprobado == 'aprobado')
+                                    @if ($tratamientoRiesgo->firma_responsable_aprobador == null)
+                                        <div>
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-6">
+                                                    <canvas id="sig-responsable-aprobar-canvas" style="width:100%;">
+                                                        Navegador no compatible
+                                                    </canvas>
                                                 </div>
                                             </div>
-                                        @else
-                                            <img
-                                                src="{{ asset($route . $tratamientoRiesgo->firma_responsable_aprobador) }}"></img>
-                                        @endif
-                                    @elseif($tratamientoRiesgo->es_aprobado == 'pendiente')
-                                        <div class=" text-center justify-content-center aprobar-planificacion">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    {{-- <button class="btn btn-sm btn-success"
+                                            id="sig-evaluador-submitBtn">Confirmar</button> --}}
+                                                    <button class="btn btn-sm" data-action="firmar"
+                                                        data-tipo="responsable_aprobador"
+                                                        id="sig-responsable-aprobar-guardar"><i
+                                                            class="mr-2 fas fa-check"></i>Guardar</button>
+                                                    <button class="btn btn-sm" id="sig-responsable-aprobar-clearBtn"><i
+                                                            class="mr-2 fas fa-trash-alt"></i>Limpiar</button>
 
-                                            <button class=" btn btn-sm text-success" data-action="aprobar"
-                                                data-type="aprobacion" id="btn-aprobar" style="display:inline-block"><i
-                                                    class="mr-2 text-success far fa-thumbs-up"
-                                                    style="font-size:12pt;"></i>Aprobar</button>
-                                            <button class=" btn btn-sm text-danger" data-action="rechazar"
-                                                data-type="aprobacion" id="btn-rechazar" style="display:inline-block"><i
-                                                    class="text-danger mr-2  far fa-thumbs-down"
-                                                    style="font-size:12pt;"></i>Rechazar</button>
+                                                </div>
+                                            </div>
 
+
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <textarea id="sig-responsable-aprobar-dataUrl" readonly class=" form-control d-none" rows="5">Data URL de tu firma será almacenada aquí</textarea>
+                                                </div>
+                                            </div>
                                         </div>
-                                    @elseif($tratamientoRiesgo->es_aprobado == 'rechazado')
-                                        <div class="mt-2 mb-2">
-                                            <strong class="text-danger mt-4">Solicitud rechazada</strong>
-                                        </div>
+                                    @else
+                                        <img
+                                            src="{{ asset($route . $tratamientoRiesgo->firma_responsable_aprobador) }}"></img>
                                     @endif
+                                @elseif($tratamientoRiesgo->es_aprobado == 'pendiente')
+                                    <div class=" text-center justify-content-center aprobar-planificacion">
 
-                             @endif
+                                        <button class=" btn btn-sm text-success" data-action="aprobar"
+                                            data-type="aprobacion" id="btn-aprobar" style="display:inline-block"><i
+                                                class="mr-2 text-success far fa-thumbs-up"
+                                                style="font-size:12pt;"></i>Aprobar</button>
+                                        <button class=" btn btn-sm text-danger" data-action="rechazar"
+                                            data-type="aprobacion" id="btn-rechazar" style="display:inline-block"><i
+                                                class="text-danger mr-2  far fa-thumbs-down"
+                                                style="font-size:12pt;"></i>Rechazar</button>
+
+                                    </div>
+                                @elseif($tratamientoRiesgo->es_aprobado == 'rechazado')
+                                    <div class="mt-2 mb-2">
+                                        <strong class="text-danger mt-4">Solicitud rechazada</strong>
+                                    </div>
+                                @endif
+
+                            @endif
                             <div>
                                 @if ($tratamientoRiesgo->id_dueno == auth()->user()->empleado->id)
                                     <strong>Dueño del riesgo</strong>
@@ -394,258 +392,295 @@
 @endsection
 
 @section('scripts')
-<script>
-    (function() {
+    <script>
+        (function() {
 
 
-        window.requestAnimFrame = (function(callback) {
-            return window.requestAnimationFrame ||
-                window.webkitRequestAnimationFrame ||
-                window.mozRequestAnimationFrame ||
-                window.oRequestAnimationFrame ||
-                window.msRequestAnimaitonFrame ||
-                function(callback) {
-                    window.setTimeout(callback, 1000 / 60);
-                };
+            window.requestAnimFrame = (function(callback) {
+                return window.requestAnimationFrame ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame ||
+                    window.oRequestAnimationFrame ||
+                    window.msRequestAnimaitonFrame ||
+                    function(callback) {
+                        window.setTimeout(callback, 1000 / 60);
+                    };
+            })();
+
+            if (document.getElementById('sig-evaluador-canvas')) {
+                renderCanvas("sig-evaluador-canvas", "sig-evaluador-clearBtn");
+
+            }
+            if (document.getElementById('sig-responsable-canvas')) {
+                renderCanvas("sig-responsable-canvas", "sig-responsable-clearBtn");
+
+            }
+            if (document.getElementById('sig-responsable-aprobar-canvas')) {
+                renderCanvas("sig-responsable-aprobar-canvas", "sig-responsable-aprobar-clearBtn");
+            }
+
+
         })();
 
-        if (document.getElementById('sig-evaluador-canvas')) {
-            renderCanvas("sig-evaluador-canvas", "sig-evaluador-clearBtn");
+        //aprobar y rechazar
+        // 1500 milisegundos en que tarda de recargar la pagina
+        document.querySelector('.aprobar-planificacion')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (e.target.getAttribute('data-type') == 'aprobacion') {
+                let tipo = e.target.getAttribute('data-action');
+                let url = "{{ route('admin.tratamiento-riesgos.firma-aprobacion') }}";
+                let aprobado = tipo == 'aprobar' ? '1' : '0';
+                let controlCambios = @json($tratamientoRiesgo);
+                let mensajeBtn = tipo == 'rechazar' ? 'Rechazar' : 'Aprobar';
+                Swal.fire({
+                    title: 'Esta seguro que desea ' + tipo + '?',
+                    text: 'comentarios',
+                    input: 'textarea',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: mensajeBtn,
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (comentarios) => {
+                        return fetch(url, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                                },
+                                body: JSON.stringify({
+                                    aprobado,
+                                    id: controlCambios.id,
+                                    comentarios
+                                })
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                )
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let mensaje = tipo == 'rechazar' ? 'Rechazado' : 'Aprobado';
+                        Swal.fire('', mensaje + ' con éxito', 'success').then(() => {
+                            window.location.reload();
+                        })
+                    }
+                })
 
-        }
-        if (document.getElementById('sig-responsable-canvas')) {
-            renderCanvas("sig-responsable-canvas", "sig-responsable-clearBtn");
-
-        }
-        if (document.getElementById('sig-responsable-aprobar-canvas')) {
-            renderCanvas("sig-responsable-aprobar-canvas", "sig-responsable-aprobar-clearBtn");
-        }
+            }
+        });
+        // // fin aprobación
 
 
-    })();
+        if (document.getElementById('contenedor_firmas')) {
+            document.getElementById('contenedor_firmas').addEventListener('click', (e) => {
+                if (e.target.getAttribute('data-action') == 'firmar') {
 
-    //aprobar y rechazar
-    // 1500 milisegundos en que tarda de recargar la pagina
-    document.querySelector('.aprobar-planificacion')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (e.target.getAttribute('data-type') == 'aprobacion') {
-            let tipo = e.target.getAttribute('data-action');
-            let url = "{{ route('admin.tratamiento-riesgos.firma-aprobacion') }}";
-            let aprobado = tipo == 'aprobar' ? '1' : '0';
-            let controlCambios = @json($tratamientoRiesgo);
-            let mensajeBtn = tipo == 'rechazar' ? 'Rechazar' : 'Aprobar';
-            Swal.fire({
-                title: 'Esta seguro que desea ' + tipo + '?',
-                text: 'comentarios',
-                input: 'textarea',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                showCancelButton: true,
-                confirmButtonText: mensajeBtn,
-                cancelButtonText: 'Cancelar',
-                showLoaderOnConfirm: true,
-                preConfirm: (comentarios) => {
-                    return fetch(url, {
-                            method: 'POST',
+                    e.preventDefault();
+                    let btnId = e.target.getAttribute('id');
+                    let canvasId = btnId.replaceAll('guardar', 'canvas');
+                    let controlCambios = @json($tratamientoRiesgo);
+                    let url = "{{ route('admin.tratamiento-riesgos.firma-aprobacion') }}";
+                    var canvas = document.getElementById(canvasId);
+                    var dataUrl = canvas.toDataURL();
+                    let tipo = e.target.getAttribute('data-tipo');
+                    var data = {
+                        id: controlCambios.id,
+                        tipo,
+                        firma: '',
+                    };
+                    var isCanvasEmptySigned = isCanvasEmpty(canvas);
+                    if (isCanvasEmptySigned) {
+                        toastr.info('Firma(s) no dibujadas');
+                    } else {
+                        data['firma'] = dataUrl;
+
+                    }
+                    console.log(data);
+                    if (!isCanvasEmptySigned) {
+                        $.ajax({
                             headers: {
-                                'Content-Type': 'application/json',
                                 "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
                             },
-                            body: JSON.stringify({
-                                aprobado,
-                                id: controlCambios.id,
-                                comentarios
-                            })
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(response.statusText)
+                            type: "POST",
+                            data: data,
+                            url: url,
+
+                            success: function(response) {
+                                if (response.success) {
+                                    toastr.success('Firmado con éxito');
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1500);
+                                }
+                            },
+                            error: function(request, status, error) {
+                                toastr.error(
+                                    'Ocurrió un error: ' + error);
                             }
-                            return response.json()
-                        })
-                        .catch(error => {
-                            Swal.showValidationMessage(
-                                `Request failed: ${error}`
-                            )
-                        })
-                },
-                allowOutsideClick: () => !Swal.isLoading()
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    let mensaje = tipo == 'rechazar' ? 'Rechazado' : 'Aprobado';
-                    Swal.fire('', mensaje + ' con éxito', 'success').then(() => {
-                        window.location.reload();
-                    })
+                        });
+                    }
                 }
             })
-
         }
-    });
-    // // fin aprobación
 
+        function renderCanvas(contenedor, clearBtnCanvas) {
 
-    if (document.getElementById('contenedor_firmas')) {
-        document.getElementById('contenedor_firmas').addEventListener('click', (e) => {
-            if (e.target.getAttribute('data-action') == 'firmar') {
+            var canvas = document.getElementById(contenedor);
+            console.log(canvas);
+            var ctx = canvas.getContext("2d");
+            ctx.strokeStyle = "#222222";
+            ctx.lineWidth = 1;
 
-                e.preventDefault();
-                let btnId = e.target.getAttribute('id');
-                let canvasId = btnId.replaceAll('guardar', 'canvas');
-                let controlCambios = @json($tratamientoRiesgo);
-                let url = "{{ route('admin.tratamiento-riesgos.firma-aprobacion') }}";
-                var canvas = document.getElementById(canvasId);
-                var dataUrl = canvas.toDataURL();
-                let tipo = e.target.getAttribute('data-tipo');
-                var data = {
-                    id: controlCambios.id,
-                    tipo,
-                    firma: '',
-                };
-                var isCanvasEmptySigned = isCanvasEmpty(canvas);
-                if (isCanvasEmptySigned) {
-                    toastr.info('Firma(s) no dibujadas');
-                } else {
-                    data['firma'] = dataUrl;
+            var drawing = false;
+            var mousePos = {
+                x: 0,
+                y: 0
+            };
+            var lastPos = mousePos;
 
+            canvas.addEventListener("mousedown", function(e) {
+                drawing = true;
+                lastPos = getMousePos(canvas, e);
+            }, false);
+
+            canvas.addEventListener("mouseup", function(e) {
+                drawing = false;
+            }, false);
+
+            canvas.addEventListener("mousemove", function(e) {
+                mousePos = getMousePos(canvas, e);
+            }, false);
+
+            // Add touch event support for mobile
+            canvas.addEventListener("touchstart", function(e) {
+
+            }, false);
+
+            canvas.addEventListener("touchmove", function(e) {
+                var touch = e.touches[0];
+                var me = new MouseEvent("mousemove", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(me);
+            }, false);
+
+            canvas.addEventListener("touchstart", function(e) {
+                mousePos = getTouchPos(canvas, e);
+                var touch = e.touches[0];
+                var me = new MouseEvent("mousedown", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(me);
+            }, false);
+
+            canvas.addEventListener("touchend", function(e) {
+                var me = new MouseEvent("mouseup", {});
+                canvas.dispatchEvent(me);
+            }, false);
+
+            function getMousePos(canvasDom, mouseEvent) {
+                var rect = canvasDom.getBoundingClientRect();
+                return {
+                    x: mouseEvent.clientX - rect.left,
+                    y: mouseEvent.clientY - rect.top
                 }
-                console.log(data);
-                if (!isCanvasEmptySigned) {
-                    $.ajax({
-                        headers: {
-                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                        },
-                        type: "POST",
-                        data: data,
-                        url: url,
+            }
 
-                        success: function(response) {
-                            if (response.success) {
-                                toastr.success('Firmado con éxito');
-                                setTimeout(() => {
-                                    window.location.reload();
-                                }, 1500);
-                            }
-                        },
-                        error: function(request, status, error) {
-                            toastr.error(
-                                'Ocurrió un error: ' + error);
-                        }
-                    });
+            function getTouchPos(canvasDom, touchEvent) {
+                var rect = canvasDom.getBoundingClientRect();
+                return {
+                    x: touchEvent.touches[0].clientX - rect.left,
+                    y: touchEvent.touches[0].clientY - rect.top
                 }
             }
-        })
-    }
 
-    function renderCanvas(contenedor, clearBtnCanvas) {
-
-        var canvas = document.getElementById(contenedor);
-        console.log(canvas);
-        var ctx = canvas.getContext("2d");
-        ctx.strokeStyle = "#222222";
-        ctx.lineWidth = 1;
-
-        var drawing = false;
-        var mousePos = {
-            x: 0,
-            y: 0
-        };
-        var lastPos = mousePos;
-
-        canvas.addEventListener("mousedown", function(e) {
-            drawing = true;
-            lastPos = getMousePos(canvas, e);
-        }, false);
-
-        canvas.addEventListener("mouseup", function(e) {
-            drawing = false;
-        }, false);
-
-        canvas.addEventListener("mousemove", function(e) {
-            mousePos = getMousePos(canvas, e);
-        }, false);
-
-        // Add touch event support for mobile
-        canvas.addEventListener("touchstart", function(e) {
-
-        }, false);
-
-        canvas.addEventListener("touchmove", function(e) {
-            var touch = e.touches[0];
-            var me = new MouseEvent("mousemove", {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(me);
-        }, false);
-
-        canvas.addEventListener("touchstart", function(e) {
-            mousePos = getTouchPos(canvas, e);
-            var touch = e.touches[0];
-            var me = new MouseEvent("mousedown", {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(me);
-        }, false);
-
-        canvas.addEventListener("touchend", function(e) {
-            var me = new MouseEvent("mouseup", {});
-            canvas.dispatchEvent(me);
-        }, false);
-
-        function getMousePos(canvasDom, mouseEvent) {
-            var rect = canvasDom.getBoundingClientRect();
-            return {
-                x: mouseEvent.clientX - rect.left,
-                y: mouseEvent.clientY - rect.top
+            function renderCanvas() {
+                if (drawing) {
+                    ctx.moveTo(lastPos.x, lastPos.y);
+                    ctx.lineTo(mousePos.x, mousePos.y);
+                    ctx.stroke();
+                    lastPos = mousePos;
+                }
             }
+
+            // Prevent scrolling when touching the canvas
+            document.body.addEventListener("touchstart", function(e) {
+                if (e.target == canvas) {
+                    e.preventDefault();
+                }
+            }, false);
+            document.body.addEventListener("touchend", function(e) {
+                if (e.target == canvas) {
+                    e.preventDefault();
+                }
+            }, false);
+            document.body.addEventListener("touchmove", function(e) {
+                if (e.target == canvas) {
+                    e.preventDefault();
+                }
+            }, false);
+
+            (function drawLoop() {
+                requestAnimFrame(drawLoop);
+                renderCanvas();
+            })();
+
+            function clearCanvas() {
+                canvas.width = canvas.width;
+            }
+
+            function isCanvasBlank() {
+                const context = canvas.getContext('2d');
+
+                const pixelBuffer = new Uint32Array(
+                    context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                );
+
+                return !pixelBuffer.some(color => color !== 0);
+            }
+
+            // Set up the UI
+            // var sigText = document.getElementById(dataBaseCanvas);
+            // var sigImage = document.getElementById(imageCanvas);
+            var clearBtn = document.getElementById(clearBtnCanvas);
+            // var submitBtn = document.getElementById(submitBtnCanvas);
+            clearBtn.addEventListener("click", function(e) {
+                clearCanvas();
+                // sigText.innerHTML = "Data URL for your signature will go here!";
+                // sigImage.setAttribute("src", "");
+            }, false);
+            // submitBtn.addEventListener("click", function(e) {
+            //     const blank = isCanvasBlank();
+            //     if (!blank) {
+            //         // var dataUrl = canvas.toDataURL();
+            //         // sigText.innerHTML = dataUrl;
+            //         // sigImage.setAttribute("src", dataUrl);
+            //     } else {
+            //         if (toastr) {
+            //             toastr.info('No has firmado en el canvas');
+            //         } else {
+            //             alert('No has firmado en el canvas');
+            //         }
+            //     }
+            // }, false);
+
         }
 
-        function getTouchPos(canvasDom, touchEvent) {
-            var rect = canvasDom.getBoundingClientRect();
-            return {
-                x: touchEvent.touches[0].clientX - rect.left,
-                y: touchEvent.touches[0].clientY - rect.top
-            }
-        }
-
-        function renderCanvas() {
-            if (drawing) {
-                ctx.moveTo(lastPos.x, lastPos.y);
-                ctx.lineTo(mousePos.x, mousePos.y);
-                ctx.stroke();
-                lastPos = mousePos;
-            }
-        }
-
-        // Prevent scrolling when touching the canvas
-        document.body.addEventListener("touchstart", function(e) {
-            if (e.target == canvas) {
-                e.preventDefault();
-            }
-        }, false);
-        document.body.addEventListener("touchend", function(e) {
-            if (e.target == canvas) {
-                e.preventDefault();
-            }
-        }, false);
-        document.body.addEventListener("touchmove", function(e) {
-            if (e.target == canvas) {
-                e.preventDefault();
-            }
-        }, false);
-
-        (function drawLoop() {
-            requestAnimFrame(drawLoop);
-            renderCanvas();
-        })();
-
-        function clearCanvas() {
-            canvas.width = canvas.width;
-        }
-
-        function isCanvasBlank() {
+        function isCanvasEmpty(canvas) {
             const context = canvas.getContext('2d');
 
             const pixelBuffer = new Uint32Array(
@@ -654,42 +689,5 @@
 
             return !pixelBuffer.some(color => color !== 0);
         }
-
-        // Set up the UI
-        // var sigText = document.getElementById(dataBaseCanvas);
-        // var sigImage = document.getElementById(imageCanvas);
-        var clearBtn = document.getElementById(clearBtnCanvas);
-        // var submitBtn = document.getElementById(submitBtnCanvas);
-        clearBtn.addEventListener("click", function(e) {
-            clearCanvas();
-            // sigText.innerHTML = "Data URL for your signature will go here!";
-            // sigImage.setAttribute("src", "");
-        }, false);
-        // submitBtn.addEventListener("click", function(e) {
-        //     const blank = isCanvasBlank();
-        //     if (!blank) {
-        //         // var dataUrl = canvas.toDataURL();
-        //         // sigText.innerHTML = dataUrl;
-        //         // sigImage.setAttribute("src", dataUrl);
-        //     } else {
-        //         if (toastr) {
-        //             toastr.info('No has firmado en el canvas');
-        //         } else {
-        //             alert('No has firmado en el canvas');
-        //         }
-        //     }
-        // }, false);
-
-    }
-
-    function isCanvasEmpty(canvas) {
-        const context = canvas.getContext('2d');
-
-        const pixelBuffer = new Uint32Array(
-            context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
-        );
-
-        return !pixelBuffer.some(color => color !== 0);
-    }
-</script>
+    </script>
 @endsection

@@ -8,7 +8,9 @@ use Livewire\Component;
 class ServicioSelectComponent extends Component
 {
     protected $listeners = ['render-servicio-select-component' => 'render'];
+
     public $servicios;
+
     public $servicio_seleccionado;
 
     public function mount($servicio_seleccionado = null)

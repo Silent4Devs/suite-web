@@ -8,7 +8,6 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -16,10 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class MaterialIsoVeinticiente extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public static $searchable = [
         'objetivo',
     ];
@@ -33,7 +29,7 @@ class MaterialIsoVeinticiente extends Model implements HasMedia
 
     const TIPOIMPARTICION_SELECT = [
         'presencial' => 'Presencial',
-        'virtual'    => 'Virtual',
+        'virtual' => 'Virtual',
     ];
 
     protected $dates = [

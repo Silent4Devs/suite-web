@@ -23,8 +23,8 @@ class ComunicacionSgi extends Model implements HasMedia
 
     const TipoSelect = [
         'Carrusel' => 'Carrusel',
-        'Blog'     => 'Blog',
-        'Ambos'    => 'Ambos',
+        'Blog' => 'Blog',
+        'Ambos' => 'Ambos',
     ];
 
     public static $searchable = [

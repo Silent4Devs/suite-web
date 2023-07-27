@@ -10,17 +10,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Documento extends Model
 {
     use HasFactory, SoftDeletes;
+
     //REVISION DE DOCUMENTOS ESTATUS
     const SOLICITUD_REVISION = 1;
+
     const APROBADO = 2;
+
     const RECHAZADO = 3;
+
     const RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR = 4;
 
     // DOCUMENTOS ESTATUS
     const EN_ELABORACION = 1;
+
     const EN_REVISION = 2;
+
     const PUBLICADO = 3;
+
     const DOCUMENTO_RECHAZADO = 4;
+
     const DOCUMENTO_OBSOLETO = 5;
 
     public static $searchable = [
@@ -149,7 +157,7 @@ class Documento extends Model
                 break;
         }
 
-        return asset($path_documento . '/' . $this->archivo);
+        return asset($path_documento.'/'.$this->archivo);
     }
 
     //Relacion uno a muchos inversa

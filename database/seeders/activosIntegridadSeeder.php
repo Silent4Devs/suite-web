@@ -16,22 +16,22 @@ class activosIntegridadSeeder extends Seeder
     {
         $inputs = [
             [
-                'id'    => 1,
+                'id' => 1,
                 'integridad' => 'Baja',
                 'valor' => '1',
             ],
             [
-                'id'    => 2,
+                'id' => 2,
                 'integridad' => 'Media',
                 'valor' => '2',
             ],
             [
-                'id'    => 3,
+                'id' => 3,
                 'integridad' => 'Alta',
                 'valor' => '3',
             ],
             [
-                'id'    => 4,
+                'id' => 4,
                 'integridad' => 'Crítica',
                 'valor' => '4',
             ],

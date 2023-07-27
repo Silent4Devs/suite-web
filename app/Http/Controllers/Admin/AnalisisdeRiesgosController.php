@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AnalisisDeRiesgo;
 use App\Models\Area;
 use App\Models\Empleado;
-use App\Models\Organizacion;
+use App\Traits\ObtenerOrganizacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -15,6 +15,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AnalisisdeRiesgosController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function menu()
     {
         // abort_if(Gate::denies('menu_analisis_riesgo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -87,13 +89,9 @@ class AnalisisdeRiesgosController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.analisis-riesgos.index', compact('empresa_actual', 'logo_actual'));
@@ -102,7 +100,7 @@ class AnalisisdeRiesgosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('matriz_de_riesgo_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         //$tipoactivos = Tipoactivo::all()->pluck('tipo', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -137,7 +135,7 @@ class AnalisisdeRiesgosController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('matriz_de_riesgo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $analisis = AnalisisDeRiesgo::find($id);
 
         return view('admin.analisis-riesgos.edit', compact('empleados', 'analisis'));
@@ -149,12 +147,12 @@ class AnalisisdeRiesgosController extends Controller
         $analisis = AnalisisDeRiesgo::find($id);
 
         $analisis->update([
-            'nombre' =>  $request->nombre,
-            'tipo' =>  $request->tipo,
-            'fecha' =>  $request->fecha,
-            'id_elaboro' =>  $request->id_elaboro,
+            'nombre' => $request->nombre,
+            'tipo' => $request->tipo,
+            'fecha' => $request->fecha,
+            'id_elaboro' => $request->id_elaboro,
             'porcentaje_implementacion' => $request->porcentaje_implementacion,
-            'estatus' =>  $request->estatus,
+            'estatus' => $request->estatus,
         ]);
 
         return redirect()->route('admin.analisis-riesgos.index')->with('success', 'Editado con éxito');

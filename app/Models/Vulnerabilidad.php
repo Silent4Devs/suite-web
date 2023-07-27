@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Vulnerabilidad.
+ *
  * @version August 5, 2021, 7:45 pm UTC
  *
  * @property \App\Models\Amenaza $idAmenaza
@@ -18,13 +18,11 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 class Vulnerabilidad extends Model
 {
     use SoftDeletes;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'vulnerabilidads';
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $dates = ['deleted_at'];

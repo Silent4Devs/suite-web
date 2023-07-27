@@ -31,14 +31,13 @@ class MarcaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         if ($request->ajax()) {
             $request->validate([
-                'nombre'=>'required|string|unique:marca,nombre',
+                'nombre' => 'required|string|unique:marca,nombre',
             ]);
             // $nombre = $request->nombre;
             // // dd($request->all());
@@ -52,7 +51,7 @@ class MarcaController extends Controller
             // }
             $marca = Marca::create($request->all());
             if (array_key_exists('ajax', $request->all())) {
-                return response()->json(['success'=>true, 'activo'=>$marca]);
+                return response()->json(['success' => true, 'activo' => $marca]);
             }
         }
     }
@@ -82,7 +81,6 @@ class MarcaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -109,12 +107,12 @@ class MarcaController extends Controller
             $marcas = Marca::getAll();
             // dd($marcas);
             foreach ($marcas as $marca) {
-                $marcas_arr[] = ['id'=>$marca->id, 'text'=>$marca->nombre];
+                $marcas_arr[] = ['id' => $marca->id, 'text' => $marca->nombre];
             }
 
             $array_m = [];
             $array_m['results'] = $marcas_arr;
-            $array_m['pagination'] = ['more'=>false];
+            $array_m['pagination'] = ['more' => false];
 
             return $array_m;
         }

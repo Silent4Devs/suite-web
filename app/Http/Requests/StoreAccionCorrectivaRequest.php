@@ -15,11 +15,11 @@ class StoreAccionCorrectivaRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecharegistro'      => [
+            'fecharegistro' => [
                 'date',
                 'nullable',
             ],
-            'fecha_compromiso'   => [
+            'fecha_compromiso' => [
                 'date',
                 'nullable',
             ],

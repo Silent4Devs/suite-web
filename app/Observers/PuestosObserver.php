@@ -10,7 +10,6 @@ class PuestosObserver
     /**
      * Handle the Puesto "created" event.
      *
-     * @param  \App\Models\Puesto  $puesto
      * @return void
      */
     public function created(Puesto $puesto)
@@ -21,7 +20,6 @@ class PuestosObserver
     /**
      * Handle the Puesto "updated" event.
      *
-     * @param  \App\Models\Puesto  $puesto
      * @return void
      */
     public function updated(Puesto $puesto)
@@ -32,7 +30,6 @@ class PuestosObserver
     /**
      * Handle the Puesto "deleted" event.
      *
-     * @param  \App\Models\Puesto  $puesto
      * @return void
      */
     public function deleted(Puesto $puesto)
@@ -43,7 +40,6 @@ class PuestosObserver
     /**
      * Handle the Puesto "restored" event.
      *
-     * @param  \App\Models\Puesto  $puesto
      * @return void
      */
     public function restored(Puesto $puesto)
@@ -54,7 +50,6 @@ class PuestosObserver
     /**
      * Handle the Puesto "force deleted" event.
      *
-     * @param  \App\Models\Puesto  $puesto
      * @return void
      */
     public function forceDeleted(Puesto $puesto)

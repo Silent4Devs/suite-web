@@ -12,7 +12,9 @@ class PlanImplementacion extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'plan_implementacions';
+
     protected $appends = ['roles', 'resources'];
+
     protected $fillable = [
         'tasks',
         'canAdd',
@@ -47,10 +49,10 @@ class PlanImplementacion extends Model
     //     return $this->hasMany(PlanImplementacionTask::class, 'plan_implementacion_id', 'id')->with('assigs');
     // }
 
-    #Redis methods
+    //Redis methods
     public static function getAll()
     {
-        return Cache::remember('implementaciones', 3600*24, function () {
+        return Cache::remember('implementaciones', 3600 * 24, function () {
             return self::get();
         });
     }
@@ -64,7 +66,7 @@ class PlanImplementacion extends Model
 
     public function getResourcesAttribute()
     {
-        $empleado = Empleado::alta()->get();
+        $empleado = Empleado::getaltaAll();
 
         return $empleado;
     }

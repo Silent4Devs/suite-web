@@ -8,66 +8,66 @@ class GenerateAnalisisBIso
     {
         return [
 
-                [
-                    'id_gap_uno_catalogo'    => '1',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '2',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '3',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '4',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '5',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '6',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '7',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '8',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '9',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '10',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '11',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '12',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '13',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '14',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
-                [
-                    'id_gap_uno_catalogo'    => '15',
-                    'id_analisis_brechas'    =>  $analisis_id,
-                ],
+            [
+                'id_gap_uno_catalogo' => '1',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '2',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '3',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '4',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '5',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '6',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '7',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '8',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '9',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '10',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '11',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '12',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '13',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '14',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_uno_catalogo' => '15',
+                'id_analisis_brechas' => $analisis_id,
+            ],
 
         ];
     }
@@ -455,54 +455,54 @@ class GenerateAnalisisBIso
     public function TraerDatosTres($analisis_id)
     {
         return [
-                [
-                    'id_gap_tres_catalogo' => '1',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '2',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '3',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '4',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '5',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '6',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '7',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '8',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '9',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '10',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '11',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-                [
-                    'id_gap_tres_catalogo' => '12',
-                    'id_analisis_brechas' => $analisis_id,
-                ],
-            ];
+            [
+                'id_gap_tres_catalogo' => '1',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '2',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '3',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '4',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '5',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '6',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '7',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '8',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '9',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '10',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '11',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+            [
+                'id_gap_tres_catalogo' => '12',
+                'id_analisis_brechas' => $analisis_id,
+            ],
+        ];
     }
 }

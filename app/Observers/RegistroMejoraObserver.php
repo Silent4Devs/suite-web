@@ -10,7 +10,6 @@ class RegistroMejoraObserver
     /**
      * Handle the Registromejora "created" event.
      *
-     * @param  \App\Models\Registromejora  $registromejora
      * @return void
      */
     public function created(Registromejora $registromejora)
@@ -21,7 +20,6 @@ class RegistroMejoraObserver
     /**
      * Handle the Registromejora "updated" event.
      *
-     * @param  \App\Models\Registromejora  $registromejora
      * @return void
      */
     public function updated(Registromejora $registromejora)
@@ -32,7 +30,6 @@ class RegistroMejoraObserver
     /**
      * Handle the Registromejora "deleted" event.
      *
-     * @param  \App\Models\Registromejora  $registromejora
      * @return void
      */
     public function deleted(Registromejora $registromejora)
@@ -43,7 +40,6 @@ class RegistroMejoraObserver
     /**
      * Handle the Registromejora "restored" event.
      *
-     * @param  \App\Models\Registromejora  $registromejora
      * @return void
      */
     public function restored(Registromejora $registromejora)
@@ -54,7 +50,6 @@ class RegistroMejoraObserver
     /**
      * Handle the Registromejora "force deleted" event.
      *
-     * @param  \App\Models\Registromejora  $registromejora
      * @return void
      */
     public function forceDeleted(Registromejora $registromejora)

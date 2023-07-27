@@ -10,11 +10,17 @@ class CategoriaSubcategoria extends Component
 {
     // protected $listeners = ['render-Modal-subcategoria' => 'render'];
     public $categorias;
+
     public $subcategorias;
+
     public $categoria;
+
     public $activo;
+
     public $subcategoria;
+
     public $categoriasSeleccionado;
+
     public $subcategoriaSeleccionado;
 
     public $selectedState = null;

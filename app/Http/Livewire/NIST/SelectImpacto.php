@@ -7,10 +7,15 @@ use Livewire\Component;
 class SelectImpacto extends Component
 {
     public $severidad = 1;
+
     public $probabilidad = 1;
+
     public $impacto = 1;
+
     public $valor;
+
     public $colorReglaTipo;
+
     public $colorTextoTipo;
 
     public function mount()

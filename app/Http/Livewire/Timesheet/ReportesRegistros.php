@@ -3,31 +3,47 @@
 namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Area;
-use App\Models\Timesheet;
 use App\Models\Empleado;
+use App\Models\Timesheet;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Carbon\Carbon;
 
 class ReportesRegistros extends Component
 {
     use WithPagination;
+
     protected $paginationTheme = 'bootstrap';
+
     public $todos_contador;
+
     public $borrador_contador;
+
     public $pendientes_contador;
+
     public $aprobados_contador;
+
     public $rechazos_contador;
+
     public $totalRegistrosMostrando;
+
     public $perPage = 5;
+
     public $search;
+
     // public $times;
     public $areas;
+
     public $area_id = 0;
+
     public $estatus;
+
     public $fecha_inicio;
+
     public $fecha_fin;
+
     public $emp;
+
     public $emp_id;
 
     public function mount()
@@ -99,7 +115,7 @@ class ReportesRegistros extends Component
     {
         //Query para obtener los timesheet y filtrarlo
         if($this->area_id == 0){
-            $this->emp = Empleado::alta()->orderBy('name', 'ASC')->get();
+            $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
         }else{
             $this->emp = Empleado::where('area_id', $this->area_id)->alta()->orderBy('name', 'ASC')->get();
         }
@@ -139,6 +155,7 @@ class ReportesRegistros extends Component
     public function establecerContadores()
     {
         //Contador Todos los registros timesheet
+        //$this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
         $this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;

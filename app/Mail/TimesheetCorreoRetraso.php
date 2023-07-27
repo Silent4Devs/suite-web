@@ -17,6 +17,7 @@ class TimesheetCorreoRetraso extends Mailable
      * @return void
      */
     public $times_faltantes_empleado = [];
+
     public $empleado;
 
     public function __construct(Empleado $empleado, $times_faltantes_empleado)

@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class DeclaracionAplicabilidad extends Model
 {
@@ -31,10 +31,10 @@ class DeclaracionAplicabilidad extends Model
         'updated_at',
     ];
 
-    #Redis methods
+    //Redis methods
     public static function getAll($columns = ['id', 'columna1', 'columna2'])
     {
-        #retrieve all data or can pass columns to retrieve
+        //retrieve all data or can pass columns to retrieve
         return Cache::remember('declaracionaplicabilidad_all', 3600 * 24, function () use ($columns) {
             return self::select($columns)->get();
         });
@@ -42,7 +42,7 @@ class DeclaracionAplicabilidad extends Model
 
     public function getNameAttribute()
     {
-        return $this->anexo_indice . ' ' . $this->nocontrolm_escenario;
+        return $this->anexo_indice.' '.$this->nocontrolm_escenario;
     }
 
     public function getContentAttribute()

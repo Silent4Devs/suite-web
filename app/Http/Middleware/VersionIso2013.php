@@ -2,16 +2,15 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\VersionesIso;
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\VersionesIso;
 
 class VersionIso2013
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
@@ -20,7 +19,7 @@ class VersionIso2013
         $version_iso = VersionesIso::first();
         $version_iso = $version_iso->version_historico;
 
-        if($version_iso === true){
+        if ($version_iso === true) {
             return $next($request);
         }
 

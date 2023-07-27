@@ -6,15 +6,11 @@ use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class GapUno extends Model
 {
     use MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'gap_logro_uno';
 
     protected $dates = [
@@ -41,8 +37,8 @@ class GapUno extends Model
 
     const VALORACION_SELECT = [
         'Cumple satisfactoriamente' => 'Cumple satisfactoriamente',
-        'Cumple parcialmente'       => 'Cumple parcialmente',
-        'No cumple'                 => 'No cumple',
+        'Cumple parcialmente' => 'Cumple parcialmente',
+        'No cumple' => 'No cumple',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -54,7 +50,7 @@ class GapUno extends Model
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format').' '.config('panel.time_format'));
         $this->save();
     }
 

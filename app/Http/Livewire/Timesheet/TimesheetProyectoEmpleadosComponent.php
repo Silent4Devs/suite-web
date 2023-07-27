@@ -2,26 +2,30 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use App\Models\TimesheetProyecto;
-use App\Models\TimesheetProyectoEmpleado;
-use App\Models\TimesheetProyectoArea;
-use App\Models\TimesheetHoras;
 use App\Models\Empleado;
-use Livewire\Component;
-use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\F;
+use App\Models\TimesheetHoras;
+use App\Models\TimesheetProyecto;
+use App\Models\TimesheetProyectoArea;
+use App\Models\TimesheetProyectoEmpleado;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class TimesheetProyectoEmpleadosComponent extends Component
 {
     use LivewireAlert;
 
     public $proyecto;
+
     public $empleados;
+
     public $proyecto_empleados;
+
     public $proyecto_id;
 
     public $empleado_añadido;
+
     public $horas_asignadas;
+
     public $costo_hora;
 
     public $areasempleado;
@@ -34,7 +38,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $this->proyecto = TimesheetProyecto::find($proyecto_id);
         $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $proyecto_id)->get();
-        $this->empleados = Empleado::alta()->get();
+        $this->empleados = Empleado::getaltaAll();
     }
 
     public function render()
@@ -60,18 +64,19 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
             $resta = $tot_horas_proyecto - $ep->horas_asignadas;
 
-            if($resta > 0){
+            if ($resta > 0) {
                 $sobre = $resta;
-            }else{
+            } else {
                 $sobre = 'No se han excedido';
             }
 
             $ep->totales = $tot_horas_proyecto;
             $ep->sobrepasadas = $sobre;
         }
-         $this->proyecto_empleados = $emp_proy;
+        $this->proyecto_empleados = $emp_proy;
         // dd($this->proyecto_empleados);
         $this->emit('scriptTabla');
+
         return view('livewire.timesheet.timesheet-proyecto-empleados-component');
     }
 
@@ -85,14 +90,14 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function addEmpleado()
     {
         $empleado_add_proyecto = Empleado::find($this->empleado_añadido);
-        if ($this->proyecto->tipo === "Externo") {
+        if ($this->proyecto->tipo === 'Externo') {
             $this->validate([
                 'horas_asignadas' => ['required'],
                 'costo_hora' => ['required'],
             ]);
         }
 
-        if($this->proyecto->tipo === "Externo"){
+        if ($this->proyecto->tipo === 'Externo') {
             $time_proyect_empleado = TimesheetProyectoEmpleado::create([
                 'proyecto_id' => $this->proyecto->id,
                 'empleado_id' => $empleado_add_proyecto->id,
@@ -101,7 +106,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 'costo_hora' => $this->costo_hora,
             ]);
             $this->resetInput();
-        }else{
+        } else {
             $time_proyect_empleado = TimesheetProyectoEmpleado::create([
                 'proyecto_id' => $this->proyecto->id,
                 'empleado_id' => $empleado_add_proyecto->id,
@@ -116,13 +121,13 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'timer' => 3000,
             'toast' => true,
             'timerProgressBar' => true,
-           ]);
+        ]);
     }
 
     public function editEmpleado($id, $datos)
     {
-        if ($this->proyecto->tipo === "Externo") {
-            if(empty($datos['horas_edit']) || empty($datos['costo_edit']) || empty($datos['empleado_editado'])){
+        if ($this->proyecto->tipo === 'Externo') {
+            if (empty($datos['horas_edit']) || empty($datos['costo_edit']) || empty($datos['empleado_editado'])) {
                 // dd('Llega nulo');
                 // $this->dispatchBrowserEvent('closeModal');
                 $this->alert('error', 'No debe contener datos vacios', [
@@ -130,10 +135,10 @@ class TimesheetProyectoEmpleadosComponent extends Component
                     'timer' => 3000,
                     'toast' => true,
                     'timerProgressBar' => true,
-                   ]);
+                ]);
 
-                   return null;
-            }else{
+                return null;
+            } else {
                 $emp_upd_proyecto = Empleado::find($datos['empleado_editado']);
                 // dd($emp_upd_proyecto);
                 $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
@@ -144,7 +149,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                     'costo_hora' => $datos['costo_edit'],
                 ]);
             }
-        }else{ //Internos
+        } else { //Internos
             $emp_upd_proyecto = Empleado::find($datos['empleado_editado']);
             // dd($emp_upd_proyecto);
             $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
@@ -163,8 +168,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             'timer' => 3000,
             'toast' => true,
             'timerProgressBar' => true,
-           ]);
-
+        ]);
     }
 
     public function bloquearEmpleado($id)

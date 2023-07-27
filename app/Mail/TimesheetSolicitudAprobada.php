@@ -18,7 +18,9 @@ class TimesheetSolicitudAprobada extends Mailable
      * @return void
      */
     public $aprobar;
+
     public $aprobador;
+
     public $solicitante;
 
     public function __construct(Empleado $aprobador, Timesheet $aprobar, Empleado $solicitante)
@@ -35,6 +37,6 @@ class TimesheetSolicitudAprobada extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.timesheet.timesheet_solicitud_aprobada')->subject('Timesheet - Solicitud Aprobada ' . $this->aprobar->semana_text);
+        return $this->view('mails.timesheet.timesheet_solicitud_aprobada')->subject('Timesheet - Solicitud Aprobada '.$this->aprobar->semana_text);
     }
 }

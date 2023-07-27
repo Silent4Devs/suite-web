@@ -20,7 +20,7 @@ class Quejas extends Model
 
     public function getFolioAttribute()
     {
-        return  sprintf('QUE-%04d', $this->id);
+        return sprintf('QUE-%04d', $this->id);
     }
 
     public function quejo()

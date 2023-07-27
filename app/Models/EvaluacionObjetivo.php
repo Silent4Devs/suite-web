@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Objetivosseguridad|null $objetivosseguridad
  */
 class EvaluacionObjetivo extends Model
@@ -32,6 +31,7 @@ class EvaluacionObjetivo extends Model
     protected $table = 'evaluacion_objetivo';
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $casts = [

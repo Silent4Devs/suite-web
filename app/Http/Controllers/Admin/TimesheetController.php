@@ -3,24 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TimesheetHorasSobrepasadas;
 use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
 use App\Mail\TimesheetSolicitudRechazada;
-use App\Mail\TimesheetHorasSobrepasadas;
 use App\Models\Area;
 use App\Models\Empleado;
-use App\Models\Sede;
 use App\Models\Organizacion;
+use App\Models\Sede;
 use App\Models\Timesheet;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
-use App\Models\TimesheetProyectoEmpleado;
-use App\Models\TimesheetProyectoProveedor;
 use App\Models\TimesheetProyectoArea;
+use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetTarea;
-use App\Services\DashboardService;
 use App\Services\TimesheetService;
+use App\Traits\ObtenerOrganizacion;
 use App\Jobs\NuevoProyectoJob;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,7 +29,7 @@ use Illuminate\Support\Facades\Mail;
 
 class TimesheetController extends Controller
 {
-
+    use ObtenerOrganizacion;
 
     private $timesheetService;
 
@@ -46,21 +45,18 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $times = timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
+        $cacheKey = 'timesheet-'.auth()->user()->empleado->id;
 
-        $todos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->count();
-        $borrador_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'papelera')->count();
-        $pendientes_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'pendiente')->count();
-        $aprobados_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'aprobado')->count();
-        $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
+        $times = Timesheet::getPersonalTimesheet();
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $todos_contador = $times->count();
+        $borrador_contador = $times->where('estatus', 'papelera')->count();
+        $pendientes_contador = $times->where('estatus', 'pendiente')->count();
+        $aprobados_contador = $times->where('estatus', 'aprobado')->count();
+        $rechazos_contador = $times->where('estatus', 'rechazado')->count();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.index', compact('times', 'rechazos_contador', 'todos_contador', 'borrador_contador', 'pendientes_contador', 'aprobados_contador', 'logo_actual', 'empresa_actual'));
@@ -70,7 +66,7 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         if (Timesheet::count() > 0) {
             $time_viejo = Timesheet::orderBy('fecha_dia')->first()->fecha_dia;
@@ -80,7 +76,7 @@ class TimesheetController extends Controller
             $time_exist = false;
         }
 
-        $rechazos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->where('estatus', 'rechazado')->count();
+        $rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
         $aprobar_contador = Timesheet::where('aprobador_id', auth()->user()->empleado->id)->where('estatus', 'pendiente')->count();
 
         return view('admin.timesheet.timesheet-inicio', compact('organizacion', 'rechazos_contador', 'aprobar_contador', 'time_viejo', 'time_exist'));
@@ -88,7 +84,7 @@ class TimesheetController extends Controller
 
     public function actualizarDia(Request $request)
     {
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $semanasAdicionales = $request->semanas_adicionales < 0 ? 0 : $request->semanas_adicionales;
         $organizacion->update([
             'dia_timesheet' => $request->dia_timesheet,
@@ -117,9 +113,9 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
+        $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
 
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
 
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
     }
@@ -148,8 +144,8 @@ class TimesheetController extends Controller
 
         $tareas = TimesheetTarea::getAll();
         $timesheet = Timesheet::find($id);
-        $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
-        $organizacion = Organizacion::first();
+        $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
+        $organizacion = Organizacion::getFirst();
         $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.create-copia', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
@@ -159,7 +155,7 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacion_semana = Organizacion::first();
+        $organizacion_semana = Organizacion::getFirst();
 
         $request->validate(
             [
@@ -342,8 +338,8 @@ class TimesheetController extends Controller
 
         $tareas = TimesheetTarea::getAll();
         $timesheet = Timesheet::find($id);
-        $fechasRegistradas = Timesheet::where('empleado_id', auth()->user()->empleado->id)->pluck('fecha_dia')->toArray();
-        $organizacion = Organizacion::first();
+        $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
+        $organizacion = Organizacion::getFirst();
         $horas_count = TimesheetHoras::where('timesheet_id', $id)->count();
 
         return view('admin.timesheet.edit', compact('timesheet', 'proyectos', 'tareas', 'fechasRegistradas', 'organizacion', 'horas_count'));
@@ -352,7 +348,6 @@ class TimesheetController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -360,7 +355,7 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacion_semana = Organizacion::first();
+        $organizacion_semana = Organizacion::getFirst();
 
         $request->validate(
             [
@@ -533,13 +528,8 @@ class TimesheetController extends Controller
     {
         $clientes = TimesheetCliente::getAll();
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.proyectos', compact('clientes', 'logo_actual', 'empresa_actual'));
@@ -552,6 +542,7 @@ class TimesheetController extends Controller
         $areas = Area::getAll();
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
+
         return view('admin.timesheet.create-proyectos', compact('clientes', 'areas', 'sedes', 'tipos', 'tipo'));
     }
 
@@ -682,20 +673,15 @@ class TimesheetController extends Controller
         }
 
         // return back()->with('success', 'Guardado con éxito');
-        return redirect('admin/timesheet/proyecto-empleados/' . $edit_proyecto->id);
+        return redirect('admin/timesheet/proyecto-empleados/'.$edit_proyecto->id);
     }
 
     public function tareas()
     {
         abort_if(Gate::denies('timesheet_administrador_tareas_proyectos_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.tareas', compact('logo_actual', 'empresa_actual'));
@@ -705,13 +691,8 @@ class TimesheetController extends Controller
     {
         $proyecto = TimesheetProyecto::select('proyecto', 'id')->find($proyecto_id);
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.tareas-proyecto', compact('proyecto', 'logo_actual', 'empresa_actual'));
@@ -722,13 +703,8 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('mi_timesheet_horas_rechazadas_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $papelera = Timesheet::where('estatus', 'papelera')->where('empleado_id', auth()->user()->empleado->id)->get();
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.papelera', compact('papelera', 'logo_actual', 'empresa_actual'));
@@ -767,13 +743,8 @@ class TimesheetController extends Controller
                 ->get();
         }
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.aprobaciones', compact('aprobaciones', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
@@ -797,13 +768,8 @@ class TimesheetController extends Controller
                 ->get();
         }
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.aprobados', compact('aprobados', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
@@ -827,13 +793,8 @@ class TimesheetController extends Controller
                 ->get();
         }
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.rechazos', compact('rechazos', 'logo_actual', 'empresa_actual', 'habilitarTodos'));
@@ -880,13 +841,8 @@ class TimesheetController extends Controller
         abort_if(Gate::denies('timesheet_administrador_clientes_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $clientes = TimesheetCliente::orderByDesc('id')->get();
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.clientes.index', compact('clientes', 'logo_actual', 'empresa_actual'));
@@ -914,7 +870,6 @@ class TimesheetController extends Controller
                 'identificador.unique' => 'El ID ya esta en uso',
             ],
         );
-
 
         $cliente_nuevo = TimesheetCliente::create($request->all());
 
@@ -967,13 +922,8 @@ class TimesheetController extends Controller
 
         $tareas = TimesheetTarea::getAll();
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.reportes', compact('clientes', 'proyectos', 'tareas', 'logo_actual', 'empresa_actual'));
@@ -1003,13 +953,8 @@ class TimesheetController extends Controller
 
         $empleados_childern = $aprobador->children;
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.reporte-aprobador', compact('logo_actual', 'empresa_actual'));
@@ -1019,13 +964,8 @@ class TimesheetController extends Controller
     {
         $proyecto = TimesheetProyecto::find($id);
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.proyecto-empleados', compact('proyecto', 'logo_actual', 'empresa_actual'));
@@ -1035,13 +975,8 @@ class TimesheetController extends Controller
     {
         $proyecto = TimesheetProyecto::find($id);
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.proyecto-externos', compact('proyecto', 'logo_actual', 'empresa_actual'));
@@ -1056,13 +991,8 @@ class TimesheetController extends Controller
         $tipos = TimesheetProyecto::TIPOS;
         $tipo = $tipos['Interno'];
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.edit-proyectos', compact('proyecto', 'logo_actual', 'empresa_actual', 'clientes', 'areas', 'sedes', 'tipos'));
@@ -1078,7 +1008,6 @@ class TimesheetController extends Controller
         } else {
             $emp_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->get();
         }
-
 
         foreach ($emp_proyectos as $ep) {
             $times = TimesheetHoras::where('proyecto_id', '=', $ep->proyecto_id)
@@ -1097,7 +1026,7 @@ class TimesheetController extends Controller
 
             $tot_horas_proyecto = $sumalun + $sumamar + $sumamie + $sumajue + $sumavie + $sumasab + $sumadom;
 
-            if ($ep->proyecto->tipo === "Externo") {
+            if ($ep->proyecto->tipo === 'Externo') {
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
 

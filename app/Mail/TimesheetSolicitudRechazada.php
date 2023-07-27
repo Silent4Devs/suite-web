@@ -18,7 +18,9 @@ class TimesheetSolicitudRechazada extends Mailable
      * @return void
      */
     public $rechazar;
+
     public $aprobador;
+
     public $solicitante;
 
     public function __construct(Empleado $aprobador, Timesheet $rechazar, Empleado $solicitante)
@@ -35,6 +37,6 @@ class TimesheetSolicitudRechazada extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.timesheet.timesheet_solicitud_rechazada')->subject('Timesheet - Solicitud Rechazada ' . $this->rechazar->semana_text);
+        return $this->view('mails.timesheet.timesheet_solicitud_rechazada')->subject('Timesheet - Solicitud Rechazada '.$this->rechazar->semana_text);
     }
 }

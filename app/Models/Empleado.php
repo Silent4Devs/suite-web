@@ -10,13 +10,12 @@ use App\Models\RH\DependientesEconomicosEmpleados;
 use Carbon\Carbon;
 use DateTime;
 use DateTimeInterface;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use EloquentFilter\Filterable;
 use Illuminate\Support\Facades\Cache;
-// use Rennokki\QueryCache\Traits\QueryCacheable;
 
 /**
  * Class Empleado.
@@ -38,7 +37,6 @@ use Illuminate\Support\Facades\Cache;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Area|null $area
  * @property Sede|null $sede
  * @property Empleado|null $empleado
@@ -58,11 +56,9 @@ class Empleado extends Model
     use SoftDeletes;
     use HasFactory;
     use Filterable;
-    // use QueryCacheable;
 
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
     const BAJA = 'baja';
+
     const ALTA = 'alta';
 
     protected $table = 'empleados';
@@ -153,24 +149,48 @@ class Empleado extends Model
         'vacante_activa',
     ];
 
-    #Redis methods
-    public static function getAll()
+    //Redis methods
+    public static function getAll(array $options = [])
     {
-        return Cache::remember('empleados_all', 3600 * 24, function () {
-            return self::get();
+        // Generate a unique cache key based on the options provided
+        $cacheKey = 'empleados_all_'.md5(serialize($options));
+
+        return Cache::remember('empleados_all', 3600 * 24, function () use ($options) {
+            $query = self::query();
+
+            if (isset($options['orderBy'])) {
+                $orderBy = $options['orderBy'];
+                $query->orderBy($orderBy[0], $orderBy[1]);
+            }
+
+            return $query->get();
+        });
+    }
+
+    public static function getAltaEmpleados()
+    {
+        return Cache::remember('empleados_alta', 3600 * 24, function () {
+            return self::alta()->select('id', 'area_id', 'name')->get();
+        });
+    }
+
+    public static function getaltaAll()
+    {
+        return Cache::remember('empleados_alta_all', 3600 * 24, function () {
+            return self::alta()->get();
         });
     }
 
     public function getActualBirdthdayAttribute()
     {
-        $birdthday = date('Y') . '-' . Carbon::parse($this->cumpleaños)->format('m-d');
+        $birdthday = date('Y').'-'.Carbon::parse($this->cumpleaños)->format('m-d');
 
         return $birdthday;
     }
 
     public function getActualAniversaryAttribute()
     {
-        $aniversario = date('Y') . '-' . Carbon::parse($this->antiguedad)->format('m-d');
+        $aniversario = date('Y').'-'.Carbon::parse($this->antiguedad)->format('m-d');
 
         return $aniversario;
     }
@@ -256,7 +276,7 @@ class Empleado extends Model
             }
         }
 
-        return asset('storage/empleados/imagenes/' . $this->foto);
+        return asset('storage/empleados/imagenes/'.$this->foto);
     }
 
     public function area()
@@ -298,7 +318,7 @@ class Empleado extends Model
 
     public function getCompetenciasAsignadasAttribute()
     {
-        return !is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
+        return ! is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
     }
 
     public function getFechaMinTimesheetAttribute($value)

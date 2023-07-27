@@ -8,15 +8,23 @@ use Livewire\Component;
 class CreateRecursosMaterialesAia extends Component
 {
     public $recursoID;
+
     public $equipos;
+
     public $impresoras;
+
     public $telefono;
+
     public $otro;
+
     public $otro_numero;
+
     public $escenario;
+
     public $cuestionario_id;
 
     public $view = 'create';
+
     protected $listeners = ['editarMateriales' => 'edit', 'eliminarMateriales' => 'destroy'];
 
     public function validarMaterial()

@@ -17,7 +17,7 @@ class AnalisisBrechasIso extends Model
         'fecha',
         'porcentaje_implementacion',
         'id_elaboro',
-        'estatus'
+        'estatus',
     ];
 
     public function empleado()

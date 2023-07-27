@@ -10,7 +10,6 @@ class RecursoObserver
     /**
      * Handle the Recurso "created" event.
      *
-     * @param  \App\Models\Recurso  $recurso
      * @return void
      */
     public function created(Recurso $recurso)
@@ -21,7 +20,6 @@ class RecursoObserver
     /**
      * Handle the Recurso "updated" event.
      *
-     * @param  \App\Models\Recurso  $recurso
      * @return void
      */
     public function updated(Recurso $recurso)
@@ -32,7 +30,6 @@ class RecursoObserver
     /**
      * Handle the Recurso "deleted" event.
      *
-     * @param  \App\Models\Recurso  $recurso
      * @return void
      */
     public function deleted(Recurso $recurso)
@@ -43,7 +40,6 @@ class RecursoObserver
     /**
      * Handle the Recurso "restored" event.
      *
-     * @param  \App\Models\Recurso  $recurso
      * @return void
      */
     public function restored(Recurso $recurso)
@@ -54,7 +50,6 @@ class RecursoObserver
     /**
      * Handle the Recurso "force deleted" event.
      *
-     * @param  \App\Models\Recurso  $recurso
      * @return void
      */
     public function forceDeleted(Recurso $recurso)

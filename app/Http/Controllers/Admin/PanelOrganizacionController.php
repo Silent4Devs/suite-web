@@ -36,7 +36,6 @@ class PanelOrganizacionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,7 +46,6 @@ class PanelOrganizacionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PanelOrganizacion  $panelOrganizacion
      * @return \Illuminate\Http\Response
      */
     public function show(PanelOrganizacion $panelOrganizacion)
@@ -58,7 +56,6 @@ class PanelOrganizacionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\PanelOrganizacion  $panelOrganizacion
      * @return \Illuminate\Http\Response
      */
     public function edit(PanelOrganizacion $panelOrganizacion)
@@ -69,8 +66,6 @@ class PanelOrganizacionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PanelOrganizacion  $panelOrganizacion
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, PanelOrganizacion $panelOrganizacion)
@@ -81,7 +76,6 @@ class PanelOrganizacionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\PanelOrganizacion  $panelOrganizacion
      * @return \Illuminate\Http\Response
      */
     public function destroy(PanelOrganizacion $panelOrganizacion)

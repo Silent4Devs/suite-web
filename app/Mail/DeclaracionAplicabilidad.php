@@ -16,7 +16,9 @@ class DeclaracionAplicabilidad extends Mailable
      * @return void
      */
     public $tipo;
+
     public $nombre;
+
     public $controles;
 
     //inicializa de la clase

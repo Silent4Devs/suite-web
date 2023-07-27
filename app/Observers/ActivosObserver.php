@@ -10,7 +10,6 @@ class ActivosObserver
     /**
      * Handle the Activo "created" event.
      *
-     * @param  \App\Models\Activo  $activo
      * @return void
      */
     public function created(Activo $activo)
@@ -21,7 +20,6 @@ class ActivosObserver
     /**
      * Handle the Activo "updated" event.
      *
-     * @param  \App\Models\Activo  $activo
      * @return void
      */
     public function updated(Activo $activo)
@@ -32,7 +30,6 @@ class ActivosObserver
     /**
      * Handle the Activo "deleted" event.
      *
-     * @param  \App\Models\Activo  $activo
      * @return void
      */
     public function deleted(Activo $activo)
@@ -43,7 +40,6 @@ class ActivosObserver
     /**
      * Handle the Activo "restored" event.
      *
-     * @param  \App\Models\Activo  $activo
      * @return void
      */
     public function restored(Activo $activo)
@@ -54,7 +50,6 @@ class ActivosObserver
     /**
      * Handle the Activo "force deleted" event.
      *
-     * @param  \App\Models\Activo  $activo
      * @return void
      */
     public function forceDeleted(Activo $activo)

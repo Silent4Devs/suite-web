@@ -13,15 +13,23 @@ class AuditoriaInternaHallazgos extends Component
     use LivewireAlert;
 
     public $incumplimiento_requisito;
+
     public $descripcion;
+
     public $clasificacion_hallazgo;
+
     public $auditoria_internas_id;
+
     public $area;
+
     public $proceso;
+
     public $hallazgoAuditoriaID;
 
     public $parteInteresadaIdEN;
+
     public $view = 'create';
+
     protected $listeners = ['editarParteInteresada' => 'edit', 'eliminarParteInteresada' => 'destroy', 'agregarNormas'];
 
     public function hydrate()

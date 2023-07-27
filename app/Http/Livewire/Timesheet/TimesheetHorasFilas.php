@@ -12,11 +12,17 @@ use Livewire\Component;
 class TimesheetHorasFilas extends Component
 {
     public $proyectos;
+
     public $tareas;
+
     public $horas;
+
     public $origen;
+
     public $timesheet;
+
     public $timesheet_id;
+
     public $contador = 5;
 
     protected $listeners = ['removerFila'];

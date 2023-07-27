@@ -63,7 +63,7 @@ class PlanBaseActividadesController extends Controller
             });
 
             $table->editColumn('guia', function ($row) {
-                return $row->guia ? '<a href="' . $row->guia->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+                return $row->guia ? '<a href="'.$row->guia->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>' : '';
             });
             $table->editColumn('estado', function ($row) {
                 return $row->estatus ? $row->estatus->estado : '';
@@ -113,7 +113,7 @@ class PlanBaseActividadesController extends Controller
         $planBaseActividade = PlanBaseActividade::create($request->all());
 
         if ($request->input('guia', false)) {
-            $planBaseActividade->addMedia(storage_path('tmp/uploads/' . $request->input('guia')))->toMediaCollection('guia');
+            $planBaseActividade->addMedia(storage_path('tmp/uploads/'.$request->input('guia')))->toMediaCollection('guia');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -147,12 +147,12 @@ class PlanBaseActividadesController extends Controller
         $planBaseActividade->update($request->all());
 
         if ($request->input('guia', false)) {
-            if (!$planBaseActividade->guia || $request->input('guia') !== $planBaseActividade->guia->file_name) {
+            if (! $planBaseActividade->guia || $request->input('guia') !== $planBaseActividade->guia->file_name) {
                 if ($planBaseActividade->guia) {
                     $planBaseActividade->guia->delete();
                 }
 
-                $planBaseActividade->addMedia(storage_path('tmp/uploads/' . $request->input('guia')))->toMediaCollection('guia');
+                $planBaseActividade->addMedia(storage_path('tmp/uploads/'.$request->input('guia')))->toMediaCollection('guia');
             }
         } elseif ($planBaseActividade->guia) {
             $planBaseActividade->guia->delete();

@@ -9,8 +9,6 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class AnalisisDeRiesgoImport implements ToModel
 {
     /**
-     * @param array $row
-     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
@@ -18,11 +16,11 @@ class AnalisisDeRiesgoImport implements ToModel
         return new AnalisisDeRiesgo([
             'nombre' => $row[0],
             'tipo' => $row[1],
-            'fecha'=> $row[2],
-            'porcentaje_implementacion'=> $row[3],
-            'id_elaboro'=> $row[4],
-              // 'id_elaboro'=> $this->obtenerEmpleadoPorNumero($row[4]),
-            'estatus'=>$row[5],
+            'fecha' => $row[2],
+            'porcentaje_implementacion' => $row[3],
+            'id_elaboro' => $row[4],
+            // 'id_elaboro'=> $this->obtenerEmpleadoPorNumero($row[4]),
+            'estatus' => $row[5],
         ]);
     }
 

@@ -2,34 +2,39 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
 use App\Repos\AreaRepo;
 use App\Repos\EmpleadoRepo;
 use App\Repos\TimesheetHorasRepo;
 use App\Repos\TimesheetProyectoRepo;
 use App\Repos\TimesheetsRepo;
 use App\Repos\TimesheetTareaRepo;
+use Carbon\Carbon;
 
 class DashboardService
 {
     private $timesheetRepo;
+
     private $carbon;
+
     private $empleadoRepo;
+
     private $areaRepo;
+
     private $timesheetProyectoRepo;
+
     private $timesheetTareaRepo;
+
     private $timesheetHorasRepo;
 
     public function __construct(
-        TimesheetsRepo $timesheetRepo, 
-        Carbon $carbon, 
+        TimesheetsRepo $timesheetRepo,
+        Carbon $carbon,
         EmpleadoRepo $empleadoRepo,
         AreaRepo $areaRepo,
         TimesheetProyectoRepo $timesheetProyectoRepo,
         TimesheetTareaRepo $timesheetTareaRepo,
         TimesheetHorasRepo $timesheetHorasRepo
-    )
-    {
+    ) {
         $this->timesheetRepo = $timesheetRepo;
         $this->carbon = $carbon;
         $this->empleadoRepo = $empleadoRepo;
@@ -54,7 +59,7 @@ class DashboardService
         $areas_array = collect();
 
         // Primero iteramos el total de las areas
-        foreach($areas as $area){
+        foreach ($areas as $area) {
             $times_complit_esperados_area = 0;
             $empleados_area = $this->empleadoRepo->find(['*'], ['area', $area->id]);
 
@@ -77,7 +82,7 @@ class DashboardService
             foreach ($empleados_partisipacion as $emp_part_area) {
                 if ($emp_part_area->area_id == $area->id) {
                     $times_empleado_part_area = $this->timesheetRepo->count([
-                        'empleado' => $emp_part_area->id, 
+                        'empleado' => $emp_part_area->id,
                         'notEqualsEstatus' => 'rechazado',
                         'notEqualsEstatus' => 'papelera',
                         'notEqualsEstatus' => 'pendiente',
@@ -125,7 +130,7 @@ class DashboardService
                 'times_esperados' => $times_complit_esperados_area,
             ]);
         }
-        
+
         $empleados_count = $this->empleadoRepo->count([]);
         $times_por_mes_esperados = $semanas_del_mes * $empleados_count;
         if ($times_por_mes_esperados == 0) {
@@ -139,7 +144,7 @@ class DashboardService
                 'fecha' => $hoy,
                 'empleado' => $emp_part->id,
                 'notEqualsEstatus' => 'rechazado',
-                'notEqualsEstatus' => 'papelera'
+                'notEqualsEstatus' => 'papelera',
             ]);
             $total_times_mes += $times_empleado_part;
 
@@ -199,22 +204,22 @@ class DashboardService
         }
 
         return [
-            'borrador_contador' => $borrador_contador, 
-            'pendientes_contador' => $pendientes_contador, 
-            'aprobados_contador' => $aprobados_contador, 
-            'rechazos_contador' => $rechazos_contador, 
-            'areas_array' => $areas_array, 
-            'porcentaje_participacion' => $porcentaje_participacion, 
+            'borrador_contador' => $borrador_contador,
+            'pendientes_contador' => $pendientes_contador,
+            'aprobados_contador' => $aprobados_contador,
+            'rechazos_contador' => $rechazos_contador,
+            'areas_array' => $areas_array,
+            'porcentaje_participacion' => $porcentaje_participacion,
             'empleados_times_atrasados' => $empleados_times_atrasados,
-            'empleados_count' => $empleados_count, 
-            'areas' => $areas, 
-            'proyectos_proceso_c' => $proyectos_proceso_c, 
-            'proyectos_cancelados_c' => $proyectos_cancelados_c, 
-            'proyectos_terminados_c' => $proyectos_terminados_c, 
-            'proyectos_array' => $proyectos_array, 
-            'proyectos_proceso_array' => $proyectos_proceso_array, 
-            'proyectos_cancelado_array' => $proyectos_cancelado_array, 
-            'proyectos_terminado_array' => $proyectos_terminado_array
+            'empleados_count' => $empleados_count,
+            'areas' => $areas,
+            'proyectos_proceso_c' => $proyectos_proceso_c,
+            'proyectos_cancelados_c' => $proyectos_cancelados_c,
+            'proyectos_terminados_c' => $proyectos_terminados_c,
+            'proyectos_array' => $proyectos_array,
+            'proyectos_proceso_array' => $proyectos_proceso_array,
+            'proyectos_cancelado_array' => $proyectos_cancelado_array,
+            'proyectos_terminado_array' => $proyectos_terminado_array,
         ];
     }
 }

@@ -8,7 +8,6 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -16,10 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class ConcientizacionSgi extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    use QueryCacheable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'concientizacion_sgis';
 
     // protected $appends = [
@@ -38,8 +34,8 @@ class ConcientizacionSgi extends Model implements HasMedia
     ];
 
     const MEDIO_ENVIO_SELECT = [
-        'Correo'  => 'Correo',
-        'Poster'  => 'Poster',
+        'Correo' => 'Correo',
+        'Poster' => 'Poster',
         'Revista' => 'Revista',
         'Folleto' => 'Folleto',
     ];
@@ -58,9 +54,9 @@ class ConcientizacionSgi extends Model implements HasMedia
     ];
 
     const PERSONALOBJETIVO_SELECT = [
-        'toda_organizacion'     => 'Toda la organización',
-        'proveedores'           => 'Proveedores',
-        'clientes'              => 'Clientes',
+        'toda_organizacion' => 'Toda la organización',
+        'proveedores' => 'Proveedores',
+        'clientes' => 'Clientes',
         'toda_parte_interesada' => 'Todas las partes interesadas',
     ];
 

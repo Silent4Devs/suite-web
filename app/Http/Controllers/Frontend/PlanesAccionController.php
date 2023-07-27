@@ -39,7 +39,6 @@ class PlanesAccionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -59,7 +58,7 @@ class PlanesAccionController extends Controller
         $planImplementacion = PlanImplementacion::create([ // Necesario se carga inicialmente el Diagrama Universal de Gantt
             'tasks' => [],
             'canAdd' => true,
-            'canWrite' =>  true,
+            'canWrite' => true,
             'canWriteOnParent' => true,
             'changesReasonWhy' => false,
             'selectedRow' => 0,
@@ -71,7 +70,7 @@ class PlanesAccionController extends Controller
             'elaboro_id' => auth()->user()->empleado->id,
         ]);
 
-        return redirect()->route('planes-de-accion.index')->with('success', 'Plan de Acción' . $planImplementacion->parent . 'creado');
+        return redirect()->route('planes-de-accion.index')->with('success', 'Plan de Acción'.$planImplementacion->parent.'creado');
     }
 
     /**
@@ -104,7 +103,6 @@ class PlanesAccionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\PlanImplementacion  $planImplementacion
      * @return \Illuminate\Http\Response
      */

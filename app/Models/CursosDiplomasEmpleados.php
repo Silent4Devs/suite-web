@@ -14,6 +14,7 @@ class CursosDiplomasEmpleados extends Model
     use DateTranslator;
 
     protected $table = 'cursos_diplomados_empleados';
+
     protected $dates = [
         'created_at',
         'updated_at',
@@ -67,7 +68,7 @@ class CursosDiplomasEmpleados extends Model
 
     public function getRutaDocumentoAttribute()
     {
-        return asset('storage/cursos_empleados/') . '/' . $this->file;
+        return asset('storage/cursos_empleados/').'/'.$this->file;
     }
 
     public function getYearYmdAttribute()

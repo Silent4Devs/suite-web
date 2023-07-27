@@ -11,7 +11,9 @@ class SolicitudVacaciones extends Mailable
     use Queueable, SerializesModels;
 
     public $solicitante;
+
     public $supervisor;
+
     public $solicitud;
 
     public function __construct($solicitante, $supervisor, $solicitud)
@@ -23,6 +25,6 @@ class SolicitudVacaciones extends Mailable
 
     public function build()
     {
-        return $this->view('mails.Vacaciones.solicitud')->subject('Solicitud de Vacaciones de: ' . $this->solicitante->name)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.Vacaciones.solicitud')->subject('Solicitud de Vacaciones de: '.$this->solicitante->name)->cc('gestiondetalento@silent4business.com');
     }
 }

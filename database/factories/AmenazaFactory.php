@@ -23,11 +23,11 @@ class AmenazaFactory extends Factory
     {
         return [
             'nombre' => $this->faker->word,
-        'categoria' => $this->faker->word,
-        'descripcion' => $this->faker->word,
-        'created_at' => $this->faker->date('Y-m-d H:i:s'),
-        'updated_at' => $this->faker->date('Y-m-d H:i:s'),
-        'deleted_at' => $this->faker->date('Y-m-d H:i:s'),
+            'categoria' => $this->faker->word,
+            'descripcion' => $this->faker->word,
+            'created_at' => $this->faker->date('Y-m-d H:i:s'),
+            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
+            'deleted_at' => $this->faker->date('Y-m-d H:i:s'),
         ];
     }
 }
