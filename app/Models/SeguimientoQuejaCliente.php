@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class SeguimientoQuejaCliente.
@@ -17,9 +18,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  * @property QuejasCliente $quejas_cliente
  */
-class SeguimientoQuejaCliente extends Model
+class SeguimientoQuejaCliente extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'seguimiento_queja_cliente';
 

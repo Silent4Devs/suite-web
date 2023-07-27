@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class AlcanceSgsi.
@@ -25,9 +26,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Empleado|null $empleado
  * @property Norma|null $norma
  */
-class AlcanceSgsi extends Model
+class AlcanceSgsi extends Model implements Auditable
 {
     use SoftDeletes, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'alcance_sgsis';
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Objetivosseguridad.
@@ -31,9 +32,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Collection|VariablesObjetivosseguridad[] $variables_objetivosseguridads
  * @property Collection|EvaluacionObjetivo[] $evaluacion_objetivos
  */
-class Objetivosseguridad extends Model
+class Objetivosseguridad extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'objetivosseguridads';
 

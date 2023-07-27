@@ -1030,7 +1030,7 @@
 
     @php
         use App\Models\Organizacion;
-        $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+        $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
         } else {

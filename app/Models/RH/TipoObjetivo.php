@@ -5,10 +5,12 @@ namespace App\Models\RH;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TipoObjetivo extends Model
+class TipoObjetivo extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'ev360_tipo_objetivos';
 
@@ -27,7 +29,7 @@ class TipoObjetivo extends Model
     public function getImagenRutaAttribute()
     {
         if ($this->imagen) {
-            return asset('storage/perspectivas/img/'.$this->imagen);
+            return asset('storage/perspectivas/img/' . $this->imagen);
         }
 
         return asset('img/bullseye.png');

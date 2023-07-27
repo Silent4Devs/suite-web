@@ -6,10 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Documento extends Model
+class Documento extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     //REVISION DE DOCUMENTOS ESTATUS
     const SOLICITUD_REVISION = 1;
@@ -157,7 +159,7 @@ class Documento extends Model
                 break;
         }
 
-        return asset($path_documento.'/'.$this->archivo);
+        return asset($path_documento . '/' . $this->archivo);
     }
 
     //Relacion uno a muchos inversa

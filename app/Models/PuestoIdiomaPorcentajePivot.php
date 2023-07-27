@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class PuestoIdiomaPorcentajePivot.
@@ -19,8 +20,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property Porcentaje $porcentaje
  * @property Collection|Puesto[] $puestos
  */
-class PuestoIdiomaPorcentajePivot extends Model
+class PuestoIdiomaPorcentajePivot extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'puesto_idioma_porcentaje_pivot';
 
     protected $casts = [

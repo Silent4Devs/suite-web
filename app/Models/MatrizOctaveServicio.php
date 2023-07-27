@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class MatrizOctaveServicio.
@@ -16,8 +17,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * @property Collection|MatrizOctaveProceso[] $matriz_octave_procesos
  */
-class MatrizOctaveServicio extends Model
+class MatrizOctaveServicio extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'matriz_octave_servicios';
 
     protected $fillable = [

@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EvaluacionRequisitoLegal extends Model
+class EvaluacionRequisitoLegal extends Model implements Auditable
 {
     use HasFactory;
-
-    public $cacheFor = 3600;
-
-    protected static $flushCacheOnUpdate = true;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'evaluacion_requisito_legal';
 

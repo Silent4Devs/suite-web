@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class SubcategoriaActivo.
@@ -17,9 +18,10 @@ use Illuminate\Support\Facades\Cache;
  * @property string|null $deleted_at
  * @property Tipoactivo $tipoactivo
  */
-class SubcategoriaActivo extends Model
+class SubcategoriaActivo extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'subcategoria_activos';
 

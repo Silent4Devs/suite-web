@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Grupo.
@@ -20,10 +21,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Collection|Area[] $areas
  * @property Collection|Macroproceso[] $macroprocesos
  */
-class Grupo extends Model
+class Grupo extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'grupos';
 

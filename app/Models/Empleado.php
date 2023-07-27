@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Empleado.
@@ -51,11 +52,12 @@ use Illuminate\Support\Facades\Cache;
  * @property Collection|RevisionDocumento[] $revision_documentos
  * @property Collection|User[] $users
  */
-class Empleado extends Model
+class Empleado extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
     use Filterable;
+    use \OwenIt\Auditing\Auditable;
 
     const BAJA = 'baja';
 
@@ -153,7 +155,7 @@ class Empleado extends Model
     public static function getAll(array $options = [])
     {
         // Generate a unique cache key based on the options provided
-        $cacheKey = 'empleados_all_'.md5(serialize($options));
+        $cacheKey = 'empleados_all_' . md5(serialize($options));
 
         return Cache::remember('empleados_all', 3600 * 24, function () use ($options) {
             $query = self::query();
@@ -183,14 +185,14 @@ class Empleado extends Model
 
     public function getActualBirdthdayAttribute()
     {
-        $birdthday = date('Y').'-'.Carbon::parse($this->cumpleaños)->format('m-d');
+        $birdthday = date('Y') . '-' . Carbon::parse($this->cumpleaños)->format('m-d');
 
         return $birdthday;
     }
 
     public function getActualAniversaryAttribute()
     {
-        $aniversario = date('Y').'-'.Carbon::parse($this->antiguedad)->format('m-d');
+        $aniversario = date('Y') . '-' . Carbon::parse($this->antiguedad)->format('m-d');
 
         return $aniversario;
     }
@@ -276,7 +278,7 @@ class Empleado extends Model
             }
         }
 
-        return asset('storage/empleados/imagenes/'.$this->foto);
+        return asset('storage/empleados/imagenes/' . $this->foto);
     }
 
     public function area()
@@ -318,7 +320,7 @@ class Empleado extends Model
 
     public function getCompetenciasAsignadasAttribute()
     {
-        return ! is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
+        return !is_null($this->puestoRelacionado) ? $this->puestoRelacionado->competencias->count() : 0;
     }
 
     public function getFechaMinTimesheetAttribute($value)

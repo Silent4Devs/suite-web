@@ -6,11 +6,13 @@ use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Timesheet extends Model
+class Timesheet extends Model implements Auditable
 {
     use HasFactory;
     use Filterable;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'timesheet';
 
@@ -33,7 +35,7 @@ class Timesheet extends Model
 
     public static function getPersonalTimesheet()
     {
-        return Cache::remember('timesheet-'.auth()->user()->empleado->id, now()->addHours(24), function () {
+        return Cache::remember('timesheet-' . auth()->user()->empleado->id, now()->addHours(24), function () {
             return self::where('empleado_id', auth()->user()->empleado->id)->get();
         });
     }
@@ -65,7 +67,7 @@ class Timesheet extends Model
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
 
         $semana_rango = '
-            <font style="font-weight: lighter !important;"> Del </font><font style="font-weight: bolder !important;">'.$inicio_dia.'</font><font style="font-weight: lighter !important;"> al </font><font style="font-weight: bolder !important;">'.$fin_dia.'</font>';
+            <font style="font-weight: lighter !important;"> Del </font><font style="font-weight: bolder !important;">' . $inicio_dia . '</font><font style="font-weight: lighter !important;"> al </font><font style="font-weight: bolder !important;">' . $fin_dia . '</font>';
 
         return $semana_rango;
     }
@@ -97,7 +99,7 @@ class Timesheet extends Model
         $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")->format('d/m/Y');
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->format('d/m/Y');
 
-        $semana_rango = ' del '.$inicio_dia.' al '.$fin_dia;
+        $semana_rango = ' del ' . $inicio_dia . ' al ' . $fin_dia;
 
         return $semana_rango;
     }
@@ -111,7 +113,7 @@ class Timesheet extends Model
         $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify('last Monday')->format('Y-m-d');
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify('next Sunday')->format('Y-m-d');
 
-        $semana_rango = $inicio_dia.'|'.$fin_dia;
+        $semana_rango = $inicio_dia . '|' . $fin_dia;
 
         return $semana_rango;
     }

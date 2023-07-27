@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class procesos_activos_informacion_historico extends Model
+class procesos_activos_informacion_historico extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'procesos_activos_informacion_historicos';
 
     protected $casts = [
