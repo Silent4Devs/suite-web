@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Vulnerabilidad.
@@ -15,9 +16,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $descripcion
  * @property int $id_amenaza
  */
-class Vulnerabilidad extends Model
+class Vulnerabilidad extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'vulnerabilidads';
 

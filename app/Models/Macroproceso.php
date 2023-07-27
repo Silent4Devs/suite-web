@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -11,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Macroproceso.
@@ -26,10 +23,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Grupo|null $grupo
  * @property Collection|Proceso[] $procesos
  */
-class Macroproceso extends Model
+class Macroproceso extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'macroprocesos';
 

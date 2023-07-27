@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Proceso.
@@ -23,9 +24,10 @@ use Illuminate\Support\Str;
  * @property Macroproceso|null $macroproceso
  * @property Collection|IndicadoresSgsi[] $indicadores_sgsis
  */
-class Proceso extends Model
+class Proceso extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'procesos';
 
@@ -85,7 +87,7 @@ class Proceso extends Model
 
     public function getNameAttribute()
     {
-        return $this->codigo.' '.$this->nombre;
+        return $this->codigo . ' ' . $this->nombre;
     }
 
     public function getContentAttribute()

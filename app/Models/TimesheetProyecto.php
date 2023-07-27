@@ -6,12 +6,13 @@ use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TimesheetProyecto extends Model
+class TimesheetProyecto extends Model implements Auditable
 {
     use HasFactory;
     use Filterable;
-
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'timesheet_proyectos';
 
     protected $appends = ['areas'];

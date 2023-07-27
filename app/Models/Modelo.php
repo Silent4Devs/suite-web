@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Modelo.
@@ -18,9 +19,10 @@ use Illuminate\Support\Facades\Cache;
  * @property string|null $deleted_at
  * @property Marca|null $marca
  */
-class Modelo extends Model
+class Modelo extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'modelo';
 
@@ -43,7 +45,7 @@ class Modelo extends Model
 
     public static function getById($id)
     {
-        $cacheKey = 'Modelos_'.$id;
+        $cacheKey = 'Modelos_' . $id;
 
         return Cache::remember($cacheKey, 3600 * 24, function () use ($id) {
             return self::find($id);

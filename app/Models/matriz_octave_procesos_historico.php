@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class matriz_octave_procesos_historico extends Model
+class matriz_octave_procesos_historico extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'matriz_octave_procesos';
 
     protected $casts = [
