@@ -38,7 +38,15 @@ class DeclaracionAplicabilidad extends Model implements Auditable
     {
         //retrieve all data or can pass columns to retrieve
         return Cache::remember('declaracionaplicabilidad_all', 3600 * 24, function () use ($columns) {
-            return self::select($columns)->get();
+            return self::select($columns)->orderBy('id')->get();
+        });
+    }
+
+    public static function getAllOrderByAsc()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('declaracion_aplicabilidad_asc_all', 3600 * 4, function () {
+            return self::orderBy('anexo_indice', 'asc')->get();
         });
     }
 
