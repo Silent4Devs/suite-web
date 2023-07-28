@@ -46,19 +46,20 @@ class DeskController extends Controller
     public function index()
     {
         abort_if(Gate::denies('centro_de_atencion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $incidentes_seguridad = IncidentesSeguridad::where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->orderBy('id')->get();
+        $incidentes_seguridad = IncidentesSeguridad::getAll()->where('archivado', IncidentesSeguridad::NO_ARCHIVADO);
         $riesgos_identificados = RiesgoIdentificado::orderBy('id')->get();
-        $quejas = Quejas::orderBy('id')->get();
-        $denuncias = Denuncias::orderBy('id')->get();
-        $mejoras = Mejoras::orderBy('id')->get();
-        $sugerencias = Sugerencias::orderBy('id')->get();
+        $quejas = Quejas::getAll();
+        $denuncias = Denuncias::getAll();
+        $mejoras = Mejoras::getAll();
+        $sugerencias = Sugerencias::getAll();
+        $incidentesSeguridad = IncidentesSeguridad::getAll();
 
-        $total_seguridad = IncidentesSeguridad::get()->count();
-        $nuevos_seguridad = IncidentesSeguridad::where('estatus', 'Sin atender')->get()->count();
-        $en_curso_seguridad = IncidentesSeguridad::where('estatus', 'En curso')->get()->count();
-        $en_espera_seguridad = IncidentesSeguridad::where('estatus', 'En espera')->get()->count();
-        $cerrados_seguridad = IncidentesSeguridad::where('estatus', 'Cerrado')->get()->count();
-        $cancelados_seguridad = IncidentesSeguridad::where('estatus', 'No procedente')->get()->count();
+        $total_seguridad = $incidentesSeguridad->count();
+        $nuevos_seguridad = $incidentesSeguridad->where('estatus', 'Sin atender')->count();
+        $en_curso_seguridad = $incidentesSeguridad->where('estatus', 'En curso')->count();
+        $en_espera_seguridad = $incidentesSeguridad->where('estatus', 'En espera')->count();
+        $cerrados_seguridad = $incidentesSeguridad->where('estatus', 'Cerrado')->count();
+        $cancelados_seguridad = $incidentesSeguridad->where('estatus', 'No procedente')->count();
 
         $total_riesgos = RiesgoIdentificado::get()->count();
         $nuevos_riesgos = RiesgoIdentificado::where('estatus', 'nuevo')->get()->count();
@@ -67,12 +68,12 @@ class DeskController extends Controller
         $cerrados_riesgos = RiesgoIdentificado::where('estatus', 'cerrado')->get()->count();
         $cancelados_riesgos = RiesgoIdentificado::where('estatus', 'cancelado')->get()->count();
 
-        $total_quejas = Quejas::get()->count();
-        $nuevos_quejas = Quejas::where('estatus', 'nuevo')->get()->count();
-        $en_curso_quejas = Quejas::where('estatus', 'en curso')->get()->count();
-        $en_espera_quejas = Quejas::where('estatus', 'en espera')->get()->count();
-        $cerrados_quejas = Quejas::where('estatus', 'cerrado')->get()->count();
-        $cancelados_quejas = Quejas::where('estatus', 'cancelado')->get()->count();
+        $total_quejas = $quejas->count();
+        $nuevos_quejas = $quejas->where('estatus', 'nuevo')->count();
+        $en_curso_quejas = $quejas->where('estatus', 'en curso')->count();
+        $en_espera_quejas = $quejas->where('estatus', 'en espera')->count();
+        $cerrados_quejas = $quejas->where('estatus', 'cerrado')->count();
+        $cancelados_quejas = $quejas->where('estatus', 'cancelado')->count();
 
         $total_quejasClientes = QuejasCliente::get()->count();
         $nuevos_quejasClientes = QuejasCliente::where('estatus', 'Sin atender')->get()->count();
@@ -81,26 +82,26 @@ class DeskController extends Controller
         $cerrados_quejasClientes = QuejasCliente::where('estatus', 'Cerrado')->get()->count();
         $cancelados_quejasClientes = QuejasCliente::where('estatus', 'No procedente')->get()->count();
 
-        $total_denuncias = Denuncias::get()->count();
-        $nuevos_denuncias = Denuncias::where('estatus', 'nuevo')->get()->count();
-        $en_curso_denuncias = Denuncias::where('estatus', 'en curso')->get()->count();
-        $en_espera_denuncias = Denuncias::where('estatus', 'en espera')->get()->count();
-        $cerrados_denuncias = Denuncias::where('estatus', 'cerrado')->get()->count();
-        $cancelados_denuncias = Denuncias::where('estatus', 'cancelado')->get()->count();
+        $total_denuncias = $denuncias->count();
+        $nuevos_denuncias = $denuncias->where('estatus', 'nuevo')->count();
+        $en_curso_denuncias = $denuncias->where('estatus', 'en curso')->count();
+        $en_espera_denuncias = $denuncias->where('estatus', 'en espera')->count();
+        $cerrados_denuncias = $denuncias->where('estatus', 'cerrado')->count();
+        $cancelados_denuncias = $denuncias->where('estatus', 'cancelado')->count();
 
-        $total_mejoras = Mejoras::get()->count();
-        $nuevos_mejoras = Mejoras::where('estatus', 'nuevo')->get()->count();
-        $en_curso_mejoras = Mejoras::where('estatus', 'en curso')->get()->count();
-        $en_espera_mejoras = Mejoras::where('estatus', 'en espera')->get()->count();
-        $cerrados_mejoras = Mejoras::where('estatus', 'cerrado')->get()->count();
-        $cancelados_mejoras = Mejoras::where('estatus', 'cancelado')->get()->count();
+        $total_mejoras = $mejoras->count();
+        $nuevos_mejoras = $mejoras->where('estatus', 'nuevo')->count();
+        $en_curso_mejoras = $mejoras->where('estatus', 'en curso')->count();
+        $en_espera_mejoras = $mejoras->where('estatus', 'en espera')->count();
+        $cerrados_mejoras = $mejoras->where('estatus', 'cerrado')->count();
+        $cancelados_mejoras = $mejoras->where('estatus', 'cancelado')->count();
 
-        $total_sugerencias = Sugerencias::get()->count();
-        $nuevos_sugerencias = Sugerencias::where('estatus', 'nuevo')->get()->count();
-        $en_curso_sugerencias = Sugerencias::where('estatus', 'en curso')->get()->count();
-        $en_espera_sugerencias = Sugerencias::where('estatus', 'en espera')->get()->count();
-        $cerrados_sugerencias = Sugerencias::where('estatus', 'cerrado')->get()->count();
-        $cancelados_sugerencias = Sugerencias::where('estatus', 'cancelado')->get()->count();
+        $total_sugerencias = $sugerencias->count();
+        $nuevos_sugerencias = $sugerencias->where('estatus', 'nuevo')->count();
+        $en_curso_sugerencias = $sugerencias->where('estatus', 'en curso')->count();
+        $en_espera_sugerencias = $sugerencias->where('estatus', 'en espera')->count();
+        $cerrados_sugerencias = $sugerencias->where('estatus', 'cerrado')->count();
+        $cancelados_sugerencias = $sugerencias->where('estatus', 'cancelado')->count();
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -236,13 +237,13 @@ class DeskController extends Controller
         // dd($incidentesSeguridad);
         $documento = $incidentesSeguridad->evidencia;
         // dd($documento);
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_documento = 'Seguridad_file_'.$incidentesSeguridad->id.'_'.$name_documento.'.'.$extension;
+                $new_name_documento = 'Seguridad_file_' . $incidentesSeguridad->id . '_' . $name_documento . '.' . $extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -305,7 +306,7 @@ class DeskController extends Controller
 
     public function archivoSeguridad()
     {
-        $incidentes_seguridad_archivados = IncidentesSeguridad::where('archivado', IncidentesSeguridad::ARCHIVADO)->get();
+        $incidentes_seguridad_archivados = IncidentesSeguridad::getAll()->where('archivado', IncidentesSeguridad::ARCHIVADO);
 
         return view('admin.desk.seguridad.archivo', compact('incidentes_seguridad_archivados'));
     }
@@ -566,7 +567,7 @@ class DeskController extends Controller
 
     public function archivoQueja()
     {
-        $quejas = Quejas::where('archivado', true)->get();
+        $quejas = Quejas::getAll()->where('archivado', true);
 
         return view('admin.desk.quejas.archivo', compact('quejas'));
     }
@@ -976,13 +977,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1110,13 +1111,13 @@ class DeskController extends Controller
 
         $documento = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_documento = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_documento = 'Queja_file_'.$quejasClientes->id.'_'.$name_documento.'.'.$extension;
+                $new_name_documento = 'Queja_file_' . $quejasClientes->id . '_' . $name_documento . '.' . $extension;
 
                 $route = 'public/evidencias_quejas_clientes';
 
@@ -1133,13 +1134,13 @@ class DeskController extends Controller
 
         $image = null;
 
-        if ($request->file('cierre') != null or ! empty($request->file('cierre'))) {
+        if ($request->file('cierre') != null or !empty($request->file('cierre'))) {
             foreach ($request->file('cierre') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Queja_file_'.$quejasClientes->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Queja_file_' . $quejasClientes->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_quejas_clientes_cerrado';
 
@@ -1169,7 +1170,7 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket == false) {
-                if (! $quejasClientes->email_env_resolucion_rechazada) {
+                if (!$quejasClientes->email_env_resolucion_rechazada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_rechazada' => true,
@@ -1182,7 +1183,7 @@ class DeskController extends Controller
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket) {
-                if (! $quejasClientes->email_env_resolucion_aprobada) {
+                if (!$quejasClientes->email_env_resolucion_aprobada) {
                     if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                         $quejasClientes->update([
                             'email_env_resolucion_aprobada' => true,
@@ -1193,8 +1194,8 @@ class DeskController extends Controller
             }
         }
 
-        if (! $email_realizara_accion_inmediata) {
-            if (! is_null($quejasClientes->acciones_tomara_responsable)) {
+        if (!$email_realizara_accion_inmediata) {
+            if (!is_null($quejasClientes->acciones_tomara_responsable)) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'email_realizara_accion_inmediata' => true,
@@ -1205,7 +1206,7 @@ class DeskController extends Controller
         }
 
         if ($notificar_registro_queja) {
-            if (! $quejasClientes->correo_enviado_registro) {
+            if (!$quejasClientes->correo_enviado_registro) {
                 if ($quejasClientes->registro != null && $quejasClientes->responsableAtencion != null) {
                     $quejasClientes->update([
                         'correo_enviado_registro' => true,
@@ -1226,7 +1227,7 @@ class DeskController extends Controller
                 $query->where('acciones_correctivas_aprobacionables_id', $quejasClientes->id);
             })->exists();
 
-            if (! $existeAC) {
+            if (!$existeAC) {
                 $accion_correctiva = AccionCorrectiva::create([
                     'tema' => $request->titulo,
                     'causaorigen' => 'Queja de un cliente',
@@ -1253,7 +1254,7 @@ class DeskController extends Controller
                 $quejasClientes->accionCorrectivaAprobacional()->sync($accion_correctiva->id);
             }
 
-            if (! $quejasClientes->correoEnviado) {
+            if (!$quejasClientes->correoEnviado) {
                 $quejasClientes->update([
                     'correoEnviado' => true,
                 ]);
@@ -1559,7 +1560,7 @@ class DeskController extends Controller
 
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
-            if (! is_null($quejasClientes->responsable_atencion_queja_id)) {
+            if (!is_null($quejasClientes->responsable_atencion_queja_id)) {
                 if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id) {
                     $this->validateRequestRegistroQuejaCliente($request);
                     $this->validateRequestAnalisisQuejaCliente($request);

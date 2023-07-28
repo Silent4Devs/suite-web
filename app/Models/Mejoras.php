@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Mejoras extends Model implements Auditable
 {
@@ -19,6 +20,15 @@ class Mejoras extends Model implements Auditable
     ];
 
     protected $appends = ['folio', 'fecha_creacion', 'fecha_de_cierre', 'fecha_reporte', 'beneficio_html', 'descripcion_html'];
+
+    //Redis methods
+    public static function getAll()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('mejoras_all', 3600, function () {
+            return self::orderBy('id')->get();
+        });
+    }
 
     public function getFolioAttribute()
     {
