@@ -672,8 +672,9 @@ class TimesheetController extends Controller
             ]);
         }
 
-        // return back()->with('success', 'Guardado con éxito');
-        return redirect('admin/timesheet/proyecto-empleados/'.$edit_proyecto->id);
+        // // return back()->with('success', 'Guardado con éxito');
+        return redirect('admin/timesheet/proyectos')->with('success', 'Guardado con éxito');
+        // return redirect('admin/timesheet/proyecto-empleados/'.$edit_proyecto->id);
     }
 
     public function tareas()
