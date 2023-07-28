@@ -12,8 +12,11 @@ class NotificacionEvaluacion360 extends Notification
     use Queueable;
 
     public $email;
+
     public $evaluacion;
+
     public $evaluador;
+
     public $evaluado;
 
     /**

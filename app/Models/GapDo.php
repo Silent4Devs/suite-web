@@ -6,15 +6,13 @@ use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class GapDo extends Model
+class GapDo extends Model implements Auditable
 {
     use MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'gap_logro_dos';
 
     protected $dates = [
@@ -24,9 +22,9 @@ class GapDo extends Model
 
     const VALORACION_SELECT = [
         'Cumple satisfactoriamente' => 'Cumple satisfactoriamente',
-        'Cumple parcialmente'       => 'Cumple parcialmente',
-        'No cumple'                 => 'No cumple',
-        'No aplica'                 => 'No aplica',
+        'Cumple parcialmente' => 'Cumple parcialmente',
+        'No cumple' => 'No cumple',
+        'No aplica' => 'No aplica',
     ];
 
     protected $fillable = [

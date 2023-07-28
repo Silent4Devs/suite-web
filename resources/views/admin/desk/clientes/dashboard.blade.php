@@ -16,10 +16,10 @@
         Imprimir
     </button>
     @php
-    use App\Models\Organizacion;
-    $organizacion = Organizacion::first();
-    $logotipo = $organizacion->logotipo;
-    $empresa = $organizacion->empresa;
+        use App\Models\Organizacion;
+        $organizacion = Organizacion::getFirst();
+        $logotipo = $organizacion->logotipo;
+        $empresa = $organizacion->empresa;
     @endphp
 
     <div class="solo-print">
@@ -84,8 +84,8 @@
         </div>
         <div class="col-6 col-md-2">
             <div class="tarjetas_seguridad_indicadores cdr-rojo">
-                <div class="numero"><strong><i
-                            class="bi bi-dash-circle mr-2"></i></strong>{{ $cancelados_quejasClientes }}</div>
+                <div class="numero"><strong><i class="bi bi-dash-circle mr-2"></i></strong>{{ $cancelados_quejasClientes }}
+                </div>
                 <div class="textoCentroCard">No procedentes</div>
             </div>
         </div>
@@ -829,63 +829,63 @@
     </script>
 
 
-        <script>
-            let procesosCollect = @json($procesosCollect);
-            let informacionprocesos = [];
-            let cantidadprocesos = [];
-            let coloresAutomaticamente = [];
-            Object.entries(procesosCollect).forEach(([key, value]) => {
-                informacionprocesos.push(key);
-                cantidadprocesos.push(value);
-            });
-            console.log(Object.entries(procesosCollect));
+    <script>
+        let procesosCollect = @json($procesosCollect);
+        let informacionprocesos = [];
+        let cantidadprocesos = [];
+        let coloresAutomaticamente = [];
+        Object.entries(procesosCollect).forEach(([key, value]) => {
+            informacionprocesos.push(key);
+            cantidadprocesos.push(value);
+        });
+        console.log(Object.entries(procesosCollect));
 
-            for (let index = 0; index < data.length; index++) {
-                coloresAutomaticamente.push("rgba(230, 108, 162, 1)");
+        for (let index = 0; index < data.length; index++) {
+            coloresAutomaticamente.push("rgba(230, 108, 162, 1)");
 
-            }
+        }
 
-            var pie_procesos = new Chart(chartProcesos, {
-                type: 'bar',
-                data: {
-                    labels: informacionprocesos,
-                    datasets: [{
-                        backgroundColor: coloresAutomaticamente,
-                        borderColor: coloresAutomaticamente,
-                        borderWidth: 1,
-                        label: ["Procesos"],
+        var pie_procesos = new Chart(chartProcesos, {
+            type: 'bar',
+            data: {
+                labels: informacionprocesos,
+                datasets: [{
+                    backgroundColor: coloresAutomaticamente,
+                    borderColor: coloresAutomaticamente,
+                    borderWidth: 1,
+                    label: ["Procesos"],
 
-                        data: cantidadprocesos,
+                    data: cantidadprocesos,
 
+                }]
+            },
+
+
+            options: {
+                legend: {
+                    display: false
+
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
                     }]
                 },
-
-
-                options: {
-                    legend: {
-                        display: false
-
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    },
-                    plugins: {
-                        datalabels: {
-                            color: 'white',
-                            display: true,
-                            font: {
-                                size: 20
-                            }
-                        },
+                plugins: {
+                    datalabels: {
+                        color: 'white',
+                        display: true,
+                        font: {
+                            size: 20
+                        }
                     },
                 },
+            },
 
 
 
-            });
-        </script>
+        });
+    </script>
 @endsection

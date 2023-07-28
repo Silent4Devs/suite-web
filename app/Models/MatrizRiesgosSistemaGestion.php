@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class MatrizRiesgosSistemaGestion extends Model
+class MatrizRiesgosSistemaGestion extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'matriz_riesgos_sistema_gestion';
 
@@ -23,17 +25,17 @@ class MatrizRiesgosSistemaGestion extends Model
     ];
 
     const PROBABILIDAD_SELECT = [
-        '9'  => 'ALTA (9)',
+        '9' => 'ALTA (9)',
         '6' => 'MEDIA (6)',
-        '3'  => 'BAJA (3)',
-        '0'  => 'NULA (0)',
+        '3' => 'BAJA (3)',
+        '0' => 'NULA (0)',
     ];
 
     const IMPACTO_SELECT = [
         '9' => 'MUY ALTO (9)',
-        '6'     => 'ALTO (6)',
-        '3'    => 'MEDIO (3)',
-        '0'     => 'BAJO (0)',
+        '6' => 'ALTO (6)',
+        '3' => 'MEDIO (3)',
+        '0' => 'BAJO (0)',
     ];
 
     protected $casts = [

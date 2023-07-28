@@ -23,100 +23,94 @@
         p {
             font-family: Arial, sans-serif;
         }
-
     </style>
     <style>
-
-    /* Remove space around the email design. */
-
-
-
-    html,
+        /* Remove space around the email design. */
 
 
 
-    body {
+        html,
 
 
 
-        margin: 0 auto !important;
+        body {
 
 
 
-        padding: 0 !important;
+            margin: 0 auto !important;
 
 
 
-        height: 100% !important;
+            padding: 0 !important;
 
 
 
-        width: 100% !important;
-
-    }
+            height: 100% !important;
 
 
 
-    /* Stop Outlook resizing small text. */
+            width: 100% !important;
 
-    * {
-
-        -ms-text-size-adjust: 100%;
-
-    }
+        }
 
 
 
+        /* Stop Outlook resizing small text. */
 
-    /* Stop Outlook from adding extra spacing to tables. */
+        * {
 
-    table,
+            -ms-text-size-adjust: 100%;
 
-    td {
-
-        mso-table-lspace: 0pt !important;
-
-        mso-table-rspace: 0pt !important;
-
-    }
-
-
-
-    /* Use a better rendering method when resizing images in Outlook IE. */
-
-
-
-    img {
-
-        -ms-interpolation-mode: bicubic;
-
-    }
+        }
 
 
 
 
-    /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
+        /* Stop Outlook from adding extra spacing to tables. */
+
+        table,
+
+        td {
+
+            mso-table-lspace: 0pt !important;
+
+            mso-table-rspace: 0pt !important;
+
+        }
 
 
 
-    a {
+        /* Use a better rendering method when resizing images in Outlook IE. */
 
 
 
-        text-decoration: none;
+        img {
+
+            -ms-interpolation-mode: bicubic;
+
+        }
 
 
 
-    }
+
+        /* Prevent Windows 10 Mail from underlining links. Styles for underlined links should be inline. */
 
 
 
-</style>
+        a {
+
+
+
+            text-decoration: none;
+
+
+
+        }
+    </style>
 </head>
 
 <body style="margin:0;padding:0;">
-    <table role="presentation"
-        style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
         <tr>
             <td align="center" style="padding:0;">
                 <table role="presentation"
@@ -144,15 +138,15 @@
                                     </hr>
 
                                     @php
-
+                                        
                                         use App\Models\Organizacion;
-
-                                        $organizacion = Organizacion::first();
-
+                                        
+                                        $organizacion = Organizacion::getFirst();
+                                        
                                         $logotipo = $organizacion->logotipo;
-
+                                        
                                         $empresa = $organizacion->empresa;
-
+                                        
                                     @endphp
 
                                     <h2 style="padding-top:3px; color:#153643; text-align:center">
@@ -174,7 +168,6 @@
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
 
                                             <img width="160" src="{{ asset($logotipo) }}" class="mt-2 ml-4"
-
                                                 style="width:160px;">
 
                                         </div>
@@ -182,22 +175,23 @@
                                         <div style="margin-top:50px;">
                                             <strong
                                                 style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{$solicitante->name}},
+                                                Estimado(a) {{ $solicitante->name }},
                                             </strong>
                                         </div>
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; fontcolor:#153643;">
                                                 Le informamos que su solicitud de Permiso ha sido atendida:
-                                            </p>                                                
+                                            </p>
                                         </div>
                                         <div style="width: 100%; margin-top: 10px;">
-                                            <p style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
-                                                Información de la Solicitud:  
+                                            <p
+                                                style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
+                                                Información de la Solicitud:
                                             </p>
                                         </div>
                                         <style type="text/css">
-                                            .list_times_faltantes{
+                                            .list_times_faltantes {
                                                 list-style: none;
                                                 padding: 0;
                                                 margin: 0;
@@ -205,14 +199,16 @@
                                                 height: 400px;
                                                 overflow: auto;
                                             }
-                                            .list_times_faltantes li{
+
+                                            .list_times_faltantes li {
                                                 display: inline-block;
                                                 padding: 4px 7px;
                                                 margin: 7px;
                                                 border-radius: 4px;
                                                 background-color: #f1f1f1;
                                             }
-                                             /*scroll style*/
+
+                                            /*scroll style*/
 
                                             .scroll_estilo::-webkit-scrollbar {
                                                 width: 7px;
@@ -236,58 +232,61 @@
                                             }
                                         </style>
                                         <div style="width: 100%; margin-top: 10px;">
-                                            <p style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
-                                               <ul class="list_times_faltantes scroll_estilo mt-3">
-                                                   
-                                                        @php
-                                                            
-                                                            $startDate = \Carbon\Carbon::parse($solicitud->fecha_inicio)->format('d/m/Y');
-                                                            $endDate = \Carbon\Carbon::parse($solicitud->fecha_fin)->format('d/m/Y');
+                                            <p
+                                                style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
+                                            <ul class="list_times_faltantes scroll_estilo mt-3">
 
-                                                            if($solicitud->aprobacion == 2){
-                                                                $respuesta ="Rechazada";
-                                                            }elseif ($solicitud->aprobacion == 3 ) {
-                                                                $respuesta ="Aceptada";
-                                                            }else {
-                                                                $respuesta ="Pendiente";
-                                                            }
-                                                        @endphp
-                                                          <li>
-                                                            Tipo de Permiso:
-                                                            @if ($solicitud->permiso->tipo_permiso == 1)
-                                                                <strong>Permisos conforme a la ley</strong>
-                                                            @elseif ($solicitud->permiso->tipo_permiso == 2)
-                                                                <strong>Permisos otorgados por la empresa</strong>
-                                                            @else
-                                                                <strong>No definido</strong>
-                                                            @endif
-                                                        </li>
-                                                        <li>
-                                                            Nombre del Permiso:
-                                                            <strong>{{ $solicitud->permiso->nombre }}</strong>
-                                                        </li>
-                                                        <li>
-                                                            Días Otorgados por la Organización:
-                                                            <strong>{{ $solicitud->dias_solicitados }}</strong>
-                                                        </li>
-                                                        <li>
-                                                            Periodo propuesto: 
-                                                            Del <strong>{{ $startDate }}</strong> al
-                                                            <strong>{{ $endDate }}</strong>
-                                                        </li>
-                                                       
-                                                        <li>
-                                                           Respuesta: <strong>{{ $respuesta }}</strong> 
-                                                        </li>
-                                                        <li>
-                                                            Comentarios: <strong>{{ $solicitud->comentarios_aprobador }}</strong> 
-                                                         </li>
-                                                   
-                                                </ul>  
+                                                @php
+                                                    
+                                                    $startDate = \Carbon\Carbon::parse($solicitud->fecha_inicio)->format('d/m/Y');
+                                                    $endDate = \Carbon\Carbon::parse($solicitud->fecha_fin)->format('d/m/Y');
+                                                    
+                                                    if ($solicitud->aprobacion == 2) {
+                                                        $respuesta = 'Rechazada';
+                                                    } elseif ($solicitud->aprobacion == 3) {
+                                                        $respuesta = 'Aceptada';
+                                                    } else {
+                                                        $respuesta = 'Pendiente';
+                                                    }
+                                                @endphp
+                                                <li>
+                                                    Tipo de Permiso:
+                                                    @if ($solicitud->permiso->tipo_permiso == 1)
+                                                        <strong>Permisos conforme a la ley</strong>
+                                                    @elseif ($solicitud->permiso->tipo_permiso == 2)
+                                                        <strong>Permisos otorgados por la empresa</strong>
+                                                    @else
+                                                        <strong>No definido</strong>
+                                                    @endif
+                                                </li>
+                                                <li>
+                                                    Nombre del Permiso:
+                                                    <strong>{{ $solicitud->permiso->nombre }}</strong>
+                                                </li>
+                                                <li>
+                                                    Días Otorgados por la Organización:
+                                                    <strong>{{ $solicitud->dias_solicitados }}</strong>
+                                                </li>
+                                                <li>
+                                                    Periodo propuesto:
+                                                    Del <strong>{{ $startDate }}</strong> al
+                                                    <strong>{{ $endDate }}</strong>
+                                                </li>
+
+                                                <li>
+                                                    Respuesta: <strong>{{ $respuesta }}</strong>
+                                                </li>
+                                                <li>
+                                                    Comentarios:
+                                                    <strong>{{ $solicitud->comentarios_aprobador }}</strong>
+                                                </li>
+
+                                            </ul>
                                             </p>
                                         </div>
                                         <div style="text-align:center; margin-top:20px">
-                                            <a  href="{{ route("admin.solicitud-dayoff.show",$solicitud->id) }}" style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
+                                            <a href="{{ route('admin.solicitud-dayoff.show', $solicitud->id) }}"
+                                                style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
                                                 Ver Solicitud
                                             </a>
                                         </div>

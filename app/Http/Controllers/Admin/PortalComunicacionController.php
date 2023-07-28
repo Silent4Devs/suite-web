@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class PortalComunicacionController extends Controller
 {
@@ -28,10 +29,18 @@ class PortalComunicacionController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        $nuevos = Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $nuevos_contador_circulo = Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
+        $nuevos = Cache::remember('portal_nuevos', 3600, function () use ($hoy) {
+            return Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+        });
 
-        $cumpleaños = Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        $nuevos_contador_circulo = Cache::remember('portal_nuevos_contador_circulo', 3600, function () use ($hoy) {
+            return Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
+        });
+
+        $cumpleaños = Cache::remember('portal_cumpleaños', 3600, function () use ($hoy) {
+            return Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        });
+
         $cumpleaños_contador_circulo = Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->count();
 
         $aniversarios = Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
@@ -65,7 +74,6 @@ class PortalComunicacionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -98,7 +106,6 @@ class PortalComunicacionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

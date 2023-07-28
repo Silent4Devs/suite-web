@@ -70,12 +70,12 @@ class TipoactivoController extends Controller
     {
         abort_if(Gate::denies('categoria_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $val = $request->validate([
-            'tipo'=> 'unique:tipoactivos,tipo',
+            'tipo' => 'unique:tipoactivos,tipo',
         ]);
 
         $tipoactivo = Tipoactivo::create($request->all());
         if (array_key_exists('ajax', $request->all())) {
-            return response()->json(['success'=>true, 'activo'=>$tipoactivo]);
+            return response()->json(['success' => true, 'activo' => $tipoactivo]);
         }
 
         return redirect()->route('admin.tipoactivos.index')->with('success', 'Guardado con éxito');
@@ -127,15 +127,15 @@ class TipoactivoController extends Controller
     {
         if ($request->ajax()) {
             $tipos_arr = [];
-            $tipos = Tipoactivo::get();
+            $tipos = Tipoactivo::getAll();
             // dd($tipos);
             foreach ($tipos as $tipo) {
-                $tipos_arr[] = ['id'=>$tipo->id, 'text'=>$tipo->tipo];
+                $tipos_arr[] = ['id' => $tipo->id, 'text' => $tipo->tipo];
             }
 
             $array_m = [];
             $array_m['results'] = $tipos_arr;
-            $array_m['pagination'] = ['more'=>false];
+            $array_m['pagination'] = ['more' => false];
 
             return $array_m;
         }

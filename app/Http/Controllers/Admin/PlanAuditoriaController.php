@@ -80,7 +80,7 @@ class PlanAuditoriaController extends Controller
             return $table->make(true);
         }
 
-        $auditoria_anuals = AuditoriaAnual::get();
+        $auditoria_anuals = AuditoriaAnual::getAll();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -94,11 +94,11 @@ class PlanAuditoriaController extends Controller
 
         // $fechas = AuditoriaAnual::all()->pluck('fechainicio', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $equipoauditorias = Empleado::alta()->get();
+        $equipoauditorias = Empleado::getaltaAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
-        $puesto = Puesto::get();
+        $puesto = Puesto::getAll();
 
         $actividadesAuditoria = ActividadesPlanAuditorium::get();
 
@@ -113,11 +113,11 @@ class PlanAuditoriaController extends Controller
 
         $request->validate([
             'fecha_inicio_auditoria' => 'required|date',
-            'nombre_auditoria'=>'required|string',
+            'nombre_auditoria' => 'required|string',
             'fecha_fin_auditoria' => 'required|date',
             'objetivo' => 'required',
             'alcance' => 'required',
-            'criterios'=> 'required',
+            'criterios' => 'required',
             'id_auditoria' => ['nullable', Rule::unique('plan_auditoria')->whereNull('deleted_at')],
 
         ]);
@@ -127,7 +127,7 @@ class PlanAuditoriaController extends Controller
         $planAuditorium->auditados()->sync($request->equipo);
         $this->saveUpdateAuditados($request->auditados, $planAuditorium);
 
-        return redirect()->route('admin.plan-auditoria.edit', ['planAuditorium'=>$planAuditorium]);
+        return redirect()->route('admin.plan-auditoria.edit', ['planAuditorium' => $planAuditorium]);
     }
 
     public function edit(PlanAuditorium $planAuditorium)
@@ -139,7 +139,7 @@ class PlanAuditoriaController extends Controller
         $equipo_seleccionado = $planAuditorium->auditados->pluck('id')->toArray();
         // dd($equipo_seleccionado);
 
-        $equipoauditorias = Empleado::alta()->get();
+        $equipoauditorias = Empleado::getaltaAll();
 
         $actividadesAuditoria = ActividadesPlanAuditorium::get();
 
@@ -152,12 +152,12 @@ class PlanAuditoriaController extends Controller
 
         $request->validate([
             'fecha_inicio_auditoria' => 'required|date',
-            'nombre_auditoria'=>'required|string',
+            'nombre_auditoria' => 'required|string',
             'fecha_fin_auditoria' => 'required|date',
             'objetivo' => 'required',
             'alcance' => 'required',
-            'criterios'=> 'required',
-            'id_auditoria' => 'nullable|unique:plan_auditoria,id_auditoria,' . $planAuditorium->id . ',id,deleted_at,NULL',
+            'criterios' => 'required',
+            'id_auditoria' => 'nullable|unique:plan_auditoria,id_auditoria,'.$planAuditorium->id.',id,deleted_at,NULL',
 
         ]);
 
@@ -168,8 +168,8 @@ class PlanAuditoriaController extends Controller
             'alcance' => $request->alcance,
             'criterios' => $request->criterios,
             'documentoauditar' => $request->documentoauditar,
-            'nombre_auditoria'=>$request->nombre_auditoria,
-            'id_auditoria'=>$request->id_auditoria,
+            'nombre_auditoria' => $request->nombre_auditoria,
+            'id_auditoria' => $request->id_auditoria,
 
         ]);
 
@@ -207,25 +207,25 @@ class PlanAuditoriaController extends Controller
 
     public function saveUpdateAuditados($auditados, $planAuditorium)
     {
-        if (!is_null($auditados)) {
+        if (! is_null($auditados)) {
             foreach ($auditados as $auditado) {
                 // dd(PuestoResponsabilidade::exists($responsabilidad['id']));
                 if (ActividadesPlanAuditorium::find($auditado['id']) != null) {
                     ActividadesPlanAuditorium::find($auditado['id'])->update([
-                        'actividad_auditar' =>  $auditado['actividad_auditar'],
-                        'fecha_act_auditoria' =>  $auditado['fecha_act_auditoria'],
-                        'hora_inicio' =>  $auditado['hora_inicio'],
-                        'hora_fin' =>  $auditado['hora_fin'],
+                        'actividad_auditar' => $auditado['actividad_auditar'],
+                        'fecha_act_auditoria' => $auditado['fecha_act_auditoria'],
+                        'hora_inicio' => $auditado['hora_inicio'],
+                        'hora_fin' => $auditado['hora_fin'],
                         'id_contacto' => $auditado['id_contacto'],
                     ]);
                 } else {
                     ActividadesPlanAuditorium::create([
                         'plan_auditoria_id' => $planAuditorium->id,
-                        'actividad_auditar' =>  $auditado['actividad_auditar'],
-                        'actividad_auditar' =>  $auditado['actividad_auditar'],
-                        'fecha_act_auditoria' =>  $auditado['fecha_act_auditoria'],
-                        'hora_inicio' =>  $auditado['hora_inicio'],
-                        'hora_fin' =>  $auditado['hora_fin'],
+                        'actividad_auditar' => $auditado['actividad_auditar'],
+                        'actividad_auditar' => $auditado['actividad_auditar'],
+                        'fecha_act_auditoria' => $auditado['fecha_act_auditoria'],
+                        'hora_inicio' => $auditado['hora_inicio'],
+                        'hora_fin' => $auditado['hora_fin'],
                         'id_contacto' => $auditado['id_contacto'],
                     ]);
                 }

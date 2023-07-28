@@ -8,8 +8,6 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class AmenazaImport implements ToModel
 {
     /**
-     * @param array $row
-     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
@@ -17,7 +15,7 @@ class AmenazaImport implements ToModel
         return new Amenaza([
             'nombre' => $row[0],
             'categoria' => $row[1],
-            'descripcion'=> $row[2],
+            'descripcion' => $row[2],
         ]);
     }
 }

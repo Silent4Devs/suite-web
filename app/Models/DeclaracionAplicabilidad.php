@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class DeclaracionAplicabilidad extends Model
+class DeclaracionAplicabilidad extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'declaracion_aplicabilidad';
 
@@ -29,6 +32,15 @@ class DeclaracionAplicabilidad extends Model
         'created_at',
         'updated_at',
     ];
+
+    //Redis methods
+    public static function getAll($columns = ['id', 'columna1', 'columna2'])
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('declaracionaplicabilidad_all', 3600 * 24, function () use ($columns) {
+            return self::select($columns)->get();
+        });
+    }
 
     public function getNameAttribute()
     {

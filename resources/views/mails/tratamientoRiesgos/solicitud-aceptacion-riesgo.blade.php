@@ -98,7 +98,7 @@
                                     </hr>
                                     @php
                                         use App\Models\Organizacion;
-                                        $organizacion = Organizacion::first();
+                                        $organizacion = Organizacion::getFirst();
                                         $logotipo = $organizacion->logotipo;
                                         $empresa = $organizacion->empresa;
                                     @endphp
@@ -124,26 +124,30 @@
 
                                         <div style="width: 100%; margin-top: 10px;">
                                             <p style="font-size:11pt; color:#153643;">
-                                                Le informamos que derivado del riesgo identificado<strong> {{ $tratamientoRiesgo->registro->name }}</strong>, solicita su firma de aceptación
+                                                Le informamos que derivado del riesgo identificado<strong>
+                                                    {{ $tratamientoRiesgo->registro->name }}</strong>, solicita su firma
+                                                de aceptación
                                             </p>
                                             <br>
 
-                                            <ul> 
-                                               <li style="font-size:11pt;">ID:
+                                            <ul>
+                                                <li style="font-size:11pt;">ID:
                                                     <strong style="font-size:10pt;">
-                                                        {{ $tratamientoRiesgo->identificador ? $tratamientoRiesgo->identificador : 'Sin registro'}} </strong>
+                                                        {{ $tratamientoRiesgo->identificador ? $tratamientoRiesgo->identificador : 'Sin registro' }}
+                                                    </strong>
                                                 </li>
                                                 <li style="font-size:11pt;">Dueño:
                                                     <strong style="font-size:10pt;">
-                                                        {{ $empleado->name ? $empleado->name : 'Sin registro'}} </strong>
+                                                        {{ $empleado->name ? $empleado->name : 'Sin registro' }}
+                                                    </strong>
                                                 </li>
                                                 <li style="font-size:11pt;">Fecha compromiso:<strong
-                                                    style="font-size:10pt;">
-                                                    {{ \Carbon\Carbon::parse($tratamientoRiesgo->fechacompromiso)->format('d-m-Y') }}
-                                                </strong>
+                                                        style="font-size:10pt;">
+                                                        {{ \Carbon\Carbon::parse($tratamientoRiesgo->fechacompromiso)->format('d-m-Y') }}
+                                                    </strong>
                                                 </li>
                                                 <li style="font-size:11pt">Proceso:
-                                                    <strong  style="font-size:10pt;">
+                                                    <strong style="font-size:10pt;">
                                                         {{ $tratamientoRiesgo->proceso ? $tratamientoRiesgo->proceso->nombre : 'Sin registro' }}</strong>
                                                 </li>
                                                 <li style="font-size:11pt">Tipo de Riesgo:
@@ -157,22 +161,24 @@
                                                 </li>
                                                 <li style="font-size:11pt">Riesgo Total:
                                                     <strong class="estilockedi" style="font-size:10pt;">
-                                                        {{$tratamientoRiesgo->riesgototal ? $tratamientoRiesgo->riesgototal : 'Sin registro'}} </strong>
+                                                        {{ $tratamientoRiesgo->riesgototal ? $tratamientoRiesgo->riesgototal : 'Sin registro' }}
+                                                    </strong>
                                                 </li>
                                                 <li style="font-size:11pt;">Riesgo Residual:
-                                                    <strong  style="font-size:10pt;">
-                                                        {{$tratamientoRiesgo->riesgo_total_residual ? $tratamientoRiesgo->riesgo_total_residual  : 'Sin registro' }} </strong>
+                                                    <strong style="font-size:10pt;">
+                                                        {{ $tratamientoRiesgo->riesgo_total_residual ? $tratamientoRiesgo->riesgo_total_residual : 'Sin registro' }}
+                                                    </strong>
                                                 </li>
-                                              
-                                               
+
+
                                             </ul>
-                                            <span style="font-size:11pt; text-"><strong>Descripcion del Riesgo:</strong> <span
-                                                style="font-size:10pt; text-align: justify !important;">
-                                                {!! $tratamientoRiesgo->descripcionriesgo ? $tratamientoRiesgo->descripcionriesgo : 'Sin registro' !!}
+                                            <span style="font-size:11pt; text-"><strong>Descripcion del Riesgo:</strong>
+                                                <span style="font-size:10pt; text-align: justify !important;">
+                                                    {!! $tratamientoRiesgo->descripcionriesgo ? $tratamientoRiesgo->descripcionriesgo : 'Sin registro' !!}
+                                                </span>
                                             </span>
-                                            </span> 
-                                               
-                                             
+
+
                                             <br>
                                             <br>
                                             <p style="font-size:11pt; color:#153643;">
@@ -180,7 +186,7 @@
                                             </p>
 
                                             <div style="text-align:center; margin-top:20px">
-                                                <a href="{{route('admin.tratamiento-riesgos.show',$tratamientoRiesgo) }}"
+                                                <a href="{{ route('admin.tratamiento-riesgos.show', $tratamientoRiesgo) }}"
                                                     style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
                                                     Revisar Riesgo
                                                 </a>

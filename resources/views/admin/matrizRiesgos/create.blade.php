@@ -764,7 +764,14 @@
 
                 <hr>
                 <p class="font-weight-bold" style="font-size:11pt;">Acciones</p>
+                <input class="form-control" type="text" id="version_historico"
+                name="version_historico" value="{{ $version_historico}}" readonly hidden>
                 <div class="row">
+                    @if ($version_historico === "true")
+                        <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2013</p>
+                    @else
+                        <p class="font-weight-bold" style="font-size:8pt;">Versión de Controles ISO 27001:2022</p>
+                    @endif
                     <div class="form-group col-sm-12">
                         <div class="row">
                             <label for="controles_id" style="margin-left: 15px; margin-bottom:5px; margin-right: 0px;" class="required"><i class="fas fa-lock iconos-crear"></i>Seleccione los control(es)
@@ -776,11 +783,20 @@
                                     name="controles_id[]" id="select2-multiple-input-sm" multiple="multiple">
                                     <option value disabled>
                                         Selecciona una opción</option>
-                                    @foreach ($controles as $control)
+                                    @if ($version_historico === "true")
+                                        @foreach ($controles as $control)
                                         <option value="{{ $control->id }}">
                                             {{ $control->anexo_indice }} {{ $control->anexo_politica }}
                                         </option>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        @foreach ($controles as $control)
+                                        <option value="{{ $control->id }}">
+                                            {{ $control->control_iso }} {{ $control->anexo_politica }}
+                                        </option>
+                                        @endforeach
+                                    @endif
+
                                 </select>
                                 @if ($errors->has('controles_id'))
                                     <div class="invalid-feedback">
@@ -828,8 +844,8 @@
                         <span class="help-block">{{ trans('cruds.matrizRiesgo.fields.amenaza_helper') }}</span> --}}
                         {{-- MODULO AGREGAR PLAN DE ACCIÓN --}}
 
-
-                        <div class="row w-100">
+                        {{--Pendiente de revisar con Mike y Marco--}}
+                        {{-- <div class="row w-100">
                             <label for="plan_accion" style="margin-left: 15px; margin-bottom:5px;"> <i class="fas fa-question-circle iconos-crear"></i> ¿Vincular con plan de acción?</label>
                             @livewire('planes-implementacion-select',['planes_seleccionados'=>[]])
                             <div class="pl-0 ml-0 col-2">
@@ -840,7 +856,7 @@
                             </div>
                             @livewire('plan-implementacion-create', ['referencia' => null,'modulo_origen'=>'Matríz de
                             riesgos', 'id_matriz' => $id_analisis])
-                        </div>
+                        </div> --}}
                         {{-- FIN MODULO AGREGAR PLAN DE ACCIÓN --}}
                     </div>
 <!-- hasta aqui -->

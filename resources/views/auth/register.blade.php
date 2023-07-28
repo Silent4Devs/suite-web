@@ -28,7 +28,7 @@
 
             @php
                 use App\Models\Organizacion;
-                $organizacion = Organizacion::select('id', 'logotipo')->first();
+                $organizacion = Organizacion::getLogo;
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {
@@ -43,7 +43,7 @@
             @if(request()->has('team'))
                 <input type="hidden" name="team" id="team" value="{{ request()->query('team') }}">
             @endif
-            
+
             <p class="mt-4" style="color: #888;"> Una vez registrado debera esperar la aprobacion del administrador del sistema </p>
 
             <div class="input-group mb-3">

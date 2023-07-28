@@ -56,7 +56,7 @@ class ComiteseguridadController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -90,7 +90,7 @@ class ComiteseguridadController extends Controller
         $comiteseguridad = Comiteseguridad::create($request->all());
         // $id = $request->id;
 
-        return redirect()->route('admin.comiteseguridads.edit', ['comiteseguridad'=>$comiteseguridad]);
+        return redirect()->route('admin.comiteseguridads.edit', ['comiteseguridad' => $comiteseguridad]);
     }
 
     public function edit(Request $request, $comiteseguridad)
@@ -180,7 +180,7 @@ class ComiteseguridadController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;

@@ -141,7 +141,7 @@
                                         
                                         use App\Models\Organizacion;
                                         
-                                        $organizacion = Organizacion::first();
+                                        $organizacion = Organizacion::getFirst();
                                         
                                         $logotipo = $organizacion->logotipo;
                                         
@@ -238,9 +238,9 @@
                                                 style="font-size:11pt; fontcolor:#153643; font-weight: normal !important;">
                                             <ul class="list_times_faltantes scroll_estilo mt-3">
 
-                                              
+
                                                 <li>
-                                                    Nombre de quien recibe: 
+                                                    Nombre de quien recibe:
                                                     <strong>{{ $solicitud->destinatario }}</strong>
                                                 </li>
                                                 <li>

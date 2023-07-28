@@ -1,64 +1,60 @@
-
-  @extends('layouts.admin')
-  @section('content')
-
-<link rel="stylesheet" type="text/css" href="{{asset('css/print_foda.css')}}">
-<style>
-
-.circulo {
-	width: 45px;
-	height: 45px;
-	border-radius: 50%;
-	display: flex !important;
-    justify-content:center;
-    align-items:center;
-    position:absolute;
-    top:20px;
-    left:0px;
+@extends('layouts.admin')
+@section('content')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print_foda.css') }}">
+    <style>
+        .circulo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 20px;
+            left: 0px;
 
 
-}
-
-.circulo2 {
-	width: 45px;
-	height: 45px;
-	border-radius: 50%;
-	display: flex !important;
-    justify-content:center;
-    align-items:center;
-    position:absolute;
-    top:20px;
-    right:0px;
-
-
-}
-
-.tit{
-    display: flex !important;
-    justify-content:center;
-    align-items:center;
-
-}
-
-.centrarte{
-    display: flex !important;
-    justify-content:center;
-    align-items:center;
-    position:absolute;
-}
-
-    @media print{
-        .print-none{
-            display: none !important;
         }
-    }
 
-</style>
+        .circulo2 {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 20px;
+            right: 0px;
 
 
-<div class="print-none">
-  {{ Breadcrumbs::render('admin.entendimiento-organizacions.show') }}
-</div>
+        }
+
+        .tit {
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .centrarte {
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+        }
+
+        @media print {
+            .print-none {
+                display: none !important;
+            }
+        }
+    </style>
+
+
+    <div class="print-none">
+        {{ Breadcrumbs::render('admin.entendimiento-organizacions.show') }}
+    </div>
 
 
     <div class="mt-5 card p-2">
@@ -74,7 +70,7 @@
 
         @php
             use App\Models\Organizacion;
-            $organizacion = Organizacion::first();
+            $organizacion = Organizacion::getFirst();
             $logotipo = $organizacion->logotipo;
             $empresa = $organizacion->empresa;
         @endphp
@@ -87,12 +83,12 @@
                 <span style="font-size:13px; text-transform: uppercase;color:#345183;">{{ $empresa }}</span>
                 <br>
                 <span style="color:#345183; font-size:15px;"><strong>Entendimiento de Organización:
-                        {{$obtener_FODA->analisis}}</strong></span>
+                        {{ $obtener_FODA->analisis }}</strong></span>
 
             </div>
             <div class="col-3 p-2">
                 <span style="color:#345183;">Fecha:
-                    {{$obtener_FODA->fecha ? \Carbon\Carbon::parse($obtener_FODA->fecha)->format('d-m-Y') : 'sin registro' }}
+                    {{ $obtener_FODA->fecha ? \Carbon\Carbon::parse($obtener_FODA->fecha)->format('d-m-Y') : 'sin registro' }}
                 </span>
             </div>
         </div>
@@ -123,33 +119,36 @@
 
                     <div class="p-0 text-center col-md-5 col-sm-5"
                         style="border-right: solid 8px rgb(255, 104, 4); border-bottom: solid 10px #2bd1b0; min-height: 150px">
-                       <div class="row">
-                                <div class="circulo" style="background: #2bd1b0"><i class="fas fa-dumbbell" style="color: #fff; font-size:25px;"></i></div>
-                           <div class="pl-3 col-sm-11">
+                        <div class="row">
+                            <div class="circulo" style="background: #2bd1b0"><i class="fas fa-dumbbell"
+                                    style="color: #fff; font-size:25px;"></i></div>
+                            <div class="pl-3 col-sm-11">
                                 <h5>
                                     <strong style="color: #18A98B">FORTALEZAS</strong>
-                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal" data-target="#fortalezas_modal"
-                                        style="float: right;">
+                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal"
+                                        data-target="#fortalezas_modal" style="float: right;">
                                         <i class="fas fa-question-circle" style="font-size: 13px"></i>
                                     </button>
                                 </h5>
                                 <div style="text-align:justify;" class="px-4">
                                     <ul>
                                         @foreach ($obtener_FODA->fodafortalezas as $fortaleza)
-                                        <li>
+                                            <li>
 
-                                            @if($fortaleza->tiene_riesgos_asociados)
-                                            <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$fortaleza->fortaleza}}
-                                            @else
-                                                {{$fortaleza->fortaleza}}
-                                            @endif
+                                                @if ($fortaleza->tiene_riesgos_asociados)
+                                                    <i class="text-danger mr-2 fas fa-exclamation-triangle"
+                                                        style="font-size:8pt"
+                                                        title="Riesgo Asociado"></i>{{ $fortaleza->fortaleza }}
+                                                @else
+                                                    {{ $fortaleza->fortaleza }}
+                                                @endif
 
-                                        </li>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
-                       </div>
+                        </div>
                     </div>
                     <div class="p-0 text-center col-md-5 col-12 col-sm-5"
                         style=" border-bottom: solid 8px rgb(255, 89, 77); min-height: 150px">
@@ -160,8 +159,8 @@
                                         DEBILIDADES
                                     </strong>
 
-                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal" data-target="#debilidades_modal"
-                                        style="float: right;">
+                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal"
+                                        data-target="#debilidades_modal" style="float: right;">
                                         <i class="fas fa-question-circle" style="font-size: 13px"></i>
                                     </button>
                                 </h5>
@@ -170,19 +169,22 @@
                                 <div class="pr-3">
                                     <ul>
                                         @foreach ($obtener_FODA->fodadebilidades as $debilidad)
-                                        <li style="text-align:justify;" >
-                                            @if($debilidad->tiene_riesgos_asociados)
-                                            <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$debilidad->debilidad}}
-                                            @else
-                                                {{$debilidad->debilidad}}
-                                            @endif
-                                        </li>
+                                            <li style="text-align:justify;">
+                                                @if ($debilidad->tiene_riesgos_asociados)
+                                                    <i class="text-danger mr-2 fas fa-exclamation-triangle"
+                                                        style="font-size:8pt"
+                                                        title="Riesgo Asociado"></i>{{ $debilidad->debilidad }}
+                                                @else
+                                                    {{ $debilidad->debilidad }}
+                                                @endif
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
 
-                                <div class="circulo2" style=" background: rgb(255, 104, 4);"><i class="fas fa-thumbs-down" style="color: #fff; font-size:25px;"></i></div>
+                            <div class="circulo2" style=" background: rgb(255, 104, 4);"><i class="fas fa-thumbs-down"
+                                    style="color: #fff; font-size:25px;"></i></div>
                         </div>
                     </div>
                 </div>
@@ -193,12 +195,13 @@
                     <div class="p-0 text-center col-md-5 col-12 col-sm-5"
                         style="border-right: solid 8px rgb(77, 184, 255); min-height: 150px">
                         <div class="row">
-                                <div class="circulo" style="margin-top:20px; background:rgb(77, 184, 255)"><i class="fas fa-handshake" style="color: #fff; font-size:25px;"></i></div>
+                            <div class="circulo" style="margin-top:20px; background:rgb(77, 184, 255)"><i
+                                    class="fas fa-handshake" style="color: #fff; font-size:25px;"></i></div>
                             <div class="pl-3 col-sm-11">
                                 <h5 class="mt-3">
                                     <strong style="color: rgb(77, 184, 255)">OPORTUNIDADES</strong>
-                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal" data-target="#oportunidades_modal"
-                                        style="float: right;">
+                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal"
+                                        data-target="#oportunidades_modal" style="float: right;">
                                         <i class="fas fa-question-circle" style="font-size: 13px"></i>
                                     </button>
                                 </h5>
@@ -206,10 +209,12 @@
                                     <ul>
                                         @foreach ($obtener_FODA->fodaoportunidades as $oportunidad)
                                             <li>
-                                                @if($oportunidad->tiene_riesgos_asociados)
-                                                <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$oportunidad->oportunidad}}
+                                                @if ($oportunidad->tiene_riesgos_asociados)
+                                                    <i class="text-danger mr-2 fas fa-exclamation-triangle"
+                                                        style="font-size:8pt"
+                                                        title="Riesgo Asociado"></i>{{ $oportunidad->oportunidad }}
                                                 @else
-                                                    {{$oportunidad->oportunidad}}
+                                                    {{ $oportunidad->oportunidad }}
                                                 @endif
                                             </li>
                                         @endforeach
@@ -223,8 +228,8 @@
                             <div class="pl-3 col-sm-11">
                                 <h5 class="mt-3">
                                     <strong style="color:rgb(255, 89, 77)">AMENAZAS</strong>
-                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal" data-target="#amenazas_modal"
-                                        style="float: right;">
+                                    <button class="mr-2 btn btn-xs print-none" type="button" data-toggle="modal"
+                                        data-target="#amenazas_modal" style="float: right;">
                                         <i class="fas fa-question-circle" style="font-size: 13px"></i>
                                     </button>
                                 </h5>
@@ -232,17 +237,20 @@
                                     <ul>
                                         @foreach ($obtener_FODA->fodamenazas as $amenaza)
                                             <li>
-                                                @if($amenaza->tiene_riesgos_asociados)
-                                                <i class="text-danger mr-2 fas fa-exclamation-triangle" style="font-size:8pt" title="Riesgo Asociado"></i>{{$amenaza->amenaza}}
+                                                @if ($amenaza->tiene_riesgos_asociados)
+                                                    <i class="text-danger mr-2 fas fa-exclamation-triangle"
+                                                        style="font-size:8pt"
+                                                        title="Riesgo Asociado"></i>{{ $amenaza->amenaza }}
                                                 @else
-                                                     {{$amenaza->amenaza}}
+                                                    {{ $amenaza->amenaza }}
                                                 @endif
                                             </li>
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
-                                <div class="circulo2" style="margin-top:20px; background:rgb(255, 89, 77)"><i class=" fas fa-bomb" style="color: #fff; font-size:25px;"></i></div>
+                            <div class="circulo2" style="margin-top:20px; background:rgb(255, 89, 77)"><i
+                                    class=" fas fa-bomb" style="color: #fff; font-size:25px;"></i></div>
                         </div>
                     </div>
                 </div>
@@ -259,7 +267,7 @@
                 </div> --}}
 
                 <div class="text-right form-group col-12"><br>
-                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar print-none" >Salir</a>
+                    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn_cancelar print-none">Salir</a>
                 </div>
 
             </div>
@@ -268,12 +276,13 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="fortalezas_modal" tabindex="-1" aria-labelledby="fortalezas_modalLabel" aria-hidden="true">
+    <div class="modal fade" id="fortalezas_modal" tabindex="-1" aria-labelledby="fortalezas_modalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <div  class="mr-5 justify-content-center" style="margin:auto">
+                    <div class="mr-5 justify-content-center" style="margin:auto">
                         <h5 class="modal-title" id="fortalezas_modalLabel">
                             <i class="fas fa-dumbbell" style="color: #2bd1b0; font-size:25px;"></i>
                             <strong class="ml-3">FORTALEZAS</strong>
@@ -296,16 +305,16 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div  class="mr-5 justify-content-center" style="margin:auto">
+                    <div class="mr-5 justify-content-center" style="margin:auto">
 
                         <h5 class="modal-title" id="oportunidades_modalLabel">
                             <i class="fas fa-handshake" style="color: rgb(77, 184, 255); font-size:23px;"></i>
                             <strong class="ml-3">OPORTUNIDADES</strong>
                         </h5>
                     </div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     En este cuadrante debemos de añadir lo que es perjudicial o los factores que pueden ser desfavorables
@@ -320,7 +329,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div  class="mr-5 justify-content-center" style="margin:auto">
+                    <div class="mr-5 justify-content-center" style="margin:auto">
                         <h5 class="modal-title" id="debilidades_modalLabel">
                             <i class="mr-3 fas fa-thumbs-down" style="color:rgb(255, 104, 4); font-size:20px;"></i>
 
@@ -329,9 +338,9 @@
                             </strong>
                         </h5>
                     </div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     Aquí debemos tener en cuenta las condiciones externas, revisando la industria y otros factores como las
@@ -341,14 +350,15 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="amenazas_modal" tabindex="-1" aria-labelledby="amenazas_modalLabel" aria-hidden="true">
+    <div class="modal fade" id="amenazas_modal" tabindex="-1" aria-labelledby="amenazas_modalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div  class="mr-5 justify-content-center" style="margin:auto">
+                    <div class="mr-5 justify-content-center" style="margin:auto">
 
                         <h5 class="modal-title" id="amenazas_modalLabel">
-                        <i class="mr-3 fas fa-bomb" style="color: rgb(255, 89, 77); font-size:20px;"></i>
+                            <i class="mr-3 fas fa-bomb" style="color: rgb(255, 89, 77); font-size:20px;"></i>
                             <strong class="mr-3">
                                 AMENAZAS
                             </strong>
@@ -366,14 +376,9 @@
             </div>
         </div>
     </div>
-
-
 @endsection
 
 
 @section('scripts')
-
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-
-
 @endsection

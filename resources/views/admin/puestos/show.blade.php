@@ -1,12 +1,9 @@
 @extends('layouts.admin')
 @section('content')
-
-
     <style type="text/css">
         .datos_der_cv {
             color: #fff;
         }
-
     </style>
 
     {{ Breadcrumbs::render('perfil-puesto-show', $puesto) }}
@@ -19,7 +16,7 @@
 
                     @php
                         use App\Models\Organizacion;
-                        $organizacion = Organizacion::first();
+                        $organizacion = Organizacion::getFirst();
                         $logotipo = $organizacion->logotipo;
                     @endphp
                     <div class="caja_img_logo">
@@ -230,29 +227,32 @@
                                 <tbody>
                                     <tr>
                                         <td style="text-align:center">
-                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $puesto->elaboro ? $puesto->reviso->avatar : "user.png"}}"
+                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $puesto->elaboro ? $puesto->reviso->avatar : 'user.png' }}"
                                                 class="img_empleado text-center mt-1">
                                             <br>
                                             <span>{{ $puesto->elaboro ? $puesto->elaboro->name : 'Sin definir' }}</span>
                                             <br>
-                                            <span style="color:#0CA193">{{$puesto->elaboro ?$puesto->elaboro->area->area : 'Sin definir'  }}</span>
+                                            <span
+                                                style="color:#0CA193">{{ $puesto->elaboro ? $puesto->elaboro->area->area : 'Sin definir' }}</span>
                                         </td>
                                         <td style="text-align:center">
-                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $puesto->reviso ? $puesto->reviso->avatar : "user.png"}}"
+                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $puesto->reviso ? $puesto->reviso->avatar : 'user.png' }}"
                                                 class="img_empleado text-center mt-1">
                                             <br>
                                             <span>{{ $puesto->reviso ? $puesto->reviso->name : 'Sin definir' }}</span>
                                             <br>
-                                            <span style="color:#0CA193">{{ $puesto->reviso ? $puesto->reviso->area->area : 'Sin definir' }}</span>
+                                            <span
+                                                style="color:#0CA193">{{ $puesto->reviso ? $puesto->reviso->area->area : 'Sin definir' }}</span>
 
                                         </td>
                                         <td style="text-align:center">
-                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $puesto->autoriza ? $puesto->autoriza->avatar : "user.png" }}"
+                                            <img src="{{ asset('storage/empleados/imagenes') }}/{{ $puesto->autoriza ? $puesto->autoriza->avatar : 'user.png' }}"
                                                 class="img_empleado text-center mt-1">
                                             <br>
                                             <span>{{ $puesto->autoriza ? $puesto->autoriza->name : 'Sin definir' }}</span>
                                             <br>
-                                            <span style="color:#0CA193">{{ $puesto->autoriza ? $puesto->autoriza->area->area : 'Sin definir' }}</span>
+                                            <span
+                                                style="color:#0CA193">{{ $puesto->autoriza ? $puesto->autoriza->area->area : 'Sin definir' }}</span>
 
                                         </td>
                                     </tr>
@@ -358,9 +358,4 @@
         </div>
 
     </div>
-
-
-
-
-
 @endsection

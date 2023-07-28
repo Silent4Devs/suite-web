@@ -9,8 +9,11 @@ use Livewire\WithPagination;
 class NotificacionesComponent extends Component
 {
     use WithPagination;
+
     public $view = 'no-leidas';
+
     private $lista_notificaciones;
+
     protected $paginationTheme = 'bootstrap';
 
     protected $listeners = [

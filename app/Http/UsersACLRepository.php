@@ -13,8 +13,6 @@ class UsersACLRepository implements ACLRepository
 
     /**
      * Get ACL rules list for user.
-     *
-     * @return array
      */
     public function getRules(): array
     {

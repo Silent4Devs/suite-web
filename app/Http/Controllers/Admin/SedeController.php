@@ -74,7 +74,7 @@ class SedeController extends Controller
             return $table->make(true);
         }
 
-        $organizacions = Organizacion::all();
+        $organizacions = Organizacion::getAll();
         //$org = $organizacions->organizacion;
         //dd($organizacions->organizacion, $organizacions);
         $teams = Team::get();
@@ -106,11 +106,11 @@ class SedeController extends Controller
         $sede = Sede::create($request->all());
 
         $image = null;
-        if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
+        if ($request->file('foto_sedes') != null or ! empty($request->file('foto_sedes'))) {
             $extension = pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/sedes/imagenes/' . $new_name_image;
+            $name_image = basename(pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path().'/app/public/sedes/imagenes/'.$new_name_image;
             $image = $new_name_image;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto_sedes'));
@@ -144,19 +144,19 @@ class SedeController extends Controller
 
         $sede = Sede::find($id);
         $image = $sede->foto_sedes;
-        if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
+        if ($request->file('foto_sedes') != null or ! empty($request->file('foto_sedes'))) {
             //Si existe la imagen entonces se elimina al editarla
 
-            $isExists = Storage::disk('public')->exists('sedes/imagenes/' . $sede->foto_sedes);
+            $isExists = Storage::disk('public')->exists('sedes/imagenes/'.$sede->foto_sedes);
             if ($isExists) {
                 if ($sede->foto_sedes != null) {
-                    unlink(storage_path('/app/public/sedes/imagenes/' . $sede->foto_sedes));
+                    unlink(storage_path('/app/public/sedes/imagenes/'.$sede->foto_sedes));
                 }
             }
             $extension = pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $sede->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/sedes/imagenes/' . $new_name_image;
+            $name_image = basename(pathinfo($request->file('foto_sedes')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+            $new_name_image = 'UID_'.$sede->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path().'/app/public/sedes/imagenes/'.$new_name_image;
             $image = $new_name_image;
             //Usamos image_intervention para disminuir el peso de la imagen
             $img_intervention = Image::make($request->file('foto_sedes'));
@@ -167,10 +167,10 @@ class SedeController extends Controller
 
         $sede->update([
 
-            'sede' =>  $request->sede,
-            'foto_sedes' =>  $request->foto_sede,
-            'direccion' =>  $request->direccion,
-            'descripcion' =>  $request->descripcion,
+            'sede' => $request->sede,
+            'foto_sedes' => $request->foto_sede,
+            'direccion' => $request->direccion,
+            'descripcion' => $request->descripcion,
             'foto_sedes' => $image,
         ]);
 
@@ -205,9 +205,9 @@ class SedeController extends Controller
     public function obtenerListaSedes(Sede $sedes)
     {
         abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //$sede = Sede::get();
+        //$sede = Sede::getAll();
         $sede = Sede::paginate(3);
-        $organizacions = Organizacion::all();
+        $organizacions = Organizacion::getAll();
         $teams = Team::get();
         $numero_sedes = Sede::count();
 

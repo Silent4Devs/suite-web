@@ -43,11 +43,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     {{-- <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css"> --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- PWA  -->
-    <meta name="theme-color" content="#6777ef" />
-    <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
@@ -57,6 +53,7 @@
         .custom-file-input~.custom-file-label::after {
             content: "Elegir";
         }
+
         .printModal {
             font-family: sans-serif;
             display: flex;
@@ -1030,9 +1027,10 @@
 </head>
 
 <body class="">
+
     @php
         use App\Models\Organizacion;
-        $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+        $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
         } else {
@@ -1243,6 +1241,18 @@
     </div>
     <!-- incluir de footer -->
     {{-- @include('partials.footer') --}}
+    <footer class="app-footer">
+        <font>
+            TABANTAJ
+            <font style="margin: 0px 20px;"> | </font>
+            SILENT4BUSINESS
+        </font>
+        <font>
+            2023
+            <font style="margin: 0px 20px;"> | </font>
+            Version: 4.8.8
+        </font>
+    </footer>
     </div>
     <style>
         #contenido_imprimir {
@@ -1328,19 +1338,23 @@
     </div>
 
     <div class="barra-herramientas-bottom-molbile">
-        <a href="{{ route('admin.inicio-Usuario.index') }}#datos" class="btn-barra-bottom-mobile" {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'style=color:#3086AF !important;"' : '' }}>
+        <a href="{{ route('admin.inicio-Usuario.index') }}#datos" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/inicioUsuario') || request()->is('admin/inicioUsuario/*') || request()->is('admin/competencias/*/cv') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-file-person"></i>
             <p>Perfil</p>
         </a>
-        <a href="{{ route('admin.timesheet-inicio') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'style=color:#3086AF !important;"' : '' }}>
+        <a href="{{ route('admin.timesheet-inicio') }}" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/timesheet') || request()->is('admin/timesheet/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-calendar3-range"></i>
             <p>Timesheet</p>
         </a>
-        <a href="{{ route('admin.systemCalendar') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'style=color:#3086AF !important;"' : '' }}>
+        <a href="{{ route('admin.systemCalendar') }}" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-calendar3"></i>
             <p>Calendario</p>
         </a>
-        <a href="{{ route('admin.portal-comunicacion.index') }}" class="btn-barra-bottom-mobile" {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'style=color:#3086AF !important;"' : '' }}>
+        <a href="{{ route('admin.portal-comunicacion.index') }}" class="btn-barra-bottom-mobile"
+            {{ request()->is('admin/portal-comunicacion') || request()->is('admin/portal-comunicacion/*') ? 'style=color:#3086AF !important;"' : '' }}>
             <i class="bi bi-newspaper"></i>
             <p>Comunicación</p>
         </a>
@@ -1409,8 +1423,8 @@
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js">
     </script> --}}
     {{-- <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script> --}}
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
@@ -1660,19 +1674,19 @@
     {{-- responsive --}}
     <script type="text/javascript">
         $(document).ready(function() {
-            if($(window).width() <= 800){
+            if ($(window).width() <= 800) {
                 $('body').addClass('body-responsive-mobile');
             }
         });
-        $(window).resize(function(){
-            if($(window).width() <= 800){
+        $(window).resize(function() {
+            if ($(window).width() <= 800) {
                 $('body').addClass('body-responsive-mobile');
-            }else{
+            } else {
                 $('body').removeClass('body-responsive-mobile');
             }
         });
     </script>
-    
+
     <script>
         $(document).ready(function() {
             $(".notifications-menu").on('click', function() {
@@ -1843,26 +1857,28 @@
             var id_seccion = $(".caja_botones_menu a:hover").attr('data-tabs');
             $(document.getElementById(id_seccion)).addClass("caja_tab_reveldada");
         });
-        $('.modal').on('shown.bs.modal', function (event) {
+        $('.modal').on('shown.bs.modal', function(event) {
             let modalBackDrop = document.querySelector('.modal-backdrop');
             if (modalBackDrop) {
-                modalBackDrop.style.width="100%";
-                modalBackDrop.style.height="100%"
+                modalBackDrop.style.width = "100%";
+                modalBackDrop.style.height = "100%"
             }
         })
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     @yield('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-idletimer/1.0.0/idle-timer.min.js" integrity="sha512-hh4Bnn1GtJOoCXufO1cvrBF6BzRWBp7rFiQCEdSRwwxJVdCIlrp6AWeD8GJVbnLO9V1XovnJSylI5/tZGOzVAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('/sw.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-idletimer/1.0.0/idle-timer.min.js"
+        integrity="sha512-hh4Bnn1GtJOoCXufO1cvrBF6BzRWBp7rFiQCEdSRwwxJVdCIlrp6AWeD8GJVbnLO9V1XovnJSylI5/tZGOzVAg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{--  <script src="{{ asset('/sw.js') }}"></script>
     <script>
         if (!navigator.serviceWorker?.controller) {
             navigator.serviceWorker?.register("/sw.js").then(function(reg) {
                 console.log("Service worker has been registered for scope: " + reg.scope);
             });
         }
-    </script>
+    </script>  --}}
     {{-- <script>
         $(function() {
             let idleTime = Number(@json(env('SESSION_LIFETIME')))*60*1000; // in milliseconds

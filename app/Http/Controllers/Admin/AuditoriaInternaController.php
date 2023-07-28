@@ -81,8 +81,7 @@ class AuditoriaInternaController extends Controller
         }
 
         $controles = Controle::get();
-        $users = User::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.auditoriaInternas.index', compact('controles', 'users', 'users', 'teams'));
@@ -94,9 +93,9 @@ class AuditoriaInternaController extends Controller
 
         $clausulas = Clausula::all();
 
-        $auditorliders = Empleado::alta()->get();
+        $auditorliders = Empleado::getaltaAll();
 
-        $equipoauditorias = Empleado::alta()->get();
+        $equipoauditorias = Empleado::getaltaAll();
 
         return view('admin.auditoriaInternas.create', compact('clausulas', 'auditorliders', 'equipoauditorias'));
     }
@@ -130,9 +129,9 @@ class AuditoriaInternaController extends Controller
 
         $clausulas = Clausula::all();
 
-        $auditorliders = Empleado::alta()->get();
+        $auditorliders = Empleado::getaltaAll();
 
-        $equipoauditorias = Empleado::alta()->get();
+        $equipoauditorias = Empleado::getaltaAll();
 
         return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'));
     }

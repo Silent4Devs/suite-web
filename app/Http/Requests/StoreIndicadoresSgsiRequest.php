@@ -15,50 +15,50 @@ class StoreIndicadoresSgsiRequest extends FormRequest
     public function rules()
     {
         return [
-            'titulo'     => [
+            'titulo' => [
                 'string',
                 'nullable',
             ],
-            'meta'       => [
+            'meta' => [
                 'string',
                 'nullable',
             ],
-            'enero'      => [
+            'enero' => [
                 'numeric',
                 'min:0',
                 'max:100',
             ],
-            'febrero'    => [
+            'febrero' => [
                 'numeric',
                 'min:0',
                 'max:100',
             ],
-            'marzo'      => [
+            'marzo' => [
                 'numeric',
                 'min:0',
                 'max:100',
             ],
-            'abril'      => [
+            'abril' => [
                 'numeric',
                 'min:0',
                 'max:100',
             ],
-            'mayo'       => [
+            'mayo' => [
                 'numeric',
                 'min:0',
                 'max:100',
             ],
-            'junio'      => [
+            'junio' => [
                 'numeric',
                 'min:0',
                 'max:100',
             ],
-            'julio'      => [
+            'julio' => [
                 'numeric',
                 'min:0',
                 'max:100',
             ],
-            'agosto'     => [
+            'agosto' => [
                 'numeric',
                 'min:0',
                 'max:100',
@@ -68,22 +68,22 @@ class StoreIndicadoresSgsiRequest extends FormRequest
                 'min:0',
                 'max:100',
             ],
-            'octubre'    => [
+            'octubre' => [
                 'numeric',
                 'min:0',
                 'max:100',
             ],
-            'noviembre'  => [
+            'noviembre' => [
                 'numeric',
                 'min:0',
                 'max:100',
             ],
-            'diciembre'  => [
+            'diciembre' => [
                 'numeric',
                 'min:0',
                 'max:100',
             ],
-            'anio'       => [
+            'anio' => [
                 'string',
                 'min:4',
                 'max:4',

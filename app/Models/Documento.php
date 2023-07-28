@@ -6,21 +6,31 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Documento extends Model
+class Documento extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     //REVISION DE DOCUMENTOS ESTATUS
     const SOLICITUD_REVISION = 1;
+
     const APROBADO = 2;
+
     const RECHAZADO = 3;
+
     const RECHAZADO_EN_CONSECUENCIA_POR_NIVEL_ANTERIOR = 4;
 
     // DOCUMENTOS ESTATUS
     const EN_ELABORACION = 1;
+
     const EN_REVISION = 2;
+
     const PUBLICADO = 3;
+
     const DOCUMENTO_RECHAZADO = 4;
+
     const DOCUMENTO_OBSOLETO = 5;
 
     public static $searchable = [

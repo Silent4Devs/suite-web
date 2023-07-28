@@ -53,7 +53,7 @@ class MaterialIsoVeinticienteController extends Controller
                 return $row->objetivo ? $row->objetivo : '';
             });
             $table->editColumn('listaasistencia', function ($row) {
-                return $row->listaasistencia ? '<a href="' . $row->listaasistencia->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+                return $row->listaasistencia ? '<a href="'.$row->listaasistencia->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>' : '';
             });
             $table->addColumn('arearesponsable_area', function ($row) {
                 return $row->arearesponsable ? $row->arearesponsable->area : '';
@@ -64,7 +64,7 @@ class MaterialIsoVeinticienteController extends Controller
             });
 
             $table->editColumn('materialarchivo', function ($row) {
-                return $row->materialarchivo ? '<a href="' . $row->materialarchivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+                return $row->materialarchivo ? '<a href="'.$row->materialarchivo->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>' : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'listaasistencia', 'arearesponsable', 'materialarchivo']);
@@ -72,7 +72,7 @@ class MaterialIsoVeinticienteController extends Controller
             return $table->make(true);
         }
 
-        $areas = Area::get();
+        $areas = Area::getAll();
         $teams = Team::get();
 
         return view('admin.materialIsoVeinticientes.index', compact('areas', 'teams'));
@@ -92,11 +92,11 @@ class MaterialIsoVeinticienteController extends Controller
         $materialIsoVeinticiente = MaterialIsoVeinticiente::create($request->all());
 
         if ($request->input('listaasistencia', false)) {
-            $materialIsoVeinticiente->addMedia(storage_path('tmp/uploads/' . $request->input('listaasistencia')))->toMediaCollection('listaasistencia');
+            $materialIsoVeinticiente->addMedia(storage_path('tmp/uploads/'.$request->input('listaasistencia')))->toMediaCollection('listaasistencia');
         }
 
         if ($request->input('materialarchivo', false)) {
-            $materialIsoVeinticiente->addMedia(storage_path('tmp/uploads/' . $request->input('materialarchivo')))->toMediaCollection('materialarchivo');
+            $materialIsoVeinticiente->addMedia(storage_path('tmp/uploads/'.$request->input('materialarchivo')))->toMediaCollection('materialarchivo');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -122,24 +122,24 @@ class MaterialIsoVeinticienteController extends Controller
         $materialIsoVeinticiente->update($request->all());
 
         if ($request->input('listaasistencia', false)) {
-            if (!$materialIsoVeinticiente->listaasistencia || $request->input('listaasistencia') !== $materialIsoVeinticiente->listaasistencia->file_name) {
+            if (! $materialIsoVeinticiente->listaasistencia || $request->input('listaasistencia') !== $materialIsoVeinticiente->listaasistencia->file_name) {
                 if ($materialIsoVeinticiente->listaasistencia) {
                     $materialIsoVeinticiente->listaasistencia->delete();
                 }
 
-                $materialIsoVeinticiente->addMedia(storage_path('tmp/uploads/' . $request->input('listaasistencia')))->toMediaCollection('listaasistencia');
+                $materialIsoVeinticiente->addMedia(storage_path('tmp/uploads/'.$request->input('listaasistencia')))->toMediaCollection('listaasistencia');
             }
         } elseif ($materialIsoVeinticiente->listaasistencia) {
             $materialIsoVeinticiente->listaasistencia->delete();
         }
 
         if ($request->input('materialarchivo', false)) {
-            if (!$materialIsoVeinticiente->materialarchivo || $request->input('materialarchivo') !== $materialIsoVeinticiente->materialarchivo->file_name) {
+            if (! $materialIsoVeinticiente->materialarchivo || $request->input('materialarchivo') !== $materialIsoVeinticiente->materialarchivo->file_name) {
                 if ($materialIsoVeinticiente->materialarchivo) {
                     $materialIsoVeinticiente->materialarchivo->delete();
                 }
 
-                $materialIsoVeinticiente->addMedia(storage_path('tmp/uploads/' . $request->input('materialarchivo')))->toMediaCollection('materialarchivo');
+                $materialIsoVeinticiente->addMedia(storage_path('tmp/uploads/'.$request->input('materialarchivo')))->toMediaCollection('materialarchivo');
             }
         } elseif ($materialIsoVeinticiente->materialarchivo) {
             $materialIsoVeinticiente->materialarchivo->delete();

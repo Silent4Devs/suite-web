@@ -19,7 +19,9 @@ class SolicitudDeAprobacion extends Mailable
      * @return void
      */
     public $minuta;
+
     public $revision;
+
     public $historialRevisionMinuta;
 
     public function __construct(Minutasaltadireccion $minuta, RevisionMinuta $revision, HistoralRevisionMinuta $historialRevisionMinuta)

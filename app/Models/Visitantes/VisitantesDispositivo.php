@@ -4,10 +4,13 @@ namespace App\Models\Visitantes;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class VisitantesDispositivo extends Model
+class VisitantesDispositivo extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'visitantes_dispositivos';
 
     protected $fillable = [

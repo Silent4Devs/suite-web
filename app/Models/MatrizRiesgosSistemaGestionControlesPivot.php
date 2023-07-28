@@ -3,14 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class MatrizRiesgosSistemaGestionControlesPivot extends Model
+class MatrizRiesgosSistemaGestionControlesPivot extends Model implements Auditable
 {
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'matriz_riesgos_sistema_gestion_controles_pivot';
 
     protected $casts = [

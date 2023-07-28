@@ -9,17 +9,15 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class DatosAreaImport implements ToModel
 {
     /**
-     * @param array $row
-     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
     {
         return new Area([
             'area' => $row[0],
-            'id_reporta' =>$this->obtenerReportaPorNombre($row[1]),
-            'id_grupo'=> $this->obtenerGrupoPorNombre($row[2]),
-            'descripcion'=> $row[3],
+            'id_reporta' => $this->obtenerReportaPorNombre($row[1]),
+            'id_grupo' => $this->obtenerGrupoPorNombre($row[2]),
+            'descripcion' => $row[3],
         ]);
     }
 

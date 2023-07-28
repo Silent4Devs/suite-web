@@ -4,19 +4,26 @@ namespace App\Models\RH;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EvaluadoEvaluador extends Model
+class EvaluadoEvaluador extends Model implements Auditable
 {
     use HasFactory;
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
+
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'ev360_evaluado_evaluador';
+
     protected $guarded = ['id'];
+
     protected $appends = ['progreso_competencias', 'progreso_objetivos'];
 
     const AUTOEVALUACION = 0;
+
     const JEFE_INMEDIATO = 1;
+
     const MISMA_AREA = 2;
+
     const EQUIPO = 3;
 
     public function getTipoFormateadoAttribute()

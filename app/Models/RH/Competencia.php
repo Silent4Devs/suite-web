@@ -5,22 +5,36 @@ namespace App\Models\RH;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Competencia extends Model
+class Competencia extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'ev360_competencias';
+
     protected $guarded = ['id'];
+
     protected $appends = ['tipo_competencia', 'imagen_ruta', 'existe_imagen_en_servidor'];
 
     const TODA_LA_EMPRESA = 0;
+
     const POR_PUESTO = 1;
+
     const POR_AREA = 2;
+
     const POR_PERFIL = 3;
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Competencias_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function getTipoCompetenciaAttribute()
     {

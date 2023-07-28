@@ -8,55 +8,60 @@ use Livewire\Component;
 class TablaMisRegistros extends Component
 {
     public $todos_contador;
+
     public $borrador_contador;
+
     public $pendientes_contador;
+
     public $aprobados_contador;
+
     public $rechazos_contador;
+
     public $times;
 
     public function mount()
     {
-        $this->times = Timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->times = Timesheet::getPersonalTimesheet();
     }
 
     public function render()
     {
-        $this->todos_contador = Timesheet::where('empleado_id', auth()->user()->empleado->id)->count();
-        $this->borrador_contador = Timesheet::where('estatus', 'papelera')->where('empleado_id', auth()->user()->empleado->id)->count();
-        $this->pendientes_contador = Timesheet::where('estatus', 'pendiente')->where('empleado_id', auth()->user()->empleado->id)->count();
-        $this->aprobados_contador = Timesheet::where('estatus', 'aprobado')->where('empleado_id', auth()->user()->empleado->id)->count();
-        $this->rechazos_contador = Timesheet::where('estatus', 'rechazado')->where('empleado_id', auth()->user()->empleado->id)->count();
+        $this->todos_contador = Timesheet::getPersonalTimesheet()->count();
+        $this->borrador_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'papelera')->count();
+        $this->pendientes_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'pendiente')->count();
+        $this->aprobados_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'aprobado')->count();
+        $this->rechazos_contador = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado')->count();
 
         return view('livewire.timesheet.tabla-mis-registros');
     }
 
     public function todos()
     {
-        $this->times = Timesheet::where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->times = Timesheet::getPersonalTimesheet();
         $this->emit('scriptTabla');
     }
 
     public function papelera()
     {
-        $this->times = Timesheet::where('estatus', 'papelera')->where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->times = Timesheet::getPersonalTimesheet()->where('estatus', 'papelera');
         $this->emit('scriptTabla');
     }
 
     public function pendientes()
     {
-        $this->times = Timesheet::where('estatus', 'pendiente')->where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->times = Timesheet::getPersonalTimesheet()->where('estatus', 'pendiente');
         $this->emit('scriptTabla');
     }
 
     public function aprobados()
     {
-        $this->times = Timesheet::where('estatus', 'aprobado')->where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->times = Timesheet::getPersonalTimesheet()->where('estatus', 'aprobado');
         $this->emit('scriptTabla');
     }
 
     public function rechazos()
     {
-        $this->times = Timesheet::where('estatus', 'rechazado')->where('empleado_id', auth()->user()->empleado->id)->get();
+        $this->times = Timesheet::getPersonalTimesheet()->where('estatus', 'rechazado');
         $this->emit('scriptTabla');
     }
 }

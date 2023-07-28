@@ -15,48 +15,48 @@ class UpdateMatrizRiesgoRequest extends FormRequest
     public function rules()
     {
         return [
-            'proceso'              => [
+            'proceso' => [
                 'string',
                 'nullable',
             ],
-            'responsableproceso'   => [
+            'responsableproceso' => [
                 'string',
                 'nullable',
             ],
-            'amenaza'              => [
+            'amenaza' => [
                 'string',
                 'nullable',
             ],
-            'vulnerabilidad'       => [
+            'vulnerabilidad' => [
                 'string',
                 'nullable',
             ],
-            'descripcionriesgo'    => [
+            'descripcionriesgo' => [
                 'string',
                 'nullable',
             ],
-            'confidencialidad'     => [
+            'confidencialidad' => [
                 'string',
             ],
-            'integridad'           => [
+            'integridad' => [
                 'string',
             ],
-            'disponibilidad'       => [
+            'disponibilidad' => [
                 'string',
             ],
-            'nivelriesgo'          => [
+            'nivelriesgo' => [
                 'numeric',
             ],
-            'riesgototal'          => [
+            'riesgototal' => [
                 'numeric',
             ],
             'resultadoponderacion' => [
                 'numeric',
             ],
-            'riesgoresidual'       => [
+            'riesgoresidual' => [
                 'numeric',
             ],
-            'justificacion'        => [
+            'justificacion' => [
                 'string',
                 'nullable',
             ],

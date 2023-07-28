@@ -15,11 +15,11 @@ class UpdateGapUnoRequest extends FormRequest
     public function rules()
     {
         return [
-            'pregunta'      => [
+            'pregunta' => [
                 'string',
                 'nullable',
             ],
-            'evidencia'     => [
+            'evidencia' => [
                 'string',
                 'nullable',
             ],

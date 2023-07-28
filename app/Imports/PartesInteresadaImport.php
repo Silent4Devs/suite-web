@@ -11,8 +11,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 class PartesInteresadaImport implements ToCollection
 {
     /**
-     * @param array $row
-     *
+     * @param  array  $row
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function collection(Collection $rows)

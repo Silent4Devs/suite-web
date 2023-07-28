@@ -21,10 +21,13 @@ class ReporteAprobador extends Component
     use LivewireAlert;
 
     public $lista_empleados;
+
     public $empleado_seleccionado_id;
+
     public $hoy_format;
 
     public $empleado;
+
     public $timesheet;
 
     public $hoy;
@@ -32,14 +35,23 @@ class ReporteAprobador extends Component
     public $areas;
 
     public $todos_contador;
+
     public $borrador_contador;
+
     public $pendientes_contador;
+
     public $aprobados_contador;
+
     public $rechazos_contador;
+
     public $times_empleado;
+
     public $proyectos;
+
     public $proyectos_detalle;
+
     public $horas_totales = 0;
+
     public $times_empleado_horas;
 
     public $horas_totales_filtros_empleados;
@@ -57,17 +69,21 @@ class ReporteAprobador extends Component
     public $costo_total_empleado = 0;
 
     public $area_id = 0;
+
     public $fecha_inicio;
+
     public $fecha_fin;
 
     public $fecha_inicio_empleado;
+
     public $fecha_fin_empleado;
+
     public $habilitarTodos = false;
 
     public function mount()
     {
         $this->habilitarTodos = false;
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
 
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(2)->format('Y-m-d');
         $this->fecha_fin = Carbon::now()->format('Y-m-d');
@@ -97,7 +113,7 @@ class ReporteAprobador extends Component
     {
         $this->fecha_fin = $value;
         if ($this->fecha_fin < $this->fecha_inicio) {
-            $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( ' . $this->fecha_inicio . ' )', [
+            $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( '.$this->fecha_inicio.' )', [
                 'position' => 'top-end',
                 'timer' => 3000,
                 'toast' => true,
@@ -165,7 +181,7 @@ class ReporteAprobador extends Component
                 $previous_month = Carbon::create()->day(1)->month(intval($previous_month))->format('F');
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
-                if (!($this->buscarKeyEnArray($year, $calendario_array))) {
+                if (! ($this->buscarKeyEnArray($year, $calendario_array))) {
                     $calendario_array["{$year}"] = [
                         'year' => $year,
                         'total_weeks' => 0,
@@ -180,19 +196,19 @@ class ReporteAprobador extends Component
                     if ($month == 'January') {
                         $previous_year = $year - 1;
                         if (array_key_exists($previous_year, $calendario_array)) {
-                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
+                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         }
                     }
                 } else {
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
-                        if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
+                        if (! in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
-                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
+                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         } else {

@@ -19,10 +19,10 @@ class StoreFaqQuestionRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'question'    => [
+            'question' => [
                 'required',
             ],
-            'answer'      => [
+            'answer' => [
                 'required',
             ],
         ];

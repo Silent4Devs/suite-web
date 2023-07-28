@@ -32,7 +32,7 @@ class ProcesoController extends Controller
     {
         abort_if(Gate::denies('procesos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = Proceso::get();
+            $query = Proceso::getAll();
             $table = DataTables::of($query);
 
             $table->addColumn('actions', '&nbsp;');
@@ -156,8 +156,8 @@ class ProcesoController extends Controller
         }])->orderBy('id')->get();
 
         $macros_mapa = Macroproceso::get();
-        $procesos_mapa = Proceso::get();
-        $organizacion = Organizacion::first();
+        $procesos_mapa = Proceso::getAll();
+        $organizacion = Organizacion::getFirst();
         $exist_no_publicado = Proceso::select('estatus')->where('estatus', Proceso::NO_ACTIVO)->exists();
 
         return view('admin.procesos.mapa_procesos', compact('grupos_mapa', 'macros_mapa', 'procesos_mapa', 'exist_no_publicado', 'organizacion'));

@@ -11,7 +11,6 @@ use App\Models\IndicadoresSgsi;
 use App\Models\Proceso;
 use App\Models\Team;
 use App\Models\User;
-use App\Models\VariablesIndicador;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
@@ -107,7 +106,7 @@ class IndicadoresSgsiController extends Controller
             return $table->make(true);
         }
 
-        /*$users = User::get();
+        /*$users = User::getAll();
         $teams = Team::get();*/
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -120,9 +119,9 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $responsables = Empleado::alta()->get();
-        $areas = Area::get();
-        $procesos = Proceso::get();
+        $responsables = Empleado::getaltaAll();
+        $areas = Area::getAll();
+        $procesos = Proceso::getAll();
 
         return view('admin.indicadoresSgsis.create', compact('areas', 'responsables', 'procesos'));
     }
@@ -155,10 +154,9 @@ class IndicadoresSgsiController extends Controller
     {
         abort_if(Gate::denies('indicadores_sgsi_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $procesos = Proceso::get();
-        $responsables = Empleado::alta()->get();
-        $areas = Area::get();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
+        $responsables = Empleado::getaltaAll();
+        $areas = Area::getAll();
         if ($indicadoresSgsi->formula_raw == null) {
             $indicadoresSgsi->update(['formula_raw' => $indicadoresSgsi->formula]);
         }
@@ -273,7 +271,7 @@ class IndicadoresSgsiController extends Controller
 
         $variables = $request->all('variables');
         // dd($variables);
-        if($variables['variables'] == null){
+        if ($variables['variables'] == null) {
 
             $indicadoresSgsi = IndicadoresSgsi::find($id['id']);
 
@@ -282,10 +280,10 @@ class IndicadoresSgsiController extends Controller
             }
 
             $formula_r = $indicadoresSgsi->formula_raw;
-            $chars = ["$", '/', '*', '-', '+'];
+            $chars = ['$', '/', '*', '-', '+'];
             $onlyconsonants = $formula_r;
             foreach ($chars as $key => $char) {
-                $onlyconsonants = str_replace($char, '!' . $char, $onlyconsonants);
+                $onlyconsonants = str_replace($char, '!'.$char, $onlyconsonants);
             }
 
             $formula_array = explode('!', $onlyconsonants);
@@ -299,8 +297,8 @@ class IndicadoresSgsiController extends Controller
             }
 
             return view('admin.indicadoresSgsis.evaluacion')
-            ->with('indicadoresSgsis', $indicadoresSgsis)
-            ->with('variables', $finish_array);
+                ->with('indicadoresSgsis', $indicadoresSgsis)
+                ->with('variables', $finish_array);
         }
 
         return view('admin.indicadoresSgsis.evaluacion')
@@ -317,14 +315,14 @@ class IndicadoresSgsiController extends Controller
         $indicadoresSgsis = IndicadoresSgsi::find($id['id']);
 
         return view('admin.indicadoresSgsis.evaluacion')->with('indicadoresSgsis', $indicadoresSgsis)
-        ->with('variables', $variables);
+            ->with('variables', $variables);
     }
 
     public function indicadoresDashboard(Request $request)
     {
         $indicadores = IndicadoresSgsi::with('evaluacion_indicadors')->get();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $porcentajeCumplimiento = DashboardIndicadorSG::first();
 

@@ -8,19 +8,18 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Jenssegers\Date\Date;
-// use Rennokki\QueryCache\Traits\QueryCacheable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Recurso extends Model implements HasMedia
+class Recurso extends Model implements HasMedia, Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
-    // use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    // public $cacheFor = 600;
-    // protected static $flushCacheOnUpdate = true;
     public $table = 'recursos';
 
     const TIPOS = [
@@ -41,8 +40,11 @@ class Recurso extends Model implements HasMedia
         // 'Re-Programado', //Re Programado (cuando se re programa)
         'Cancelado', // Cuando se cancela
     ];
+
     const PROXIMAMENTE = 0;
+
     const EN_CURSO = 1;
+
     const TERMINADO = 2;
 
     protected $appends = [
@@ -89,6 +91,14 @@ class Recurso extends Model implements HasMedia
         'lista_asistencia',
         'is_sync_elearning',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('recursos_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     // SCOPES
     public function scopeCapacitacionesProximas($query)

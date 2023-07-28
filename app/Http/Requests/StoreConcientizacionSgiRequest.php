@@ -19,7 +19,7 @@ class StoreConcientizacionSgiRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'fecha_publicacion'  => [
+            'fecha_publicacion' => [
                 'date',
                 'required',
             ],

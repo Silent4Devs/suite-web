@@ -98,7 +98,7 @@
                                     </hr>
                                     @php
                                         use App\Models\Organizacion;
-                                        $organizacion = Organizacion::first();
+                                        $organizacion = Organizacion::getFirst();
                                         $logotipo = $organizacion->logotipo;
                                         $empresa = $organizacion->empresa;
                                     @endphp
@@ -129,7 +129,9 @@
                                                     Le informamos que derivado de la solicitud de aprobación del riesgo
                                                     <strong style="font-size:10pt;">ID
                                                         {{ $tratamientoRiesgo->identificador }}</strong>,
-                                                    {{ $tratamientoRiesgo->responsable->name }} ha dado su consentimiento                                             </p>
+                                                    {{ $tratamientoRiesgo->responsable->name }} ha dado su
+                                                    consentimiento
+                                                </p>
                                                 <strong
                                                     style="color:#345183;padding-top:10px; margin:0 0 14px 0;font-size:15px;line-height:24px;font-family:Arial,sans-serif;">
                                                     Comentarios:</strong>
@@ -150,8 +152,6 @@
                                                 <p style="font-size:11pt; color:#153643;">
                                                     {{ $tratamientoRiesgo->comentarios != null ? $tratamientoRiesgo->comentarios : 'Sin comentario' }}
                                                 </p>
-
-                                               
                                             @endif
                                         </div>
                                         <br>

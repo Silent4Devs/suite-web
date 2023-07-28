@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\IncidentesDayoff;
-use App\Models\Organizacion;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Gate;
 
 class IncidentesDayOffController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('incidentes_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -60,13 +62,9 @@ class IncidentesDayOffController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.incidentesDayoff.index', compact('logo_actual', 'empresa_actual'));
@@ -76,9 +74,9 @@ class IncidentesDayOffController extends Controller
     {
         abort_if(Gate::denies('incidentes_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacacion = new IncidentesDayOff();
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $empleados_seleccionados = $vacacion->empleados->pluck('id')->toArray();
-        $año = Carbon:: now()->format('Y');
+        $año = Carbon::now()->format('Y');
 
         return view('admin.incidentesDayoff.create', compact('vacacion', 'empleados', 'empleados_seleccionados', 'año'));
     }
@@ -115,7 +113,7 @@ class IncidentesDayOffController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('incidentes_dayoff_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $vacacion = IncidentesDayoff::with('empleados')->find($id);
         if (empty($vacacion)) {
             Flash::error('Excepción not found');

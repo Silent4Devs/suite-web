@@ -15,8 +15,11 @@ class NotificacionEvaluacion360 implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $email;
+
     public $evaluacion;
+
     public $evaluador;
+
     public $evaluado;
 
     /**

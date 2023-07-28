@@ -31,23 +31,23 @@ class StoreMatrizRiesgoRequest extends FormRequest
                 'required',
                 'int',
             ],
-            'id_amenaza'=> [
+            'id_amenaza' => [
                 'required',
                 'int',
             ],
-            'id_vulnerabilidad'=> [
+            'id_vulnerabilidad' => [
                 'required',
                 'int',
             ],
-            'controles_id'=> [
+            'controles_id' => [
                 'required',
                 'array',
             ],
-            'probabilidad'=> [
+            'probabilidad' => [
                 'required',
                 'int',
             ],
-            'impacto'=> [
+            'impacto' => [
                 'required',
                 'int',
             ],

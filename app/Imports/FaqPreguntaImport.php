@@ -9,14 +9,12 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class FaqPreguntaImport implements ToModel
 {
     /**
-     * @param array $row
-     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
     {
         return new FaqQuestion([
-            'category_id'=> $this->obtenerEmpleadoPorNombre($row[0]),
+            'category_id' => $this->obtenerEmpleadoPorNombre($row[0]),
             'question' => $row[1],
             'answer' => $row[2],
         ]);

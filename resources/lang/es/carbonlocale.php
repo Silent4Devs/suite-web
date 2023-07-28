@@ -4,23 +4,23 @@
 
 return [
 
-    'past'     =>  [
+    'past' => [
         'second' => 'hace :delta segundo|hace :delta segundos',
         'minute' => 'hace :delta minuto|hace :delta minutos',
-        'hour'   => 'hace :delta hora|hace :delta horas',
-        'day'    => '{1} ayer|{2} hace dos días|[3,Inf] hace :delta días',
-        'week'   => '{1} hace :delta semana|[2,Inf] hace :delta semanas',
-        'month'  => '{1} hace :delta mes|[2,Inf] HOLA :delta meses',
-        'year'   => 'hace :delta año|hace :delta años',
+        'hour' => 'hace :delta hora|hace :delta horas',
+        'day' => '{1} ayer|{2} hace dos días|[3,Inf] hace :delta días',
+        'week' => '{1} hace :delta semana|[2,Inf] hace :delta semanas',
+        'month' => '{1} hace :delta mes|[2,Inf] HOLA :delta meses',
+        'year' => 'hace :delta año|hace :delta años',
     ],
 
     'future' => [
         'second' => 'en :delta segundo|en :delta segundos',
         'minute' => 'en :delta minuto|en :delta minutos',
-        'hour'   => 'en :delta hora|en :delta horas',
-        'day'    => '{1} mañana|{2} en dos días|[3,Inf] en :delta días',
-        'week'   => '{1} en :delta semana|[2,Inf] en :delta semanas',
-        'month'  => '{1} en :delta mes|[2,Inf] en :delta meses',
-        'year'   => 'en :delta año|en :delta años',
+        'hour' => 'en :delta hora|en :delta horas',
+        'day' => '{1} mañana|{2} en dos días|[3,Inf] en :delta días',
+        'week' => '{1} en :delta semana|[2,Inf] en :delta semanas',
+        'month' => '{1} en :delta mes|[2,Inf] en :delta meses',
+        'year' => 'en :delta año|en :delta años',
     ],
 ];

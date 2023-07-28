@@ -28,7 +28,7 @@
 
             @php
                 use App\Models\Organizacion;
-                $organizacion = Organizacion::select('id', 'logotipo')->first();
+                $organizacion = Organizacion::getLogo();
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {
@@ -59,7 +59,7 @@
             </div>
 
             <p class="mt-4">En caso de requerir asesoría, contactar a soporte técnico al siguiente correo:
-            <br><br> 
+            <br><br>
                 <a href="mailto:contacto@silent4business.com">contacto@silent4business.com</a></p>
         </form>
 

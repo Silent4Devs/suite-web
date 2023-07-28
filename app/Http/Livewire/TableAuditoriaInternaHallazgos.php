@@ -8,6 +8,7 @@ use Livewire\Component;
 class TableAuditoriaInternaHallazgos extends Component
 {
     public $auditoria_internas_id;
+
     protected $listeners = ['render' => 'render'];
 
     public function render()

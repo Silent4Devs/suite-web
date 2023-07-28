@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TimesheetHoras extends Model
+class TimesheetHoras extends Model implements Auditable
 {
     use HasFactory;
-
+    use Filterable;
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'timesheet_horas';
 
     protected $fillable = [
@@ -24,6 +27,7 @@ class TimesheetHoras extends Model
         'horas_sabado',
         'horas_domingo',
         'descripcion',
+        'empleado_id',
     ];
 
     public function timesheet()

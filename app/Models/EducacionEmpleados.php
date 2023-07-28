@@ -5,15 +5,13 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EducacionEmpleados extends Model
+class EducacionEmpleados extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'educacion_empleados';
 
     const NivelSelect = [
@@ -24,8 +22,8 @@ class EducacionEmpleados extends Model
         'Técnico' => 'Técnico',
         'Ingeniería' => 'Ingeniería',
         'Licenciatura' => 'Licenciatura',
-        'Maestria'     => 'Maestria',
-        'Doctorado'    => 'Doctorado',
+        'Maestria' => 'Maestria',
+        'Doctorado' => 'Doctorado',
     ];
 
     protected $dates = [

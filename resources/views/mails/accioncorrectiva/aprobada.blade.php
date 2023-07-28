@@ -23,13 +23,11 @@
         p {
             font-family: Arial, sans-serif;
         }
-
     </style>
 </head>
 
 <body style="margin:0;padding:0;">
-    <table role="presentation"
-        style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
         <tr>
             <td align="center" style="padding:0;">
                 <table role="presentation"
@@ -55,7 +53,7 @@
                                     </div>
                                     @php
                                         use App\Models\Organizacion;
-                                        $organizacion = Organizacion::first();
+                                        $organizacion = Organizacion::getFirst();
                                         $logotipo = $organizacion->logotipo;
                                         $empresa = $organizacion->empresa;
                                     @endphp
@@ -68,8 +66,7 @@
                                     <td style="padding:0 0 36px 0;">
 
                                         <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img src="{{ asset($logotipo) }}" class="mt-2 ml-4"
-                                                style="width:160px;">
+                                            <img src="{{ asset($logotipo) }}" class="mt-2 ml-4" style="width:160px;">
                                         </div>
 
                                         <div style="margin-top:50px;">
@@ -107,7 +104,8 @@
                                                     su solicitud para la generación de la Acción Correctiva.
                                                 </p>
                                                 <p style="font-size:11pt; color:#153643;"><i
-                                                        class="mr-2 far fa-comments"></i><strong>Comentarios</strong></p>
+                                                        class="mr-2 far fa-comments"></i><strong>Comentarios</strong>
+                                                </p>
                                                 <p style="font-size:11pt; color:#153643;">
                                                     {{ $quejas->accionCorrectiva->comentarios_aprobacion != null ? $quejas->accionCorrectiva->comentarios_aprobacion : 'Sin comentario' }}
                                                 </p>

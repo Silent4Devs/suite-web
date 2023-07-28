@@ -6,10 +6,12 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Role extends Model
+class Role extends Model implements Auditable
 {
     use SoftDeletes, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'roles';
 

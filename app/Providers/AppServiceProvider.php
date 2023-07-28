@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Extensions\CustomSessionHandler;
+use App\Models\VersionesIso;
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Pagination\Paginator;
@@ -55,6 +56,12 @@ class AppServiceProvider extends ServiceProvider
             $path = Config::get('session.path');
 
             return new CustomSessionHandler($files, $path, $minutes);
+        });
+
+        view()->composer('*', function ($view) {
+            $version_historico = VersionesIso::first();
+            $version_iso = $version_historico->version_historico;
+            $view->with('version_iso', $version_iso);
         });
     }
 }

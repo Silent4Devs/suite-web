@@ -10,10 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ComunicacionSgi extends Model implements HasMedia
+class ComunicacionSgi extends Model implements HasMedia, Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'comunicacion_sgis';
 
@@ -23,8 +25,8 @@ class ComunicacionSgi extends Model implements HasMedia
 
     const TipoSelect = [
         'Carrusel' => 'Carrusel',
-        'Blog'     => 'Blog',
-        'Ambos'    => 'Ambos',
+        'Blog' => 'Blog',
+        'Ambos' => 'Ambos',
     ];
 
     public static $searchable = [

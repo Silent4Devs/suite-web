@@ -77,8 +77,9 @@
             .table th td:nth-child(1) {
                 min-width: 100px;
             }
-            .print-none{
-            display: none !important;
+
+            .print-none {
+                display: none !important;
             }
         }
     </style>
@@ -99,7 +100,7 @@
 
                     @php
                         use App\Models\Organizacion;
-                        $organizacion = Organizacion::first();
+                        $organizacion = Organizacion::getFirst();
                         $logotipo = $organizacion->logotipo;
                         $empresa = $organizacion->empresa;
                     @endphp

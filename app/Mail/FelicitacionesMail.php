@@ -11,8 +11,11 @@ class FelicitacionesMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $nombre;
+
     protected $correodestinatario;
+
     protected $imgpastel;
+
     protected $imgtab;
 
     /**
@@ -37,13 +40,13 @@ class FelicitacionesMail extends Mailable
     public function build()
     {
         return $this->from(env('# MAIL_FROM_ADDRESS'), env('# MAIL_FROM_NAME'))
-        ->subject('Feliz Cumpleaños')
-        ->view(
-            'mails.felicitaciones',
-            ['empleado'=>$this->nombre,
-            'pastel'=>$this->imgpastel,
-            'tabantaj'=>$this->imgtab,
-        ]
-        );
+            ->subject('Feliz Cumpleaños')
+            ->view(
+                'mails.felicitaciones',
+                ['empleado' => $this->nombre,
+                    'pastel' => $this->imgpastel,
+                    'tabantaj' => $this->imgtab,
+                ]
+            );
     }
 }

@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EvaluacionRequisitoLegal extends Model
+class EvaluacionRequisitoLegal extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'evaluacion_requisito_legal';
 
     protected $dates = [
@@ -18,6 +18,7 @@ class EvaluacionRequisitoLegal extends Model
         'updated_at',
         'deleted_at',
     ];
+
     protected $fillable = [
         'id',
         'cumplerequisito',

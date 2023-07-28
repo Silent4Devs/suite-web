@@ -19,8 +19,8 @@ class UpdateMinutasaltadireccionRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'fechareunion'    => [
-                'date_format:' . config('panel.date_format'),
+            'fechareunion' => [
+                'date_format:'.config('panel.date_format'),
                 'nullable',
             ],
         ];

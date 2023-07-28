@@ -23,7 +23,6 @@ use App\Models\EvidenciasQuejasClientesCerrado;
 use App\Models\EvidenciasSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\Mejoras;
-use App\Models\Organizacion;
 use App\Models\Proceso;
 use App\Models\Quejas;
 use App\Models\QuejasCliente;
@@ -33,80 +32,80 @@ use App\Models\SubcategoriaIncidente;
 use App\Models\Sugerencias;
 use App\Models\TimesheetCliente;
 use App\Models\TimesheetProyecto;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
+use Illuminate\Support\Facades\Gate; //mejora apunta a este modelo
+use Illuminate\Support\Facades\Mail;
 
 class DeskController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index()
     {
         abort_if(Gate::denies('centro_de_atencion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $incidentes_seguridad = IncidentesSeguridad::where('archivado', IncidentesSeguridad::NO_ARCHIVADO)->orderBy('id')->get();
-        $riesgos_identificados = RiesgoIdentificado::orderBy('id')->get();
-        $quejas = Quejas::orderBy('id')->get();
-        $denuncias = Denuncias::orderBy('id')->get();
-        $mejoras = Mejoras::orderBy('id')->get();
-        $sugerencias = Sugerencias::orderBy('id')->get();
+        $incidentes_seguridad = IncidentesSeguridad::getAll()->where('archivado', IncidentesSeguridad::NO_ARCHIVADO);
+        $riesgos_identificados = RiesgoIdentificado::getAll();
+        $quejas = Quejas::getAll();
+        $denuncias = Denuncias::getAll();
+        $mejoras = Mejoras::getAll();
+        $sugerencias = Sugerencias::getAll();
+        $incidentesSeguridad = IncidentesSeguridad::getAll();
+        $quejasClientes = QuejasCliente::getAll();
 
-        $total_seguridad = IncidentesSeguridad::get()->count();
-        $nuevos_seguridad = IncidentesSeguridad::where('estatus', 'Sin atender')->get()->count();
-        $en_curso_seguridad = IncidentesSeguridad::where('estatus', 'En curso')->get()->count();
-        $en_espera_seguridad = IncidentesSeguridad::where('estatus', 'En espera')->get()->count();
-        $cerrados_seguridad = IncidentesSeguridad::where('estatus', 'Cerrado')->get()->count();
-        $cancelados_seguridad = IncidentesSeguridad::where('estatus', 'No procedente')->get()->count();
+        $total_seguridad = $incidentesSeguridad->count();
+        $nuevos_seguridad = $incidentesSeguridad->where('estatus', 'Sin atender')->count();
+        $en_curso_seguridad = $incidentesSeguridad->where('estatus', 'En curso')->count();
+        $en_espera_seguridad = $incidentesSeguridad->where('estatus', 'En espera')->count();
+        $cerrados_seguridad = $incidentesSeguridad->where('estatus', 'Cerrado')->count();
+        $cancelados_seguridad = $incidentesSeguridad->where('estatus', 'No procedente')->count();
 
-        $total_riesgos = RiesgoIdentificado::get()->count();
-        $nuevos_riesgos = RiesgoIdentificado::where('estatus', 'nuevo')->get()->count();
-        $en_curso_riesgos = RiesgoIdentificado::where('estatus', 'en curso')->get()->count();
-        $en_espera_riesgos = RiesgoIdentificado::where('estatus', 'en espera')->get()->count();
-        $cerrados_riesgos = RiesgoIdentificado::where('estatus', 'cerrado')->get()->count();
-        $cancelados_riesgos = RiesgoIdentificado::where('estatus', 'cancelado')->get()->count();
+        $total_riesgos = $riesgos_identificados->count();
+        $nuevos_riesgos = $riesgos_identificados->where('estatus', 'nuevo')->count();
+        $en_curso_riesgos = $riesgos_identificados->where('estatus', 'en curso')->count();
+        $en_espera_riesgos = $riesgos_identificados->where('estatus', 'en espera')->count();
+        $cerrados_riesgos = $riesgos_identificados->where('estatus', 'cerrado')->count();
+        $cancelados_riesgos = $riesgos_identificados->where('estatus', 'cancelado')->count();
 
-        $total_quejas = Quejas::get()->count();
-        $nuevos_quejas = Quejas::where('estatus', 'nuevo')->get()->count();
-        $en_curso_quejas = Quejas::where('estatus', 'en curso')->get()->count();
-        $en_espera_quejas = Quejas::where('estatus', 'en espera')->get()->count();
-        $cerrados_quejas = Quejas::where('estatus', 'cerrado')->get()->count();
-        $cancelados_quejas = Quejas::where('estatus', 'cancelado')->get()->count();
+        $total_quejas = $quejas->count();
+        $nuevos_quejas = $quejas->where('estatus', 'nuevo')->count();
+        $en_curso_quejas = $quejas->where('estatus', 'en curso')->count();
+        $en_espera_quejas = $quejas->where('estatus', 'en espera')->count();
+        $cerrados_quejas = $quejas->where('estatus', 'cerrado')->count();
+        $cancelados_quejas = $quejas->where('estatus', 'cancelado')->count();
 
-        $total_quejasClientes = QuejasCliente::get()->count();
-        $nuevos_quejasClientes = QuejasCliente::where('estatus', 'Sin atender')->get()->count();
-        $en_curso_quejasClientes = QuejasCliente::where('estatus', 'En curso')->get()->count();
-        $en_espera_quejasClientes = QuejasCliente::where('estatus', 'En espera')->get()->count();
-        $cerrados_quejasClientes = QuejasCliente::where('estatus', 'Cerrado')->get()->count();
-        $cancelados_quejasClientes = QuejasCliente::where('estatus', 'No procedente')->get()->count();
+        $total_quejasClientes = $quejasClientes->count();
+        $nuevos_quejasClientes = $quejasClientes->where('estatus', 'Sin atender')->count();
+        $en_curso_quejasClientes = $quejasClientes->where('estatus', 'En curso')->count();
+        $en_espera_quejasClientes = $quejasClientes->where('estatus', 'En espera')->count();
+        $cerrados_quejasClientes = $quejasClientes->where('estatus', 'Cerrado')->count();
+        $cancelados_quejasClientes = $quejasClientes->where('estatus', 'No procedente')->count();
 
-        $total_denuncias = Denuncias::get()->count();
-        $nuevos_denuncias = Denuncias::where('estatus', 'nuevo')->get()->count();
-        $en_curso_denuncias = Denuncias::where('estatus', 'en curso')->get()->count();
-        $en_espera_denuncias = Denuncias::where('estatus', 'en espera')->get()->count();
-        $cerrados_denuncias = Denuncias::where('estatus', 'cerrado')->get()->count();
-        $cancelados_denuncias = Denuncias::where('estatus', 'cancelado')->get()->count();
+        $total_denuncias = $denuncias->count();
+        $nuevos_denuncias = $denuncias->where('estatus', 'nuevo')->count();
+        $en_curso_denuncias = $denuncias->where('estatus', 'en curso')->count();
+        $en_espera_denuncias = $denuncias->where('estatus', 'en espera')->count();
+        $cerrados_denuncias = $denuncias->where('estatus', 'cerrado')->count();
+        $cancelados_denuncias = $denuncias->where('estatus', 'cancelado')->count();
 
-        $total_mejoras = Mejoras::get()->count();
-        $nuevos_mejoras = Mejoras::where('estatus', 'nuevo')->get()->count();
-        $en_curso_mejoras = Mejoras::where('estatus', 'en curso')->get()->count();
-        $en_espera_mejoras = Mejoras::where('estatus', 'en espera')->get()->count();
-        $cerrados_mejoras = Mejoras::where('estatus', 'cerrado')->get()->count();
-        $cancelados_mejoras = Mejoras::where('estatus', 'cancelado')->get()->count();
+        $total_mejoras = $mejoras->count();
+        $nuevos_mejoras = $mejoras->where('estatus', 'nuevo')->count();
+        $en_curso_mejoras = $mejoras->where('estatus', 'en curso')->count();
+        $en_espera_mejoras = $mejoras->where('estatus', 'en espera')->count();
+        $cerrados_mejoras = $mejoras->where('estatus', 'cerrado')->count();
+        $cancelados_mejoras = $mejoras->where('estatus', 'cancelado')->count();
 
-        $total_sugerencias = Sugerencias::get()->count();
-        $nuevos_sugerencias = Sugerencias::where('estatus', 'nuevo')->get()->count();
-        $en_curso_sugerencias = Sugerencias::where('estatus', 'en curso')->get()->count();
-        $en_espera_sugerencias = Sugerencias::where('estatus', 'en espera')->get()->count();
-        $cerrados_sugerencias = Sugerencias::where('estatus', 'cerrado')->get()->count();
-        $cancelados_sugerencias = Sugerencias::where('estatus', 'cancelado')->get()->count();
+        $total_sugerencias = $sugerencias->count();
+        $nuevos_sugerencias = $sugerencias->where('estatus', 'nuevo')->count();
+        $en_curso_sugerencias = $sugerencias->where('estatus', 'en curso')->count();
+        $en_espera_sugerencias = $sugerencias->where('estatus', 'en espera')->count();
+        $cerrados_sugerencias = $sugerencias->where('estatus', 'cerrado')->count();
+        $cancelados_sugerencias = $sugerencias->where('estatus', 'cancelado')->count();
 
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.desk.index', compact(
@@ -182,15 +181,15 @@ class DeskController extends Controller
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'seguridad')->where('seguridad_id', intval($id_incidente))->first();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $subcategorias = SubcategoriaIncidente::get();
 
@@ -202,7 +201,7 @@ class DeskController extends Controller
     public function updateSeguridad(Request $request, $id_incidente)
     {
         abort_if(Gate::denies('centro_atencion_incidentes_de_seguridad_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-    //    dd($request->all());
+        //    dd($request->all());
         $incidentesSeguridad = IncidentesSeguridad::findOrfail(intval($id_incidente));
         // dd( $incidentesSeguridad);
 
@@ -308,7 +307,7 @@ class DeskController extends Controller
 
     public function archivoSeguridad()
     {
-        $incidentes_seguridad_archivados = IncidentesSeguridad::where('archivado', IncidentesSeguridad::ARCHIVADO)->get();
+        $incidentes_seguridad_archivados = IncidentesSeguridad::getAll()->where('archivado', IncidentesSeguridad::ARCHIVADO);
 
         return view('admin.desk.seguridad.archivo', compact('incidentes_seguridad_archivados'));
     }
@@ -371,15 +370,15 @@ class DeskController extends Controller
         if (is_null($analisis)) {
             $analisis = collect();
         }
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.desk.riesgos.edit', compact('riesgos', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
@@ -451,7 +450,7 @@ class DeskController extends Controller
 
     public function archivoRiesgo()
     {
-        $riesgos = RiesgoIdentificado::where('archivado', true)->get();
+        $riesgos = RiesgoIdentificado::getAll()->where('archivado', true);
 
         return view('admin.desk.riesgos.archivo', compact('riesgos'));
     }
@@ -482,17 +481,17 @@ class DeskController extends Controller
 
         $quejas = Quejas::findOrfail(intval($id_quejas))->load('evidencias_quejas');
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'queja')->where('quejas_id', intval($id_quejas))->first();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $sedes = Sede::get();
+        $sedes = Sede::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.desk.quejas.edit', compact('quejas', 'procesos', 'empleados', 'areas', 'activos', 'sedes', 'analisis'));
     }
@@ -569,7 +568,7 @@ class DeskController extends Controller
 
     public function archivoQueja()
     {
-        $quejas = Quejas::where('archivado', true)->get();
+        $quejas = Quejas::getAll()->where('archivado', true);
 
         return view('admin.desk.quejas.archivo', compact('quejas'));
     }
@@ -602,9 +601,9 @@ class DeskController extends Controller
 
         $denuncias = Denuncias::findOrfail(intval($id_denuncias));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.desk.denuncias.edit', compact('denuncias', 'activos', 'empleados', 'analisis'));
     }
@@ -705,13 +704,13 @@ class DeskController extends Controller
 
         $mejoras = Mejoras::findOrfail(intval($id_mejoras));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'mejora')->where('mejoras_id', intval($id_mejoras))->first();
 
@@ -817,13 +816,13 @@ class DeskController extends Controller
 
         $sugerencias = Sugerencias::findOrfail(intval($id_sugerencias));
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         $analisis = AnalisisSeguridad::where('formulario', '=', 'sugerencia')->where('sugerencias_id', intval($id_sugerencias))->first();
 
@@ -897,17 +896,17 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_clientes_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $areas = Area::get();
+        $areas = Area::getAll();
 
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
 
-        $proyectos = TimesheetProyecto::get();
+        $proyectos = TimesheetProyecto::getAll();
 
         return view('admin.desk.clientes.quejasclientes', compact('areas', 'procesos', 'empleados', 'activos', 'clientes', 'proyectos'));
     }
@@ -1013,19 +1012,19 @@ class DeskController extends Controller
 
         $quejasClientes = QuejasCliente::findOrfail(intval($id_quejas))->load('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos');
         // dd($quejasClientes);
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
-        $activos = Activo::get();
+        $activos = Activo::getAll();
 
         $analisis = AnalisisQuejasClientes::where('formulario', '=', 'quejaCliente')->where('quejas_clientes_id', intval($id_quejas))->first();
         // dd($analisis);
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         $empleados = Empleado::orderBy('name')->get();
 
-        $clientes = TimesheetCliente::get();
+        $clientes = TimesheetCliente::getAll();
 
-        $proyectos = TimesheetProyecto::get();
+        $proyectos = TimesheetProyecto::getAll();
 
         $cierre = EvidenciasQuejasClientesCerrado::where('quejas_clientes_id', '=', $quejasClientes->id)->get();
 
@@ -1094,7 +1093,7 @@ class DeskController extends Controller
             'realizar_accion' => $realizar_accion,
             'cual_accion' => $request->cual_accion ? $request->cual_accion : $quejasClientes->cual_accion,
             'desea_levantar_ac' => $desea_levantar_ac,
-            'acciones_tomara_responsable' =>  $request->acciones_tomara_responsable ? $request->acciones_tomara_responsable : $quejasClientes->acciones_tomara_responsable,
+            'acciones_tomara_responsable' => $request->acciones_tomara_responsable ? $request->acciones_tomara_responsable : $quejasClientes->acciones_tomara_responsable,
             'fecha_limite' => $request->fecha_limite ? $request->fecha_limite : $quejasClientes->fecha_limite,
             'comentarios_atencion' => $request->comentarios_atencion ? $request->comentarios_atencion : $quejasClientes->comentarios_atencion,
             'responsable_sgi_id' => $request->responsable_sgi_id ? $request->responsable_sgi_id : $quejasClientes->responsable_sgi_id,
@@ -1107,7 +1106,7 @@ class DeskController extends Controller
             'cumplio_fecha' => $cumplio_fecha,
             'notificar_responsable' => $notificar_responsable,
             'notificar_registro_queja' => $notificar_registro_queja,
-            'porque_no_cierre_ticket' =>  $request->porque_no_cierre_ticket ? $request->porque_no_cierre_ticket : $quejasClientes->porque_no_cierre_ticket,
+            'porque_no_cierre_ticket' => $request->porque_no_cierre_ticket ? $request->porque_no_cierre_ticket : $quejasClientes->porque_no_cierre_ticket,
             'notificar_atencion_queja_no_aprobada' => $notificar_atencion_queja_no_aprobada,
         ]);
 
@@ -1342,7 +1341,7 @@ class DeskController extends Controller
 
     public function archivoQuejaClientes()
     {
-        $quejas = QuejasCliente::where('archivado', true)->get();
+        $quejas = QuejasCliente::getAll()->where('archivado', true);
 
         return view('admin.desk.clientes.archivo', compact('quejas'));
     }
@@ -1375,65 +1374,67 @@ class DeskController extends Controller
     {
         abort_if(Gate::denies('centro_atencion_quejas_cliente_dashboard'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quejasClientesSaA = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Alta')->count();
-        $quejasClientesSaM = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Media')->count();
-        $quejasClientesSaB = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', 'Baja')->count();
-        $quejasClientesSaSd = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Sin atender')->where('prioridad', null)->count();
+        $quejasClientes = QuejasCliente::getAll();
 
-        $quejasClientesEcA = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'En curso')->where('prioridad', 'Alta')->count();
-        $quejasClientesEcM = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'En curso')->where('prioridad', 'Media')->count();
-        $quejasClientesEcB = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'En curso')->where('prioridad', 'Baja')->count();
-        $quejasClientesEcSd = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'En curso')->where('prioridad', null)->count();
+        $quejasClientesSaA = $quejasClientes->where('estatus', 'Sin atender')->where('prioridad', 'Alta')->count();
+        $quejasClientesSaM = $quejasClientes->where('estatus', 'Sin atender')->where('prioridad', 'Media')->count();
+        $quejasClientesSaB = $quejasClientes->where('estatus', 'Sin atender')->where('prioridad', 'Baja')->count();
+        $quejasClientesSaSd = $quejasClientes->where('estatus', 'Sin atender')->where('prioridad', null)->count();
 
-        $quejasClientesEeA = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'En espera')->where('prioridad', 'Alta')->count();
-        $quejasClientesEeM = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'En espera')->where('prioridad', 'Media')->count();
-        $quejasClientesEeB = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'En espera')->where('prioridad', 'Baja')->count();
-        $quejasClientesEeSd = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'En espera')->where('prioridad', null)->count();
+        $quejasClientesEcA = $quejasClientes->where('estatus', 'En curso')->where('prioridad', 'Alta')->count();
+        $quejasClientesEcM = $quejasClientes->where('estatus', 'En curso')->where('prioridad', 'Media')->count();
+        $quejasClientesEcB = $quejasClientes->where('estatus', 'En curso')->where('prioridad', 'Baja')->count();
+        $quejasClientesEcSd = $quejasClientes->where('estatus', 'En curso')->where('prioridad', null)->count();
 
-        $quejasClientesCA = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Cerrado')->where('prioridad', 'Alta')->count();
-        $quejasClientesCM = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Cerrado')->where('prioridad', 'Media')->count();
-        $quejasClientesCB = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Cerrado')->where('prioridad', 'Baja')->count();
-        $quejasClientesCSd = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'Cerrado')->where('prioridad', null)->count();
+        $quejasClientesEeA = $quejasClientes->where('estatus', 'En espera')->where('prioridad', 'Alta')->count();
+        $quejasClientesEeM = $quejasClientes->where('estatus', 'En espera')->where('prioridad', 'Media')->count();
+        $quejasClientesEeB = $quejasClientes->where('estatus', 'En espera')->where('prioridad', 'Baja')->count();
+        $quejasClientesEeSd = $quejasClientes->where('estatus', 'En espera')->where('prioridad', null)->count();
 
-        $quejasClientesCanA = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'No procedente')->where('prioridad', 'Alta')->count();
-        $quejasClientesCanM = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'No procedente')->where('prioridad', 'Media')->count();
-        $quejasClientesCanB = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'No procedente')->where('prioridad', 'Baja')->count();
-        $quejasClientesCanSd = QuejasCliente::select('id', 'prioridad', 'estatus')->where('estatus', 'No procedente')->where('prioridad', null)->count();
+        $quejasClientesCA = $quejasClientes->where('estatus', 'Cerrado')->where('prioridad', 'Alta')->count();
+        $quejasClientesCM = $quejasClientes->where('estatus', 'Cerrado')->where('prioridad', 'Media')->count();
+        $quejasClientesCB = $quejasClientes->where('estatus', 'Cerrado')->where('prioridad', 'Baja')->count();
+        $quejasClientesCSd = $quejasClientes->where('estatus', 'Cerrado')->where('prioridad', null)->count();
+
+        $quejasClientesCanA = $quejasClientes->where('estatus', 'No procedente')->where('prioridad', 'Alta')->count();
+        $quejasClientesCanM = $quejasClientes->where('estatus', 'No procedente')->where('prioridad', 'Media')->count();
+        $quejasClientesCanB = $quejasClientes->where('estatus', 'No procedente')->where('prioridad', 'Baja')->count();
+        $quejasClientesCanSd = $quejasClientes->where('estatus', 'No procedente')->where('prioridad', null)->count();
 
         $quejaEstatusAltaArray = [$quejasClientesSaA, $quejasClientesEcA, $quejasClientesEeA, $quejasClientesCA, $quejasClientesCanA];
         $quejaEstatusMediaArray = [$quejasClientesSaM, $quejasClientesEcM, $quejasClientesEeM, $quejasClientesCM, $quejasClientesCanM];
         $quejaEstatusBajaArray = [$quejasClientesSaB, $quejasClientesEcB, $quejasClientesEeB, $quejasClientesCB, $quejasClientesCanB];
         $quejaEstatusSinDArray = [$quejasClientesSaSd, $quejasClientesEcSd, $quejasClientesEeSd, $quejasClientesCSd, $quejasClientesCanSd];
 
-        $quejaPrioridadA = QuejasCliente::select('id', 'prioridad')->where('prioridad', 'Alta')->count();
-        $quejaPrioridadM = QuejasCliente::select('id', 'prioridad')->where('prioridad', 'Media')->count();
-        $quejaPrioridadB = QuejasCliente::select('id', 'prioridad')->where('prioridad', 'Baja')->count();
+        $quejaPrioridadA = $quejasClientes->where('prioridad', 'Alta')->count();
+        $quejaPrioridadM = $quejasClientes->where('prioridad', 'Media')->count();
+        $quejaPrioridadB = $quejasClientes->where('prioridad', 'Baja')->count();
 
-        $quejaAcSolicitada = QuejasCliente::select('id', 'desea_levantar_ac')->where('desea_levantar_ac', true)->count();
-        $quejaAcNoSolicitada = QuejasCliente::select('id', 'desea_levantar_ac')->where('desea_levantar_ac', false)->count();
+        $quejaAcSolicitada = $quejasClientes->where('desea_levantar_ac', true)->count();
+        $quejaAcNoSolicitada = $quejasClientes->where('desea_levantar_ac', false)->count();
 
-        $quejaCanalCorreoE = QuejasCliente::select('id', 'canal')->where('canal', 'Correo electronico')->count();
-        $quejaCanalTelefono = QuejasCliente::select('id', 'canal')->where('canal', 'Via telefonica')->count();
-        $quejaCanalPresencial = QuejasCliente::select('id', 'canal')->where('canal', 'Presencial')->count();
-        $quejaCanalRemota = QuejasCliente::select('id', 'canal')->where('canal', 'Remota')->count();
-        $quejaCanalOficio = QuejasCliente::select('id', 'canal')->where('canal', 'Oficio')->count();
-        $quejaCanalOtro = QuejasCliente::select('id', 'canal')->where('canal', 'Otro')->count();
+        $quejaCanalCorreoE = $quejasClientes->where('canal', 'Correo electronico')->count();
+        $quejaCanalTelefono = $quejasClientes->where('canal', 'Via telefonica')->count();
+        $quejaCanalPresencial = $quejasClientes->where('canal', 'Presencial')->count();
+        $quejaCanalRemota = $quejasClientes->where('canal', 'Remota')->count();
+        $quejaCanalOficio = $quejasClientes->where('canal', 'Oficio')->count();
+        $quejaCanalOtro = $quejasClientes->where('canal', 'Otro')->count();
 
-        $quejaCategoriaServNoP = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Servicio no prestado')->count();
-        $quejaCategoriaRetrasoP = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Retraso en la prestacion')->count();
-        $quejaCategoriaEntreNoC = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Entregable no conforme')->count();
-        $quejaCategoriaIncuComC = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Incumplimiento de los compromisos contractuales')->count();
-        $quejasCategoriaIncuNivServ = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Incumplimiento de los niveles de servicio')->count();
-        $quejasCategoriaNegPresServ = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Negativa de prestación del servicio')->count();
-        $quejasCategoriaIncFact = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Incorrecta facturacion')->count();
-        $quejasCategoriaOtro = QuejasCliente::select('id', 'categoria_queja')->where('categoria_queja', 'Otro')->count();
+        $quejaCategoriaServNoP = $quejasClientes->where('categoria_queja', 'Servicio no prestado')->count();
+        $quejaCategoriaRetrasoP = $quejasClientes->where('categoria_queja', 'Retraso en la prestacion')->count();
+        $quejaCategoriaEntreNoC = $quejasClientes->where('categoria_queja', 'Entregable no conforme')->count();
+        $quejaCategoriaIncuComC = $quejasClientes->where('categoria_queja', 'Incumplimiento de los compromisos contractuales')->count();
+        $quejasCategoriaIncuNivServ = $quejasClientes->where('categoria_queja', 'Incumplimiento de los niveles de servicio')->count();
+        $quejasCategoriaNegPresServ = $quejasClientes->where('categoria_queja', 'Negativa de prestación del servicio')->count();
+        $quejasCategoriaIncFact = $quejasClientes->where('categoria_queja', 'Incorrecta facturacion')->count();
+        $quejasCategoriaOtro = $quejasClientes->where('categoria_queja', 'Otro')->count();
 
-        $quejaCumplioFecha = QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', true)->count();
-        $quejaNoCumplioFecha = QuejasCliente::select('id', 'cumplio_fecha')->where('cumplio_fecha', false)->count();
+        $quejaCumplioFecha = $quejasClientes->where('cumplio_fecha', true)->count();
+        $quejaNoCumplioFecha = $quejasClientes->where('cumplio_fecha', false)->count();
 
         $areasCollect = [];
         $areas = [];
-        $ticketPorArea = QuejasCliente::select('area_quejado')->get();
+        $ticketPorArea = $quejasClientes;
         foreach ($ticketPorArea as $ticketArea) {
             $areas = $ticketArea->area_quejado;
             $areasExplode = explode(',', $areas);
@@ -1451,7 +1452,7 @@ class DeskController extends Controller
         }, ARRAY_FILTER_USE_KEY);
 
         $procesosCollect = [];
-        $ticketPorProceso = QuejasCliente::select('proceso_quejado')->get();
+        $ticketPorProceso = $quejasClientes;
 
         foreach ($ticketPorProceso as $ticketProceso) {
             $procesos = $ticketProceso->proceso_quejado;
@@ -1475,7 +1476,7 @@ class DeskController extends Controller
         $proyectosLabel = [];
         foreach ($proyectos as $proyecto) {
             // dd($proyecto);
-            $cantidad = QuejasCliente::where('proyectos_id', $proyecto->id)->count();
+            $cantidad = $quejasClientes->where('proyectos_id', $proyecto->id)->count();
             array_push($proyectosLabel, [
                 'nombre' => $proyecto->proyecto,
                 'cliente' => $proyecto->cliente->nombre,
@@ -1487,19 +1488,19 @@ class DeskController extends Controller
         $clientes = TimesheetCliente::select('nombre', 'id')->find($quejasclientes);
         $clientesLabel = [];
         foreach ($clientes as $cliente) {
-            $cantidadClientes = QuejasCliente::where('cliente_id', $cliente->id)->count();
+            $cantidadClientes = $quejasClientes->where('cliente_id', $cliente->id)->count();
             array_push($clientesLabel, [
                 'nombre' => $cliente->nombre,
                 'cantidad' => $cantidadClientes,
             ]);
         }
 
-        $total_quejasClientes = QuejasCliente::get()->count();
-        $nuevos_quejasClientes = QuejasCliente::where('estatus', 'Sin atender')->get()->count();
-        $en_curso_quejasClientes = QuejasCliente::where('estatus', 'En curso')->get()->count();
-        $en_espera_quejasClientes = QuejasCliente::where('estatus', 'En espera')->get()->count();
-        $cerrados_quejasClientes = QuejasCliente::where('estatus', 'Cerrado')->get()->count();
-        $cancelados_quejasClientes = QuejasCliente::where('estatus', 'No procedente')->get()->count();
+        $total_quejasClientes = $quejasClientes->count();
+        $nuevos_quejasClientes = $quejasClientes->where('estatus', 'Sin atender')->count();
+        $en_curso_quejasClientes = $quejasClientes->where('estatus', 'En curso')->count();
+        $en_espera_quejasClientes = $quejasClientes->where('estatus', 'En espera')->count();
+        $cerrados_quejasClientes = $quejasClientes->where('estatus', 'Cerrado')->count();
+        $cancelados_quejasClientes = $quejasClientes->where('estatus', 'No procedente')->count();
 
         return view('admin.desk.clientes.dashboard', compact(
             'ticketPorArea',
@@ -1677,8 +1678,8 @@ class DeskController extends Controller
 
             ],
             [
-                'porque_no_cumplio_responsable' =>  'El campo por qué no se cumplieron las acciones es obligatorio',
-                'porque_no_cierre_ticket' =>  'El campo por qué no se cierra el ticket es obligatorio',
+                'porque_no_cumplio_responsable' => 'El campo por qué no se cumplieron las acciones es obligatorio',
+                'porque_no_cierre_ticket' => 'El campo por qué no se cierra el ticket es obligatorio',
             ]
         );
     }

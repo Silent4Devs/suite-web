@@ -78,7 +78,7 @@ class PanelDeclaracionController extends Controller
     public function edit($id)
     {
         $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
-        $controles = DeclaracionAplicabilidad::get();
+        $controles = DeclaracionAplicabilidad::getAll();
 
         return view('admin.panelDeclaracion.edit', compact('empleados', 'controles'));
     }
@@ -110,9 +110,9 @@ class PanelDeclaracionController extends Controller
         if ($readyExistResponsable) {
             return response()->json(['estatus' => 'ya_es_aprobador', 'message' => 'Ya fue asignado aprobador'], 200);
         } else {
-            if (!$existResponsable) {
+            if (! $existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsable::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
-                if (!$exists) {
+                if (! $exists) {
                     // dd($responsable);
                     DeclaracionAplicabilidadResponsable::updateOrCreate([
                         'declaracion_id' => $declaracion,
@@ -165,9 +165,9 @@ class PanelDeclaracionController extends Controller
         if ($readyExistResponsable) {
             return response()->json(['estatus' => 'ya_es_responsable', 'message' => 'Ya fue asignado responsable'], 200);
         } else {
-            if (!$existAprobador) {
+            if (! $existAprobador) {
                 $exists = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $declaracion)->where('aprobadores_id', $aprobador)->exists();
-                if (!$exists) {
+                if (! $exists) {
                     DeclaracionAplicabilidadAprobadores::updateOrCreate(
                         [
                             'declaracion_id' => $declaracion,
@@ -216,7 +216,7 @@ class PanelDeclaracionController extends Controller
             $destinatarios = DeclaracionAplicabilidadResponsable::distinct('empleado_id')->pluck('empleado_id')->toArray();
         } elseif ($request->enviarNoNotificados) {
             $destinatarios = DeclaracionAplicabilidadResponsable::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
-        // dd($destinatarios);
+            // dd($destinatarios);
         } else {
             $destinatarios = json_decode($request->responsables);
         }

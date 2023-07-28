@@ -13,7 +13,7 @@ class ReportesSemanas extends Component
 
     public function render()
     {
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $timeSheetEmpleados = collect();
         $timeSheetHorasCollection = collect();
 
@@ -26,29 +26,29 @@ class ReportesSemanas extends Component
                     $existe_proyecto = in_array($horas->proyecto_id, array_column($timeSheetHorasCollection->toArray(), 'proyecto_id'));
                     $existe_tarea = in_array($horas->tarea_id, array_column($timeSheetHorasCollection->toArray(), 'tarea_id'));
                     $existe_fecha_timesheet = in_array($timesheet->semana_text, array_column($timeSheetHorasCollection->toArray(), 'timesheet'));
-                    if (!$existe_fecha_timesheet) {
-                        if (!$existe_proyecto) {
-                            if (!$existe_tarea) {
+                    if (! $existe_fecha_timesheet) {
+                        if (! $existe_proyecto) {
+                            if (! $existe_tarea) {
                                 $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
                             } else {
                                 $timeSheetHorasCollection = $this->addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas);
                             }
                         } else {
-                            if (!$existe_tarea) {
+                            if (! $existe_tarea) {
                                 $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
                             } else {
                                 $timeSheetHorasCollection = $this->addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas);
                             }
                         }
                     } else {
-                        if (!$existe_proyecto) {
-                            if (!$existe_tarea) {
+                        if (! $existe_proyecto) {
+                            if (! $existe_tarea) {
                                 $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
                             } else {
                                 $timeSheetHorasCollection = $this->addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas);
                             }
                         } else {
-                            if (!$existe_tarea) {
+                            if (! $existe_tarea) {
                                 $this->pushInformationTimesheet($timeSheetHorasCollection, $empleado, $timesheet, $sumatoria, $horas);
                             } else {
                                 $timeSheetHorasCollection = $this->addHoursToExistentTimeSheet($timeSheetHorasCollection, $sumatoria, $horas);

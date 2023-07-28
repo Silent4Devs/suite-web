@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class TablaImpacto.
@@ -13,12 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $impacto
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Collection|NivelesImpacto[] $niveles_impactos
  * @property Collection|TipoImpacto[] $tipo_impactos
  */
-class TablaImpacto extends Model
+class TablaImpacto extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'tabla_impacto';
 
     protected $fillable = [

@@ -16,15 +16,15 @@ class NivelesImpactoController extends Controller
             $color = $request->color;
             // dd($request->all());
             $niveles = NivelesImpacto::create([
-                'nivel'=>$nivel,
-                'clasificacion'=>$clasificacion,
-                'color'=>$color,
+                'nivel' => $nivel,
+                'clasificacion' => $clasificacion,
+                'color' => $color,
 
             ]);
             if ($niveles) {
-                return response()->json(['success'=>true, 'nivelimpacto'=>$niveles]);
+                return response()->json(['success' => true, 'nivelimpacto' => $niveles]);
             } else {
-                return response()->json(['success'=>false]);
+                return response()->json(['success' => false]);
             }
         }
     }

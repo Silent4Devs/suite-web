@@ -14,8 +14,11 @@ class RegistroMejoraEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $registro_mejora;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     /**

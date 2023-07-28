@@ -14,10 +14,10 @@ class GanttController extends Controller
     public function index()
     {
         $planbase = PlanBaseActividade::get();
-        $responsable = User::get();
+        $responsable = User::getAll();
         $responsablenom = User::select('name')->where('id', '=', '3');
         //dd($planbase, $responsable, $responsablenom);
-        return view('admin.gantt.index', compact('planbase', 'responsable', ))
+        return view('admin.gantt.index', compact('planbase', 'responsable'))
             ->with('planbases', $planbase);
     }
 

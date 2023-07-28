@@ -7,13 +7,17 @@ use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class PlanImplementacion extends Model
+class PlanImplementacion extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'plan_implementacion_9001';
+
     protected $appends = ['roles', 'resources'];
+
     protected $fillable = [
         'tasks',
         'canAdd',
@@ -52,7 +56,7 @@ class PlanImplementacion extends Model
 
     public function getResourcesAttribute()
     {
-        $empleado = Empleado::alta()->get();
+        $empleado = Empleado::getaltaAll();
 
         return $empleado;
     }

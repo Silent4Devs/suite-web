@@ -11,16 +11,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Minutasaltadireccion extends Model implements HasMedia
+class Minutasaltadireccion extends Model implements HasMedia, Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     // ESTATUS MINUTAS
     const EN_ELABORACION = 1;
+
     const EN_REVISION = 2;
+
     const PUBLICADO = 3;
+
     const DOCUMENTO_RECHAZADO = 4;
+
     const DOCUMENTO_OBSOLETO = 5;
 
     protected $appends = [

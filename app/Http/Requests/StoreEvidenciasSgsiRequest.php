@@ -28,11 +28,11 @@ class StoreEvidenciasSgsiRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'area_id'   => [
+            'area_id' => [
                 'string',
                 'required',
             ],
-            'fechadocumento'    => [
+            'fechadocumento' => [
                 'date',
                 'required',
             ],

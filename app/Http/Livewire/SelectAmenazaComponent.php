@@ -8,8 +8,11 @@ use Livewire\Component;
 class SelectAmenazaComponent extends Component
 {
     public $nombre;
+
     public $categoria;
+
     public $descripcion;
+
     protected $listeners = ['render' => 'render'];
 
     public function render()

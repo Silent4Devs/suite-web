@@ -107,7 +107,7 @@
         <div class="mt-4 row justify-content-center">
             <div class="card col-sm-12 col-md-10">
                 <div class="card-body">
-                    <a href="{{ route("admin.auditoria-anuals.index") }}" class="btn_cancelar">Regresar</a>
+                    <a href="{{ route('admin.auditoria-anuals.index') }}" class="btn_cancelar">Regresar</a>
                     <button class="btn btn-danger print-none" style="position: absolute; right:20px;"
                         onclick="javascript:window.print()">
                         <i class="fas fa-print"></i>
@@ -116,7 +116,7 @@
 
                     @php
                         use App\Models\Organizacion;
-                        $organizacion = Organizacion::first();
+                        $organizacion = Organizacion::getFirst();
                         $logotipo = $organizacion->logotipo;
                         $empresa = $organizacion->empresa;
                     @endphp
@@ -147,13 +147,13 @@
 
                     <div style="color:#18183c">
                         <span class="p-1" style="text-align:center">Fecha Inicio:</span>
-                        <strong>{{ $auditoriaAnual->fechafin ? \Carbon\Carbon::parse($auditoriaAnual->fechainicio)->format('d-m-Y'): 'Sin registro' }}</strong>
+                        <strong>{{ $auditoriaAnual->fechafin ? \Carbon\Carbon::parse($auditoriaAnual->fechainicio)->format('d-m-Y') : 'Sin registro' }}</strong>
                         </span>
                     </div>
 
                     <div style="color:#18183c">
                         <span class="p-1" style="text-align:center">Fecha Fin:</span>
-                        <strong>{{ $auditoriaAnual->fechafin ? \Carbon\Carbon::parse( $auditoriaAnual->fechafin)->format('d-m-Y'): 'Sin registro' }}</strong>
+                        <strong>{{ $auditoriaAnual->fechafin ? \Carbon\Carbon::parse($auditoriaAnual->fechafin)->format('d-m-Y') : 'Sin registro' }}</strong>
                         </span>
                     </div>
 
@@ -161,13 +161,13 @@
                         <span style="font-size: 17px; font-weight: bold;">Objetivo de la Auditoría</span>
                     </div>
 
-                    <span style="text-align: justify; color:#18183c;">{!!$auditoriaAnual->objetivo ?  $auditoriaAnual->objetivo : 'Sin registro' !!}</span>
+                    <span style="text-align: justify; color:#18183c;">{!! $auditoriaAnual->objetivo ? $auditoriaAnual->objetivo : 'Sin registro' !!}</span>
 
                     <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #345183;">
                         <span style="font-size: 17px; font-weight: bold;">Alcance de la Auditoría</span>
                     </div>
 
-                    <span style="text-align: justify; color:#18183c;">{!!$auditoriaAnual->alcance ?  $auditoriaAnual->alcance : 'Sin registro' !!}</span>
+                    <span style="text-align: justify; color:#18183c;">{!! $auditoriaAnual->alcance ? $auditoriaAnual->alcance : 'Sin registro' !!}</span>
 
                 </div>
             </div>

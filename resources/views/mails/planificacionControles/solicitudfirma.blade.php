@@ -98,7 +98,7 @@
                                     </hr>
                                     @php
                                         use App\Models\Organizacion;
-                                        $organizacion = Organizacion::first();
+                                        $organizacion = Organizacion::getFirst();
                                         $logotipo = $organizacion->logotipo;
                                         $empresa = $organizacion->empresa;
                                     @endphp
@@ -116,16 +116,16 @@
                                         </div>
 
                                         <div style="margin-top:50px;">
-                                            @if($planificacionControles->firma_registro == null)
-                                            <strong
-                                                style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{ $planificacionControles->empleado->name }},
-                                            </strong>
+                                            @if ($planificacionControles->firma_registro == null)
+                                                <strong
+                                                    style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
+                                                    Estimado(a) {{ $planificacionControles->empleado->name }},
+                                                </strong>
                                             @else
-                                            <strong
-                                                style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
-                                                Estimado(a) {{ $planificacionControles->responsable->name }},
-                                            </strong>
+                                                <strong
+                                                    style="color:#153643; padding-top:40px; margin:0 0 14px 0;font-size:17px;line-height:24px;font-family:Arial,sans-serif;">
+                                                    Estimado(a) {{ $planificacionControles->responsable->name }},
+                                                </strong>
                                             @endif
                                         </div>
 
@@ -192,7 +192,7 @@
                                             </p>
 
                                             <div style="text-align:center; margin-top:20px">
-                                                <a href="{{route('admin.planificacion-controls.show',$planificacionControles) }}"
+                                                <a href="{{ route('admin.planificacion-controls.show', $planificacionControles) }}"
                                                     style="text-decoration:none;padding-top:15px; border-radius:4px; display:inline-block; min-width:300px; height:35px ;color:#fff; font-size:11pt; background-color:#345183">
                                                     Revisar Control Administrativo
                                                 </a>

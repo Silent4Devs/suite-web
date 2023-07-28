@@ -15,13 +15,13 @@ class StoreAuditoriaAnualRequest extends FormRequest
     public function rules()
     {
         return [
-            'tipo'        => [
+            'tipo' => [
                 'required',
             ],
             'fechainicio' => [
                 'required',
             ],
-            'dias'        => [
+            'dias' => [
                 'numeric',
                 'min:1',
                 'max:100',

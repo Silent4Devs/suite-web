@@ -16,34 +16,58 @@ use Livewire\Component;
 class RegistroVisitantes extends Component
 {
     use LivewireAlert;
+
     public $totalSteps = 4;
+
     public $currentStep = 1;
+
     public $empleados;
+
     public $areas;
+
     // step 1
     public $dispositivos;
+
     public $nombre;
+
     public $apellidos;
+
     public $correo;
+
     public $celular;
+
     public $dispositivo;
+
     public $empresa;
+
     public $serie;
+
     public $motivo;
+
     // step 2
     public $foto;
+
     // step 3
     public $empleado_id;
+
     public $castEmpleado;
+
     public $area_id;
+
     public $castArea;
+
     public $tipo_visita = 'persona';
 
     public $visitanteFake = [];
+
     public $registrarVisitante;
+
     public $showStepOne = true;
+
     public $showStepTwo = false;
+
     public $showStepThree = false;
+
     public $showStepFour = false;
 
     protected $rules = [
@@ -260,7 +284,7 @@ class RegistroVisitantes extends Component
             $this->registrarDispositivos();
         }
         $this->enviarCorreoDeConfirmacion($this->correo, $this->registrarVisitante);
-        $this->alert('success', 'Bien Hecho ' . $this->nombre . ', te has registrado correctamente', [
+        $this->alert('success', 'Bien Hecho '.$this->nombre.', te has registrado correctamente', [
             'position' => 'top-end',
             'timer' => 3000,
             'toast' => true,
@@ -294,12 +318,12 @@ class RegistroVisitantes extends Component
     public function imprimirCredencialImage($dataImage)
     {
         $pdf = \PDF::loadView('visitantes.credencial.index', ['credencial' => $dataImage])->output();
-        $fileName = 'Credencial de ' . $this->registrarVisitante->nombre . ' ' . $this->registrarVisitante->apellidos . '.pdf';
+        $fileName = 'Credencial de '.$this->registrarVisitante->nombre.' '.$this->registrarVisitante->apellidos.'.pdf';
 
         return response()->streamDownload(
             function () use ($pdf) {
                 echo $pdf;
-                $this->alert('success', 'Bien Hecho ' . $this->nombre . ', se ha imprimido correctamente la credencial', [
+                $this->alert('success', 'Bien Hecho '.$this->nombre.', se ha imprimido correctamente la credencial', [
                     'position' => 'top-end',
                     'timer' => 1000,
                     'toast' => true,
@@ -309,7 +333,7 @@ class RegistroVisitantes extends Component
             $fileName,
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+                'Content-Disposition' => 'attachment; filename="'.$fileName.'"',
             ]
         );
     }

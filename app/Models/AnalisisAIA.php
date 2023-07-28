@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class AnalisisAIA extends Model
+class AnalisisAIA extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'analisis_aia';
 
@@ -16,6 +18,7 @@ class AnalisisAIA extends Model
         '2' => 'Virtual',
 
     ];
+
     const TipoAccesoSelect = [
         '1' => 'WEB',
         '2' => 'Cliente-Servidor',
@@ -36,10 +39,12 @@ class AnalisisAIA extends Model
         '3' => 'N/a',
 
     ];
+
     const AmbienteSelect = [
         '1' => 'Productivo',
         '2' => 'Desarrollo',
     ];
+
     const PublicacionSelect = [
         '1' => 'Interno',
         '2' => 'Externo',
@@ -421,7 +426,7 @@ class AnalisisAIA extends Model
             $texto = 'No definido';
         }
 
-        return  [$color,  $color_texto, $texto];
+        return [$color,  $color_texto, $texto];
     }
 
     public function getOperacionPromedioAttribute()
@@ -504,7 +509,7 @@ class AnalisisAIA extends Model
             $texto = 'No definido';
         }
 
-        return  [$color,  $color_texto, $texto];
+        return [$color,  $color_texto, $texto];
     }
 
     public function getCriticidadProcesoAttribute()
@@ -553,7 +558,7 @@ class AnalisisAIA extends Model
             $texto = 'Fuera de Rango';
         }
 
-        return  [$color,  $color_texto, $texto];
+        return [$color,  $color_texto, $texto];
     }
 
     // Apenns Matriz apartado 3

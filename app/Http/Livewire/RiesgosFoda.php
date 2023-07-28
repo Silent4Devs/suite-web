@@ -13,11 +13,17 @@ use Livewire\Component;
 class RiesgosFoda extends Component
 {
     public $analisisSeleccionado;
+
     public $riesgosPorAnalisis;
+
     public $modelId;
+
     public $modelType;
+
     public $riesgosSeleccionados;
+
     public $globalModel;
+
     protected $listeners = ['modalRiesgoFoda'];
 
     public function hydrate()

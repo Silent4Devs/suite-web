@@ -8,10 +8,12 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TratamientoRiesgo extends Model
+class TratamientoRiesgo extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'tratamiento_riesgos';
 
@@ -28,9 +30,9 @@ class TratamientoRiesgo extends Model
 
     const PRIORIDAD_SELECT = [
         'Critica' => 'Crítica',
-        'Alta'    => 'Alta',
-        'Media'   => 'Media',
-        'Baja'    => 'Baja',
+        'Alta' => 'Alta',
+        'Media' => 'Media',
+        'Baja' => 'Baja',
     ];
 
     const TIPO_INVERSION_SELECT = [

@@ -7,10 +7,14 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Puesto extends Model
+class Puesto extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use \OwenIt\Auditing\Auditable;
+
     public $table = 'puestos';
 
     protected $dates = [
@@ -55,6 +59,14 @@ class Puesto extends Model
         'autoriza_id',
         'reporta_puesto_id',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Puestos_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

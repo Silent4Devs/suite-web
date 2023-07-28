@@ -10,7 +10,7 @@ class ObjetivoUnidadMedidaController extends Controller
 {
     public function index()
     {
-        $metricas = MetricasObjetivo::get();
+        $metricas = MetricasObjetivo::getAll();
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.metricas.index', compact('metricas'));
     }
@@ -54,7 +54,7 @@ class ObjetivoUnidadMedidaController extends Controller
     {
         $metricas = MetricasObjetivo::find($id);
         $metricas->delete();
-        $metricas = MetricasObjetivo::get();
+        $metricas = MetricasObjetivo::getAll();
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.metricas.index', compact('metricas'));
     }

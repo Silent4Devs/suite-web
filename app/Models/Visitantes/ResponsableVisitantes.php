@@ -5,10 +5,12 @@ namespace App\Models\Visitantes;
 use App\Models\Empleado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ResponsableVisitantes extends Model
+class ResponsableVisitantes extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'responsable_visitantes';
 

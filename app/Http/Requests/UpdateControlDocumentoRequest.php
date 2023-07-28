@@ -15,11 +15,11 @@ class UpdateControlDocumentoRequest extends FormRequest
     public function rules()
     {
         return [
-            'clave'          => [
+            'clave' => [
                 'string',
                 'nullable',
             ],
-            'nombre'         => [
+            'nombre' => [
                 'string',
                 'nullable',
             ],
@@ -27,7 +27,7 @@ class UpdateControlDocumentoRequest extends FormRequest
                 'date',
                 'nullable',
             ],
-            'version'        => [
+            'version' => [
                 'string',
                 'nullable',
             ],

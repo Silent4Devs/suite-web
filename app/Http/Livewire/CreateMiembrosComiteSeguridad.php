@@ -10,16 +10,25 @@ use Livewire\Component;
 class CreateMiembrosComiteSeguridad extends Component
 {
     public $nombre_rol;
+
     public $fecha_vigor;
+
     public $colaborador;
+
     public $responsabilidades;
+
     public $id_comite;
+
     public $miembroID;
 
     public $id_interesado;
+
     public $parteInteresadaIdEN;
+
     public $view = 'create';
+
     public $normasModel = [];
+
     protected $listeners = ['editarParteInteresada' => 'edit', 'eliminarParteInteresada' => 'destroy', 'agregarNormas'];
 
     public function hydrate()
@@ -47,11 +56,11 @@ class CreateMiembrosComiteSeguridad extends Component
     {
         $this->validarMiembro();
         $model = MiembrosComiteSeguridad::create([
-            'nombrerol'=> $this->nombre_rol,
-            'id_asignada'=> $this->colaborador,
-            'fechavigor'=> $this->fecha_vigor,
-            'responsabilidades'=> $this->responsabilidades,
-            'comite_id'=> $this->id_comite,
+            'nombrerol' => $this->nombre_rol,
+            'id_asignada' => $this->colaborador,
+            'fechavigor' => $this->fecha_vigor,
+            'responsabilidades' => $this->responsabilidades,
+            'comite_id' => $this->id_comite,
         ]);
 
         $this->reset('nombre_rol', 'colaborador', 'fecha_vigor', 'responsabilidades');
@@ -90,11 +99,11 @@ class CreateMiembrosComiteSeguridad extends Component
         $this->validarMiembro();
         $model = MiembrosComiteSeguridad::find($this->miembroID);
         $model->update([
-            'nombrerol'=> $this->nombre_rol,
-            'id_asignada'=> $this->colaborador,
-            'fechavigor'=> $this->fecha_vigor,
-            'responsabilidades'=> $this->responsabilidades,
-            'comite_id'=> $this->id_comite,
+            'nombrerol' => $this->nombre_rol,
+            'id_asignada' => $this->colaborador,
+            'fechavigor' => $this->fecha_vigor,
+            'responsabilidades' => $this->responsabilidades,
+            'comite_id' => $this->id_comite,
         ]);
         $this->emit('cerrar-modal', ['editar' => true]);
         $this->default();

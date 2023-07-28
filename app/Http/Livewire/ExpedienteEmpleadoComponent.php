@@ -13,19 +13,24 @@ class ExpedienteEmpleadoComponent extends Component
     use WithFileUploads;
 
     public $empleado;
+
     public $documentoIne;
+
     public $documentoImss;
+
     public $documentoCurp;
+
     public $documentoRfc;
+
     public $documentosExistentes;
 
     public function updatedDocumentoIne()
     {
         $this->validate([
-            'documentoIne' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
+            'documentoIne' => 'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoIne->extension();
-        $this->documentoIne->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "INE.{$extension}");
+        $this->documentoIne->storeAs('public/expedientes/'.Str::slug($this->empleado->name).'/', "INE.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => 'INE',
             'documentos' => "INE.{$extension}",
@@ -36,11 +41,11 @@ class ExpedienteEmpleadoComponent extends Component
     public function updatedDocumentoImss()
     {
         $this->validate([
-            'documentoImss' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
+            'documentoImss' => 'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoImss->extension();
         $nombre_documento = 'IMSS';
-        $this->documentoImss->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "{$nombre_documento}.{$extension}");
+        $this->documentoImss->storeAs('public/expedientes/'.Str::slug($this->empleado->name).'/', "{$nombre_documento}.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => $nombre_documento,
             'documentos' => "{$nombre_documento}.{$extension}",
@@ -51,11 +56,11 @@ class ExpedienteEmpleadoComponent extends Component
     public function updatedDocumentoCurp()
     {
         $this->validate([
-            'documentoCurp' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
+            'documentoCurp' => 'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoCurp->extension();
         $nombre_documento = 'CURP';
-        $this->documentoCurp->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "{$nombre_documento}.{$extension}");
+        $this->documentoCurp->storeAs('public/expedientes/'.Str::slug($this->empleado->name).'/', "{$nombre_documento}.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => $nombre_documento,
             'documentos' => "{$nombre_documento}.{$extension}",
@@ -66,11 +71,11 @@ class ExpedienteEmpleadoComponent extends Component
     public function updatedDocumentoRFC()
     {
         $this->validate([
-            'documentoRfc' =>  'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
+            'documentoRfc' => 'mimes:jpeg,bmp,png,gif,svg,pdf|max:1000000', // 1GB Max
         ]);
         $extension = $this->documentoRfc->extension();
         $nombre_documento = 'RFC';
-        $this->documentoRfc->storeAs('public/expedientes/' . Str::slug($this->empleado->name) . '/', "{$nombre_documento}.{$extension}");
+        $this->documentoRfc->storeAs('public/expedientes/'.Str::slug($this->empleado->name).'/', "{$nombre_documento}.{$extension}");
         EvidenciasDocumentosEmpleados::create([
             'nombre' => $nombre_documento,
             'documentos' => "{$nombre_documento}.{$extension}",
@@ -111,7 +116,7 @@ class ExpedienteEmpleadoComponent extends Component
     public function removeDocumento($documento_id)
     {
         $evidencia = EvidenciasDocumentosEmpleados::find($documento_id);
-        Storage::disk('public')->delete('expedientes/' . Str::slug($this->empleado->name) . '/' . $evidencia->documentos);
+        Storage::disk('public')->delete('expedientes/'.Str::slug($this->empleado->name).'/'.$evidencia->documentos);
         $evidencia->delete();
         $this->checkIfDocumentExists();
     }

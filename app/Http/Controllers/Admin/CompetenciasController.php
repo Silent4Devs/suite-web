@@ -67,14 +67,14 @@ class CompetenciasController extends Controller
                 return $row->perfilpuesto ? $row->perfilpuesto : '';
             });
             $table->editColumn('certificados', function ($row) {
-                if (!$row->certificados) {
+                if (! $row->certificados) {
                     return '';
                 }
 
                 $links = [];
 
                 foreach ($row->certificados as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                    $links[] = '<a href="'.$media->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>';
                 }
 
                 return implode(', ', $links);
@@ -85,7 +85,7 @@ class CompetenciasController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.competencia.index', compact('users', 'teams'));
@@ -107,7 +107,7 @@ class CompetenciasController extends Controller
         $competencium = Competencium::create($request->all());
 
         foreach ($request->input('certificados', []) as $file) {
-            $competencium->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificados');
+            $competencium->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('certificados');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -136,7 +136,7 @@ class CompetenciasController extends Controller
 
         if (count($competencium->certificados) > 0) {
             foreach ($competencium->certificados as $media) {
-                if (!in_array($media->file_name, $request->input('certificados', []))) {
+                if (! in_array($media->file_name, $request->input('certificados', []))) {
                     $media->delete();
                 }
             }
@@ -145,8 +145,8 @@ class CompetenciasController extends Controller
         $media = $competencium->certificados->pluck('file_name')->toArray();
 
         foreach ($request->input('certificados', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $competencium->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('certificados');
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $competencium->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('certificados');
             }
         }
 
@@ -180,7 +180,7 @@ class CompetenciasController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-//        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Competencium();
         $model->id = $request->input('crud_id', 0);
@@ -192,7 +192,7 @@ class CompetenciasController extends Controller
 
     public function buscarcv(Request $request)
     {
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.competencia.buscarCV', compact('areas'));
     }
@@ -200,7 +200,7 @@ class CompetenciasController extends Controller
     public function expedientesProfesionales(Request $request)
     {
         abort_if(Gate::denies('perfiles_profesionales_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.competencia.expedientes', compact('areas'));
     }
@@ -210,7 +210,7 @@ class CompetenciasController extends Controller
         $empleado->load('idiomas');
         // dd($empleado);
         abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $lista_docs = ListaDocumentoEmpleado::get();
+        $lista_docs = ListaDocumentoEmpleado::getAll();
 
         return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
     }
@@ -248,7 +248,7 @@ class CompetenciasController extends Controller
 
         if ($request->hasFile('documentos')) {
             $file = $request->file('documentos');
-            if (Storage::putFileAs('public/expedientes/' . Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
+            if (Storage::putFileAs('public/expedientes/'.Str::slug($empleado->name), $file, $file->getClientOriginalName())) {
                 $evidencia->update([
                     'documentos' => $file->getClientOriginalName(),
                 ]);
@@ -286,10 +286,10 @@ class CompetenciasController extends Controller
         $curso = CursosDiplomasEmpleados::create([
             'empleado_id' => $empleado->id,
             'curso_diploma' => $request->curso_diploma,
-            'tipo' =>  $request->tipo,
-            'año' =>  $request->año,
-            'fecha_fin' =>  $request->fecha_fin,
-            'duracion' =>  $request->duracion,
+            'tipo' => $request->tipo,
+            'año' => $request->año,
+            'fecha_fin' => $request->fecha_fin,
+            'duracion' => $request->duracion,
         ]);
 
         if ($request->hasFile('file')) {
@@ -299,7 +299,7 @@ class CompetenciasController extends Controller
             // Get just ext
             $extension = $request->file('file')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = $request->file('file')->storeAs('public/cursos_empleados', $fileNameToStore);
 
@@ -333,8 +333,8 @@ class CompetenciasController extends Controller
         $certificado = CertificacionesEmpleados::create([
             'empleado_id' => $empleado->id,
             'nombre' => $request->nombre,
-            'estatus' =>  $request->estatus,
-            'vigencia' =>  $request->vigencia,
+            'estatus' => $request->estatus,
+            'vigencia' => $request->vigencia,
         ]);
         if ($request->hasFile('documento')) {
             $filenameWithExt = $request->file('documento')->getClientOriginalName();
@@ -343,7 +343,7 @@ class CompetenciasController extends Controller
             // Get just ext
             $extension = $request->file('documento')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = $request->file('documento')->storeAs('public/certificados_empleados', $fileNameToStore);
 

@@ -9,9 +9,13 @@ use Livewire\Component;
 class PartesInteresadasComponent extends Component
 {
     public $clausulas;
+
     public $norma_id;
+
     public $parteinteresada;
+
     public $value;
+
     public $normas;
 
     public function mount()

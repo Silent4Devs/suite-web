@@ -73,7 +73,7 @@ class ComunicacionSgiController extends Controller
     public function create()
     {
         abort_if(Gate::denies('comunicados_generales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
 
@@ -103,11 +103,11 @@ class ComunicacionSgiController extends Controller
         $comunicacionSgi = ComunicacionSgi::create($request->all());
 
         $image = null;
-        if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
+        if ($request->file('imagen') != null or ! empty($request->file('imagen'))) {
             $extension = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
+            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+            $new_name_image = 'UID_'.$comunicacionSgi->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path().'/app/public/imagen_comunicado_SGI/'.$new_name_image;
             $image = $new_name_image;
             if ($extension == 'mp4' || $extension == 'mov' || $extension == 'webm' || $extension == 'wmv' || $extension == 'avi') {
                 $request->file('imagen')->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
@@ -146,7 +146,7 @@ class ComunicacionSgiController extends Controller
         $comunicacionSgi->empleados()->sync($publicoObjetivo);
 
         if ($request->input('archivo', false)) {
-            $comunicacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+            $comunicacionSgi->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -180,7 +180,7 @@ class ComunicacionSgiController extends Controller
     {
         abort_if(Gate::denies('comunicados_generales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
 
@@ -206,11 +206,11 @@ class ComunicacionSgiController extends Controller
         $publicoObjetivo = $this->obtenerPublicoObjetivo($request->evaluados_objetivo, $opts);
         $comunicacionSgi->update($request->all());
         // $image = $comunicacionSgi->imagen;
-        if ($request->file('imagen') != null or !empty($request->file('imagen'))) {
+        if ($request->file('imagen') != null or ! empty($request->file('imagen'))) {
             $extension = pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_EXTENSION);
-            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
-            $new_name_image = 'UID_' . $comunicacionSgi->id . '_' . $name_image . '.' . $extension;
-            $route = storage_path() . '/app/public/imagen_comunicado_SGI/' . $new_name_image;
+            $name_image = basename(pathinfo($request->file('imagen')->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+            $new_name_image = 'UID_'.$comunicacionSgi->id.'_'.$name_image.'.'.$extension;
+            $route = storage_path().'/app/public/imagen_comunicado_SGI/'.$new_name_image;
             $image = $new_name_image;
             if ($extension == 'mp4' || $extension == 'mov' || $extension == 'webm' || $extension == 'wmv' || $extension == 'avi') {
                 $request->file('imagen')->storeAs('public/imagen_comunicado_SGI/', $new_name_image);
@@ -258,12 +258,12 @@ class ComunicacionSgiController extends Controller
         $comunicacionSgi->empleados()->sync($publicoObjetivo);
 
         if ($request->input('archivo', false)) {
-            if (!$comunicacionSgi->archivo || $request->input('archivo') !== $comunicacionSgi->archivo->file_name) {
+            if (! $comunicacionSgi->archivo || $request->input('archivo') !== $comunicacionSgi->archivo->file_name) {
                 if ($comunicacionSgi->archivo) {
                     $comunicacionSgi->archivo->delete();
                 }
 
-                $comunicacionSgi->addMedia(storage_path('tmp/uploads/' . $request->input('archivo')))->toMediaCollection('archivo');
+                $comunicacionSgi->addMedia(storage_path('tmp/uploads/'.$request->input('archivo')))->toMediaCollection('archivo');
             }
         } elseif ($comunicacionSgi->archivo) {
             $comunicacionSgi->archivo->delete();

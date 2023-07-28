@@ -97,8 +97,8 @@ class TratamientoRiesgosController extends Controller
             return $table->make(true);
         }
 
-        $controles = DeclaracionAplicabilidad::get();
-        $users = User::get();
+        $controles = DeclaracionAplicabilidad::getAll();
+        $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -146,7 +146,7 @@ class TratamientoRiesgosController extends Controller
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::alta()->with('area')->get();
         $registros = Empleado::alta()->with('area')->get();
-        $procesos = Proceso::get();
+        $procesos = Proceso::getAll();
 
         return view('admin.tratamientoRiesgos.edit', compact('registros', 'procesos', 'tratamientos', 'controls', 'responsables', 'empleados'));
     }
@@ -183,8 +183,8 @@ class TratamientoRiesgosController extends Controller
 
         if ($tratamientoRiesgo->es_aprobado == 'rechazado') {
             $tratamientoRiesgo->update([
-                'es_aprobado'=>'pendiente',
-                'comentarios'=>null,
+                'es_aprobado' => 'pendiente',
+                'comentarios' => null,
             ]);
             $empleado_email = Empleado::select('name', 'email')->find($request->id_dueno);
             $empleado_copia = auth()->user()->empleado;
@@ -205,7 +205,7 @@ class TratamientoRiesgosController extends Controller
         $tratamientoRiesgo->load('control', 'responsable', 'team');
         // dd($tratamientoRiesgo);
 
-        $route = 'storage/tratamiento/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id) . '/';
+        $route = 'storage/tratamiento/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id).'/';
 
         return view('admin.tratamientoRiesgos.show', compact('route', 'tratamientoRiesgo'));
     }
@@ -229,27 +229,27 @@ class TratamientoRiesgosController extends Controller
     public function guardarFirmaAprobacion(Request $request)
     {
         $tratamientoRiesgo = TratamientoRiesgo::find($request->id)->load('responsable', 'registro');
-        $existsFolderFirmasCartas = Storage::exists('public/tratamiento/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id));
-        if (!$existsFolderFirmasCartas) {
-            Storage::makeDirectory('public/tratamiento/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id));
+        $existsFolderFirmasCartas = Storage::exists('public/tratamiento/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id));
+        if (! $existsFolderFirmasCartas) {
+            Storage::makeDirectory('public/tratamiento/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id));
         }
         if (preg_match('/^data:image\/(\w+);base64,/', $request->firma)) {
             $value = substr($request->firma, strpos($request->firma, ',') + 1);
             $value = base64_decode($value);
-            $new_name_image = $request->tipo . $tratamientoRiesgo->id . time() . '.png';
+            $new_name_image = $request->tipo.$tratamientoRiesgo->id.time().'.png';
             $image = $new_name_image;
-            $route = 'public/tratamiento/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id) . '/' . $new_name_image;
+            $route = 'public/tratamiento/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id).'/'.$new_name_image;
             Storage::put($route, $value);
             // dd($request->aprobado);
 
             if ($request->tipo == 'responsable_aprobador') {
                 $tratamientoRiesgo->update([
-                    'firma_' . $request->tipo => $image,
+                    'firma_'.$request->tipo => $image,
 
                 ]);
             } else {
                 $tratamientoRiesgo->update([
-                    'firma_' . $request->tipo => $image,
+                    'firma_'.$request->tipo => $image,
 
                 ]);
             }
@@ -257,14 +257,14 @@ class TratamientoRiesgosController extends Controller
 
         if ($request->aprobado != null) {
             $tratamientoRiesgo->update([
-                'es_aprobado'=>$request->aprobado == '1' ? 'aprobado' : 'rechazado',
-                'comentarios'=>$request->comentarios,
+                'es_aprobado' => $request->aprobado == '1' ? 'aprobado' : 'rechazado',
+                'comentarios' => $request->comentarios,
             ]);
         }
 
         // dd($tratamientoRiesgo);
         Mail::to($tratamientoRiesgo->responsable->email)->send(new RiesgoAceptadoRechazado($tratamientoRiesgo));
 
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 }

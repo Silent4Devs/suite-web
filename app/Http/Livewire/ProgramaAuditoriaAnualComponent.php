@@ -11,7 +11,9 @@ use Livewire\WithFileUploads;
 class ProgramaAuditoriaAnualComponent extends Component
 {
     use WithFileUploads, LivewireAlert;
+
     public $documento;
+
     public $auditoriaAnualId;
 
     public function mount($auditoriaAnualId)
@@ -35,12 +37,12 @@ class ProgramaAuditoriaAnualComponent extends Component
         $extension = $this->documento->extension();
 
         $nombreAuditoria = str_replace(' ', '_', $auditoriaAnual->nombre);
-        $nombreArchivo = $this->auditoriaAnualId . $nombreAuditoria . ".{$extension}";
-        $documentoAuditoria = $this->documento->storeAs('public/programaAnualAuditoria/documentos/' . $this->auditoriaAnualId . '/', $nombreArchivo);
+        $nombreArchivo = $this->auditoriaAnualId.$nombreAuditoria.".{$extension}";
+        $documentoAuditoria = $this->documento->storeAs('public/programaAnualAuditoria/documentos/'.$this->auditoriaAnualId.'/', $nombreArchivo);
         AuditoriaAnualDocumento::updateOrCreate([
-            'id_auditoria_anuals'=>$this->auditoriaAnualId,
+            'id_auditoria_anuals' => $this->auditoriaAnualId,
         ], [
-            'documento'=>$nombreArchivo,
+            'documento' => $nombreArchivo,
         ]);
 
         $this->alert('success', 'Bien hecho', [
@@ -48,7 +50,7 @@ class ProgramaAuditoriaAnualComponent extends Component
             'timer' => 3000,
             'toast' => true,
             'text' => 'Creado con éxito',
-           ]);
+        ]);
 
         return redirect()->route('admin.auditoria-anuals.index');
     }

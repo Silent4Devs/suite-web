@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class CartaAceptacionAprobacione.
@@ -18,12 +19,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Empleado $empleado
  */
-class CartaAceptacionAprobacione extends Model
+class CartaAceptacionAprobacione extends Model implements Auditable
+{
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'carta_aceptacion_aprobaciones';
 
     protected $casts = [

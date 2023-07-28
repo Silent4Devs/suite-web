@@ -5,8 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\DayOff;
-use App\Models\Organizacion;
 use App\Models\SolicitudDayOff;
+use App\Traits\ObtenerOrganizacion;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Gate;
 
 class DayOffController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('reglas_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -68,13 +70,9 @@ class DayOffController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.dayOff.index', compact('logo_actual', 'empresa_actual'));
@@ -83,7 +81,7 @@ class DayOffController extends Controller
     public function create()
     {
         abort_if(Gate::denies('reglas_dayoff_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $areas = Area::get();
+        $areas = Area::getAll();
         $vacacion = new DayOff();
         $areas_seleccionadas = $vacacion->areas->pluck('id')->toArray();
 
@@ -128,7 +126,7 @@ class DayOffController extends Controller
     public function edit($id)
     {
         abort_if(Gate::denies('reglas_dayoff_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $areas = Area::get();
+        $areas = Area::getAll();
         $vacacion = DayOff::with('areas')->find($id);
         if (empty($vacacion)) {
             Flash::error('Days Off´s not found');
@@ -205,13 +203,9 @@ class DayOffController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.dayOff.solicitudes', compact('logo_actual', 'empresa_actual'));

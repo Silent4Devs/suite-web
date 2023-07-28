@@ -342,7 +342,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             'update' => 'ev360-evaluaciones.update',
         ]);
 
-        Route::get('recursos-humanos/evaluacion-360/evaluacion/objetivostmp', 'RH\EV360EvaluacionesController@objetivosTemporal')->name('ev360-evaluaciones.objetivostmp');
+        Route::get('recursos-humanos/evaluacion-360/evaluacion/objetivostmp', 'RH\EV360EvaluacionesController@objetivostemporal')->name('ev360-evaluaciones.objetivostmp');
 
         Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/remover', 'RH\EvaluadoEvaluadorController@remover')->name('ev360-evaluaciones.evaluadores.remover');
         Route::post('recursos-humanos/evaluacion-360/evaluaciones/evaluado-evaluador/agregar', 'RH\EvaluadoEvaluadorController@agregar')->name('ev360-evaluaciones.evaluadores.agregar');
@@ -421,7 +421,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('Metrica', 'RH\ObjetivoUnidadMedidaController', ['except' => ['edit']]);
 
         Route::view('iso27001', 'admin.iso27001.index')->name('iso27001.index');
+        Route::view('iso27001M', 'admin.iso27001M.index')->name('iso27001M.index');
         Route::view('iso9001', 'admin.iso9001.index')->name('iso9001.index');
+        Route::view('contratos', 'admin.contratos.index')->name('contratos.index');
+        Route::view('visualizar-logs', 'admin.visualizar-logs.index')->name('visualizar-logs.index');
 
         Route::get('portal-comunicacion/reportes', 'PortalComunicacionController@reportes')->name('portal-comunicacion.reportes');
         Route::post('portal-comunicacion/cumpleaños/{id}', 'PortalComunicacionController@felicitarCumpleaños')->name('portal-comunicacion.cumples');
@@ -475,6 +478,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::post('inicioUsuario/expediente/update', 'InicioUsuarioController@expedienteUpdate')->name('inicio-Usuario.expediente-update');
         Route::post('inicioUsuario/expediente/{id_empleado}/getListaDocumentos', 'EmpleadoController@getListaDocumentos')->name('inicio-Usuario.expediente-getListaDocumentos');
+
+        Route::post('inicioUsuario/versioniso', 'InicioUsuarioController@updateVersionIso')->name('inicio-Usuario.updateVersionIso');
 
         Route::get('desk', 'DeskController@index')->name('desk.index');
 
@@ -595,34 +600,87 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
         Route::resource('permissions', 'PermissionsController');
 
-        //analisis brechas
-        //Route::resource('analisis-brechas', 'AnalisisBController');
-        Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
-        Route::get('analisis-brechas/{id}', 'AnalisisBController@index')->name('analisis-brechas');
-        Route::post('analisis-brechas/update', 'AnalisisBController@update');
-        Route::delete('analisisdebrechas/destroy', 'AnalisisBrechaController@massDestroy')->name('analisisdebrechas.massDestroy');
-        Route::resource('analisisdebrechas', 'AnalisisBrechaController');
-        Route::get('getEmployeeData', 'AnalisisBrechaController@getEmployeeData')->name('getEmployeeData');
+        //Analisis brechas
+        Route::group(['middleware' => ['version_iso_2013']], function () {
+            //Route::resource('analisis-brechas', 'AnalisisBController');
+            Route::get('analisis-brechas', 'AnalisisBController@index')->name('analisis-brechas.index');
+            Route::get('analisis-brechas/{id}', 'AnalisisBController@index')->name('analisis-brechas');
+            Route::post('analisis-brechas/update', 'AnalisisBController@update');
+            Route::delete('analisisdebrechas/destroy', 'AnalisisBrechaController@massDestroy')->name('analisisdebrechas.massDestroy');
+            Route::resource('analisisdebrechas', 'AnalisisBrechaController');
+            Route::get('getEmployeeData', 'AnalisisBrechaController@getEmployeeData')->name('getEmployeeData');
+        });
 
-        // Declaracion de Aplicabilidad
-        Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
-        Route::get('declaracion-aplicabilidad/tabla', 'DeclaracionAplicabilidadController@tabla')->name('declaracion-aplicabilidad.tabla');
-        Route::put('declaracion-aplicabilidad/tabla/{control}', 'DeclaracionAplicabilidadController@updateTabla')->name('declaracion-aplicabilidad.updateTabla');
-        Route::get('declaracion-aplicabilidad/{id}', 'DeclaracionAplicabilidadController@index')->name('declaracion-aplicabilidad');
-        Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
-        Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
-        Route::post('declaracion-aplicabilidad/enviar-correo', 'DeclaracionAplicabilidadController@enviarCorreo')->name('declaracion-aplicabilidad.enviarcorreo');
-        Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
+        Route::group(['middleware' => ['version_iso_2022']], function () {
+            //Analisis brechas 2022
+            Route::resource('analisisdebrechas-2022', 'AnalisisBrechaIsoController');
+            Route::delete('analisisdebrechas-2022/destroy', 'AnalisisBrechaIsoController@massDestroy')->name('analisisdebrechas-2022.massDestroy');
+            Route::get('getEmployeeData', 'AnalisisBrechaIsoController@getEmployeeData')->name('getEmployeeData');
+            Route::get('analisis-brechas-2022', 'AnalisisBIsoController@index')->name('analisis-brechas-2022.index');
+            Route::get('analisis-brechas-2022/{id}', 'AnalisisBIsoController@index')->name('analisis-brechas-2022');
+            Route::post('analisis-brechas-2022/update', 'AnalisisBController@update');
 
-        //Panel declaracion
-        Route::post('paneldeclaracion/controles', 'PanelDeclaracionController@controles')->name('paneldeclaracion.controles');
-        Route::post('paneldeclaracion/responsables-quitar', 'PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
-        Route::post('paneldeclaracion/responsables', 'PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
-        Route::post('paneldeclaracion/enviar-correo', 'PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
-        Route::post('paneldeclaracion/aprobadores-quitar', 'PanelDeclaracionController@quitarRelacionAprobador')->name('paneldeclaracion.aprobadores.quitar');
-        Route::post('paneldeclaracion/aprobadores', 'PanelDeclaracionController@relacionarAprobador')->name('paneldeclaracion.aprobadores');
-        Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
-        Route::resource('paneldeclaracion', 'PanelDeclaracionController');
+            // Gap Unos 2022
+            Route::delete('gap-uno-2022/destroy', 'iso27\GapUnoConcentradoIsoController@massDestroy')->name('gap-unos-2022.massDestroy');
+            Route::resource('gap-uno-2022', 'iso27\GapUnoConcentradoIsoController');
+
+            // Gap Dos 2022
+            Route::delete('gap-dos-2022/destroy', 'iso27\GapDosConcentradoIsoController@massDestroy')->name('gap-dos.massDestroy');
+            Route::resource('gap-dos-2022', 'iso27\GapDosConcentradoIsoController');
+
+            // Gap Tres 2022
+            Route::delete('gap-tres-2022/destroy', 'iso27\GapTresConcentradoIsoController@massDestroy')->name('gap-tres.massDestroy');
+            Route::resource('gap-tres-2022', 'iso27\GapTresConcentradoIsoController');
+        });
+
+        Route::group(['middleware' => ['version_iso_2013']], function () {
+            // Declaracion de Aplicabilidad
+            Route::get('declaracion-aplicabilidad/descargar', 'DeclaracionAplicabilidadController@download')->name('declaracion-aplicabilidad.descargar');
+            Route::get('declaracion-aplicabilidad/tabla', 'DeclaracionAplicabilidadController@tabla')->name('declaracion-aplicabilidad.tabla');
+            Route::put('declaracion-aplicabilidad/tabla/{control}', 'DeclaracionAplicabilidadController@updateTabla')->name('declaracion-aplicabilidad.updateTabla');
+            Route::get('declaracion-aplicabilidad/{id}', 'DeclaracionAplicabilidadController@index')->name('declaracion-aplicabilidad');
+            Route::delete('declaracion-aplicabilidad/destroy', 'DeclaracionAplicabilidadController@massDestroy')->name('declaracion-aplicabilidad.massDestroy');
+            Route::resource('declaracion-aplicabilidad', 'DeclaracionAplicabilidadController');
+            Route::post('declaracion-aplicabilidad/enviar-correo', 'DeclaracionAplicabilidadController@enviarCorreo')->name('declaracion-aplicabilidad.enviarcorreo');
+            Route::get('getEmployeeData', 'DeclaracionAplicabilidadController@getEmployeeData')->name('getEmployeeData');
+        });
+
+        Route::group(['middleware' => ['version_iso_2022']], function () {
+            // Declaracion de Aplicabilidad 2022
+            Route::get('declaracion-aplicabilidad-2022/descargar', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@download')->name('declaracion-aplicabilidad-2022.descargar');
+            Route::get('declaracion-aplicabilidad-2022/dashboard', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@dashboard')->name('declaracion-aplicabilidad-2022.dashboard');
+            Route::get('declaracion-aplicabilidad-2022/tabla', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@tabla')->name('declaracion-aplicabilidad-2022.tabla');
+            Route::put('declaracion-aplicabilidad-2022/tabla/{control}', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@updateTabla')->name('declaracion-aplicabilidad-2022.updateTabla');
+            Route::get('declaracion-aplicabilidad-2022/{id}', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@index')->name('declaracion-aplicabilidad-2022');
+            Route::delete('declaracion-aplicabilidad-2022/destroy', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@massDestroy')->name('declaracion-aplicabilidad-2022.massDestroy');
+            Route::resource('declaracion-aplicabilidad-2022', 'iso27\DeclaracionAplicabilidadConcentradoIsoController');
+            Route::post('declaracion-aplicabilidad-2022/enviar-correo', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@enviarCorreo')->name('declaracion-aplicabilidad-2022.enviarcorreo');
+            Route::get('getEmployeeData', 'iso27\DeclaracionAplicabilidadConcentradoIsoController@getEmployeeData')->name('getEmployeeData');
+        });
+
+        Route::group(['middleware' => ['version_iso_2013']], function () {
+            //Panel declaracion
+            Route::post('paneldeclaracion/controles', 'PanelDeclaracionController@controles')->name('paneldeclaracion.controles');
+            Route::post('paneldeclaracion/responsables-quitar', 'PanelDeclaracionController@quitarRelacionResponsable')->name('paneldeclaracion.responsables.quitar');
+            Route::post('paneldeclaracion/responsables', 'PanelDeclaracionController@relacionarResponsable')->name('paneldeclaracion.responsables');
+            Route::post('paneldeclaracion/enviar-correo', 'PanelDeclaracionController@enviarCorreo')->name('paneldeclaracion.enviarcorreo');
+            Route::post('paneldeclaracion/aprobadores-quitar', 'PanelDeclaracionController@quitarRelacionAprobador')->name('paneldeclaracion.aprobadores.quitar');
+            Route::post('paneldeclaracion/aprobadores', 'PanelDeclaracionController@relacionarAprobador')->name('paneldeclaracion.aprobadores');
+            Route::delete('paneldeclaracion/destroy', 'PanelDeclaracionController@massDestroy')->name('paneldeclaracion.massDestroy');
+            Route::resource('paneldeclaracion', 'PanelDeclaracionController');
+        });
+
+        Route::group(['middleware' => ['version_iso_2022']], function () {
+            //Panel declaracion-2022
+            Route::post('paneldeclaracion-2022/controles', 'PanelDeclaracionIsoController@controles')->name('paneldeclaracion-2022.controles');
+            Route::post('paneldeclaracion-2022/responsables-quitar', 'PanelDeclaracionIsoController@quitarRelacionResponsable')->name('paneldeclaracion-2022.responsables.quitar');
+            Route::post('paneldeclaracion-2022/responsables', 'PanelDeclaracionIsoController@relacionarResponsable')->name('paneldeclaracion-2022.responsables');
+            Route::post('paneldeclaracion-2022/enviar-correo', 'PanelDeclaracionIsoController@enviarCorreo')->name('paneldeclaracion-2022.enviarcorreo');
+            Route::post('paneldeclaracion-2022/aprobadores-quitar', 'PanelDeclaracionIsoController@quitarRelacionAprobador')->name('paneldeclaracion-2022.aprobadores.quitar');
+            Route::post('paneldeclaracion-2022/aprobadores', 'PanelDeclaracionIsoController@relacionarAprobador')->name('paneldeclaracion-2022.aprobadores');
+            Route::delete('paneldeclaracion-2022/destroy', 'PanelDeclaracionIsoController@massDestroy')->name('paneldeclaracion-2022.massDestroy');
+            Route::resource('paneldeclaracion-2022', 'PanelDeclaracionIsoController');
+        });
 
         //gantt
         Route::get('gantt', 'GanttController@index');
@@ -666,9 +724,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('timesheet/create', 'TimesheetController@create')->name('timesheet-create');
 
         Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
+        Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
+        Route::post('timesheet/proyectos/store', 'TimesheetController@storeProyectos')->name('timesheet-proyectos-store');
+        Route::get('timesheet/proyectos/edit/{id}', 'TimesheetController@editProyectos')->name('timesheet-proyectos-edit');
         Route::post('timesheet/proyectos/update/{id}', 'TimesheetController@updateProyectos')->name('timesheet-proyectos-update');
+        // Route::get('timesheet/proyectos/notificacion-horas', 'TimesheetController@notificacionhorassobrepasadas')->name('timesheet-notificacion-horas');
+        Route::get('timesheet/proyectos/show/{id}', 'TimesheetController@showProyectos')->name('timesheet-proyectos-show');
         Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
         Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
+
+        Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
+        Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');
 
         Route::get('timesheet/clientes', 'TimesheetController@clientes')->name('timesheet-clientes');
         Route::get('timesheet/clientes/create', 'TimesheetController@clientesCreate')->name('timesheet-clientes-create');
@@ -1231,17 +1297,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::delete('servicios/destroy', 'ServiciosController@destroy')->name('servicios.destroy');
         Route::resource('servicios', 'ServiciosController')->except('destroy');
 
-        // Gap Unos
-        Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
-        Route::resource('gap-unos', 'GapUnoController');
+        Route::group(['middleware' => ['version_iso_2013']], function () {
+            // Gap Unos
+            Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
+            Route::resource('gap-unos', 'GapUnoController');
 
-        // Gap Dos
-        Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
-        Route::resource('gap-dos', 'GapDosController');
+            // Gap Dos
+            Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
+            Route::resource('gap-dos', 'GapDosController');
 
-        // Gap Tres
-        Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
-        Route::resource('gap-tres', 'GapTresController');
+            // Gap Tres
+            Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
+            Route::resource('gap-tres', 'GapTresController');
+        });
 
         //Revisiones Documentos
         Route::get('/revisiones/archivo', 'RevisionDocumentoController@archivo')->name('revisiones.archivo');
@@ -1307,262 +1375,6 @@ Route::group(['prefix' => 'iso9001'], function () {
     Route::post('plantTrabajoBase/bloqueo/is-locked', 'iso9001\LockedPlanTrabajoController@isLockedToPlanTrabajo')->name('lockedPlan.isLockedToPlanTrabajo');
     Route::post('plantTrabajoBase/bloqueo/registrar', 'iso9001\LockedPlanTrabajoController@setLockedToPlanTrabajo')->name('lockedPlan.setLockedToPlanTrabajo');
 });
-
-/* Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth', '2fa']], function () {
-
-    Route::get('/home', 'HomeController@index')->name('home');
-
-    // Permissions
-    Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
-    Route::resource('permissions', 'PermissionsController');
-
-    // Roles
-    Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
-    Route::resource('roles', 'RolesController');
-
-    // Users
-    Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
-    Route::resource('users', 'UsersController');
-
-    // Organizacions
-    Route::delete('organizacions/destroy', 'OrganizacionController@massDestroy')->name('organizacions.massDestroy');
-
-    Route::resource('organizacions', 'OrganizacionController');
-
-
-
-
-    // Plan Base Actividades
-    Route::delete('plan-base-actividades/destroy', 'PlanBaseActividadesController@massDestroy')->name('plan-base-actividades.massDestroy');
-    Route::resource('plan-base-actividades', 'PlanBaseActividadesController');
-
-    // User Alerts
-    Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
-    Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
-
-
-    // Partes Interesadas
-    Route::delete('partes-interesadas/destroy', 'PartesInteresadasController@massDestroy')->name('partes-interesadas.massDestroy');
-    Route::resource('partes-interesadas', 'PartesInteresadasController');
-
-    // Matriz Requisito Legales
-    Route::delete('matriz-requisito-legales/destroy', 'MatrizRequisitoLegalesController@massDestroy')->name('matriz-requisito-legales.massDestroy');
-    Route::resource('matriz-requisito-legales', 'MatrizRequisitoLegalesController');
-
-
-    // Alcance Sgsis
-    Route::delete('alcance-sgsis/destroy', 'AlcanceSgsiController@massDestroy')->name('alcance-sgsis.massDestroy');
-    Route::resource('alcance-sgsis', 'AlcanceSgsiController');
-
-    // Comiteseguridads
-    Route::delete('comiteseguridads/destroy', 'ComiteseguridadController@massDestroy')->name('comiteseguridads.massDestroy');
-    Route::resource('comiteseguridads', 'ComiteseguridadController');
-
-    // Minutasaltadireccions
-    Route::delete('minutasaltadireccions/destroy', 'MinutasaltadireccionController@massDestroy')->name('minutasaltadireccions.massDestroy');
-    Route::resource('minutasaltadireccions', 'MinutasaltadireccionController');
-
-    // Evidencias Sgsis
-    Route::delete('evidencias-sgsis/destroy', 'EvidenciasSgsiController@massDestroy')->name('evidencias-sgsis.massDestroy');
-    Route::resource('evidencias-sgsis', 'EvidenciasSgsiController');
-
-    // Politica Sgsis
-    Route::delete('politica-sgsis/destroy', 'PoliticaSgsiController@massDestroy')->name('politica-sgsis.massDestroy');
-    Route::resource('politica-sgsis', 'PoliticaSgsiController');
-
-    // Roles Responsabilidades
-    Route::delete('roles-responsabilidades/destroy', 'RolesResponsabilidadesController@massDestroy')->name('roles-responsabilidades.massDestroy');
-    Route::resource('roles-responsabilidades', 'RolesResponsabilidadesController');
-
-    // Riesgosoportunidades
-    Route::delete('riesgosoportunidades/destroy', 'RiesgosoportunidadesController@massDestroy')->name('riesgosoportunidades.massDestroy');
-    Route::resource('riesgosoportunidades', 'RiesgosoportunidadesController');
-
-    // Objetivosseguridads
-    Route::delete('objetivosseguridads/destroy', 'ObjetivosseguridadController@massDestroy')->name('objetivosseguridads.massDestroy');
-    Route::resource('objetivosseguridads', 'ObjetivosseguridadController');
-
-    // Recursos
-    Route::delete('recursos/destroy', 'RecursosController@massDestroy')->name('recursos.massDestroy');
-    Route::resource('recursos', 'RecursosController');
-
-    // Competencia
-    Route::delete('competencia/destroy', 'CompetenciasController@massDestroy')->name('competencia.massDestroy');
-    Route::resource('competencia', 'CompetenciasController');
-    // Concientizacion Sgis
-    Route::delete('concientizacion-sgis/destroy', 'ConcientizacionSgiController@massDestroy')->name('concientizacion-sgis.massDestroy');
-    Route::resource('concientizacion-sgis', 'ConcientizacionSgiController');
-
-    // Material Sgsis
-    Route::delete('material-sgsis/destroy', 'MaterialSgsiController@massDestroy')->name('material-sgsis.massDestroy');
-    Route::resource('material-sgsis', 'MaterialSgsiController');
-
-    // Material Iso Veinticientes
-    Route::delete('material-iso-veinticientes/destroy', 'MaterialIsoVeinticienteController@massDestroy')->name('material-iso-veinticientes.massDestroy');
-    Route::resource('material-iso-veinticientes', 'MaterialIsoVeinticienteController');
-
-    // Comunicacion Sgis
-    Route::delete('comunicacion-sgis/destroy', 'ComunicacionSgiController@massDestroy')->name('comunicacion-sgis.massDestroy');
-    Route::resource('comunicacion-sgis', 'ComunicacionSgiController');
-
-    // Politica Del Sgsi Soportes
-    //Route::resource('politica-del-sgsi-soportes', 'PoliticaDelSgsiSoporteController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-    // Control Accesos
-    Route::delete('control-accesos/destroy', 'ControlAccesoController@massDestroy')->name('control-accesos.massDestroy');
-    Route::resource('control-accesos', 'ControlAccesoController');
-
-    // Informacion Documetadas
-    Route::delete('informacion-documetadas/destroy', 'InformacionDocumetadaController@massDestroy')->name('informacion-documetadas.massDestroy');
-    Route::resource('informacion-documetadas', 'InformacionDocumetadaController');
-
-    // Planificacion Controls
-    Route::delete('planificacion-controls/destroy', 'PlanificacionControlController@massDestroy')->name('planificacion-controls.massDestroy');
-    Route::resource('planificacion-controls', 'PlanificacionControlController');
-
-    // Activos
-    Route::delete('activos/destroy', 'ActivosController@massDestroy')->name('activos.massDestroy');
-    Route::resource('activos', 'ActivosController');
-
-    // Tratamiento Riesgos
-    Route::delete('tratamiento-riesgos/destroy', 'TratamientoRiesgosController@massDestroy')->name('tratamiento-riesgos.massDestroy');
-    Route::resource('tratamiento-riesgos', 'TratamientoRiesgosController');
-
-    // Auditoria Internas
-    Route::delete('auditoria-internas/destroy', 'AuditoriaInternaController@massDestroy')->name('auditoria-internas.massDestroy');
-    Route::resource('auditoria-internas', 'AuditoriaInternaController');
-
-    // Revision Direccions
-    Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
-    Route::resource('revision-direccions', 'RevisionDireccionController');
-
-    // Controles
-    Route::delete('controles/destroy', 'ControlesController@massDestroy')->name('controles.massDestroy');
-    Route::resource('controles', 'ControlesController');
-
-    // Audit Logs
-    //Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
-
-    // Areas
-    Route::delete('areas/destroy', 'AreasController@massDestroy')->name('areas.massDestroy');
-    Route::resource('areas', 'AreasController');
-
-    // Grupo Areas
-    Route::delete('grupoarea/destroy', 'GrupoAreaController@massDestroy')->name('grupoarea.massDestroy');
-    Route::resource('grupoarea', 'GrupoAreaController');
-
-    // Organizaciones
-    Route::delete('organizaciones/destroy', 'OrganizacionesController@massDestroy')->name('organizaciones.massDestroy');
-    Route::resource('organizaciones', 'OrganizacionesController');
-
-    // Tipoactivos
-    Route::delete('tipoactivos/destroy', 'TipoactivoController@massDestroy')->name('tipoactivos.massDestroy');
-    Route::resource('tipoactivos', 'TipoactivoController');
-
-    // Puestos
-    Route::delete('puestos/destroy', 'PuestosController@massDestroy')->name('puestos.massDestroy');
-    Route::resource('puestos', 'PuestosController');
-
-    // Sedes
-    Route::delete('sedes/destroy', 'SedeController@massDestroy')->name('sedes.massDestroy');
-    Route::resource('sedes', 'SedeController');
-
-    // Indicadores Sgsis
-    Route::delete('indicadores-sgsis/destroy', 'IndicadoresSgsiController@massDestroy')->name('indicadores-sgsis.massDestroy');
-    Route::resource('indicadores-sgsis', 'IndicadoresSgsiController');
-
-    // Indicadorincidentessis
-    //Route::resource('indicadorincidentessis', 'IndicadorincidentessiController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-    // Auditoria Anuals
-    Route::delete('auditoria-anuals/destroy', 'AuditoriaAnualController@massDestroy')->name('auditoria-anuals.massDestroy');
-    Route::resource('auditoria-anuals', 'AuditoriaAnualController');
-
-    // Plan Auditoria
-    Route::delete('plan-auditoria/destroy', 'PlanAuditoriaController@massDestroy')->name('plan-auditoria.massDestroy');
-    Route::resource('plan-auditoria', 'PlanAuditoriaController');
-
-    // Accion Correctivas
-    Route::delete('accion-correctivas/destroy', 'AccionCorrectivaController@massDestroy')->name('accion-correctivas.massDestroy');
-    Route::resource('accion-correctivas', 'AccionCorrectivaController');
-
-    // Planaccion Correctivas
-    Route::delete('planaccion-correctivas/destroy', 'PlanaccionCorrectivaController@massDestroy')->name('planaccion-correctivas.massDestroy');
-    Route::resource('planaccion-correctivas', 'PlanaccionCorrectivaController');
-
-    // Registromejoras
-    Route::delete('registromejoras/destroy', 'RegistromejoraController@massDestroy')->name('registromejoras.massDestroy');
-    Route::resource('registromejoras', 'RegistromejoraController');
-
-    // Dmaics
-    Route::delete('dmaics/destroy', 'DmaicController@massDestroy')->name('dmaics.massDestroy');
-    Route::resource('dmaics', 'DmaicController');
-
-    // Plan Mejoras
-    Route::delete('plan-mejoras/destroy', 'PlanMejoraController@massDestroy')->name('plan-mejoras.massDestroy');
-    Route::resource('plan-mejoras', 'PlanMejoraController');
-
-    // Enlaces Ejecutars
-    Route::delete('enlaces-ejecutars/destroy', 'EnlacesEjecutarController@massDestroy')->name('enlaces-ejecutars.massDestroy');
-    Route::resource('enlaces-ejecutars', 'EnlacesEjecutarController');
-
-    // Teams
-    Route::delete('teams/destroy', 'TeamController@massDestroy')->name('teams.massDestroy');
-    Route::resource('teams', 'TeamController');
-
-    // Incidentes De Seguridads
-    Route::delete('incidentes-de-seguridads/destroy', 'IncidentesDeSeguridadController@massDestroy')->name('incidentes-de-seguridads.massDestroy');
-    Route::resource('incidentes-de-seguridads', 'IncidentesDeSeguridadController');
-
-    // Estado Incidentes
-    Route::delete('estado-incidentes/destroy', 'EstadoIncidentesController@massDestroy')->name('estado-incidentes.massDestroy');
-    Route::resource('estado-incidentes', 'EstadoIncidentesController');
-
-    // Estatus Plan Trabajos
-    Route::delete('estatus-plan-trabajos/destroy', 'EstatusPlanTrabajoController@massDestroy')->name('estatus-plan-trabajos.massDestroy');
-    Route::resource('estatus-plan-trabajos', 'EstatusPlanTrabajoController');
-
-    // Carpeta
-    Route::delete('carpeta/destroy', 'CarpetasController@massDestroy')->name('carpeta.massDestroy');
-    Route::resource('carpeta', 'CarpetasController');
-
-    // Archivos
-    Route::delete('archivos/destroy', 'ArchivosController@massDestroy')->name('archivos.massDestroy');
-    Route::resource('archivos', 'ArchivosController');
-
-    // Estado Documentos
-    Route::delete('estado-documentos/destroy', 'EstadoDocumentoController@massDestroy')->name('estado-documentos.massDestroy');
-    Route::resource('estado-documentos', 'EstadoDocumentoController');
-
-    // Faq Categories
-    Route::delete('faq-categories/destroy', 'FaqCategoryController@massDestroy')->name('faq-categories.massDestroy');
-    Route::resource('faq-categories', 'FaqCategoryController');
-
-    // Matriz Riesgos
-    //Route::delete('matriz-riesgos/destroy', 'MatrizRiesgosController@massDestroy')->name('matriz-riesgos.massDestroy');
-    //Route::resource('matriz-riesgos', 'MatrizRiesgosController');
-    // Gap Unos
-    Route::delete('gap-unos/destroy', 'GapUnoController@massDestroy')->name('gap-unos.massDestroy');
-    Route::resource('gap-unos', 'GapUnoController');
-
-    // Gap Dos
-    Route::delete('gap-dos/destroy', 'GapDosController@massDestroy')->name('gap-dos.massDestroy');
-    Route::resource('gap-dos', 'GapDosController');
-
-    // Gap Tres
-    Route::delete('gap-tres/destroy', 'GapTresController@massDestroy')->name('gap-tres.massDestroy');
-    Route::resource('gap-tres', 'GapTresController');
-
-    // Faq Questions
-    Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
-    Route::resource('faq-questions', 'FaqQuestionController');
-
-    Route::get('frontend/profile', 'ProfileController@index')->name('profile.index');
-    Route::post('frontend/profile', 'ProfileController@update')->name('profile.update');
-    Route::post('frontend/profile/destroy', 'ProfileController@destroy')->name('profile.destroy');
-    Route::post('frontend/profile/password', 'ProfileController@password')->name('profile.password');
-    Route::post('profile/toggle-two-factor', 'ProfileController@toggleTwoFactor')->name('profile.toggle-two-factor');
-}); */
 
 //#######################
 //### NOTIFICACIONES ###

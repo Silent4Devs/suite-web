@@ -8,6 +8,7 @@ use Livewire\Component;
 class ShowPartesInteresadas extends Component
 {
     public $id_interesado;
+
     protected $listeners = ['render' => 'render'];
 
     public function render()

@@ -3,38 +3,60 @@
 namespace App\Http\Livewire\Timesheet;
 
 use App\Models\Area;
+use App\Models\Empleado;
 use App\Models\Timesheet;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ReportesRegistros extends Component
 {
     use WithPagination;
+
     protected $paginationTheme = 'bootstrap';
+
     public $todos_contador;
+
     public $borrador_contador;
+
     public $pendientes_contador;
+
     public $aprobados_contador;
+
     public $rechazos_contador;
+
     public $totalRegistrosMostrando;
+
     public $perPage = 5;
+
     public $search;
+
     // public $times;
     public $areas;
+
     public $area_id = 0;
+
     public $estatus;
+
     public $fecha_inicio;
+
     public $fecha_fin;
+
+    public $emp;
+
+    public $emp_id;
 
     public function mount()
     {
         $this->estatus = null;
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
+        // $this->emp = Empleado::alta()->orderBy('name', 'ASC')->get();
     }
 
     public function updatedFechaInicio($value)
     {
-        $this->fecha_inicio = $value;
+        $fi = Carbon::parse($value)->format('Y-m-d');
+        $this->fecha_inicio = $fi;
         // $this->times = Timesheet::whereHas('empleado', function ($query) {
         //     if ($this->area_id == 0) {
         //         return $query;
@@ -46,7 +68,8 @@ class ReportesRegistros extends Component
 
     public function updatedFechaFin($value)
     {
-        $this->fecha_fin = $value;
+        $ff = Carbon::parse($value)->format('Y-m-d');
+        $this->fecha_fin = $ff;
         // $this->times = Timesheet::whereHas('empleado', function ($query) {
         //     if ($this->area_id == 0) {
         //         return $query;
@@ -58,7 +81,26 @@ class ReportesRegistros extends Component
 
     public function updatedAreaId($value)
     {
-        $this->area_id = $value;
+        if($value == 0){
+            $this->area_id = $value;
+            $this->emp = 0;
+        }else{
+            $this->area_id = $value;
+        }
+
+
+        // $this->times = Timesheet::whereHas('empleado', function ($query) {
+        //     if ($this->area_id == 0) {
+        //         return $query;
+        //     } else {
+        //         $query->where('area_id', $this->area_id);
+        //     }
+        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
+    }
+
+    public function updatedEmpleadoId($value)
+    {
+        $this->emp_id = $value;
 
         // $this->times = Timesheet::whereHas('empleado', function ($query) {
         //     if ($this->area_id == 0) {
@@ -72,7 +114,21 @@ class ReportesRegistros extends Component
     public function render()
     {
         //Query para obtener los timesheet y filtrarlo
+        if($this->area_id == 0){
+            $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
+        }else{
+            $this->emp = Empleado::where('area_id', $this->area_id)->alta()->orderBy('name', 'ASC')->get();
+        }
+        $empleados = $this->emp;
+
         $query = Timesheet::orderByDesc('fecha_dia')
+            ->whereHas('empleado', function ($query) {
+                if ($this->emp_id == 0) {
+                    return $query->where('name', 'ILIKE', "%{$this->search}%");
+                } else {
+                    $query->where('id', $this->emp_id)->where('name', 'ILIKE', "%{$this->search}%");
+                }
+            })
             ->whereHas('empleado', function ($query) {
                 if ($this->area_id == 0) {
                     return $query->where('name', 'ILIKE', "%{$this->search}%");
@@ -93,12 +149,13 @@ class ReportesRegistros extends Component
 
         $this->emit('scriptTabla');
 
-        return view('livewire.timesheet.reportes-registros', compact('times'));
+        return view('livewire.timesheet.reportes-registros', compact('times', 'empleados'));
     }
 
     public function establecerContadores()
     {
         //Contador Todos los registros timesheet
+        //$this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
         $this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
             if ($this->area_id == 0) {
                 return $query;

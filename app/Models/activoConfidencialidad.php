@@ -4,15 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class activoConfidencialidad extends Model
+class activoConfidencialidad extends Model implements Auditable
 {
     use HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'activo_confidencialidad';
 
     protected $guarded = [
@@ -20,4 +19,12 @@ class activoConfidencialidad extends Model
         'confidencialidad',
         'valor',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('ActivosConfidencial_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 }

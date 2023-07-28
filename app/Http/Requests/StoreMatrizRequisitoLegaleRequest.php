@@ -9,23 +9,23 @@ class StoreMatrizRequisitoLegaleRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombrerequisito'           => [
+            'nombrerequisito' => [
                 'string',
                 'required',
             ],
-            'fechaexpedicion'           => [
+            'fechaexpedicion' => [
                 'date',
                 'nullable',
             ],
-            'fechavigor'                => [
+            'fechavigor' => [
                 'date',
                 'nullable',
             ],
-            'requisitoacumplir'         => [
+            'requisitoacumplir' => [
                 'string',
                 'nullable',
             ],
-            'formacumple'               => [
+            'formacumple' => [
                 'string',
                 'nullable',
             ],
@@ -33,7 +33,7 @@ class StoreMatrizRequisitoLegaleRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'fechaverificacion'         => [
+            'fechaverificacion' => [
                 'date',
                 'nullable',
             ],
