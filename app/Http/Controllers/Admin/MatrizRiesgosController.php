@@ -477,7 +477,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $numero_sedes = Sede::count();
-        $numero_matriz = MatrizRiesgosSistemaGestion::count();
+        $numero_matriz = MatrizRiesgosSistemaGestion::getAll()->count();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -990,8 +990,8 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('analisis_de_riesgo_integral_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $matrizRiesgo = MatrizRiesgosSistemaGestion::with(['controles', 'matriz_riesgos_controles_pivots', 'proceso'])->find($id);
-        // dd($matrizRiesgo);
+        $matrizRiesgo = MatrizRiesgosSistemaGestion::getAllWithControlesPivotProceso($id);
+
         return view('admin.matrizSistemaGestion.show', compact('matrizRiesgo'));
     }
 
