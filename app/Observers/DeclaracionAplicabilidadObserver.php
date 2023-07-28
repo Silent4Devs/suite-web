@@ -60,5 +60,6 @@ class DeclaracionAplicabilidadObserver
     private function forgetCache()
     {
         Cache::forget('declaracionaplicabilidad_all');
+        Cache::forget('declaracion_aplicabilidad_asc_all');
     }
 }
