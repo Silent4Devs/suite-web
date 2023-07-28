@@ -78,6 +78,7 @@ use App\Observers\TimeSheetTareaObserver;
 use App\Events\IncidentesDeSeguridadEvent;
 use App\Observers\TipoCompetenciaObserver;
 use App\Listeners\AccionCorrectivaListener;
+use App\Models\MatrizRiesgosSistemaGestion;
 use App\Observers\AccionCorrectivaObserver;
 use App\Observers\MetricasObjetivoObserver;
 use App\Observers\TimeSheetClienteObserver;
@@ -91,6 +92,7 @@ use App\Observers\ExperienciaEmpleadosObserver;
 use App\Listeners\IncidentesDeSeguridadListener;
 use App\Observers\IncidentesDeSeguridadObserver;
 use App\Observers\DeclaracionAplicabilidadObserver;
+use App\Observers\MatrizRiesgosSistemaGestionObserver;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -173,5 +175,6 @@ class EventServiceProvider extends ServiceProvider
         IncidentesSeguridad::observe(IncidentesSeguridadObserver::class);
         RiesgoIdentificado::observe(RiesgoIdentificadoObserver::class);
         QuejasCliente::observe(QuejasClienteObserver::class);
+        MatrizRiesgosSistemaGestion::observe(MatrizRiesgosSistemaGestionObserver::class);
     }
 }

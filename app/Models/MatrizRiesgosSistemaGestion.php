@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class MatrizRiesgosSistemaGestion extends Model implements Auditable
 {
@@ -115,6 +117,22 @@ class MatrizRiesgosSistemaGestion extends Model implements Auditable
     {
         return $date->format('Y-m-d H:i:s');
     }*/
+    public static function getAll()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('matriz_riesgos_sistema_gestion_all', 3600 * 4, function () {
+            return self::get();
+        });
+    }
+
+    public static function getAllWithControlesPivotProceso($columns = 'id')
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('matriz_riesgos_sistema_gestion_' . Auth::user()->id, 3600 * 4, function () use ($columns) {
+            return self::with(['controles', 'matriz_riesgos_controles_pivots', 'proceso'])
+                ->find($columns);
+        });
+    }
 
     public function generateTwoFactorCode()
     {
