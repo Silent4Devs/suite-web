@@ -165,7 +165,7 @@ class Timesheet extends Model implements Auditable
 
         $proyectos = collect();
         foreach ($horas_id_proyectos as $id_proyect) {
-            $proyecto = TimesheetProyecto::find($id_proyect->proyecto_id);
+            $proyecto = TimesheetProyecto::getAll()->find($id_proyect->proyecto_id);
 
             $proyectos->push($proyecto);
         }

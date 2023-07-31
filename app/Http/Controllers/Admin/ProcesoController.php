@@ -216,7 +216,7 @@ class ProcesoController extends Controller
     {
         $input = $request->all();
 
-        $data = MatrizRiesgo::select('id', 'descripcionriesgo', 'nivelriesgo', 'nivelriesgo_residual', 'meta')->where('id', $input['id'])->first();
+        $data = MatrizRiesgo::getAll()->where('id', $input['id'])->first();
 
         $res = '<div id="resultado_riesgos" width="900" height="750"></div>';
 

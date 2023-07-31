@@ -11,7 +11,7 @@ class SelectAreasComponent extends Component
 
     public function render()
     {
-        $areas = Area::orderByDesc('id')->get();
+        $areas = Area::getAll();
 
         return view('livewire.timesheet.select-areas-component', compact('areas'));
     }

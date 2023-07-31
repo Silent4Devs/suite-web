@@ -34,11 +34,11 @@ class DeclaracionAplicabilidad extends Model implements Auditable
     ];
 
     //Redis methods
-    public static function getAll($columns = ['id', 'columna1', 'columna2'])
+    public static function getAll()
     {
         //retrieve all data or can pass columns to retrieve
-        return Cache::remember('declaracionaplicabilidad_all', 3600 * 24, function () use ($columns) {
-            return self::select($columns)->orderBy('id')->get();
+        return Cache::remember('declaracionaplicabilidad_all', 3600 * 24, function () {
+            return self::orderBy('id')->get();
         });
     }
 

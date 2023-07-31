@@ -78,7 +78,7 @@ class ContenedorMatrizOctaveController extends Controller
     {
         $contenedor = MatrizOctaveContenedor::find($contenedor);
         $sumatoria = $this->calcularRiesgo($contenedor->id);
-        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
+        $controles = DeclaracionAplicabilidad::getAll();
         // dd($contenedor->impacto_proceso);
         return view('admin.ContenedorMatrizOctave.edit', compact('contenedor', 'sumatoria', 'controles', 'matriz'));
     }
