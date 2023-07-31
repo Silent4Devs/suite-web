@@ -174,7 +174,9 @@
                         class="datatable_timesheet_proyectos table w-100 tabla-fixed">
                         <thead>
                             <tr>
-                                <th style="min-width:250px;">Proyecto </th>
+                                <th style="min-width:250px;">
+                                    ID-Proyecto
+                                </th>
                                 <th style="min-width:250px; text-align: right;">Áreas participantes</th>
                                 <th style="min-width:250px; text-align: right;">Cliente</th>
                                 @foreach ($calendario_tabla as $calendar)
@@ -264,7 +266,7 @@
                         <tbody>
                             @foreach ($proyectos_array as $proyecto)
                                 <tr>
-                                    <td>{{ $proyecto['proyecto'] }} </td>
+                                    <td>{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</td>
                                     <td>
                                         <ul style="padding-left: 10px;">
                                             @foreach ($proyecto['areas'] as $area)
