@@ -62,9 +62,9 @@ class DashboardProyectos extends Component
         $this->datos_areas = collect();
 
         if ($this->estatus === 'todos') {
-            $this->proy = TimesheetProyecto::orderBy('proyecto')->get();
+            $this->proy = TimesheetProyecto::getAll()->orderBy('proyecto');
         } else {
-            $this->proy = TimesheetProyecto::where('estatus', $this->estatus)->orderBy('proyecto')->get();
+            $this->proy = TimesheetProyecto::getAll()->where('estatus', $this->estatus)->orderBy('proyecto');
         }
 
         $lista_proyectos = $this->proy;
@@ -187,7 +187,7 @@ class DashboardProyectos extends Component
                 $this->datos_dash = TimesheetProyecto::find($this->proy_id);
                 $area_individual = Area::find($this->area_id);
 
-                if (! isset($area_individual->area)) {
+                if (!isset($area_individual->area)) {
                     $area_individual = 'Sin definir';
                 } else {
                     $area_individual = $area_individual->area;
