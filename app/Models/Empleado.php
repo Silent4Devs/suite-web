@@ -169,6 +169,14 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public static function getEmpleadoCurriculum($id)
+    {
+        return
+            Cache::remember('EmpleadoCurriculum_' . $id, 3600 * 24, function () use ($id) {
+                return self::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->findOrFail($id);
+            });
+    }
+
     public static function getAltaEmpleados()
     {
         return Cache::remember('empleados_alta', 3600 * 24, function () {

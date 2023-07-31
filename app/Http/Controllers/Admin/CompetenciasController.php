@@ -207,9 +207,8 @@ class CompetenciasController extends Controller
 
     public function miCurriculum(Request $request, Empleado $empleado)
     {
-        $empleado->load('idiomas');
-        // dd($empleado);
         abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $empleado->load('idiomas');
         $lista_docs = ListaDocumentoEmpleado::getAll();
 
         return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
