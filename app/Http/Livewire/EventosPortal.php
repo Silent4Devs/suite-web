@@ -49,13 +49,15 @@ class EventosPortal extends Component
 
     public function render()
     {
-        $this->nuevos = Empleado::alta()->whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->get();
-        $this->nuevos_contador_circulo = Empleado::alta()->whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->count();
+        $getAlta = Empleado::alta();
 
-        $this->cumpleaños = Empleado::alta()->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->get();
-        $this->cumpleaños_contador_circulo = Empleado::alta()->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->count();
+        $this->nuevos = $getAlta->whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->get();
+        $this->nuevos_contador_circulo = $getAlta->whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->count();
 
-        $this->aniversarios = Empleado::alta()->whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->get();
+        $this->cumpleaños = $getAlta->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->get();
+        $this->cumpleaños_contador_circulo = $getAlta->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->count();
+
+        $this->aniversarios = $getAlta->whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->get();
         $this->aniversarios_contador_circulo = 0;
         foreach ($this->aniversarios as $key => $aniv) {
             if (Carbon::createFromTimeStamp(strtotime($aniv->antiguedad))->diffInYears() > 0) {
@@ -63,8 +65,8 @@ class EventosPortal extends Component
             }
         }
 
-        $this->politica_existe = PoliticaSgsi::count();
-        $this->comite_existe = Comiteseguridad::count();
+        $this->politica_existe = PoliticaSgsi::getAll()->count();
+        $this->comite_existe = Comiteseguridad::getAll()->count();
 
         // dd($nuevos);
 

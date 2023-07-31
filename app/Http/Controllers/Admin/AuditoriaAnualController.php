@@ -117,7 +117,7 @@ class AuditoriaAnualController extends Controller
     {
         abort_if(Gate::denies('programa_anual_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $auditorliders = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $auditoriaAnual->load('auditorlider', 'team');
 
@@ -178,7 +178,7 @@ class AuditoriaAnualController extends Controller
         $auditoria = AuditoriaAnual::with('documentos_material')->find($request->auditoriaId);
         $paths = [];
         foreach ($auditoria->documentos_material as $documento) {
-            $path = asset('storage/programaAnualAuditoria/documentos/'.$auditoria->id.'/'.$documento->documento);
+            $path = asset('storage/programaAnualAuditoria/documentos/' . $auditoria->id . '/' . $documento->documento);
             $extension = pathinfo($path, PATHINFO_EXTENSION);
             array_push($paths, [
                 'path' => $path,

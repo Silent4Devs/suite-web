@@ -28,7 +28,7 @@ class RegistroVisitantesController extends Controller
         }
         $logo = asset('img/logo_monocromatico.png');
         if (Organizacion::select('id', 'logotipo')->first()) {
-            $logo = Organizacion::select('id', 'logotipo')->first()->logotipo;
+            $logo = Organizacion::getLogo()->logotipo;
         }
 
         return view('visitantes.registro-visitantes.presentacion', compact('quote', 'logo'))->with('existsResponsable', $this->existsResponsable);
@@ -46,8 +46,8 @@ class RegistroVisitantesController extends Controller
         } else {
             $aviso_privacidad = new AvisoPrivacidadVisitante();
         }
-        if (Organizacion::count() > 0) {
-            $organizacionLogo = Organizacion::first()->logotipo;
+        if (Organizacion::getAll()->count() > 0) {
+            $organizacionLogo = Organizacion::getFirst()->logotipo;
         } else {
             $organizacionLogo = asset('img/logo.png');
         }

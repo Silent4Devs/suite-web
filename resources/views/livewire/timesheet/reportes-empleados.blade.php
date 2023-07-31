@@ -168,19 +168,23 @@
         <div class="col-md-3 form-group" style="padding-left:0px !important;">
             <label class="form-label">Estatus de Colaborador</label>
             <div class="d-flex">
-                <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus('alta')" style="background-color: #69D552; border:none !important;">
+                <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus('alta')"
+                    style="background-color: #69D552; border:none !important;">
                     Alta
                 </div>
-                <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus('baja')" style="background-color: #FF9D9D; border:none !important;">
+                <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus('baja')"
+                    style="background-color: #FF9D9D; border:none !important;">
                     Baja
                 </div>
-                <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus(null)" style="background-color: #42ADDC; border:none !important;">
+                <div class="btn btn-info mr-2" wire:click="updateEmpleadosEstatus(null)"
+                    style="background-color: #42ADDC; border:none !important;">
                     Todos
                 </div>
             </div>
         </div>
         <div class="col-md-9 form-group text-right d-flex" style="align-items: flex-end;">
-            <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar correo a todos los colaboradores con horas faltantes de registrar</button>
+            <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar
+                correo a todos los colaboradores con horas faltantes de registrar</button>
         </div>
         <div class="datatable-fix w-100 mt-4">
             <table id="timesheet_empleados_lista" class="table w-100 datatable_timesheet_empleados_reportes tabla-fixed"
@@ -301,7 +305,9 @@
                                     {{ $empleado_td['estatus'] }}</span>
                             </td>
                             <td class="cde-fecha">
-                                <small style="color:#aaa;">Fecha&nbsp;de&nbsp;{{$empleado_td['estatus'] == 'alta' ? 'ingreso' : 'baja'}}: </small>
+                                <small
+                                    style="color:#aaa;">Fecha&nbsp;de&nbsp;{{ $empleado_td['estatus'] == 'alta' ? 'ingreso' : 'baja' }}:
+                                </small>
                                 {{ $empleado_td['fecha_alta_baja'] }}
                             </td>
                             @foreach ($empleado_td['calendario'] as $index => $horas_calendar)
@@ -321,8 +327,8 @@
                                 </button>
 
                                 @if ($empleado_td['times_atrasados'] > 0)
-                                    <button class="btn" title="Notificar retrasos en Timesheet" data-toggle="modal"
-                                        data-target="#modal_semanas_{{ $empleado_td['id'] }}">
+                                    <button class="btn" title="Notificar retrasos en Timesheet"
+                                        data-toggle="modal" data-target="#modal_semanas_{{ $empleado_td['id'] }}">
                                         <i class="fa-solid fa-envelope" style="color:#173D59 !important;"></i>
                                     </button>
                                 @endif
@@ -337,7 +343,7 @@
                     <td class="cde-area"></td>
                     <td class="cde-estatus"></td>
                     <td class="cde-fecha">Total:</td>
-                    @if(isset($empleado_td))
+                    @if (isset($empleado_td))
                         @foreach ($empleado_td['calendario'] as $index => $horas_calendar)
                             <td></td>
                         @endforeach
@@ -389,7 +395,8 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn_cancelar" data-dismiss="modal">Cerrar</button>
                             <button type="button" class="btn btn-success"
-                                wire:click="correoRetraso({{ $empleado_md['id']}}, {{$empleado_md['times_atrasados'] }})" data-dismiss="modal">Notificar
+                                wire:click="correoRetraso({{ $empleado_md['id'] }}, {{ $empleado_md['times_atrasados'] }})"
+                                data-dismiss="modal">Notificar
                                 Retrasos al Colaborador</button>
                         </div>
                     </div>
@@ -402,7 +409,7 @@
     @if ($empleado)
         <div id="reporte_empleado" class="anima_reporte">
             @php
-                $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+                $organizacion = Organizacion::getFirst();
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {
@@ -667,56 +674,58 @@
         document.addEventListener('DOMContentLoaded', () => {
             Livewire.on('scriptTabla', () => {
                 $(".cde-nombre").mouseover(function() {
-            $(".cde-nombre").addClass("ver");
-        });
-        $(".cde-nombre").mouseleave(function() {
-            $(".cde-nombre").removeClass("ver");
-        });
+                    $(".cde-nombre").addClass("ver");
+                });
+                $(".cde-nombre").mouseleave(function() {
+                    $(".cde-nombre").removeClass("ver");
+                });
 
-        $(".cde-puesto").mouseover(function() {
-            $(".cde-puesto").addClass("ver");
-        });
-        $(".cde-puesto").mouseleave(function() {
-            $(".cde-puesto").removeClass("ver");
-        });
+                $(".cde-puesto").mouseover(function() {
+                    $(".cde-puesto").addClass("ver");
+                });
+                $(".cde-puesto").mouseleave(function() {
+                    $(".cde-puesto").removeClass("ver");
+                });
 
-        $(".cde-area").mouseover(function() {
-            $(".cde-area").addClass("ver");
-        });
-        $(".cde-area").mouseleave(function() {
-            $(".cde-area").removeClass("ver");
-        });
+                $(".cde-area").mouseover(function() {
+                    $(".cde-area").addClass("ver");
+                });
+                $(".cde-area").mouseleave(function() {
+                    $(".cde-area").removeClass("ver");
+                });
 
-        $(".cde-estatus").mouseover(function() {
-            $(".cde-estatus").addClass("ver");
-        });
-        $(".cde-estatus").mouseleave(function() {
-            $(".cde-estatus").removeClass("ver");
-        });
-        $(".cde-fecha").mouseleave(function() {
-            $(".cde-fecha").removeClass("ver");
-        });
+                $(".cde-estatus").mouseover(function() {
+                    $(".cde-estatus").addClass("ver");
+                });
+                $(".cde-estatus").mouseleave(function() {
+                    $(".cde-estatus").removeClass("ver");
+                });
+                $(".cde-fecha").mouseleave(function() {
+                    $(".cde-fecha").removeClass("ver");
+                });
 
-        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)").mouseover(
-            function() {
                 $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
-                    .addClass("ver");
-            });
-        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
-            .mouseleave(function() {
+                    .mouseover(
+                        function() {
+                            $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
+                                .addClass("ver");
+                        });
                 $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
-                    .removeClass("ver");
-            });
-        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)").mouseover(
-            function() {
+                    .mouseleave(function() {
+                        $(".datatable_timesheet_proyectos tr th:nth-child(2), .datatable_timesheet_proyectos tr td:nth-child(2)")
+                            .removeClass("ver");
+                    });
                 $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
-                    .addClass("ver");
-            });
-        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
-            .mouseleave(function() {
+                    .mouseover(
+                        function() {
+                            $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
+                                .addClass("ver");
+                        });
                 $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
-                    .removeClass("ver");
-            });
+                    .mouseleave(function() {
+                        $(".datatable_timesheet_proyectos tr th:nth-child(3), .datatable_timesheet_proyectos tr td:nth-child(3)")
+                            .removeClass("ver");
+                    });
                 tablaLivewire('timesheet_empleados_lista');
                 tablaLivewire('datatable_timesheet_empleados');
                 tablaLivewire('table_horas_empleado_semanas');

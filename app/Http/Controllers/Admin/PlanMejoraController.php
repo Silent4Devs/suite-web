@@ -79,7 +79,7 @@ class PlanMejoraController extends Controller
 
         $mejoras = Registromejora::all()->pluck('nombre', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.planMejoras.create', compact('mejoras', 'responsables'));
     }
@@ -97,7 +97,7 @@ class PlanMejoraController extends Controller
 
         $mejoras = Registromejora::all()->pluck('nombre', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $planMejora->load('mejora', 'responsable', 'team');
 
