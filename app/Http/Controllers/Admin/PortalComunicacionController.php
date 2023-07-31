@@ -30,21 +30,21 @@ class PortalComunicacionController extends Controller
         $hoy->toDateString();
 
         $nuevos = Cache::remember('portal_nuevos', 3600, function () use ($hoy) {
-            return Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+            return Empleado::getaltaAll()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         });
 
         $nuevos_contador_circulo = Cache::remember('portal_nuevos_contador_circulo', 3600, function () use ($hoy) {
-            return Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
+            return Empleado::getaltaAll()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
         });
 
         $cumpleaños = Cache::remember('portal_cumpleaños', 3600, function () use ($hoy) {
-            return Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+            return Empleado::getaltaAll()->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
 
-        $cumpleaños_contador_circulo = Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->count();
+        $cumpleaños_contador_circulo = Empleado::getaltaAll()->whereMonth('cumpleaños', '=', $hoy->format('m'))->count();
 
-        $aniversarios = Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
-        $aniversarios_contador_circulo = Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
+        $aniversarios = Empleado::getaltaAll()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
+        $aniversarios_contador_circulo = Empleado::getaltaAll()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
 
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
 

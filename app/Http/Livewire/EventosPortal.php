@@ -49,13 +49,13 @@ class EventosPortal extends Component
 
     public function render()
     {
-        $this->nuevos = Empleado::alta()->whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->get();
-        $this->nuevos_contador_circulo = Empleado::alta()->whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->count();
+        $this->nuevos = Empleado::getaltaAll()->whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->get();
+        $this->nuevos_contador_circulo = Empleado::getaltaAll()->whereBetween('antiguedad', [$this->hoy->firstOfMonth()->format('Y-m-d'), $this->hoy->endOfMonth()->format('Y-m-d')])->count();
 
-        $this->cumpleaños = Empleado::alta()->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->get();
-        $this->cumpleaños_contador_circulo = Empleado::alta()->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->count();
+        $this->cumpleaños = Empleado::getaltaAll()->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->get();
+        $this->cumpleaños_contador_circulo = Empleado::getaltaAll()->whereMonth('cumpleaños', '=', $this->hoy->format('m'))->count();
 
-        $this->aniversarios = Empleado::alta()->whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->get();
+        $this->aniversarios = Empleado::getaltaAll()->whereMonth('antiguedad', '=', $this->hoy->format('m'))->whereYear('antiguedad', '<', $this->hoy->format('Y'))->get();
         $this->aniversarios_contador_circulo = 0;
         foreach ($this->aniversarios as $key => $aniv) {
             if (Carbon::createFromTimeStamp(strtotime($aniv->antiguedad))->diffInYears() > 0) {
