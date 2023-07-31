@@ -113,7 +113,7 @@ class ReporteAprobador extends Component
     {
         $this->fecha_fin = $value;
         if ($this->fecha_fin < $this->fecha_inicio) {
-            $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( '.$this->fecha_inicio.' )', [
+            $this->alert('info', 'La fecha de fin no puede ser anterior a la fecha de inicio ( ' . $this->fecha_inicio . ' )', [
                 'position' => 'top-end',
                 'timer' => 3000,
                 'toast' => true,
@@ -181,7 +181,7 @@ class ReporteAprobador extends Component
                 $previous_month = Carbon::create()->day(1)->month(intval($previous_month))->format('F');
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
-                if (! ($this->buscarKeyEnArray($year, $calendario_array))) {
+                if (!($this->buscarKeyEnArray($year, $calendario_array))) {
                     $calendario_array["{$year}"] = [
                         'year' => $year,
                         'total_weeks' => 0,
@@ -196,19 +196,19 @@ class ReporteAprobador extends Component
                     if ($month == 'January') {
                         $previous_year = $year - 1;
                         if (array_key_exists($previous_year, $calendario_array)) {
-                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
+                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         }
                     }
                 } else {
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
-                        if (! in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
+                        if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
-                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
+                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         } else {
@@ -477,7 +477,7 @@ class ReporteAprobador extends Component
             }
         }
 
-        $this->timesheet = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->orderByDesc('fecha_dia')->get();
+        $this->timesheet = Timesheet::getAll()->where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->orderByDesc('fecha_dia');
 
         foreach ($this->timesheet as $t) {
             $horas_semana_lunes = 0;
@@ -528,7 +528,7 @@ class ReporteAprobador extends Component
         foreach ($this->proyectos as $proyecto) {
             $tareas = collect();
             $horas_proyecto = 0;
-            foreach (TimesheetProyecto::find($proyecto)->tareas as $tarea) {
+            foreach (TimesheetProyecto::getAll()->find($proyecto)->tareas as $tarea) {
                 $tarea_horas = TimesheetHoras::where('tarea_id', $tarea->id)->get();
                 $horas = 0;
                 foreach ($tarea_horas as $tm) {
@@ -553,7 +553,7 @@ class ReporteAprobador extends Component
             }
             $this->proyectos_detalle->push([
                 'id' => $proyecto,
-                'proyecto' => TimesheetProyecto::find($proyecto)->proyecto,
+                'proyecto' => TimesheetProyecto::getAll()->find($proyecto)->proyecto,
                 'tareas' => $tareas,
                 'horas' => $this->fecha_inicio_empleado ? '50' : $horas_proyecto,
             ]);

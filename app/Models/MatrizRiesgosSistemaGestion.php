@@ -121,7 +121,7 @@ class MatrizRiesgosSistemaGestion extends Model implements Auditable
     {
         //retrieve all data or can pass columns to retrieve
         return Cache::remember('matriz_riesgos_sistema_gestion_all', 3600 * 4, function () {
-            return self::get();
+            return self::orderBy('id');
         });
     }
 

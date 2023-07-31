@@ -89,7 +89,7 @@
                             @foreach ($horas as $index => $hora)
                                 <tr>
                                     <td>
-                                        <div class="form-control" style="height:unset;">{{ $hora->proyecto->proyecto }}
+                                        <div class="form-control" style="height:unset;">{{ $hora->proyecto->identificador }} - {{ $hora->proyecto->proyecto }}
                                         </div>
                                     </td>
                                     <td>
@@ -177,9 +177,7 @@
             @if (asset('admin/timesheet/aprobaciones') ==
                     redirect()->getUrlGenerator()->previous())
                 <div class="col-12 d-flex justify-content-between">
-                    <button class="btn btn_cancelar">
-                        Regresar
-                    </button>
+                    <a href="{{ route('admin.timesheet-inicio') }}" class="btn_cancelar">Regresar</a>
                     <div class="">
                         <button title="Rechazar" class="btn btn-info" style="background-color:#F05353; border: none;"
                             data-toggle="modal" data-target="#modal_rechazar_{{ $timesheet->id }}">

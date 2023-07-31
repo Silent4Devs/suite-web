@@ -49,15 +49,15 @@ class TablaProyectosTimesheet extends Component
     {
         $this->tipos = TimesheetProyecto::TIPOS;
         $this->tipo = $this->tipos['Interno'];
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')
-        ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);
+        $this->proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso')
+            ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);
     }
 
     public function render()
     {
-        $this->proceso_count = TimesheetProyecto::where('estatus', 'proceso')->count();
-        $this->cancelado_count = TimesheetProyecto::where('estatus', 'cancelado')->count();
-        $this->terminado_count = TimesheetProyecto::where('estatus', 'terminado')->count();
+        $this->proceso_count = TimesheetProyecto::getAll()->where('estatus', 'proceso')->count();
+        $this->cancelado_count = TimesheetProyecto::getAll()->where('estatus', 'cancelado')->count();
+        $this->terminado_count = TimesheetProyecto::getAll()->where('estatus', 'terminado')->count();
 
         $this->emit('cerrarModal');
 
@@ -120,24 +120,25 @@ class TablaProyectosTimesheet extends Component
     public function procesos()
     {
         $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')
-        ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);
+            ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);
     }
 
     public function cancelados()
     {
         $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')
-        ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);    }
+            ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);
+    }
 
     public function terminados()
     {
         $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')
-        ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);;
+            ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);;
     }
 
     public function todos()
     {
         $this->proyectos = TimesheetProyecto::orderBy('identificador')
-        ->get()->sortBy('identificador', SORT_NATURAL);
+            ->get()->sortBy('identificador', SORT_NATURAL);
     }
 
     public function destroy($id)

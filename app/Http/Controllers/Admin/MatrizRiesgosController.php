@@ -132,7 +132,7 @@ class MatrizRiesgosController extends Controller
         $vulnerabilidades = Vulnerabilidad::select('id', 'nombre')->get();
 
         if ($version_historico === 'true') {
-            $controles = DeclaracionAplicabilidad::getAll('id', 'anexo_indice', 'anexo_politica');
+            $controles = DeclaracionAplicabilidad::getAll();
         } elseif ($version_historico === 'false') {
             $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
         }
@@ -178,7 +178,7 @@ class MatrizRiesgosController extends Controller
             $controlesSeleccionado = $matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray();
         }
         if ($matrizRiesgo->version_historico === true or $matrizRiesgo->version_historico === null) {
-            $controles = DeclaracionAplicabilidad::getAll('id', 'anexo_indice', 'anexo_politica');
+            $controles = DeclaracionAplicabilidad::getAll();
         } elseif ($matrizRiesgo->version_historico === false) {
             $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
         }
@@ -188,7 +188,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
         $procesos = Proceso::getAll();
         $numero_sedes = $sedes->count();
-        $numero_matriz = MatrizRiesgo::count();
+        $numero_matriz = MatrizRiesgo::getAll()->count();
         $responsables = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
@@ -397,7 +397,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $numero_sedes = $sedes->count();
-        $numero_matriz = MatrizRiesgo::count();
+        $numero_matriz = MatrizRiesgo::getAll()->count();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -833,7 +833,7 @@ class MatrizRiesgosController extends Controller
             $version_historico = 'true';
         }
         if ($version_historico === 'true') {
-            $controles = DeclaracionAplicabilidad::getAll('id', 'anexo_indice', 'anexo_politica');
+            $controles = DeclaracionAplicabilidad::getAll();
         } elseif ($version_historico === 'false') {
             $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
         }
@@ -900,7 +900,7 @@ class MatrizRiesgosController extends Controller
             $controlesSeleccionado = $matrizRiesgo->matriz_riesgos_controles_pivots->pluck('id')->toArray();
         }
         if ($matrizRiesgo->version_historico === true or $matrizRiesgo->version_historico === null) {
-            $controles = DeclaracionAplicabilidad::getAll('id', 'anexo_indice', 'anexo_politica');
+            $controles = DeclaracionAplicabilidad::getAll();
         } elseif ($matrizRiesgo->version_historico === false) {
             $controles = GapDosCatalogoIso::select('id', 'control_iso', 'anexo_politica')->orderBy('id')->get();
         }
@@ -910,7 +910,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
         $procesos = Proceso::getAll();
         $numero_sedes = $sedes->count();
-        $numero_matriz = MatrizRiesgo::count();
+        $numero_matriz = MatrizRiesgo::getAll()->count();
         $responsables = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
         $planes_seleccionados = [];
@@ -1096,7 +1096,7 @@ class MatrizRiesgosController extends Controller
         $duenos = Empleado::getaltaAll();
         $custodios = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
+        $controles = DeclaracionAplicabilidad::getAll();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = new MatrizOctave();
         $nombreAis = ActivoInformacion::with('dueno', 'custodio')->get();
@@ -1115,7 +1115,7 @@ class MatrizRiesgosController extends Controller
         $duenos = Empleado::getaltaAll();
         $custodios = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
+        $controles = DeclaracionAplicabilidad::getAll();
         $activosoctave = MatrizOctave::get();
         $matrizOctave = MatrizOctave::with('matrizActivos')->find($id);
 
@@ -1237,7 +1237,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
 
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
+        $controles = DeclaracionAplicabilidad::getAll();
         $activosmatriz31000 = MatrizIso31000::get();
 
         return view('admin.MatrizISO31000.create', compact('activosmatriz31000', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', $request->id_analisis);
@@ -1252,7 +1252,7 @@ class MatrizRiesgosController extends Controller
         $activos = Activo::getAll();
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
+        $controles = DeclaracionAplicabilidad::getAll();
         $activosmatriz31000 = MatrizIso31000::with('activosInformacion')->find($id);
 
         return view('admin.MatrizISO31000.edit', compact('activosmatriz31000', 'activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables'))->with('id_analisis', $request->id_analisis);
@@ -1359,7 +1359,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $numero_sedes = $sedes->count();
-        $numero_matriz = MatrizRiesgo::count();
+        $numero_matriz = MatrizRiesgo::getAll()->count();
 
         return view('admin.NIST.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);
     }
@@ -1374,7 +1374,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
         $matrizNist = new MatrizNist();
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
+        $controles = DeclaracionAplicabilidad::getAll();
 
         return view('admin.NIST.create', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables', 'matrizNist'))->with('id_analisis', $request->id_analisis);
     }
@@ -1389,7 +1389,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
         $matrizNist = MatrizNist::find($id);
         $vulnerabilidades = Vulnerabilidad::get();
-        $controles = DeclaracionAplicabilidad::getAll(['id', 'anexo_indice', 'anexo_politica']);
+        $controles = DeclaracionAplicabilidad::getAll();
 
         return view('admin.NIST.edit', compact('activos', 'amenazas', 'vulnerabilidades', 'sedes', 'areas', 'procesos', 'controles', 'responsables', 'matrizNist'))->with('id_analisis', $request->id_analisis);
     }
