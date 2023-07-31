@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cedula_cumplimiento_historicos', function (Blueprint $table) {
+        Schema::create('cedula_cumplimiento_historico', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contrato_id')->nullable();
             $table->string('elaboro')->nullable();
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cedula_cumplimiento_historicos');
+        Schema::dropIfExists('cedula_cumplimiento_historico');
     }
 };

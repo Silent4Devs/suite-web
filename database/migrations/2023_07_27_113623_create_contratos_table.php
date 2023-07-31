@@ -53,7 +53,8 @@ return new class extends Migration
             $table->boolean('identificador_privado')->nullable()->default(false);
             $table->string('firma1')->nullable();
             $table->timestamps();
-            $table->softDeletes();        });
+            $table->softDeletes();
+        });
     }
 
     /**

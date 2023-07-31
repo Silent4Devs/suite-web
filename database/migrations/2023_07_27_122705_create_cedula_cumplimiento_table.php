@@ -23,7 +23,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('contrato_id')->references('id')->on('contratos');
+            $table->foreign('contrato_id')->references('id')->on('contratos')->onDelete('cascade');
         });
     }
 
@@ -34,6 +34,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cedula_cumplimientos');
+        Schema::table('cedula_cumplimiento', function (Blueprint $table) {
+            //
+            $table->dropForeign(['contrato_id']);
+        });
+        Schema::dropIfExists('cedula_cumplimiento');
     }
 };
