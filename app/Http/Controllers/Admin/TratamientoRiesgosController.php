@@ -112,7 +112,7 @@ class TratamientoRiesgosController extends Controller
         abort_if(Gate::denies('tratamiento_de_los_riesgos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $controls = DeclaracionAplicabilidad::with('control')->get();
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::alta()->with('area')->get();
 
         return view('admin.tratamientoRiesgos.create', compact('controls', 'responsables', 'empleados'));
@@ -143,7 +143,7 @@ class TratamientoRiesgosController extends Controller
 
         $tratamientos = TratamientoRiesgo::find($tratamientos);
         $controls = DeclaracionAplicabilidad::with('control')->get();
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::alta()->with('area')->get();
         $registros = $empleados;
         $procesos = Proceso::getAll();
