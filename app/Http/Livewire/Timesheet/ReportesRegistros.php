@@ -81,10 +81,10 @@ class ReportesRegistros extends Component
 
     public function updatedAreaId($value)
     {
-        if($value == 0){
+        if ($value == 0) {
             $this->area_id = $value;
             $this->emp = 0;
-        }else{
+        } else {
             $this->area_id = $value;
         }
 
@@ -114,9 +114,9 @@ class ReportesRegistros extends Component
     public function render()
     {
         //Query para obtener los timesheet y filtrarlo
-        if($this->area_id == 0){
+        if ($this->area_id == 0) {
             $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
-        }else{
+        } else {
             $this->emp = Empleado::where('area_id', $this->area_id)->alta()->orderBy('name', 'ASC')->get();
         }
         $empleados = $this->emp;
@@ -142,7 +142,7 @@ class ReportesRegistros extends Component
             $query = $query->where('estatus', $this->estatus);
         }
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->paginate($this->perPage);
+        $times = $query->fastPaginate($this->perPage);
 
         //Funcion para pintar contadores en los filtros de estatus
         $this->establecerContadores();

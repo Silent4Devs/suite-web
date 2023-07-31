@@ -63,7 +63,7 @@ class ReportesProyemp extends Component
         $this->estatus = null;
         $this->areas = Area::getAll();
         $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
-        $this->proy = TimesheetProyecto::orderBy('proyecto', 'ASC')->get();
+        $this->proy = TimesheetProyecto::getAll();
     }
 
     public function updatedFechaInicio($value)
@@ -152,7 +152,7 @@ class ReportesProyemp extends Component
             });
 
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->paginate($this->perPage);
+        $times = $query->fastPaginate($this->perPage);
 
         // $this->totalRegistrosMostrando = $proyemp->count();
 

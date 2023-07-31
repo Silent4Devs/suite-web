@@ -65,7 +65,7 @@ class TablaTareasTimesheet extends Component
         }
 
         if ($this->origen == 'tareas-proyectos') {
-            $this->proyecto_seleccionado = TimesheetProyecto::find($this->proyecto_id);
+            $this->proyecto_seleccionado = TimesheetProyecto::getAll()->find($this->proyecto_id);
             $this->tareas = TimesheetTarea::where('proyecto_id', $this->proyecto_id)->orderByDesc('id')->get();
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         }
@@ -132,7 +132,7 @@ class TablaTareasTimesheet extends Component
     public function llenarAreas($id)
     {
         if ($id) {
-            $this->proyecto_seleccionado = TimesheetProyecto::find($id);
+            $this->proyecto_seleccionado = TimesheetProyecto::getAll()->find($id);
             $this->area_seleccionar = $this->proyecto_seleccionado->areas;
         } else {
             $this->area_seleccionar = [];

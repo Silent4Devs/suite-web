@@ -16,6 +16,7 @@
         "doctrine/dbal": "^3.1",
         "friendsofphp/php-cs-fixer": "^3.2",
         "guzzlehttp/guzzle": "^7.0.1",
+        "hammerstone/fast-paginate": "^1.0",
         "intervention/image": "^2.5",
         "jantinnerezo/livewire-alert": "^2.2",
         "jenssegers/date": "^4.0",
