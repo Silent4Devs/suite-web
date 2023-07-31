@@ -62,9 +62,9 @@ class DashboardProyectos extends Component
         $this->datos_areas = collect();
 
         if ($this->estatus === 'todos') {
-            $this->proy = TimesheetProyecto::getAll()->orderBy('proyecto');
+            $this->proy = TimesheetProyecto::getAll();
         } else {
-            $this->proy = TimesheetProyecto::getAll()->where('estatus', $this->estatus)->orderBy('proyecto');
+            $this->proy = TimesheetProyecto::getAll()->where('estatus', $this->estatus);
         }
 
         $lista_proyectos = $this->proy;
