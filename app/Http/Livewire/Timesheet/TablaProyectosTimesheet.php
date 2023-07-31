@@ -9,6 +9,7 @@ use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class TablaProyectosTimesheet extends Component
 {
@@ -48,7 +49,8 @@ class TablaProyectosTimesheet extends Component
     {
         $this->tipos = TimesheetProyecto::TIPOS;
         $this->tipo = $this->tipos['Interno'];
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderBy('proyecto')->get();
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')
+        ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);
     }
 
     public function render()
@@ -117,22 +119,25 @@ class TablaProyectosTimesheet extends Component
 
     public function procesos()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
+        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')
+        ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);
     }
 
     public function cancelados()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->orderByDesc('id')->get();
-    }
+        $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')
+        ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);    }
 
     public function terminados()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->orderByDesc('id')->get();
+        $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')
+        ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);;
     }
 
     public function todos()
     {
-        $this->proyectos = TimesheetProyecto::orderByDesc('id')->get();
+        $this->proyectos = TimesheetProyecto::orderBy('identificador')
+        ->get()->sortBy('identificador', SORT_NATURAL);
     }
 
     public function destroy($id)
