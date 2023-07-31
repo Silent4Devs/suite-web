@@ -302,7 +302,7 @@
     @if ($proyecto_reporte)
         <div id="reporte_proyecto" class="anima_reporte">
             @php
-                $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+                $organizacion = Organizacion::getFirst();
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {

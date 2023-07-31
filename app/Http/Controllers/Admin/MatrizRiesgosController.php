@@ -187,7 +187,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $amenazas = Amenaza::get();
         $procesos = Proceso::getAll();
-        $numero_sedes = Sede::count();
+        $numero_sedes = $sedes->count();
         $numero_matriz = MatrizRiesgo::count();
         $responsables = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
@@ -396,7 +396,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $numero_sedes = Sede::count();
+        $numero_sedes = $sedes->count();
         $numero_matriz = MatrizRiesgo::count();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -476,7 +476,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $numero_sedes = Sede::count();
+        $numero_sedes = $sedes->count();
         $numero_matriz = MatrizRiesgosSistemaGestion::getAll()->count();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -909,7 +909,7 @@ class MatrizRiesgosController extends Controller
         $areas = Area::getAll();
         $amenazas = Amenaza::get();
         $procesos = Proceso::getAll();
-        $numero_sedes = Sede::count();
+        $numero_sedes = $sedes->count();
         $numero_matriz = MatrizRiesgo::count();
         $responsables = Empleado::getaltaAll();
         $vulnerabilidades = Vulnerabilidad::get();
@@ -1078,7 +1078,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $numero_sedes = Sede::count();
+        $numero_sedes = $sedes->count();
         // $numero_matriz = MatrizRiesgo::count();
         $numero_matriz = MatrizOctave::count();
 
@@ -1220,7 +1220,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $numero_sedes = Sede::count();
+        $numero_sedes = $sedes->count();
         // $numero_matriz = MatrizRiesgo::count();
         $numero_matriz = MatrizIso31000::count();
 
@@ -1358,7 +1358,7 @@ class MatrizRiesgosController extends Controller
         $sedes = Sede::getAll();
         $areas = Area::getAll();
         $procesos = Proceso::getAll();
-        $numero_sedes = Sede::count();
+        $numero_sedes = $sedes->count();
         $numero_matriz = MatrizRiesgo::count();
 
         return view('admin.NIST.index', compact('sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz'))->with('id_matriz', $request['id']);

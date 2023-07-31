@@ -23,7 +23,6 @@
                 width: 100% !important;
             }
         }
-
     </style>
 </head>
 
@@ -43,7 +42,7 @@
                                 style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 #ffffff; display: inline-block;">
                                 @php
                                     use App\Models\Organizacion;
-                                    $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+                                    $organizacion = getFirst();
                                     if (!is_null($organizacion)) {
                                         $logotipo = $organizacion->logotipo;
                                     } else {
