@@ -163,7 +163,7 @@ class BuscarCVComponent extends Component
 
     public function mostrarCurriculum($empleadoID)
     {
-        $this->empleadoModel = Empleado::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->find($empleadoID);
+        $this->empleadoModel = Empleado::getEmpleadoCurriculum($empleadoID)->find($empleadoID);
         $this->emit('tagify');
     }
 
