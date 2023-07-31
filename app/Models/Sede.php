@@ -61,6 +61,13 @@ class Sede extends Model implements Auditable
         });
     }
 
+    public static function getbyId($id)
+    {
+        return Cache::remember('sede_' . $id, 3600 * 24, function () use ($id) {
+            return self::find($id);
+        });
+    }
+
     public function organizacion()
     {
         return $this->belongsTo(Organizacion::class, 'organizacion_id', 'id');

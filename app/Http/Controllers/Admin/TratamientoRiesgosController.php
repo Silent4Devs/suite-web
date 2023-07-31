@@ -145,7 +145,7 @@ class TratamientoRiesgosController extends Controller
         $controls = DeclaracionAplicabilidad::with('control')->get();
         $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $empleados = Empleado::alta()->with('area')->get();
-        $registros = Empleado::alta()->with('area')->get();
+        $registros = $empleados;
         $procesos = Proceso::getAll();
 
         return view('admin.tratamientoRiesgos.edit', compact('registros', 'procesos', 'tratamientos', 'controls', 'responsables', 'empleados'));
@@ -205,7 +205,7 @@ class TratamientoRiesgosController extends Controller
         $tratamientoRiesgo->load('control', 'responsable', 'team');
         // dd($tratamientoRiesgo);
 
-        $route = 'storage/tratamiento/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id).'/';
+        $route = 'storage/tratamiento/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id) . '/';
 
         return view('admin.tratamientoRiesgos.show', compact('route', 'tratamientoRiesgo'));
     }
@@ -229,27 +229,27 @@ class TratamientoRiesgosController extends Controller
     public function guardarFirmaAprobacion(Request $request)
     {
         $tratamientoRiesgo = TratamientoRiesgo::find($request->id)->load('responsable', 'registro');
-        $existsFolderFirmasCartas = Storage::exists('public/tratamiento/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id));
-        if (! $existsFolderFirmasCartas) {
-            Storage::makeDirectory('public/tratamiento/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id));
+        $existsFolderFirmasCartas = Storage::exists('public/tratamiento/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id));
+        if (!$existsFolderFirmasCartas) {
+            Storage::makeDirectory('public/tratamiento/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id));
         }
         if (preg_match('/^data:image\/(\w+);base64,/', $request->firma)) {
             $value = substr($request->firma, strpos($request->firma, ',') + 1);
             $value = base64_decode($value);
-            $new_name_image = $request->tipo.$tratamientoRiesgo->id.time().'.png';
+            $new_name_image = $request->tipo . $tratamientoRiesgo->id . time() . '.png';
             $image = $new_name_image;
-            $route = 'public/tratamiento/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id).'/'.$new_name_image;
+            $route = 'public/tratamiento/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $tratamientoRiesgo->id) . '/' . $new_name_image;
             Storage::put($route, $value);
             // dd($request->aprobado);
 
             if ($request->tipo == 'responsable_aprobador') {
                 $tratamientoRiesgo->update([
-                    'firma_'.$request->tipo => $image,
+                    'firma_' . $request->tipo => $image,
 
                 ]);
             } else {
                 $tratamientoRiesgo->update([
-                    'firma_'.$request->tipo => $image,
+                    'firma_' . $request->tipo => $image,
 
                 ]);
             }

@@ -97,7 +97,7 @@ class ActivoImport implements ToModel
 
     public function obtenerUbicacionPorId($ubicacion)
     {
-        $ubicacion_bd = Sede::select('id', 'sede')->where('id', $ubicacion)->first();
+        $ubicacion_bd = Sede::getAll()->where('id', $ubicacion)->first();
         // dd($ubicacion_bd);
         return $ubicacion_bd->id;
     }

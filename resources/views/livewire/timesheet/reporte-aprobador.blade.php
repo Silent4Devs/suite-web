@@ -161,7 +161,8 @@
             <a href="" class="btn btn-info"><i class="fa-solid fa-arrow-rotate-right"></i></a>
         </div>
         <div class="col-12 form-group text-right">
-            <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar correo a colaboradores con horas faltantes de registrar</button>
+            <button class="btn btn-success" wire:click="correoMasivo()"><i class="fa-solid fa-envelope mr-3"></i> Enviar
+                correo a colaboradores con horas faltantes de registrar</button>
         </div>
 
         <div class="datatable-fix w-100 mt-4">
@@ -374,7 +375,7 @@
     @if ($empleado)
         <div id="reporte_empleado" class="anima_reporte">
             @php
-                $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+                $organizacion = Organizacion::getFirst();
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {

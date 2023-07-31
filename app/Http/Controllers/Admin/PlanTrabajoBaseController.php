@@ -41,7 +41,7 @@ class PlanTrabajoBaseController extends Controller
         $name_file_gantt = 'gantt_inicial.json';
         $texto = false;
         //FIN REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
-        $empleados = Empleado::alta()->select('name')->get();
+        $empleados = Empleado::getAltaEmpleados()
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -76,7 +76,7 @@ class PlanTrabajoBaseController extends Controller
         $sinTexto = true;
         //FIN REFACTOR EL CODIGO NO SE UTILIZA PERO SE NECESITA MAPEAR DONDE SE INSTANCIA PARA QUIARSE DE AQUI
 
-        $empleados = Empleado::alta()->select('name')->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.planTrabajoBase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto', 'sinTexto'));
     }

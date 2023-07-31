@@ -169,7 +169,7 @@ class AnalisisdeRiesgosController extends Controller
 
     public function getEmployeeData(Request $request)
     {
-        $empleados = Empleado::alta()->find($request->id);
+        $empleados = Empleado::getaltaAll()->find($request->id);
         $areas = Area::find($empleados->area_id);
 
         return response()->json(['puesto' => $empleados->puesto, 'area' => $areas->area]);

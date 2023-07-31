@@ -83,7 +83,7 @@ class BuscarCVComponent extends Component
         } else {
             $this->area_id = $value;
             $this->empleado_id = null;
-            $this->empleados = Empleado::alta()->where('area_id', $this->area_id)->get();
+            $this->empleados = Empleado::getaltaAll()->where('area_id', $this->area_id);
         }
         $this->emit('tagify');
     }
@@ -115,14 +115,14 @@ class BuscarCVComponent extends Component
 
     public function mount()
     {
-        if (! $this->isPersonal) {
+        if (!$this->isPersonal) {
             $this->empleados = Empleado::getAltaEmpleados();
         }
     }
 
     public function render()
     {
-        $cacheKey = 'empleadosCV_data_'.Auth::user()->id;
+        $cacheKey = 'empleadosCV_data_' . Auth::user()->id;
 
         $empleadosCV = Cache::remember($cacheKey, 3600 * 60, function () {
             return Empleado::alta()
