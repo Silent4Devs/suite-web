@@ -103,13 +103,15 @@ class PlanificacionControlController extends Controller
     {
         abort_if(Gate::denies('planificacion_y_control_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::alta()->with('area')->get();
+        $alta = Empleado::alta()->with('area')->get();
 
-        $responsables = Empleado::alta()->with('area')->get();
+        $empleados = $alta;
 
-        $aprobadores = Empleado::alta()->with('area')->get();
+        $responsables = $alta;
+
+        $aprobadores = $alta;
 
         $origen_seleccionado = null;
 
@@ -179,15 +181,15 @@ class PlanificacionControlController extends Controller
     {
         abort_if(Gate::denies('planificacion_y_control_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $empleados = Empleado::alta()->with('area')->get();
+        $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $alta = Empleado::alta()->with('area')->get();
+        $empleados = $alta;
 
         $planificacionControl->load('team');
 
-        $responsables = Empleado::alta()->with('area')->get();
+        $responsables = $alta;
 
-        $aprobadores = Empleado::alta()->with('area')->get();
+        $aprobadores = $alta;
 
         $origen_seleccionado = $planificacionControl->origen_id;
 
@@ -252,7 +254,7 @@ class PlanificacionControlController extends Controller
 
         $planificacionControl->load('empleado', 'responsable', 'origen', 'team', 'participantes');
         // dd( $planificacionControl);
-        $route = 'storage/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id).'/';
+        $route = 'storage/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id) . '/';
 
         return view('admin.planificacionControls.show', compact('route', 'planificacionControl'));
     }
@@ -286,27 +288,27 @@ class PlanificacionControlController extends Controller
     {
         // dd($request->all());
         $planificacionControl = PlanificacionControl::find($request->id)->load('responsableAprobar');
-        $existsFolderFirmasCartas = Storage::exists('public/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
-        if (! $existsFolderFirmasCartas) {
-            Storage::makeDirectory('public/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
+        $existsFolderFirmasCartas = Storage::exists('public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
+        if (!$existsFolderFirmasCartas) {
+            Storage::makeDirectory('public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id));
         }
         if (preg_match('/^data:image\/(\w+);base64,/', $request->firma)) {
             $value = substr($request->firma, strpos($request->firma, ',') + 1);
             $value = base64_decode($value);
-            $new_name_image = $request->tipo.$planificacionControl->id.time().'.png';
+            $new_name_image = $request->tipo . $planificacionControl->id . time() . '.png';
             $image = $new_name_image;
-            $route = 'public/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id).'/'.$new_name_image;
+            $route = 'public/planificacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id) . '/' . $new_name_image;
             Storage::put($route, $value);
             // dd($request->aprobado);
 
             if ($request->tipo == 'responsable_aprobador') {
                 $planificacionControl->update([
-                    'firma_'.$request->tipo => $image,
+                    'firma_' . $request->tipo => $image,
 
                 ]);
             } else {
                 $planificacionControl->update([
-                    'firma_'.$request->tipo => $image,
+                    'firma_' . $request->tipo => $image,
 
                 ]);
             }

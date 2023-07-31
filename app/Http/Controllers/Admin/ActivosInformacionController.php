@@ -27,7 +27,7 @@ class ActivosInformacionController extends Controller
     public function create($matriz)
     {
         $empleados = Empleado::alta()->with('area')->get();
-        $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $area = Area::getAll();
         $procesos = Proceso::with('macroproceso')->get();
         $confidencials = activoConfidencialidad::getAll();
