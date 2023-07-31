@@ -285,6 +285,7 @@ class ReportesProyectos extends Component
 
             $proyectos_array->push([
                 'id' => $proyecto->id,
+                'identificador' => $proyecto->identificador,
                 'proyecto' => $proyecto->proyecto,
                 'areas' => $proyecto->areas,
                 'cliente' => $proyecto->cliente ? $proyecto->cliente->nombre : '',
