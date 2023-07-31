@@ -318,7 +318,7 @@ class ReportesProyectos extends Component
 
     public function genrarReporte($id)
     {
-        $this->proyecto_reporte = TimesheetProyecto::find($id);
+        $this->proyecto_reporte = TimesheetProyecto::getAll()->find($id);
 
         // $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
         $this->cliente_proyecto = TimesheetCliente::find($this->proyecto_reporte->cliente_id);

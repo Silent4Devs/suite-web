@@ -36,7 +36,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function mount($proyecto_id)
     {
-        $this->proyecto = TimesheetProyecto::find($proyecto_id);
+        $this->proyecto = TimesheetProyecto::getAll()->find($proyecto_id);
         $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $proyecto_id)->get();
         $this->empleados = Empleado::getaltaAll();
     }
@@ -175,7 +175,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     {
         $emp_bloq = TimesheetProyectoEmpleado::find($id);
 
-        if($emp_bloq->usuario_bloqueado == false){
+        if ($emp_bloq->usuario_bloqueado == false) {
             $emp_bloq->usuario_bloqueado = true;
             $emp_bloq->save();
             $this->alert('success', 'El Usuario ha sido Bloqueado', [
@@ -183,8 +183,8 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 'timer' => 3000,
                 'toast' => true,
                 'timerProgressBar' => true,
-               ]);
-        }elseif($emp_bloq->usuario_bloqueado == true){
+            ]);
+        } elseif ($emp_bloq->usuario_bloqueado == true) {
             $emp_bloq->usuario_bloqueado = false;
             $emp_bloq->save();
             $this->alert('success', 'El Usuario ha sido Desloqueado', [
@@ -192,7 +192,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                 'timer' => 3000,
                 'toast' => true,
                 'timerProgressBar' => true,
-               ]);
+            ]);
         }
         // dd($emp_bloq->usuario_bloqueado);
     }

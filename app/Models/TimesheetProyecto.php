@@ -35,11 +35,17 @@ class TimesheetProyecto extends Model implements Auditable
     ];
 
     //Redis methods
-    public static function getAll()
+    public static function getAll($proyecto_id = null)
     {
-        return Cache::remember('timesheetproyecto_all', 3600 * 24, function () {
-            return self::get()->orderBy('proyecto');
-        });
+        if (is_null($proyecto_id)) {
+            return Cache::remember('timesheetproyecto_all', 3600, function () {
+                return self::orderBy('proyecto')->get();
+            });
+        } else {
+            return Cache::remember('timesheetproyecto_show_' . $proyecto_id, 3600, function () {
+                return self::orderBy('proyecto')->get();
+            });
+        }
     }
 
     public function getAreasAttribute()

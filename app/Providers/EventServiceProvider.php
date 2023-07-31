@@ -18,6 +18,7 @@ use App\Models\Timesheet;
 use App\Models\Calendario;
 use App\Models\Tipoactivo;
 use App\Models\Sugerencias;
+use App\Models\MatrizRiesgo;
 use App\Models\Organizacion;
 use App\Models\PoliticaSgsi;
 use App\Events\RecursosEvent;
@@ -67,6 +68,7 @@ use App\Observers\CompetenciaObserver;
 use App\Observers\SugerenciasObserver;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\TaskRecursosListener;
+use App\Observers\MatrizRiesgoObserver;
 use App\Observers\OrganizacionObserver;
 use App\Observers\PoliticaSgsiObserver;
 use App\Observers\tipoObjetivoObserver;
@@ -179,5 +181,6 @@ class EventServiceProvider extends ServiceProvider
         QuejasCliente::observe(QuejasClienteObserver::class);
         MatrizRiesgosSistemaGestion::observe(MatrizRiesgosSistemaGestionObserver::class);
         PoliticaSgsi::observe(PoliticaSgsiObserver::class);
+        MatrizRiesgo::observe(MatrizRiesgoObserver::class);
     }
 }
