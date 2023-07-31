@@ -24,7 +24,6 @@
                 </div>
                 <div id="content_times_show_print" class="w-100">
                     @php
-                        use App\Models\Organizacion;
                         $organizacion = Organizacion::getFirst();
                         if (!is_null($organizacion)) {
                             $logotipo = $organizacion->logotipo;
