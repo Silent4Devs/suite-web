@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('historico_solicitudes', function (Blueprint $table) {
+        Schema::create('variables_plantillas', function (Blueprint $table) {
             $table->id();
-            $table->string('historico')->nullable();
-            $table->unsignedBigInteger('solicitud_id')->nullable();
-            $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('nombre');
+            $table->longText('descripcion');
+            $table->string('tipo');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('historico_solicitudes');
+        Schema::dropIfExists('variables_plantillas');
     }
 };

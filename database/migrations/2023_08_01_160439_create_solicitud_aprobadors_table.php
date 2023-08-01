@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('historico_solicitudes', function (Blueprint $table) {
+        Schema::create('solicitudes_aprobadores', function (Blueprint $table) {
             $table->id();
-            $table->string('historico')->nullable();
+            $table->string('estatus')->nullable();
             $table->unsignedBigInteger('solicitud_id')->nullable();
-            $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onUpdate('cascade')->onDelete('cascade');
+            // $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('usuario_id')->nullable();
+            // $table->foreign('usuario_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('historico_solicitudes');
+        Schema::dropIfExists('solicitudes_aprobadores');
     }
 };

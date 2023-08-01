@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('historico_solicitudes', function (Blueprint $table) {
-            $table->id();
-            $table->string('historico')->nullable();
-            $table->unsignedBigInteger('solicitud_id')->nullable();
-            $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onUpdate('cascade')->onDelete('cascade');
+        Schema::create('tablalogs', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type_dml');
+            $table->string('tabla');
+            $table->longText('old_values')->nullable();
+            $table->string('usuario')->nullable();
+            $table->timestamp('fecha');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('historico_solicitudes');
+        Schema::dropIfExists('tablalogs');
     }
 };

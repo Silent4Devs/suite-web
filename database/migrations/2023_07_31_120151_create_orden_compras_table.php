@@ -32,22 +32,22 @@ return new class extends Migration
 
             //foreign
             $table->unsignedBigInteger('centro_costos_id')->nullable();
-            // $table->foreign('centro_costos_id')->references('id')->on('contratos');
+            $table->foreign('centro_costos_id')->references('id')->on('contratos');
             //foreign
             $table->unsignedBigInteger('requisiciones_id')->nullable();
-            // $table->foreign('requisiciones_id')->references('id')->on('requsiciones');
+            $table->foreign('requisiciones_id')->references('id')->on('requisiciones');
             //foreign
             $table->unsignedBigInteger('contrato_id')->nullable();
-            // $table->foreign('contrato_id')->references('id')->on('contratos');
+            $table->foreign('contrato_id')->references('id')->on('contratos');
             //foreign
             $table->unsignedBigInteger('proveedor_id')->nullable();
-            // $table->foreign('proveedor_id')->references('id')->on('proveedores');
+            $table->foreign('proveedor_id')->references('id')->on('proveedores');
             //foreign
             $table->unsignedBigInteger('comprador_id')->nullable();
-            // $table->foreign('comprador_id')->references('id')->on('compradores');
+            $table->foreign('comprador_id')->references('id')->on('compradores');
             //foreign
             $table->unsignedBigInteger('sucursal_id')->nullable();
-            // $table->foreign('sucursal_id')->references('id')->on('sucursales');
+            $table->foreign('sucursal_id')->references('id')->on('sucursales');
             $table->timestamps();
             $table->softDeletes();
         });

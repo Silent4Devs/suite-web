@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('facturas_files', function (Blueprint $table) {
+        Schema::create('rescision', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('pdf')->nullable();
-            $table->string('xml')->nullable();
-            $table->unsignedBigInteger('factura_id');
-            $table->foreign('factura_id')->references('id')->on('facturacion');
+            $table->string('clausula')->nullable();
+            $table->string('nombre')->nullable();
+            $table->string('articulos_referencia')->nullable();
+            $table->string('detalle')->nullable();
+            $table->string('puntos_evaluacion')->nullable();
+            $table->string('cumplimiento')->nullable();
+            $table->boolean('aplica')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facturas_files');
+        Schema::dropIfExists('rescision');
     }
 };

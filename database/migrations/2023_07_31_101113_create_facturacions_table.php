@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('facturacion', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('contrato_id')->nullable();
-            // $table->foreign('contrato_id')->references('id')->on('contratos');
+            $table->foreign('contrato_id')->references('id')->on('contratos');
             $table->string('no_factura', 50)->nullable();
             $table->longText('concepto')->nullable();
             $table->date('fecha_recepcion')->nullable();

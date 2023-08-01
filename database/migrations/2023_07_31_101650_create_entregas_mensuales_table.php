@@ -29,9 +29,9 @@ return new class extends Migration
             $table->string('deductiva_penalizacion')->nullable();
             $table->string('justificacion_deductiva_penalizacion')->after('deductiva_penalizacion')->nullable();
             $table->unsignedBigInteger('factura_id')->nullable();
-            // $table->foreign('factura_id')->references('id')->on('facturacion')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('factura_id')->references('id')->on('facturacion')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('deductiva_factura_id')->nullable();
-            // $table->foreign('deductiva_factura_id')->references('id')->on('facturacion')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('deductiva_factura_id')->references('id')->on('facturacion')->onUpdate('cascade')->onDelete('cascade');
             $table->string('nota_credito')->nullable();
             $table->timestamps();
             $table->softDeletes();
