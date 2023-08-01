@@ -39,7 +39,7 @@ return new class extends Migration
             $table->string('clasificacion')->nullable();
             $table->string('fase')->nullable();
             $table->string('estatus')->nullable();
-            // $table->foreign('proveedor_id')->references('id')->on('proveedores');
+            $table->foreign('proveedor_id')->references('id')->on('proveedores');
             $table->boolean('contrato_ampliado')->after('fase')->nullable();
             $table->string('folio')->after('estatus')->nullable();
             $table->string('documento')->after('folio')->nullable();
