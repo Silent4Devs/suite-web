@@ -48,6 +48,13 @@ class TimesheetProyecto extends Model implements Auditable
         }
     }
 
+    public static function getAllOrderByIdentificador()
+    {
+        return Cache::remember('timesheetproyecto_all_order_by_identificador', 3600, function () {
+            return self::orderBy('identificador')->sortBy('identificador', SORT_NATURAL)->get();
+        });
+    }
+
     public function getAreasAttribute()
     {
         $ids_areas = TimesheetProyectoArea::where('proyecto_id', $this->id)->get();
