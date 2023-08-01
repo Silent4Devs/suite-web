@@ -29,7 +29,7 @@ class TimesheetTarea extends Model implements Auditable
     public static function getAll()
     {
         return Cache::remember('timesheettarea_all', 3600 * 24, function () {
-            return self::get();
+            return self::orderByDesc('id')->get();
         });
     }
 

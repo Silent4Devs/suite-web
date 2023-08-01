@@ -322,11 +322,11 @@ class ReportesProyectos extends Component
         $this->proyecto_reporte = TimesheetProyecto::getAll()->find($id);
 
         // $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
-        $this->cliente_proyecto = TimesheetCliente::find($this->proyecto_reporte->cliente_id);
+        $this->cliente_proyecto = TimesheetCliente::getAll()->find($this->proyecto_reporte->cliente_id);
 
         $empleados = collect();
 
-        $tareas = TimesheetTarea::where('proyecto_id', $id)->get();
+        $tareas = TimesheetTarea::getAll()->where('proyecto_id', $id);
 
         $this->tareas_array = collect();
 

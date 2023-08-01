@@ -79,6 +79,8 @@ class ReportesEmpleados extends Component
     public $fecha_inicio_empleado;
 
     public $fecha_fin_empleado;
+    public $empleadosQuery;
+    public $timesheetQuery;
 
     public function mount()
     {
@@ -86,6 +88,8 @@ class ReportesEmpleados extends Component
         $this->empleados_estatus = 'alta';
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
         $this->fecha_fin = Carbon::now()->format('Y-m-d');
+        $this->empleadosQuery = Empleado::getAll();
+        $this->timesheetQuery = Timesheet::getAll();
     }
 
     public function updatedAreaId($value)
@@ -155,17 +159,17 @@ class ReportesEmpleados extends Component
         $this->empleados = collect();
 
         if ($this->area_id && $this->empleados_estatus) {
-            $empleados_list = Empleado::where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus)->get();
-            $this->empleados_list_global = Empleado::where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus)->get();
+            $empleados_list = $this->empleadosQuery->where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus);
+            $this->empleados_list_global = $this->empleadosQuery->where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus);
         } elseif ($this->area_id) {
-            $empleados_list = Empleado::where('area_id', $this->area_id)->get();
-            $this->empleados_list_global = Empleado::where('area_id', $this->area_id)->get();
+            $empleados_list = $this->empleadosQuery->where('area_id', $this->area_id);
+            $this->empleados_list_global = $this->empleadosQuery->where('area_id', $this->area_id);
         } elseif ($this->empleados_estatus) {
-            $empleados_list = Empleado::where('estatus', $this->empleados_estatus)->get();
-            $this->empleados_list_global = Empleado::where('estatus', $this->empleados_estatus)->get();
+            $empleados_list = $this->empleadosQuery->where('estatus', $this->empleados_estatus);
+            $this->empleados_list_global = $this->empleadosQuery->where('estatus', $this->empleados_estatus);
         } else {
-            $empleados_list = Empleado::getAll();
-            $this->empleados_list_global = Empleado::getAll();
+            $empleados_list = $this->empleadosQuery;
+            $this->empleados_list_global = $this->empleadosQuery;
         }
         // $empleados_list = Empleado::where('id', 222)->get();
 
@@ -269,7 +273,7 @@ class ReportesEmpleados extends Component
             }
 
             // horas totales por empleado
-            $times_empleado_aprobados_pendientes_list = Timesheet::where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->get();
+            $times_empleado_aprobados_pendientes_list = $this->timesheetQuery->where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera');
 
             $horas_semana = 0;
             $times_empleado_calendario_array = [];
@@ -302,7 +306,7 @@ class ReportesEmpleados extends Component
             }
             $this->horas_totales_filtros_empleados += $horas_total_time;
 
-            $times_empleado = Timesheet::where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
+            $times_empleado = $this->timesheetQuery->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
 
             $fecha_inicio = date_create(Carbon::parse($fecha_inicio_timesheet_empleado)->format('d-m-Y'));
             $fecha_fin = date_create(Carbon::parse($fecha_fin_timesheet_empleado)->format('d-m-Y'));
@@ -506,7 +510,7 @@ class ReportesEmpleados extends Component
 
         $this->times_empleado_horas = collect();
 
-        $this->empleado = Empleado::find($this->empleado_seleccionado_id);
+        $this->empleado = $this->empleadosQuery->find($this->empleado_seleccionado_id);
 
         // calcular fechas de parametros en reporte empleado
         $fecha_registro_timesheet = Organizacion::select('fecha_registro_timesheet')->first()->fecha_registro_timesheet;
@@ -618,7 +622,7 @@ class ReportesEmpleados extends Component
         }
 
         // contadores
-        $contadorthis = Timesheet::getAll()->where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $this->empleado_seleccionado_id);
+        $contadorthis = $this->timesheetQuery->where('fecha_dia', '>=', $fecha_inicio_timesheet_empleado)->where('fecha_dia', '<=', $fecha_fin_timesheet_empleado)->where('empleado_id', $this->empleado_seleccionado_id);
         $this->todos_contador = $contadorthis->count();
         $this->borrador_contador = $contadorthis->where('estatus', 'papelera')->count();
         $this->pendientes_contador = $contadorthis->where('estatus', 'pendiente')->count();
@@ -667,26 +671,26 @@ class ReportesEmpleados extends Component
 
     public function todos()
     {
-        $this->times_empleado = Timesheet::where('empleado_id', $this->empleado_seleccionado_id)->get();
+        $this->times_empleado = $this->timesheetQuery->where('empleado_id', $this->empleado_seleccionado_id);
     }
 
     public function papelera()
     {
-        $this->times_empleado = Timesheet::where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', 'papelera')->get();
+        $this->times_empleado = $this->timesheetQuery->where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', 'papelera');
     }
 
     public function pendientes()
     {
-        $this->times_empleado = Timesheet::where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', 'pendiente')->get();
+        $this->times_empleado = $this->timesheetQuery->where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', 'pendiente');
     }
 
     public function aprobados()
     {
-        $this->times_empleado = Timesheet::where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', 'aprobado')->get();
+        $this->times_empleado = $this->timesheetQuery->where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', 'aprobado');
     }
 
     public function rechazos()
     {
-        $this->times_empleado = Timesheet::where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', 'rechazado')->get();
+        $this->times_empleado = $this->timesheetQuery->where('empleado_id', $this->empleado_seleccionado_id)->where('estatus', 'rechazado');
     }
 }
