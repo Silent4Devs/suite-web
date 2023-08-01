@@ -38,7 +38,7 @@ class TimesheetProyecto extends Model implements Auditable
     public static function getAll($proyecto_id = null)
     {
         if (is_null($proyecto_id)) {
-            return Cache::remember('timesheetproyecto_all', 3600, function () {
+            return Cache::remember('timesheetproyecto_all', 3600 * 4, function () {
                 return self::orderBy('proyecto')->get();
             });
         } else {
