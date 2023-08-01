@@ -118,26 +118,22 @@ class TablaProyectosTimesheet extends Component
 
     public function procesos()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')
-            ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
     }
 
     public function cancelados()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')
-            ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'cancelado');
     }
 
     public function terminados()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')
-            ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);;
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'terminado');
     }
 
     public function todos()
     {
-        $this->proyectos = TimesheetProyecto::orderBy('identificador')
-            ->get()->sortBy('identificador', SORT_NATURAL);
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador();
     }
 
     public function destroy($id)
