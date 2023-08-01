@@ -49,8 +49,7 @@ class TablaProyectosTimesheet extends Component
     {
         $this->tipos = TimesheetProyecto::TIPOS;
         $this->tipo = $this->tipos['Interno'];
-        $this->proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso')
-            ->orderBy('identificador')->get()->sortBy('identificador', SORT_NATURAL);
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
     }
 
     public function render()
