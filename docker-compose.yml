@@ -142,7 +142,7 @@ services:
       - 5000:5000
     volumes:
       - type: bind
-        source: .
+        source: ./infra/elk
         target: /usr/share/logstash/pipeline
         read_only: true
     networks:
