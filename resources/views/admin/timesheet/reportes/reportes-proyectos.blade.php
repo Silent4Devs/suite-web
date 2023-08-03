@@ -1,306 +1,44 @@
 @extends('layouts.admin')
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
-    <style type="text/css">
-        .caja_botones_menu {
-            display: flex;
+<style type="text/css">
+    #lista_proyectos_tareas li {
+        padding-top: 13px;
+    }
+
+    @media print {
+
+        #sidebar,
+        header,
+        .nav-tabs,
+        .titulo_general_funcion,
+        .breadcrumb {
+            display: none !important;
         }
 
-        .caja_botones_menu a {
-            width: 33.33%;
-            text-decoration: none;
-            display: inline-block;
-            color: #345183;
-            padding: 5px 0px;
-            border-top: 1px solid #ccc !important;
-            border-right: 1px solid #ccc;
-            background-color: #f9f9f9;
-            margin: 0;
-            text-align: center;
-            align-items: center;
-        }
-
-        .caja_botones_menu a:first-child {
-            border-left: 1px solid #ccc;
-        }
-
-        .caja_botones_menu a:not(.caja_botones_menu a.btn_activo) {
-            border-bottom: 1px solid #ccc;
-        }
-
-        .caja_botones_menu a i {
-            margin-right: 7px;
-            font-size: 15pt;
-        }
-
-        .caja_botones_menu a.btn_activo,
-        .caja_botones_menu a.btn_activo:hover {
-            background-color: #fff;
-        }
-
-        .caja_botones_menu a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .caja_caja_secciones {
-            width: 100%;
-        }
-
-        .caja_secciones {
-            width: 100%;
-            display: flex;
-        }
-
-        .caja_secciones section {
-            width: 0px;
-            overflow: hidden;
-            transition: 0.4s;
-            opacity: 0;
-        }
-
-        .caja_tab_reveldada {
+        #reporte_proyecto,
+        /* #reporte_empleado, */
+        #reporte_general {
             width: 100% !important;
-            overflow: none;
-            opacity: 1 !important;
-        }
-
-
-
-        .seccion_div {
-            overflow: hidden;
-            width: 990px;
-        }
-
-        .caja_tab_reveldada .seccion_div {
-            overflow: hidden;
-            transition-delay: 0.5s;
-            width: 100%;
-        }
-
-    </style>
-    <style type="text/css">
-        div.nav .nav-link {
-            color: #345183;
-        }
-
-        .nav-tabs .nav-link.active {
-            border-top: 2px solid #345183;
-        }
-
-        div.tab-pane ul {
-            padding: 0;
-            margin: 0;
-            text-align: center;
-        }
-
-        div.tab-pane li {
-            list-style: none;
-            width: 150px;
-            height: 150px;
-            box-sizing: border-box;
-            position: relative;
-            margin: 10px;
-            display: inline-block;
-        }
-
-        div.tab-pane li i {
-            font-size: 30pt;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
-        div.tab-pane a {
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #eee;
-            color: #345183;
-            border-radius: 6px;
-            box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
-            transition: 0.1s;
-            padding: 7px;
+            margin: 0 !important;
+            margin-top: -150px !important;
+            padding: 0 !important;
+            background-color: #fff !important;
+            border: 1px solid #fff !important;
         }
+    }
+</style>
 
-        div.tab-pane a:hover {
-            text-decoration: none !important;
-            color: #345183;
-            border: 1px solid #345183;
-            box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.0);
-            background-color: #fff;
-        }
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
+</script>
 
-        a:hover {
-            text-decoration: none !important;
-        }
+@livewire('timesheet.reportes-proyectos')
 
-
-
-        @media(max-width: 648px) {
-            .caja_secciones {
-                min-height: 1000px;
-            }
-        }
-
-        @media(max-width: 474px) {
-            .caja_secciones {
-                min-height: 2000px;
-            }
-        }
-
-        .tabs {
-            outline: none;
-        }
-
-    </style>
-    <style>
-        .ventana_menu {
-            width: calc(100% - 40px);
-            background-color: #fff;
-            position: absolute;
-            margin: auto;
-            display: none;
-            top: 35px;
-            z-index: 3;
-            height: calc(100% - 40px);
-
-        }
-
-
-        .btn_modal_video {
-            width: 160px !important;
-            transform: scale(0.7);
-            position: absolute;
-            right: 0;
-            margin-top: -35px;
-        }
-    </style>
-
-    {{-- <style type="text/css">
-        #lista_proyectos_tareas li {
-            padding-top: 13px;
-        }
-
-        @media print {
-
-            #sidebar,
-            header,
-            .nav-tabs,
-            .titulo_general_funcion,
-            .breadcrumb {
-                display: none !important;
-            }
-
-            #reporte_proyecto,
-            #reporte_empleado,
-            #reporte_general {
-                width: 100% !important;
-                position: absolute;
-                top: 0;
-                margin: 0 !important;
-                margin-top: -150px !important;
-                padding: 0 !important;
-                background-color: #fff !important;
-                border: 1px solid #fff !important;
-            }
-        }
-    </style> --}}
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://unpkg.com/gauge-chart@latest/dist/bundle.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js">
-    </script>
-
-    {{ Breadcrumbs::render('timesheet-reportes') }}
-    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Reportes</font>
-    </h5>
-<div class="mt-5 card card-body">
-    <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane mb-4 fade show active" id="nav-contexto" role="tabpanel"
-        aria-labelledby="nav-contexto-tab">
-        <ul class="mt-4">
-
-                <li>
-                    <a href="{{ route('admin.timesheet-reportes-registros') }}">
-                        <div>
-                        <i class="bi bi-file-earmark-text"></i><br>
-                            Registros Timesheet
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.timesheet-reportes-empleados') }}">
-                        <div>
-                        <i class="bi bi-file-earmark-text"></i><br>
-                            Registros por Área
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.timesheet-reportes-proyectos') }}">
-                        <div>
-                        <i class="bi bi-file-earmark-text"></i><br>
-                            Proyectos
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.timesheet-reportes-proyemp') }}">
-                        <div>
-                        <i class="bi bi-file-earmark-text"></i><br>
-                            Registros Colaboradores-Tareas
-                        </div>
-                    </a>
-                </li>
-        </ul>
-    </div>
-</div>
-    {{-- <div class="mt-5 card card-body"> --}}
-        {{-- <nav class="mt-4"> --}}
-            {{-- <div class="nav nav-tabs" id="tabsIso27001" role="tablist">
-                <a class="nav-link active" id="nav-registros-tab" data-type="registros" data-toggle="tab"
-                    href="#nav-registros" role="tab" aria-controls="nav-registros" aria-selected="true">
-                    Registros Timesheet
-                </a> --}}
-                {{-- <a class="nav-link" id="nav-empleados-tab" data-type="empleados" data-toggle="tab" href="#nav-empleados"
-                    role="tab" aria-controls="nav-empleados" aria-selected="false" style="position: relative;">
-                    Registros por Área
-                </a>
-                <a class="nav-link" id="nav-proyectos-tab" data-type="proyectos" data-toggle="tab" href="#nav-proyectos"
-                    role="tab" aria-controls="nav-proyectos" aria-selected="false">
-                    Proyectos
-                </a> --}}
-                {{-- <a class="nav-link" id="nav-proyemp-tab" data-type="proyemp" data-toggle="tab" href="#nav-proyemp"
-                    role="tab" aria-controls="nav-proyemp" aria-selected="false">
-                    Registros Colaboradores-Tareas
-                </a>
-            </div> --}}
-        {{-- </nav> --}}
-
-        {{-- <div class="tab-content" id="nav-tabContent"> --}}
-            {{-- <div class="tab-pane mb-4 fade p-4 show active" id="nav-registros" role="tabpanel"
-                aria-labelledby="nav-registros-tab">
-                @livewire('timesheet.reportes-registros')
-            </div> --}}
-            {{-- <div class="tab-pane mb-4 fade p-4" id="nav-empleados" role="tabpanel" aria-labelledby="nav-empleados-tab">
-                @livewire('timesheet.reportes-empleados')
-            </div>
-            <div class="tab-pane mb-4 fade p-4" id="nav-proyectos" role="tabpanel" aria-labelledby="nav-proyectos-tab">
-                @livewire('timesheet.reportes-proyectos')
-            </div> --}}
-            {{-- <div class="tab-pane mb-4 fade p-4" id="nav-proyemp" role="tabpanel" aria-labelledby="nav-proyemp-tab">
-                @livewire('timesheet.reportes-proyemp')
-            </div> --}}
-        {{-- </div> --}}
-    </div>
 @endsection
-
-
 @section('scripts')
     @parent
     <script type="text/javascript">
@@ -538,8 +276,8 @@
             let table_1 = null;
             setTimeout(() => {
                 table_1 = tablaLivewire('datatable_timesheet');
-                tablaLivewire('timesheet_empleados_lista');
-                tablaLivewire('datatable_timesheet_empleados');
+                // tablaLivewire('timesheet_empleados_lista');
+                // tablaLivewire('datatable_timesheet_empleados');
                 tablaLivewire('datatable_timesheet_proyectos');
             }, 100);
 

@@ -1033,7 +1033,7 @@
             width: 100%;
             height: 100%;
             text-align: center;
-            opacity: 0.9;
+            opacity: 0.8;
             background-color: #fff;
             z-index: 990000;
         }

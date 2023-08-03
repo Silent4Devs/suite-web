@@ -136,6 +136,7 @@
             z-index: 10;
         }
     </style>
+<div class="mt-5 card card-body">
     <div class="row print-none" style="margin: 0 !important;">
         <x-loading-indicator />
         <div class="col-md-3 form-group" style="padding-left:0 !important;">
@@ -354,7 +355,7 @@
                 </tfoot>
             </table>
         </div>
-
+    </div>
         <!-- Modal semanas faltantes -->
         @foreach ($empleados as $empleado_md)
             <div class="modal fade" id="modal_semanas_{{ $empleado_md['id'] }}" tabindex="-1" role="dialog"

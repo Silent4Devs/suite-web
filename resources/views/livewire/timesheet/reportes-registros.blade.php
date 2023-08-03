@@ -8,6 +8,7 @@
     @endphp
 
 
+<div class="mt-5 card card-body">
     <x-loading-indicator />
     <div class="row">
         <div class="col-md-4 form-group" style="padding-left:0px !important;">
@@ -297,7 +298,7 @@
         </div>--}}
 
     </div>
-
+</div>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
             Livewire.on('scriptTabla', () => {
