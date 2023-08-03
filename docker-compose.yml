@@ -148,11 +148,11 @@ services:
     networks:
       - tabantajnetwork
 
-volumes:
-  tabantaj-db:
-    driver: local
-  pgadmin-data:
-    driver: local
+# volumes:
+#   tabantaj-db:
+#     driver: local
+#   pgadmin-data:
+#     driver: local
 
 networks:
   tabantajnetwork:
