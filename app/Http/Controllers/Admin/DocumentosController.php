@@ -244,17 +244,17 @@ class DocumentosController extends Controller
         $codigoDoc = $documento->codigo != null ? 'nullable' : 'required';
         if ($request->tipo == 'formato') {
             $request->validate([
-                'codigo' => $codigoDoc.'|string|unique:documentos,codigo,'.$documento->id.',id,deleted_at,NULL',
+                'codigo' => $codigoDoc . '|string|unique:documentos,codigo,' . $documento->id . ',id,deleted_at,NULL',
                 'nombre' => 'required|string',
                 'tipo' => 'required|string',
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
                 'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
                 'fecha' => 'required|date',
-                'archivo' => $validateDocumento.'|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:10000',
-                'elaboro_id' => $elaboroId.'|exists:empleados,id',
-                'aprobo_id' => $revisoId.'|exists:empleados,id',
-                'reviso_id' => $aproboId.'|exists:empleados,id',
-                'responsable_id' => $responsableId.'|exists:empleados,id',
+                'archivo' => $validateDocumento . '|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:10000',
+                'elaboro_id' => $elaboroId . '|exists:empleados,id',
+                'aprobo_id' => $revisoId . '|exists:empleados,id',
+                'reviso_id' => $aproboId . '|exists:empleados,id',
+                'responsable_id' => $responsableId . '|exists:empleados,id',
                 'version' => 'required|numeric',
             ], [
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
@@ -262,17 +262,17 @@ class DocumentosController extends Controller
             ]);
         } else {
             $request->validate([
-                'codigo' => $codigoDoc.'|string|unique:documentos,codigo,'.$documento->id.',id,deleted_at,NULL',
+                'codigo' => $codigoDoc . '|string|unique:documentos,codigo,' . $documento->id . ',id,deleted_at,NULL',
                 'nombre' => 'required|string',
                 'tipo' => 'required|string',
                 'macroproceso' => 'required_if:tipo,proceso|exists:macroprocesos,id',
                 'proceso' => 'required_unless:tipo,proceso|exists:procesos,id',
                 'fecha' => 'required|date',
-                'archivo' => $validateDocumento.'|mimetypes:application/pdf|max:10000',
-                'elaboro_id' => $elaboroId.'|exists:empleados,id',
-                'aprobo_id' => $revisoId.'|exists:empleados,id',
-                'reviso_id' => $aproboId.'|exists:empleados,id',
-                'responsable_id' => $responsableId.'|exists:empleados,id',
+                'archivo' => $validateDocumento . '|mimetypes:application/pdf|max:10000',
+                'elaboro_id' => $elaboroId . '|exists:empleados,id',
+                'aprobo_id' => $revisoId . '|exists:empleados,id',
+                'reviso_id' => $aproboId . '|exists:empleados,id',
+                'responsable_id' => $responsableId . '|exists:empleados,id',
                 'version' => 'required|numeric',
             ], [
                 'codigo.unique' => 'El código de documento ya ha sido tomado',
@@ -297,8 +297,8 @@ class DocumentosController extends Controller
             // $nombre_compuesto = basename($nombre_original) . '.' . $extension;
             $nombre_compuesto = $request->file('archivo')->getClientOriginalName();
             //Se elimina el archivo anterior
-            if (Storage::exists($this->pathDocumentsWhenUpdate($documento->tipo).'/'.$documento->archivo)) {
-                Storage::delete([$this->pathDocumentsWhenUpdate($documento->tipo).'/'.$documento->archivo]);
+            if (Storage::exists($this->pathDocumentsWhenUpdate($documento->tipo) . '/' . $documento->archivo)) {
+                Storage::delete([$this->pathDocumentsWhenUpdate($documento->tipo) . '/' . $documento->archivo]);
             }
             //Se guarda el nuevo documento
             $request->file('archivo')->storeAs($path_documentos_aprobacion, $nombre_compuesto); // Almacenar Archivo
@@ -315,22 +315,22 @@ class DocumentosController extends Controller
         }
 
         $elaborador = $documento->elaboro_id;
-        if (! $documento->elaborador) {
+        if (!$documento->elaborador) {
             $elaborador = $request->elaboro_id;
         }
 
         $aprobador = $documento->aprobo_id;
-        if (! $documento->aprobador) {
+        if (!$documento->aprobador) {
             $aprobador = $request->aprobo_id;
         }
 
         $revisor = $documento->reviso_id;
-        if (! $documento->revisor) {
+        if (!$documento->revisor) {
             $revisor = $request->reviso_id;
         }
         // dd($revisor);
         $responsable = $documento->responsable_id;
-        if (! $documento->responsable) {
+        if (!$documento->responsable) {
             $responsable = $request->responsable_id;
         }
 
@@ -419,11 +419,11 @@ class DocumentosController extends Controller
                 $revision->delete();
             }
             $path_documento = $this->getPathDocumento($documento, 'public');
-            $extension = pathinfo($path_documento.'/'.$documento->archivo, PATHINFO_EXTENSION);
-            $nombre_documento = $documento->codigo.'-'.$documento->nombre.'-obsoleto'.'.'.$extension;
+            $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
+            $nombre_documento = $documento->codigo . '-' . $documento->nombre . '-obsoleto' . '.' . $extension;
 
-            $ruta_documento = $path_documento.'/'.$documento->archivo;
-            $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento).'/'.$nombre_documento;
+            $ruta_documento = $path_documento . '/' . $documento->archivo;
+            $ruta_obsoleto = $this->getPublicPathObsoleteDocument($documento) . '/' . $nombre_documento;
 
             if (Storage::exists($ruta_documento)) {
                 if (Storage::exists($ruta_obsoleto)) {
@@ -536,7 +536,7 @@ class DocumentosController extends Controller
         // dd($path_documento);
 
         if (auth()->user()->empleado) {
-            if (! VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', auth()->user()->empleado->id)->exists()) {
+            if (!VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', auth()->user()->empleado->id)->exists()) {
                 VistaDocumento::create([
                     'empleado_id' => auth()->user()->empleado->id,
                     'documento_id' => $documento->id,
@@ -591,10 +591,10 @@ class DocumentosController extends Controller
 
     public function getPathDocumento(Documento $documento, $ruta)
     {
-        $path_documento = $ruta.'/Documentos en aprobacion';
+        $path_documento = $ruta . '/Documentos en aprobacion';
 
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
-            $path_documento = $ruta.'/Documentos publicados';
+            $path_documento = $ruta . '/Documentos publicados';
         }
 
         switch ($documento->tipo) {
@@ -636,68 +636,68 @@ class DocumentosController extends Controller
 
     public function createDocumentosEnAprobacionIfNotExists()
     {
-        if (! Storage::exists('/public/Documentos en aprobacion')) {
+        if (!Storage::exists('/public/Documentos en aprobacion')) {
             Storage::makeDirectory('/public/Documentos en aprobacion', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos en aprobacion/politicas')) {
+        if (!Storage::exists('/public/Documentos en aprobacion/politicas')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/politicas', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos en aprobacion/procedimientos')) {
+        if (!Storage::exists('/public/Documentos en aprobacion/procedimientos')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/procedimientos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos en aprobacion/manuales')) {
+        if (!Storage::exists('/public/Documentos en aprobacion/manuales')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/manuales', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos en aprobacion/planes')) {
+        if (!Storage::exists('/public/Documentos en aprobacion/planes')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/planes', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos en aprobacion/instructivos')) {
+        if (!Storage::exists('/public/Documentos en aprobacion/instructivos')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/instructivos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos en aprobacion/reglamentos')) {
+        if (!Storage::exists('/public/Documentos en aprobacion/reglamentos')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/reglamentos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos en aprobacion/externos')) {
+        if (!Storage::exists('/public/Documentos en aprobacion/externos')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/externos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos en aprobacion/procesos')) {
+        if (!Storage::exists('/public/Documentos en aprobacion/procesos')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/procesos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos en aprobacion/formatos')) {
+        if (!Storage::exists('/public/Documentos en aprobacion/formatos')) {
             Storage::makeDirectory('/public/Documentos en aprobacion/formatos', 0775, true);
         }
     }
 
     public function createDocumentosObsoletosIfNotExists()
     {
-        if (! Storage::exists('/public/Documentos obsoletos')) {
+        if (!Storage::exists('/public/Documentos obsoletos')) {
             Storage::makeDirectory('/public/Documentos obsoletos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos obsoletos/politicas')) {
+        if (!Storage::exists('/public/Documentos obsoletos/politicas')) {
             Storage::makeDirectory('/public/Documentos obsoletos/politicas', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos obsoletos/procedimientos')) {
+        if (!Storage::exists('/public/Documentos obsoletos/procedimientos')) {
             Storage::makeDirectory('/public/Documentos obsoletos/procedimientos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos obsoletos/manuales')) {
+        if (!Storage::exists('/public/Documentos obsoletos/manuales')) {
             Storage::makeDirectory('/public/Documentos obsoletos/manuales', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos obsoletos/planes')) {
+        if (!Storage::exists('/public/Documentos obsoletos/planes')) {
             Storage::makeDirectory('/public/Documentos obsoletos/planes', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos obsoletos/instructivos')) {
+        if (!Storage::exists('/public/Documentos obsoletos/instructivos')) {
             Storage::makeDirectory('/public/Documentos obsoletos/instructivos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos obsoletos/reglamentos')) {
+        if (!Storage::exists('/public/Documentos obsoletos/reglamentos')) {
             Storage::makeDirectory('/public/Documentos obsoletos/reglamentos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos obsoletos/externos')) {
+        if (!Storage::exists('/public/Documentos obsoletos/externos')) {
             Storage::makeDirectory('/public/Documentos obsoletos/externos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos obsoletos/procesos')) {
+        if (!Storage::exists('/public/Documentos obsoletos/procesos')) {
             Storage::makeDirectory('/public/Documentos obsoletos/procesos', 0775, true);
         }
-        if (! Storage::exists('/public/Documentos obsoletos/formatos')) {
+        if (!Storage::exists('/public/Documentos obsoletos/formatos')) {
             Storage::makeDirectory('/public/Documentos obsoletos/formatos', 0775, true);
         }
     }
@@ -722,7 +722,7 @@ class DocumentosController extends Controller
             $versiones = Documento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('id', $documento->id)->get();
             // dd($versiones);
             $path_documento = $this->getPathDocumento($documento, 'storage');
-            $extension = pathinfo($path_documento.'/'.$documento->archivo, PATHINFO_EXTENSION);
+            $extension = pathinfo($path_documento . '/' . $documento->archivo, PATHINFO_EXTENSION);
 
             return view('admin.documentos.versions-document', compact('documento', 'versiones', 'path_documento'));
         }
