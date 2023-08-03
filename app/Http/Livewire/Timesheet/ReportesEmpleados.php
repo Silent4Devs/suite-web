@@ -169,7 +169,7 @@ class ReportesEmpleados extends Component
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
-        
+
         if ($this->area_id && $this->empleados_estatus) {
             $empleados_list = $this->empleadosQuery->where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus);
             $this->empleados_list_global = $this->empleadosQuery->where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus);
@@ -184,7 +184,7 @@ class ReportesEmpleados extends Component
             $this->empleados_list_global = $this->empleadosQuery;
         }
         // $empleados_list = Empleado::where('id', 222)->get();
-        
+
         //calendario tabla
         $calendario_array = [];
         // $this->fecha_inicio = "2022-08-31";
@@ -341,9 +341,11 @@ class ReportesEmpleados extends Component
             if (!$fecha_inicio_timesheet_faltantes_empleado) {
                 $fecha_inicio_timesheet_faltantes_empleado = $this->fecha_inicio;
             }
-            $antiguedad_y = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('Y');
-            $antiguedad_m = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('m');
-            $antiguedad_d = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado)->format('d');
+
+            $fechaToFormat = Carbon::parse($fecha_inicio_timesheet_faltantes_empleado);
+            $antiguedad_y = $fechaToFormat->format('Y');
+            $antiguedad_m = $fechaToFormat->format('m');
+            $antiguedad_d = $fechaToFormat->format('d');
 
             foreach ($times_empleado_aprobados_pendientes_list as $time) {
                 $times_empleado_array[] = $time->semana_y;
@@ -442,41 +444,43 @@ class ReportesEmpleados extends Component
     public function getMonthSpanish($month)
     {
         $mes = '';
-        if ($month == 'January') {
-            $mes = 'Enero';
-        }
-        if ($month == 'February') {
-            $mes = 'Febrero';
-        }
-        if ($month == 'March') {
-            $mes = 'Marzo';
-        }
-        if ($month == 'April') {
-            $mes = 'Abril';
-        }
-        if ($month == 'May') {
-            $mes = 'Mayo';
-        }
-        if ($month == 'June') {
-            $mes = 'Junio';
-        }
-        if ($month == 'July') {
-            $mes = 'Julio';
-        }
-        if ($month == 'August') {
-            $mes = 'Agosto';
-        }
-        if ($month == 'September') {
-            $mes = 'Septiembre';
-        }
-        if ($month == 'October') {
-            $mes = 'Octubre';
-        }
-        if ($month == 'November') {
-            $mes = 'Noviembre';
-        }
-        if ($month == 'December') {
-            $mes = 'Diciembre';
+        switch ($month) {
+            case 'January':
+                $mes = 'Enero';
+                break;
+            case 'February':
+                $mes = 'Febrero';
+                break;
+            case 'March':
+                $mes = 'Marzo';
+                break;
+            case 'April':
+                $mes = 'Abril';
+                break;
+            case 'May':
+                $mes = 'Mayo';
+                break;
+            case 'June':
+                $mes = 'Junio';
+                break;
+            case 'July':
+                $mes = 'Julio';
+                break;
+            case 'August':
+                $mes = 'Agosto';
+                break;
+            case 'September':
+                $mes = 'Septiembre';
+                break;
+            case 'October':
+                $mes = 'Octubre';
+                break;
+            case 'November':
+                $mes = 'Noviembre';
+                break;
+            case 'December':
+                $mes = 'Diciembre';
+                break;
         }
 
         return $mes;
