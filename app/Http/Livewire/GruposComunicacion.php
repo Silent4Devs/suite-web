@@ -10,17 +10,22 @@ use Livewire\Component;
 class GruposComunicacion extends Component
 {
     protected $listeners = ['grupoEvaluadosSaved' => 'render'];
+
     public $evaluados_objetivo;
+
     public $by_manual;
+
     public $by_area;
+
     public $habilitarSelectManual = false;
+
     public $habilitarSelectAreas = false;
 
     public function render()
     {
         $grupos_evaluados = GruposEvaluado::all();
         $areas = Area::all();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('livewire.grupos-comunicacion', ['grupos_evaluados' => $grupos_evaluados, 'areas' => $areas, 'empleados' => $empleados]);
     }

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Tipoactivo.
@@ -15,15 +17,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
  * @property int|null $team_id
- *
  * @property Team|null $team
  * @property Collection|SubcategoriaActivo[] $subcategoria_activos
  * @property Collection|Marca[] $marcas
  * @property Collection|Activo[] $activos
  */
-class Tipoactivo extends Model
+class Tipoactivo extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'tipoactivos';
 
     protected $casts = [
@@ -33,6 +36,14 @@ class Tipoactivo extends Model
     protected $fillable = [
         'tipo',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('tipoactivos_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function team()
     {

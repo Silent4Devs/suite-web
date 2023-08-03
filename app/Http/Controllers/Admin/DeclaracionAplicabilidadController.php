@@ -33,44 +33,46 @@ class DeclaracionAplicabilidadController extends Controller
     public function index()
     {
         abort_if(Gate::denies('declaracion_de_aplicabilidad_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gapa5 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-uno', '=', 'A5');
-        $gapa6 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A6.1');
-        $gapa62 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A6.2');
-        $gapa71 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A7.1');
-        $gapa72 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A7.2');
-        $gapa73 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A7.3');
-        $gapa81 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A8.1');
-        $gapa82 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A8.2');
-        $gapa83 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A8.3');
-        $gapa91 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A9.1');
-        $gapa92 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A9.2');
-        $gapa93 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A9.3');
-        $gapa94 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A9.4');
-        $gapa101 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A10.1');
-        $gapa111 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A11.1');
-        $gapa112 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A11.2');
-        $gapa121 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.1');
-        $gapa122 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.2');
-        $gapa123 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.3');
-        $gapa124 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.4');
-        $gapa125 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.5');
-        $gapa126 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.6');
-        $gapa127 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A12.7');
-        $gapa131 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A13.1');
-        $gapa132 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A13.2');
-        $gapa141 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A14.1');
-        $gapa142 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A14.2');
-        $gapa143 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A14.3');
-        $gapa151 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A15.1');
-        $gapa152 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A15.2');
-        $gapa161 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A16.1');
-        $gapa171 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A17.1');
-        $gapa172 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A17.2');
-        $gapa181 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A18.1');
-        $gapa182 = DeclaracionAplicabilidad::orderBy('anexo_indice', 'asc')->get()->where('control-dos', '=', 'A18.2');
+        $declaracion_aplicabilidad = DeclaracionAplicabilidad::getAllOrderByAsc();
 
-        $conteoAplica = DeclaracionAplicabilidad::get()->where('aplica', '=', '1')->count();
-        $conteoNoaplica = DeclaracionAplicabilidad::get()->where('aplica', '=', '2')->count();
+        $gapa5 = $declaracion_aplicabilidad->where('control-uno', '=', 'A5');
+        $gapa6 = $declaracion_aplicabilidad->where('control-dos', '=', 'A6.1');
+        $gapa62 = $declaracion_aplicabilidad->where('control-dos', '=', 'A6.2');
+        $gapa71 = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.1');
+        $gapa72 = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.2');
+        $gapa73 = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.3');
+        $gapa81 = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.1');
+        $gapa82 = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.2');
+        $gapa83 = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.3');
+        $gapa91 = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.1');
+        $gapa92 = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.2');
+        $gapa93 = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.3');
+        $gapa94 = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.4');
+        $gapa101 = $declaracion_aplicabilidad->where('control-dos', '=', 'A10.1');
+        $gapa111 = $declaracion_aplicabilidad->where('control-dos', '=', 'A11.1');
+        $gapa112 = $declaracion_aplicabilidad->where('control-dos', '=', 'A11.2');
+        $gapa121 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.1');
+        $gapa122 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.2');
+        $gapa123 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.3');
+        $gapa124 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.4');
+        $gapa125 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.5');
+        $gapa126 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.6');
+        $gapa127 = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.7');
+        $gapa131 = $declaracion_aplicabilidad->where('control-dos', '=', 'A13.1');
+        $gapa132 = $declaracion_aplicabilidad->where('control-dos', '=', 'A13.2');
+        $gapa141 = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.1');
+        $gapa142 = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.2');
+        $gapa143 = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.3');
+        $gapa151 = $declaracion_aplicabilidad->where('control-dos', '=', 'A15.1');
+        $gapa152 = $declaracion_aplicabilidad->where('control-dos', '=', 'A15.2');
+        $gapa161 = $declaracion_aplicabilidad->where('control-dos', '=', 'A16.1');
+        $gapa171 = $declaracion_aplicabilidad->where('control-dos', '=', 'A17.1');
+        $gapa172 = $declaracion_aplicabilidad->where('control-dos', '=', 'A17.2');
+        $gapa181 = $declaracion_aplicabilidad->where('control-dos', '=', 'A18.1');
+        $gapa182 = $declaracion_aplicabilidad->where('control-dos', '=', 'A18.2');
+
+        $conteoAplica = $declaracion_aplicabilidad->where('aplica', '=', '1')->count();
+        $conteoNoaplica = $declaracion_aplicabilidad->where('aplica', '=', '2')->count();
         $gap182total = $gapa182->count();
         $A5 = $gapa5->where('aplica', '=', 1)->count();
         $A5No = $gapa5->where('aplica', '=', 2)->count();
@@ -139,7 +141,7 @@ class DeclaracionAplicabilidadController extends Controller
     public function tabla(Request $request)
     {
         if ($request->ajax()) {
-            $controles = DeclaracionAplicabilidad::orderBy('id')->get();
+            $controles = DeclaracionAplicabilidad::getAll();
 
             return datatables()->of($controles)->toJson();
         }
@@ -177,7 +179,6 @@ class DeclaracionAplicabilidadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\DeclaracionAplicabilidad  $declaracionAplicabilidad
      * @return \Illuminate\Http\Response
      */
@@ -195,7 +196,7 @@ class DeclaracionAplicabilidadController extends Controller
                         $aprobadorDeclaracion = DeclaracionAplicabilidadAprobadores::where('declaracion_id', $id)->orderBy('created_at')->first();
                         $aprobador = Empleado::select('id', 'name', 'email')->find($aprobadorDeclaracion->aprobadores_id);
                         $responsable = Empleado::select('id', 'name', 'email')->find($control->empleado_id);
-                        Mail::to($aprobador->email)->send(new  NotificacionDeclaracionAplicabilidadAprobadores($aprobador, $responsable, $aplicabilidad));
+                        Mail::to($aprobador->email)->send(new NotificacionDeclaracionAplicabilidadAprobadores($aprobador, $responsable, $aplicabilidad));
                     }
 
                     return response()->json(['success' => true, 'id' => $id]);
@@ -292,41 +293,43 @@ class DeclaracionAplicabilidadController extends Controller
 
     public function download(DeclaracionAplicabilidad $declaracionAplicabilidad)
     {
-        $gapda5s = DeclaracionAplicabilidad::get()->where('control-uno', '=', 'A5');
-        $gapda6s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A6.1');
-        $gapda62s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A6.2');
-        $gapda71s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A7.1');
-        $gapda72s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A7.2');
-        $gapda73s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A7.3');
-        $gapda81s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A8.1');
-        $gapda82s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A8.2');
-        $gapda83s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A8.3');
-        $gapda91s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A9.1');
-        $gapda92s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A9.2');
-        $gapda93s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A9.3');
-        $gapda94s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A9.4');
-        $gapda101s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A10.1');
-        $gapda111s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A11.1');
-        $gapda112s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A11.2');
-        $gapda121s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.1');
-        $gapda122s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.2');
-        $gapda123s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.3');
-        $gapda124s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.4');
-        $gapda125s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.5');
-        $gapda126s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.6');
-        $gapda127s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A12.7');
-        $gapda131s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A13.1');
-        $gapda132s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A13.2');
-        $gapda141s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A14.1');
-        $gapda142s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A14.2');
-        $gapda143s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A14.3');
-        $gapda151s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A15.1');
-        $gapda152s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A15.2');
-        $gapda161s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A16.1');
-        $gapda171s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A17.1');
-        $gapda172s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A17.2');
-        $gapda181s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A18.1');
-        $gapda182s = DeclaracionAplicabilidad::get()->where('control-dos', '=', 'A18.2');
+        $declaracion_aplicabilidad = DeclaracionAplicabilidad::getAll();
+
+        $gapda5s = $declaracion_aplicabilidad->where('control-uno', '=', 'A5');
+        $gapda6s = $declaracion_aplicabilidad->where('control-dos', '=', 'A6.1');
+        $gapda62s = $declaracion_aplicabilidad->where('control-dos', '=', 'A6.2');
+        $gapda71s = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.1');
+        $gapda72s = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.2');
+        $gapda73s = $declaracion_aplicabilidad->where('control-dos', '=', 'A7.3');
+        $gapda81s = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.1');
+        $gapda82s = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.2');
+        $gapda83s = $declaracion_aplicabilidad->where('control-dos', '=', 'A8.3');
+        $gapda91s = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.1');
+        $gapda92s = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.2');
+        $gapda93s = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.3');
+        $gapda94s = $declaracion_aplicabilidad->where('control-dos', '=', 'A9.4');
+        $gapda101s = $declaracion_aplicabilidad->where('control-dos', '=', 'A10.1');
+        $gapda111s = $declaracion_aplicabilidad->where('control-dos', '=', 'A11.1');
+        $gapda112s = $declaracion_aplicabilidad->where('control-dos', '=', 'A11.2');
+        $gapda121s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.1');
+        $gapda122s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.2');
+        $gapda123s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.3');
+        $gapda124s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.4');
+        $gapda125s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.5');
+        $gapda126s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.6');
+        $gapda127s = $declaracion_aplicabilidad->where('control-dos', '=', 'A12.7');
+        $gapda131s = $declaracion_aplicabilidad->where('control-dos', '=', 'A13.1');
+        $gapda132s = $declaracion_aplicabilidad->where('control-dos', '=', 'A13.2');
+        $gapda141s = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.1');
+        $gapda142s = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.2');
+        $gapda143s = $declaracion_aplicabilidad->where('control-dos', '=', 'A14.3');
+        $gapda151s = $declaracion_aplicabilidad->where('control-dos', '=', 'A15.1');
+        $gapda152s = $declaracion_aplicabilidad->where('control-dos', '=', 'A15.2');
+        $gapda161s = $declaracion_aplicabilidad->where('control-dos', '=', 'A16.1');
+        $gapda171s = $declaracion_aplicabilidad->where('control-dos', '=', 'A17.1');
+        $gapda172s = $declaracion_aplicabilidad->where('control-dos', '=', 'A17.2');
+        $gapda181s = $declaracion_aplicabilidad->where('control-dos', '=', 'A18.1');
+        $gapda182s = $declaracion_aplicabilidad->where('control-dos', '=', 'A18.2');
         $logo = DB::table('organizacions')
             ->select('logotipo')
             ->first();

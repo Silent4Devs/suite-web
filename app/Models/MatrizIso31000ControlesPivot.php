@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class MatrizIso31000ControlesPivot.
@@ -17,12 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $controles_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property MatrizIso31000|null $matriz_iso31000
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  */
-class MatrizIso31000ControlesPivot extends Model
+class MatrizIso31000ControlesPivot extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'matriz_iso31000_controles_pivots';
 
     protected $casts = [

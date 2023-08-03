@@ -8,6 +8,7 @@ use Livewire\Component;
 class PerfilSelect extends Component
 {
     public $perfiles;
+
     public $perfiles_seleccionado;
 
     protected $listeners = ['PerfilStore' => 'PerfilStore'];

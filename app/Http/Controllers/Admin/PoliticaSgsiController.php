@@ -53,7 +53,7 @@ class PoliticaSgsiController extends Controller
                 return $row->nombre_politica ? $row->nombre_politica : '';
             });
             $table->editColumn('politicasgsi', function ($row) {
-                return  $row->politicasgsi ? html_entity_decode(strip_tags($row->politicasgsi), ENT_QUOTES, 'UTF-8') : '';
+                return $row->politicasgsi ? html_entity_decode(strip_tags($row->politicasgsi), ENT_QUOTES, 'UTF-8') : '';
                 // return $row->politicasgsi ? strip_tags($row->politicasgsi) : '';
             });
             $table->editColumn('fecha_publicacion', function ($row) {
@@ -80,7 +80,7 @@ class PoliticaSgsiController extends Controller
             return $table->make(true);
         }
 
-        $politicaSgsis = PoliticaSgsi::all();
+        $politicaSgsis = PoliticaSgsi::getAll();
 
         $teams = Team::get();
 
@@ -138,7 +138,7 @@ class PoliticaSgsiController extends Controller
         $request->validate([
             'nombre_politica' => 'required',
             'politicasgsi' => 'required',
-/*            'fecha_publicacion' => 'required|date',
+            /*            'fecha_publicacion' => 'required|date',
            'fecha_entrada' => 'required|date',
            'fecha_revision' => 'required|date',*/
             'id_reviso_politica' => 'required',
@@ -176,9 +176,9 @@ class PoliticaSgsiController extends Controller
 
     public function visualizacion()
     {
-        $politicaSgsis = PoliticaSgsi::all();
+        $politicaSgsis = PoliticaSgsi::getAll();
 
-        $organizacions = Organizacion::first();
+        $organizacions = Organizacion::getFirst();
 
         return view('admin.politicaSgsis.visualizacion', compact('politicaSgsis', 'organizacions'));
     }

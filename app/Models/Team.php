@@ -2,20 +2,17 @@
 
 namespace App\Models;
 
-use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Team extends Model
+class Team extends Model implements Auditable
 {
-    use SoftDeletes, Auditable, HasFactory;
-    use QueryCacheable;
+    use SoftDeletes,  HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'teams';
 
     protected $dates = [

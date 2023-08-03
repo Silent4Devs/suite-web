@@ -10,13 +10,13 @@ use App\Models\RH\DependientesEconomicosEmpleados;
 use Carbon\Carbon;
 use DateTime;
 use DateTimeInterface;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use EloquentFilter\Filterable;
-
-// use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Empleado.
@@ -38,7 +38,6 @@ use EloquentFilter\Filterable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Area|null $area
  * @property Sede|null $sede
  * @property Empleado|null $empleado
@@ -53,16 +52,15 @@ use EloquentFilter\Filterable;
  * @property Collection|RevisionDocumento[] $revision_documentos
  * @property Collection|User[] $users
  */
-class Empleado extends Model
+class Empleado extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
     use Filterable;
-    // use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
     const BAJA = 'baja';
+
     const ALTA = 'alta';
 
     protected $table = 'empleados';
@@ -86,7 +84,7 @@ class Empleado extends Model
     //public $preventsLazyLoading = true;
     //protected $with = ['children:id,name,foto,puesto as title,area,supervisor_id']; //Se desborda la memoria al entrar en un bucle infinito se opto por utilizar eager loading
     protected $appends = [
-        'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador','declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
+        'avatar', 'avatar_ruta', 'resourceId', 'empleados_misma_area', 'genero_formateado', 'puesto', 'declaraciones_responsable', 'declaraciones_aprobador', 'declaraciones_responsable2022', 'declaraciones_aprobador2022', 'fecha_ingreso', 'saludo', 'saludo_completo',
         'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'es_supervisor', 'fecha_min_timesheet',
     ];
 
@@ -152,6 +150,46 @@ class Empleado extends Model
         'semanas_min_timesheet',
         'vacante_activa',
     ];
+
+    //Redis methods
+    public static function getAll(array $options = [])
+    {
+        // Generate a unique cache key based on the options provided
+        $cacheKey = 'empleados_all_' . md5(serialize($options));
+
+        return Cache::remember('empleados_all', 3600 * 24, function () use ($options) {
+            $query = self::query();
+
+            if (isset($options['orderBy'])) {
+                $orderBy = $options['orderBy'];
+                $query->orderBy($orderBy[0], $orderBy[1]);
+            }
+
+            return $query->get();
+        });
+    }
+
+    public static function getEmpleadoCurriculum($id)
+    {
+        return
+            Cache::remember('EmpleadoCurriculum_' . $id, 3600 * 24, function () use ($id) {
+                return self::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->findOrFail($id);
+            });
+    }
+
+    public static function getAltaEmpleados()
+    {
+        return Cache::remember('empleados_alta', 3600 * 24, function () {
+            return self::alta()->select('id', 'area_id', 'name')->get();
+        });
+    }
+
+    public static function getaltaAll()
+    {
+        return Cache::remember('empleados_alta_all', 3600 * 24, function () {
+            return self::alta()->get();
+        });
+    }
 
     public function getActualBirdthdayAttribute()
     {

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class SubcategoriaActivo.
@@ -14,12 +16,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Tipoactivo $tipoactivo
  */
-class SubcategoriaActivo extends Model
+class SubcategoriaActivo extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'subcategoria_activos';
 
     protected $casts = [
@@ -31,6 +34,14 @@ class SubcategoriaActivo extends Model
         'subcategoria',
         'categoria_id',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('SubCategoriaActivo_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     public function tipoactivo()
     {

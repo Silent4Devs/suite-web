@@ -39,8 +39,8 @@ class EV360ObjetivosController extends Controller
             }
         }
 
-        $areas = Area::select('id', 'area')->get();
-        $puestos = Puesto::select('id', 'puesto')->get();
+        $areas = Area::getAll();
+        $puestos = Puesto::getAll();
         $perfiles = PerfilEmpleado::select('id', 'nombre')->get();
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.index', compact('areas', 'puestos', 'perfiles'));
@@ -73,7 +73,7 @@ class EV360ObjetivosController extends Controller
         if ($request->ajax()) {
         }
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados'));
     }
@@ -129,13 +129,13 @@ class EV360ObjetivosController extends Controller
 
             foreach ($evaluacion as $evalu) {
                 $evaluado = ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
-                ->where('empleado_id', '=', $evalu->evaluado_id)
-                ->where('en_curso', '=', true)->get();
+                    ->where('empleado_id', '=', $evalu->evaluado_id)
+                    ->where('en_curso', '=', true)->get();
 
                 foreach ($evaluado as $eva) {
                     $evaluador = EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
-                    ->where('evaluacion_id', '=', $reciente->id)
-                    ->whereIn('tipo', ['0', '1'])->get();
+                        ->where('evaluacion_id', '=', $reciente->id)
+                        ->whereIn('tipo', ['0', '1'])->get();
 
                     foreach ($evaluador as $evldr) {
                         ObjetivoRespuesta::create([
@@ -148,11 +148,11 @@ class EV360ObjetivosController extends Controller
                             'evaluacion_id' => $reciente->id,
                         ]);
                         ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
-                        ->where('en_curso', '=', true)
-                        ->where('empleado_id', '=', $eva->empleado_id)
-                        ->update([
-                            'evaluacion_id' => $reciente->id,
-                        ]);
+                            ->where('en_curso', '=', true)
+                            ->where('empleado_id', '=', $eva->empleado_id)
+                            ->update([
+                                'evaluacion_id' => $reciente->id,
+                            ]);
                     }
                 }
             }
@@ -201,13 +201,13 @@ class EV360ObjetivosController extends Controller
 
             foreach ($evaluacion as $evalu) {
                 $evaluado = ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
-                ->where('empleado_id', '=', $evalu->evaluado_id)
-                ->where('en_curso', '=', true)->get();
+                    ->where('empleado_id', '=', $evalu->evaluado_id)
+                    ->where('en_curso', '=', true)->get();
 
                 foreach ($evaluado as $eva) {
                     $evaluador = EvaluadoEvaluador::where('evaluado_id', '=', $evalu->evaluado_id)
-                    ->where('evaluacion_id', '=', $reciente->id)
-                    ->whereIn('tipo', ['0', '1'])->get();
+                        ->where('evaluacion_id', '=', $reciente->id)
+                        ->whereIn('tipo', ['0', '1'])->get();
 
                     foreach ($evaluador as $evldr) {
                         ObjetivoRespuesta::create([
@@ -220,11 +220,11 @@ class EV360ObjetivosController extends Controller
                             'evaluacion_id' => $reciente->id,
                         ]);
                         ObjetivoEmpleado::where('objetivo_id', '=', $objetivo->id)
-                        ->where('en_curso', '=', true)
-                        ->where('empleado_id', '=', $eva->empleado_id)
-                        ->update([
-                            'evaluacion_id' => $reciente->id,
-                        ]);
+                            ->where('en_curso', '=', true)
+                            ->where('empleado_id', '=', $eva->empleado_id)
+                            ->update([
+                                'evaluacion_id' => $reciente->id,
+                            ]);
                     }
                 }
             }
@@ -250,8 +250,8 @@ class EV360ObjetivosController extends Controller
     {
         //Buscar en objetivo calificaciones y se borra
         $objres = ObjetivoRespuesta::where('objetivo_id', $objetivo->objetivo_id)
-        ->where('evaluado_id', $objetivo->empleado_id)
-        ->where('evaluacion_id', $objetivo->evaluacion_id);
+            ->where('evaluado_id', $objetivo->empleado_id)
+            ->where('evaluacion_id', $objetivo->evaluacion_id);
 
         //Borrar si existe
         if ($objres != null) {
@@ -344,7 +344,7 @@ class EV360ObjetivosController extends Controller
         }])->find(intval($empleado));
         $objetivos_empleado = $empleado->objetivos;
         if (count($objetivos_empleado)) {
-            $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get()->except($empleado->id);
+            $empleados = Empleado::getaltaAll()->except($empleado->id);
 
             return response()->json(['empleados' => $empleados, 'hasObjetivos' => true, 'objetivos' => $objetivos_empleado]);
         } else {

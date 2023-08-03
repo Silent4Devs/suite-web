@@ -90,7 +90,7 @@ class PlanificacionControlController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -103,13 +103,15 @@ class PlanificacionControlController extends Controller
     {
         abort_if(Gate::denies('planificacion_y_control_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $empleados = Empleado::alta()->with('area')->get();
+        $alta = Empleado::alta()->with('area')->get();
 
-        $responsables = Empleado::alta()->with('area')->get();
+        $empleados = $alta;
 
-        $aprobadores = Empleado::alta()->with('area')->get();
+        $responsables = $alta;
+
+        $aprobadores = $alta;
 
         $origen_seleccionado = null;
 
@@ -150,7 +152,7 @@ class PlanificacionControlController extends Controller
             'descripcion' => $request->descripcion,
             'origen_id' => $request->origen_id,
             'descripcion' => $request->descripcion,
-            'id_responsable_aprobar'=> $request->id_responsable_aprobar,
+            'id_responsable_aprobar' => $request->id_responsable_aprobar,
         ]);
 
         Mail::to($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl));
@@ -179,15 +181,15 @@ class PlanificacionControlController extends Controller
     {
         abort_if(Gate::denies('planificacion_y_control_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $empleados = Empleado::alta()->with('area')->get();
+        $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $alta = Empleado::alta()->with('area')->get();
+        $empleados = $alta;
 
         $planificacionControl->load('team');
 
-        $responsables = Empleado::alta()->with('area')->get();
+        $responsables = $alta;
 
-        $aprobadores = Empleado::alta()->with('area')->get();
+        $aprobadores = $alta;
 
         $origen_seleccionado = $planificacionControl->origen_id;
 
@@ -226,9 +228,9 @@ class PlanificacionControlController extends Controller
             'descripcion' => $request->descripcion,
             'origen_id' => $request->origen_id,
             'descripcion' => $request->descripcion,
-            'id_responsable_aprobar'=> $request->id_responsable_aprobar,
-            'es_aprobado'=>'pendiente',
-            'comentarios'=>null,
+            'id_responsable_aprobar' => $request->id_responsable_aprobar,
+            'es_aprobado' => 'pendiente',
+            'comentarios' => null,
         ]);
 
         // dd($planificacionControl);
@@ -322,12 +324,12 @@ class PlanificacionControlController extends Controller
         // dd($request->aprobado);
         if ($request->aprobado != null) {
             $planificacionControl->update([
-                'es_aprobado'=>$request->aprobado == '1' ? 'aprobado' : 'rechazado',
-                'comentarios'=>$request->comentarios,
+                'es_aprobado' => $request->aprobado == '1' ? 'aprobado' : 'rechazado',
+                'comentarios' => $request->comentarios,
             ]);
             Mail::to($planificacionControl->empleado->email)->cc([$planificacionControl->responsableAprobar->email, $planificacionControl->responsable->email])->send(new PlanificacionAceptadaRechazada($planificacionControl));
         }
 
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 }

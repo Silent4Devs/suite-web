@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class PortalComunicacionController extends Controller
 {
@@ -28,14 +29,29 @@ class PortalComunicacionController extends Controller
         $hoy = Carbon::now();
         $hoy->toDateString();
 
-        $nuevos = Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        $nuevos_contador_circulo = Empleado::alta()->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
+        $nuevos = Cache::remember('portal_nuevos', 3600 * 12, function () use ($hoy) {
+            return Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+        });
 
-        $cumpleaños = Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
-        $cumpleaños_contador_circulo = Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->count();
+        $nuevos_contador_circulo = Cache::remember('portal_nuevos_contador_circulo', 3600 * 12, function () use ($hoy) {
+            return Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
+        });
 
-        $aniversarios = Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
-        $aniversarios_contador_circulo = Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
+        $cumpleaños = Cache::remember('portal_cumpleaños', 3600 * 12, function () use ($hoy) {
+            return Empleado::whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        });
+
+        $cumpleaños_contador_circulo = Cache::remember('portal_contador_circulo', 3600 * 12, function () use ($hoy) {
+            return Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->count();
+        });
+
+        $aniversarios = Cache::remember('portal_aniversarios', 3600 * 12, function () use ($hoy) {
+            return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
+        });
+
+        $aniversarios_contador_circulo = Cache::remember('portal_aniversarios_contador_circulo', 3600 * 12, function () use ($hoy) {
+            return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
+        });
 
         $documentos_publicados = Documento::with('macroproceso')->where('estatus', Documento::PUBLICADO)->latest('updated_at')->get()->take(5);
 
@@ -46,8 +62,8 @@ class PortalComunicacionController extends Controller
 
         $empleado_asignado = auth()->user()->n_empleado;
 
-        $politica_existe = PoliticaSgsi::count();
-        $comite_existe = Comiteseguridad::count();
+        $politica_existe = PoliticaSgsi::getAll()->count();
+        $comite_existe = Comiteseguridad::getAll()->count();
 
         return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'nuevos_contador_circulo', 'cumpleaños_contador_circulo', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe'));
     }
@@ -65,7 +81,6 @@ class PortalComunicacionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -98,7 +113,6 @@ class PortalComunicacionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

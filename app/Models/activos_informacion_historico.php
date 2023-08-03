@@ -6,10 +6,12 @@ use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class activos_informacion_historico extends Model
+class activos_informacion_historico extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'activos_informacion_historicos';
 
@@ -18,6 +20,7 @@ class activos_informacion_historico extends Model
         'updated_at',
         'deleted_at',
     ];
+
     protected $appends = ['riesgo_activo', 'name', 'content', 'color', 'nivel_riesgo_ai'];
 
     protected $fillable = [

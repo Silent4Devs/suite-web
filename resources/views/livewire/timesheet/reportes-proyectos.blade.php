@@ -132,12 +132,15 @@
                 <div class="row w-100 mt-4" style="align-items: end">
                     <div class="col-6">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="row" style="justify-content: center">
-                                    <div class="col-4 p-0" style="font-size: 11px;align-self: center">
+                                    <div class="col-3 p-0" style="font-size: 11px;align-self: center">
+
+                                    </div>
+                                    <div class="col-3 p-0" style="font-size: 11px;align-self: center">
                                         <p class="m-0">Mostrando</p>
                                     </div>
-                                    <div class="col-4 p-0">
+                                    <div class="col-3 p-0">
                                         <select name="" id="" class="form-control" wire:model="perPage">
                                             <option value="5">5</option>
                                             <option value="10">10</option>
@@ -147,12 +150,12 @@
                                             <option value="-1">Todos</option>
                                         </select>
                                     </div>
-                                    <div class="col-4 p-0" style="font-size: 11px;align-self: center;text-align: end">
+                                    <div class="col-3 p-0" style="font-size: 11px;align-self: center;text-align: end">
                                         <p class="m-0">por página</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-8">
+                            <div class="col-6">
 
                             </div>
                         </div>
@@ -171,7 +174,9 @@
                         class="datatable_timesheet_proyectos table w-100 tabla-fixed">
                         <thead>
                             <tr>
-                                <th style="min-width:250px;">Proyecto </th>
+                                <th style="min-width:250px;">
+                                    ID-Proyecto
+                                </th>
                                 <th style="min-width:250px; text-align: right;">Áreas participantes</th>
                                 <th style="min-width:250px; text-align: right;">Cliente</th>
                                 @foreach ($calendario_tabla as $calendar)
@@ -261,7 +266,7 @@
                         <tbody>
                             @foreach ($proyectos_array as $proyecto)
                                 <tr>
-                                    <td>{{ $proyecto['proyecto'] }} </td>
+                                    <td>{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</td>
                                     <td>
                                         <ul style="padding-left: 10px;">
                                             @foreach ($proyecto['areas'] as $area)
@@ -299,7 +304,7 @@
     @if ($proyecto_reporte)
         <div id="reporte_proyecto" class="anima_reporte">
             @php
-                $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+                $organizacion = Organizacion::getFirst();
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {

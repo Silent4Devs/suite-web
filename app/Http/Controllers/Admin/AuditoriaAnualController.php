@@ -73,7 +73,7 @@ class AuditoriaAnualController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
         $auditoriaAnual = AuditoriaAnual::with('documentos_material')->get();
         $documentoAuditoriaAnuals = AuditoriaAnualDocumento::get();
@@ -117,11 +117,11 @@ class AuditoriaAnualController extends Controller
     {
         abort_if(Gate::denies('programa_anual_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $auditorliders = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $auditorliders = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $auditoriaAnual->load('auditorlider', 'team');
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.auditoriaAnuals.edit', compact('auditorliders', 'auditoriaAnual', 'empleados'));
     }

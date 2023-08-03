@@ -16,23 +16,39 @@ class BitacoraAccesos extends Component
 {
     use WithPagination;
     use LivewireAlert;
+
     protected $listeners = [
         'confirmarSalida',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $perPage = 5;
+
     public $colaborador = '';
+
     public $area = '';
+
     public $rangoFechas = '';
+
     public $fechaInicio;
+
     public $fechaFin;
+
     public $empleados;
+
     public $areas;
+
     public $textoFiltro;
+
     public $search = '';
+
     public $total = 0;
+
     public $tipoVista = 'bitacora';
+
     public $visitanteID;
+
     protected $queryString = [
         'colaborador' => ['except' => ''],
         'area' => ['except' => ''],
@@ -53,13 +69,13 @@ class BitacoraAccesos extends Component
     {
         $this->tipoVista = $tipoVista;
         $this->empleados = Empleado::select('id', 'name')->alta()->get();
-        $this->areas = Area::select('id', 'area')->get();
+        $this->areas = Area::getAll();
     }
 
     public function render()
     {
         $model = $this->getQueryFilter();
-        $visitantes = $model->paginate($this->perPage);
+        $visitantes = $model->fastPaginate($this->perPage);
         $this->total = $model->count();
         $this->obtenerTexto($this->total, $visitantes->count());
 

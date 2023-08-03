@@ -85,7 +85,7 @@ class PlanBaseActividadesController extends Controller
         $plan_base_actividades = PlanBaseActividade::get();
         $enlaces_ejecutars = EnlacesEjecutar::get();
         $estatus_plan_trabajos = EstatusPlanTrabajo::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.planBaseActividades.index', compact('plan_base_actividades', 'enlaces_ejecutars', 'estatus_plan_trabajos', 'users', 'users', 'teams'));
@@ -95,15 +95,17 @@ class PlanBaseActividadesController extends Controller
     {
         abort_if(Gate::denies('plan_base_actividade_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $users = User::getAll();
+
         $actividad_padres = PlanBaseActividade::all()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $ejecutars = EnlacesEjecutar::all()->pluck('ejecutar', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $estatuses = EstatusPlanTrabajo::all()->pluck('estado', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $colaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $colaboradors = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.planBaseActividades.create', compact('actividad_padres', 'ejecutars', 'estatuses', 'responsables', 'colaboradors'));
     }
@@ -127,15 +129,17 @@ class PlanBaseActividadesController extends Controller
     {
         abort_if(Gate::denies('plan_base_actividade_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $users = User::getAll();
+
         $actividad_padres = PlanBaseActividade::all()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $ejecutars = EnlacesEjecutar::all()->pluck('ejecutar', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $estatuses = EstatusPlanTrabajo::all()->pluck('estado', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $colaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $colaboradors = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $planBaseActividade->load('actividad_padre', 'ejecutar', 'estatus', 'responsable', 'colaborador', 'team');
 

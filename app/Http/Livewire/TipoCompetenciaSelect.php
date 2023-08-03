@@ -8,7 +8,9 @@ use Livewire\Component;
 class TipoCompetenciaSelect extends Component
 {
     protected $listeners = ['render-tipo-competencia-select' => 'render'];
+
     public $tipos;
+
     public $tipo_seleccionado;
 
     public function mount($tipo_seleccionado)
@@ -19,7 +21,7 @@ class TipoCompetenciaSelect extends Component
 
     public function render()
     {
-        $this->tipos = TipoCompetencia::get();
+        $this->tipos = TipoCompetencia::getAll();
 
         return view('livewire.tipo-competencia-select', ['tipos' => $this->tipos]);
     }

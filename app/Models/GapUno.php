@@ -6,15 +6,12 @@ use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class GapUno extends Model
+class GapUno extends Model implements Auditable
 {
     use MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use \OwenIt\Auditing\Auditable;
     public $table = 'gap_logro_uno';
 
     protected $dates = [
@@ -41,8 +38,8 @@ class GapUno extends Model
 
     const VALORACION_SELECT = [
         'Cumple satisfactoriamente' => 'Cumple satisfactoriamente',
-        'Cumple parcialmente'       => 'Cumple parcialmente',
-        'No cumple'                 => 'No cumple',
+        'Cumple parcialmente' => 'Cumple parcialmente',
+        'No cumple' => 'No cumple',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

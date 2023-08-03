@@ -5,7 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Modelo.
@@ -16,16 +17,13 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Marca|null $marca
  */
-class Modelo extends Model
+class Modelo extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'modelo';
 
     protected $casts = [
@@ -36,6 +34,23 @@ class Modelo extends Model
         'marca_id',
         'nombre',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('Modelos_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
+
+    public static function getById($id)
+    {
+        $cacheKey = 'Modelos_' . $id;
+
+        return Cache::remember($cacheKey, 3600 * 24, function () use ($id) {
+            return self::find($id);
+        });
+    }
 
     public function marca()
     {

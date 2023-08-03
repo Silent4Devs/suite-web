@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\IncidentesSeguridad;
+use Illuminate\Support\Facades\Cache;
+
+class IncidentesSeguridadObserver
+{
+    /**
+     * Handle the IncidentesSeguridad "created" event.
+     *
+     * @param  \App\Models\IncidentesSeguridad  $incidentesSeguridad
+     * @return void
+     */
+    public function created(IncidentesSeguridad $incidentesSeguridad)
+    {
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the IncidentesSeguridad "updated" event.
+     *
+     * @param  \App\Models\IncidentesSeguridad  $incidentesSeguridad
+     * @return void
+     */
+    public function updated(IncidentesSeguridad $incidentesSeguridad)
+    {
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the IncidentesSeguridad "deleted" event.
+     *
+     * @param  \App\Models\IncidentesSeguridad  $incidentesSeguridad
+     * @return void
+     */
+    public function deleted(IncidentesSeguridad $incidentesSeguridad)
+    {
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the IncidentesSeguridad "restored" event.
+     *
+     * @param  \App\Models\IncidentesSeguridad  $incidentesSeguridad
+     * @return void
+     */
+    public function restored(IncidentesSeguridad $incidentesSeguridad)
+    {
+        $this->forgetCache();
+    }
+
+    /**
+     * Handle the IncidentesSeguridad "force deleted" event.
+     *
+     * @param  \App\Models\IncidentesSeguridad  $incidentesSeguridad
+     * @return void
+     */
+    public function forceDeleted(IncidentesSeguridad $incidentesSeguridad)
+    {
+        $this->forgetCache();
+    }
+
+    private function forgetCache()
+    {
+        Cache::forget('incidentes_seguridad_all');
+    }
+}

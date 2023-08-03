@@ -84,9 +84,7 @@ class RegistromejoraController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
-        $users = User::get();
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.registromejoras.index', compact('users', 'users', 'users', 'teams'));
@@ -95,12 +93,13 @@ class RegistromejoraController extends Controller
     public function create()
     {
         abort_if(Gate::denies('registromejora_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $users = User::getAll();
 
-        $nombre_reportas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombre_reportas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsableimplementacions = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsableimplementacions = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $validas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $validas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $empleados = Empleado::alta()->with('area')->get();
 
@@ -118,11 +117,12 @@ class RegistromejoraController extends Controller
     {
         abort_if(Gate::denies('registromejora_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $nombre_reportas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::getAll();
+        $nombre_reportas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsableimplementacions = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsableimplementacions = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $validas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $validas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $registromejora->load('nombre_reporta', 'responsableimplementacion', 'valida', 'team');
 

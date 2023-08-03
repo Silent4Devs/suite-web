@@ -13,7 +13,7 @@ class ListaDocumentosEmpleados extends Controller
     public function index()
     {
         abort_if(Gate::denies('lista_de_documentos_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $docs = ListaDocumentoEmpleado::get();
+        $docs = ListaDocumentoEmpleado::getAll();
 
         return view('admin.lista_documentos_empleados.index', compact('docs'));
     }

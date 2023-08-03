@@ -25,36 +25,56 @@ class ReportesProyectos extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
+
     public $totalRegistrosMostrando;
+
     public $perPage = 5;
+
     public $search;
 
     public $areas;
+
     public $proyectos;
 
     public $proyecto_reporte;
+
     public $area_proyecto;
+
     public $cliente_proyecto;
+
     public $tareas_array;
+
     public $empleados_proyecto;
+
     public $total_horas_proyecto;
+
     public $hoy_format;
+
     // public $proyectos_array;
     public $area_id;
+
     public $fecha_inicio;
+
     public $fecha_fin;
+
     public $hoy;
+
     public $fecha_inicio_proyecto;
+
     public $fecha_fin_proyecto;
+
     public $horas_totales_todos_proyectos = 0;
+
     public $semanas_totales_calendario = 0;
+
     public $calendario_tabla;
+
     public $organizacion;
 
     public function mount()
     {
-        $this->areas = Area::get();
-        $this->organizacion = Organizacion::first();
+        $this->areas = Area::getAll();
+        $this->organizacion = Organizacion::getFirst();
     }
 
     public function updatedAreaId($value)
@@ -126,7 +146,7 @@ class ReportesProyectos extends Component
 
         $this->emit('scriptTabla');
 
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
 
         $this->horas_totales_todos_proyectos = 0;
 
@@ -220,7 +240,7 @@ class ReportesProyectos extends Component
                 return $item->areas->contains(Area::select('id', 'area')->find($this->area_id));
             });
         } else {
-            $this->proyectos = TimesheetProyecto::get();
+            $this->proyectos = TimesheetProyecto::getAll();
         }
         foreach ($this->proyectos as $proyecto) {
             // registros existenetes horas a la semana
@@ -265,6 +285,7 @@ class ReportesProyectos extends Component
 
             $proyectos_array->push([
                 'id' => $proyecto->id,
+                'identificador' => $proyecto->identificador,
                 'proyecto' => $proyecto->proyecto,
                 'areas' => $proyecto->areas,
                 'cliente' => $proyecto->cliente ? $proyecto->cliente->nombre : '',
@@ -280,7 +301,7 @@ class ReportesProyectos extends Component
         }
 
         $this->totalRegistrosMostrando = count($proyectos_array);
-        $proyectos_array = $this->paginate($proyectos_array, $this->perPage);
+        $proyectos_array = $this->fastPaginate($proyectos_array, $this->perPage);
 
         $this->calendario_tabla = $calendario_array;
         $this->hoy_format = $this->hoy->format('d/m/Y');
@@ -298,14 +319,14 @@ class ReportesProyectos extends Component
 
     public function genrarReporte($id)
     {
-        $this->proyecto_reporte = TimesheetProyecto::find($id);
+        $this->proyecto_reporte = TimesheetProyecto::getAll()->find($id);
 
         // $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
-        $this->cliente_proyecto = TimesheetCliente::find($this->proyecto_reporte->cliente_id);
+        $this->cliente_proyecto = TimesheetCliente::getAll()->find($this->proyecto_reporte->cliente_id);
 
         $empleados = collect();
 
-        $tareas = TimesheetTarea::where('proyecto_id', $id)->get();
+        $tareas = TimesheetTarea::getAll()->where('proyecto_id', $id);
 
         $this->tareas_array = collect();
 

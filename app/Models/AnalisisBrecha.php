@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class AnalisisBrecha.
@@ -19,15 +20,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Empleado|null $empleado
  * @property Collection|GapLogroTre[] $gap_logro_tres
  * @property Collection|GapLogroDo[] $gap_logro_dos
  * @property Collection|GapLogroUno[] $gap_logro_unos
  */
-class AnalisisBrecha extends Model
+class AnalisisBrecha extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'analisis_brechas';
 

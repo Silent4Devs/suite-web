@@ -66,9 +66,7 @@
                                 HACER</h5>
                             <div class="table-responsive">
                                 <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">
-                                Organizacional</p>
-                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Orientación de la
-                                    dirección para la gestión de la seguridad de la información</p>
+                                5. CONTROLES ORGANIZACIONALES</p>
                                 <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px; margin: 0px;">OBJETIVO:
                                     Brindar orientación y soporte, por parte de la dirección, para la seguridad de la
                                     información de acuerdo con los requisitos del negocio y con las leyes y reglamentos
@@ -78,7 +76,8 @@
                                     <tr>
                                         <th scope="col">INDICE</th>
                                         <th scope="col">CLASIFICACIÓN</th>
-                                        <th COLSPAN="2">CONTROL</th>
+                                        <th scope="col">ANEXO INDICE</th>
+                                        <th scope="col">CONTROL</th>
                                         <th scope="col">VALORACIÓN</th>
                                         <th scope="col">EVIDENCIA DE
                                             CUMPLIMIENTO</th>
@@ -132,8 +131,7 @@
                             </div>
                             <div class="table-responsive">
                                 <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">
-                                Personales</p>
-                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Organización Interna</p>
+                                6. CONTROLES PERSONALES</p>
                                 <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px; margin: 0px;">OBJETIVO:
                                     Establecer un marco de referencia de gestión para iniciar y controlar la
                                     implementación y operación de la seguridad de la información dentro de la
@@ -198,7 +196,7 @@
                             </div>
                             <div class="table-responsive">
                                 <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">
-                                Fisicas</p>
+                                7. CONTROLES FISICOS</p>
                                 <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Garantizar la
                                     seguridad del teletrabajo y el uso de dispositivos móviles</p>
                                 <table class="table" style="font-size: 12px;">
@@ -211,7 +209,7 @@
                                         <th scope="col">EVIDENCIA DE
                                             CUMPLIMIENTO
                                         </th>
-                                        <th scope="col">RECOMENDACIÓ</th>
+                                        <th scope="col">RECOMENDACIÓN</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -260,9 +258,7 @@
                                 </table>
                             </div>
                             <div class="table-responsive">
-                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Tecnológicos</p>
-                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">Responsabilidad por los
-                                    activos</p>
+                                <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">8. CONTROLES TECNÓLOGICOS</p>
                                 <p class="p-2 mb-2 text-white bg-info" style="font-size: 12px;">OBJETIVO: Identificar
                                     los activos organizacionales y definir las responsabilidades de protección
                                     adecuadas.</p>

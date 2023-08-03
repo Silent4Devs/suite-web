@@ -7,8 +7,8 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\CreateAmenazaRequest;
 use App\Http\Requests\UpdateAmenazaRequest;
 use App\Models\Amenaza;
-use App\Models\Organizacion;
 use App\Repositories\AmenazaRepository;
+use App\Traits\ObtenerOrganizacion;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,6 +18,8 @@ use Yajra\DataTables\Facades\DataTables;
 class AmenazaController extends AppBaseController
 {
     use CsvImportTrait;
+    use ObtenerOrganizacion;
+
     /** @var AmenazaRepository */
     private $amenazaRepository;
 
@@ -68,13 +70,8 @@ class AmenazaController extends AppBaseController
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.amenazas.index', compact('logo_actual', 'empresa_actual'));
@@ -96,7 +93,6 @@ class AmenazaController extends AppBaseController
     /**
      * Store a newly created Amenaza in storage.
      *
-     * @param CreateAmenazaRequest $request
      *
      * @return Response
      */
@@ -154,8 +150,7 @@ class AmenazaController extends AppBaseController
     /**
      * Remove the specified Amenaza from storage.
      *
-     * @param  int $id
-     *
+     * @param  int  $id
      * @return Response
      */
     public function destroy($id)

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class DeclaracionAplicabilidadResponsable.
@@ -16,13 +17,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- *
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  * @property Empleado|null $empleado
  */
-class DeclaracionAplicabilidadResponsable extends Model
+class DeclaracionAplicabilidadResponsable extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'declaracion_aplicabilidad_responsables';
 

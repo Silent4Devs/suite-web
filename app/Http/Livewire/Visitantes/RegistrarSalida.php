@@ -13,14 +13,16 @@ class RegistrarSalida extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
+
     public $visitante;
+
     public $perPage = 5;
 
     protected $listeners = ['salidaRegistrada' => 'render'];
 
     public function render()
     {
-        $visitantes = RegistrarVisitante::where('registro_salida', false)->paginate($this->perPage);
+        $visitantes = RegistrarVisitante::where('registro_salida', false)->fastPaginate($this->perPage);
 
         return view('livewire.visitantes.registrar-salida', compact('visitantes'));
     }

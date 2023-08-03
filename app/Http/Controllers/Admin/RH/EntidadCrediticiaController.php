@@ -42,7 +42,6 @@ class EntidadCrediticiaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -88,7 +87,6 @@ class EntidadCrediticiaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\RH\EntidadCrediticia  $entidadCrediticia
      * @return \Illuminate\Http\Response
      */

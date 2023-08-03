@@ -10,10 +10,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     use SoftDeletes, Notifiable, HasFactory;
+    use \OwenIt\Auditing\Auditable;
+
     public $table = 'users';
 
     protected $hidden = [
@@ -54,6 +58,14 @@ class User extends Authenticatable
         'is_active',
         'empleado_id',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('users_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     //empleadoId attribute
     public function getEmpleadoIdAttribute($value)

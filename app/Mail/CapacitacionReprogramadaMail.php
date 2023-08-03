@@ -13,6 +13,7 @@ class CapacitacionReprogramadaMail extends Mailable
     use Queueable, SerializesModels;
 
     public $recurso;
+
     public $empleado;
 
     public function __construct(Recurso $recurso, Empleado $empleado)

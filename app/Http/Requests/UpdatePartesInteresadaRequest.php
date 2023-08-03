@@ -19,7 +19,7 @@ class UpdatePartesInteresadaRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'requisitos'      => [
+            'requisitos' => [
                 'string',
                 'required',
             ],

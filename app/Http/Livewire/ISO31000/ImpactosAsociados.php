@@ -7,11 +7,17 @@ use Livewire\Component;
 class ImpactosAsociados extends Component
 {
     public $estrategico = 1;
+
     public $operacional = 1;
+
     public $cumplimiento = 1;
+
     public $legal = 1;
+
     public $reputacional = 1;
+
     public $tecnologico = 1;
+
     public $valor = 6;
 
     public function mount($estrategico, $operacional, $cumplimiento, $legal, $reputacional, $tecnologico)

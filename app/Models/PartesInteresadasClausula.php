@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class PartesInteresadasClausula.
@@ -12,12 +13,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $partesint_id
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
- *
  * @property Clausula $clausula
  * @property PartesInteresada $partes_interesada
  */
-class PartesInteresadasClausula extends Model
+class PartesInteresadasClausula extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'partes_interesadas_clausula';
 
     protected $casts = [

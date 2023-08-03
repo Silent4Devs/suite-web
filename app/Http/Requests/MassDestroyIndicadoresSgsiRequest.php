@@ -18,7 +18,7 @@ class MassDestroyIndicadoresSgsiRequest extends FormRequest
     public function rules()
     {
         return [
-            'ids'   => 'required|array',
+            'ids' => 'required|array',
             'ids.*' => 'exists:indicadores_sgsis,id',
         ];
     }

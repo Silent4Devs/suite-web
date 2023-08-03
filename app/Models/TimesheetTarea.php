@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use EloquentFilter\Filterable;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TimesheetTarea extends Model
+class TimesheetTarea extends Model implements Auditable
 {
     use HasFactory;
     use Filterable;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'timesheet_tareas';
 
@@ -21,6 +24,14 @@ class TimesheetTarea extends Model
         'area_id',
         'todos',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('timesheettarea_all', 3600 * 24, function () {
+            return self::orderByDesc('id')->get();
+        });
+    }
 
     public function proyecto()
     {
@@ -37,12 +48,18 @@ class TimesheetTarea extends Model
         } else {
             $areas = [Area::find($this->area_id)];
         }
+
         return $areas;
     }
 
     public function areaData()
     {
         return $this->belongsTo(Area::class);
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_id', 'id');
     }
 
     public function horas()

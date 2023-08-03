@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class DayOff extends Model
+class DayOff extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'day_off';
 

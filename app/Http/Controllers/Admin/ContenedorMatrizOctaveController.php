@@ -71,14 +71,14 @@ class ContenedorMatrizOctaveController extends Controller
         $contenedor = MatrizOctaveContenedor::create($request->all());
         $matriz = $request->matriz_id;
 
-        return redirect()->route('admin.contenedores.edit', ['contenedor'=>$contenedor, 'matriz'=>$matriz]);
+        return redirect()->route('admin.contenedores.edit', ['contenedor' => $contenedor, 'matriz' => $matriz]);
     }
 
     public function edit(Request $request, $contenedor, MatrizOctaveContenedor $matrizOctaveContenedor, $matriz)
     {
         $contenedor = MatrizOctaveContenedor::find($contenedor);
         $sumatoria = $this->calcularRiesgo($contenedor->id);
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        $controles = DeclaracionAplicabilidad::getAll();
         // dd($contenedor->impacto_proceso);
         return view('admin.ContenedorMatrizOctave.edit', compact('contenedor', 'sumatoria', 'controles', 'matriz'));
     }
@@ -89,7 +89,7 @@ class ContenedorMatrizOctaveController extends Controller
         $contenedor = $contenedor->update($request->all());
         $matriz = $request->matriz_id;
 
-        return redirect()->route('admin.contenedores.index', ['matriz'=>$matriz]);
+        return redirect()->route('admin.contenedores.index', ['matriz' => $matriz]);
     }
 
     public function agregarEscenarios(Request $request, $contenedor)
@@ -159,7 +159,7 @@ class ContenedorMatrizOctaveController extends Controller
         $activo = MatrizOctaveContenedor::find($contenedor);
         $activo->delete();
 
-        return response()->json(['status'=>200]);
+        return response()->json(['status' => 200]);
 
         // return redirect()->route('admin.contenedores.index')->with('success', 'Eliminado con éxito');
     }

@@ -2,22 +2,21 @@
 
 namespace App\Models\Iso27;
 
+use App\Models\Empleado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Empleado;
-use App\Models\NotificacionAprobadores;
-use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
-use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class DeclaracionAplicabilidadConcentradoIso extends Model
+class DeclaracionAplicabilidadConcentradoIso extends Model implements Auditable
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'id',
         'valoracion',
-        'id_gap_dos_catalogo'
+        'id_gap_dos_catalogo',
     ];
 
     public function gapdos()

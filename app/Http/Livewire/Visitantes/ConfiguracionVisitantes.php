@@ -9,9 +9,13 @@ use Livewire\Component;
 class ConfiguracionVisitantes extends Component
 {
     public $empleados;
+
     public $responsable = '';
+
     public $responsableVisitante;
+
     public $fotografiaRequerida = false;
+
     public $firmaRequerida = true;
 
     protected $rules = [

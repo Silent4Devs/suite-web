@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Vulnerabilidad.
+ *
  * @version August 5, 2021, 7:45 pm UTC
  *
  * @property \App\Models\Amenaza $idAmenaza
@@ -15,16 +16,15 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property string $descripcion
  * @property int $id_amenaza
  */
-class Vulnerabilidad extends Model
+class Vulnerabilidad extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'vulnerabilidads';
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $dates = ['deleted_at'];

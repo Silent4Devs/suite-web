@@ -4,7 +4,6 @@ namespace App\Functions;
 
 class PorcentajeDecApl2022
 {
-
     public function GapDecAplPorc($total, $conteoAprobado)
     {
         $valor = 100 / $total;
@@ -12,7 +11,7 @@ class PorcentajeDecApl2022
         $aprobada = $conteoAprobado * $valor;
 
         $porcentaje = number_format($aprobada, 2);
-        $faltante = number_format((100-$porcentaje), 2);
+        $faltante = number_format((100 - $porcentaje), 2);
 
         return [
             'porcentaje' => $porcentaje,

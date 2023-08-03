@@ -11,10 +11,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class MaterialSgsi extends Model implements HasMedia
+class MaterialSgsi extends Model implements HasMedia, Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'material_sgsis';
 
@@ -28,7 +30,7 @@ class MaterialSgsi extends Model implements HasMedia
 
     const TIPOIMPARTICION_SELECT = [
         'presencial' => 'Presencial',
-        'virtual'    => 'Virtual',
+        'virtual' => 'Virtual',
     ];
 
     protected $dates = [
@@ -53,9 +55,9 @@ class MaterialSgsi extends Model implements HasMedia
     ];
 
     const PERSONALOBJETIVO_SELECT = [
-        'toda_organizacion'       => 'Toda la organización',
-        'proveedores'             => 'Proveedores',
-        'clientes'                => 'Clientes',
+        'toda_organizacion' => 'Toda la organización',
+        'proveedores' => 'Proveedores',
+        'clientes' => 'Clientes',
         'toda_partes_interesadas' => 'Todas las partes interesadas',
     ];
 

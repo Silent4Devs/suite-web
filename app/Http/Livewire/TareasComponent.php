@@ -9,8 +9,11 @@ use Livewire\WithPagination;
 class TareasComponent extends Component
 {
     use WithPagination;
+
     public $view = 'no-leidas';
+
     private $lista_tareas;
+
     protected $paginationTheme = 'bootstrap';
 
     protected $listeners = [
@@ -57,14 +60,14 @@ class TareasComponent extends Component
 
     public function getUnreadTasks()
     {
-        $this->lista_tareas = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->paginate(10);
+        $this->lista_tareas = Auth::user()->unreadNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->fastPaginate(10);
 
         return response()->noContent();
     }
 
     public function getReadedTasks()
     {
-        $this->lista_tareas = Auth::user()->readNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->paginate(10);
+        $this->lista_tareas = Auth::user()->readNotifications()->where('data', 'like', '%"tipo_notificacion":"task"%')->fastPaginate(10);
 
         return response()->noContent();
     }

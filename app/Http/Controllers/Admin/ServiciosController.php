@@ -57,8 +57,8 @@ class ServiciosController extends Controller
     public function store(Request $request)
     {
         $servicios = MatrizOctaveServicio::create([
-            'servicio'=> $request->servicio,
-            'descripcion'=> $request->descripcion,
+            'servicio' => $request->servicio,
+            'descripcion' => $request->descripcion,
 
         ]);
 

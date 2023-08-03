@@ -86,12 +86,12 @@ class CartaAceptacionRiesgosController extends Controller
 
     public function create(Request $request)
     {
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $directoresRiesgo = $responsables;
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;
         $vicepresidentes = $responsables;
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        $controles = DeclaracionAplicabilidad::getAll();
 
         return view('admin.CartaAceptacionRiesgos.create', compact('controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }
@@ -173,12 +173,12 @@ class CartaAceptacionRiesgosController extends Controller
     public function edit($cartaAceptacion)
     {
         $cartaAceptacion = CartaAceptacion::find($cartaAceptacion);
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $directoresRiesgo = $responsables;
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;
         $vicepresidentes = $responsables;
-        $controles = DeclaracionAplicabilidad::select('id', 'anexo_indice', 'anexo_politica')->get();
+        $controles = DeclaracionAplicabilidad::getAll();
 
         return view('admin.CartaAceptacionRiesgos.edit', compact('cartaAceptacion', 'controles', 'vicepresidentes', 'vicepresidentesOperaciones', 'presidencias', 'directoresRiesgo', 'responsables'));
     }
@@ -189,7 +189,7 @@ class CartaAceptacionRiesgosController extends Controller
         $cartaAceptacion = CartaAceptacion::with(['aprobaciones' => function ($query) {
             $query->with('empleado', 'aprobacionesActivo')->orderBy('nivel');
         }])->find($cartaAceptacion);
-        $responsables = Empleado::alta()->get();
+        $responsables = Empleado::getaltaAll();
         $directoresRiesgo = $responsables;
         $presidencias = $responsables;
         $vicepresidentesOperaciones = $responsables;

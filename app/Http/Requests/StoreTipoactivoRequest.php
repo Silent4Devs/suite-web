@@ -15,7 +15,7 @@ class StoreTipoactivoRequest extends FormRequest
     public function rules()
     {
         return [
-            'tipo'    => [
+            'tipo' => [
                 'string',
                 'required',
             ],

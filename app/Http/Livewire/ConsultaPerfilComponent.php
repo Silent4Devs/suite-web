@@ -11,36 +11,65 @@ class ConsultaPerfilComponent extends Component
 {
     use LivewireAlert;
     use WithPagination;
+
     protected $paginationTheme = 'bootstrap';
+
     public $areas;
+
     public $competencias;
+
     public $language;
+
     public $contactos;
+
     public $herramientas;
+
     public $responsabilidades;
+
     public $reporto;
+
     public $puestos;
+
     public $empleado_id;
+
     public $area_id;
+
     public $competencia_id;
+
     public $reporto_id;
+
     public $puesto_id;
+
     public $empleado_experiencia;
+
     public $empleado_educacion;
+
     public $empleado_certificaciones;
+
     public $empleado_cursos;
+
     public $foto_organizacion;
+
     public $empleados;
+
     public $isPersonal;
+
     public $curriculums;
 
     public $empresaExperiencia;
+
     public $puestoExperiencia;
+
     public $descripcionExperiencia;
+
     public $certificacion;
+
     public $curso;
+
     public $empleadoModel;
+
     public $puestoModel;
+
     public $general;
 
     protected $queryString = [
@@ -67,7 +96,7 @@ class ConsultaPerfilComponent extends Component
         if ($value == '') {
             $this->area_id = null;
             $this->reporta_id = null;
-            $this->puestos = Puesto::get();
+            $this->puestos = Puesto::getAll();
         } else {
             $this->area_id = $value;
             $this->empleado_id = null;
@@ -129,7 +158,7 @@ class ConsultaPerfilComponent extends Component
                 $qGeneral->where('puesto', 'ILIKE', "%{$this->general}%");
             })
 
-            ->paginate(21);
+            ->fastPaginate(21);
 
         $this->puesto = null;
 
@@ -149,14 +178,14 @@ class ConsultaPerfilComponent extends Component
     public function callAlert($tipo, $mensaje, $bool, $test = '')
     {
         $this->alert($tipo, $mensaje, [
-            'position' =>  'top-end',
-            'timer' =>  2500,
-            'toast' =>  true,
-            'text' =>  $test,
-            'confirmButtonText' =>  'Entendido',
-            'cancelButtonText' =>  '',
-            'showCancelButton' =>  false,
-            'showConfirmButton' =>  $bool,
+            'position' => 'top-end',
+            'timer' => 2500,
+            'toast' => true,
+            'text' => $test,
+            'confirmButtonText' => 'Entendido',
+            'cancelButtonText' => '',
+            'showCancelButton' => false,
+            'showConfirmButton' => $bool,
         ]);
     }
 }

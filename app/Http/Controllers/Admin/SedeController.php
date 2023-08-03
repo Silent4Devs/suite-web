@@ -74,11 +74,11 @@ class SedeController extends Controller
             return $table->make(true);
         }
 
-        $organizacions = Organizacion::all();
+        $organizacions = Organizacion::getAll();
         //$org = $organizacions->organizacion;
         //dd($organizacions->organizacion, $organizacions);
         $teams = Team::get();
-        $numero_sedes = Sede::count();
+        $numero_sedes = Sede::getAll()->count();
 
         //$sede_inicio = !is_null($sedes) ? url('images/' . DB::table('organizacions')->select('logotipo')->first()->logotipo) : url('img/Silent4Business-Logo-Color.png');
 
@@ -89,7 +89,7 @@ class SedeController extends Controller
     {
         abort_if(Gate::denies('sedes_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacions = Organizacion::all()->pluck('empresa', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $organizacions = Organizacion::getAll()->pluck('empresa', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.sedes.create', compact('organizacions'));
     }
@@ -130,7 +130,7 @@ class SedeController extends Controller
     {
         abort_if(Gate::denies('sedes_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $organizacions = Organizacion::all()->pluck('empresa', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $organizacions = Organizacion::getAll()->pluck('empresa', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $sede->load('organizacion', 'team');
 
@@ -142,7 +142,7 @@ class SedeController extends Controller
         abort_if(Gate::denies('sedes_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $sede->update($request->all());
 
-        $sede = Sede::find($id);
+        $sede = Sede::getbyId($id);
         $image = $sede->foto_sedes;
         if ($request->file('foto_sedes') != null or !empty($request->file('foto_sedes'))) {
             //Si existe la imagen entonces se elimina al editarla
@@ -167,10 +167,10 @@ class SedeController extends Controller
 
         $sede->update([
 
-            'sede' =>  $request->sede,
-            'foto_sedes' =>  $request->foto_sede,
-            'direccion' =>  $request->direccion,
-            'descripcion' =>  $request->descripcion,
+            'sede' => $request->sede,
+            'foto_sedes' => $request->foto_sede,
+            'direccion' => $request->direccion,
+            'descripcion' => $request->descripcion,
             'foto_sedes' => $image,
         ]);
 
@@ -205,11 +205,11 @@ class SedeController extends Controller
     public function obtenerListaSedes(Sede $sedes)
     {
         abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //$sede = Sede::get();
-        $sede = Sede::paginate(3);
-        $organizacions = Organizacion::all();
+        //$sede = Sede::getAll();
+        $sede = Sede::getAll()->fastPaginate(3);
+        $organizacions = Organizacion::getAll();
         $teams = Team::get();
-        $numero_sedes = Sede::count();
+        $numero_sedes = Sede::getAll()->count();
 
         return view('admin.sedes.sedes-organizacion', compact('sede', 'organizacions', 'teams', 'numero_sedes'));
     }

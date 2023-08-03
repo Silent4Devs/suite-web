@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class IndicadoresSgsi.
@@ -32,16 +33,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $amarillo_dos
  * @property string|null $rojo_uno
  * @property string|null $rojo_dos
- *
  * @property Empleado|null $empleado
  * @property Proceso|null $proceso
  * @property User|null $user
  * @property Team|null $team
  * @property Collection|EvaluacionIndicador[] $evaluacion_indicadors
  */
-class IndicadoresSgsi extends Model
+class IndicadoresSgsi extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'indicadores_sgsis';
 

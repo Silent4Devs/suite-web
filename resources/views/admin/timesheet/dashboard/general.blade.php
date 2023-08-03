@@ -292,19 +292,20 @@
             const area = areas_array.filter(item => item.area == event.target.value)
             registros_atrazados.data.datasets[0].data = [
                 area[0].times_esperados,
+                area[0].times_aprobados,
                 area[0].times_rechazados
             ]
             registros_atrazados.update()
         })
 
-        $('#registros-rechazados-empleado').on('change', function() {
-            const area = areas_array.filter(item => item.area == event.target.value)
-            grafica_rechazados.data.datasets[0].data = [
-                area[0].times_esperados,
-                area[0].times_aprobados
-            ]
-            grafica_rechazados.update()
-        })
+        // $('#registros-rechazados-empleado').on('change', function() {
+        //     const area = areas_array.filter(item => item.area == event.target.value)
+        //     grafica_rechazados.data.datasets[0].data = [
+        //         area[0].times_esperados,
+        //         area[0].times_aprobados
+        //     ]
+        //     grafica_rechazados.update()
+        // })
 
         $('#proyectos-en-proceso').on('change', function(event) {
             const proyecto = proyectos.proyectos_lista.proceso.filter(item => item.proyecto == event
@@ -332,7 +333,7 @@
         data: {
             labels: areas_array.map(item => item.area),
             datasets: [{
-                label: null,
+                label: 'Áreas',
                 data: areas_array.map(item => item.times_aprobados),
                 backgroundColor: '#25A0E2',
             }]
@@ -349,7 +350,7 @@
                 }
             },
             legend: {
-                display: true,
+                display: false,
                 position: 'bottom',
                 align: 'start',
                 labels: {
@@ -361,7 +362,7 @@
             plugins: {
                 datalabels: {
                     color: '#fff',
-                    display: true,
+                    display: false,
                     font: {
                         size: 20
                     }
@@ -412,7 +413,7 @@
             plugins: {
                 datalabels: {
                     color: '#fff',
-                    display: true,
+                    display: false,
                     font: {
                         size: 20
                     }
@@ -517,7 +518,7 @@
             plugins: {
                 datalabels: {
                     color: '#000',
-                    display: true,
+                    display: false,
                     font: {
                         size: 8
                     },

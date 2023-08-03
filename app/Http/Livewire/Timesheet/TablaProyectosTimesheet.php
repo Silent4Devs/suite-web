@@ -9,6 +9,7 @@ use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class TablaProyectosTimesheet extends Component
 {
@@ -17,39 +18,51 @@ class TablaProyectosTimesheet extends Component
     public $proyectos;
 
     public $identificador;
+
     public $proyecto_name;
+
     public $areas_seleccionadas;
+
     public $cliente_id;
+
     public $fecha_inicio;
+
     public $fecha_fin;
+
     public $sede_id;
+
     public $tipo;
 
     public $proceso_count;
+
     public $cancelado_count;
+
     public $terminado_count;
+
     public $tipos;
+
     public $sedes;
+
     public $areas;
 
     public function mount()
     {
         $this->tipos = TimesheetProyecto::TIPOS;
         $this->tipo = $this->tipos['Interno'];
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderBy('proyecto')->get();
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
     }
 
     public function render()
     {
-        $this->proceso_count = TimesheetProyecto::where('estatus', 'proceso')->count();
-        $this->cancelado_count = TimesheetProyecto::where('estatus', 'cancelado')->count();
-        $this->terminado_count = TimesheetProyecto::where('estatus', 'terminado')->count();
+        $this->proceso_count = TimesheetProyecto::getAll()->where('estatus', 'proceso')->count();
+        $this->cancelado_count = TimesheetProyecto::getAll()->where('estatus', 'cancelado')->count();
+        $this->terminado_count = TimesheetProyecto::getAll()->where('estatus', 'terminado')->count();
 
         $this->emit('cerrarModal');
 
-        $this->sedes = Sede::get();
+        $this->sedes = Sede::getAll();
 
-        $this->areas = Area::get();
+        $this->areas = Area::getAll();
 
         $this->clientes = TimesheetCliente::orderBy('nombre')->get();
 
@@ -105,22 +118,22 @@ class TablaProyectosTimesheet extends Component
 
     public function procesos()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'proceso')->orderByDesc('id')->get();
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'proceso');
     }
 
     public function cancelados()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'cancelado')->orderByDesc('id')->get();
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'cancelado');
     }
 
     public function terminados()
     {
-        $this->proyectos = TimesheetProyecto::where('estatus', 'terminado')->orderByDesc('id')->get();
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador()->where('estatus', 'terminado');
     }
 
     public function todos()
     {
-        $this->proyectos = TimesheetProyecto::orderByDesc('id')->get();
+        $this->proyectos = TimesheetProyecto::getAllOrderByIdentificador();
     }
 
     public function destroy($id)

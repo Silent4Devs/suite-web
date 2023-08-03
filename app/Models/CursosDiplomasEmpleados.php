@@ -7,13 +7,16 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Jenssegers\Date\Date;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CursosDiplomasEmpleados extends Model
+class CursosDiplomasEmpleados extends Model implements Auditable
 {
     use SoftDeletes;
     use DateTranslator;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'cursos_diplomados_empleados';
+
     protected $dates = [
         'created_at',
         'updated_at',

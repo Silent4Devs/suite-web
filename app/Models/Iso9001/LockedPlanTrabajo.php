@@ -4,18 +4,17 @@ namespace App\Models\Iso9001;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class LockedPlanTrabajo extends Model
+class LockedPlanTrabajo extends Model implements Auditable
 {
     use HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'locked_plan_trabajos_9001';
+
     protected $dates = ['locked_to'];
+
     protected $fillable = [
         'locked_to',
         'blocked',

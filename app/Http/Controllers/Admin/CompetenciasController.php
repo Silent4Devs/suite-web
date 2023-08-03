@@ -85,7 +85,7 @@ class CompetenciasController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.competencia.index', compact('users', 'teams'));
@@ -95,7 +95,7 @@ class CompetenciasController extends Controller
     {
         abort_if(Gate::denies('competencias_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombrecolaboradors = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.competencia.create', compact('nombrecolaboradors'));
     }
@@ -121,7 +121,7 @@ class CompetenciasController extends Controller
     {
         abort_if(Gate::denies('competencias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $nombrecolaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombrecolaboradors = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $competencium->load('nombrecolaborador', 'team');
 
@@ -180,7 +180,7 @@ class CompetenciasController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-//        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('competencium_create') && Gate::denies('competencium_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Competencium();
         $model->id = $request->input('crud_id', 0);
@@ -192,7 +192,7 @@ class CompetenciasController extends Controller
 
     public function buscarcv(Request $request)
     {
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.competencia.buscarCV', compact('areas'));
     }
@@ -200,17 +200,16 @@ class CompetenciasController extends Controller
     public function expedientesProfesionales(Request $request)
     {
         abort_if(Gate::denies('perfiles_profesionales_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $areas = Area::get();
+        $areas = Area::getAll();
 
         return view('admin.competencia.expedientes', compact('areas'));
     }
 
     public function miCurriculum(Request $request, Empleado $empleado)
     {
-        $empleado->load('idiomas');
-        // dd($empleado);
         abort_if(Gate::denies('mi_perfil_mis_datos_ver_perfil_profesional'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $lista_docs = ListaDocumentoEmpleado::get();
+        $empleado->load('idiomas');
+        $lista_docs = ListaDocumentoEmpleado::getAll();
 
         return view('admin.competencia.mi-cv', compact('empleado', 'lista_docs'));
     }
@@ -286,10 +285,10 @@ class CompetenciasController extends Controller
         $curso = CursosDiplomasEmpleados::create([
             'empleado_id' => $empleado->id,
             'curso_diploma' => $request->curso_diploma,
-            'tipo' =>  $request->tipo,
-            'año' =>  $request->año,
-            'fecha_fin' =>  $request->fecha_fin,
-            'duracion' =>  $request->duracion,
+            'tipo' => $request->tipo,
+            'año' => $request->año,
+            'fecha_fin' => $request->fecha_fin,
+            'duracion' => $request->duracion,
         ]);
 
         if ($request->hasFile('file')) {
@@ -333,8 +332,8 @@ class CompetenciasController extends Controller
         $certificado = CertificacionesEmpleados::create([
             'empleado_id' => $empleado->id,
             'nombre' => $request->nombre,
-            'estatus' =>  $request->estatus,
-            'vigencia' =>  $request->vigencia,
+            'estatus' => $request->estatus,
+            'vigencia' => $request->vigencia,
         ]);
         if ($request->hasFile('documento')) {
             $filenameWithExt = $request->file('documento')->getClientOriginalName();

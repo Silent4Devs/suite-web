@@ -18,9 +18,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Traits\ObtenerOrganizacion;
 
 class SolicitudVacacionesController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_vacaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -71,13 +74,9 @@ class SolicitudVacacionesController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         $ingreso = auth()->user()->empleado->antiguedad;
@@ -134,7 +133,7 @@ class SolicitudVacacionesController extends Controller
 
                 return redirect(route('admin.solicitud-vacaciones.index'));
             }
-        // Inician vacaciones a los 6 meses
+            // Inician vacaciones a los 6 meses
         } else {
             $tipo_conteo = null;
             $fecha_limite = Vacaciones::where('inicio_conteo', '=', $año)->pluck('fin_conteo')->first();
@@ -144,7 +143,7 @@ class SolicitudVacacionesController extends Controller
             $autoriza = auth()->user()->empleado->supervisor_id;
             $vacacion = new SolicitudVacaciones();
             $dias_disponibles = null;
-            $organizacion = Organizacion::first();
+            $organizacion = Organizacion::getFirst();
             $dias_pendientes = null;
             $mostrar_reclamo = false;
             $año_pasado = 0;
@@ -163,7 +162,7 @@ class SolicitudVacacionesController extends Controller
         $vacacion = new SolicitudVacaciones();
 
         $dias_disponibles = $this->diasDisponibles();
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $dias_pendientes = SolicitudVacaciones::where('empleado_id', '=', auth()->user()->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
 
         // Funcion para dias dias disponibles año pasado
@@ -231,7 +230,7 @@ class SolicitudVacacionesController extends Controller
         $autoriza = auth()->user()->empleado->supervisor_id;
         $vacacion = new SolicitudVacaciones();
         $dias_disponibles = $this->diasDisponiblesAñopasado();
-        $organizacion = Organizacion::first();
+        $organizacion = Organizacion::getFirst();
         $dias_pendientes = SolicitudVacaciones::where('empleado_id', '=', auth()->user()->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
 
         return view('admin.solicitudVacaciones.periodoAdicional', compact('vacacion', 'dias_disponibles', 'año', 'autoriza', 'no_vacaciones', 'organizacion', 'finVacaciones', 'dias_pendientes', 'tipo_conteo'));
@@ -434,13 +433,9 @@ class SolicitudVacacionesController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.solicitudVacaciones.global-solicitudes', compact('logo_actual', 'empresa_actual'));
@@ -516,13 +511,9 @@ class SolicitudVacacionesController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.solicitudVacaciones.archivo', compact('logo_actual', 'empresa_actual'));

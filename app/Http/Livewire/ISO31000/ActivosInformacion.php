@@ -7,11 +7,17 @@ use Livewire\Component;
 class ActivosInformacion extends Component
 {
     public $confidencialidad = 0;
+
     public $disponibilidad = 0;
+
     public $integridad = 0;
+
     public $evaluacion;
+
     public $colorReglaTipo;
+
     public $colorTextoTipo;
+
     public $impactoOb = 6;
 
     protected $listeners = ['impactoObtenido31' => 'calcularConImpacto'];

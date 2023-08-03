@@ -7,7 +7,7 @@ use App\Mail\SolicitudMensajeria as MailMensajeria;
 use App\Models\Empleado;
 use App\Models\EnvioDocumentos;
 use App\Models\EnvioDocumentosAjustes;
-use App\Models\Organizacion;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Mail;
 
 class EnvioDocumentosController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_mensajeria_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -67,13 +69,9 @@ class EnvioDocumentosController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.envio-documentos.index', compact('logo_actual', 'empresa_actual'));
@@ -185,7 +183,7 @@ class EnvioDocumentosController extends Controller
 
             return redirect(route('admin.Ausencias.index'));
         }
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         // dd($ajustes);
 
         return view('admin.envio-documentos.ajustesEdit', compact('ajustes', 'empleados'));
@@ -249,13 +247,9 @@ class EnvioDocumentosController extends Controller
 
             return $table->make(true);
         }
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-        $logo_actual = $organizacion_actual->logotipo;
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.envio-documentos.atencion', compact('logo_actual', 'empresa_actual'));
@@ -278,22 +272,22 @@ class EnvioDocumentosController extends Controller
         return view('admin.envio-documentos.seguimiento', compact('solicitud', 'fecha_solicitud', 'operadores'));
     }
 
-public function seguimientoUpdate(Request $request, $id)
-{
-    abort_if(Gate::denies('solicitud_mensajeria_atencion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    public function seguimientoUpdate(Request $request, $id)
+    {
+        abort_if(Gate::denies('solicitud_mensajeria_atencion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $solicitud = EnvioDocumentos::find($id);
+        $solicitud = EnvioDocumentos::find($id);
 
-    if (empty($solicitud)) {
-        Flash::error('Error al actualizar');
+        if (empty($solicitud)) {
+            Flash::error('Error al actualizar');
 
-        return redirect(route('admin.envio-documentos.index'));
+            return redirect(route('admin.envio-documentos.index'));
+        }
+
+        $solicitud->update($request->all());
+
+        Flash::success('Solicitud actualizada correctamente.');
+
+        return redirect(route('admin.envio-documentos.atencion'));
     }
-
-    $solicitud->update($request->all());
-
-    Flash::success('Solicitud actualizada correctamente.');
-
-    return redirect(route('admin.envio-documentos.atencion'));
-}
 }

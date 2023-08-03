@@ -8,9 +8,13 @@ use Livewire\Component;
 class OportunidadesComponent extends Component
 {
     public $foda_id;
+
     public $oportunidad;
+
     public $riesgo;
+
     public $nombre;
+
     public $view = 'create';
 
     protected $rules = [

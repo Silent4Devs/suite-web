@@ -43,10 +43,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     {{-- <link rel="stylesheet" type="text/css" href=" https://printjs-4de6.kxcdn.com/print.min.css"> --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- PWA  -->
-    {{--  <meta name="theme-color" content="#6777ef" />
-    <link rel="apple-touch-icon" href="{{ asset('/img/logo_policromatico.png') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">  --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -1031,9 +1027,10 @@
 </head>
 
 <body class="">
+
     @php
         use App\Models\Organizacion;
-        $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+        $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
         } else {
@@ -1244,6 +1241,18 @@
     </div>
     <!-- incluir de footer -->
     {{-- @include('partials.footer') --}}
+    <footer class="app-footer">
+        <font>
+            TABANTAJ
+            <font style="margin: 0px 20px;"> | </font>
+            SILENT4BUSINESS
+        </font>
+        <font>
+            2023
+            <font style="margin: 0px 20px;"> | </font>
+            Version: 4.8.8
+        </font>
+    </footer>
     </div>
     <style>
         #contenido_imprimir {

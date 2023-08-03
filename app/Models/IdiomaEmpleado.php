@@ -5,11 +5,13 @@ namespace App\Models;
 use App\Traits\DateTranslator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class IdiomaEmpleado extends Model
+class IdiomaEmpleado extends Model implements Auditable
 {
     use HasFactory;
     use DateTranslator;
+    use \OwenIt\Auditing\Auditable;
 
     const NIVELES = [
         'Basico' => 'Básico',

@@ -65,8 +65,8 @@ class GapTresCatalogoIsoSeeder extends Seeder
                 'estado' => 'actuar',
             ],
 
-            ];
+        ];
 
-            GapTresCatalogoIso::insert($Catalgo);
+        GapTresCatalogoIso::insert($Catalgo);
     }
 }

@@ -182,6 +182,7 @@ return [
         Spatie\Geocoder\GeocoderServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
     ],
 
     /*
@@ -243,8 +244,8 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Date' => Jenssegers\Date\Date::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
+
     ],
-
-
 
 ];

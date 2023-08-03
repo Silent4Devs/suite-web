@@ -18,8 +18,11 @@ class NotificacionDeclaracionAplicabilidadResponsables extends Mailable
      * @return void
      */
     public $aprobador;
+
     public $aplicabilidad;
+
     public $responsable;
+
     public $control;
 
     public function __construct(Empleado $aprobador, Empleado $responsable, DeclaracionAplicabilidad $aplicabilidad, $control)
@@ -37,6 +40,6 @@ class NotificacionDeclaracionAplicabilidadResponsables extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadResponsable')->subject('Aprobación/rechazo del control ' . $this->aplicabilidad->anexo_indice);
+        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadResponsable')->subject('Aprobación/rechazo del control '.$this->aplicabilidad->anexo_indice);
     }
 }

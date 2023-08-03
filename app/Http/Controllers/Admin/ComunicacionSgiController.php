@@ -73,7 +73,7 @@ class ComunicacionSgiController extends Controller
     public function create()
     {
         abort_if(Gate::denies('comunicados_generales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::get();
+        $empleados = Empleado::getAll();
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
 
@@ -160,10 +160,10 @@ class ComunicacionSgiController extends Controller
     {
         if ($evaluados_objetivo != null) {
             if ($evaluados_objetivo == 'all') {
-                $evaluados = Empleado::alta()->pluck('id')->toArray();
+                $evaluados = Empleado::getaltaAll()->pluck('id')->toArray();
             } elseif ($evaluados_objetivo == 'area') {
                 $evaluados_area = intval($opts);
-                $evaluados = Empleado::alta()->where('area_id', $evaluados_area)->pluck('id')->toArray();
+                $evaluados = Empleado::getaltaAll()->where('area_id', $evaluados_area)->pluck('id')->toArray();
             } elseif ($evaluados_objetivo == 'manual') {
                 $evaluados = $opts;
             } else {
@@ -180,7 +180,7 @@ class ComunicacionSgiController extends Controller
     {
         abort_if(Gate::denies('comunicados_generales_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
         $documentos = DocumentoComunicacionSgis::get();
         $imagenes = ImagenesComunicacionSgis::get();
 

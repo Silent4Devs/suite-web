@@ -4,13 +4,10 @@ namespace App\Models\RH;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class PeriodoEvaluacion extends Model
+class PeriodoEvaluacion extends Model implements Auditable
 {
     use HasFactory;
-    use QueryCacheable;
-
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use \OwenIt\Auditing\Auditable;
 }

@@ -7,14 +7,12 @@ use Livewire\Component;
 
 class SelectAreasComponent extends Component
 {
-
     protected $listeners = ['render' => 'render'];
 
     public function render()
     {
-        $areas = Area::orderByDesc('id')->get();
+        $areas = Area::getAll();
 
         return view('livewire.timesheet.select-areas-component', compact('areas'));
     }
-
 }

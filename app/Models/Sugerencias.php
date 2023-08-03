@@ -3,19 +3,20 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Sugerencias extends Model
+class Sugerencias extends Model implements Auditable
 {
     use HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     const ARCHIVADO = '1';
+
     const NO_ARCHIVADO = '0';
+
     protected $table = 'sugerencias';
 
     protected $guarded = [
@@ -24,9 +25,18 @@ class Sugerencias extends Model
 
     protected $appends = ['folio', 'fecha_de_cierre', 'fecha_reporte'];
 
+    //Redis methods
+    public static function getAll()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('sugerencias_all', 3600, function () {
+            return self::orderBy('id')->get();
+        });
+    }
+
     public function getFolioAttribute()
     {
-        return  sprintf('SUG-%04d', $this->id);
+        return sprintf('SUG-%04d', $this->id);
     }
 
     public function sugirio()

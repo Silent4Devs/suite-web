@@ -12,11 +12,17 @@ use Livewire\Component;
 class TimesheetHorasFilas extends Component
 {
     public $proyectos;
+
     public $tareas;
+
     public $horas;
+
     public $origen;
+
     public $timesheet;
+
     public $timesheet_id;
+
     public $contador = 5;
 
     protected $listeners = ['removerFila'];
@@ -32,35 +38,52 @@ class TimesheetHorasFilas extends Component
 
         // areas proyectos
         $proyectos_array = collect();
-        $proyectos_totales = TimesheetProyecto::get();
-        $proyectoempleado = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->exists();
-        if($proyectoempleado === true){
-            foreach ($proyectos_totales as $key => $proyecto) {
-                if ($proyecto->estatus == 'proceso') {
-                    foreach($proyecto->empleados as $key => $emp){
-                        if($emp['id'] == $empleado->id){
-                            foreach ($proyecto->areas as $key => $area) {
-                                if (($area['id'] == $empleado->area_id)) {
-                                    $proyectos_array->push([
-                                        'id'=>$proyecto->id,
-                                        'identificador'=>$proyecto->identificador,
-                                        'proyecto'=>$proyecto->proyecto,
-                                    ]);
-                                }
-                            }
+        $proyectos_totales = TimesheetProyecto::getAll();
+        $proyectoempleadoexists = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->exists();
+        $proyectoempleado = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->get();
+        $filtrope = TimesheetProyectoEmpleado::select('proyecto_id')->get();
+        // dd(!$filtrope->isEmpty());
+        // dd($proyectoempleado);
+        if($proyectoempleadoexists == true){
+            foreach ($proyectoempleado as $key => $proyecto) {
+                if ($proyecto->proyecto->estatus == 'proceso') {
+                    if ($proyecto->empleado->id == $empleado->id) {
+                        if ($proyecto->empleado->area_id == $empleado->area_id) {
+                            $proyectos_array->push([
+                                'id' => $proyecto->proyecto["id"],
+                                'identificador' => $proyecto->proyecto["identificador"],
+                                'proyecto' => $proyecto->proyecto["proyecto"],
+                            ]);
                         }
                     }
                 }
             }
+        }elseif(!$filtrope->isEmpty()) { //Revisar que haya registros en la tabla
+            foreach ($proyectos_totales as $key => $proyecto) {
+                if ($proyecto->estatus == 'proceso') {
+                    foreach ($proyecto->areas as $key => $area) {
+                        if (($area['id'] == $empleado->area_id)) {
+                            $proyectos_array->push([
+                                'id' => $proyecto->id,
+                                'identificador' => $proyecto->identificador,
+                                'proyecto' => $proyecto->proyecto,
+                            ]);
+                        }
+                    }
+                }
+            }
+            foreach($filtrope as $key => $fpe){
+                $proyectos_array = $proyectos_array->whereNotIn('id', $fpe->proyecto_id);
+              }
         }else{
             foreach ($proyectos_totales as $key => $proyecto) {
                 if ($proyecto->estatus == 'proceso') {
                     foreach ($proyecto->areas as $key => $area) {
                         if (($area['id'] == $empleado->area_id)) {
                             $proyectos_array->push([
-                                'id'=>$proyecto->id,
-                                'identificador'=>$proyecto->identificador,
-                                'proyecto'=>$proyecto->proyecto,
+                                'id' => $proyecto->id,
+                                'identificador' => $proyecto->identificador,
+                                'proyecto' => $proyecto->proyecto,
                             ]);
                         }
                     }

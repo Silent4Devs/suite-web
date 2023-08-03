@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class MatrizOctaveControlesPivot.
@@ -13,12 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $controles_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property MatrizOctave|null $matriz_octave
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  */
-class MatrizOctaveControlesPivot extends Model
+class MatrizOctaveControlesPivot extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'matriz_octave_controles_pivots';
 
     protected $casts = [

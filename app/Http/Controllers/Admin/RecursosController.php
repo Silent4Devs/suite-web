@@ -30,7 +30,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RecursosController extends Controller
 {
-    use MediaUploadingTrait,ObtenerOrganizacion;
+    use MediaUploadingTrait, ObtenerOrganizacion;
 
     public function index(Request $request)
     {
@@ -90,7 +90,7 @@ class RecursosController extends Controller
             return $table->make(true);
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -107,7 +107,7 @@ class RecursosController extends Controller
         $recurso = new Recurso;
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.recursos.create', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
@@ -148,13 +148,13 @@ class RecursosController extends Controller
 
         if ($request->isElearning) {
             if ($request->estatus == 'Enviado') {
-                $empleados = Empleado::alta()->select('id', 'name', 'email')->find($request->participantes)->toArray();
+                $empleados = Empleado::getaltaAll()->find($request->participantes)->toArray();
                 $emails = Http::post(env('APP_ELEARNING') . '/api/users', [
                     'students' => json_encode($empleados),
-                    'course' =>  $request->cursoscapacitaciones,
+                    'course' => $request->cursoscapacitaciones,
                 ]);
                 foreach ($emails->json() as $email) {
-                    $empleado = Empleado::alta()->where('email', $email['email'])->first();
+                    $empleado = Empleado::getaltaAll()->where('email', $email['email'])->first();
                     Mail::to($empleado->email)->send(new ElearningInscripcionMail($empleado));
                 }
             }
@@ -229,10 +229,10 @@ class RecursosController extends Controller
             'fecha_curso' => 'date|required',
             'fecha_fin' => 'date|required|after:fecha_curso',
             'instructor' => 'string|required',
-            'cursoscapacitaciones'  => 'required|max:255',
-            'modalidad'  => 'string|required',
+            'cursoscapacitaciones' => 'required|max:255',
+            'modalidad' => 'string|required',
             'ubicacion' => 'string|required',
-            'categoria_capacitacion_id'  => 'string|required',
+            'categoria_capacitacion_id' => 'string|required',
             'modalidad' => 'string|required',
             'recurso_capacitacion' => 'nullable|mimes:pdf|max:10000',
         ], [
@@ -265,7 +265,7 @@ class RecursosController extends Controller
         $categorias = CategoriaCapacitacion::get();
         $areas = Area::with('empleados')->get();
         $grupos = GruposEvaluado::with('empleados')->get();
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.recursos.edit', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
@@ -361,7 +361,7 @@ class RecursosController extends Controller
 
     public function storeCKEditorImages(Request $request)
     {
-//        abort_if(Gate::denies('recurso_create') && Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //        abort_if(Gate::denies('recurso_create') && Gate::denies('recurso_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $model = new Recurso();
         $model->id = $request->input('crud_id', 0);

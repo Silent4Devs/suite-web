@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 // use App\Models\Schedule;
 
@@ -29,15 +31,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $team_id
  * @property string|null $antecedentes
  * @property string|null $logotipo
- *
  * @property Team|null $team
  * @property Collection|Sede[] $sedes
  */
-class Organizacion extends Model
+class Organizacion extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'organizacions';
+
     protected $appends = ['logotipo', 'fecha_min_timesheet'];
+
     protected $casts = [
         'telefono' => 'int',
         'team_id' => 'int',
@@ -74,6 +79,30 @@ class Organizacion extends Model
         'semanas_min_timesheet',
         'semanas_faltantes',
     ];
+
+    //Redis methods
+    public static function getLogo()
+    {
+        return Cache::remember('getLogo_organizacion', 3600 * 24, function () {
+            return self::select('id', 'logotipo', 'empresa')->first();
+        });
+    }
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('organizacion_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
+
+    //Redis methods
+    public static function getFirst()
+    {
+        return Cache::remember('organizacion_first', 3600 * 24, function () {
+            return self::get()->first();
+        });
+    }
 
     public function getLogotipoAttribute($value)
     {

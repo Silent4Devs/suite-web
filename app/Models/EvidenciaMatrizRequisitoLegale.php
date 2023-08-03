@@ -4,15 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EvidenciaMatrizRequisitoLegale extends Model
+class EvidenciaMatrizRequisitoLegale extends Model implements Auditable
 {
     use SoftDeletes;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'evidencias_matriz_requisito_legales';
 
     protected $dates = [

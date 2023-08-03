@@ -30,13 +30,13 @@ class TeamMemberInvite extends Notification
     public function getMessage()
     {
         return (new MailMessage)
-            ->subject(config('app.name') . ': invitation ')
+            ->subject(config('app.name').': invitation ')
             ->greeting('Hi,')
             ->line('We invite you to join our team!')
             ->line('Please click the link bellow.')
             ->action('Register', $this->url)
             ->line('Thank you')
-            ->line(config('app.name') . ' Team')
+            ->line(config('app.name').' Team')
             ->salutation(' ');
     }
 }

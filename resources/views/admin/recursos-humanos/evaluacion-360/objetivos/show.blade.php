@@ -18,7 +18,6 @@
             margin: 8px 0;
             border: 1px solid #345183
         }
-
     </style>
     <div class="mt-3">
         {{ Breadcrumbs::render('EV360-Objetivos-Show', ['empleado' => $empleado]) }}
@@ -50,7 +49,7 @@
                         <div class="text-center col-2">
                             @php
                                 use App\Models\Organizacion;
-                                $organizacion = Organizacion::first();
+                                $organizacion = Organizacion::getFirst();
                                 $logotipo = 'img/logo_policromatico_2.png';
                                 if ($organizacion) {
                                     if ($organizacion->logotipo) {

@@ -8,13 +8,16 @@ use Livewire\Component;
 class OrigenCambioComponent extends Component
 {
     public $nombre;
+
     public $descripcion;
+
     protected $rules = [
-        'nombre'=>'required',
-        'descripcion'=>'nullable',
+        'nombre' => 'required',
+        'descripcion' => 'nullable',
     ];
+
     protected $messages = [
-        'nombre.required'=>'Debes definir un nombre para el origen de cambio',
+        'nombre.required' => 'Debes definir un nombre para el origen de cambio',
 
     ];
 
@@ -22,8 +25,8 @@ class OrigenCambioComponent extends Component
     {
         $this->validate();
         PlanificacionControlOrigenCambio::create([
-            'nombre'=>$this->nombre,
-            'descripcion'=>$this->descripcion,
+            'nombre' => $this->nombre,
+            'descripcion' => $this->descripcion,
         ]);
         $this->emit('OrigenCambioStore');
         $this->emit('render-origen-select-component');

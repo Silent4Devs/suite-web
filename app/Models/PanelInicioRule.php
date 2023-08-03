@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class PanelInicioRule extends Model
+class PanelInicioRule extends Model implements Auditable
 {
     use HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'panel_inicio_rules';
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
 }

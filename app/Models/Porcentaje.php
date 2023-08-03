@@ -1,12 +1,9 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Porcentaje.
@@ -16,8 +13,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  */
-class Porcentaje extends Model
+class Porcentaje extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'porcentajes';
 
     protected $casts = [

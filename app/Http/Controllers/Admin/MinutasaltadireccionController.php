@@ -42,7 +42,7 @@ class MinutasaltadireccionController extends Controller
             return datatables()->of($query)->toJson();
         }
 
-        $users = User::get();
+        $users = User::getAll();
         $teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -152,8 +152,8 @@ class MinutasaltadireccionController extends Controller
         //Historial#
         $historialRevisionMinuta = HistoralRevisionMinuta::create([
             'minuta_id' => $minutasaltadireccion->id,
-            'descripcion' =>  $minutasaltadireccion->objetivoreunion,
-            'comentarios' =>  $minutasaltadireccion->tema_tratado,
+            'descripcion' => $minutasaltadireccion->objetivoreunion,
+            'comentarios' => $minutasaltadireccion->tema_tratado,
             'fecha' => Carbon::now(),
         ]);
         //Revisiones#
@@ -296,7 +296,7 @@ class MinutasaltadireccionController extends Controller
             return intval($actividad->level) > 0;
         });
 
-        $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->get();
+        $responsablereunions = Empleado::getaltaAll();
 
         return view('admin.minutasaltadireccions.edit', compact('responsablereunions', 'minutasaltadireccion', 'actividades'));
     }

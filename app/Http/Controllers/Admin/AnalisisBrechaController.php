@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use App\Functions\GenerateAnalisisBIso;
 
 class AnalisisBrechaController extends Controller
 {
@@ -80,7 +79,7 @@ class AnalisisBrechaController extends Controller
 
                 $cuentas = $gapunoPorc->GAPTotal($porcentajeGap1, $porcentajeGap2['Avance'], $porcentajeGap3['porcentaje']);
 
-                return $cuentas . '%' ? $cuentas . '%' : '';
+                return $cuentas.'%' ? $cuentas.'%' : '';
             });
 
             $table->editColumn('elaboro', function ($row) {
@@ -113,7 +112,7 @@ class AnalisisBrechaController extends Controller
     public function create()
     {
         abort_if(Gate::denies('analisis_de_brechas_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('admin.analisisdebrechas.create', compact('empleados'));
     }
@@ -151,7 +150,7 @@ class AnalisisBrechaController extends Controller
     {
         abort_if(Gate::denies('analisis_de_brechas_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::alta()->get();
+        $empleados = Empleado::getaltaAll();
 
         $analisisBrecha = AnalisisBrecha::find($id);
 
@@ -193,11 +192,11 @@ class AnalisisBrechaController extends Controller
         $analisisBrecha = AnalisisBrecha::find($id);
 
         $analisisBrecha->update([
-            'nombre' =>  $request->nombre,
-            'fecha' =>  $request->fecha,
-            'id_elaboro' =>  $request->id_elaboro,
+            'nombre' => $request->nombre,
+            'fecha' => $request->fecha,
+            'id_elaboro' => $request->id_elaboro,
             'porcentaje_implementacion' => $request->porcentaje_implementacion,
-            'estatus' =>  $request->estatus,
+            'estatus' => $request->estatus,
         ]);
 
         return redirect()->route('admin.analisisdebrechas.index')->with('success', 'Editado con éxito');

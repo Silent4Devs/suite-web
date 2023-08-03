@@ -10,14 +10,23 @@ use Livewire\Component;
 class CompararEvaluaciones extends Component
 {
     public $evaluador;
+
     public $calificaciones_autoevaluacion_competencias_compare_first;
+
     public $calificaciones_autoevaluacion_competencias_compare;
+
     public $competencias_lista_nombre_max;
+
     public $calificaciones_compare_first;
+
     public $calificaciones_compare;
+
     public $informacion_obtenida_compare_first;
+
     public $informacion_obtenida_compare;
+
     public $evaluacion1;
+
     public $evaluacion2;
 
     public function mount($evaluacion, $evaluador)
@@ -29,7 +38,7 @@ class CompararEvaluaciones extends Component
     public function render()
     {
         $evaluacionController = new EV360EvaluacionesController;
-        $evaluaciones = Evaluacion::all();
+        $evaluaciones = Evaluacion::getAll();
         $jefe = Empleado::select('id', 'name')->with('children')->find($this->evaluador);
         $equipo_a_cargo = $evaluacionController->obtenerEquipoACargo($jefe->children);
         $equipo_a_cargo = Empleado::select('id', 'name')->find($equipo_a_cargo);

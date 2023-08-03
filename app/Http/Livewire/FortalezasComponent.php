@@ -8,10 +8,15 @@ use Livewire\Component;
 class FortalezasComponent extends Component
 {
     public $foda_id;
+
     public $fortaleza;
+
     public $riesgo;
+
     public $nombre;
+
     public $view = 'create';
+
     public $fortaleza_id;
 
     protected $rules = [

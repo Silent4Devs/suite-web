@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Extensions\CustomSessionHandler;
+use App\Models\VersionesIso;
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Pagination\Paginator;
@@ -14,7 +15,6 @@ use Spatie\Health\Checks\Checks\DatabaseCheck;
 use Spatie\Health\Checks\Checks\EnvironmentCheck;
 use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
 use Spatie\Health\Facades\Health;
-use App\Models\VersionesIso;
 
 class AppServiceProvider extends ServiceProvider
 {

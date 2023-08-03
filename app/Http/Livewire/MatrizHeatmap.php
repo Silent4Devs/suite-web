@@ -14,59 +14,111 @@ class MatrizHeatmap extends Component
     use LivewireAlert;
 
     public $id_analisis;
+
     public $control;
+
     public $matriz;
+
     public $valor_riesgo;
+
     public $sede_id = '';
+
     public $area_id = '';
+
     public $proceso_id = '';
+
     public $listados = [];
+
     public $listados_residual = [];
+
     public $mensaje = '';
+
     public $changer;
+
     public $changer_residual;
+
     public $muy_alto;
+
     public $alto;
+
     public $medio;
+
     public $bajo;
+
     public $muy_alto_residual;
+
     public $alto_residual;
+
     public $medio_residual;
+
     public $bajo_residual;
+
     //var conta
     public $nula_muyalto = 0;
+
     public $nula_alto = 0;
+
     public $nula_medio = 0;
+
     public $nula_bajo = 0;
+
     public $baja_bajo = 0;
+
     public $baja_medio = 0;
+
     public $baja_alto = 0;
+
     public $baja_muyalto = 0;
+
     public $media_bajo = 0;
+
     public $media_medio = 0;
+
     public $media_alto = 0;
+
     public $media_muyalto = 0;
+
     public $alta_bajo = 0;
+
     public $alta_medio = 0;
+
     public $alta_alto = 0;
+
     public $alta_muyalto = 0;
+
     //var conta residual
     public $nula_muyalto_r = 0;
+
     public $nula_alto_r = 0;
+
     public $nula_medio_r = 0;
+
     public $nula_bajo_r = 0;
+
     public $baja_bajo_r = 0;
+
     public $baja_medio_r = 0;
+
     public $baja_alto_r = 0;
+
     public $baja_muyalto_r = 0;
+
     public $media_bajo_r = 0;
+
     public $media_medio_r = 0;
+
     public $media_alto_r = 0;
+
     public $media_muyalto_r = 0;
+
     public $alta_bajo_r = 0;
+
     public $alta_medio_r = 0;
+
     public $alta_alto_r = 0;
+
     public $alta_muyalto_r = 0;
+
     public $mapas = [];
 
     public function mount($mapas = [])
@@ -104,24 +156,25 @@ class MatrizHeatmap extends Component
 
     public function render()
     {
-        $sedes = Sede::select('id', 'sede')->get();
-        $areas = Area::select('id', 'area')->get();
-        $procesos = Proceso::select('id', 'nombre')->get();
+        $sedes = Sede::getAll(['id', 'sede']);
+        $areas = Area::getAll();
+        $procesos = Proceso::getAll();
+        $matriz_riesgo = MatrizRiesgo::getAll();
 
-        $muy_alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['54', '81']);
-        $alto = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['27', '36']);
-        $medio = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '9');
-        $bajo = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
-        $muy_alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo_residual', ['54', '81']);
-        $alto_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo_residual', ['27', '36']);
-        $medio_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '9');
-        $bajo_residual = MatrizRiesgo::select('id', 'probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '0');
+        $muy_alto = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['54', '81']);
+        $alto = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo', ['27', '36']);
+        $medio = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '9');
+        $bajo = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', '0');
+        $muy_alto_residual = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo_residual', ['54', '81']);
+        $alto_residual = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->whereIn('nivelriesgo_residual', ['27', '36']);
+        $medio_residual = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '9');
+        $bajo_residual = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo_residual', '=', '0');
         //querys contador en grafica
-        $matriz_query = MatrizRiesgo::select('probabilidad', 'impacto')->where('id_analisis', '=', $this->id_analisis);
-        $matriz_query_r = MatrizRiesgo::select('probabilidad_residual', 'impacto_residual')->where('id_analisis', '=', $this->id_analisis);
+        $matriz_query = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis);
+        $matriz_query_r = $matriz_riesgo->where('id_analisis', '=', $this->id_analisis);
 
         if ($this->sede_id != '') {
-            if (MatrizRiesgo::select('id')->Where('id_sede', '=', $this->sede_id)->count() > 0) {
+            if ($matriz_riesgo->Where('id_sede', '=', $this->sede_id)->count() > 0) {
                 $muy_alto->Where('id_sede', '=', $this->sede_id);
                 $alto->Where('id_sede', '=', $this->sede_id);
                 $medio->Where('id_sede', '=', $this->sede_id);
@@ -140,7 +193,7 @@ class MatrizHeatmap extends Component
         }
 
         if ($this->area_id != '') {
-            if (MatrizRiesgo::select('id')->Where('id_area', '=', $this->area_id)->count() > 0) {
+            if ($matriz_riesgo->Where('id_area', '=', $this->area_id)->count() > 0) {
                 $muy_alto->Where('id_area', '=', $this->area_id);
                 $alto->Where('id_area', '=', $this->area_id);
                 $medio->Where('id_area', '=', $this->area_id);
@@ -159,7 +212,7 @@ class MatrizHeatmap extends Component
         }
 
         if ($this->proceso_id != '') {
-            if (MatrizRiesgo::select('id')->Where('id_proceso', '=', $this->proceso_id)->count() > 0) {
+            if ($matriz_riesgo->Where('id_proceso', '=', $this->proceso_id)->count() > 0) {
                 $muy_alto->Where('id_proceso', '=', $this->proceso_id);
                 $alto->Where('id_proceso', '=', $this->proceso_id);
                 $medio->Where('id_proceso', '=', $this->proceso_id);
@@ -370,7 +423,7 @@ class MatrizHeatmap extends Component
     public function callQuery($id, $valor)
     {
         // dd($id);
-        $matriz_riesgos = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad', 'impacto', 'nivelriesgo')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', $id);
+        $matriz_riesgos = MatrizRiesgo::getAll()->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', $id);
 
         if ($this->sede_id != '') {
             $matriz_riesgos->Where('id_sede', '=', $this->sede_id);
@@ -400,7 +453,7 @@ class MatrizHeatmap extends Component
 
     public function callQueryResidual($id, $valor)
     {
-        $matriz_riesgos_residual = MatrizRiesgo::select('id', 'descripcionriesgo', 'probabilidad_residual', 'impacto_residual', 'nivelriesgo_residual')->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', $id);
+        $matriz_riesgos_residual = MatrizRiesgo::getAll()->where('id_analisis', '=', $this->id_analisis)->where('nivelriesgo', '=', $id);
 
         if ($this->sede_id != '') {
             $matriz_riesgos_residual->Where('id_sede', '=', $this->sede_id);
@@ -431,14 +484,14 @@ class MatrizHeatmap extends Component
     public function callAlert($tipo, $mensaje, $bool, $test = '')
     {
         $this->alert($tipo, $mensaje, [
-            'position' =>  'top-end',
-            'timer' =>  3100,
-            'toast' =>  true,
-            'text' =>  $test,
-            'confirmButtonText' =>  'Entendido',
-            'cancelButtonText' =>  '',
-            'showCancelButton' =>  false,
-            'showConfirmButton' =>  $bool,
+            'position' => 'top-end',
+            'timer' => 3100,
+            'toast' => true,
+            'text' => $test,
+            'confirmButtonText' => 'Entendido',
+            'cancelButtonText' => '',
+            'showCancelButton' => false,
+            'showConfirmButton' => $bool,
         ]);
         $this->cleanData();
     }

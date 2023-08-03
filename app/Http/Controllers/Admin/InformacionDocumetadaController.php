@@ -103,10 +103,8 @@ class InformacionDocumetadaController extends Controller
             return $table->make(true);
         }
 
-        $politica_sgsis = PoliticaSgsi::get();
-        $users = User::get();
-        $users = User::get();
-        $users = User::get();
+        $politica_sgsis = PoliticaSgsi::getAll();
+        $users = User::getAll();
         $teams = Team::get();
 
         return view('admin.informacionDocumetadas.index', compact('politica_sgsis', 'users', 'users', 'users', 'teams'));
@@ -116,13 +114,15 @@ class InformacionDocumetadaController extends Controller
     {
         abort_if(Gate::denies('informacion_documetada_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $politicas = PoliticaSgsi::all()->pluck('politicasgsi', 'id');
+        $politicas = PoliticaSgsi::getAll()->pluck('politicasgsi', 'id');
 
-        $elaboros = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::getAll();
 
-        $revisos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $elaboros = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $aprobacions = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $revisos = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $aprobacions = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.informacionDocumetadas.create', compact('politicas', 'elaboros', 'revisos', 'aprobacions'));
     }
@@ -147,13 +147,15 @@ class InformacionDocumetadaController extends Controller
     {
         abort_if(Gate::denies('informacion_documetada_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $politicas = PoliticaSgsi::all()->pluck('politicasgsi', 'id');
+        $politicas = PoliticaSgsi::getAll()->pluck('politicasgsi', 'id');
 
-        $elaboros = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::getAll();
 
-        $revisos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $elaboros = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $aprobacions = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $revisos = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $aprobacions = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $informacionDocumetada->load('politicas', 'elaboro', 'reviso', 'aprobacion', 'team');
 

@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TimesheetProyectoProveedor extends Model
+class TimesheetProyectoProveedor extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'timesheet_proyectos_proveedores';
 
@@ -22,5 +24,4 @@ class TimesheetProyectoProveedor extends Model
     {
         return $this->belongsTo(TimesheetProyecto::class, 'proyecto_id');
     }
-
 }

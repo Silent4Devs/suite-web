@@ -9,6 +9,7 @@ class BarraProgresoComponent extends Component
     protected $listeners = [
         'actualizarProgreso',
     ];
+
     public $progreso;
 
     public function mount()

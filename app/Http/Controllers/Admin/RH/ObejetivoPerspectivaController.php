@@ -10,7 +10,7 @@ class ObejetivoPerspectivaController extends Controller
 {
     public function index()
     {
-        $perspectivas = TipoObjetivo::get();
+        $perspectivas = TipoObjetivo::getAll();
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.perspectiva.index', compact('perspectivas'));
     }
@@ -54,7 +54,7 @@ class ObejetivoPerspectivaController extends Controller
     {
         $perspectiva = TipoObjetivo::find($id);
         $perspectiva->delete();
-        $perspectivas = TipoObjetivo::get();
+        $perspectivas = TipoObjetivo::getAll();
 
         return view('admin.recursos-humanos.evaluacion-360.objetivos.perspectiva.index', compact('perspectivas'));
     }

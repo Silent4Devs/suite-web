@@ -13,11 +13,17 @@ use Livewire\Component;
 class RiesgosFoda extends Component
 {
     public $analisisSeleccionado;
+
     public $riesgosPorAnalisis;
+
     public $modelId;
+
     public $modelType;
+
     public $riesgosSeleccionados;
+
     public $globalModel;
+
     protected $listeners = ['modalRiesgoFoda'];
 
     public function hydrate()
@@ -30,7 +36,7 @@ class RiesgosFoda extends Component
         if ($this->analisisSeleccionado == '') {
             $this->default();
         } else {
-            $this->riesgosPorAnalisis = MatrizRiesgo::where('id_analisis', $this->analisisSeleccionado)->get();
+            $this->riesgosPorAnalisis = MatrizRiesgo::getAll()->where('id_analisis', $this->analisisSeleccionado);
         }
         // dd($this->riesgosPorAnalisis);
     }

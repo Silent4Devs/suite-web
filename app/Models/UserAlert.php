@@ -6,15 +6,13 @@ use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class UserAlert extends Model
+class UserAlert extends Model implements Auditable
 {
     use MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'user_alerts';
 
     protected $dates = [

@@ -4,16 +4,17 @@ namespace App\Models\RH;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Conducta extends Model
+class Conducta extends Model implements Auditable
 {
-    use HasFactory, QueryCacheable;
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
+    use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'ev360_competencias_opciones';
+
     protected $appends = ['definicion_h'];
+
     protected $guarded = ['id'];
 
     public function getDefinicionHAttribute()

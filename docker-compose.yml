@@ -1,30 +1,35 @@
 version: "3.8"
 services:
-  nginx:
+  nginx-tabantaj:
     image: nginx:stable-alpine
-    container_name: nginx
+    container_name: nginx-tabantaj #uncommment if will not use swarm
     restart: unless-stopped
     tty: true
     ports:
       - 80:80
+      - 443:443
     volumes:
       - .:/var/www/html
       - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
-      - postgres
+      - postgres-tabantaj
+      - redis-tabantaj
     networks:
       - tabantajnetwork
     # deploy:
     #   replicas: 1 # Set the desired number of replicas
+    #   restart_policy:
+    #     condition: on-failure
 
-  postgres:
-    image: postgres:13-alpine
-    container_name: postgres
+  postgres-tabantaj:
+    image: postgres:14-alpine
+    container_name: postgres-tabantaj #uncomment if will not use swarm mode
     restart: unless-stopped
     tty: true
     volumes:
-      - "tabantaj:/var/lib/postgresql/data"
+      # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
+      - tabantaj-db:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=homestead
       - POSTGRES_PASSWORD=secret
@@ -33,20 +38,36 @@ services:
       - "5432:5432"
     networks:
       - tabantajnetwork
-    # deploy:
-    #   replicas: 1 # Set the desired number of replicas
+    mem_limit: 6g
+
+  pgadmin-tabantaj:
+    depends_on:
+      - postgres-tabantaj
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5480:80"
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - tabantajnetwork
 
   php:
     #uncomment this if you will use only docker compose
     build:
-      context: .
+      context: "./infra/php/"
       dockerfile: Dockerfile
-      # target: php-production  # Specify the target build stage if applicable
-      # args:
-      # - BUILD_ENV=production  # Pass any necessary build arguments
-    container_name: php
+    #     # target: php-production  # Specify the target build stage if applicable
+    #     # args:
+    #     # - BUILD_ENV=production  # Pass any necessary build arguments
+    # #container_name: php-tabantaj
     #uncomment this if you will use only docker compose
-    #image: tabantaj_php:latest
+    #image: johnvo95/tabantaj_php-tabantaj:latest
+    container_name: php-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
@@ -57,9 +78,81 @@ services:
       - tabantajnetwork
     # deploy:
     #   replicas: 1 # Set the desired number of replicas
+    #   restart_policy:
+    #     condition: on-failure
+
+  redis-tabantaj:
+    image: redis:latest
+    container_name: redis-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
+    networks:
+      - tabantajnetwork
+    mem_limit: 2g
+
+  rdadmin-tabantaj:
+    image: erikdubbelboer/phpredisadmin:latest
+    container_name: rdadmin-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 6360:80
+    environment:
+      - REDIS_1_HOST=redis-tabantaj # Replace with your Redis container name
+      - REDIS_1_PORT=6379 # Replace with your Redis container port
+      #- REDIS_1_AUTH=silent11!
+    networks:
+      - tabantajnetwork
+
+  elastik-search-tabantaj:
+    image: elasticsearch:8.8.1
+    container_name: elastik-search-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 9200:9200
+      - 9300:9300
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    environment:
+      - discovery.type=single-node
+    networks:
+      - tabantajnetwork
+
+  kibana-tabantaj:
+    image: kibana:8.8.1
+    container_name: kibana-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 5601:5601
+    networks:
+      - tabantajnetwork
+
+  logstash-tabantaj:
+    image: logstash:8.8.1
+    container_name: logstash-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 5000:5000
+    volumes:
+      - type: bind
+        source: ./infra/elk
+        target: /usr/share/logstash/pipeline
+        read_only: true
+    networks:
+      - tabantajnetwork
 
 volumes:
-  tabantaj:
+  tabantaj-db:
+    driver: local
+  pgadmin-data:
+    driver: local
 
 networks:
   tabantajnetwork:

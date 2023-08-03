@@ -11,10 +11,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class AccionCorrectiva extends Model implements HasMedia
+class AccionCorrectiva extends Model implements HasMedia, Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'accion_correctivas';
 
@@ -30,14 +32,14 @@ class AccionCorrectiva extends Model implements HasMedia
 
     const ESTATUS_SELECT = [
         'por_iniciar' => 'Por iniciar',
-        'en_proceso'  => 'En proceso',
-        'terminado'   => 'Terminado',
+        'en_proceso' => 'En proceso',
+        'terminado' => 'Terminado',
     ];
 
     const METODO_CAUSA_SELECT = [
         'lluvia_ideas' => 'Lluvia de ideas',
         'cinco_porque' => 'Cinco porqués',
-        'Ishikawa'     => 'Ishikawa',
+        'Ishikawa' => 'Ishikawa',
     ];
 
     protected $dates = [
@@ -96,7 +98,7 @@ class AccionCorrectiva extends Model implements HasMedia
 
     public function getFolioAttribute()
     {
-        return  sprintf('AC-%04d', $this->id);
+        return sprintf('AC-%04d', $this->id);
     }
 
     protected function serializeDate(DateTimeInterface $date)

@@ -118,7 +118,7 @@
 
                     @php
                         use App\Models\Organizacion;
-                        $organizacion = Organizacion::first();
+                        $organizacion = Organizacion::getFirst();
                         $logotipo = $organizacion->logotipo;
                         $empresa = $organizacion->empresa;
                     @endphp
@@ -234,21 +234,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                                @forelse($auditoriaInterna->auditoriaHallazgos as $hallazgo)
+                            @forelse($auditoriaInterna->auditoriaHallazgos as $hallazgo)
+                                <tr>
+                                    <td style="min-width:130px;">
+                                        {{ $hallazgo->incumplimiento_requisito ? $hallazgo->incumplimiento_requisito : 'Sin registro' }}
+                                    </td>
+                                    <td style="min-width:100px;">
+                                        {{ $hallazgo->descripcion ? $hallazgo->descripcion : 'Sin registro' }}</td>
+                                    <td style="min-width:100px;">
+                                        {{ $hallazgo->clasificacion_hallazgo ? $hallazgo->clasificacion_hallazgo : 'Sin registro' }}
+                                    </td>
+                                    <td style="min-width:100px;">
+                                        {{ $hallazgo->procesos ? $hallazgo->procesos->nombre : 'n/a' }}</td>
+                                    <td style="min-width:100px;">{{ $hallazgo->areas ? $hallazgo->areas->area : 'n/a' }}
+                                    </td>
 
-                                    <tr>
-                                        <td style="min-width:130px;">{{ $hallazgo->incumplimiento_requisito?$hallazgo->incumplimiento_requisito:'Sin registro' }}</td>
-                                        <td style="min-width:100px;">{{ $hallazgo->descripcion?$hallazgo->descripcion:'Sin registro' }}</td>
-                                        <td style="min-width:100px;">{{ $hallazgo->clasificacion_hallazgo?$hallazgo->clasificacion_hallazgo:'Sin registro' }}</td>
-                                        <td style="min-width:100px;">
-                                            {{ $hallazgo->procesos ? $hallazgo->procesos->nombre : 'n/a' }}</td>
-                                        <td style="min-width:100px;">{{ $hallazgo->areas ? $hallazgo->areas->area : 'n/a' }}
-                                        </td>
-
-                                    </tr>
-                                @empty
-                                    <strong>Sin registro</strong>
-                                @endforelse
+                                </tr>
+                            @empty
+                                <strong>Sin registro</strong>
+                            @endforelse
 
 
                         </tbody>

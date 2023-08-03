@@ -11,30 +11,55 @@ class OrganizacionComponent extends Component
     use LivewireAlert;
 
     public $panel;
+
     public $empresa_id;
+
     public $direccion_id;
+
     public $telefono_id;
+
     public $correo_id;
+
     public $pagina_web_id;
+
     public $puesto_id;
+
     public $giro_id;
+
     public $servicios_id;
+
     public $mision_id;
+
     public $vision_id;
+
     public $valores_id;
+
     public $team_id_id;
+
     public $antecedentes_id;
+
     public $logotipo_id;
+
     public $razon_social_id;
+
     public $rfc_id;
+
     public $representante_legal_id;
+
     public $fecha_constitucion_id;
+
     public $num_empleados_id;
+
     public $tamano_id;
+
     public $schedule_id;
+
     public $linkedln_id;
+
     public $facebook_id;
+
     public $youtube_id;
+
     public $twitter_id;
 
     public function mount()
@@ -267,14 +292,14 @@ class OrganizacionComponent extends Component
     public function callAlert($tipo, $mensaje, $bool, $test = '')
     {
         $this->alert($tipo, $mensaje, [
-            'position' =>  'top-end',
-            'timer' =>  2500,
-            'toast' =>  true,
-            'text' =>  $test,
-            'confirmButtonText' =>  'Entendido',
-            'cancelButtonText' =>  '',
-            'showCancelButton' =>  false,
-            'showConfirmButton' =>  $bool,
+            'position' => 'top-end',
+            'timer' => 2500,
+            'toast' => true,
+            'text' => $test,
+            'confirmButtonText' => 'Entendido',
+            'cancelButtonText' => '',
+            'showCancelButton' => false,
+            'showConfirmButton' => $bool,
         ]);
     }
 }

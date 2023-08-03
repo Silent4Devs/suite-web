@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class PartesInteresada.
@@ -19,14 +20,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  * @property int|null $team_id
  * @property int|null $norma_id
- *
  * @property Team|null $team
  * @property Norma|null $norma
  * @property Collection|Clausula[] $clausulas
  */
-class PartesInteresada extends Model
+class PartesInteresada extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'partes_interesadas';
 

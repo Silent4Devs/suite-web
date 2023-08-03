@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="form-group col-md-2">
                     <label><i class="fas fa-list iconos-crear"></i>ID<sup>*</sup></label>
-                    <input id="identificador_proyect" name="identificador" class="form-control" required>
+                    <input type="text" id="identificador_proyect" name="identificador" class="form-control" maxlength="150" required>
                     @if ($errors->has('identificador'))
                         <div class="invalid-feedback">
                             {{ $errors->first('identificador') }}
@@ -27,13 +27,37 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-10">
+                <div class="form-group col-md-6">
                     <label><i class="fas fa-list iconos-crear"></i> Nombre del proyecto<sup>*</sup></label>
-                    <input id="name_proyect" name="proyecto_name" class="form-control" required>
+                    <input type="text" id="name_proyect" name="proyecto_name" class="form-control" maxlength="150" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente<sup>*</sup></label>
+                    <select name="cliente_id" id="cliente_id" class="form-control" required>
+                        <option selected value="">Seleccione cliente</option>
+                        @foreach ($clientes as $cliente)
+                            <option value="{{ $cliente->id }}">{{ $cliente->nombre }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4" wire:ignore id="caja_areas_seleccionadas_create">
+                    <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)<sup>*</sup></label>
+                    <select class="select2-multiple form-control" multiple="multiple"
+                    id="areas_seleccionadas" name="areas_seleccionadas[]" required>
+                        @foreach ($areas as $area)
+                            <option value="{{ $area->id }}">
+                                {{ $area->area }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div class="mt-1">
+                        <input id="chkall" name="chkall" type="checkbox" value="todos"> Seleccionar Todas
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de inicio <small>(opcional)</small></label>
                     <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">
                     @if ($errors->has('fecha_inicio'))
@@ -45,7 +69,7 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label class="form-label"><i class="fa-solid fa-calendar-day iconos-crear"></i> Fecha de fin <small>(opcional)</small></label>
                     <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
                     @if ($errors->has('fecha_fin'))
@@ -56,33 +80,6 @@
                     @error('fecha_fin')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-5">
-                    <label><i class="fa-solid fa-bag-shopping iconos-crear"></i> Cliente<sup>*</sup></label>
-                    <select name="cliente_id" id="cliente_id" class="form-control" required>
-                        <option selected value="">Seleccione cliente</option>
-                        @foreach ($clientes as $cliente)
-                            <option value="{{ $cliente->id }}">{{ $cliente->identificador }} - {{ $cliente->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group col-md-7" wire:ignore id="caja_areas_seleccionadas_create">
-                    <label><i class="fab fa-adn iconos-crear"></i> Área(s) participante(s)<sup>*</sup></label>
-                    <select class="select2-multiple form-control" multiple="multiple"
-                    id="areas_seleccionadas" name="areas_seleccionadas[]" required>
-                        @foreach ($areas as $area)
-                            <option value="{{ $area->id }}">
-                                {{ $area->area }}
-                            </option>
-                        @endforeach
-                    </select>
-
-                    <div class="mt-1">
-                        <input id="chkall" name="chkall" type="checkbox" value="todos"> Seleccionar Todas
-                    </div>
                 </div>
             </div>
             <div class="row">

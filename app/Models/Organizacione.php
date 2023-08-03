@@ -9,15 +9,13 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Organizacione extends Model
+class Organizacione extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'organizaciones';
 
     protected $dates = [
@@ -27,6 +25,7 @@ class Organizacione extends Model
     ];
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
 
     protected $fillable = [

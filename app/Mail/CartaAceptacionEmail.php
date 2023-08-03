@@ -18,6 +18,7 @@ class CartaAceptacionEmail extends Mailable
      * @return void
      */
     public $carta;
+
     public $empleado;
 
     public function __construct(Empleado $empleado, CartaAceptacion $carta)

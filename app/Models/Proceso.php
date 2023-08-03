@@ -6,7 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Proceso.
@@ -19,13 +21,14 @@ use Illuminate\Support\Str;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Macroproceso|null $macroproceso
  * @property Collection|IndicadoresSgsi[] $indicadores_sgsis
  */
-class Proceso extends Model
+class Proceso extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'procesos';
 
     protected $casts = [
@@ -35,8 +38,11 @@ class Proceso extends Model
     protected $dates = ['deleted_at'];
 
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = 'updated_at';
+
     const ACTIVO = '1';
+
     const NO_ACTIVO = '2';
 
     protected $appends = ['name', 'content', 'proceso_octave_riesgo', 'color'];
@@ -64,6 +70,14 @@ class Proceso extends Model
         } else {
             return '#FF0000';
         }
+    }
+
+    //Redis methods
+    public static function getAll($columns = ['id', 'codigo', 'nombre'])
+    {
+        return Cache::remember('procesos_all', 3600 * 24, function () use ($columns) {
+            return self::select($columns)->get();
+        });
     }
 
     public function getProcesoOctaveRiesgoAttribute()

@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class MatrizOctaveEscenario extends Model
+class MatrizOctaveEscenario extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'matriz_octave_escenarios';
+
     protected $appends = ['name', 'content', 'color', 'sumatoria'];
+
     protected $fillable = [
         'identificador_escenario',
         'nom_escenario',

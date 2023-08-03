@@ -19,6 +19,9 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 bootstrap/cache/config.php
+composer.lock
+
+composer.lock
 
 npm-debug.log
 yarn-error.log
@@ -35,7 +38,6 @@ infra/postgres/
 infra/postgres/*
 infra/postgres/data/
 infra/postgres/data/*
-infra
 /infra/mysql/*
 /infra/mysql
 /storage/app/public/users-avatar/*
@@ -54,3 +56,19 @@ storage/app/public/documentos_concientSgsi/
 storage/app/public/documentos_control_accesos/
 storage/app/public/documentos_material_sgsi/
 
+/infra/postgres/*
+/infra/postgres/data/*
+/respaldos/*
+/storage/app/public/Documentos\ en\ aprobacion/procedimientos/*
+/storage/app/public/Documentos\ en\ aprobacion/procesos/*
+/storage/app/public/Documentos\ obsoletos/planes/*
+/storage/app/public/Documentos\ en\ aprobacion/procedimientos/PR-AFI-011_Evaluaci\303\263n\ de\ proveedores\ v5.pdf
+/storage/app/public/Documentos\ en\ aprobacion/procesos/P-GET-003\ PROCESO\ DE\ GESTI\303\223N\ DE\ TALENTO_V.4\ (1).pdf
+/storage/app/public/Documentos\ en\ aprobacion/procesos/P-SGI-002\ Gesti\303\263n\ Comercial\ V.5.pdf
+/storage/app/public/Documentos\ en\ aprobacion/procesos/P-SGI-006\ formato\ de\ proceso\ Consultor\303\255a\ Estrategica\ V.5.pdf
+/storage/app/public/Documentos\ en\ aprobacion/procesos/P-SGI-007_Ciberinteligencia_v7.pdf
+/storage/app/public/Documentos\ en\ aprobacion/procesos/P-SGI-008\ Gesti\303\263n\ Proveedores_v7\ (1).pdf
+/storage/app/public/Documentos\ en\ aprobacion/procesos/P-SGI-015\ Gesti\303\263n_seguridad_informaci\303\263n_V2.pdf
+/storage/app/public/Documentos\ en\ aprobacion/procesos/P-SGI-018\ Gesti\303\263n\ de\ incidentes\ de\ seguridad\ V.2.pdf
+/storage/app/public/Documentos\*
+*.stat

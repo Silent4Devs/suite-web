@@ -7,10 +7,14 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Activo extends Model
+class Activo extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use \OwenIt\Auditing\Auditable;
+
     public $table = 'activos';
 
     protected $dates = [
@@ -52,6 +56,14 @@ class Activo extends Model
         'modelo' => 'int',
         'marca' => 'int',
     ];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('activos_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

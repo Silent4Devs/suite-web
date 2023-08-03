@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -35,8 +35,6 @@ class TimesheetService
 
     /**
      * Retorna el total de los registros en timesheets seperados por tipos
-     *
-     * @return array
      */
     public function totalCounters(): array
     {
@@ -45,8 +43,8 @@ class TimesheetService
         $pendiente = 0;
         $rechazado = 0;
         $aprobado = 0;
-        foreach($counters as $counter){
-            switch($counter->estatus){
+        foreach ($counters as $counter) {
+            switch ($counter->estatus) {
                 case 'aprobado':
                     $aprobado++;
                     break;
@@ -61,15 +59,15 @@ class TimesheetService
                     break;
             }
         }
+
         return [
-            'borrador_contador' => $papelera, 
+            'borrador_contador' => $papelera,
             'pendientes_contador' => $pendiente,
             'aprobados_contador' => $aprobado,
             'rechazos_contador' => $rechazado,
-            'totales' => $papelera + $pendiente + $aprobado + $rechazado
+            'totales' => $papelera + $pendiente + $aprobado + $rechazado,
         ];
     }
-
 
     public function totalRegisterByAreas(): array
     {
@@ -82,7 +80,7 @@ class TimesheetService
         if ($times_por_mes_esperados == 0) {
             $times_por_mes_esperados = 1;
         }
-        foreach($areas as $area){
+        foreach ($areas as $area) {
             $times_complete_esperados_area = 0;
             $total_times_complit_area = 0;
             $contador_times_aprobados_areas = 0;
@@ -90,7 +88,7 @@ class TimesheetService
             $contador_times_rechazados_areas = 0;
             $contador_times_papelera_areas = 0;
             $empleados_array = [];
-            foreach($area->totalEmpleados as $empleado){
+            foreach ($area->totalEmpleados as $empleado) {
                 $times_esperados_empleado = intval(date_diff($empleado->antiguedad, $this->carbon->now())->format('%R%a') / 7);
                 $times_complete_esperados_area += $times_esperados_empleado;
                 $papelera = 0;
@@ -98,9 +96,9 @@ class TimesheetService
                 $rechazado = 0;
                 $aprobado = 0;
                 $timesheets_empleado = $empleado->timesheet;
-                if(!$timesheets_empleado->isEmpty()){
-                    foreach($timesheets_empleado as $timesheet){
-                        switch($timesheet->estatus){
+                if (! $timesheets_empleado->isEmpty()) {
+                    foreach ($timesheets_empleado as $timesheet) {
+                        switch ($timesheet->estatus) {
                             case 'aprobado':
                                 $aprobado++;
                                 break;
@@ -157,16 +155,17 @@ class TimesheetService
                 'partisipacion' => $porcentaje_participacion_area,
                 'nivel_p' => $nivel_participacion,
                 'times_esperados' => $times_complete_esperados_area,
-                'empleados' => $empleados_array
+                'empleados' => $empleados_array,
             ];
             $participacion_total += $contador_times_aprobados_areas;
         }
-        
+
         $response = [];
-        foreach($array as $item){
+        foreach ($array as $item) {
             $item['total_participacion_porcentaje'] = round((($item['times_aprobados'] * 100) / $participacion_total), 2);
             $response[] = $item;
         }
+
         return $response;
     }
 
@@ -182,8 +181,8 @@ class TimesheetService
         $horas_totales_cancelados = 0;
         $horas_totales_terminados = 0;
         $horas_totales_proceso = 0;
-        foreach($proyectos as $proyecto){
-            switch($proyecto->estatus){
+        foreach ($proyectos as $proyecto) {
+            switch ($proyecto->estatus) {
                 case 'cancelado':
                     $cancelados++;
                     $totales = $this->calcularHorasProyecto($proyecto->tareas);
@@ -192,7 +191,7 @@ class TimesheetService
                         'proyecto' => $proyecto->proyecto,
                         'tareas_count' => $proyecto->tareas->count(),
                         'estatus' => $proyecto->estatus,
-                        'horas_totales' => round($totales)
+                        'horas_totales' => round($totales),
                     ];
                     break;
                 case 'terminado':
@@ -203,7 +202,7 @@ class TimesheetService
                         'proyecto' => $proyecto->proyecto,
                         'tareas_count' => $proyecto->tareas->count(),
                         'estatus' => $proyecto->estatus,
-                        'horas_totales' => round($totales)
+                        'horas_totales' => round($totales),
                     ];
                     break;
                 case 'proceso':
@@ -214,12 +213,13 @@ class TimesheetService
                         'proyecto' => $proyecto->proyecto,
                         'tareas_count' => $proyecto->tareas->count(),
                         'estatus' => $proyecto->estatus,
-                        'horas_totales' => round($totales)
+                        'horas_totales' => round($totales),
                     ];
                     break;
             }
             $horas_totales += $totales;
         }
+
         return [
             'total_proyectos' => $proyectos->count(),
             'proyectos_terminados' => $terminados,
@@ -229,16 +229,16 @@ class TimesheetService
             'horas_terminados' => round($horas_totales_terminados),
             'horas_cancelados' => round($horas_totales_cancelados),
             'horas_proceso' => round($horas_totales_proceso),
-            'horas_totales' => round($horas_totales)
+            'horas_totales' => round($horas_totales),
         ];
     }
 
     private function calcularHorasProyecto($tareas): int
     {
-        $total = 0;    
-        foreach($tareas as $tarea){
-            if(!$tarea->horas->isEmpty()){
-                foreach($tarea->horas as $horas){
+        $total = 0;
+        foreach ($tareas as $tarea) {
+            if (! $tarea->horas->isEmpty()) {
+                foreach ($tarea->horas as $horas) {
                     $total += $horas->horas_lunes;
                     $total += $horas->horas_martes;
                     $total += $horas->horas_miercoles;
@@ -249,6 +249,7 @@ class TimesheetService
                 }
             }
         }
+
         return $total;
     }
 }

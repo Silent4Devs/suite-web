@@ -64,7 +64,7 @@ class SubcategoriaActivoContoller extends Controller
     public function create()
     {
         abort_if(Gate::denies('subcategoria_activos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $tipos = Tipoactivo::get();
+        $tipos = Tipoactivo::getAll();
 
         return view('admin.SubtipoActivos.create', compact('tipos'));
     }
@@ -78,7 +78,7 @@ class SubcategoriaActivoContoller extends Controller
 
         $subtipos = SubcategoriaActivo::create($request->all());
         if (array_key_exists('ajax', $request->all())) {
-            return response()->json(['success'=>true, 'subtipo'=>$subtipos]);
+            return response()->json(['success' => true, 'subtipo' => $subtipos]);
         }
 
         return redirect()->route('admin.subtipoactivos.index')->with('success', 'Guardado con éxito');
@@ -88,7 +88,7 @@ class SubcategoriaActivoContoller extends Controller
     {
         abort_if(Gate::denies('subcategoria_activos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $subcategoria = SubcategoriaActivo::find($subcategoria);
-        $categorias = Tipoactivo::get();
+        $categorias = Tipoactivo::getAll();
 
         return view('admin.SubtipoActivos.edit', compact('categorias'))->with('subcategoria', $subcategoria);
     }
@@ -116,7 +116,7 @@ class SubcategoriaActivoContoller extends Controller
         abort_if(Gate::denies('subcategoria_activos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $subcategoria = SubcategoriaActivo::find($id);
         $subcategoria->delete();
-        $subcategoria = SubcategoriaActivo::get();
+        $subcategoria = SubcategoriaActivo::getAll();
 
         return view('admin.SubtipoActivos.index', compact('subcategoria'));
     }
@@ -133,12 +133,12 @@ class SubcategoriaActivoContoller extends Controller
             $subtipos = SubcategoriaActivo::where('categoria_id', $request->categoria)->get();
             // dd($tipos);
             foreach ($subtipos as $subtipo) {
-                $subtipos_arr[] = ['id'=>$subtipo->id, 'text'=>$subtipo->categoria_id, 'text'=>$subtipo->subcategoria];
+                $subtipos_arr[] = ['id' => $subtipo->id, 'text' => $subtipo->categoria_id, 'text' => $subtipo->subcategoria];
             }
 
             $array_m = [];
             $array_m['results'] = $subtipos_arr;
-            $array_m['pagination'] = ['more'=>false];
+            $array_m['pagination'] = ['more' => false];
 
             return $array_m;
         }

@@ -8,15 +8,13 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ControlDocumento extends Model
+class ControlDocumento extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     public $table = 'control_documentos';
 
     protected $dates = [

@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class AnalisisDeRiesgo.
@@ -21,17 +21,14 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- *
  * @property Empleado|null $empleado
  * @property Collection|MatrizRiesgo[] $matriz_riesgos
  */
-class AnalisisDeRiesgo extends Model
+class AnalisisDeRiesgo extends Model implements Auditable
 {
     use SoftDeletes;
-    // use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
     protected $table = 'analisis_de_riesgo';
 
     protected $casts = [

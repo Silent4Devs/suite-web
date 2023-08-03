@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class CuestionarioProporcionaInformacion extends Model
+class CuestionarioProporcionaInformacion extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
+
     public $table = 'cuestionario_proporciona_informacion';
 
     public $fillable = [

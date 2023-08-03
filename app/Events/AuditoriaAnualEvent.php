@@ -14,8 +14,11 @@ class AuditoriaAnualEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $auditoria_anual;
+
     public $tipo_consulta;
+
     public $tabla;
+
     public $slug;
 
     public function __construct(AuditoriaAnual $auditoria_anual, $tipo_consulta, $tabla, $slug)

@@ -41,7 +41,7 @@ class PlanImplementacionNueveUnoController extends Controller
         $texto = false;
         //FIN
 
-        $empleados = Empleado::alta()->select('name')->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('iso9001.plantrabajobase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'texto'));
     }
@@ -72,7 +72,7 @@ class PlanImplementacionNueveUnoController extends Controller
         $texto = true;
         //FIN
 
-        $empleados = Empleado::alta()->select('name')->get();
+        $empleados = Empleado::getaltaAll();
 
         return view('iso9001.plantrabajobase.index', compact('archivos_gantt', 'path_asset', 'gant_readed', 'empleados', 'file_gant', 'name_file_gantt', 'sinTexto', 'texto'));
     }

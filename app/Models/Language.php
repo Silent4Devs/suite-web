@@ -1,12 +1,9 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Language.
@@ -16,11 +13,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $id_puesto
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
- *
  * @property Puesto|null $puesto
  */
-class Language extends Model
+class Language extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'languages';
 
     protected $casts = [

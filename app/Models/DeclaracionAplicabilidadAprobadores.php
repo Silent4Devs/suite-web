@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class DeclaracionAplicabilidadAprobadore.
@@ -17,13 +18,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- *
  * @property DeclaracionAplicabilidad|null $declaracion_aplicabilidad
  * @property Empleado|null $empleado
  */
-class DeclaracionAplicabilidadAprobadores extends Model
+class DeclaracionAplicabilidadAprobadores extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'declaracion_aplicabilidad_aprobadores';
 

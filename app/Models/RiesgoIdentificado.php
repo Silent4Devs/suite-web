@@ -3,17 +3,16 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Rennokki\QueryCache\Traits\QueryCacheable;
+use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class RiesgoIdentificado extends Model
+class RiesgoIdentificado extends Model implements Auditable
 {
     use HasFactory;
-    use QueryCacheable;
+    use \OwenIt\Auditing\Auditable;
 
-    public $cacheFor = 3600;
-    protected static $flushCacheOnUpdate = true;
     protected $table = 'riesgos_identificados';
 
     protected $dates = [
@@ -26,9 +25,17 @@ class RiesgoIdentificado extends Model
 
     protected $appends = ['folio', 'fecha_creacion', 'fecha_de_cierre', 'fecha_reporte'];
 
+    public static function getAll()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('riesgo_identificado_all', 3600 * 4, function () {
+            return self::orderBy('id')->get();
+        });
+    }
+
     public function getFolioAttribute()
     {
-        return  sprintf('RSG-%04d', $this->id);
+        return sprintf('RSG-%04d', $this->id);
     }
 
     public function reporto()
