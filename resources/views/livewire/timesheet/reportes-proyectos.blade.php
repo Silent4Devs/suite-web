@@ -96,6 +96,7 @@
             }
         }
     </style>
+<div class="mt-5 card card-body">
     <div class="w-100">
         <x-loading-indicator />
         <div class="row">
@@ -300,7 +301,7 @@
             </div>
         </div>
     </div>
-
+</div>
     @if ($proyecto_reporte)
         <div id="reporte_proyecto" class="anima_reporte">
             @php

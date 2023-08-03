@@ -927,7 +927,47 @@ class TimesheetController extends Controller
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.timesheet.reportes', compact('clientes', 'proyectos', 'tareas', 'logo_actual', 'empresa_actual'));
+        return view('admin.timesheet.reportes', compact(
+            // 'clientes', 'proyectos', 'tareas', 
+            'logo_actual', 'empresa_actual'));
+    }
+
+    public function reportesRegistros()
+    {
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.reportes.reportes-registros', compact('logo_actual', 'empresa_actual'));
+    }
+
+    public function reportesEmpleados()
+    {
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.reportes.reportes-empleados', compact('logo_actual', 'empresa_actual'));
+    }
+
+    public function reportesProyectos()
+    {
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.reportes.reportes-proyectos', compact('logo_actual', 'empresa_actual'));
+    }
+
+    public function reportesProyemp()
+    {
+        $proyectos = TimesheetProyecto::getAll();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
+        $empresa_actual = $organizacion_actual->empresa;
+
+        return view('admin.timesheet.reportes.reportes-proyemp', compact('proyectos', 'logo_actual', 'empresa_actual'));
     }
 
     public function obtenerTareas(Request $request)

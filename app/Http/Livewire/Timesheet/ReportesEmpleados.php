@@ -14,11 +14,16 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Livewire\WithPagination;
 
 class ReportesEmpleados extends Component
 {
     use getWeeksFromRange;
     use LivewireAlert;
+    use WithPagination;
 
     public $lista_empleados;
 
@@ -27,6 +32,12 @@ class ReportesEmpleados extends Component
     public $hoy_format;
 
     public $empleado;
+
+    public $empleados;
+
+    public $perPage = 5;
+
+    public $totalRegistrosMostrando;
 
     public $timesheet;
 
@@ -88,8 +99,8 @@ class ReportesEmpleados extends Component
         $this->empleados_estatus = 'alta';
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
         $this->fecha_fin = Carbon::now()->format('Y-m-d');
-        $this->empleadosQuery = Empleado::getAll();
-        $this->timesheetQuery = Timesheet::getAll();
+        $this->empleadosQuery = Empleado::getreportesAll();
+        $this->timesheetQuery = Timesheet::getreportes();
     }
 
     public function updatedAreaId($value)
@@ -154,10 +165,11 @@ class ReportesEmpleados extends Component
 
     public function render()
     {
+        // dd( $this->empleadosQuery);
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
-
+        
         if ($this->area_id && $this->empleados_estatus) {
             $empleados_list = $this->empleadosQuery->where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus);
             $this->empleados_list_global = $this->empleadosQuery->where('area_id', $this->area_id)->where('estatus', $this->empleados_estatus);
@@ -172,7 +184,7 @@ class ReportesEmpleados extends Component
             $this->empleados_list_global = $this->empleadosQuery;
         }
         // $empleados_list = Empleado::where('id', 222)->get();
-
+        
         //calendario tabla
         $calendario_array = [];
         // $this->fecha_inicio = "2022-08-31";
@@ -181,7 +193,7 @@ class ReportesEmpleados extends Component
         $fecha_inicio_complit_timesheet = Carbon::parse($fecha_inicio_complit_timesheet);
         $semanas_complit_timesheet = $this->getWeeksFromRange($fecha_inicio_complit_timesheet->format('Y'), $fecha_inicio_complit_timesheet->format('m'), $fecha_inicio_complit_timesheet->format('d'), [], 'monday', 'sunday', $this->fecha_fin ? Carbon::parse($this->fecha_fin) : null, $this->fecha_fin ? Carbon::parse($this->fecha_fin) : Carbon::now(), false);
         $total_months = 0;
-
+        // dd("test");
         foreach ($semanas_complit_timesheet as $semana) {
             $semana_array = explode('|', $semana);
             foreach ($semana_array as $semana_a) {
@@ -232,6 +244,7 @@ class ReportesEmpleados extends Component
                 }
             }
         }
+        // dd("test");
 
         foreach ($calendario_array as $key => &$c_year) {
             $total_months = count($c_year['months']);
@@ -246,7 +259,7 @@ class ReportesEmpleados extends Component
             $c_year['total_weeks'] = $total_weeks_year;
             $this->semanas_totales_calendario += $total_weeks_year;
         }
-
+        // dd("test");
         $this->horas_totales_filtros_empleados = 0;
         foreach ($empleados_list as $empleado_list) {
             $horas_total_time = 0;
@@ -306,12 +319,12 @@ class ReportesEmpleados extends Component
             }
             $this->horas_totales_filtros_empleados += $horas_total_time;
 
-            $times_empleado = $this->timesheetQuery->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
+            // $times_empleado = $this->timesheetQuery->where('empleado_id', $empleado_list->id)->where('estatus', '!=', 'rechazado')->where('estatus', '!=', 'papelera')->count();
 
-            $fecha_inicio = date_create(Carbon::parse($fecha_inicio_timesheet_empleado)->format('d-m-Y'));
-            $fecha_fin = date_create(Carbon::parse($fecha_fin_timesheet_empleado)->format('d-m-Y'));
+            // $fecha_inicio = date_create(Carbon::parse($fecha_inicio_timesheet_empleado)->format('d-m-Y'));
+            // $fecha_fin = date_create(Carbon::parse($fecha_fin_timesheet_empleado)->format('d-m-Y'));
 
-            $semanas_empleado = intval(date_diff($fecha_inicio, $fecha_fin)->format('%R%a') / 7);
+            // $semanas_empleado = intval(date_diff($fecha_inicio, $fecha_fin)->format('%R%a') / 7);
 
             // semanas faltantes
             $entro_esta_semana = false;
