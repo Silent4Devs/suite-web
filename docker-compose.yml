@@ -106,47 +106,47 @@ services:
     networks:
       - tabantajnetwork
 
-  elastik-search-tabantaj:
-    image: elasticsearch:8.8.1
-    container_name: elastik-search-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 9200:9200
-      - 9300:9300
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    environment:
-      - discovery.type=single-node
-    networks:
-      - tabantajnetwork
+  # elastik-search-tabantaj:
+  #   image: elasticsearch:8.8.1
+  #   container_name: elastik-search-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   environment:
+  #     - discovery.type=single-node
+  #   networks:
+  #     - tabantajnetwork
 
-  kibana-tabantaj:
-    image: kibana:8.8.1
-    container_name: kibana-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 5601:5601
-    networks:
-      - tabantajnetwork
+  # kibana-tabantaj:
+  #   image: kibana:8.8.1
+  #   container_name: kibana-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 5601:5601
+  #   networks:
+  #     - tabantajnetwork
 
-  logstash-tabantaj:
-    image: logstash:8.8.1
-    container_name: logstash-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 5000:5000
-    volumes:
-      - type: bind
-        source: ./infra/elk
-        target: /usr/share/logstash/pipeline
-        read_only: true
-    networks:
-      - tabantajnetwork
+  # logstash-tabantaj:
+  #   image: logstash:8.8.1
+  #   container_name: logstash-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 5000:5000
+  #   volumes:
+  #     - type: bind
+  #       source: ./infra/elk
+  #       target: /usr/share/logstash/pipeline
+  #       read_only: true
+  #   networks:
+  #     - tabantajnetwork
 
 volumes:
   tabantaj-db:
