@@ -13,7 +13,7 @@ services:
       - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
-      - postgres-tabantaj
+      # - postgres-tabantaj
       - redis-tabantaj
     networks:
       - tabantajnetwork
@@ -40,21 +40,21 @@ services:
   #     - tabantajnetwork
   #   mem_limit: 6g
 
-  pgadmin-tabantaj:
-    depends_on:
-      - postgres-tabantaj
-    image: dpage/pgadmin4:latest
-    ports:
-      - "5480:80"
-    environment:
-      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
-      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - tabantajnetwork
+  # pgadmin-tabantaj:
+  #   depends_on:
+  #     - postgres-tabantaj
+  #   image: dpage/pgadmin4:latest
+  #   ports:
+  #     - "5480:80"
+  #   environment:
+  #     - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+  #     - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
+  #   networks:
+  #     - tabantajnetwork
 
   php:
     #uncomment this if you will use only docker compose
