@@ -10,7 +10,6 @@
     "require": {
         "php": "^8.0",
         "alexusmai/laravel-file-manager": "^3.0",
-        "appstract/laravel-opcache": "^4.0",
         "barryvdh/laravel-dompdf": "^2.0",
         "chelout/laravel-relationship-events": "^1.4",
         "davejamesmiller/laravel-breadcrumbs": "5.x",
