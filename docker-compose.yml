@@ -22,23 +22,23 @@ services:
     #   restart_policy:
     #     condition: on-failure
 
-  postgres-tabantaj:
-    image: postgres:14-alpine
-    container_name: postgres-tabantaj #uncomment if will not use swarm mode
-    restart: unless-stopped
-    tty: true
-    volumes:
-      # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
-      - tabantaj-db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=homestead
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=homestead
-    ports:
-      - "5432:5432"
-    networks:
-      - tabantajnetwork
-    mem_limit: 6g
+  # postgres-tabantaj:
+  #   image: postgres:14-alpine
+  #   container_name: postgres-tabantaj #uncomment if will not use swarm mode
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
+  #     - tabantaj-db:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_USER=homestead
+  #     - POSTGRES_PASSWORD=secret
+  #     - POSTGRES_DB=homestead
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - tabantajnetwork
+  #   mem_limit: 6g
 
   pgadmin-tabantaj:
     depends_on:
