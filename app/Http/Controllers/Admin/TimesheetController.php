@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Throwable;
 
 class TimesheetController extends Controller
 {
@@ -281,7 +282,14 @@ class TimesheetController extends Controller
 
             $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
 
-            Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
+            try {
+                // Enviar correo
+                Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
+            } catch (Throwable $e) {
+                report($e);
+         
+                return response()->json(['status' => 520]);
+            }
         }
 
         $this->notificacionhorassobrepasadas(auth()->user()->empleado->id);
@@ -497,7 +505,14 @@ class TimesheetController extends Controller
 
             $solicitante = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
 
-            Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
+            try {
+                // Enviar correo
+                Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
+            } catch (Throwable $e) {
+                report($e);
+         
+                return response()->json(['status' => 520]);
+            }
         }
 
         $this->notificacionhorassobrepasadas(auth()->user()->empleado->id);
@@ -814,8 +829,15 @@ class TimesheetController extends Controller
 
         $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($aprobar->aprobador_id);
 
-        Mail::to($solicitante->email)->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
-
+        try {
+            // Enviar correo
+            Mail::to($solicitante->email)->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
+        } catch (Throwable $e) {
+            report($e);
+            
+            return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
+        }
+        
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
     }
 
@@ -832,7 +854,14 @@ class TimesheetController extends Controller
 
         $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find($rechazar->aprobador_id);
 
-        Mail::to($solicitante->email)->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
+        try {
+            // Enviar correo
+            Mail::to($solicitante->email)->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
+        } catch (Throwable $e) {
+            report($e);
+            
+            return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
+        }
 
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
     }
@@ -1076,8 +1105,15 @@ class TimesheetController extends Controller
                     $empleado = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
                     //Se comentaron los correos a quienes se les enviara al final
                     // Mail::to(['marco.luna@silent4business.com', 'eugenia.gomez@silent4business.com', $aprobador->email, $empleado->email])
-                    Mail::to('marco.luna@silent4business.com')
-                        ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
+                    try {
+                        // Enviar correo
+                        Mail::to('marco.luna@silent4business.com')
+                            ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
+                    } catch (Throwable $e) {
+                        report($e);
+                 
+                        return false;
+                    }
 
                     //     $ep->update([
                     //         'correo_enviado' => true,
