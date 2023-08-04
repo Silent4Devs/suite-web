@@ -832,13 +832,13 @@ class TimesheetController extends Controller
         try {
             // Enviar correo
             Mail::to($solicitante->email)->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
-            return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
         } catch (Throwable $e) {
             report($e);
-     
+            
             return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
         }
-
+        
+        return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
     }
 
     public function rechazar(Request $request, $id)
@@ -857,13 +857,13 @@ class TimesheetController extends Controller
         try {
             // Enviar correo
             Mail::to($solicitante->email)->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
-            return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
         } catch (Throwable $e) {
             report($e);
-     
+            
             return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
         }
 
+        return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
     }
 
     public function clientes()
