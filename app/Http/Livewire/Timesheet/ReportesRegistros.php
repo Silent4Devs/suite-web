@@ -142,7 +142,7 @@ class ReportesRegistros extends Component
             $query = $query->where('estatus', $this->estatus);
         }
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->fastPaginate($this->perPage);
+        $times = $query->paginate($this->perPage);
 
         //Funcion para pintar contadores en los filtros de estatus
         $this->establecerContadores();

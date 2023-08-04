@@ -152,7 +152,7 @@ class ReportesProyemp extends Component
             });
 
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->fastPaginate($this->perPage);
+        $times = $query->paginate($this->perPage);
 
         // $this->totalRegistrosMostrando = $proyemp->count();
 
