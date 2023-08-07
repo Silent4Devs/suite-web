@@ -27,7 +27,8 @@ RUN apk add --no-cache \
     zlib-dev \
     sudo \
     zip \
-    unzip
+    unzip \
+    sodium-dev
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
