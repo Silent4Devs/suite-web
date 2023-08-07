@@ -56,20 +56,28 @@ class EventosPortal extends Component
         $authId = Auth::user()->id;
         $getAlta = Empleado::alta();
 
-        $this->nuevos = Cache::remember('portal_nuevos_' . $authId, 3600, function () use ($hoy, $getAlta) {
-            return $getAlta->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        });
+        // $this->nuevos = Cache::remember('portal_nuevos_' . $authId, 3600, function () use ($hoy, $getAlta) {
+        //     return $getAlta->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
+        // });
+
+        $this->nuevos = $getAlta->whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
 
         $this->nuevos_contador_circulo = $this->nuevos->count();
 
-        $this->cumpleaños = Cache::remember('portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $getAlta) {
-            return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
-        });
+        // $this->cumpleaños = Cache::remember('portal_cumpleaños_' . $authId, 3600, function () use ($hoy, $getAlta) {
+        //     return $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+        // });
+
+        $this->cumpleaños = $getAlta->whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
+
         $this->cumpleaños_contador_circulo = $this->cumpleaños->count();
 
-        $this->aniversarios = Cache::remember('portal_aniversarios_' . $authId, 3600, function () use ($hoy, $getAlta) {
-            return $getAlta->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
-        });
+        // $this->aniversarios = Cache::remember('portal_aniversarios_' . $authId, 3600, function () use ($hoy, $getAlta) {
+        //     return $getAlta->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
+        // });
+
+        $this->aniversarios = $getAlta->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
+
         $this->aniversarios_contador_circulo = 0;
         foreach ($this->aniversarios as $key => $aniv) {
             if (Carbon::createFromTimeStamp(strtotime($aniv->antiguedad))->diffInYears() > 0) {
