@@ -28,7 +28,7 @@ RUN apk add --no-cache \
     sudo \
     zip \
     unzip \
-    sodium
+    libsodium-dev
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
@@ -49,7 +49,8 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     zip \
     apcu \
     opcache \
-    sockets
+    sockets \
+    sodium
 
 # Copy custom php.ini
 COPY php.ini /usr/local/etc/php/php.ini
