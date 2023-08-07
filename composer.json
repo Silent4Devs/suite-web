@@ -21,6 +21,7 @@
         "jenssegers/date": "^4.0",
         "laracasts/flash": "^3.0",
         "laravel/framework": "^10.0",
+        "laravel/octane": "^2.0",
         "laravel/passport": "^11.0",
         "laravel/ui": "^4.0",
         "laravelcollective/html": "^6.2",
