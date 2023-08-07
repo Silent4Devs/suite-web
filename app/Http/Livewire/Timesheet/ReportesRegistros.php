@@ -117,7 +117,7 @@ class ReportesRegistros extends Component
         if ($this->area_id == 0) {
             $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
         } else {
-            $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']])->where('area_id', $this->area_id)->alta();
+            $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']])->where('area_id', $this->area_id)->where('estatus', 'alta');
         }
         $empleados = $this->emp;
 
@@ -142,7 +142,7 @@ class ReportesRegistros extends Component
             $query = $query->where('estatus', $this->estatus);
         }
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->fastPaginate($this->perPage);
+        $times = $query->paginate($this->perPage);
 
         //Funcion para pintar contadores en los filtros de estatus
         $this->establecerContadores();

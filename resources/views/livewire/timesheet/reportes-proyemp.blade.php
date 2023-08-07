@@ -7,6 +7,7 @@
                         'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y' );
     @endphp
     <x-loading-indicator />
+<div class="mt-5 card card-body">
     <div class="row">
         <div class="col-md-4 form-group" style="padding-left:0px !important;">
             <label class="form-label">Colaborador</label>
@@ -160,7 +161,7 @@
             </div>
         </div>
     </div>
-
+</div>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
             Livewire.on('scriptTabla', () => {

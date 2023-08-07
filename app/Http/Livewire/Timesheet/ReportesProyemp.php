@@ -62,7 +62,7 @@ class ReportesProyemp extends Component
     {
         $this->estatus = null;
         $this->areas = Area::getAll();
-        $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
+        $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']])->where('estatus', 'alta');
         $this->proy = TimesheetProyecto::getAll();
     }
 
@@ -132,18 +132,18 @@ class ReportesProyemp extends Component
     {
         // dd($this->fecha_inicio);
         //Query para obtener los timesheet y filtrarlo
-        $query = TimesheetHoras::with('proyecto', 'timesheet', 'tarea.areaData')
-            ->whereHas('timesheet', function ($query) {
+        $query = TimesheetHoras::with('tarea.areaData')
+            ->withwhereHas('timesheet', function ($query) {
                 if ($this->emp_id == 0) {
                     return $query;
                 } else {
                     $query->where('empleado_id', $this->emp_id);
                 }
             })
-            ->whereHas('timesheet', function ($query) {
+            ->withwhereHas('timesheet', function ($query) {
                 $query->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia');
             })
-            ->whereHas('proyecto', function ($query) {
+            ->withwhereHas('proyecto', function ($query) {
                 if ($this->proy_id == 0) {
                     return $query;
                 } else {
@@ -152,7 +152,7 @@ class ReportesProyemp extends Component
             });
 
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->fastPaginate($this->perPage);
+        $times = $query->paginate($this->perPage);
 
         // $this->totalRegistrosMostrando = $proyemp->count();
 

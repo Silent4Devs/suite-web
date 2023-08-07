@@ -732,6 +732,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('timesheet/proyectos/show/{id}', 'TimesheetController@showProyectos')->name('timesheet-proyectos-show');
         Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
         Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
+        Route::get('timesheet/proyectos/reporte/registros', 'TimesheetController@reportesRegistros')->name('timesheet-reportes-registros');
+        Route::get('timesheet/proyectos/reporte/proyemp', 'TimesheetController@reportesProyemp')->name('timesheet-reportes-proyemp');
+        Route::get('timesheet/proyectos/reporte/empleados', 'TimesheetController@reportesEmpleados')->name('timesheet-reportes-empleados');
+        Route::get('timesheet/proyectos/reporte/proyectos', 'TimesheetController@reportesProyectos')->name('timesheet-reportes-proyectos');
 
         Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
         Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');

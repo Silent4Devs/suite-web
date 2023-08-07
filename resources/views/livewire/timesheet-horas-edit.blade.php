@@ -351,7 +351,17 @@
                                 window.location.href = '{{ route("admin.timesheet-inicio") }}';
                             });
                         }else{
-                            toastr.error('Error al enviar');
+                            if(response.status == 520){
+                            Swal.fire(
+                              'Ha habido un error al enviar la notificacion al lider',
+                              'Timesheet Registrado',
+                              'success'
+                            ).then(()=>{
+                                window.location.href = '{{ route("admin.timesheet-inicio") }}';
+                            });
+                            }else{
+                                toastr.error('Error al enviar');
+                            }
                         }
                     },
                     error: function(request, status, error) {
