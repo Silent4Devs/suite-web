@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class PortalComunicacionController extends Controller
@@ -28,30 +29,29 @@ class PortalComunicacionController extends Controller
         abort_if(Gate::denies('portal_de_comunicaccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $hoy = Carbon::now();
         $hoy->toDateString();
+        $authId = Auth::user()->id;
 
-        $nuevos = Cache::remember('portal_nuevos', 3600 * 12, function () use ($hoy) {
+        $nuevos = Cache::remember('portal_nuevos_' . $authId, 3600 * 2, function () use ($hoy) {
             return Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
         });
 
-        $nuevos_contador_circulo = Cache::remember('portal_nuevos_contador_circulo', 3600 * 12, function () use ($hoy) {
+        $nuevos_contador_circulo = Cache::remember('portal_nuevos_contador_circulo_' . $authId, 3600 * 2, function () use ($hoy) {
             return Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
         });
 
-        $cumpleaños = Cache::remember('portal_cumpleaños', 3600 * 12, function () use ($hoy) {
+        $cumpleaños = Cache::remember('portal_cumpleaños_' . $authId, 3600 * 2, function () use ($hoy) {
             return Empleado::whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
         });
 
-        $cumpleaños_contador_circulo = Cache::remember('portal_contador_circulo', 3600 * 12, function () use ($hoy) {
+        $cumpleaños_contador_circulo = Cache::remember('portal_contador_circulo_' . $authId, 3600 * 2, function () use ($hoy) {
             return Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->count();
         });
 
-        $aniversarios = Cache::remember('portal_aniversarios', 3600 * 12, function () use ($hoy) {
+        $aniversarios = Cache::remember('portal_aniversarios_' . $authId, 3600 * 2, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         });
 
-        dd($aniversarios);
-
-        $aniversarios_contador_circulo = Cache::remember('portal_aniversarios_contador_circulo', 3600 * 12, function () use ($hoy) {
+        $aniversarios_contador_circulo = Cache::remember('portal_aniversarios_contador_circulo_' . $authId, 3600 * 2, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
         });
 
