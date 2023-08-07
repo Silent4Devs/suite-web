@@ -88,11 +88,31 @@ class Timesheet extends Model implements Auditable
         return $fin_dia;
     }
 
+    public function getFinLetrasAttribute()
+    {
+        $fin = $this->traducirDia($this->fin_semana);
+
+        $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()
+        ->formatLocalized('%d/%b/%Y');
+
+        return $fin_dia;
+    }
+
     public function getInicioAttribute()
     {
         $inicio = $this->traducirDia($this->inicio_semana);
 
         $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")->format('d/m/Y');
+
+        return $inicio_dia;
+    }
+
+    public function getInicioLetrasAttribute()
+    {
+        $inicio = $this->traducirDia($this->inicio_semana);
+
+        $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")
+        ->formatLocalized('%d/%b/%Y');
 
         return $inicio_dia;
     }

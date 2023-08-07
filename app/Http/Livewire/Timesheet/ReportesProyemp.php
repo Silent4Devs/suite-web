@@ -10,6 +10,8 @@ use App\Models\TimesheetProyecto;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Exports\ReporteColaboradorTarea;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportesProyemp extends Component
 {
@@ -216,6 +218,18 @@ class ReportesProyemp extends Component
             }
         })
             ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'rechazado')->count();
+    }
+
+    public function exportExcel()
+    {
+
+        $date = Carbon::now();
+
+        $date = $date->format('d-m-Y');
+
+        $file_name = 'Reporte Colaborador-Tarea'.$date.'.xlsx';
+        // dd($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
+        return Excel::download(new ReporteColaboradorTarea($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id, $this->proy_id), $file_name);
     }
 
     public function todos()

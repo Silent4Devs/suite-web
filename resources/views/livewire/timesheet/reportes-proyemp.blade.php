@@ -75,14 +75,18 @@
                         </div>
                     </div>
                     <div class="col-6">
-                        <button onclick="exportTableToExcel('proyemp', 'Reporte Colaborador-Tareas')"
+                        {{-- <button onclick="exportTableToExcel('proyemp', 'Reporte Colaborador-Tareas')"
                         class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
                         <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-                        Exportar Excel</button>
+                        Exportar Excel</button> --}}
                         {{-- <button id="btnExportarproyemp" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
                             <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                             Exportar Excel
                         </button> --}}
+                        <button wire:click="exportExcel()" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
+                            <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                            Exportar Excel
+                        </button>
                     </div>
                 </div>
             </div>
@@ -170,7 +174,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
             function exportTableToExcel(tableID, filename){
             var downloadLink;
             var dataType = 'application/vnd.ms-excel';
@@ -202,9 +206,9 @@
             }
         }
 
-    </script>
+    </script> --}}
 
-    {{-- <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
 
     <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
 
@@ -232,5 +236,5 @@
             tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
 
         });
-        </script> --}}
+        </script>
 </div>
