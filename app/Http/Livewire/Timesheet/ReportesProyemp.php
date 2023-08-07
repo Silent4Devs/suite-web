@@ -149,7 +149,7 @@ class ReportesProyemp extends Component
                 if ($this->proy_id == 0) {
                     return $query;
                 } else {
-                    $query->where('proyecto_id', $this->proy_id);
+                    $query->where('id', $this->proy_id);
                 }
             });
 
