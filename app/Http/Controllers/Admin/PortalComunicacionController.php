@@ -31,22 +31,6 @@ class PortalComunicacionController extends Controller
         $hoy->toDateString();
         $authId = Auth::user()->id;
 
-        $nuevos = Cache::remember('portal_nuevos_' . $authId, 3600 * 2, function () use ($hoy) {
-            return Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->get();
-        });
-
-        $nuevos_contador_circulo = Cache::remember('portal_nuevos_contador_circulo_' . $authId, 3600 * 2, function () use ($hoy) {
-            return Empleado::whereBetween('antiguedad', [$hoy->firstOfMonth()->format('Y-m-d'), $hoy->endOfMonth()->format('Y-m-d')])->count();
-        });
-
-        $cumpleaños = Cache::remember('portal_cumpleaños_' . $authId, 3600 * 2, function () use ($hoy) {
-            return Empleado::whereMonth('cumpleaños', '=', $hoy->format('m'))->get();
-        });
-
-        $cumpleaños_contador_circulo = Cache::remember('portal_contador_circulo_' . $authId, 3600 * 2, function () use ($hoy) {
-            return Empleado::alta()->whereMonth('cumpleaños', '=', $hoy->format('m'))->get()->count();
-        });
-
         $aniversarios = Cache::remember('portal_aniversarios_' . $authId, 3600 * 2, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         });
@@ -67,7 +51,7 @@ class PortalComunicacionController extends Controller
         $politica_existe = PoliticaSgsi::getAll()->count();
         $comite_existe = Comiteseguridad::getAll()->count();
 
-        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'nuevos', 'cumpleaños', 'aniversarios', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'nuevos_contador_circulo', 'cumpleaños_contador_circulo', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe'));
+        return view('admin.portal-comunicacion.index', compact('documentos_publicados', 'hoy', 'comunicacionSgis', 'comunicacionSgis_carrusel', 'empleado_asignado', 'aniversarios_contador_circulo', 'politica_existe', 'comite_existe'));
     }
 
     /**
