@@ -1,7 +1,4 @@
 <div>
-    @php
-        $unwanted_array = ['Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y'];
-    @endphp
     <x-loading-indicator />
     <div class="mt-5 card card-body">
         <div class="row">
@@ -100,7 +97,7 @@
             </div> --}}
             </div>
             <div class="datatable-fix w-100 mt-2">
-                <table class="table w-100 datatable_timesheet_registros_reportes" id="proyemp">
+                <table class="table w-100 datatable_timesheet_registros_reportes">
                     {{-- id="datatable_timesheet" --}}
                     <thead class="w-100">
                         <tr>
@@ -126,19 +123,19 @@
                                     {!! $time->timesheet->fin !!}
                                 </td>
                                 <td>
-                                    {{ strtr($time->timesheet->empleado->name, $unwanted_array) }}
+                                    {{ $time->timesheet->empleado->name}}
                                 </td>
                                 <td>
-                                    {{ strtr($time->timesheet->aprobador->name, $unwanted_array) }}
+                                    {{ $time->timesheet->aprobador->name}}
                                 </td>
                                 <td>
-                                    {{ strtr($time->proyecto->proyecto, $unwanted_array) }}
+                                    {{ $time->proyecto->proyecto}}
                                 </td>
                                 <td>
-                                    {{ strtr($time->tarea->tarea, $unwanted_array) }}
+                                    {{ $time->tarea->tarea}}
                                 </td>
                                 <td>
-                                    {{ strtr($time->descripcion, $unwanted_array) }}
+                                    {{ $time->descripcion}}
                                 </td>
                                 <td>
                                     {{ $time->horas_lunes + $time->horas_martes + $time->horas_miercoles + $time->horas_jueves + $time->horas_viernes + $time->horas_sabado + $time->horas_domingo }}
@@ -151,6 +148,58 @@
                         @endforeach
                     </tbody>
                 </table>
+                <table class="table w-100 datatable_timesheet_registros_reportes" id="proyemp" hidden>
+                    {{-- id="datatable_timesheet" --}}
+                    <thead class="w-100">
+                        <tr>
+                            <th>Fecha Inicio </th>
+                            <th>Fecha Fin </th>
+                            <th>Empleado</th>
+                            <th>Supervisor</th>
+                            <th style="min-width:250px;">Proyecto</th>
+                            <th>Tarea</th>
+                            <th>Descripcion</th>
+                            <th>Horas Totales de la Tarea</th>
+                            {{-- <th>Opciones</th> --}}
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach ($times as $time)
+                            <tr class="tr_{{ $time->estatus }}">
+                                <td>
+                                    {!! $time->timesheet->inicioLetras !!}
+                                </td>
+                                <td>
+                                    {!! $time->timesheet->finLetras !!}
+                                </td>
+                                <td>
+                                    {{ $time->timesheet->empleado->name}}
+                                </td>
+                                <td>
+                                    {{ $time->timesheet->aprobador->name}}
+                                </td>
+                                <td>
+                                    {{ $time->proyecto->proyecto}}
+                                </td>
+                                <td>
+                                    {{ $time->tarea->tarea}}
+                                </td>
+                                <td>
+                                    {{ $time->descripcion}}
+                                </td>
+                                <td>
+                                    {{ $time->horas_lunes + $time->horas_martes + $time->horas_miercoles + $time->horas_jueves + $time->horas_viernes + $time->horas_sabado + $time->horas_domingo }}
+                                </td>
+                                {{-- <td>
+                                <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar"
+                                    class="btn"><i class="fa-solid fa-eye"></i></a>
+                            </td> --}}
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
                 <div class="row">
                     <div class="col-6 p-0">
                         <strong>
