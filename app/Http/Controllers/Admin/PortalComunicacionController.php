@@ -49,6 +49,8 @@ class PortalComunicacionController extends Controller
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->get();
         });
 
+        dd($aniversarios);
+
         $aniversarios_contador_circulo = Cache::remember('portal_aniversarios_contador_circulo', 3600 * 12, function () use ($hoy) {
             return Empleado::alta()->whereMonth('antiguedad', '=', $hoy->format('m'))->whereYear('antiguedad', '<', $hoy->format('Y'))->count();
         });
