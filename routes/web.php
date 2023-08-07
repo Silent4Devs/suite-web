@@ -121,6 +121,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('puestos', 'PuestosController');
     Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
 
+    //Katbol
+    //Proveedores
+    Route::resource('proveedores', 'ProveedoresController');
+
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
         // Visitantes
         Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
