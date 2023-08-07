@@ -100,7 +100,7 @@
             </div> --}}
             </div>
             <div class="datatable-fix w-100 mt-2">
-                <table class="table w-100 datatable_timesheet_registros_reportes" id="proyemp">
+                <table class="table w-100 datatable_timesheet_registros_reportes">
                     {{-- id="datatable_timesheet" --}}
                     <thead class="w-100">
                         <tr>
@@ -151,6 +151,58 @@
                         @endforeach
                     </tbody>
                 </table>
+                <table class="table w-100 datatable_timesheet_registros_reportes" id="proyemp" hidden>
+                    {{-- id="datatable_timesheet" --}}
+                    <thead class="w-100">
+                        <tr>
+                            <th>Fecha Inicio </th>
+                            <th>Fecha Fin </th>
+                            <th>Empleado</th>
+                            <th>Supervisor</th>
+                            <th style="min-width:250px;">Proyecto</th>
+                            <th>Tarea</th>
+                            <th>Descripcion</th>
+                            <th>Horas Totales de la Tarea</th>
+                            {{-- <th>Opciones</th> --}}
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach ($times as $time)
+                            <tr class="tr_{{ $time->estatus }}">
+                                <td>
+                                    {!! $time->timesheet->inicioLetras !!}
+                                </td>
+                                <td>
+                                    {!! $time->timesheet->finLetras !!}
+                                </td>
+                                <td>
+                                    {{ strtr($time->timesheet->empleado->name, $unwanted_array) }}
+                                </td>
+                                <td>
+                                    {{ strtr($time->timesheet->aprobador->name, $unwanted_array) }}
+                                </td>
+                                <td>
+                                    {{ strtr($time->proyecto->proyecto, $unwanted_array) }}
+                                </td>
+                                <td>
+                                    {{ strtr($time->tarea->tarea, $unwanted_array) }}
+                                </td>
+                                <td>
+                                    {{ strtr($time->descripcion, $unwanted_array) }}
+                                </td>
+                                <td>
+                                    {{ $time->horas_lunes + $time->horas_martes + $time->horas_miercoles + $time->horas_jueves + $time->horas_viernes + $time->horas_sabado + $time->horas_domingo }}
+                                </td>
+                                {{-- <td>
+                                <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar"
+                                    class="btn"><i class="fa-solid fa-eye"></i></a>
+                            </td> --}}
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
                 <div class="row">
                     <div class="col-6 p-0">
                         <strong>
