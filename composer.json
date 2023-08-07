@@ -14,7 +14,6 @@
         "chelout/laravel-relationship-events": "^2.0",
         "davejamesmiller/laravel-breadcrumbs": "5.x",
         "doctrine/dbal": "^3.1",
-        "friendsofphp/php-cs-fixer": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
         "hammerstone/fast-paginate": "^1.0",
         "intervention/image": "^2.5",
@@ -54,7 +53,8 @@
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.0",
         "reliese/laravel": "^1.1",
-        "spatie/laravel-ignition": "^2.0"
+        "spatie/laravel-ignition": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.2"
     },
     "config": {
         "optimize-autoloader": true,
