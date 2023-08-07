@@ -30,6 +30,7 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
+
     //log-viewer
     Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
@@ -1455,4 +1456,27 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
     //URL::forceScheme('https');
 
     Route::view('post_register', 'auth.post_register');
+});
+
+
+
+Route::group(['prefix' => 'katbol', 'as' => 'katbol.', 'namespace' => 'Katbol', 'middleware' => ['auth', '2fa', 'active']], function () {
+
+    //KATBOL
+    Route::resource('productos', 'ProductoController');
+    Route::delete('productos/destroy', 'ProductoController@massDestroy')->name('productos.massDestroy');
+    Route::post('productos/list/get', 'ProductoController@getProductosIndex')->name('productos.getProductosIndex');
+
+    Route::resource('sucursales', 'SucursalController');
+    Route::delete('sucursales/destroy', 'SucursalController@massDestroy')->name('sucursales.massDestroy');
+    Route::post('sucursales/list/get', 'SucursalController@getSucursalesIndex')->name('sucursales.getSucursalesIndex');
+
+    Route::resource('proveedores', 'ProveedoresController');
+    Route::delete('proveedores/destroy', 'ProveedoresController@massDestroy')->name('proveedores.massDestroy');
+    Route::post('proveedores/list/get', 'ProveedoresController@getProveedoresIndex')->name('proveedores.getProveedoresIndex');
+
+    Route::resource('centro-costos', 'CentroCostosController');
+    Route::delete('centro-costos/destroy', 'CentroCostosController@massDestroy')->name('centro-costos.massDestroy');
+    Route::post('centro-costos/list/get', 'CentroCostosController@getCentroCostosIndex')->name('centro-costos.getCentroCostosIndex');
+
 });
