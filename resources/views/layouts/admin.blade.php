@@ -1333,7 +1333,7 @@
         <font>
             2023
             <font style="margin: 0px 20px;"> | </font>
-            Version: 4.8.8
+            Version: 4.12.15
         </font>
     </footer>
     </div>
