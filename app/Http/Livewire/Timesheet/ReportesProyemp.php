@@ -153,6 +153,8 @@ class ReportesProyemp extends Component
                 }
             });
 
+
+
         $this->totalRegistrosMostrando = $query->count();
         $times = $query->paginate($this->perPage);
 
@@ -222,12 +224,10 @@ class ReportesProyemp extends Component
 
     public function exportExcel()
     {
-
         $date = Carbon::now();
-
         $date = $date->format('d-m-Y');
 
-        $file_name = 'Reporte Colaborador-Tarea'.$date.'.xlsx';
+        $file_name = 'Reporte Colaborador-Tarea' . $date . '.xlsx';
         // dd($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
         return Excel::download(new ReporteColaboradorTarea($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id, $this->proy_id), $file_name);
     }

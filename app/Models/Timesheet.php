@@ -93,7 +93,7 @@ class Timesheet extends Model implements Auditable
         $fin = $this->traducirDia($this->fin_semana);
 
         $fin_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()
-        ->formatLocalized('%d/%b/%Y');
+            ->formatLocalized('%d/%b/%Y');
 
         return $fin_dia;
     }
@@ -112,7 +112,7 @@ class Timesheet extends Model implements Auditable
         $inicio = $this->traducirDia($this->inicio_semana);
 
         $inicio_dia = \Carbon\Carbon::parse($this->fecha_dia)->copy()->modify("last {$inicio}")
-        ->formatLocalized('%d/%b/%Y');
+            ->formatLocalized('%d/%b/%Y');
 
         return $inicio_dia;
     }
