@@ -127,6 +127,7 @@ class ProveedoresController extends Controller
         // $this->authorize('haveaccess', 'proveedores.edit');
         $proveedor = Proveedores::find($id);
         $personas = Fiscale::get();
+        // dd($personas);
 
         return view('admin.proveedores.edit')->with('proveedores', $proveedor)->with('personas', $personas);
     }
@@ -157,9 +158,8 @@ class ProveedoresController extends Controller
         $proveedor = Proveedores::find($id);
         $proveedor->update($request->all());
         //  dd($proveedor);
-        notify()->success('¡El registro fue actualizado exitosamente!');
+        return redirect()->route('admin.proveedores.index')->with('success', '¡El registro fue actualizado exitosamente!');
 
-        return redirect(route('admin.proveedores.index'));
     }
 
     /**
@@ -174,8 +174,6 @@ class ProveedoresController extends Controller
     {
         // $this->authorize('haveaccess', 'proveedores.destroy');
         Proveedores::destroy($id);
-        notify()->success('¡El registro fue eliminado exitosamente!');
-
-        return redirect(route('admin.proveedores.index'));
+        return redirect()->route('admin.proveedores.index')->with('success', '¡El registro fue eliminado exitosamente!');
     }
 }

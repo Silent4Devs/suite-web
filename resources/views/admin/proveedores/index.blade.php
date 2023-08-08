@@ -39,14 +39,15 @@
                     <span class="card-title">
                     </span>
                     <div class='btn-group'>
-                        <div class="col s8" style="margin-bottom: 30px;">
+                        <div class="col s8" style="margin-bottom: 15px;">
                             <h3 class="titulo-form">INSTRUCCIONES</h3>
                             <p class="instrucciones">En esta sección podrá dar de alta a los clientes que participarán dentro del flujo de contratos.</p>
                         </div>
                         {{-- @can('proveedores.create') --}}
-                            <a class="right btn waves-effect waves-light btn-redondeado"
-                                style=" margin: 13px 12px 12px 10px; " href="{{ route('admin.proveedores.create') }}"
-                                type="submit" name="action">Agregar Cliente<i class="material-icons right">add</i></a>
+                            <a class="btn btn-success" style=" margin: 13px 12px 12px 10px; "
+                            href="{{ route('admin.proveedores.create') }}"
+                                type="submit" name="action">Agregar Cliente <sup>+</sup>
+                            </a>
                         {{-- @endcan --}}
                     </div>
 

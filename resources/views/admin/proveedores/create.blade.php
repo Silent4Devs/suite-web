@@ -59,10 +59,14 @@
             <div class="col s12 l6 distancia">
                 <label for="id_fiscale" class="txt-tamaño"><i class="fas fa-file-alt iconos-crear"></i> Persona fiscal </label>
                 <select name="id_fiscale" id="" class="form-control">
-                    <option value="">Seleccione </option>
+                @if (!($personas->isEmpty()))
+                    <option value="" disabled selected>Seleccione una opción</option>
                     @foreach($personas as $persona)
                         <option  value="{{$persona->id}}">{{$persona->persona_fiscal}}</option>
                     @endforeach
+                @else
+                    <option value="" disabled>No hay proveedores registrados</option>
+                @endif
                 </select>
                 @if ($errors->has('persona_fiscal'))
                     <div class="invalid-feedback red-text">
