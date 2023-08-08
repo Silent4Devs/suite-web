@@ -199,7 +199,7 @@ class SolicitudVacacionesController extends Controller
     {
         $ingreso = auth()->user()->empleado->antiguedad;
         $dia_hoy = Carbon::now();
-        $no_vacaciones = $ingreso->format('d-m-Y');
+        $no_vacaciones = Carbon::parse($ingreso->format('d-m-Y'));
         $año = Carbon::createFromDate($ingreso)->age;
         $seis_meses = ($dia_hoy->diffInMonths($ingreso));
         // dd($seis_meses);
