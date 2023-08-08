@@ -29,7 +29,7 @@ RUN apk add --no-cache \
     zip \
     unzip \
     libsodium-dev \
-    cron
+    dcron
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
