@@ -106,6 +106,18 @@ services:
     networks:
       - tabantajnetwork
 
+  # prometheus-tabantaj:
+  #   image: prom/prometheus
+  #   container_name: prometheus-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 9090:9090
+  #   volumes:
+  #     - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   networks:
+  #     - tabantajnetwork
+
   # elastik-search-tabantaj:
   #   image: elasticsearch:8.8.1
   #   container_name: elastik-search-tabantaj

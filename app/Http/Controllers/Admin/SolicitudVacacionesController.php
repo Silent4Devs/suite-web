@@ -197,9 +197,9 @@ class SolicitudVacacionesController extends Controller
 
     public function periodoAdicional()
     {
-        $ingreso = auth()->user()->empleado->antiguedad;
+        $ingreso = Carbon::parse(auth()->user()->empleado->antiguedad);
         $dia_hoy = Carbon::now();
-        $no_vacaciones = Carbon::parse($ingreso->format('d-m-Y'));
+        $no_vacaciones = $ingreso->format('d-m-Y');
         $año = Carbon::createFromDate($ingreso)->age;
         $seis_meses = ($dia_hoy->diffInMonths($ingreso));
         // dd($seis_meses);
