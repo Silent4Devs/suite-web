@@ -35,14 +35,14 @@ class Kernel extends ConsoleKernel
         // $schedule->command('notify:ev360')->daily()->timezone('America/Mexico_City');
         // $schedule->command('capacitacion:usuario')
         //     ->everyFiveMinutes();
-        // $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everySixHours();
+        $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everySixHours();
         //$schedule->command('cache:clearall')->everyTwoHours();
         $schedule->command(EnviarCorreoFelicitaciones::class)
             ->timezone('America/Mexico_City')
             ->dailyAt('10:00')
             ->withoutOverlapping()
             ->onOneServer();
-        $schedule->command('backup:run')->dailyAt('02:00');
+        $schedule->command('backup:run')->dailyAt('02:00')->sendOutputTo(storage_path('logs/scheduled.log'));
     }
 
     /**
