@@ -28,7 +28,9 @@
             margin-bottom: 30px;
         }
     </style>
-
+    <ul>
+        @livewire('offline-state-component')
+    </ul>
     <ul class="c-sidebar-nav dark_mode1">
 
         <li class="c-sidebar-nav-title">
