@@ -36,13 +36,13 @@ class Kernel extends ConsoleKernel
         // $schedule->command('capacitacion:usuario')
         //     ->everyFiveMinutes();
         // $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everySixHours();
-        $schedule->command('cache:clearall')->everyTwoHours();
-        $schedule->command('backup:run')->daily();
+        //$schedule->command('cache:clearall')->everyTwoHours();
         $schedule->command(EnviarCorreoFelicitaciones::class)
             ->timezone('America/Mexico_City')
             ->dailyAt('10:00')
             ->withoutOverlapping()
             ->onOneServer();
+        $schedule->command('backup:run')->dailyAt('02:00');
     }
 
     /**
@@ -52,7 +52,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

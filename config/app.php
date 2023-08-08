@@ -183,6 +183,7 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
     ],
 
     /*
