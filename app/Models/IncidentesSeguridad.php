@@ -3,17 +3,20 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class IncidentesSeguridad extends Model implements HasMedia
+class IncidentesSeguridad extends Model implements HasMedia, Auditable
 {
     use InteractsWithMedia;
     use HasFactory;
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     const ARCHIVADO = '1';
 
@@ -35,6 +38,15 @@ class IncidentesSeguridad extends Model implements HasMedia
     // {
     //     return $this->fecha ? Carbon::parse($this->fecha)->format('d-m-Y'):'';
     // }
+
+    //Redis methods
+    public static function getAll()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('incidentes_seguridad_all', 3600 * 4, function () {
+            return self::orderBy('id')->get();
+        });
+    }
 
     public function getFolioAttribute()
     {

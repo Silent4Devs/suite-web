@@ -49,6 +49,8 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+
+
     <style type="text/css">
         .custom-file-input~.custom-file-label::after {
             content: "Elegir";
@@ -1022,15 +1024,96 @@
         }
     </style>
 
+    <style>
+        #loading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            opacity: 0.8;
+            background-color: #fff;
+            z-index: 990000;
+        }
+
+        #loading-image {
+            position: absolute;
+            z-index: 100;
+        }
+    </style>
+
+    <style>
+        #contenido_imprimir {
+            padding: 20px;
+        }
+
+        .solo-print {
+            display: none;
+        }
+
+        .encabezado-print {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 35px;
+        }
+
+        .encabezado-print td {
+            padding: 10px 5px;
+            text-align: center;
+            border: 1px #ccc solid;
+        }
+
+        @media print {
+
+            .vista_print,
+            .print-none {
+                display: none !important;
+            }
+
+            .solo-print {
+                display: block !important;
+            }
+
+            body {
+                background-color: #fff !important;
+            }
+
+            .table th {
+                background-color: #788BAC !important;
+            }
+
+            #tabla_blanca_imprimir_global thead tr,
+            #tabla_blanca_imprimir_global thead tr th,
+            #tabla_blanca_imprimir_global thead tr th div {
+                height: unset !important;
+                color: #fff !important;
+                padding-top: 10px;
+            }
+
+            #tabla_blanca_imprimir_global thead tr:first-child th:last-child,
+            #tabla_blanca_imprimir_global tbody tr td:last-child {
+                display: none !important;
+            }
+        }
+    </style>
     @yield('styles')
     @livewireStyles
 </head>
 
 <body class="">
 
+    <div id="loading">
+
+        <img id="loading-image" src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif"
+            alt="Loading..." />
+    </div>
+
+
     @php
         use App\Models\Organizacion;
-        $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+        $organizacion = Organizacion::getLogo();
         if (!is_null($organizacion)) {
             $logotipo = $organizacion->logotipo;
         } else {
@@ -1250,64 +1333,11 @@
         <font>
             2023
             <font style="margin: 0px 20px;"> | </font>
-            Version: 4.8.8
+            Version: 4.12.15
         </font>
     </footer>
     </div>
-    <style>
-        #contenido_imprimir {
-            padding: 20px;
-        }
 
-        .solo-print {
-            display: none;
-        }
-
-        .encabezado-print {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 35px;
-        }
-
-        .encabezado-print td {
-            padding: 10px 5px;
-            text-align: center;
-            border: 1px #ccc solid;
-        }
-
-        @media print {
-
-            .vista_print,
-            .print-none {
-                display: none !important;
-            }
-
-            .solo-print {
-                display: block !important;
-            }
-
-            body {
-                background-color: #fff !important;
-            }
-
-            .table th {
-                background-color: #788BAC !important;
-            }
-
-            #tabla_blanca_imprimir_global thead tr,
-            #tabla_blanca_imprimir_global thead tr th,
-            #tabla_blanca_imprimir_global thead tr th div {
-                height: unset !important;
-                color: #fff !important;
-                padding-top: 10px;
-            }
-
-            #tabla_blanca_imprimir_global thead tr:first-child th:last-child,
-            #tabla_blanca_imprimir_global tbody tr td:last-child {
-                display: none !important;
-            }
-        }
-    </style>
     <div id="elementos_imprimir" class="d-none">
         <div id="contenido_imprimir">
 
@@ -1361,6 +1391,22 @@
     </div>
 
     <script>
+        document.onreadystatechange = function() {
+            if (document.readyState !== "complete") {
+                document.querySelector(
+                    "body").style.visibility = "hidden";
+                document.querySelector(
+                    "#loading").style.visibility = "visible";
+            } else {
+                document.querySelector(
+                    "#loading").style.display = "none";
+                document.querySelector(
+                    "body").style.visibility = "visible";
+            }
+        };
+    </script>
+
+    <script>
         function imprimirElemento(elemento) {
             let elemento_seleccionado = document.getElementById(elemento);
             let contenido_imprimir = document.getElementById('contenido_imprimir').innerHTML = elemento_seleccionado
@@ -1410,8 +1456,12 @@
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('js')
     <script src="https://unpkg.com/@coreui/coreui@3.4.0/dist/js/coreui.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    {{--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>  --}}
+    #lazyload
+    {{--  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js">  --}}
+    </script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
 
@@ -1486,6 +1536,12 @@
             $('.c-sidebar-nav').delay(1000).scrollTop(900);
         });
     </script>
+    {{-- lazyload
+          <script>
+        $(function() {
+            $('img').Lazy();
+        });
+    </script>  --}}
     <script>
         $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>

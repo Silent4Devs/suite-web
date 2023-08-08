@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 // use App\Models\Schedule;
 
@@ -33,9 +34,10 @@ use Illuminate\Support\Facades\Cache;
  * @property Team|null $team
  * @property Collection|Sede[] $sedes
  */
-class Organizacion extends Model
+class Organizacion extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'organizacions';
 
@@ -76,13 +78,14 @@ class Organizacion extends Model
         'fecha_registro_timesheet',
         'semanas_min_timesheet',
         'semanas_faltantes',
+        'semanas_adicionales',
     ];
 
     //Redis methods
     public static function getLogo()
     {
         return Cache::remember('getLogo_organizacion', 3600 * 24, function () {
-            return self::select('id', 'logotipo')->first();
+            return self::select('id', 'logotipo', 'empresa')->first();
         });
     }
 
@@ -106,7 +109,7 @@ class Organizacion extends Model
     {
         $logotipo = asset('img/logo_policromatico_2.png');
         if ($value) {
-            $logotipo = asset('storage/images/'.$value);
+            $logotipo = asset('storage/images/' . $value);
         }
 
         return $logotipo;

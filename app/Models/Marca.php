@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Marca.
@@ -20,9 +21,10 @@ use Illuminate\Support\Facades\Cache;
  * @property Tipoactivo|null $tipoactivo
  * @property Collection|Modelo[] $modelos
  */
-class Marca extends Model
+class Marca extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'marca';
 

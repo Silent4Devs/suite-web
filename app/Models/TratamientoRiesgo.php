@@ -8,10 +8,12 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TratamientoRiesgo extends Model
+class TratamientoRiesgo extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'tratamiento_riesgos';
 

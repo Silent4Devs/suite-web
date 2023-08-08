@@ -96,6 +96,7 @@
             }
         }
     </style>
+<div class="mt-5 card card-body">
     <div class="w-100">
         <x-loading-indicator />
         <div class="row">
@@ -174,7 +175,9 @@
                         class="datatable_timesheet_proyectos table w-100 tabla-fixed">
                         <thead>
                             <tr>
-                                <th style="min-width:250px;">Proyecto </th>
+                                <th style="min-width:250px;">
+                                    ID-Proyecto
+                                </th>
                                 <th style="min-width:250px; text-align: right;">Áreas participantes</th>
                                 <th style="min-width:250px; text-align: right;">Cliente</th>
                                 @foreach ($calendario_tabla as $calendar)
@@ -264,7 +267,7 @@
                         <tbody>
                             @foreach ($proyectos_array as $proyecto)
                                 <tr>
-                                    <td>{{ $proyecto['proyecto'] }} </td>
+                                    <td>{{ $proyecto['identificador'] }} - {{ $proyecto['proyecto'] }}</td>
                                     <td>
                                         <ul style="padding-left: 10px;">
                                             @foreach ($proyecto['areas'] as $area)
@@ -298,11 +301,11 @@
             </div>
         </div>
     </div>
-
+</div>
     @if ($proyecto_reporte)
         <div id="reporte_proyecto" class="anima_reporte">
             @php
-                $organizacion = Organizacion::select('id', 'logotipo', 'empresa')->first();
+                $organizacion = Organizacion::getFirst();
                 if (!is_null($organizacion)) {
                     $logotipo = $organizacion->logotipo;
                 } else {

@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class RiesgoIdentificado extends Model
+class RiesgoIdentificado extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'riesgos_identificados';
 
@@ -21,6 +24,14 @@ class RiesgoIdentificado extends Model
     ];
 
     protected $appends = ['folio', 'fecha_creacion', 'fecha_de_cierre', 'fecha_reporte'];
+
+    public static function getAll()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('riesgo_identificado_all', 3600 * 4, function () {
+            return self::orderBy('id')->get();
+        });
+    }
 
     public function getFolioAttribute()
     {

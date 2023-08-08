@@ -6,10 +6,12 @@ use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class UserAlert extends Model
+class UserAlert extends Model implements Auditable
 {
     use MultiTenantModelTrait, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'user_alerts';
 

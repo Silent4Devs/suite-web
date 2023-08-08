@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Permission extends Model
+class Permission extends Model implements Auditable
 {
-    use SoftDeletes, Auditable, HasFactory;
-
-    // public $cacheFor = 3600;
-    // protected static $flushCacheOnUpdate = true;
+    use SoftDeletes, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'permissions';
 

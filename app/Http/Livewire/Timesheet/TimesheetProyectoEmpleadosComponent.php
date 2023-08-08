@@ -36,7 +36,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
     public function mount($proyecto_id)
     {
-        $this->proyecto = TimesheetProyecto::find($proyecto_id);
+        $this->proyecto = TimesheetProyecto::getAll()->find($proyecto_id);
         $this->areasempleado = TimesheetProyectoArea::where('proyecto_id', $proyecto_id)->get();
         $this->empleados = Empleado::getaltaAll();
     }
@@ -171,34 +171,31 @@ class TimesheetProyectoEmpleadosComponent extends Component
         ]);
     }
 
-    // public function bloquearEmpleado($id)
-    // {
-    //     $emp_bloq = TimesheetProyectoEmpleado::find($id);
-    //     if($emp_bloq->usuario_bloqueado == false){
-    //         // dd($emp_bloq->usuario_bloqueado);
-    //         $emp_bloq->update([
-    //             'usuario_bloqueado' => true,
-    //         ]);
-    //         $this->alert('success', 'El Usuario ha sido Bloqueado', [
-    //             'position' => 'top-end',
-    //             'timer' => 3000,
-    //             'toast' => true,
-    //             'timerProgressBar' => true,
-    //            ]);
-    //            dd($emp_bloq->usuario_bloqueado);
-    //     }elseif($emp_bloq->usuario_bloqueado == true){
-    //         $emp_bloq->update([
-    //             'usuario_bloqueado' => false,
-    //         ]);
-    //         $this->alert('success', 'El Usuario ha sido Desloqueado', [
-    //             'position' => 'top-end',
-    //             'timer' => 3000,
-    //             'toast' => true,
-    //             'timerProgressBar' => true,
-    //            ]);
-    //     }
-    //     // dd($emp_bloq->usuario_bloqueado);
-    // }
+    public function bloquearEmpleado($id)
+    {
+        $emp_bloq = TimesheetProyectoEmpleado::find($id);
+
+        if ($emp_bloq->usuario_bloqueado == false) {
+            $emp_bloq->usuario_bloqueado = true;
+            $emp_bloq->save();
+            $this->alert('success', 'El Usuario ha sido Bloqueado', [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+                'timerProgressBar' => true,
+            ]);
+        } elseif ($emp_bloq->usuario_bloqueado == true) {
+            $emp_bloq->usuario_bloqueado = false;
+            $emp_bloq->save();
+            $this->alert('success', 'El Usuario ha sido Desloqueado', [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+                'timerProgressBar' => true,
+            ]);
+        }
+        // dd($emp_bloq->usuario_bloqueado);
+    }
 
     public function empleadoProyectoRemove($id)
     {

@@ -53,12 +53,13 @@ class HomeController
         ];
 
         // DB::enableQueryLog();
-        $total = IncidentesSeguridad::select('id')->get()->count();
-        $nuevos = IncidentesSeguridad::select('id')->where('estatus', 'nuevo')->get()->count();
-        $en_curso = IncidentesSeguridad::select('id')->where('estatus', 'en curso')->get()->count();
-        $en_espera = IncidentesSeguridad::select('id')->where('estatus', 'en espera')->get()->count();
-        $cerrados = IncidentesSeguridad::select('id')->where('estatus', 'cerrado')->get()->count();
-        $cancelados = IncidentesSeguridad::select('id')->where('estatus', 'cancelado')->get()->count();
+        $incidentesSeguridad = IncidentesSeguridad::getAll();
+        $total = $incidentesSeguridad->count();
+        $nuevos = $incidentesSeguridad->where('estatus', 'nuevo')->count();
+        $en_curso = $incidentesSeguridad->where('estatus', 'en curso')->count();
+        $en_espera = $incidentesSeguridad->where('estatus', 'en espera')->count();
+        $cerrados = $incidentesSeguridad->where('estatus', 'cerrado')->count();
+        $cancelados = $incidentesSeguridad->where('estatus', 'cancelado')->count();
 
         // Show results of log
 
@@ -124,10 +125,10 @@ class HomeController
                             $start = date('Y-m-d', strtotime('last Monday'));
                             break;
                         case 'month':
-                            $start = date('Y-m').'-01';
+                            $start = date('Y-m') . '-01';
                             break;
                         case 'year':
-                            $start = date('Y').'-01-01';
+                            $start = date('Y') . '-01-01';
                             break;
                     }
 
@@ -169,10 +170,10 @@ class HomeController
                             $start = date('Y-m-d', strtotime('last Monday'));
                             break;
                         case 'month':
-                            $start = date('Y-m').'-01';
+                            $start = date('Y-m') . '-01';
                             break;
                         case 'year':
-                            $start = date('Y').'-01-01';
+                            $start = date('Y') . '-01-01';
                             break;
                     }
 
@@ -255,11 +256,11 @@ class HomeController
         $registro = Registromejora::select('id')->count('id');
         $accionc = AccionCorrectiva::select('id')->count('id');
 
-        $incidentesasignado = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '4')->count('id');
-        $incidentescerrado = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '1')->count('id');
-        $incidentespendiente = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '3')->count('id');
-        $incidentescancelado = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '5')->count('id');
-        $incidentescurso = IncidentesDeSeguridad::select('id')->where('estado_id', '=', '2')->count('id');
+        $incidentesasignado = $incidentesSeguridad->where('estado_id', '=', '4')->count('id');
+        $incidentescerrado = $incidentesSeguridad->where('estado_id', '=', '1')->count('id');
+        $incidentespendiente = $incidentesSeguridad->where('estado_id', '=', '3')->count('id');
+        $incidentescancelado = $incidentesSeguridad->where('estado_id', '=', '5')->count('id');
+        $incidentescurso = $incidentesSeguridad->where('estado_id', '=', '2')->count('id');
 
         $actividadsininici = PlanBaseActividade::select('id')->where('estatus_id', '=', '1')->count('id');
         $actividadenproc = PlanBaseActividade::select('id')->where('estatus_id', '=', '2')->count('id');

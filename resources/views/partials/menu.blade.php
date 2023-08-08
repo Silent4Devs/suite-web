@@ -28,7 +28,9 @@
             margin-bottom: 30px;
         }
     </style>
-
+    <ul>
+        @livewire('offline-state-component')
+    </ul>
     <ul class="c-sidebar-nav dark_mode1">
 
         <li class="c-sidebar-nav-title">
@@ -190,15 +192,15 @@
             </li>
         @endcan
         @can('solicitud_mensajeria_atencion')
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.envio-documentos.atencion') }}"
-                class="c-sidebar-nav-link {{ request()->is('admin/desk') || request()->is('admin/desk/*') ? 'active' : '' }}">
-                <i class="far fa-paper-plane iconos_menu letra_blanca"></i>
-                <font class="letra_blanca">Atención de Mensajería
-                </font>
-            </a>
-        </li>
-    @endcan
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.envio-documentos.atencion') }}"
+                    class="c-sidebar-nav-link {{ request()->is('admin/desk') || request()->is('admin/desk/*') ? 'active' : '' }}">
+                    <i class="far fa-paper-plane iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">Atención de Mensajería
+                    </font>
+                </a>
+            </li>
+        @endcan
         {{-- @can('glosario_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.glosarios.render') }}"
@@ -251,10 +253,10 @@
             </a>
         </li> --}}
         @if (auth()->user()->can('visitantes_acceder') ||
-            auth()->user()->can('capital_humano_acceder') ||
-            auth()->user()->can('analisis_de_riesgo_integral_acceder') ||
-            auth()->user()->can('sistema_de_gestion_acceder') ||
-            auth()->user()->can('matriz_bia_menu_acceder'))
+                auth()->user()->can('capital_humano_acceder') ||
+                auth()->user()->can('analisis_de_riesgo_integral_acceder') ||
+                auth()->user()->can('sistema_de_gestion_acceder') ||
+                auth()->user()->can('matriz_bia_menu_acceder'))
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
             </li>
@@ -451,6 +453,14 @@
                 </a>
             </li>
         @endcan
+
+        {{--  <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link {{ request()->is('admin/contratos') ? 'active' : '' }}"
+                href="{{ route('admin.contratos.index') }}#contexto">
+                <i class="bi bi-file-text iconos_menu letra_blanca"></i>
+                <font class="letra_blanca">Sistema de Contratos</font>
+            </a>
+        </li>  --}}
         {{-- <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->is('admin/iso9001') ? 'active' : '' }}"
                 href="{{ route('admin.iso9001.index') }}#contexto">
@@ -924,12 +934,27 @@
             @endcan
             {{-- @can('') este acceso no corresponde --}}
             @can('configurar_soporte_acceder')
-                <li class="c-sidebar-nav-item">
-                    <a href="{{ route('admin.configurar-soporte.index') }}"
-                        class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                         <i class="bi bi-gear iconos_menu letra_blanca"></i>
-                        <font class="letra_blanca">Configurar Soporte</font>
+                        <font class="letra_blanca"> Ajustes de Sistema </font>
                     </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.configurar-soporte.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/configurar-soporte') || request()->is('admin/configurar-soporte/*') ? 'active' : '' }}">
+                                <i class="bi bi-gear iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca">Configurar Soporte</font>
+                            </a>
+                        </li>
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.visualizar-logs.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/visualizar-logs') || request()->is('admin/visualizar-logs/*') ? 'active' : '' }}">
+                                <i class="bi bi-gear iconos_menu letra_blanca"></i>
+                                <font class="letra_blanca">Visualizar Logs</font>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             @endcan
         @endcan
@@ -995,8 +1020,9 @@
                 </ul>
             </li>
         @endcan --}}
-        @if (\Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') &&
-            \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
+        @if (
+            \Illuminate\Support\Facades\Schema::hasColumn('teams', 'owner_id') &&
+                \App\Models\Team::where('owner_id', auth()->user()->id)->exists())
             <li class="c-sidebar-nav-item">
                 <a class="{{ request()->is('admin/team-members') || request()->is('admin/team-members/*') ? 'active' : '' }} c-sidebar-nav-link"
                     href="{{ route('admin.team-members.index') }}">
@@ -1036,7 +1062,8 @@
                 <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
             @endcan
             </li>
-            {{-- @can('sitemap_access')
+        </div>
+        {{-- @can('sitemap_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ url('sitemap') }}" class="c-sidebar-nav-link">
                     <i class="iconos_menu letra_blanca fas fa-fw fa-sitemap">
@@ -1046,7 +1073,7 @@
                 </a>
             </li>
         @endcan --}}
-            {{-- <div class="text-center botones_g_s" style="margin-top: 80px;">
+        {{-- <div class="text-center botones_g_s" style="margin-top: 80px;">
             @can('listados_soporte_access')
                 <a href="{{ route('admin.soporte') }}" title="Soporte" style="margin-right:14px;"><i
                         class="bi bi-headset"></i></a>
@@ -1055,11 +1082,8 @@
                 <a href="{{ route('admin.glosarios.render') }}" title="Glosario"><i class="bi bi-book"></i></a>
             @endcan
         </div> --}}
-            {{-- <div class="row lemnt_row_menu" style="padding-bottom:300px;">
+        {{-- <div class="row lemnt_row_menu" style="padding-bottom:300px;">
         </div> --}}
-
-
-
     </ul>
 
 </div>

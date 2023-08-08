@@ -225,7 +225,7 @@ class InicioUsuarioController extends Controller
 
         $panel_rules = PanelInicioRule::select('nombre', 'n_empleado', 'area', 'jefe_inmediato', 'puesto', 'perfil', 'fecha_ingreso', 'genero', 'estatus', 'email', 'telefono', 'sede', 'direccion', 'cumpleaños')->get()->first();
 
-        if (! is_null(auth()->user()->empleado)) {
+        if (!is_null(auth()->user()->empleado)) {
             $activos = Activo::select('*')->where('id_responsable', '=', auth()->user()->empleado->id)->get();
             if ($usuario->empleado->cumpleaños) {
                 $cumpleaños_usuario = Carbon::parse($usuario->empleado->cumpleaños)->format('d-m');
@@ -257,16 +257,21 @@ class InicioUsuarioController extends Controller
                     }]);
                 }]
             )->find(auth()->user()->empleado->id)->puestoRelacionado;
-            $competencias = ! is_null($competencias) ? $competencias->competencias : collect();
+            $competencias = !is_null($competencias) ? $competencias->competencias : collect();
 
-            $mis_quejas = Quejas::where('empleado_quejo_id', auth()->user()->empleado->id)->get();
-            $mis_quejas_count = Quejas::where('empleado_quejo_id', auth()->user()->empleado->id)->count();
-            $mis_denuncias = Denuncias::where('empleado_denuncio_id', auth()->user()->empleado->id)->get();
-            $mis_denuncias_count = Denuncias::where('empleado_denuncio_id', auth()->user()->empleado->id)->count();
-            $mis_propuestas = Mejoras::where('empleado_mejoro_id', auth()->user()->empleado->id)->get();
-            $mis_propuestas_count = Mejoras::where('empleado_mejoro_id', auth()->user()->empleado->id)->count();
-            $mis_sugerencias = Sugerencias::where('empleado_sugirio_id', auth()->user()->empleado->id)->get();
-            $mis_sugerencias_count = Sugerencias::where('empleado_sugirio_id', auth()->user()->empleado->id)->count();
+            $quejas = Quejas::getAll();
+            $denuncias = Denuncias::getAll();
+            $mejoras = Mejoras::getAll();
+            $sugerencias = Sugerencias::getAll();
+
+            $mis_quejas = $quejas->where('empleado_quejo_id', auth()->user()->empleado->id);
+            $mis_quejas_count = $quejas->where('empleado_quejo_id', auth()->user()->empleado->id)->count();
+            $mis_denuncias = $denuncias->where('empleado_denuncio_id', auth()->user()->empleado->id);
+            $mis_denuncias_count = $denuncias->where('empleado_denuncio_id', auth()->user()->empleado->id)->count();
+            $mis_propuestas = $mejoras->where('empleado_mejoro_id', auth()->user()->empleado->id);
+            $mis_propuestas_count = $mejoras->where('empleado_mejoro_id', auth()->user()->empleado->id)->count();
+            $mis_sugerencias = $sugerencias->where('empleado_sugirio_id', auth()->user()->empleado->id);
+            $mis_sugerencias_count = $sugerencias->where('empleado_sugirio_id', auth()->user()->empleado->id)->count();
 
             $solicitud_vacacion = SolicitudVacaciones::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
             $solicitud_dayoff = SolicitudDayOff::where('autoriza', auth()->user()->empleado->id)->where('aprobacion', 1)->count();
@@ -655,13 +660,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Queja_file_'.$quejas->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Queja_file_' . $quejas->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_quejas';
 
@@ -713,13 +718,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Denuncia_file_'.$denuncias->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Denuncia_file_' . $denuncias->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_denuncias';
 
@@ -833,7 +838,7 @@ class InicioUsuarioController extends Controller
 
         $subcategorias = SubcategoriaIncidente::get();
 
-        $incidentes_seguridad = IncidentesSeguridad::get();
+        $incidentes_seguridad = IncidentesSeguridad::getAll();
 
         return view('admin.inicioUsuario.formularios.seguridad', compact('incidentes_seguridad', 'activos', 'areas', 'procesos', 'sedes', 'subcategorias'));
     }
@@ -884,13 +889,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Seguridad_file_'.$incidentes_seguridad->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Seguridad_file_' . $incidentes_seguridad->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_seguridad';
 
@@ -953,13 +958,13 @@ class InicioUsuarioController extends Controller
 
         $image = null;
 
-        if ($request->file('evidencia') != null or ! empty($request->file('evidencia'))) {
+        if ($request->file('evidencia') != null or !empty($request->file('evidencia'))) {
             foreach ($request->file('evidencia') as $file) {
                 $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.'.$extension);
+                $name_image = basename(pathinfo($file->getClientOriginalName(), PATHINFO_BASENAME), '.' . $extension);
 
-                $new_name_image = 'Riesgo_file_'.$riesgos->id.'_'.$name_image.'.'.$extension;
+                $new_name_image = 'Riesgo_file_' . $riesgos->id . '_' . $name_image . '.' . $extension;
 
                 $route = 'public/evidencias_riesgos';
 
@@ -1237,10 +1242,10 @@ class InicioUsuarioController extends Controller
     {
         // dd($request->all());
         if ($request->name == 'file') {
-            $fileName = time().$request->file('value')->getClientOriginalName();
+            $fileName = time() . $request->file('value')->getClientOriginalName();
             // dd($request->file('value'));
             $empleado = Empleado::find($request->empleadoId);
-            $request->file('value')->storeAs('public/expedientes/'.Str::slug($empleado->name), $fileName);
+            $request->file('value')->storeAs('public/expedientes/' . Str::slug($empleado->name), $fileName);
             $expediente = EvidenciasDocumentosEmpleados::updateOrCreate(['empleado_id' => $request->empleadoId, 'lista_documentos_empleados_id' => $request->documentoId], [$request->name => $request->value]);
 
             $doc_viejo = EvidenciaDocumentoEmpleadoArchivo::where('evidencias_documentos_empleados_id', $expediente->id)->where('archivado', false)->first();

@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\Http\Livewire\ISO31000\ActivosInformacion;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class MatrizOctaveProceso extends Model
+class MatrizOctaveProceso extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+
     protected $table = 'matriz_octave_procesos';
 
     protected $casts = [

@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\MultiTenantModelTrait;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class PoliticaSgsi extends Model
+class PoliticaSgsi extends Model implements Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'politica_sgsis';
 
@@ -41,6 +44,13 @@ class PoliticaSgsi extends Model
         'deleted_at',
         'team_id',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('politicas_sgsi_all', 3600 * 12, function () {
+            return self::get();
+        });
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

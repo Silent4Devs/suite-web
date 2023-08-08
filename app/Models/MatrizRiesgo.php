@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -55,9 +57,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Team|null $team
  * @property Collection|MatrizRiesgosControlesPivot[] $matriz_riesgos_controles_pivots
  */
-class MatrizRiesgo extends Model
+class MatrizRiesgo extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'matriz_riesgos';
 
@@ -182,11 +185,18 @@ class MatrizRiesgo extends Model
         return $date->format('Y-m-d H:i:s');
     }*/
 
+    public static function getAll()
+    {
+        return Cache::remember('matriz_riesgos_all', 3600 * 12, function () {
+            return self::get();
+        });
+    }
+
     public function generateTwoFactorCode()
     {
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);
-        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format').' '.config('panel.time_format'));
+        $this->two_factor_expires_at = now()->addMinutes(15)->format(config('panel.date_format') . ' ' . config('panel.time_format'));
         $this->save();
     }
 

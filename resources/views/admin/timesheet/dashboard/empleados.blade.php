@@ -45,11 +45,11 @@
     </div>
 </div>
 
-<div class="row">
-    <div class=" col-lg-6">
-        <div class="card card-body">
+<div class="row" style="display: flex; justify-content:center">
+    <div class=" col-lg-7">
+        <div class="card card-body" style="min-height:330px !important;">
             <h4 class="titulo-grafica d-flex justify-content-between">
-                Registros aprobados este mes
+                Registros Timesheet de este Mes
                 <a href="{{ asset('admin/timesheet/reportes') }}">Ver&nbsp;detalle</a>
             </h4>
             <div class="row p-2">
@@ -64,7 +64,7 @@
             <canvas id="graf-registros-atrasados" width="400" height="400"></canvas>
         </div>
     </div>
-    <div class=" col-lg-6">
+    {{-- <div class=" col-lg-6">
         <div class="card card-body" style="min-height:330px !important;">
             <h4 class="titulo-grafica d-flex justify-content-between">
                 Registros en rechazados
@@ -81,7 +81,7 @@
             </div>
             <canvas id="graf-registros-pendientes" width="400" height="400"></canvas>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 
@@ -229,16 +229,18 @@
     let registros_atrazados = new Chart(document.getElementById('graf-registros-atrasados'), {
         type: 'doughnut',
         data: {
-            labels: ['Registros totales', 'Registros aprobados'],
+            labels: ['Registros totales', 'Registros aprobados', 'Registros rechazados'],
             datasets: [{
                 label: '%',
                 data: [
                     areas_array[0].times_esperados,
-                    areas_array[0].times_aprobados
+                    areas_array[0].times_aprobados,
+                    areas_array[0].times_rechazados
                 ],
                 backgroundColor: [
                     '#29C0D2',
-                    '#bbb',
+                    '#61CB5C',
+                    '#FF5454',
                 ],
             }]
         },
@@ -261,7 +263,7 @@
     });
 </script>
 
-<script>
+{{-- <script>
     let grafica_rechazados = new Chart(document.getElementById('graf-registros-pendientes'), {
         type: 'doughnut',
         data: {
@@ -294,4 +296,4 @@
                 }
         },
     });
-</script>
+</script> --}}

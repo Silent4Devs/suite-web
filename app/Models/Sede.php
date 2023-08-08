@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -12,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Sede.
@@ -31,10 +28,11 @@ use Illuminate\Support\Facades\Cache;
  * @property Collection|Activo[] $activos
  * @property Collection|Empleado[] $empleados
  */
-class Sede extends Model
+class Sede extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'sedes';
 
@@ -60,6 +58,13 @@ class Sede extends Model
         //retrieve all data or can pass columns to retrieve
         return Cache::remember('sedes_all', 3600 * 24, function () use ($columns) {
             return self::select($columns)->get();
+        });
+    }
+
+    public static function getbyId($id)
+    {
+        return Cache::remember('sede_' . $id, 3600 * 24, function () use ($id) {
+            return self::find($id);
         });
     }
 

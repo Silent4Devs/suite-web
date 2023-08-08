@@ -292,19 +292,20 @@
             const area = areas_array.filter(item => item.area == event.target.value)
             registros_atrazados.data.datasets[0].data = [
                 area[0].times_esperados,
+                area[0].times_aprobados,
                 area[0].times_rechazados
             ]
             registros_atrazados.update()
         })
 
-        $('#registros-rechazados-empleado').on('change', function() {
-            const area = areas_array.filter(item => item.area == event.target.value)
-            grafica_rechazados.data.datasets[0].data = [
-                area[0].times_esperados,
-                area[0].times_aprobados
-            ]
-            grafica_rechazados.update()
-        })
+        // $('#registros-rechazados-empleado').on('change', function() {
+        //     const area = areas_array.filter(item => item.area == event.target.value)
+        //     grafica_rechazados.data.datasets[0].data = [
+        //         area[0].times_esperados,
+        //         area[0].times_aprobados
+        //     ]
+        //     grafica_rechazados.update()
+        // })
 
         $('#proyectos-en-proceso').on('change', function(event) {
             const proyecto = proyectos.proyectos_lista.proceso.filter(item => item.proyecto == event

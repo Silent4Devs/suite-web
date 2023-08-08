@@ -172,17 +172,20 @@ class AccionCorrectivaController extends Controller
     {
         abort_if(Gate::denies('accion_correctiva_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $nombrereportas = User::get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $user = User::getAll();
+        $puestos = Puesto::getAll();
 
-        $puestoreportas = Puesto::get()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombrereportas = $user->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nombreregistras = User::get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoreportas = $puestos->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $puestoregistras = Puesto::get()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombreregistras = $user->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsable_accions = User::get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoregistras = $puestos->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nombre_autorizas = User::get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsable_accions = $user->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $nombre_autorizas = $user->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $empleados = Empleado::alta()->with('area')->get();
 
@@ -244,18 +247,20 @@ class AccionCorrectivaController extends Controller
     {
         // dd($accionCorrectiva);
         abort_if(Gate::denies('accion_correctiva_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $users = User::getAll();
+        $puestos = Puesto::getAll();
 
-        $nombrereportas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombrereportas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $puestoreportas = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoreportas = $puestos->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nombreregistras = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombreregistras = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $puestoregistras = Puesto::all()->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $puestoregistras = $puestos->pluck('puesto', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsable_accions = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsable_accions = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nombre_autorizas = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $nombre_autorizas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $accionCorrectiva->load('nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team');
 
@@ -269,7 +274,7 @@ class AccionCorrectivaController extends Controller
 
         $id = $accionCorrectiva->id;
 
-        $quejasClientes = QuejasCliente::where('accion_correctiva_id', '=', $accionCorrectiva->id)->get();
+        $quejasClientes = QuejasCliente::getAll()->where('accion_correctiva_id', '=', $accionCorrectiva->id);
 
         $clientes = TimesheetCliente::getAll();
 
@@ -304,12 +309,12 @@ class AccionCorrectivaController extends Controller
 
         $accionCorrectiva->update($request->all());
         if ($request->input('documentometodo', false)) {
-            if (! $accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
+            if (!$accionCorrectiva->documentometodo || $request->input('documentometodo') !== $accionCorrectiva->documentometodo->file_name) {
                 if ($accionCorrectiva->documentometodo) {
                     $accionCorrectiva->documentometodo->delete();
                 }
 
-                $accionCorrectiva->addMedia(storage_path('tmp/uploads/'.$request->input('documentometodo')))->toMediaCollection('documentometodo');
+                $accionCorrectiva->addMedia(storage_path('tmp/uploads/' . $request->input('documentometodo')))->toMediaCollection('documentometodo');
             }
         } elseif ($accionCorrectiva->documentometodo) {
             $accionCorrectiva->documentometodo->delete();

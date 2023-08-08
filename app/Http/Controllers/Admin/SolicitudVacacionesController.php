@@ -18,9 +18,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Traits\ObtenerOrganizacion;
 
 class SolicitudVacacionesController extends Controller
 {
+    use ObtenerOrganizacion;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_vacaciones_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -96,7 +99,7 @@ class SolicitudVacacionesController extends Controller
     public function create()
     {
         abort_if(Gate::denies('solicitud_vacaciones_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $ingreso = auth()->user()->empleado->antiguedad;
+        $ingreso = Carbon::parse(auth()->user()->empleado->antiguedad);
         $dia_hoy = Carbon::now();
         $no_vacaciones = $ingreso->format('d-m-Y');
         $año = Carbon::createFromDate($ingreso)->age;
@@ -194,7 +197,7 @@ class SolicitudVacacionesController extends Controller
 
     public function periodoAdicional()
     {
-        $ingreso = auth()->user()->empleado->antiguedad;
+        $ingreso = Carbon::parse(auth()->user()->empleado->antiguedad);
         $dia_hoy = Carbon::now();
         $no_vacaciones = $ingreso->format('d-m-Y');
         $año = Carbon::createFromDate($ingreso)->age;

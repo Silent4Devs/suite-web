@@ -80,7 +80,7 @@ class PoliticaSgsiController extends Controller
             return $table->make(true);
         }
 
-        $politicaSgsis = PoliticaSgsi::all();
+        $politicaSgsis = PoliticaSgsi::getAll();
 
         $teams = Team::get();
 
@@ -176,7 +176,7 @@ class PoliticaSgsiController extends Controller
 
     public function visualizacion()
     {
-        $politicaSgsis = PoliticaSgsi::all();
+        $politicaSgsis = PoliticaSgsi::getAll();
 
         $organizacions = Organizacion::getFirst();
 

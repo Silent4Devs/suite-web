@@ -13,10 +13,12 @@ use Jenssegers\Date\Date;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Recurso extends Model implements HasMedia
+class Recurso extends Model implements HasMedia, Auditable
 {
     use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'recursos';
 

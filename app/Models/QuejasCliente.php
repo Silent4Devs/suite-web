@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class QuejasCliente extends Model
+class QuejasCliente extends Model implements Auditable
 {
     use SoftDeletes;
-
+    use \OwenIt\Auditing\Auditable;
     protected $table = 'quejas_clientes';
 
     protected $casts = [
@@ -90,6 +92,14 @@ class QuejasCliente extends Model
         'fecha_de_cierre',
         'fecha_reporte',
     ];
+
+    public static function getAll()
+    {
+        //retrieve all data or can pass columns to retrieve
+        return Cache::remember('quejas_cliente_all', 3600 * 4, function () {
+            return self::orderBy('id')->get();
+        });
+    }
 
     public function getFolioAttribute()
     {

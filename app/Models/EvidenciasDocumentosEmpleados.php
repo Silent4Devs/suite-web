@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EvidenciasDocumentosEmpleados extends Model
+class EvidenciasDocumentosEmpleados extends Model implements Auditable
 {
     use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'evidencias_documentos_empleados';
 
@@ -39,14 +41,14 @@ class EvidenciasDocumentosEmpleados extends Model
     {
         $empleado = Empleado::select('id', 'name')->find($this->empleado_id);
 
-        return asset('storage/expedientes/'.Str::slug($empleado->name).'/'.$this->documentos);
+        return asset('storage/expedientes/' . Str::slug($empleado->name) . '/' . $this->documentos);
     }
 
     public function getRutaAbsolutaDocumentoAttribute()
     {
         $empleado = Empleado::select('id', 'name')->find($this->empleado_id);
 
-        return 'expedientes/'.Str::slug($empleado->name).'/'.$this->documentos;
+        return 'expedientes/' . Str::slug($empleado->name) . '/' . $this->documentos;
     }
 
     public function empleados_documentos()

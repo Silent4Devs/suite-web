@@ -51,7 +51,7 @@ abstract class BaseRepository
     {
         $model = $this->app->make($this->model());
 
-        if (! $model instanceof Model) {
+        if (!$model instanceof Model) {
             throw new \Exception("Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
         }
 
@@ -69,7 +69,7 @@ abstract class BaseRepository
     {
         $query = $this->allQuery();
 
-        return $query->paginate($perPage, $columns);
+        return $query->fastPaginate($perPage, $columns);
     }
 
     /**
@@ -92,11 +92,11 @@ abstract class BaseRepository
             }
         }
 
-        if (! is_null($skip)) {
+        if (!is_null($skip)) {
             $query->skip($skip);
         }
 
-        if (! is_null($limit)) {
+        if (!is_null($limit)) {
             $query->limit($limit);
         }
 

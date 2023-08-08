@@ -3,9 +3,11 @@
     <div class="row">
         <div class="form-group col-12 text-right">
         <a href="{{ route('admin.timesheet-proyectos-edit', $proyecto->id) }}" class="btn btn_cancelar">Editar Proyecto</a>
-        @if($proyecto->tipo === "Externo")
-            <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-success">Asignar Proveedores/Consultores</a>
-        @endif
+        @can('asignar_externos')
+            @if($proyecto->tipo === "Externo")
+                <a href="{{ route('admin.timesheet-proyecto-externos', $proyecto->id) }}" class="btn btn-success">Asignar Proveedores/Consultores</a>
+            @endif
+        @endcan
         <a href="{{ route('admin.timesheet-proyectos') }}" class="btn btn-info">Pagina Principal de Proyectos</a>
         </div>
     </div>
@@ -34,14 +36,14 @@
             @if($proyecto->tipo === "Externo")
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number" min="1" class="form-control">
+                <input wire:model.defer="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number" step="0.01" min="0.01" class="form-control">
             </div>
             @error('horas_asignadas')
                 <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
             @enderror
             <div class="form-group col-md-4">
                 <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora" type="number" min="1" class="form-control">
+                <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora" type="number" min="0.01" step="0.01" class="form-control">
             </div>
             @error('costo_hora')
                 <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
@@ -89,13 +91,13 @@
                             <i class="fa-solid fa-pen-to-square" style="color: rgb(62, 86, 246); font-size: 15pt;"
                                 title="Editar"></i>
                             </button>
-                            {{-- <a wire:click="bloquearEmpleado({{ $proyect_empleado->id }})" class="btn btn-sm">
+                            <a wire:click="bloquearEmpleado({{ $proyect_empleado->id }})" class="btn btn-sm">
                                 @if ($proyect_empleado->usuario_bloqueado == false)
                                     <i class="fas fa-unlock"></i>
                                 @else
                                     <i class="fas fa-lock"></i>
                                 @endif
-                            </a> --}}
+                            </a>
                             {{-- <button class="btn" data-toggle="modal"
                                 data-target="#modal_proyecto_empleado_eliminar_{{ $proyect_empleado->id }}">
                                 <i class="fas fa-trash-alt" style="color: red; font-size: 15pt;"
@@ -144,12 +146,12 @@
                                         <div class="form-group col-md-6">
                                             <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
                                             <input value="{{ old('horas_edit', $proyect_empleado->horas_asignadas  ?? '0') }}"
-                                            name="horas_edit" id="" type="number" min="1" class="form-control">
+                                            name="horas_edit" id="" type="number" step="0.01" min="0.01" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
                                             <input value="{{ old('horas_edit', $proyect_empleado->costo_hora) }}"
-                                            name="costo_edit" id="" type="number" min="1" value="{{$proyect_empleado->costo_hora  ?? '0' }}"  class="form-control">
+                                            name="costo_edit" id="" type="number" step="0.01" min="0.01" value="{{$proyect_empleado->costo_hora  ?? '0' }}"  class="form-control">
                                         </div>
                                     </div>
                                 @endif

@@ -142,9 +142,9 @@ class ActivosController extends Controller
 
         $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $ubicacions = Sede::getAll()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $empleados = Empleado::alta()->with('area')->get();
         $procesos = Proceso::with('macroproceso')->get();
@@ -228,9 +228,9 @@ class ActivosController extends Controller
 
         $subtipos = SubcategoriaActivo::all()->pluck('subcategoria', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $duenos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $duenos = User::getall()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $ubicacions = Sede::all()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $ubicacions = Sede::getall()->pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $empleados = Empleado::alta()->with('area')->get();
 
@@ -321,7 +321,7 @@ class ActivosController extends Controller
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $content_type = finfo_file($finfo, $src);
             finfo_close($finfo);
-            $file_name = basename($src).PHP_EOL;
+            $file_name = basename($src) . PHP_EOL;
             $size = filesize($src);
             header("Content_Type: $content_type");
             header("Content-Disposition: attachemt; filename=$file_name");
@@ -341,7 +341,7 @@ class ActivosController extends Controller
 
     public function DescargaFormato()
     {
-        if (! $this->downloadFile(storage_path('app/public/exportActivos/Responsiva.docx'))) {
+        if (!$this->downloadFile(storage_path('app/public/exportActivos/Responsiva.docx'))) {
             return redirect()->back();
         }
     }

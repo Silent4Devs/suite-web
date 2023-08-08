@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class EvaluacionIndicador.
@@ -21,10 +22,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  * @property IndicadoresSgsi|null $indicadores_sgsi
  */
-class EvaluacionIndicador extends Model
+class EvaluacionIndicador extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'evaluacion_indicador';
 
