@@ -74,4 +74,6 @@ storage/app/public/documentos_material_sgsi/
 *.stat
 rr
 .rr.yaml
-/storage/app/backup-temp/*
+/storage/app/backups/*
+/storage/app/backups/*
+/storage/app/Tabantaj/
