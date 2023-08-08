@@ -28,7 +28,8 @@ RUN apk add --no-cache \
     sudo \
     zip \
     unzip \
-    libsodium-dev
+    libsodium-dev \
+    dcron
 
 # Install php extensions
 RUN chmod +x /usr/local/bin/install-php-extensions && \
