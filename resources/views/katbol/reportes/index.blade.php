@@ -363,15 +363,15 @@
             <form method="post" action="excelContratos" >
                 @csrf
                 <div class="input-field col s6">
-	                <label>Contrato</label>
-	                <select class="browser-default" name="id" required>
+	                <label>Contrato:</label>
+	                <select class="form-control" name="id" required>
 						<option value="" selected>Seleccione una opción</option>
 						@foreach ($contratos as $contrato)
 							<option value="{{$contrato->id}}">{{$contrato->no_contrato}}</option>
 						@endforeach
 	                </select>
                 </div>
-                <div class="input-field col s6">
+                <div class="input-field col s6" style="position: relative; top: -15px">
                     <button type="submit" class="btn btn-primary">Descargar Reporte</button>
                 </div>
         	</form>
