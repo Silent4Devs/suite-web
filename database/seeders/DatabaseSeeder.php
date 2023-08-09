@@ -64,18 +64,9 @@ class DatabaseSeeder extends Seeder
                 // VacacionesPermisosSeeder::class,
                 // PermisosBIASeeder::class,
                 // AjustesAIASeeder::class,
-                VersionIsoHistoricoSeeder::class,
-                GapUnoCatalogoIsoSeeder::class,
-                GapTresCatalogoIsoSeeder::class,
-                ClasificacionSeeder::class,
-                GapDosCatalogoIsoSeeder::class,
-                Declaracion_aplicabilidad_concentrado_Seeder::class,
-                Declaracion_aplicabilidad_responsable_Seeder::class,
-                Declaracion_aplicabilidad_aprobador_Seeder::class,
-                PermissionVersionesIso::class,
-                PermissionsAgregarEmpExtProyectos::class,
-                PermisosDashboardTimesheet::class,
-                PermisosTimesheetAdministrador::class,
+                PermisosEscuelaAdminSeeder::class,
+                PermisosEscuelaInstructor::class
+
             ]
         );
     }
