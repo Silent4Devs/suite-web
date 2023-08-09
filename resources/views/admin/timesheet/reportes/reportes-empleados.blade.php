@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 
+<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+
 <style type="text/css">
     #lista_proyectos_tareas li {
         padding-top: 13px;
@@ -16,9 +18,7 @@
             display: none !important;
         }
 
-        #reporte_proyecto,
-        #reporte_empleado,
-        #reporte_general {
+        #reporte_empleado {
             width: 100% !important;
             position: absolute;
             top: 0;
