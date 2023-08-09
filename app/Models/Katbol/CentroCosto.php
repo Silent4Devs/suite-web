@@ -13,6 +13,7 @@ class CentroCosto extends Model
     public $table = 'centro_costos';
 
     public $fillable = [
+        'id',
         'clave',
         'descripcion',
         'estado',

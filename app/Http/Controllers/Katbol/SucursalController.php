@@ -16,14 +16,20 @@ class SucursalController extends Controller
     public function index()
     {
 
-        $sucursales = Sucursal::get();
+        $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
+        $sucursales_id = Sucursal::get()->pluck('id');
+        $ids = [];
 
-        return view('katbol.sucursales.index', compact('sucursales'));
+        foreach ($sucursales_id as $id) {
+            $ids =  $id;
+        }
+
+        return view('katbol.sucursales.index', compact('sucursales', 'ids'));
     }
 
     public function getSucursalesIndex(Request $request)
     {
-        $query = Sucursal::get();
+        $query = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
 
         return datatables()->of($query)->toJson();
     }
@@ -120,24 +126,6 @@ class SucursalController extends Controller
             return redirect('/katbol/sucursales');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        Sucursal::destroy($id);
-    }
-
-
-    public function massDestroy(Request $request)
-    {
-        Sucursal::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
-    }
 
      /**
      * Remove the specified resource from storage.
@@ -145,33 +133,19 @@ class SucursalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function archivo()
-    {
-      $sucursal = Sucursal::where('archivo', true)->get();
-
-      return view('sucursals.archivo', compact('sucursals'));
-    }
-
-     /**
-     * Remove the specified resource from storage.
-     *
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function estado($id)
+    public function archivar($id)
     {
         $sucursal = Sucursal::find($id);
-        if($sucursal->archivo === 0){
+        if($sucursal->archivo === false){
             $sucursal->update([
-                'archivo' => 1,
+                'archivo' => true,
             ]);
 
         }else{
             $sucursal->update([
-                'archivo' => 0,
+                'archivo' => false,
             ]);
         }
-        $Sucursals = Sucursal::where('archivo', true)->get();
-        return view('sucursals.archivo', compact('Sucursal'));
+        return redirect('/katbol/sucursales');
     }
 }

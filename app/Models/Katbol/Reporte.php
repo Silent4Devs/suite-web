@@ -4,11 +4,15 @@ namespace App\Models\Katbol;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Auditable as AuditableTrait;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class Reporte extends Model implements Auditable
+class Reporte extends Model
 {
     use HasFactory;
-    use AuditableTrait;
+
+
+    protected $fillable = [
+        'nombre',
+        ];
+
+    public $table = 'reportes';
 }

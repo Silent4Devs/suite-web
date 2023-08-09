@@ -6,7 +6,7 @@ use App\Models\Katbol\ProveedoresOC;
 use App\Models\Katbol\ProveedorOC;
 use Illuminate\Http\Request;
 
-class ProveedoresController extends Controller
+class ProveedoresOController extends Controller
 {
      /**
      * Display a listing of the resource.
@@ -16,14 +16,20 @@ class ProveedoresController extends Controller
     public function index()
     {
 
-        $proveedores = ProveedorOC::get();
+        $proveedores = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', true)->get();
+        $proveedores_id = ProveedorOC::get()->pluck('id');
+        $ids = [];
 
-        return view('katbol.proveedores.index', compact('proveedores'));
+        foreach ($proveedores_id as $id) {
+            $ids =  $id;
+        }
+
+        return view('katbol.proveedores.index', compact('proveedores', 'ids'));
     }
 
     public function getproveedoresIndex(Request $request)
     {
-        $query = ProveedorOC::get();
+        $query = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', true)->get();
         return datatables()->of($query)->toJson();
     }
 
@@ -125,24 +131,6 @@ class ProveedoresController extends Controller
             return redirect('/katbol/proveedores');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        ProveedorOC::destroy($id);
-    }
-
-
-    public function massDestroy(Request $request)
-    {
-        ProveedorOC::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
-    }
 
      /**
      * Remove the specified resource from storage.
@@ -150,34 +138,21 @@ class ProveedoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function archivo()
-    {
-      $proveedores = ProveedorOC::where('archivo', true)->get();
-
-      return view('proveedores.archivo', compact('proveedores'));
-    }
-
-     /**
-     * Remove the specified resource from storage.
-     *
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function estado($id)
+    public function archivar($id)
     {
         $proveedores = ProveedorOC::find($id);
-        if($proveedores->archivo === 0){
+        if($proveedores->estado === false){
             $proveedores->update([
-                'archivo' => 1,
+                'estado' => true,
             ]);
 
         }else{
             $proveedores->update([
-                'archivo' => 0,
+                'estado' => false,
             ]);
         }
-        $proveedores = ProveedorOC::where('archivo', true)->get();
-        return view('proveedores.archivo', compact('proveedores'));
+
+        return redirect('/katbol/proveedores');
     }
 
 }

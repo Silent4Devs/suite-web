@@ -11,6 +11,7 @@ class ProveedorOC extends Model
 
 
     protected $fillable = [
+        'id',
         'nombre',
         'razon_social',
         'rfc',

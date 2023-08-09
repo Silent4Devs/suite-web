@@ -12,19 +12,6 @@ use Response;
 
 class ProveedoresController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    //     $this->middleware('permission:proveedores.index')->only('index');
-    //     $this->middleware('permission:proveedores.create')->only('store');
-    //     $this->middleware('permission:proveedores.destroy')->only('destroy');
-    //     $this->middleware('permission:proveedores.edit')->only('update');
-    // }
 
     /**
      * Show the application dashboard.
