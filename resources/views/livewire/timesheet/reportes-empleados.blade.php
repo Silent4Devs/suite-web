@@ -2,6 +2,7 @@
     @php
         use App\Models\Organizacion;
     @endphp
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
     <style type="text/css">
         .cde-nombre.ver {
             position: sticky;
@@ -116,6 +117,7 @@
             .cde-totalh,
             .cde-semenasf {
                 position: unset !important;
+                color: #747474;
             }
         }
 
