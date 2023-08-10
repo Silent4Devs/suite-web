@@ -42,6 +42,9 @@ class TimesheetHorasFilas extends Component
         $proyectoempleadoexists = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->exists();
         $proyectoempleado = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->get();
         $filtrope = TimesheetProyectoEmpleado::select('proyecto_id')->get();
+        $comodines = TimesheetProyecto::select('id', 'identificador', 'proyecto')
+        ->where('proyecto', 'LIKE', 'S4B-'.'%')->get();
+        // dd($comodines);
         // dd(!$filtrope->isEmpty());
         // dd($proyectoempleado);
         if($proyectoempleadoexists == true){
@@ -53,6 +56,17 @@ class TimesheetHorasFilas extends Component
                                 'id' => $proyecto->proyecto["id"],
                                 'identificador' => $proyecto->proyecto["identificador"],
                                 'proyecto' => $proyecto->proyecto["proyecto"],
+                            ]);
+                        }
+                    }
+                }
+                foreach($comodines as $key => $com){
+                    foreach($proyectos_array as $pay){
+                        if(!($pay['id'] === $com->id)){
+                            $proyectos_array->push([
+                                'id' => $com->id,
+                                'identificador' => $com->identificador,
+                                'proyecto' => $com->proyecto,
                             ]);
                         }
                     }
@@ -75,6 +89,17 @@ class TimesheetHorasFilas extends Component
             foreach($filtrope as $key => $fpe){
                 $proyectos_array = $proyectos_array->whereNotIn('id', $fpe->proyecto_id);
               }
+              foreach($comodines as $key => $com){
+                foreach($proyectos_array as $pay){
+                    if(!($pay['id'] === $com->id)){
+                        $proyectos_array->push([
+                            'id' => $com->id,
+                            'identificador' => $com->identificador,
+                            'proyecto' => $com->proyecto,
+                        ]);
+                    }
+                }
+            }
         }else{
             foreach ($proyectos_totales as $key => $proyecto) {
                 if ($proyecto->estatus == 'proceso') {
