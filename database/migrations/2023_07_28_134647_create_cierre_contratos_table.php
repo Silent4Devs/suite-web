@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('aspectos');
             $table->boolean('cumple')->nullable();
             $table->longText('observaciones')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('update_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
