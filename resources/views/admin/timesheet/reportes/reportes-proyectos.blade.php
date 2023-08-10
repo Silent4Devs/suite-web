@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
 <style type="text/css">
     #lista_proyectos_tareas li {
