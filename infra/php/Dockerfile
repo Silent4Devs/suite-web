@@ -62,6 +62,9 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
 
+# Add cron job to schedule Laravel tasks
+RUN echo "0 * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1" | crontab -
+
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
     CMD curl --fail http://localhost/ || exit 1
