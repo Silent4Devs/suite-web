@@ -379,6 +379,7 @@ class ReportesEmpleados extends Component
                     foreach ($mes['weeks'] as $key => $semana) {
                         if (count($times_empleado_calendario_array) > 0) {
                             $unique_array = [];
+                            $s = explode('|', $semana);
                             foreach ($times_empleado_calendario_array as $element) {
                                 $hash = $element['semana_y'];
                                 $unique_array[$hash] = $element;
@@ -393,15 +394,16 @@ class ReportesEmpleados extends Component
                                     array_push($calendario_tabla_empleado, $t['horas_semana']);
                                     $horas_totales_empleado_calendar += $t['horas_semana'];
                                 }
-                            } elseif ($entro_esta_semana === true) {
+                            } elseif ($entro_esta_semana === true or (Carbon::parse($s[0])->lt(Carbon::parse($fecha_ingre)))) {
                                 array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">No&nbsp;Aplica</span>');
                             } else {
                                 array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');
                                 $times_atrasados = ($times_atrasados + 1);
                             }
                         } else {
+                            // dd($semana);
                             $s = explode('|', $semana);
-                            if (Carbon::parse($s[0])->lt($fecha_ingre)) {
+                            if ((Carbon::parse($s[0])->lt(Carbon::parse($fecha_ingre)))) {
                                 array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">No&nbsp;Aplica</span>');
                             } else {
                                 array_push($calendario_tabla_empleado, '<span class="p-1" style="background-color:#FFF2CC;">Sin&nbsp;Registro</span>');

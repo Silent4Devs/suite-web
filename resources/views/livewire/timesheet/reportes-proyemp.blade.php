@@ -149,7 +149,6 @@
                     </tbody>
                 </table>
                 <table class="table w-100 datatable_timesheet_registros_reportes" id="proyemp" hidden>
-                    {{-- id="datatable_timesheet" --}}
                     <thead class="w-100">
                         <tr>
                             <th>Fecha Inicio </th>
@@ -191,10 +190,6 @@
                                 <td>
                                     {{ $time->horas_lunes + $time->horas_martes + $time->horas_miercoles + $time->horas_jueves + $time->horas_viernes + $time->horas_sabado + $time->horas_domingo }}
                                 </td>
-                                {{-- <td>
-                                <a href="{{ asset('admin/timesheet/show') }}/{{ $time->id }}" title="Visualizar"
-                                    class="btn"><i class="fa-solid fa-eye"></i></a>
-                            </td> --}}
                             </tr>
                         @endforeach
                     </tbody>
