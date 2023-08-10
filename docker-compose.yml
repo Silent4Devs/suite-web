@@ -2,7 +2,7 @@ version: "3.8"
 services:
   nginx-tabantaj:
     image: nginx:stable-alpine
-    container_name: nginx-tabantaj #uncommment if will not use swarm
+    container_name: nginx-tabantaj
     restart: unless-stopped
     tty: true
     ports:
@@ -17,14 +17,10 @@ services:
       - redis-tabantaj
     networks:
       - tabantajnetwork
-    # deploy:
-    #   replicas: 1 # Set the desired number of replicas
-    #   restart_policy:
-    #     condition: on-failure
 
   postgres-tabantaj:
     image: postgres:14-alpine
-    container_name: postgres-tabantaj #uncomment if will not use swarm mode
+    container_name: postgres-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
@@ -82,7 +78,7 @@ services:
     #     condition: on-failure
 
   redis-tabantaj:
-    image: redis:latest
+    image: redis:alpine
     container_name: redis-tabantaj
     restart: unless-stopped
     tty: true
@@ -105,6 +101,44 @@ services:
       #- REDIS_1_AUTH=silent11!
     networks:
       - tabantajnetwork
+
+  prometheus-tabantaj:
+    image: prom/prometheus
+    container_name: prometheus-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 9090:9090
+    volumes:
+      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - tabantajnetwork
+
+  grafana-tabantaj:
+    image: grafana/grafana
+    container_name: grafana-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3000:3000
+    networks:
+      - tabantajnetwork
+
+  redis-exporter-tabantaj:
+    image: oliver006/redis_exporter:v1.22.0-alpine
+    container_name: redis-exporter-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 9121:9121
+    networks:
+      - tabantajnetwork
+    environment:
+      REDIS_ADDR: "redis-tabantaj:6379"
+      REDIS_USER: null
+      REDIS_PASS: null
+    # command:
+    #   - --redis.addr=redis-tabantaj:6379
 
   # elastik-search-tabantaj:
   #   image: elasticsearch:8.8.1
