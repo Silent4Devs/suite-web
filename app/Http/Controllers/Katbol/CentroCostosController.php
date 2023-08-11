@@ -111,6 +111,27 @@ class CentroCostosController extends Controller
     }
 
 
+    public function view_archivados()
+    {
+      $centros = CentroCosto::select('id', 'clave', 'descripcion')->where('archivo', true)->get();
+      $centros_id = CentroCosto::get()->pluck('id');
+      $ids = [];
+
+      foreach ($centros_id as $id) {
+          $ids =  $id;
+      }
+
+      return view('katbol.centro-costos.archivo', compact('centros', 'ids'));
+    }
+
+
+    public function getArchivadosIndex(Request $request)
+    {
+        $query = CentroCosto::select('id', 'clave', 'descripcion')->where('archivo', true)->get();
+
+        return datatables()->of($query)->toJson();
+    }
+
     public function archivar($id)
     {
         $centro = CentroCosto::find($id);
@@ -126,4 +147,7 @@ class CentroCostosController extends Controller
         }
         return redirect('/katbol/centro-costos');
     }
+
+
+
 }

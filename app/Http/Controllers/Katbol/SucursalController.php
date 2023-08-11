@@ -29,7 +29,7 @@ class SucursalController extends Controller
 
     public function getSucursalesIndex(Request $request)
     {
-        $query = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
+        $query = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', false)->get();
 
         return datatables()->of($query)->toJson();
     }
@@ -147,5 +147,26 @@ class SucursalController extends Controller
             ]);
         }
         return redirect('/katbol/sucursales');
+    }
+
+    public function view_archivados()
+    {
+      $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
+      $sucursales_id = Sucursal::get()->pluck('id');
+      $ids = [];
+
+      foreach ($sucursales_id as $id) {
+          $ids =  $id;
+      }
+
+      return view('katbol.sucursales.archivo', compact('sucursales', 'ids'));
+    }
+
+
+    public function getArchivadosIndex(Request $request)
+    {
+        $query = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
+
+        return datatables()->of($query)->toJson();
     }
 }

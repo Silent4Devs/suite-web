@@ -132,7 +132,7 @@
             ];
                 let btnAgregar = {
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar usuario',
+                    titleAttr: 'Agregar proveedor',
                     url: "{{ route('katbol.proveedores.create') }}",
                     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                     action: function(e, dt, node, config) {
@@ -142,7 +142,19 @@
                         window.location.href = url;
                     }
                 };
-                dtButtons.push(btnAgregar);
+                let btnArchivar = {
+                    text: '<i class="fa-solid fa-box-archive"></i>Archivados',
+                    titleAttr: 'Archivar proveedor',
+                    url: "{{ route('katbol.proveedores.view_archivados') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    }
+                };
+                dtButtons.push(btnAgregar, btnArchivar);
                 let archivarButton = {
                     text: 'Archivar Registro',
                     url: "{{ route('katbol.proveedores.archivar', ['id' => $ids]) }}",

@@ -119,7 +119,7 @@ class ProductoController extends Controller
 
     public function view_archivados()
     {
-      $productos = Producto::where('archivo', true)->get();
+      $productos = Producto::select('id', 'clave', 'descripcion')->where('archivo', true)->get();
       $productos_id = Producto::get()->pluck('id');
       $ids = [];
 

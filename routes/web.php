@@ -1478,18 +1478,29 @@ Route::group(['prefix' => 'katbol', 'as' => 'katbol.', 'namespace' => 'Katbol', 
     Route::post('productos/list/get', 'ProductoController@getProductosIndex')->name('productos.getProductosIndex');
     
 
+    Route::get('sucursales/archivados', 'SucursalController@view_archivados')->name('sucursales.view_archivados');
+    Route::post('sucursales/list/get/archivados', 'SucursalController@getArchivadosIndex')->name('sucursales.getArchivadosIndex');
     Route::resource('sucursales', 'SucursalController');
     Route::post('sucursales/archivar/{id}', 'SucursalController@archivar')->name('sucursales.archivar');
     Route::post('sucursales/list/get', 'SucursalController@getSucursalesIndex')->name('sucursales.getSucursalesIndex');
 
+
+    Route::get('proveedores/archivados', 'ProveedoresOController@view_archivados')->name('proveedores.view_archivados');
+    Route::post('proveedores/list/get/archivados', 'ProveedoresOController@getArchivadosIndex')->name('proveedores.getArchivadosIndex');
     Route::resource('proveedores', 'ProveedoresOController');
     Route::post('proveedores/archivar/{id}', 'ProveedoresOController@archivar')->name('proveedores.archivar');
     Route::post('proveedores/list/get', 'ProveedoresOController@getProveedoresIndex')->name('proveedores.getProveedoresIndex');
 
+
+    Route::get('compradores/archivados', 'CompradoresController@view_archivados')->name('compradores.view_archivados');
+    Route::post('compradores/list/get/archivados', 'CompradoresController@getArchivadosIndex')->name('compradores.getArchivadosIndex');
     Route::resource('compradores', 'CompradoresController');
     Route::post('compradores/archivar/{id}', 'CompradoresController@archivar')->name('compradores.archivar');
     Route::post('compradores/list/get', 'CompradoresController@getCompradoresIndex')->name('compradores.getCompradoresIndex');
 
+
+    Route::get('centro-costos/archivados', 'CentroCostosController@view_archivados')->name('centro-costos.view_archivados');
+    Route::post('centro-costos/list/get/archivados', 'CentroCostosController@getArchivadosIndex')->name('centro-costos.getArchivadosIndex');
     Route::resource('centro-costos', 'CentroCostosController');
     Route::post('centro-costos/archivar/{id}', 'CentroCostosController@archivar')->name('centro-costos.archivar');
     Route::post('centro-costos/list/get', 'CentroCostosController@getCentroCostosIndex')->name('centro-costos.getCentroCostosIndex');

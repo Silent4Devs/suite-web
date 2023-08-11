@@ -120,7 +120,22 @@
                         window.location.href = url;
                     }
             };
-            dtButtons.push(btnAgregar);
+
+            let btnArchivar = {
+                    text: '<i class="fa-solid fa-box-archive"></i> Archivados',
+                    titleAttr: 'Archivar comprador',
+                    url: "{{ route('katbol.compradores.view_archivados') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                        console.log(url);
+                    },
+            };
+
+            dtButtons.push(btnAgregar, btnArchivar);
             let archivoButton = {
                     text: 'Archivar Registro',
                     url: "{{ route('katbol.compradores.archivar', ['id' => $ids]) }}",
@@ -226,14 +241,14 @@
                             beforeSend: function() {
                                 Swal.fire(
                                     '¡Estamos Archivando!',
-                                    `El producto: ${clave} está siendo archivado`,
+                                    `El comprador: ${clave} está siendo archivado`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
                                     'Archivando!',
-                                    `El producto: ${clave} ha sido archivado`,
+                                    `El comprador: ${clave} ha sido archivado`,
                                     'success'
                                 )
                                 table.ajax.reload();

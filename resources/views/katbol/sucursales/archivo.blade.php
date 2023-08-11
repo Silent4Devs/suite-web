@@ -12,22 +12,38 @@
     </style>
      @include('flash::message')
      @include('partials.flashMessages')
-    <h5 class="col-12 titulo_general_funcion">Centro de Costos</h5>
+    <h5 class="col-12 titulo_general_funcion">Razónes Sociales</h5>
     <div class="mt-5 card">
 
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Centro">
+            <table class="table table-bordered w-100 datatable-Sucursal">
                 <thead class="thead-dark">
                     <tr>
-
                         <th style="vertical-align: top">
                             Clave
                         </th>
                         <th style="vertical-align: top">
                             Nombre
                         </th>
-
+                        <th style="vertical-align: top">
+                            Empresa
+                        </th>
+                        <th style="vertical-align: top">
+                            Cuenta Contable
+                        </th>
+                        <th style="vertical-align: top">
+                            Zona
+                        </th>
+                        <th style="vertical-align: top">
+                            Dirección
+                        </th>
+                        <th style="vertical-align: top">
+                            RFC
+                        </th>
+                        <th style="vertical-align: top">
+                            My Logo
+                        </th>
                         <th style="vertical-align: top">
                             Opciones
                         </th>
@@ -43,7 +59,7 @@
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
-                    title: `Centros ${new Date().toLocaleDateString().trim()}`,
+                    title: `Razón Social ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
@@ -53,7 +69,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title: `Centros ${new Date().toLocaleDateString().trim()}`,
+                    title: `Razón Social ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
@@ -63,7 +79,7 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: `Centros ${new Date().toLocaleDateString().trim()}`,
+                    title: `Razón Social ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar PDF',
@@ -79,7 +95,7 @@
                 },
                 {
                     extend: 'print',
-                    title: `Centros ${new Date().toLocaleDateString().trim()}`,
+                    title: `Razón Social ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
@@ -108,23 +124,12 @@
                 }
 
             ];
-            let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar Centro',
-                    url: "{{ route('katbol.centro-costos.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-            };
+                
 
-            let btnArchivar = {
-                    text: '<i class="fa-solid fa-box-archive"></i> Archivados',
-                    titleAttr: 'Archivar comprador',
-                    url: "{{ route('katbol.centro-costos.view_archivados') }}",
+                let btnArchivar = {
+                    text: '<i class="fa-solid fa-backward"></i> Sucursales',
+                    titleAttr: 'Archivar sucursales',
+                    url: "{{ route('katbol.sucursales.index') }}",
                     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                     action: function(e, dt, node, config) {
                         let {
@@ -134,10 +139,10 @@
                     },
             };
 
-            dtButtons.push(btnAgregar, btnArchivar);
-            let archivoButton = {
+                dtButtons.push(btnArchivar);
+                let archivoButton = {
                     text: 'Archivar Registro',
-                    url: "{{ route('katbol.centro-costos.archivar', ['id' => $ids]) }}",
+                    url: "{{ route('katbol.sucursales.archivar', ['id' => $ids]) }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -169,7 +174,7 @@
                                 })
                         }
                     }
-            }
+                }
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -178,13 +183,14 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: {
-                    url: "{{ route('katbol.centro-costos.getCentroCostosIndex') }}",
+                    url: "{{ route('katbol.sucursales.getArchivadosIndex') }}",
                     type: 'POST',
                     data: {
                         _token: _token
                     }
                 },
-                columns: [{
+                columns: [
+                    {
                         data: 'clave',
                         name: 'clave'
                     },
@@ -193,12 +199,36 @@
                         name: 'descripcion'
                     },
                     {
+                        data: 'empresa',
+                        name: 'empresa'
+                    },
+                    {
+                        data: 'cuenta_contable',
+                        name: 'cuenta_contable'
+                    },
+                    {
+                        data: 'zona',
+                        name: 'zona'
+                    },
+                    {
+                        data: 'direccion',
+                        name: 'direccion'
+                    },
+                    {
+                        data: 'rfc',
+                        name: 'rfc'
+                    },
+                    {
+                        data: 'mylogo',
+                        name: 'mylogo'
+                    },
+                    {
                         data: 'id',
                         name: 'actions',
                         render: function(data, type, row, meta) {
-                            let centro = @json($centros);
-                            let urlButtonArchivar = `/katbol/centro-costos/archivar/${data}`;
-                            let urlButtonEdit = `/katbol/centro-costos/${data}/edit`;
+                            let sucursales = @json($sucursales);
+                            let urlButtonArchivar = `/katbol/sucursales/archivar/${data}`;
+                            let urlButtonEdit = `/katbol/sucursales/${data}/edit`;
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
@@ -216,7 +246,7 @@
                     [0, 'desc']
                 ]
             };
-            let table = $('.datatable-Centro').DataTable(dtOverrideGlobals);
+            let table = $('.datatable-Sucursal').DataTable(dtOverrideGlobals);
 
             window.Archivar = function(url, clave) {
                 Swal.fire({
@@ -229,7 +259,6 @@
                     confirmButtonText: '¡Sí, archivar!',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
-                    console.log(result);
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
@@ -240,14 +269,14 @@
                             beforeSend: function() {
                                 Swal.fire(
                                     '¡Estamos Archivando!',
-                                    `El centro: ${clave} está siendo archivado`,
+                                    `La sucursal: ${clave} está siendo archivado`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
-                                    'Archivando!',
-                                    `El centro: ${clave} ha sido archivado`,
+                                    'Archivado!',
+                                    `La sucursal: ${clave} ha sido archivado`,
                                     'success'
                                 )
                                 table.ajax.reload();

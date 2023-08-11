@@ -17,7 +17,8 @@
 
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Centro">
+
+            <table class="table table-bordered w-100 datatable-Archivado">
                 <thead class="thead-dark">
                     <tr>
 
@@ -43,7 +44,7 @@
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
-                    title: `Centros ${new Date().toLocaleDateString().trim()}`,
+                    title: `Centro ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
@@ -53,7 +54,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title: `Centros ${new Date().toLocaleDateString().trim()}`,
+                    title: `Centro ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
@@ -63,7 +64,7 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: `Centros ${new Date().toLocaleDateString().trim()}`,
+                    title: `Centro ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar PDF',
@@ -79,7 +80,7 @@
                 },
                 {
                     extend: 'print',
-                    title: `Centros ${new Date().toLocaleDateString().trim()}`,
+                    title: `Centro ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
@@ -108,10 +109,10 @@
                 }
 
             ];
-            let btnAgregar = {
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar Centro',
-                    url: "{{ route('katbol.centro-costos.create') }}",
+            let btnRegresar = {
+                    text: '<i class="fa-solid fa-backward"></i> Centro de Costos',
+                    titleAttr: 'Regresar centro-costos',
+                    url: "{{ route('katbol.centro-costos.index') }}",
                     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                     action: function(e, dt, node, config) {
                         let {
@@ -120,21 +121,7 @@
                         window.location.href = url;
                     }
             };
-
-            let btnArchivar = {
-                    text: '<i class="fa-solid fa-box-archive"></i> Archivados',
-                    titleAttr: 'Archivar comprador',
-                    url: "{{ route('katbol.centro-costos.view_archivados') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    },
-            };
-
-            dtButtons.push(btnAgregar, btnArchivar);
+            dtButtons.push(btnRegresar);
             let archivoButton = {
                     text: 'Archivar Registro',
                     url: "{{ route('katbol.centro-costos.archivar', ['id' => $ids]) }}",
@@ -178,7 +165,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: {
-                    url: "{{ route('katbol.centro-costos.getCentroCostosIndex') }}",
+                    url: "{{ route('katbol.centro-costos.getArchivadosIndex') }}",
                     type: 'POST',
                     data: {
                         _token: _token
@@ -196,7 +183,7 @@
                         data: 'id',
                         name: 'actions',
                         render: function(data, type, row, meta) {
-                            let centro = @json($centros);
+                            let centros = @json($centros);
                             let urlButtonArchivar = `/katbol/centro-costos/archivar/${data}`;
                             let urlButtonEdit = `/katbol/centro-costos/${data}/edit`;
                             let htmlBotones =
@@ -216,7 +203,7 @@
                     [0, 'desc']
                 ]
             };
-            let table = $('.datatable-Centro').DataTable(dtOverrideGlobals);
+            let table = $('.datatable-Archivado').DataTable(dtOverrideGlobals);
 
             window.Archivar = function(url, clave) {
                 Swal.fire({
@@ -240,14 +227,14 @@
                             beforeSend: function() {
                                 Swal.fire(
                                     '¡Estamos Archivando!',
-                                    `El centro: ${clave} está siendo archivado`,
+                                    `El centro-costos: ${clave} está siendo archivado`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
                                     'Archivando!',
-                                    `El centro: ${clave} ha sido archivado`,
+                                    `El centro-costos: ${clave} ha sido archivado`,
                                     'success'
                                 )
                                 table.ajax.reload();

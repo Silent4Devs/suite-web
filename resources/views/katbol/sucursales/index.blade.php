@@ -136,7 +136,21 @@
                         window.location.href = url;
                     }
                 };
-                dtButtons.push(btnAgregar);
+
+                let btnArchivar = {
+                    text: '<i class="fa-solid fa-box-archive"></i> Archivados',
+                    titleAttr: 'Archivar sucursales',
+                    url: "{{ route('katbol.sucursales.view_archivados') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                    },
+            };
+
+                dtButtons.push(btnAgregar, btnArchivar);
                 let archivoButton = {
                     text: 'Archivar Registro',
                     url: "{{ route('katbol.sucursales.archivar', ['id' => $ids]) }}",

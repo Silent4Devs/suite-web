@@ -144,4 +144,26 @@ class CompradoresController extends Controller
     }
 
 
+    public function view_archivados()
+    {
+      $compradores = Comprador::where('archivo', true)->get();
+      $compradores_id = Comprador::get()->pluck('id');
+      $ids = [];
+
+      foreach ($compradores_id as $id) {
+          $ids =  $id;
+      }
+
+      return view('katbol.compradores.archivo', compact('compradores', 'ids'));
+    }
+
+
+    public function getArchivadosIndex(Request $request)
+    {
+        $query = Comprador::select('id', 'clave', 'nombre')->where('archivo', true)->get();
+
+        return datatables()->of($query)->toJson();
+    }
+
+
 }

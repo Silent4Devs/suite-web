@@ -155,4 +155,26 @@ class ProveedoresOController extends Controller
         return redirect('/katbol/proveedores');
     }
 
+
+    public function view_archivados()
+    {
+      $proveedores = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', true)->get();
+      $proveedores_id = ProveedorOC::get()->pluck('id');
+      $ids = [];
+
+      foreach ($proveedores_id as $id) {
+          $ids =  $id;
+      }
+
+      return view('katbol.proveedores.archivo', compact('proveedores', 'ids'));
+    }
+
+
+    public function getArchivadosIndex(Request $request)
+    {
+        $query = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', true)->get();
+
+        return datatables()->of($query)->toJson();
+    }
+
 }
