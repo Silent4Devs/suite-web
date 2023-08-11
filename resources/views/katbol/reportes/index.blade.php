@@ -354,7 +354,7 @@
 		</div>
 	</div>
 
-    <div class="card card-content" id="test2">
+    {{-- <div class="card card-content" id="test2">
         <div class="row">
             <div class="col s12" style="margin-bottom: 30px;">
 	            <h4 class="sub-titulo-form">DESCARGAR CONTRATO</h4>
@@ -376,7 +376,7 @@
                 </div>
         	</form>
 		</div>
-	</div>
+	</div> --}}
 </div>
 
 <script>

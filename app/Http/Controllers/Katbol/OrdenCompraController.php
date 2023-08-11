@@ -289,7 +289,7 @@ class OrdenCompraController extends Controller
         $organizacion = Organizacion::first();
         $tipo_firma = 'rechazado';
         Mail::to($requisicion->email)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
-        return redirect(route('orden-compra'));
+        return redirect('katbol/orden-compra');
 
     }
 

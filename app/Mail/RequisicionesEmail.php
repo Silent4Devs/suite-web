@@ -92,7 +92,7 @@ class RequisicionesEmail extends Mailable
     public function build()
     {
 
-        return $this->from('demos@silent4business.com', 'Sender Name')
+        return $this->from('donot-reply@silent4business.com', 'Sender Name')
                     ->view('emails.requisiciones', [
                         'supervisor' =>  $this->supervisor,
                         'requisicion' => $this->requisicion,
