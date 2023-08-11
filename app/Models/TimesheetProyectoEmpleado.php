@@ -26,8 +26,16 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
     public static function getAllByEmpleadoId()
     {
         return
-            Cache::remember('getAllByEmpleadoId_' . auth()->user()->empleado->id, 3600 * 12, function () {
+            Cache::remember('GetAllByEmpleadoId_' . auth()->user()->empleado->id, 3600 * 2, function () {
                 return self::get()->where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false);
+            });
+    }
+
+    public static function getAllByEmpleadoIdExists()
+    {
+        return
+            Cache::remember('GetAllByEmpleadoId_' . auth()->user()->empleado->id, 3600 * 2, function () {
+                return self::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->exists();
             });
     }
 
