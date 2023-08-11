@@ -34,14 +34,14 @@ class TimesheetHorasFilas extends Component
 
     public function mount($origen, $timesheet_id)
     {
-        $empleado = Empleado::find(auth()->user()->empleado->id);
-
+        $empleado = Empleado::getAll()->find(auth()->user()->empleado->id);
+        $empleadoTimesheetproyecto = TimesheetProyectoEmpleado::getAllByEmpleadoId();
         // areas proyectos
         $proyectos_array = collect();
         $proyectos_totales = TimesheetProyecto::getAll();
-        $proyectoempleadoexists = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->exists();
-        $proyectoempleado = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->get();
-        $filtrope = TimesheetProyectoEmpleado::select('proyecto_id')->get();
+        $proyectoempleado = $empleadoTimesheetproyecto;
+        $proyectoempleadoexists = $empleadoTimesheetproyecto->exists();
+        $filtrope = $empleadoTimesheetproyecto;
         $comodines = TimesheetProyecto::select('id', 'identificador', 'proyecto')
         ->where('proyecto', 'LIKE', 'S4B-'.'%')->get();
         // dd($comodines);
