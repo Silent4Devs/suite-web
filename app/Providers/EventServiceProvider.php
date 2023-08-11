@@ -92,8 +92,10 @@ use App\Observers\PlanImplementacionObserver;
 use App\Observers\RiesgoIdentificadoObserver;
 use App\Observers\SubCategoriaActivoObserver;
 use App\Observers\IncidentesSeguridadObserver;
+use App\Observers\TimesheetProyectoEmpleadoObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
 use App\Listeners\IncidentesDeSeguridadListener;
+use App\Models\TimesheetProyectoEmpleado;
 use App\Observers\IncidentesDeSeguridadObserver;
 use App\Observers\DeclaracionAplicabilidadObserver;
 use App\Observers\MatrizRiesgosSistemaGestionObserver;
@@ -182,5 +184,6 @@ class EventServiceProvider extends ServiceProvider
         MatrizRiesgosSistemaGestion::observe(MatrizRiesgosSistemaGestionObserver::class);
         PoliticaSgsi::observe(PoliticaSgsiObserver::class);
         MatrizRiesgo::observe(MatrizRiesgoObserver::class);
+        TimesheetProyectoEmpleado::observe(TimesheetProyectoEmpleadoObserver::class);
     }
 }

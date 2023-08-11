@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TimesheetProyectoEmpleado extends Model implements Auditable
 {
@@ -21,6 +22,14 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
         'costo_hora',
         'correo_enviado',
     ];
+
+    public static function getAllByEmpleadoId()
+    {
+        return
+            Cache::remember('getAllByEmpleadoId_' . auth()->user()->empleado->id, 3600 * 12, function () {
+                return self::get()->where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false);
+            });
+    }
 
     public function empleado()
     {
