@@ -34,17 +34,22 @@ class TimesheetHorasFilas extends Component
 
     public function mount($origen, $timesheet_id)
     {
-        $empleado = Empleado::find(auth()->user()->empleado->id);
-
+        $empleado = Empleado::getAll()->find(auth()->user()->empleado->id);
+        $empleadoTimesheetproyecto = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->get();
+        $proyectosRedis = TimesheetProyecto::getAll();
         // areas proyectos
         $proyectos_array = collect();
-        $proyectos_totales = TimesheetProyecto::getAll();
-        $proyectoempleadoexists = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->exists();
-        $proyectoempleado = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->get();
-        $filtrope = TimesheetProyectoEmpleado::select('proyecto_id')->get();
+        $proyectos_totales = $proyectosRedis;
+        $proyectoempleado = $empleadoTimesheetproyecto;
+        $proyectoempleadoexists = TimesheetProyectoEmpleado::getAllByEmpleadoIdExists();
+        $filtrope = $empleadoTimesheetproyecto;
+        // $comodines = TimesheetProyecto::select('id', 'identificador', 'proyecto')
+        // ->where('proyecto', 'LIKE', 'S4B-'.'%')->get();
+        $comodines = $proyectosRedis->where('proyecto', 'LIKE', 'S4B-' . '%');
+        // dd($comodines);
         // dd(!$filtrope->isEmpty());
         // dd($proyectoempleado);
-        if($proyectoempleadoexists == true){
+        if ($proyectoempleadoexists) {
             foreach ($proyectoempleado as $key => $proyecto) {
                 if ($proyecto->proyecto->estatus == 'proceso') {
                     if ($proyecto->empleado->id == $empleado->id) {
@@ -57,8 +62,19 @@ class TimesheetHorasFilas extends Component
                         }
                     }
                 }
+                foreach ($comodines as $key => $com) {
+                    foreach ($proyectos_array as $pay) {
+                        if (!($pay['id'] === $com->id)) {
+                            $proyectos_array->push([
+                                'id' => $com->id,
+                                'identificador' => $com->identificador,
+                                'proyecto' => $com->proyecto,
+                            ]);
+                        }
+                    }
+                }
             }
-        }elseif(!$filtrope->isEmpty()) { //Revisar que haya registros en la tabla
+        } elseif (!$filtrope->isEmpty()) { //Revisar que haya registros en la tabla
             foreach ($proyectos_totales as $key => $proyecto) {
                 if ($proyecto->estatus == 'proceso') {
                     foreach ($proyecto->areas as $key => $area) {
@@ -72,10 +88,21 @@ class TimesheetHorasFilas extends Component
                     }
                 }
             }
-            foreach($filtrope as $key => $fpe){
+            foreach ($filtrope as $key => $fpe) {
                 $proyectos_array = $proyectos_array->whereNotIn('id', $fpe->proyecto_id);
-              }
-        }else{
+            }
+            foreach ($comodines as $key => $com) {
+                foreach ($proyectos_array as $pay) {
+                    if (!($pay['id'] === $com->id)) {
+                        $proyectos_array->push([
+                            'id' => $com->id,
+                            'identificador' => $com->identificador,
+                            'proyecto' => $com->proyecto,
+                        ]);
+                    }
+                }
+            }
+        } else {
             foreach ($proyectos_totales as $key => $proyecto) {
                 if ($proyecto->estatus == 'proceso') {
                     foreach ($proyecto->areas as $key => $area) {

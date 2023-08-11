@@ -18,7 +18,7 @@ class PanelDeclaracionController extends Controller
 
     public function index(Request $request)
     {
-        $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
+        $empleados = Empleado::getaltaAll();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -77,7 +77,7 @@ class PanelDeclaracionController extends Controller
 
     public function edit($id)
     {
-        $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
+        $empleados = Empleado::getaltaAll();
         $controles = DeclaracionAplicabilidad::getAll();
 
         return view('admin.panelDeclaracion.edit', compact('empleados', 'controles'));
@@ -226,7 +226,7 @@ class PanelDeclaracionController extends Controller
         $declaracion = $request->declaracion;
 
         foreach ($destinatarios as $destinatario) {
-            $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($destinatario));
+            $empleado = Empleado::getaltaAll()->find(intval($destinatario));
             // dd($empleado); Hacer la consulta de controles se la envio como controles buscar la tabla where->
             $responsable = DeclaracionAplicabilidadResponsable::with('declaracion_aplicabilidad')->where('empleado_id', $destinatario)->get();
             // dd($responsable);

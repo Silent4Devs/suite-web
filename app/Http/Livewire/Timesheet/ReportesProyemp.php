@@ -10,6 +10,8 @@ use App\Models\TimesheetProyecto;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Exports\ReporteColaboradorTarea;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportesProyemp extends Component
 {
@@ -62,8 +64,8 @@ class ReportesProyemp extends Component
     {
         $this->estatus = null;
         $this->areas = Area::getAll();
-        $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']]);
-        $this->proy = TimesheetProyecto::orderBy('proyecto', 'ASC')->get();
+        $this->emp = Empleado::getAll(['orderBy' => ['name', 'ASC']])->where('estatus', 'alta');
+        $this->proy = TimesheetProyecto::getAll();
     }
 
     public function updatedFechaInicio($value)
@@ -132,24 +134,26 @@ class ReportesProyemp extends Component
     {
         // dd($this->fecha_inicio);
         //Query para obtener los timesheet y filtrarlo
-        $query = TimesheetHoras::with('proyecto', 'timesheet', 'tarea.areaData')
-            ->whereHas('timesheet', function ($query) {
+        $query = TimesheetHoras::with('tarea.areaData')
+            ->withwhereHas('timesheet', function ($query) {
                 if ($this->emp_id == 0) {
                     return $query;
                 } else {
                     $query->where('empleado_id', $this->emp_id);
                 }
             })
-            ->whereHas('timesheet', function ($query) {
+            ->withwhereHas('timesheet', function ($query) {
                 $query->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia');
             })
-            ->whereHas('proyecto', function ($query) {
+            ->withwhereHas('proyecto', function ($query) {
                 if ($this->proy_id == 0) {
                     return $query;
                 } else {
-                    $query->where('proyecto_id', $this->proy_id);
+                    $query->where('id', $this->proy_id);
                 }
             });
+
+
 
         $this->totalRegistrosMostrando = $query->count();
         $times = $query->paginate($this->perPage);
@@ -216,6 +220,16 @@ class ReportesProyemp extends Component
             }
         })
             ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'rechazado')->count();
+    }
+
+    public function exportExcel()
+    {
+        $date = Carbon::now();
+        $date = $date->format('d-m-Y');
+
+        $file_name = 'Reporte Colaborador-Tarea' . $date . '.xlsx';
+        // dd($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
+        return Excel::download(new ReporteColaboradorTarea($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id, $this->proy_id), $file_name);
     }
 
     public function todos()

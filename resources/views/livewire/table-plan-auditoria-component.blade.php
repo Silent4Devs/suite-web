@@ -26,7 +26,7 @@
                     <td style="min-width:100px;">{{ $data->horario_termino }}</td>
                     <td style="min-width:130px;"><img class="img_empleado"
                             src="{{ asset('storage/empleados/imagenes') }}/{{ $data->auditado ? $data->auditado->avatar : 'user.png' }}"
-                            title="{{ $data->auditado->name }}"></td>
+                            title="{{ $data->auditado->name ?? ''}}"></td>
                     <td style="min-width:100px;">{{$data->nombre_auditor}}</td>
                     <td style="min-width:40px;">
                         <i class="fas fa-edit" wire:click.prevent="$emit('editarParteInteresada',{{ $data->id }})">
@@ -50,7 +50,7 @@
         Livewire.on('cerrar-modal', (event) => {
             $('#exampleModal').modal('hide');
             $('.modal-backdrop').hide();
-           
+
 
         })
         Livewire.on('abrir-modal', () => {

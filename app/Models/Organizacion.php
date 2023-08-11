@@ -78,6 +78,7 @@ class Organizacion extends Model implements Auditable
         'fecha_registro_timesheet',
         'semanas_min_timesheet',
         'semanas_faltantes',
+        'semanas_adicionales',
     ];
 
     //Redis methods

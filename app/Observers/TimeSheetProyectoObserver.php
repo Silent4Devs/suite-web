@@ -60,5 +60,6 @@ class TimeSheetProyectoObserver
     private function forgetCache()
     {
         Cache::forget('timesheetproyecto_all');
+        Cache::forget('timesheetproyecto_show_');
     }
 }

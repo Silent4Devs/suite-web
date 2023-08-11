@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class MatrizRiesgo.
@@ -183,6 +184,13 @@ class MatrizRiesgo extends Model implements Auditable
     {
         return $date->format('Y-m-d H:i:s');
     }*/
+
+    public static function getAll()
+    {
+        return Cache::remember('matriz_riesgos_all', 3600 * 12, function () {
+            return self::get();
+        });
+    }
 
     public function generateTwoFactorCode()
     {
