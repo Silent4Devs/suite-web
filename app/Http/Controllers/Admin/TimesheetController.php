@@ -46,7 +46,6 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        dd("test");
         $cacheKey = 'timesheet-' . auth()->user()->empleado->id;
 
         $times = Timesheet::getPersonalTimesheet();
@@ -113,6 +112,7 @@ class TimesheetController extends Controller
      */
     public function create()
     {
+        dd("test");
         abort_if(Gate::denies('timesheet_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $fechasRegistradas = Timesheet::getPersonalTimesheet()->pluck('fecha_dia')->toArray();
