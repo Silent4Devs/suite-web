@@ -65,6 +65,12 @@ RUN chown -R www-data:www-data /var/www \
 # Add cron job to schedule Laravel tasks
 RUN echo "0 * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1" | crontab -
 
+# Link cron log file to stdout
+RUN ln -s /dev/stdout /var/log/cron
+
+# Run the cron service in the foreground
+CMD [ "crond", "-l", "2", "-f" ]
+
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
     CMD curl --fail http://localhost/ || exit 1
