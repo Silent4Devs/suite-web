@@ -31,6 +31,14 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
             });
     }
 
+    public static function getAllByEmpleadoIdExists()
+    {
+        return
+            Cache::remember('getAllByEmpleadoId_' . auth()->user()->empleado->id, 3600 * 12, function () {
+                return self::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->exists();
+            });
+    }
+
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');
