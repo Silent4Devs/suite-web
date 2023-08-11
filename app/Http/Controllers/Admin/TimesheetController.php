@@ -46,6 +46,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
+        dd("test");
         $cacheKey = 'timesheet-' . auth()->user()->empleado->id;
 
         $times = Timesheet::getPersonalTimesheet();
@@ -287,7 +288,7 @@ class TimesheetController extends Controller
                 Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
             } catch (Throwable $e) {
                 report($e);
-         
+
                 return response()->json(['status' => 520]);
             }
         }
@@ -510,7 +511,7 @@ class TimesheetController extends Controller
                 Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
             } catch (Throwable $e) {
                 report($e);
-         
+
                 return response()->json(['status' => 520]);
             }
         }
@@ -834,10 +835,10 @@ class TimesheetController extends Controller
             Mail::to($solicitante->email)->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
         } catch (Throwable $e) {
             report($e);
-            
+
             return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
         }
-        
+
         return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito');
     }
 
@@ -859,7 +860,7 @@ class TimesheetController extends Controller
             Mail::to($solicitante->email)->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
         } catch (Throwable $e) {
             report($e);
-            
+
             return redirect()->route('admin.timesheet-aprobaciones')->with('success', 'Guardado con éxito, correo no enviado');
         }
 
@@ -957,7 +958,7 @@ class TimesheetController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
 
         return view('admin.timesheet.reportes', compact(
-            // 'clientes', 'proyectos', 'tareas', 
+            // 'clientes', 'proyectos', 'tareas',
             'logo_actual', 'empresa_actual'));
     }
 
@@ -1111,7 +1112,7 @@ class TimesheetController extends Controller
                             ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
                     } catch (Throwable $e) {
                         report($e);
-                 
+
                         return false;
                     }
 
