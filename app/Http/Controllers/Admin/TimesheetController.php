@@ -118,8 +118,6 @@ class TimesheetController extends Controller
 
         $organizacion = Organizacion::getFirst();
 
-        dd($organizacion, $fechasRegistradas);
-
         return view('admin.timesheet.create', compact('fechasRegistradas', 'organizacion'));
     }
 

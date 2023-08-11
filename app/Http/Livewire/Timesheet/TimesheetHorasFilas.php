@@ -34,6 +34,7 @@ class TimesheetHorasFilas extends Component
 
     public function mount($origen, $timesheet_id)
     {
+        dd("test timesheet");
         $empleado = Empleado::find(auth()->user()->empleado->id);
 
         // areas proyectos
