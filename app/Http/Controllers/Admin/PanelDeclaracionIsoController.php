@@ -19,7 +19,7 @@ class PanelDeclaracionIsoController extends Controller
 
     public function index(Request $request)
     {
-        $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
+        $empleados = Empleado::getaltaAll();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -90,7 +90,7 @@ class PanelDeclaracionIsoController extends Controller
 
     public function edit($id)
     {
-        $empleados = Empleado::alta()->select('id', 'name', 'genero', 'foto')->get();
+        $empleados = Empleado::getaltaAll();
         // $controles = DeclaracionAplicabilidadConcentradoIso::get();
 
         return view('admin.panelDeclaracion2022.edit', compact('empleados', 'controles'));
@@ -123,9 +123,9 @@ class PanelDeclaracionIsoController extends Controller
         if ($readyExistResponsable) {
             return response()->json(['estatus' => 'ya_es_aprobador', 'message' => 'Ya fue asignado como aprobador'], 200);
         } else {
-            if (! $existResponsable) {
+            if (!$existResponsable) {
                 $exists = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)->where('empleado_id', $responsable)->exists();
-                if (! $exists) {
+                if (!$exists) {
                     DeclaracionAplicabilidadResponsableIso::where('declaracion_id', $declaracion)
                         ->update([
                             'declaracion_id' => $declaracion,
@@ -178,7 +178,7 @@ class PanelDeclaracionIsoController extends Controller
         } else {
             if ($existAprobador) {
                 $exists = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)->where('empleado_id', $aprobador)->exists();
-                if (! $exists) {
+                if (!$exists) {
                     DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $declaracion)
                         ->update(
                             [
@@ -187,7 +187,8 @@ class PanelDeclaracionIsoController extends Controller
                             ],
                             [
                                 'esta_correo_enviado' => false,
-                            ]);
+                            ]
+                        );
 
                     return response()->json(['estatus' => 'asignado', 'message' => 'Aprobador asignado'], 200);
                 } else {

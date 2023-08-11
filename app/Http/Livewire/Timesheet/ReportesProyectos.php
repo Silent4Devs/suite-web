@@ -182,7 +182,7 @@ class ReportesProyectos extends Component
                 $previous_month = Carbon::create()->day(1)->month(intval($previous_month))->format('F');
                 $year = $fecha->format('Y');
                 $month = $fecha->format('F');
-                if (! ($this->buscarKeyEnArray($year, $calendario_array))) {
+                if (!($this->buscarKeyEnArray($year, $calendario_array))) {
                     $calendario_array["{$year}"] = [
                         'year' => $year,
                         'total_weeks' => 0,
@@ -197,19 +197,19 @@ class ReportesProyectos extends Component
                     if ($month == 'January') {
                         $previous_year = $year - 1;
                         if (array_key_exists($previous_year, $calendario_array)) {
-                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
+                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$previous_year}"]['months']['December']['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         }
                     }
                 } else {
                     if (array_key_exists($month, $calendario_array["{$year}"]['months'])) {
-                        if (! in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
+                        if (!in_array($semana, $calendario_array["{$year}"]['months']["{$month}"]['weeks'])) {
                             $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                         }
                     } else {
                         if (array_key_exists($previous_month, $calendario_array["{$year}"]['months'])) {
-                            if (! ($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
+                            if (!($this->existsWeeksInMonth($semana, $calendario_array["{$year}"]['months']["{$previous_month}"]['weeks']))) {
                                 $calendario_array["{$year}"]['months']["{$month}"]['weeks'][] = $semana;
                             }
                         } else {
@@ -285,6 +285,7 @@ class ReportesProyectos extends Component
 
             $proyectos_array->push([
                 'id' => $proyecto->id,
+                'identificador' => $proyecto->identificador,
                 'proyecto' => $proyecto->proyecto,
                 'areas' => $proyecto->areas,
                 'cliente' => $proyecto->cliente ? $proyecto->cliente->nombre : '',
@@ -318,14 +319,14 @@ class ReportesProyectos extends Component
 
     public function genrarReporte($id)
     {
-        $this->proyecto_reporte = TimesheetProyecto::find($id);
+        $this->proyecto_reporte = TimesheetProyecto::getAll()->find($id);
 
         // $this->area_proyecto = Area::find($this->proyecto_reporte->area_id);
-        $this->cliente_proyecto = TimesheetCliente::find($this->proyecto_reporte->cliente_id);
+        $this->cliente_proyecto = TimesheetCliente::getAll()->find($this->proyecto_reporte->cliente_id);
 
         $empleados = collect();
 
-        $tareas = TimesheetTarea::where('proyecto_id', $id)->get();
+        $tareas = TimesheetTarea::getAll()->where('proyecto_id', $id);
 
         $this->tareas_array = collect();
 
@@ -356,7 +357,7 @@ class ReportesProyectos extends Component
 
                 $empleado = Empleado::find($hora->timesheet->empleado_id);
 
-                if (! $empleados->contains('id', $empleado->id)) {
+                if (!$empleados->contains('id', $empleado->id)) {
                     $empleados->push([
                         'id' => $empleado->id,
                         'name' => $empleado->name,
@@ -389,7 +390,7 @@ class ReportesProyectos extends Component
 
         foreach ($this->tareas_array as $key => $tarea_em) {
             foreach ($tarea_em['empleados'] as $key => $emp_array) {
-                if (! ($this->empleados_proyecto->contains('id', $emp_array['id']))) {
+                if (!($this->empleados_proyecto->contains('id', $emp_array['id']))) {
                     $this->empleados_proyecto->push($emp_array);
                 } else {
                     $this->empleados_proyecto = $this->empleados_proyecto->map(function ($emp_item) use ($emp_array) {

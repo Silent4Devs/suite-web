@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Iso9001\PlanImplementacion as PlanItemIplementacion9001;
-use App\Models\PlanImplementacion;
-use Carbon\Carbon;
 use Gate;
-use Illuminate\Database\Eloquent\Collection;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\PlanImplementacion;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Collection;
+use App\Models\Iso9001\PlanImplementacion as PlanItemIplementacion9001;
 
 class PlanesAccionController extends Controller
 {
@@ -20,9 +21,13 @@ class PlanesAccionController extends Controller
      */
     public function index(Request $request)
     {
-        $iso2007 = PlanImplementacion::where('es_plan_trabajo_base', false)->with('elaborador')->get();
+        $iso2007 = Cache::remember('plan_implementacion_all', 3600 * 24, function () {
+            return PlanImplementacion::where('es_plan_trabajo_base', false)->with('elaborador')->get();
+        });
         $original = new Collection($iso2007);
-        $iso9001 = PlanItemIplementacion9001::with('elaborador')->get();
+        $iso9001 = Cache::remember('plan_implementacion_9001_all', 3600 * 24, function () {
+            return PlanItemIplementacion9001::with('elaborador')->get();
+        });
         $latest = new Collection($iso9001);
         // dd($iso9001);
         $merged = $original->concat($latest);
@@ -75,9 +80,9 @@ class PlanesAccionController extends Controller
         ]);
         $tasks = [
             [
-                'id' => 'tmp_'.(strtotime(now())).'_1',
+                'id' => 'tmp_' . (strtotime(now())) . '_1',
                 'end' => strtotime(now()) * 1000,
-                'name' => 'Plan de Accion - '.$request->norma,
+                'name' => 'Plan de Accion - ' . $request->norma,
                 'level' => 0,
                 'start' => strtotime(now()) * 1000,
                 'canAdd' => true,
@@ -96,7 +101,7 @@ class PlanesAccionController extends Controller
                 'assigs' => [],
             ],
             [
-                'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
+                'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
                 'end' => strtotime(now()) * 1000,
                 'name' => $request->norma,
                 'level' => 1,
@@ -137,17 +142,17 @@ class PlanesAccionController extends Controller
         $mensaje = $request->es_plan_trabajo_base != null ? 'Plan de Trabajo Base' : 'Plan de Acción';
         $route = $request->es_plan_trabajo_base != null ? 'admin.planTrabajoBase.index' : 'admin.planes-de-accion.index';
 
-        return redirect()->route($route)->with('success', $mensaje.' '.$planImplementacion->parent.' creado');
+        return redirect()->route($route)->with('success', $mensaje . ' ' . $planImplementacion->parent . ' creado');
     }
 
     public function crearPlanDeAccion($modelo)
     {
-        if (! count($modelo->planes)) {
+        if (!count($modelo->planes)) {
             $tasks = [
                 [
-                    'id' => 'tmp_'.(strtotime(now())).'_1',
+                    'id' => 'tmp_' . (strtotime(now())) . '_1',
                     'end' => strtotime(now()) * 1000,
-                    'name' => 'Plan de Accion - '.$modelo->norma,
+                    'name' => 'Plan de Accion - ' . $modelo->norma,
                     'level' => 0,
                     'start' => strtotime(now()) * 1000,
                     'canAdd' => true,
@@ -166,7 +171,7 @@ class PlanesAccionController extends Controller
                     'assigs' => [],
                 ],
                 [
-                    'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
+                    'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
                     'end' => strtotime(now()) * 1000,
                     'name' => $modelo->norma,
                     'level' => 1,
@@ -198,7 +203,7 @@ class PlanesAccionController extends Controller
             $planImplementacion->changesReasonWhy = false;
             $planImplementacion->selectedRow = 0;
             $planImplementacion->zoom = '3d';
-            $planImplementacion->parent = 'Incidente - '.$modelo->folio;
+            $planImplementacion->parent = 'Incidente - ' . $modelo->folio;
             $planImplementacion->norma = 'ISO 27001';
             $planImplementacion->modulo_origen = 'Incidentes';
             $planImplementacion->objetivo = null;

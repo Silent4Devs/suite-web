@@ -63,7 +63,7 @@ class PlanBaseActividadesController extends Controller
             });
 
             $table->editColumn('guia', function ($row) {
-                return $row->guia ? '<a href="'.$row->guia->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>' : '';
+                return $row->guia ? '<a href="' . $row->guia->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
             $table->editColumn('estado', function ($row) {
                 return $row->estatus ? $row->estatus->estado : '';
@@ -95,15 +95,17 @@ class PlanBaseActividadesController extends Controller
     {
         abort_if(Gate::denies('plan_base_actividade_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $users = User::getAll();
+
         $actividad_padres = PlanBaseActividade::all()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $ejecutars = EnlacesEjecutar::all()->pluck('ejecutar', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $estatuses = EstatusPlanTrabajo::all()->pluck('estado', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $colaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $colaboradors = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.planBaseActividades.create', compact('actividad_padres', 'ejecutars', 'estatuses', 'responsables', 'colaboradors'));
     }
@@ -113,7 +115,7 @@ class PlanBaseActividadesController extends Controller
         $planBaseActividade = PlanBaseActividade::create($request->all());
 
         if ($request->input('guia', false)) {
-            $planBaseActividade->addMedia(storage_path('tmp/uploads/'.$request->input('guia')))->toMediaCollection('guia');
+            $planBaseActividade->addMedia(storage_path('tmp/uploads/' . $request->input('guia')))->toMediaCollection('guia');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -127,15 +129,17 @@ class PlanBaseActividadesController extends Controller
     {
         abort_if(Gate::denies('plan_base_actividade_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $users = User::getAll();
+
         $actividad_padres = PlanBaseActividade::all()->pluck('actividad', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $ejecutars = EnlacesEjecutar::all()->pluck('ejecutar', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $estatuses = EstatusPlanTrabajo::all()->pluck('estado', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $responsables = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $responsables = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $colaboradors = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $colaboradors = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $planBaseActividade->load('actividad_padre', 'ejecutar', 'estatus', 'responsable', 'colaborador', 'team');
 
@@ -147,12 +151,12 @@ class PlanBaseActividadesController extends Controller
         $planBaseActividade->update($request->all());
 
         if ($request->input('guia', false)) {
-            if (! $planBaseActividade->guia || $request->input('guia') !== $planBaseActividade->guia->file_name) {
+            if (!$planBaseActividade->guia || $request->input('guia') !== $planBaseActividade->guia->file_name) {
                 if ($planBaseActividade->guia) {
                     $planBaseActividade->guia->delete();
                 }
 
-                $planBaseActividade->addMedia(storage_path('tmp/uploads/'.$request->input('guia')))->toMediaCollection('guia');
+                $planBaseActividade->addMedia(storage_path('tmp/uploads/' . $request->input('guia')))->toMediaCollection('guia');
             }
         } elseif ($planBaseActividade->guia) {
             $planBaseActividade->guia->delete();

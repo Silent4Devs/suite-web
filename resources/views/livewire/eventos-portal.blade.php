@@ -354,7 +354,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                 @empty
+                                @empty
                                     <div class="nuevo">No hay aniversarios registrados en este mes.</div>
                                 @endforelse
                             </div>

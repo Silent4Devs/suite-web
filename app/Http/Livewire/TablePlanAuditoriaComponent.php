@@ -13,8 +13,8 @@ class TablePlanAuditoriaComponent extends Component
 
     public function render()
     {
-        $datas = PlanAuditoriaActividades::where('plan_auditoria_id', '=', $this->plan_auditoria_id)->get();
-
+        $datas = PlanAuditoriaActividades::with('auditado')->where('plan_auditoria_id', '=', $this->plan_auditoria_id)->get();
+        // dd($datas[0]);
         return view('livewire.table-plan-auditoria-component', compact('datas'));
     }
 }

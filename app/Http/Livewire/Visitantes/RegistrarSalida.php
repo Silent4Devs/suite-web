@@ -22,7 +22,7 @@ class RegistrarSalida extends Component
 
     public function render()
     {
-        $visitantes = RegistrarVisitante::where('registro_salida', false)->paginate($this->perPage);
+        $visitantes = RegistrarVisitante::where('registro_salida', false)->fastPaginate($this->perPage);
 
         return view('livewire.visitantes.registrar-salida', compact('visitantes'));
     }
