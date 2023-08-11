@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Katbol;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Katbol\Comprador;
 use App\Models\Katbol\Producto;
 use Exception;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\DB;
 
-class ProductoController extends Controller
+class CompradoresController extends Controller
 {
 
     /**
@@ -20,23 +21,23 @@ class ProductoController extends Controller
     public function index()
     {
 
-        $productos = Producto::select('id', 'clave', 'descripcion')->where('archivo', false)->get();
-        $productos_id = Producto::get()->pluck('id');
+        $compradores = Comprador::select('id', 'clave', 'nombre', 'estado')->where('archivo', false)->get();
+        $compradores_id = Comprador::get()->pluck('id');
         $ids = [];
 
-        foreach ($productos_id as $id) {
+        foreach ($compradores_id as $id) {
             $ids =  $id;
         }
 
-        return view('katbol.productos.index', compact('productos', 'ids'));
+        return view('katbol.compradores.index', compact('compradores', 'ids'));
 
 
 
     }
 
-    public function getProductosIndex()
+    public function getCompradoresIndex(Request $request)
     {
-        $query = Producto::select('id', 'clave', 'descripcion')->where('archivo', false)->get();
+        $query = Comprador::select('id', 'clave', 'nombre', 'estado')->where('archivo', false)->get();
 
         return datatables()->of($query)->toJson();
     }
@@ -48,7 +49,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('katbol.productos.create');
+        return view('katbol.compradores.create');
     }
 
     /**
@@ -60,12 +61,13 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
 
-            $productos = new Producto();
-            $productos->descripcion = $request->descripcion;
-            $productos->clave = $request->clave;
-            $productos->save();
+            $compradores = new Comprador();
+            $compradores->nombre = $request->nombre;
+            $compradores->clave = $request->clave;
+            $compradores->id_user = $request->id_user;
+            $compradores->save();
 
-            return redirect('/katbol/productos');
+            return redirect('/katbol/compradores');
     }
 
     /**
@@ -88,9 +90,9 @@ class ProductoController extends Controller
     public function edit($id)
     {
 
-        $productos = Producto::find($id);
+        $compradores = Comprador::find($id);
 
-        return view('katbol.productos.edit', compact('productos'));
+        return view('katbol.compradores.edit', compact('compradores'));
     }
 
     /**
@@ -103,39 +105,17 @@ class ProductoController extends Controller
     public function update(Request $request, $id)
     {
             $request->validate([
-             'descripcion' => 'required',
+             'nombre' => 'required',
              'clave' => 'required',
             ]);
-            $sucursal = Producto::find($id);
+            $comprador = Comprador::find($id);
 
-            $sucursal->update([
-                'descripcion' => $request->descripcion,
+            $comprador->update([
+                'nombre' => $request->nombre,
                 'clave' => $request->clave
             ]);
 
-            return redirect('/katbol/productos');
-    }
-
-
-    public function view_archivados()
-    {
-      $productos = Producto::where('archivo', true)->get();
-      $productos_id = Producto::get()->pluck('id');
-      $ids = [];
-
-      foreach ($productos_id as $id) {
-          $ids =  $id;
-      }
-
-      return view('katbol.productos.archivo', compact('productos', 'ids'));
-    }
-
-
-    public function getArchivadosIndex(Request $request)
-    {
-        $query = Producto::select('id', 'clave', 'descripcion')->where('archivo', true)->get();
-
-        return datatables()->of($query)->toJson();
+            return redirect('/katbol/compradores');
     }
 
     /**
@@ -146,21 +126,21 @@ class ProductoController extends Controller
      */
     public function archivar($id)
     {
-        $productos = Producto::find($id);
+        $compradores = Comprador::find($id);
 
-        if($productos->archivo === false){
-            $productos->update([
+        if($compradores->archivo === false){
+            $compradores->update([
                 'archivo' => true,
             ]);
 
         }else{
-            $productos->update([
+            $compradores->update([
                 'archivo' => false,
             ]);
 
         }
 
-        return redirect('/katbol/productos');
+        return redirect('/katbol/compradores');
     }
 
 

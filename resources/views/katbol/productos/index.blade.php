@@ -17,6 +17,7 @@
 
         <div class="card-body datatable-fix">
 
+
             <table class="table table-bordered w-100 datatable-Productos">
                 <thead class="thead-dark">
                     <tr>
@@ -120,7 +121,23 @@
                         window.location.href = url;
                     }
             };
-            dtButtons.push(btnAgregar);
+
+            let btnArchivar = {
+                    text: '<i class="fa-solid fa-box-archive"></i> Archivados',
+                    titleAttr: 'Archivar producto',
+                    url: "{{ route('katbol.productos.view_archivados') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                        console.log(url);
+                    },
+            };
+
+            dtButtons.push(btnAgregar, btnArchivar);
+
             let archivoButton = {
                     text: 'Archivar Registro',
                     url: "{{ route('katbol.productos.archivar', ['id' => $ids]) }}",
@@ -250,6 +267,7 @@
                     }
                 })
             }
+
 
         });
     </script>

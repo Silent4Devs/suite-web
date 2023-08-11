@@ -68,7 +68,7 @@ class Requsicion extends Model
         'folio'
     ];
 
-    public $table = 'requsiciones';
+    public $table = 'requisiciones';
 
     protected $with = ['productos_requisiciones', 'provedores_requisiciones'];
 

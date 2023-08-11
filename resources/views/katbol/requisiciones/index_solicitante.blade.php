@@ -12,47 +12,26 @@
     </style>
      @include('flash::message')
      @include('partials.flashMessages')
-    <h5 class="col-12 titulo_general_funcion">Proveedores</h5>
+    <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
     <div class="mt-5 card">
 
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Proveedores">
+            <table class="table table-bordered w-100 datatable-Requisiciones">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="vertical-align: top">
-                            Nombre
-                        </th>
-                        <th style="vertical-align: top">
-                            Razon Social
-                        </th>
-                        <th style="vertical-align: top">
-                            RFC
-                        </th>
-                        <th style="vertical-align: top">
-                            Contacto
-                        </th>
-                        <th style="vertical-align: top">
-                            Facturación
-                        </th>
-                        <th style="vertical-align: top">
-                            Envio
-                        </th>
-                        <th style="vertical-align: top">
-                            Dirección
-                        </th>
-                        <th style="vertical-align: top">
-                            Credito
-                        </th>
-                        <th style="vertical-align: top">
-                            Fecha Inicio
-                        </th>
-                        <th style="vertical-align: top">
-                            Fecha Fin
-                        </th>
-                        <th style="vertical-align: top">
-                            Opciones
-                        </th>
+
+                        <th style="vertical-align: top">Folio</th>
+                        <th style="vertical-align: top">Fecha De Solicitud</th>
+                        <th style="vertical-align: top">Referencia</th>
+                        <th style="vertical-align: top">Producto</th>
+                        <th style="vertical-align: top">Proveedor</th>
+                        <th style="vertical-align: top">Estatus</th>
+                        <th style="vertical-align: top">Proyecto</th>
+                        <th style="vertical-align: top">Área que Solicita</th>
+                        <th style="vertical-align: top">Solicitante</th>
+                        <th style="vertical-align: top">Opciones</th>
+
                     </tr>
                 </thead>
             </table>
@@ -132,8 +111,8 @@
             ];
                 let btnAgregar = {
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar usuario',
-                    url: "{{ route('katbol.proveedores.create') }}",
+                    titleAttr: 'Agregar requisicion',
+                    url: "{{ route('katbol.requisiciones.create') }}",
                     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                     action: function(e, dt, node, config) {
                         let {
@@ -145,7 +124,7 @@
                 dtButtons.push(btnAgregar);
                 let archivarButton = {
                     text: 'Archivar Registro',
-                    url: "{{ route('katbol.proveedores.archivar', ['id' => $ids]) }}",
+                    url: "",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -186,7 +165,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: {
-                    url: "{{ route('katbol.proveedores.getProveedoresIndex') }}",
+                    url: "{{ route('katbol.requisiciones.getRequisicionIndex') }}",
                     type: 'POST',
                     data: {
                         _token: _token
@@ -194,52 +173,48 @@
                 },
                 columns: [
                     {
-                        data: 'nombre',
-                        name: 'nombre'
+                        data: 'folio',
+                        name: 'folio'
                     },
                     {
-                        data: 'razon_social',
-                        name: 'razon_social'
+                        data: 'fecha',
+                        name: 'fecha'
                     },
                     {
-                        data: 'rfc',
-                        name: 'rfc'
+                        data: 'referencia',
+                        name: 'referencia'
                     },
                     {
-                        data: 'contacto',
-                        name: 'contacto'
+                        data: 'producto_id',
+                        name: 'producto_id'
                     },
                     {
-                        data: 'facturacion',
-                        name: 'facturacion'
+                        data: 'proveedor_catalogo',
+                        name: 'proveedor_catalogo'
                     },
                     {
-                        data: 'envio',
-                        name: 'envio'
+                        data: 'estatus',
+                        name: 'estatus'
                     },
                     {
-                        data: 'direccion',
-                        name: 'direccion'
+                        data: 'contrato_id',
+                        name: 'contrato_id'
                     },
                     {
-                        data: 'credito',
-                        name: 'credito'
+                        data: 'area',
+                        name: 'area'
                     },
                     {
-                        data: 'fecha_inicio',
-                        name: 'fecha_inicio'
-                    },
-                    {
-                        data: 'fecha_fin',
-                        name: 'fecha_fin'
+                        data: 'user',
+                        name: 'user'
                     },
                     {
                         data: 'id',
                         name: 'actions',
                         render: function(data, type, row, meta) {
-                            let proveedores = @json($proveedores);
-                            let urlButtonArchivar = `/katbol/proveedores/archivar/${data}`;
-                            let urlButtonEdit = `/katbol/proveedores/${data}/edit`;
+                            let requisiciones = @json($requisiciones_solicitante);
+                            let urlButtonArchivar = `/katbol/requisiciones/archivar/${data}`;
+                            let urlButtonEdit = `/katbol/requisiciones/${data}/edit`;
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
@@ -257,7 +232,7 @@
                     [0, 'desc']
                 ]
             };
-            let table = $('.datatable-Proveedores').DataTable(dtOverrideGlobals);
+            let table = $('.datatable-Requisiciones').DataTable(dtOverrideGlobals);
 
             window.Archivar = function(url, nombre) {
                 Swal.fire({

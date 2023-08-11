@@ -16,7 +16,7 @@ class SucursalController extends Controller
     public function index()
     {
 
-        $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
+        $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', false)->get();
         $sucursales_id = Sucursal::get()->pluck('id');
         $ids = [];
 

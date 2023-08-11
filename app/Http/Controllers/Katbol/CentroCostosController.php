@@ -16,7 +16,7 @@ class CentroCostosController extends Controller
     public function index()
     {
 
-        $centros = CentroCosto::select('id', 'clave', 'descripcion', 'estado', 'archivo')->where('archivo', true)->get();
+        $centros = CentroCosto::select('id', 'clave', 'descripcion', 'estado', 'archivo')->where('archivo', false)->get();
         $centros_id = CentroCosto::get()->pluck('id');
         $ids = [];
 
@@ -29,7 +29,7 @@ class CentroCostosController extends Controller
 
     public function getCentroCostosIndex(Request $request)
     {
-        $query = CentroCosto::select('id', 'clave', 'descripcion', 'estado', 'archivo')->where('archivo', true)->get();
+        $query = CentroCosto::select('id', 'clave', 'descripcion', 'estado', 'archivo')->where('archivo', false)->get();
 
         return datatables()->of($query)->toJson();
     }

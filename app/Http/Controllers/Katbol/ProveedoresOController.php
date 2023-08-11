@@ -16,7 +16,7 @@ class ProveedoresOController extends Controller
     public function index()
     {
 
-        $proveedores = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', true)->get();
+        $proveedores = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', false)->get();
         $proveedores_id = ProveedorOC::get()->pluck('id');
         $ids = [];
 
@@ -29,7 +29,7 @@ class ProveedoresOController extends Controller
 
     public function getproveedoresIndex(Request $request)
     {
-        $query = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', true)->get();
+        $query = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', false)->get();
         return datatables()->of($query)->toJson();
     }
 
