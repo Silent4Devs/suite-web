@@ -85,9 +85,11 @@ class ControlDocumentosController extends Controller
     {
         abort_if(Gate::denies('control_documento_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $elaboros = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::getAll();
 
-        $revisos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $elaboros = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $revisos = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $estados = EstadoDocumento::all()->pluck('estado', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -105,9 +107,11 @@ class ControlDocumentosController extends Controller
     {
         abort_if(Gate::denies('control_documento_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $elaboros = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::getAll();
 
-        $revisos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $elaboros = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $revisos = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $estados = EstadoDocumento::all()->pluck('estado', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -120,9 +124,11 @@ class ControlDocumentosController extends Controller
     {
         abort_if(Gate::denies('control_documento_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $elaboros = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::getAll();
 
-        $revisos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $elaboros = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $revisos = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $estados = EstadoDocumento::all()->pluck('estado', 'id')->prepend(trans('global.pleaseSelect'), '');
 

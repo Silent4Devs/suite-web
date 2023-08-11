@@ -20,14 +20,23 @@ class ProductoController extends Controller
     public function index()
     {
 
-        $productos = Producto::get();
+        $productos = Producto::select('id', 'clave', 'descripcion')->where('archivo', true)->get();
+        $productos_id = Producto::get()->pluck('id');
+        $ids = [];
 
-        return view('katbol.productos.index', compact('productos'));
+        foreach ($productos_id as $id) {
+            $ids =  $id;
+        }
+
+        return view('katbol.productos.index', compact('productos', 'ids'));
+
+
+
     }
 
     public function getProductosIndex(Request $request)
     {
-        $query = Producto::get();
+        $query = Producto::select('id', 'clave', 'descripcion')->where('archivo', true)->get();
 
         return datatables()->of($query)->toJson();
     }
@@ -113,41 +122,24 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function archivar($id)
     {
-        Producto::destroy($id);
-    }
+        $productos = Producto::find($id);
 
-
-    public function massDestroy(Request $request)
-    {
-        Producto::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
-    }
-
-    public function archivo()
-    {
-      $productos = Producto::where('archivo', true)->get();
-
-      return view('productos.archivo', compact('productos'));
-    }
-
-
-    public function estado($id)
-    {
-        $producto = Producto::find($id);
-        if($producto->archivo === 0){
-            $producto->update([
-                'archivo' => 1,
+        if($productos->archivo === false){
+            $productos->update([
+                'archivo' => true,
             ]);
 
         }else{
-            $producto->update([
-                'archivo' => 0,
+            $productos->update([
+                'archivo' => false,
             ]);
+
         }
-        $productos = Producto::where('archivo', true)->get();
-        return view('productos.archivo', compact('productos'));
+
+        return redirect('/katbol/productos');
     }
+
+
 }

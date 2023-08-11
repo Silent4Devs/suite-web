@@ -157,7 +157,7 @@ class Empleado extends Model implements Auditable
         // Generate a unique cache key based on the options provided
         $cacheKey = 'empleados_all_' . md5(serialize($options));
 
-        return Cache::remember('empleados_all', 3600 * 24, function () use ($options) {
+        return Cache::remember('empleados_all', 3600 * 12, function () use ($options) {
             $query = self::query();
 
             if (isset($options['orderBy'])) {
@@ -167,6 +167,14 @@ class Empleado extends Model implements Auditable
 
             return $query->get();
         });
+    }
+
+    public static function getEmpleadoCurriculum($id)
+    {
+        return
+            Cache::remember('EmpleadoCurriculum_' . $id, 3600 * 12, function () use ($id) {
+                return self::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->findOrFail($id);
+            });
     }
 
     public static function getAltaEmpleados()
@@ -180,6 +188,13 @@ class Empleado extends Model implements Auditable
     {
         return Cache::remember('empleados_alta_all', 3600 * 24, function () {
             return self::alta()->get();
+        });
+    }
+
+    public static function getreportesAll()
+    {
+        return Cache::remember('empleados_reportes_all', 3600 * 24, function () {
+            return self::select('id', 'antiguedad', 'puesto_id', 'area_id', 'name', 'estatus')->get();
         });
     }
 

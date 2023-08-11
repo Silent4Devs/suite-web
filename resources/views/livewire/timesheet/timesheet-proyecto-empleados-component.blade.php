@@ -36,14 +36,14 @@
             @if($proyecto->tipo === "Externo")
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number" min="1" class="form-control">
+                <input wire:model.defer="horas_asignadas" name="horas_asignadas" id="horas_asignadas" type="number" step="0.01" min="0.01" class="form-control">
             </div>
             @error('horas_asignadas')
                 <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
             @enderror
             <div class="form-group col-md-4">
                 <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora" type="number" min="1" class="form-control">
+                <input wire:model.defer="costo_hora" name="costo_hora" id="costo_hora" type="number" min="0.01" step="0.01" class="form-control">
             </div>
             @error('costo_hora')
                 <small class="text-danger"><i class="fas fa-info-circle mr-2"></i>{{ $message }}</small>
@@ -146,12 +146,12 @@
                                         <div class="form-group col-md-6">
                                             <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
                                             <input value="{{ old('horas_edit', $proyect_empleado->horas_asignadas  ?? '0') }}"
-                                            name="horas_edit" id="" type="number" min="1" class="form-control">
+                                            name="horas_edit" id="" type="number" step="0.01" min="0.01" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
                                             <input value="{{ old('horas_edit', $proyect_empleado->costo_hora) }}"
-                                            name="costo_edit" id="" type="number" min="1" value="{{$proyect_empleado->costo_hora  ?? '0' }}"  class="form-control">
+                                            name="costo_edit" id="" type="number" step="0.01" min="0.01" value="{{$proyect_empleado->costo_hora  ?? '0' }}"  class="form-control">
                                         </div>
                                     </div>
                                 @endif

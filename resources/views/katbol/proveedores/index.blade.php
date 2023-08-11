@@ -65,7 +65,7 @@
         $(function() {
             let dtButtons = [{
                     extend: 'csvHtml5',
-                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
+                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar CSV',
@@ -75,7 +75,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
+                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar Excel',
@@ -85,7 +85,7 @@
                 },
                 {
                     extend: 'pdfHtml5',
-                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
+                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-file-pdf" style="font-size: 1.1rem;color:#e3342f"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Exportar PDF',
@@ -101,7 +101,7 @@
                 },
                 {
                     extend: 'print',
-                    title: `Usuarios ${new Date().toLocaleDateString().trim()}`,
+                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
@@ -143,9 +143,9 @@
                     }
                 };
                 dtButtons.push(btnAgregar);
-                let deleteButton = {
-                    text: 'Eliminar Registro',
-                    url: "{{ route('katbol.proveedores.massDestroy') }}",
+                let archivarButton = {
+                    text: 'Archivar Registro',
+                    url: "{{ route('katbol.proveedores.archivar', ['id' => $ids]) }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -169,7 +169,7 @@
                                     url: config.url,
                                     data: {
                                         ids: ids,
-                                        _method: 'DELETE'
+                                        _method: 'POST'
                                     }
                                 })
                                 .done(function() {
@@ -238,13 +238,13 @@
                         name: 'actions',
                         render: function(data, type, row, meta) {
                             let proveedores = @json($proveedores);
-                            let urlButtonDelete = `/katbol/proveedores/${data}`;
+                            let urlButtonArchivar = `/katbol/proveedores/archivar/${data}`;
                             let urlButtonEdit = `/katbol/proveedores/${data}/edit`;
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
                                     <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.nombre}');"><i class="fas fa-trash-alt"></i></button>
+                                    <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.nombre}');"> <i class="fa-solid fa-box-archive"></i></a>
                                 </div>
 
                             `;
@@ -259,35 +259,35 @@
             };
             let table = $('.datatable-User').DataTable(dtOverrideGlobals);
 
-            window.Eliminar = function(url, nombre) {
+            window.Archivar = function(url, nombre) {
                 Swal.fire({
-                    title: `¿Estás seguro de eliminar el siguiente registro?`,
+                    title: `¿Estás seguro de archivar el siguiente registro?`,
                     html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: '¡Sí, eliminar!',
+                    confirmButtonText: '¡Sí, archivar!',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            type: "DELETE",
+                            type: "POST",
                             headers: {
                                 'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
                             },
                             url: url,
                             beforeSend: function() {
                                 Swal.fire(
-                                    '¡Estamos Eliminando!',
-                                    `El usuario: ${nombre} está siendo eliminado`,
+                                    '¡Estamos Archivar!',
+                                    `El proveedor: ${nombre} está siendo archivado`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
-                                    'Eliminado!',
-                                    `El usuario: ${nombre} ha sido eliminado`,
+                                    'Archivando!',
+                                    `El proveedor: ${nombre} ha sido archivado`,
                                     'success'
                                 )
                                 table.ajax.reload();

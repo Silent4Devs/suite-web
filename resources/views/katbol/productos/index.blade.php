@@ -17,7 +17,7 @@
 
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-User">
+            <table class="table table-bordered w-100 datatable-Productos">
                 <thead class="thead-dark">
                     <tr>
 
@@ -108,10 +108,9 @@
                 }
 
             ];
-            @can('usuarios_agregar')
-                let btnAgregar = {
+            let btnAgregar = {
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar usuario',
+                    titleAttr: 'Agregar producto',
                     url: "{{ route('katbol.productos.create') }}",
                     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                     action: function(e, dt, node, config) {
@@ -120,13 +119,11 @@
                         } = config;
                         window.location.href = url;
                     }
-                };
-                dtButtons.push(btnAgregar);
-            @endcan
-            @can('usuarios_eliminar')
-                let deleteButton = {
-                    text: 'Eliminar Registro',
-                    url: "{{ route('katbol.productos.massDestroy') }}",
+            };
+            dtButtons.push(btnAgregar);
+            let archivoButton = {
+                    text: 'Archivar Registro',
+                    url: "{{ route('katbol.productos.archivar', ['id' => $ids]) }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -150,7 +147,7 @@
                                     url: config.url,
                                     data: {
                                         ids: ids,
-                                        _method: 'DELETE'
+                                        _method: 'POST'
                                     }
                                 })
                                 .done(function() {
@@ -158,9 +155,7 @@
                                 })
                         }
                     }
-                }
-                // dtButtons.push(deleteButton)
-            @endcan
+            }
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -188,13 +183,13 @@
                         name: 'actions',
                         render: function(data, type, row, meta) {
                             let productos = @json($productos);
-                            let urlButtonDelete = `/katbol/productos/${data}`;
+                            let urlButtonArchivar = `/katbol/productos/archivar/${data}`;
                             let urlButtonEdit = `/katbol/productos/${data}/edit`;
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
                                     <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    <button class="btn btn-sm text-danger" title="Eliminar" onclick="Eliminar('${urlButtonDelete}','${row.clave}');"><i class="fas fa-trash-alt"></i></button>
+                                    <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.clave}');"> <i class="fa-solid fa-box-archive"></i></a>
                                 </div>
 
                             `;
@@ -207,37 +202,38 @@
                     [0, 'desc']
                 ]
             };
-            let table = $('.datatable-User').DataTable(dtOverrideGlobals);
+            let table = $('.datatable-Productos').DataTable(dtOverrideGlobals);
 
-            window.Eliminar = function(url, clave) {
+            window.Archivar = function(url, clave) {
                 Swal.fire({
-                    title: `¿Estás seguro de eliminar el siguiente registro?`,
+                    title: `¿Estás seguro de archivar el siguiente registro?`,
                     html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${clave}</strong>`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: '¡Sí, eliminar!',
+                    confirmButtonText: '¡Sí, archivar!',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
+                    console.log(result);
                     if (result.isConfirmed) {
                         $.ajax({
-                            type: "DELETE",
+                            type: "POST",
                             headers: {
                                 'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
                             },
                             url: url,
                             beforeSend: function() {
                                 Swal.fire(
-                                    '¡Estamos Eliminando!',
-                                    `El usuario: ${clave} está siendo eliminado`,
+                                    '¡Estamos Archivando!',
+                                    `El producto: ${clave} está siendo archivado`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
-                                    'Eliminado!',
-                                    `El usuario: ${clave} ha sido eliminado`,
+                                    'Archivando!',
+                                    `El producto: ${clave} ha sido archivado`,
                                     'success'
                                 )
                                 table.ajax.reload();

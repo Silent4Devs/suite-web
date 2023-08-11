@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Traits\MultiTenantModelTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Comiteseguridad extends Model implements Auditable
 {
@@ -22,6 +23,13 @@ class Comiteseguridad extends Model implements Auditable
         'updated_at',
         'deleted_at',
     ];
+
+    public static function getAll()
+    {
+        return Cache::remember('comite_seguridad_all', 3600 * 6, function () {
+            return self::get();
+        });
+    }
 
     public function miembros()
     {

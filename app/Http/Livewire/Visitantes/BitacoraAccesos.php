@@ -75,7 +75,7 @@ class BitacoraAccesos extends Component
     public function render()
     {
         $model = $this->getQueryFilter();
-        $visitantes = $model->paginate($this->perPage);
+        $visitantes = $model->fastPaginate($this->perPage);
         $this->total = $model->count();
         $this->obtenerTexto($this->total, $visitantes->count());
 
@@ -116,7 +116,7 @@ class BitacoraAccesos extends Component
     {
         $model = $this->getQueryFilter();
 
-        return Excel::download(new VisitanteExport($model->get()), 'Reporte de Visitantes '.now()->format('d-m-Y h:i A').'.xlsx');
+        return Excel::download(new VisitanteExport($model->get()), 'Reporte de Visitantes ' . now()->format('d-m-Y h:i A') . '.xlsx');
     }
 
     public function default()

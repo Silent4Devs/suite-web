@@ -133,14 +133,14 @@
 
         .btn-silent:after {
             /*content: "";
-                    position: absolute;
-                    width: 100%;
-                    height: 2px;
-                    bottom: 5px;
-                    background-color: #e6e6e6;
-                    transition: 0.4s;
-                    left: 0;
-                    z-index: 0;*/
+                        position: absolute;
+                        width: 100%;
+                        height: 2px;
+                        bottom: 5px;
+                        background-color: #e6e6e6;
+                        transition: 0.4s;
+                        left: 0;
+                        z-index: 0;*/
         }
 
         .btn-silent:hover:before {
@@ -159,7 +159,6 @@
         .btn-silent:hover {
             color: #345183 !important;
         }
-
     </style>
     <style type="text/css">
         .titulo-seccion {
@@ -425,10 +424,9 @@
             margin-top: 30px !important;
         }
 
-        .carousel-indicators{
+        .carousel-indicators {
             z-index: 5 !important;
         }
-
     </style>
 
 
@@ -489,16 +487,21 @@
                                             } else {
                                                 $imagen = 'img/tabantaj_fondo_blanco.png';
                                             }
-
+                                            
                                         @endphp
-                                        @if($carrusel->imagenes_comunicacion->first()->tipo == 'video')
-                                            <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}" data-toggle="modal" data-target="#comunicado_carrusel_modal{{$idx}}" style="cursor: pointer;">
-                                                <div class="img_carrusel" style="display: flex; justify-content: center; align-items: center;">
+                                        @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
+                                            <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}" data-toggle="modal"
+                                                data-target="#comunicado_carrusel_modal{{ $idx }}"
+                                                style="cursor: pointer;">
+                                                <div class="img_carrusel"
+                                                    style="display: flex; justify-content: center; align-items: center;">
                                                     <video muted controls src="{{ asset($imagen) }}" width="100%"></video>
                                                 </div>
                                             </div>
-                                         @else
-                                            <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}" data-toggle="modal" data-target="#comunicado_carrusel_modal{{$idx}}" style="cursor: pointer;">
+                                        @else
+                                            <div class="carousel-item {{ $idx == 0 ? 'active' : '' }}" data-toggle="modal"
+                                                data-target="#comunicado_carrusel_modal{{ $idx }}"
+                                                style="cursor: pointer;">
                                                 <div class="img_carrusel"
                                                     style="background-image: url('{{ asset($imagen) }}');">
                                                 </div>
@@ -536,34 +539,43 @@
                         </div>
 
                         {{-- modal carrusel --}}
-                        @foreach($comunicacionSgis_carrusel as $idx=>$carrusel)
-                            @if($carrusel->imagenes_comunicacion->first()->tipo == 'video')
-                                <div class="modal fade carrusel-modal" id="comunicado_carrusel_modal{{$idx}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog" role="document" style="max-width: 75% !important;">
-                                    <div class="modal-content">
-                                      <div class="modal-body">
-                                        <a href="{{$carrusel->link}}">{{Str::limit($carrusel->link, 50, '...')}}</a>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                            <video muted controls src="{{asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen)}}" width="100%"></video>
-                                      </div>
+                        @foreach ($comunicacionSgis_carrusel as $idx => $carrusel)
+                            @if ($carrusel->imagenes_comunicacion->first()->tipo == 'video')
+                                <div class="modal fade carrusel-modal" id="comunicado_carrusel_modal{{ $idx }}"
+                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document" style="max-width: 75% !important;">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <a
+                                                    href="{{ $carrusel->link }}">{{ Str::limit($carrusel->link, 50, '...') }}</a>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <video muted controls
+                                                    src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
+                                                    width="100%"></video>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
-                             @else
-                                <div class="modal fade carrusel-modal" id="comunicado_carrusel_modal{{$idx}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog" role="document" style="max-width: 75% !important;">
-                                    <div class="modal-content">
-                                      <div class="modal-body">
-                                        <a href="{{$carrusel->link}}">{{Str::limit($carrusel->link, 50, '...')}}</a>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <img src="{{asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen)}}" style="width: 100%;">
-                                      </div>
+                            @else
+                                <div class="modal fade carrusel-modal" id="comunicado_carrusel_modal{{ $idx }}"
+                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document" style="max-width: 75% !important;">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <a
+                                                    href="{{ $carrusel->link }}">{{ Str::limit($carrusel->link, 50, '...') }}</a>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <img src="{{ asset('storage/imagen_comunicado_SGI/' . $carrusel->imagenes_comunicacion->first()->imagen) }}"
+                                                    style="width: 100%;">
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
                             @endif
                         @endforeach
@@ -583,19 +595,22 @@
                                                 } else {
                                                     $imagen = 'img/portal_404.png';
                                                 }
-
+                                                
                                             @endphp
 
                                             {{-- {{ asset('public/storage/imagen_comunicado_SGI/'. $comunicacionSgi->imagenes_comunicacion->first()->imagen) }} --}}
-                                            @if($comunicacionSgi->imagenes_comunicacion->first()->tipo == 'video')
-                                                <div class="img_comunicado" style="display:flex; justify-content: center; align-items:center;">
-                                                    <video autoplay muted controls src="{{ asset($imagen) }}" width="100%"></video>
+                                            @if ($comunicacionSgi->imagenes_comunicacion->first()->tipo == 'video')
+                                                <div class="img_comunicado"
+                                                    style="display:flex; justify-content: center; align-items:center;">
+                                                    <video autoplay muted controls src="{{ asset($imagen) }}"
+                                                        width="100%"></video>
                                                 </div>
-                                             @else
+                                            @else
                                                 <div class="img_comunicado"
                                                     style="background-image: url('{{ asset($imagen) }}');">
                                                 </div>
-                                            @endif                                            <div class="text_comunicado">
+                                            @endif
+                                            <div class="text_comunicado">
                                                 <h4 class="w-100 mb-4" style="font-size:16px;">
                                                     {{ $comunicacionSgi->titulo }}</h4>
 
@@ -626,66 +641,66 @@
                                 </div>
                             @endcan
                             @can('portal_comunicacion_mostrar_documentos_publicados')
-                            <div class="card card-body">
-                                <h2 class="titulo-seccion" style="font-weight:normal;"><i
-                                        class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
-                                @forelse($documentos_publicados as $documento)
-                                    <div class="doc_publicado">
-                                        <div class="icon_doc">
-                                            <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
-                                                title="Ver documento">
-                                                <i class="bi bi-file-earmark-pdf"></i>
-                                            </a>
-                                        </div>
-                                        <div class="text_doc">
-                                            <h5>{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
-                                            </h5>
-                                            <p>
-                                                Se ha publicado el documento {{ $documento->codigo }}
-                                                {{ $documento->nombre }} el
-                                                10/10/21.
-                                            </p>
-                                            <p>
-                                                <span class="badge"
-                                                    style="text-transform: capitalize">{{ $documento->tipo }}</span>
-                                                @if ($documento->macroproceso_id)
+                                <div class="card card-body">
+                                    <h2 class="titulo-seccion" style="font-weight:normal;"><i
+                                            class="mr-3 far fa-file-alt"></i>Documentos publicados </h2>
+                                    @forelse($documentos_publicados as $documento)
+                                        <div class="doc_publicado">
+                                            <div class="icon_doc">
+                                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}"
+                                                    title="Ver documento">
+                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                </a>
+                                            </div>
+                                            <div class="text_doc">
+                                                <h5>{{ Str::limit($documento->codigo . ' - ' . $documento->nombre . '', 50, '...') }}
+                                                </h5>
+                                                <p>
+                                                    Se ha publicado el documento {{ $documento->codigo }}
+                                                    {{ $documento->nombre }} el
+                                                    10/10/21.
+                                                </p>
+                                                <p>
                                                     <span class="badge"
-                                                        style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
-                                                @endif
-                                                @if ($documento->proceso_id)
-                                                    <span class="badge"
-                                                        style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
-                                                @endif
-                                                <span style="color:#1E94A8; margin-left:20px;"><i
-                                                        class="fas fa-eye"></i>
-                                                    <strong>{{ $documento->no_vistas }}</strong></span>
-                                            </p>
-                                        </div>
-                                        <div class="opciones_doc">
-                                            <p>Responsable:</p>
-                                            <img src="{{ asset('storage/empleados/imagenes/')}}/{{$documento->responsable ? $documento->responsable->avatar : 'user.png' }}"
-                                                class="img_empleado" title="{{ $documento->responsable ? $documento->responsable->name : 'Sin dato'}}"><br />
-                                            <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver
-                                                documento</a>
-                                        </div>
-                                    </div>
-
-                                    <hr style="margin: 18px 0;">
-                                @empty
-                                    <div class="comunicado" style="position:relative;">
-                                        <div class="img_comunicado"
-                                            style="background-image: url('{{ asset('img/no_docs.svg') }}'); transform: scale(0.8);">
-                                        </div>
-                                        <div class="text_comunicado">
-                                            <h4 class="w-100">Sin documentos que mostar</h4>
-                                            <p class="w-100">
-
-                                            </p>
+                                                        style="text-transform: capitalize">{{ $documento->tipo }}</span>
+                                                    @if ($documento->macroproceso_id)
+                                                        <span class="badge"
+                                                            style="text-transform: capitalize">{{ $documento->macroproceso->nombre }}</span>
+                                                    @endif
+                                                    @if ($documento->proceso_id)
+                                                        <span class="badge"
+                                                            style="text-transform: capitalize">{{ $documento->proceso->nombre }}</span>
+                                                    @endif
+                                                    <span style="color:#1E94A8; margin-left:20px;"><i class="fas fa-eye"></i>
+                                                        <strong>{{ $documento->no_vistas }}</strong></span>
+                                                </p>
+                                            </div>
+                                            <div class="opciones_doc">
+                                                <p>Responsable:</p>
+                                                <img src="{{ asset('storage/empleados/imagenes/') }}/{{ $documento->responsable ? $documento->responsable->avatar : 'user.png' }}"
+                                                    class="img_empleado"
+                                                    title="{{ $documento->responsable ? $documento->responsable->name : 'Sin dato' }}"><br />
+                                                <a href="{{ route('admin.documentos.renderViewDocument', $documento->id) }}">Ver
+                                                    documento</a>
+                                            </div>
                                         </div>
 
-                                    </div>
-                                @endforelse
-                            </div>
+                                        <hr style="margin: 18px 0;">
+                                    @empty
+                                        <div class="comunicado" style="position:relative;">
+                                            <div class="img_comunicado"
+                                                style="background-image: url('{{ asset('img/no_docs.svg') }}'); transform: scale(0.8);">
+                                            </div>
+                                            <div class="text_comunicado">
+                                                <h4 class="w-100">Sin documentos que mostar</h4>
+                                                <p class="w-100">
+
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    @endforelse
+                                </div>
                             @endcan
                         </div>
 

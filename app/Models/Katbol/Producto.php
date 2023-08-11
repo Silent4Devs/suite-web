@@ -12,6 +12,7 @@ class Producto extends Model
     public $table = 'productos';
 
     public $fillable = [
+        'id',
         'descripcion',
         'archivo',
         'clave'

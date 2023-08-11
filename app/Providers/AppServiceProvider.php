@@ -2,19 +2,20 @@
 
 namespace App\Providers;
 
-use App\Extensions\CustomSessionHandler;
-use App\Models\VersionesIso;
 use Carbon\Carbon;
-use Illuminate\Filesystem\Filesystem;
+use App\Models\VersionesIso;
+use Laravel\Passport\Passport;
+use Spatie\Health\Facades\Health;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use App\Extensions\CustomSessionHandler;
 use Spatie\Health\Checks\Checks\DatabaseCheck;
 use Spatie\Health\Checks\Checks\EnvironmentCheck;
 use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
-use Spatie\Health\Facades\Health;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
             DatabaseCheck::new(),
             //DebugModeCheck::new(),
         ]);
+        Passport::ignoreRoutes();
     }
 
     /**

@@ -16,14 +16,20 @@ class CentroCostosController extends Controller
     public function index()
     {
 
-        $centros = CentroCosto::get();
+        $centros = CentroCosto::select('id', 'clave', 'descripcion', 'estado', 'archivo')->where('archivo', true)->get();
+        $centros_id = CentroCosto::get()->pluck('id');
+        $ids = [];
 
-        return view('katbol.centro-costos.index', compact('centros'));
+        foreach ($centros_id as $id) {
+            $ids =  $id;
+        }
+
+        return view('katbol.centro-costos.index', compact('centros', 'ids'));
     }
 
     public function getCentroCostosIndex(Request $request)
     {
-        $query = CentroCosto::get();
+        $query = CentroCosto::select('id', 'clave', 'descripcion', 'estado', 'archivo')->where('archivo', true)->get();
 
         return datatables()->of($query)->toJson();
     }
@@ -104,47 +110,20 @@ class CentroCostosController extends Controller
             return redirect('/katbol/centro-costos');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        CentroCosto::destroy($id);
-    }
 
-
-    public function massDestroy(Request $request)
-    {
-        CentroCosto::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
-    }
-
-    public function archivo()
-    {
-      $centros = CentroCosto::where('archivo', true)->get();
-
-      return view('centro-costos.archivo', compact('centro-costos'));
-    }
-
-
-    public function estado($id)
+    public function archivar($id)
     {
         $centro = CentroCosto::find($id);
-        if($centro->archivo === 0){
+        if($centro->archivo === false){
             $centro->update([
-                'archivo' => 1,
+                'archivo' => true,
             ]);
 
         }else{
             $centro->update([
-                'archivo' => 0,
+                'archivo' => false,
             ]);
         }
-        $centros = CentroCosto::where('archivo', true)->get();
-        return view('centro-costos.archivo', compact('centros'));
+        return redirect('/katbol/centro-costos');
     }
 }

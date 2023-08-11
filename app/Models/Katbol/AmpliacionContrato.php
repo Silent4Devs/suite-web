@@ -26,7 +26,6 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class AmpliacionContrato extends Model implements Auditable
 {
-    use SoftDeletes;
     use AuditableTrait;
 
     protected $table = 'ampliacion_contratos';

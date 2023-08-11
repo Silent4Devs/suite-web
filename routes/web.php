@@ -6,6 +6,7 @@ use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
     Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
@@ -24,6 +25,10 @@ Route::post('/minutas/revisiones/approve', 'RevisionMinutasController@approve')-
 Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->name('minutas.revisiones.reject');
 Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@edit')->name('minutas.revisiones.revisar');
 Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
+
+
+Route::post('provedor_reporte', 'Katbol\ReporteRequisicionController@AjaxRequestProveedores')->name('provedor_reporte');
+Route::post('contrato_reporte', 'Katbol\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
 
 Auth::routes();
 
@@ -757,6 +762,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('timesheet/proyectos/show/{id}', 'TimesheetController@showProyectos')->name('timesheet-proyectos-show');
         Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
         Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
+        Route::get('timesheet/proyectos/reporte/registros', 'TimesheetController@reportesRegistros')->name('timesheet-reportes-registros');
+        Route::get('timesheet/proyectos/reporte/proyemp', 'TimesheetController@reportesProyemp')->name('timesheet-reportes-proyemp');
+        Route::get('timesheet/proyectos/reporte/empleados', 'TimesheetController@reportesEmpleados')->name('timesheet-reportes-empleados');
+        Route::get('timesheet/proyectos/reporte/proyectos', 'TimesheetController@reportesProyectos')->name('timesheet-reportes-proyectos');
 
         Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
         Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');
@@ -1483,24 +1492,26 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 
 
-
 Route::group(['prefix' => 'katbol', 'as' => 'katbol.', 'namespace' => 'Katbol', 'middleware' => ['auth', '2fa', 'active']], function () {
 
     //KATBOL
     Route::resource('productos', 'ProductoController');
-    Route::delete('productos/destroy', 'ProductoController@massDestroy')->name('productos.massDestroy');
+    Route::post('productos/archivar/{id}', 'ProductoController@archivar')->name('productos.archivar');
     Route::post('productos/list/get', 'ProductoController@getProductosIndex')->name('productos.getProductosIndex');
 
     Route::resource('sucursales', 'SucursalController');
-    Route::delete('sucursales/destroy', 'SucursalController@massDestroy')->name('sucursales.massDestroy');
+    Route::post('sucursales/archivar/{id}', 'SucursalController@archivar')->name('sucursales.archivar');
     Route::post('sucursales/list/get', 'SucursalController@getSucursalesIndex')->name('sucursales.getSucursalesIndex');
 
-    Route::resource('proveedores', 'ProveedoresController');
-    Route::delete('proveedores/destroy', 'ProveedoresController@massDestroy')->name('proveedores.massDestroy');
-    Route::post('proveedores/list/get', 'ProveedoresController@getProveedoresIndex')->name('proveedores.getProveedoresIndex');
+    Route::resource('proveedores', 'ProveedoresOController');
+    Route::post('proveedores/archivar/{id}', 'ProveedoresOController@archivar')->name('proveedores.archivar');
+    Route::post('proveedores/list/get', 'ProveedoresOController@getProveedoresIndex')->name('proveedores.getProveedoresIndex');
 
     Route::resource('centro-costos', 'CentroCostosController');
-    Route::delete('centro-costos/destroy', 'CentroCostosController@massDestroy')->name('centro-costos.massDestroy');
+    Route::post('centro-costos/archivar/{id}', 'CentroCostosController@archivar')->name('centro-costos.archivar');
     Route::post('centro-costos/list/get', 'CentroCostosController@getCentroCostosIndex')->name('centro-costos.getCentroCostosIndex');
+
+    Route::resource('reportes', 'ReporteRequisicionController');
+    Route::post('excelContratos', 'ReporteRequisicionController@ExcelContratos')->name('excelContratos');
 
 });

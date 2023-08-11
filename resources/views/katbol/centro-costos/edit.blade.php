@@ -1,7 +1,7 @@
 
 @extends('layouts.admin')
 @section('content')
-<h5 class="col-12 titulo_general_funcion">Actualizar:  Producto</h5>
+<h5 class="col-12 titulo_general_funcion">Actualizar:  Centro de Costos</h5>
 <div class="mt-4 card">
     <div class="card-body">
         <form method="POST" action="{{ route('katbol.centro-costos.update', [$centros->id]) }}" enctype="multipart/form-data">
@@ -9,7 +9,7 @@
             @csrf
           <div class="row">
             <div class="form-group col-md-6 col-sm-6">
-                <label class="required" for="clave"><i class="fas fa-envelope iconos-crear"></i>Clave</label>
+                <label class="required" for="clave"><i class="fa-solid fa-key fa-lg"></i>&nbsp;&nbsp;Clave</label>
                 <input  value="{{ old("clave", $centros->clave) }}" class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" type="clave" name="clave" id="clave" value="{{ old('clave') }}" required>
                 @if($errors->has('clave'))
                     <div class="invalid-feedback">
@@ -19,7 +19,7 @@
                 <span class="help-block"></span>
             </div>
             <div class="form-group col-md-6 col-sm-6">
-                <label class="required" for="descripcion"><i class="fas fa-lock iconos-crear"></i>Descripción</label>
+                <label class="required" for="descripcion"><i class="fa-solid fa-file-lines fa-lg"></i>&nbsp;&nbsp;Descripción</label>
                 <input value="{{old("descripcion",  $centros->descripcion)}}"  class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="descripcion" name="descripcion" id="descripcion" required>
                 @if($errors->has('descripcion'))
                     <div class="invalid-feedback">

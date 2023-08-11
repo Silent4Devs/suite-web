@@ -83,7 +83,7 @@ class BuscarCVComponent extends Component
         } else {
             $this->area_id = $value;
             $this->empleado_id = null;
-            $this->empleados = Empleado::alta()->where('area_id', $this->area_id)->get();
+            $this->empleados = Empleado::getaltaAll()->where('area_id', $this->area_id);
         }
         $this->emit('tagify');
     }
@@ -115,44 +115,42 @@ class BuscarCVComponent extends Component
 
     public function mount()
     {
-        if (! $this->isPersonal) {
+        if (!$this->isPersonal) {
             $this->empleados = Empleado::getAltaEmpleados();
         }
     }
 
     public function render()
     {
-        $cacheKey = 'empleadosCV_data_'.Auth::user()->id;
+        $cacheKey = 'empleadosCV_data_' . Auth::user()->id;
 
-        $empleadosCV = Cache::remember($cacheKey, 3600 * 60, function () {
-            return Empleado::alta()
-                ->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
-                ->when($this->empleado_id, function ($q3) {
-                    $q3->where('id', $this->empleado_id);
-                })
-                ->when($this->area_id, function ($q4) {
-                    $q4->where('area_id', $this->area_id);
-                })
-                ->when($this->certificacion, function ($q) {
-                    $q->whereHas('empleado_certificaciones', function ($query) {
-                        $certificaciones = explode(',', $this->certificacion);
-                        $query->where(function ($queryArr) use ($certificaciones) {
-                            foreach ($certificaciones as $busqueda) {
-                                $queryArr->orWhere('nombre', 'ILIKE', "%{$busqueda}%");
-                            }
-                        });
+        $empleadosCV = Empleado::alta()
+            ->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')
+            ->when($this->empleado_id, function ($q3) {
+                $q3->where('id', $this->empleado_id);
+            })
+            ->when($this->area_id, function ($q4) {
+                $q4->where('area_id', $this->area_id);
+            })
+            ->when($this->certificacion, function ($q) {
+                $q->whereHas('empleado_certificaciones', function ($query) {
+                    $certificaciones = explode(',', $this->certificacion);
+                    $query->where(function ($queryArr) use ($certificaciones) {
+                        foreach ($certificaciones as $busqueda) {
+                            $queryArr->orWhere('nombre', 'ILIKE', "%{$busqueda}%");
+                        }
                     });
-                })
-                ->when($this->curso, function ($qCurso) {
-                    $qCurso->whereHas('empleado_cursos', function ($queryCurso) {
-                        $queryCurso->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
-                    });
-                })
-                ->when($this->general, function ($qGeneral) {
-                    $qGeneral->where('name', 'ILIKE', "%{$this->general}%");
-                })
-                ->paginate(21);
-        });
+                });
+            })
+            ->when($this->curso, function ($qCurso) {
+                $qCurso->whereHas('empleado_cursos', function ($queryCurso) {
+                    $queryCurso->where('curso_diploma', 'ILIKE', "%{$this->curso}%");
+                });
+            })
+            ->when($this->general, function ($qGeneral) {
+                $qGeneral->where('name', 'ILIKE', "%{$this->general}%");
+            })
+            ->fastPaginate(21);
 
         $this->empleado_id = null;
 
@@ -165,7 +163,7 @@ class BuscarCVComponent extends Component
 
     public function mostrarCurriculum($empleadoID)
     {
-        $this->empleadoModel = Empleado::alta()->with('empleado_certificaciones', 'empleado_cursos', 'empleado_experiencia')->find($empleadoID);
+        $this->empleadoModel = Empleado::getEmpleadoCurriculum($empleadoID)->find($empleadoID);
         $this->emit('tagify');
     }
 

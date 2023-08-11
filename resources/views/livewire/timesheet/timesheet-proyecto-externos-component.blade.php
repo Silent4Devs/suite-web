@@ -19,11 +19,11 @@
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="horas_tercero" name="" id="" type="number" min="1" class="form-control">
+                <input wire:model.defer="horas_tercero" name="" id="" step="0.01" type="number" min="0.01" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                <input wire:model.defer="costo_tercero" name="" id="" type="number" min="1" class="form-control">
+                <input wire:model.defer="costo_tercero" name="" id="" step="0.01" type="number" min="0.01" class="form-control">
             </div>
             <div class="form-group col-md-4" style="display: flex; align-items: flex-end;">
                 <button class="btn btn-success">Agregar</button>
@@ -123,11 +123,11 @@
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label for="">Horas asignadas<sup>*</sup>(obligatorio)</label>
-                                            <input value="{{ $proyecto_proveedor->horas_tercero}}" name="horas_tercero_edit" id="" type="number" min="1" class="form-control">
+                                            <input value="{{ $proyecto_proveedor->horas_tercero}}" name="horas_tercero_edit" id="" type="number" step="0.01" min="0.01" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="">Costo por hora<sup>*</sup>(obligatorio)</label>
-                                            <input value="{{ $proyecto_proveedor->costo_tercero}}" name="costo_tercero_edit" id="" type="number" min="1" class="form-control">
+                                            <input value="{{ $proyecto_proveedor->costo_tercero}}" name="costo_tercero_edit" id="" type="number" step="0.01" min="0.01" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row">
