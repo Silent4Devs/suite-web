@@ -35,7 +35,7 @@ class TimesheetHorasFilas extends Component
     public function mount($origen, $timesheet_id)
     {
         $empleado = Empleado::getAll()->find(auth()->user()->empleado->id);
-        $empleadoTimesheetproyecto = TimesheetProyectoEmpleado::getAllByEmpleadoId();
+        $empleadoTimesheetproyecto = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->get();
         $proyectosRedis = TimesheetProyecto::getAll();
         // areas proyectos
         $proyectos_array = collect();
