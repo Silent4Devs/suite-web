@@ -121,19 +121,19 @@
                             @endif
                         </td>
                         <td class="botones_accion" style="min-width: 100px;">
-                            {!! Form::open(['route' => ['contratos.destroy', $contrato->id], 'method' => 'delete']) !!}
+                            {!! Form::open(['route' => ['admin.contratos-katbol.destroy', $contrato->id], 'method' => 'delete']) !!}
                             <div class='btn-group'>
-                                <a href="{{ route('contratos.show', [$contrato->id]) }}"
+                                <a href="{{ route('admin.contratos-katbol.show', [$contrato->id]) }}"
                                     style="color:#2395AA;"><i class="material-icons-outlined">visibility </i>
                                 </a>
-                                @can('contratos.edit')
+                                @can('admin.contratos-katbol.edit')
                                 @if ($areas->count() > 0)
-                                    <a href="{{ route('contratos.edit', [$contrato->id]) }}"
+                                    <a href="{{ route('admin.contratos-katbol.edit', [$contrato->id]) }}"
                                     style="color:#2395AA;"><i class="material-icons-outlined">edit</i></a>
                                 @endif
 
                                 @endcan
-                                @can('contratos.destroy')
+                                @can('admin.contratos-katbol.destroy')
                                     {!! Form::button('<i class="material-icons">delete_outline</i>', ['type' => 'submit', 'style' => 'color:#2395AA', 'onclick' => "return confirm('Esta seguro de eliminar el registro?')"]) !!}
                                 @endcan
                             </div>

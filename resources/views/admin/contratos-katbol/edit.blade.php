@@ -26,8 +26,8 @@
 
     </style>
 
-{{ Breadcrumbs::render('contratos_edit', $contrato) }}
-        @include('bitacora.formedit', ["show_contrato"=>false])
+{{-- {{ Breadcrumbs::render('contratos_edit', $contrato) }} --}}
+        @include('admin.bitacora.formedit', ["show_contrato"=>false])
 
 
 
@@ -130,7 +130,7 @@
                                 </td>
                                 <td style="text-align: center">
                                     <form style="width:100%;" id="ampliacion_form"
-                                        action="{{ route('contratos.ampliacion', ['id' => $contratos->id]) }}"
+                                        action="{{ route('admin.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}"
                                         method="POST">
                                         @method("PATCH")
                                         <p style="width:100%; text-align:center;">
@@ -144,7 +144,7 @@
                                 </td>
                                 <td style="text-align: center">
                                     <form style="width:100%;" id="convenio_form"
-                                        action="{{ route('contratos.convenios', ['id' => $contratos->id]) }}"
+                                        action="{{ route('admin.contratos-katbol.convenios', ['id' => $contratos->id]) }}"
                                         method="POST">
                                         @method("PATCH")
                                         <p style="width:100%; text-align:center;">
@@ -185,7 +185,7 @@
                                             <tr class="black-text">
                                                 <td>
                                                     <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                        data-url="{{ route('contratopago', $contratos->id) }}"
+                                                        data-url="{{ route('admin.contratos-katbol.contratopago', $contratos->id) }}"
                                                         data-title="Número de contrato"
                                                         data-value="{{ $contratos->no_pagos }}" class="no_pagos"
                                                         data-name="no_pagos">
@@ -193,7 +193,7 @@
                                                 </td>
                                                 <td>
                                                     <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                        data-url="{{ route('contratopago', $contratos->id) }}"
+                                                        data-url="{{ route('admin.contratos-katbol.contratopago', $contratos->id) }}"
                                                         data-title="Tipo de contrato"
                                                         data-value="{{ $contratos->tipo_contrato }}"
                                                         class="tipo_contrato" data-name="tipo_contrato">
@@ -201,7 +201,7 @@
                                                 </td>
                                                 <td>
                                                     <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                        data-url="{{ route('contratopago', $contratos->id) }}"
+                                                        data-url="{{ route('admin.contratos-katbol.contratopago', $contratos->id) }}"
                                                         data-title="Nombre de servicio"
                                                         data-value="{{ $contratos->nombre_servicio }}"
                                                         class="nombre_servicio" data-name="nombre_servicio">
@@ -267,11 +267,11 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('ampliacion-contratos.ampliacion-component', [
+                                {{-- @livewire('ampliacion-contratos.ampliacion-component', [
                                 'contrato_id' => $contratos->id,
                                 'show_contrato'=>false,
                                 'fecha_fin_contrato'=>$contratos->fecha_fin
-                                ])
+                                ]) --}}
                             </div>
                         </div>
                     </div>
@@ -286,9 +286,9 @@
                     <div class="col s12 m12 l12">
                         <div class="card">
                             <div class="card-content">
-                                @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' =>
+                                {{-- @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' =>
                                 $contratos->id,
-                                'show_contrato'=>false])
+                                'show_contrato'=>false]) --}}
                             </div>
                         </div>
                     </div>

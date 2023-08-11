@@ -76,9 +76,9 @@
                         <!-- <div class="box box-primary">-->
                         <div class="box-body">
                             <div class="row">
-                                {!! Form::model($contrato, ['route' => ['contratos.update', $contrato->id], 'method' => 'patch', 'enctype' => 'multipart/form-data']) !!}
+                                {!! Form::model($contrato, ['route' => ['admin.contratos-katbol.update', $contrato->id], 'method' => 'patch', 'enctype' => 'multipart/form-data']) !!}
 
-                                @include('bitacora.formedit', ["show_contrato"=>true])
+                                @include('admin.bitacora.formedit', ["show_contrato"=>true])
 
                                 {!! Form::close() !!}
                             </div>
@@ -169,7 +169,7 @@
                                 <td>{{ $contratos->estatus }}</td>
                                 <td style="text-align: center">
                                     <form id="ampliacion_form"
-                                        action="{{ route('contratos.ampliacion', ['id' => $contratos->id]) }}" method="POST">
+                                        action="{{ route('admin.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}" method="POST">
                                         @method("PATCH")
                                         <p>
                                             <label>
@@ -182,7 +182,7 @@
                                 </td>
                                 <td style="text-align: center">
                                     <form id="ampliacion_form"
-                                        action="{{ route('contratos.ampliacion', ['id' => $contratos->id]) }}" method="POST">
+                                        action="{{ route('admin.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}" method="POST">
                                         @method("PATCH")
                                         <p>
                                             <label>
@@ -241,10 +241,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-content">
+                            {{-- <div class="card-content">
                                 @livewire('factura.factura-component', ['contrato_id' => $contratos->id,
                                 'show_contrato'=>true, 'contrato_total'=>$contratos->monto_pago])
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -259,8 +259,8 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true])
+                                {{-- @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>true]) --}}
 
                             </div>
                         </div>
@@ -277,8 +277,8 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true])
+                                {{-- @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>true]) --}}
 
                             </div>
                         </div>
@@ -295,8 +295,8 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true])
+                                {{-- @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>true]) --}}
 
                             </div>
                         </div>
@@ -313,8 +313,8 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true])
+                                {{-- @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>true]) --}}
 
                             </div>
                         </div>
@@ -340,11 +340,11 @@
 
 
 
-                                @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' =>
+                                {{-- @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' =>
 
                                 $contratos->id,
 
-                                'show_contrato'=>true])
+                                'show_contrato'=>true]) --}}
 
                             </div>
 

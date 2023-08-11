@@ -103,7 +103,7 @@
 
 {{-- <form method="PATH" action="{{ route('contratos.update', $contrato->id) }}" enctype="multipart/form-data"> --}}
 {!! Form::open([
-    'route' => ['contratos.update', $contrato->id],
+    'route' => ['admin.contratos-katbol.update', $contrato->id],
     'method' => 'PATCH',
     'enctype' => 'multipart/form-data',
 ]) !!}
@@ -800,7 +800,7 @@
         <div class="col s12 right-align btn-grd distancia">
 
             @if (!$show_contrato)
-                <a href="{{ route('contratos.index') }}" class="btn-redondeado btn btn-default"
+                <a href="{{ route('admin.contratos-katbol.index') }}" class="btn-redondeado btn btn-default"
                     style="background: #959595 !important">Cancelar</a>
                 {!! Form::submit('Guardar', ['class' => 'btn-redondeado btn btn-primary']) !!}
             @endif
@@ -864,7 +864,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "{{ route('contratos.checkCode') }}",
+                url: "{{ route('admin.contratos-katbol.checkCode') }}",
                 data: {
                     _token: "{{ csrf_token() }}",
                     no_contrato
@@ -1189,7 +1189,7 @@
 </script>
 <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
-            const url = "{{ route('validar-documento') }}";
+            const url = "{{ route('admin.contratos-katbol.validar-documento') }}";
             $('.input-field').click(function(e) {
                 $('.input-field:hover').addClass('caja_input_file_activa');
             });

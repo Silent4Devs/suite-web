@@ -18,7 +18,7 @@ class FormatearFecha
     public function formatearFecha($fecha, $formatoInicial, $formatoRequerido)
     {
         try {
-            $fecha = Carbon::parse($fecha)->format('d-m-Y');
+            // $fecha = Carbon::parse($fecha)->format('d-m-Y');
             // dd($formatoInicial, $fecha);
             $formF = Carbon::createFromFormat($formatoInicial, $fecha)
             ->format($formatoRequerido);

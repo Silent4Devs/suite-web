@@ -8,6 +8,7 @@ use App\Functions\EntregablesData;
 use App\Functions\FormatearFecha;
 use App\Http\Requests\CreateContratoRequest;
 use App\Http\Requests\UpdateContratoRequest;
+use App\Models\Empleado;
 use App\Models\Area;
 use App\Models\Katbol\CedulaCumplimiento;
 use App\Models\Katbol\CierreContrato;
@@ -53,8 +54,7 @@ class ContratosController extends AppBaseController
     public function index(Request $request)
     {
         // $this->authorize('haveaccess', 'contratos.index');
-        $usuario_actual = User::find(auth()->id());
-
+        $usuario_actual = Empleado::find(auth()->user()->empleado->id);
         $areas = Area::get();
 
         $contratos = Contratos::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'proveedores.nombre_comercial')
@@ -174,10 +174,14 @@ class ContratosController extends AppBaseController
         $date = Carbon::now()->format('dmY');
 
         $formatoFecha = new FormatearFecha;
-        $fecha_inicio = $formatoFecha->formatearFecha($request->fecha_inicio, 'd-m-Y', 'Y-m-d');
-        $fecha_fin = $formatoFecha->formatearFecha($request->fecha_fin, 'd-m-Y', 'Y-m-d');
+        // dd($request->fecha_inicio);
+        $fecha_inicio = $request->fecha_inicio;
+        $fecha_fin = $request->fecha_fin;
+        // $fecha_inicio = $formatoFecha->formatearFecha($request->fecha_inicio, 'd-m-Y', 'Y-m-d');
+        // $fecha_fin = $formatoFecha->formatearFecha($request->fecha_fin, 'd-m-Y', 'Y-m-d');
         if ($request->fecha_firma != null) {
-            $fecha_firma = $formatoFecha->formatearFecha($request->fecha_firma, 'd-m-Y', 'Y-m-d');
+            // $fecha_firma = $formatoFecha->formatearFecha($request->fecha_firma, 'd-m-Y', 'Y-m-d');
+            $fecha_firma = $request->fecha_firma;
         } else {
             $fecha_firma = null;
         }
@@ -816,15 +820,15 @@ class ContratosController extends AppBaseController
 
     public function validateDocument(Request $request)
     {
-        $organizacion = Organizacion::first();
+        // $organizacion = Organizacion::first();
 
-        $mines = str_replace('.', '', $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt');
+        // $mines = str_replace('.', '', $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt');
 
-        $tamaño_limite = ($organizacion->config_megas_permitido_docs) * 1024;
+        // $tamaño_limite = ($organizacion->config_megas_permitido_docs) * 1024;
 
-        $request->validate([
-            'file' => 'required|mimes:'.$mines.'|max:'.$tamaño_limite,
-        ]);
+        // $request->validate([
+        //     'file' => 'required|mimes:'.$mines.'|max:'.$tamaño_limite,
+        // ]);
 
         return response()->json(['status' => 'success']);
     }

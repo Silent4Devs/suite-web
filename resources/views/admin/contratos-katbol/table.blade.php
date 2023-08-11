@@ -132,7 +132,7 @@
                         <td class="botones_accion" style="min-width: 100px;">
                             {!! Form::open(['route' => ['admin.contratos-katbol.destroy', $contrato->id], 'method' => 'delete']) !!}
                             <div class='btn-group'>
-                                <a href="{{ route('contratos.show', [$contrato->id]) }}"
+                                <a href="{{ route('admin.contratos-katbol.show', [$contrato->id]) }}"
                                     style="color:#2395AA;"><i class="material-icons-outlined">visibility </i>
                                 </a>
                                 {{-- @can('contratos.edit') --}}
