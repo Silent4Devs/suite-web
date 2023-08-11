@@ -49,7 +49,7 @@ class TimesheetHorasFilas extends Component
         // dd($comodines);
         // dd(!$filtrope->isEmpty());
         // dd($proyectoempleado);
-        if ($proyectoempleadoexists == true) {
+        if ($proyectoempleadoexists) {
             foreach ($proyectoempleado as $key => $proyecto) {
                 if ($proyecto->proyecto->estatus == 'proceso') {
                     if ($proyecto->empleado->id == $empleado->id) {
