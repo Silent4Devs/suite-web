@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             //Foreign
             $table->foreign('contrato_id')->references('id')->on('contratos');

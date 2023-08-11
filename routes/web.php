@@ -133,23 +133,27 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //Contratos
     //## API - Revisar en tiempo real si contrato ya existe ###
-    Route::post('contratos-katbol/numero/existe', 'ContratosController@revisarSiNumeroContratoExiste')->name('contratos.noContratoExistencia');
-    Route::post('contratos-katbol/{id}/ampliacion', 'ContratosController@updateAmpliacion')->name('contratos.ampliacion');
-    Route::post('contratos-katbol/{id}/convenios', 'ContratosController@updateConvenios')->name('contratos.convenios');
-    // Route::post('contratos-katbol/update/{id}', 'ContratosController@update')->name('contratos.update');
-    Route::post('contratos-katbol/contrato-file-upload-tmp', 'ContratosController@uploadInTmpDirectory')->name('contratos.fileUploadTmp');
+    Route::post('contratos-katbol/numero/existe', 'ContratosController@revisarSiNumeroContratoExiste')->name('contratos-katbol.noContratoExistencia');
+    Route::post('contratos-katbol/{id}/ampliacion', 'ContratosController@updateAmpliacion')->name('contratos-katbol.ampliacion');
+    Route::post('contratos-katbol/{id}/convenios', 'ContratosController@updateConvenios')->name('contratos-katbol.convenios');
+    // Route::post('contratos-katbol/update/{id}', 'ContratosController@update')->name('contracontratos-katboltos.update');
+    Route::post('contratos-katbol/contrato-file-upload-tmp', 'ContratosController@uploadInTmpDirectory')->name('contratos-katbol.fileUploadTmp');
     // Route::get('download/{file}', 'ContratosController@getDownload');
-    Route::post('contratos-katbol/archivos', 'ContratosController@obtenerArchivos')->name('contratos.obtenerArchivos');
+    Route::post('contratos-katbol/archivos', 'ContratosController@obtenerArchivos')->name('contratos-katbol.obtenerArchivos');
     Route::get('contratos-katbol/file/download', 'ContratosController@downloadFile')->name('downloadFile');
-    // Route::post('contratos/identificadorExist', 'ContratosController@identificadorExist')->name('contratos.identificadorExist');
+    // Route::post('contratos/identificadorExist', 'ContratosController@identificadorExist')->name('contratos-katbol.identificadorExist');
 
-    Route::post('contratos-katbol/check-code', 'ContratosController@checkCode')->name('contratos.checkCode');
+    Route::post('contratos-katbol/check-code', 'ContratosController@checkCode')->name('contratos-katbol.checkCode');
     Route::resource('contratos-katbol', 'ContratosController');
     Route::get('contratos-katbol/exportar/contratos', 'ContratosController@exportTo')->name('reportecliente.exportar');
-    Route::put('contratos-katbol/contratopago/{id}', 'ContratosController@Campos')->name('contratopago');
-    Route::get('contratos-katbol/contratoinsert', 'FacturaController@ContratoInsert')->name('contratoInsertar');
-    Route::get('contratos-katbol/eval-nivel/{id}', 'ContratosController@evaluacion')->name('contrato.evaluacion');
-    Route::get('contratos-katbol/revision-factura/{id}', 'ContratosController@revision')->name('contrato.revision');
+    Route::put('contratos-katbol/contratopago/{id}', 'ContratosController@Campos')->name('contratos-katbol.contratopago');
+    Route::get('contratos-katbol/contratoinsert', 'FacturaController@ContratoInsert')->name('contratos-katbol.Insertar');
+    Route::get('contratos-katbol/eval-nivel/{id}', 'ContratosController@evaluacion')->name('contratos-katbol.evaluacion');
+    Route::get('contratos-katbol/revision-factura/{id}', 'ContratosController@revision')->name('contratos-katbol.revision');
+
+    Route::post('contratos-katbol/validateDocument', 'ContratoController@validateDocument')->name('contratos-katbol.validar-documento');
+
+    Route::resource('bitacoras', 'BitacoraController');
 
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
         // Visitantes
