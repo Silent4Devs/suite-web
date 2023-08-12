@@ -27,8 +27,8 @@ Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@ed
 Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
 
 
-Route::post('provedor_reporte', 'Katbol\ReporteRequisicionController@AjaxRequestProveedores')->name('provedor_reporte');
-Route::post('contrato_reporte', 'Katbol\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
+Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestProveedores')->name('provedor_reporte');
+Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
 
 Auth::routes();
 
@@ -141,7 +141,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');
         Route::resource('visitantes', 'VisitantesController');
         // Fin visitantes
-
         Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
         Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
         Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
@@ -1472,7 +1471,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 
 
-Route::group(['prefix' => 'katbol', 'as' => 'katbol.', 'namespace' => 'Katbol', 'middleware' => ['auth', '2fa', 'active']], function () {
+Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'contractmanager', 'middleware' => ['auth', '2fa', 'active']], function () {
 
     //KATBOL
     Route::get('productos/archivados', 'ProductoController@view_archivados')->name('productos.view_archivados');
@@ -1480,7 +1479,7 @@ Route::group(['prefix' => 'katbol', 'as' => 'katbol.', 'namespace' => 'Katbol', 
     Route::resource('productos', 'ProductoController');
     Route::post('productos/archivar/{id}', 'ProductoController@archivar')->name('productos.archivar');
     Route::post('productos/list/get', 'ProductoController@getProductosIndex')->name('productos.getProductosIndex');
-    
+
 
     Route::get('sucursales/archivados', 'SucursalController@view_archivados')->name('sucursales.view_archivados');
     Route::post('sucursales/list/get/archivados', 'SucursalController@getArchivadosIndex')->name('sucursales.getArchivadosIndex');

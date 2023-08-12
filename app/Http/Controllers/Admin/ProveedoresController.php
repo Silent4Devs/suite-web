@@ -4,9 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProveedoresRequest;
-use App\Models\Katbol\Fiscale;
+use App\Models\ContractManager\Fiscale;
 use App\Models\Organizacion;
-use App\Models\Katbol\Proveedores;
+use App\Models\ContractManager\Proveedores;
 use Illuminate\Http\Request;
 use Response;
 
