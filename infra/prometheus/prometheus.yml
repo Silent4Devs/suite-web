@@ -12,4 +12,19 @@ scrape_configs:
       - targets: ['localhost:9090']
   - job_name: redis-exporter
     static_configs:
-      - targets: ['redis-exporter:9121']
+      - targets: ['redis-exporter-tabantaj:9121']
+  - job_name: nginx-tabantaj
+    static_configs:
+      - targets: ['nginx-tabantaj:80']
+  - job_name: php-tabantaj  # Add PHP service
+    static_configs:
+      - targets: ['php-tabantaj:9000']
+  - job_name: postgres-tabantaj  # Add Postgres service
+    static_configs:
+      - targets: ['postgres-tabantaj:5432']
+  - job_name: rdadmin-tabantaj  # Add rdadmin service
+    static_configs:
+      - targets: ['rdadmin-tabantaj:6360']
+  - job_name: grafana-tabantaj  # Add Grafana service
+    static_configs:
+      - targets: ['grafana-tabantaj:3000']
