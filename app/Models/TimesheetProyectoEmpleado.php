@@ -23,15 +23,15 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
         'correo_enviado',
     ];
 
-    public static function getAllByEmpleadoId()
+    public static function getAllByEmpleadoIdNoBloqueado()
     {
         return
             Cache::remember('GetAllByEmpleadoId_' . auth()->user()->empleado->id, 3600 * 2, function () {
-                return self::get()->where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false);
+                return self::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->get();
             });
     }
 
-    public static function getAllByEmpleadoIdExists()
+    public static function getAllByEmpleadoIdExistsNoBloqueado()
     {
         return
             Cache::remember('GetAllByEmpleadoId_' . auth()->user()->empleado->id, 3600 * 2, function () {
