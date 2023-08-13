@@ -34,7 +34,7 @@
             </li>
         </ul>
     </div>
-
+    <br>
     <div class="card card-content caja-proceso-requi" wire:ignore>
         <div class="flex" style="gap: 20px;">
             <div class="paso-tab active" data-id="paso-servicio">
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-
+    <br>
     <div id="paso-servicio" class="tab-content" wire:ignore>
         <form method="POST" wire:submit.prevent="servicioStore(Object.fromEntries(new FormData($event.target)))" enctype="multipart/form-data">
             <div class="card card-content">
@@ -197,7 +197,7 @@
             </div>
         </form>
     </div>
-
+    <br>
     <div id="paso-proveedores" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
         <form id="form-proveedores" wire:submit.prevent="proveedoresStore(Object.fromEntries(new FormData($event.target)))" action="POST" enctype="multipart/form-data">
             <div class="card card-content">
@@ -739,6 +739,9 @@
             }
         }
     </script>
+
+
+
     @section('scripts')
     <script>
          $(".not-select2").select2('destroy');
