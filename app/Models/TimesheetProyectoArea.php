@@ -21,4 +21,14 @@ class TimesheetProyectoArea extends Model implements Auditable
     {
         return $this->belongsTo(Area::class, 'area_id', 'id');
     }
+
+    public function proyecto()
+    {
+        return $this->belongsTo(TimesheetProyecto::class, 'proyecto_id', 'id');
+    }
+
+    public function proyectosAsignados()
+    {
+        return $this->belongsTo(TimesheetProyectoEmpleado::class, 'proyecto_id', 'proyecto_id');
+    }
 }
