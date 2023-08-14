@@ -34,18 +34,20 @@ class TimesheetHorasFilas extends Component
 
     public function mount($origen, $timesheet_id)
     {
-        $empleado = Empleado::getAll()->find(auth()->user()->empleado->id);
-        $empleadoTimesheetproyecto = TimesheetProyectoEmpleado::getAllByEmpleadoIdNoBloqueado();
-        $proyectosRedis = TimesheetProyecto::getAll();
+        $empleado = Empleado::select('id', 'area_id', 'name')->find(auth()->user()->empleado->id);
+        $empleadoTimesheetproyecto = TimesheetProyectoEmpleado::with('empleado')->where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->get();
+        $proyectosRedis = TimesheetProyecto::orderBy('proyecto')->get();
+        // dd($empleadoTimesheetproyecto);
         // areas proyectos
         $proyectos_array = collect();
         $proyectos_totales = $proyectosRedis;
         $proyectoempleado = $empleadoTimesheetproyecto;
-        $proyectoempleadoexists = TimesheetProyectoEmpleado::getAllByEmpleadoIdExistsNoBloqueado();
+        $proyectoempleadoexists = TimesheetProyectoEmpleado::where('empleado_id', auth()->user()->empleado->id)->where('usuario_bloqueado', false)->exists();
+        // dd($proyectoempleadoexists);
         $filtrope = $empleadoTimesheetproyecto;
         // $comodines = TimesheetProyecto::select('id', 'identificador', 'proyecto')
         // ->where('proyecto', 'LIKE', 'S4B-'.'%')->get();
-        $comodines = $proyectosRedis->where('proyecto', 'LIKE', 'S4B-' . '%');
+        $comodines = TimesheetProyecto::where('proyecto', 'LIKE', 'S4B-' . '%')->get();;
         // dd($comodines);
         // dd(!$filtrope->isEmpty());
         // dd($proyectoempleado);
@@ -73,6 +75,7 @@ class TimesheetHorasFilas extends Component
                         }
                     }
                 }
+                // dd($proyectos_array);
             }
         } elseif (!$filtrope->isEmpty()) { //Revisar que haya registros en la tabla
             foreach ($proyectos_totales as $key => $proyecto) {
