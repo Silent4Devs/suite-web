@@ -57,19 +57,19 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 COPY php.ini /usr/local/etc/php/php.ini
 
 # Copy custom www.conf
-# COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
 
-# Add cron job to schedule Laravel tasks
-RUN echo "0 * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1" | crontab -
+# # Add cron job to schedule Laravel tasks
+# RUN echo "0 * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1" | crontab -
 
-# Link cron log file to stdout
-RUN ln -s /dev/stdout /var/log/cron
+# # Link cron log file to stdout
+# RUN ln -s /dev/stdout /var/log/cron
 
-# Run the cron service in the foreground
-CMD [ "crond", "-l", "2", "-f" ]
+# # Run the cron service in the foreground
+# CMD [ "crond", "-f", "-d", "8" ]
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \
