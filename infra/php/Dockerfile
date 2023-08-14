@@ -57,7 +57,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 COPY php.ini /usr/local/etc/php/php.ini
 
 # Copy custom www.conf
-COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+# COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
