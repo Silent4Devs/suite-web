@@ -98,7 +98,7 @@ class RequisicionesCreateComponent extends Component
         $this->proveedores = KatbolProveedorOC::where('estado', false)->get();
         $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
         $this->contratos = KatbolContrato::get();
-        $this->productos = KatbolProducto::where('archivo', false)->orderby('descripcion', 'asc')->get();
+        $this->productos = KatbolProducto::where('archivo', false)->orderby('id', 'asc')->get();
         $this->user_tabantaj = ModelsUser::with('empleado.area')->get();
         $this->organizacion = Organizacion::first();
     }
@@ -340,9 +340,9 @@ class RequisicionesCreateComponent extends Component
 
                 $supervisor = $empleado->supervisor->email;
 
-                Mail::to($supervisor)->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
+                Mail::to('saul.ramirez@silent4business.com')->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 
-                return redirect(route('requisiciones'));
+                return redirect(route('contract_manager.requisiciones'));
 
             }
 

@@ -18,7 +18,6 @@ class ProductoRequisicion extends Model
         'no_personas',
         'porcentaje_involucramiento',
         'centro_costo_id',
-
         'sub_total',
         'iva',
         'iva_retenido',

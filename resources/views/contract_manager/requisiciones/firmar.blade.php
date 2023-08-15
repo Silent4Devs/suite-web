@@ -313,7 +313,7 @@
         </div>
     </div>
     <div class="card card-content" style="margin-bottom: 30px">
-        <form method="POST" id="myForm" action="{{ route('requisiciones.firmar-update', ['tipo_firma' => $tipo_firma, 'id' => $requisicion->id]) }}">
+        <form method="POST" id="myForm" action="{{ route('contract_manager.requisiciones.firmar-update', ['tipo_firma' => $tipo_firma, 'id' => $requisicion->id]) }}">
             @csrf
             <div class="">
                 <h5><strong>Firma*</strong></h5>
@@ -341,7 +341,7 @@
                 {{--  <div class="btn btn-secundario" style="background: #959595 !important"><i class="fa-solid fa-chevron-left icon-prior"></i> Regresar </div>  --}}
             </div>
         </form>
-        <form method="POST" action="{{ route('requisiciones.rechazada', ['id' => $requisicion->id]) }}">
+        <form method="POST" action="{{ route('contract_manager.requisiciones.rechazada', ['id' => $requisicion->id]) }}">
             @csrf
             <div class="flex" style="justify-content: space-between; gap:25px; margin-top:30px;">
                 <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR REQUISICIÓN</button>

@@ -76,15 +76,15 @@
                     @endif
                     <span class="help-block"></span>
                 </div>
-                <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="mylogo"><i class="fa-solid fa-user fa-lg"></i>&nbsp;&nbsp;Logo</label>
-                    <input   class="form-control {{ $errors->has('mylogo') ? 'is-invalid' : '' }}" type="mylogo" name="mylogo" id="mylogo" required>
-                    @if($errors->has('mylogo'))
-                        <div class="invalid-feedback">
+                <div class="col s12 l6 distancia">
+                    <label for="myfile">Selecciona el logotipo: <font class="asterisco">*</font></label>
+                    <input type="file" id="myfile" class="form-control" name="mylogo" required  accept="image/png,image/jpeg"  >
+                    @if ($errors->has('mylogo'))
+                        <div class="invalid-feedback red-text">
                             {{ $errors->first('mylogo') }}
                         </div>
                     @endif
-                    <span class="help-block"></span>
+    
                 </div>
               </div>
 

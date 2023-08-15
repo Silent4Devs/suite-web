@@ -403,7 +403,7 @@
                     @else
                         <div>&nbsp;</div>
                     @endif
-                    <div onclick="validar();" style="" class="btn">Guardar</div>
+                    <div onclick="validar();" style="" class="btn btn-primary">Guardar</div>
                 </div>
             </form>
         </div>

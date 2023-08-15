@@ -61,8 +61,16 @@ class SucursalController extends Controller
             $sucursales->cuenta_contable = $request->cuenta_contable;
             $sucursales->zona = $request->zona;
             $sucursales->direccion = $request->direccion;
-            $sucursales->mylogo = $request->mylogo;
-            $sucursales->save();
+
+            $file = $request->file('mylogo');
+
+            if ($file != null) {
+                $nombre = uniqid().'.'.$file->getClientOriginalExtension();
+                $file->move(base_path('public/razon_social'), $nombre);
+                $sucursales->mylogo = $nombre;
+                $sucursales->save();
+    
+            }
 
             return redirect('/contract_manager/sucursales');
     }
@@ -113,15 +121,25 @@ class SucursalController extends Controller
             ]);
             $sucursal = Sucursal::find($id);
 
-            $sucursal->update([
-                'clave' => $request->clave,
-                'descripcion' => $request->descripcion,
-                'rfc' => $request->rfc,
-                'empresa' => $request->empresa,
-                'cuenta_contable' => $request->cuenta_contable,
-                'direccion' => $request->direccion,
-                'mylogo' => $request->mylogo,
-            ]);
+
+            $file = $request->file('mylogo');
+    
+            if ($file != null) {
+                $nombre = uniqid().'.'.$file->getClientOriginalExtension();
+                $file->move(base_path('public/razon_social'), $nombre);
+    
+                $sucursal->update([
+                    'clave' => $request->clave,
+                    'descripcion' => $request->descripcion,
+                    'rfc' => $request->rfc,
+                    'empresa' => $request->empresa,
+                    'cuenta_contable' => $request->cuenta_contable,
+                    'estado' => $request->estado,
+                    'zona' =>  $request->zona,
+                    'direccion' =>  $request->direccion,
+                    'mylogo' =>   $nombre,
+                ]);
+            }
 
             return redirect('/contract_manager/sucursales');
     }

@@ -14,7 +14,7 @@
             <div class="card card-content caja-blue">
 
                 <div>
-                    <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width: 150px;">
+                    <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width: 100px;">
                 </div>
 
                 <div>
@@ -26,12 +26,12 @@
             <div class="requisicion-info">
                 <div class="card card-content">
                     <div class="row">
-                        <div class="col s12 l12">
+                        {{-- <div class="col s12 l12">
                             <h3 class="titulo-form">Orden de Compra</h3>
                             <hr style="margin: 20px 0px;">
                             <h2>Folio Requisición: 00-00{{ $requisicion->id}}</h2>
                             <br>
-                        </div>
+                        </div> --}}
                         <div class="col s12 l3 ">
                             <label for="" class="txt-tamaño">
                                 Fecha solicitud <font class="asterisco">*</font>
@@ -46,7 +46,6 @@
                         </div>
                         <div class="col s12 l3 ">
                             <label for="" class="txt-tamaño">
-                                <i class="fa-solid fa-user"></i>
                                 Solicita <font class="asterisco">*</font>
                             </label>
                             <input  class="browser-default" disabled  value="{{$requisicion->user}}">
@@ -436,7 +435,7 @@
             </div>
             <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
                 <a  href="" class="btn" style="background: #959595 !important">Regresar</a>
-                <button class="btn" onclick="mensaje()">Guardar</button>
+                <button class="btn btn-primary" onclick="mensaje()">Guardar</button>
             </div>
         </form>
     </div>
@@ -474,17 +473,6 @@
             // $('#proveedor-direccion').val(option.attr('data-direccion'));
             // $('#proveedor-razon').val(option.attr('data-razon'));
         });
-
-
-
-
-
-
-
-
-
-
-
 
         $('.productos-info').on('keyup', function(e){
             if(e.target.parentNode.classList.contains('caja-input-dinero')){

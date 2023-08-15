@@ -1,17 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
-        .table tr td:nth-child(1) {
-            min-width: 200px !important;
-        }
-
-        .table tr td:nth-child(4) {
-            min-width: 200px !important;
-        }
-
-    </style>
-     @include('flash::message')
-     @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
     <div class="mt-5 card">
 

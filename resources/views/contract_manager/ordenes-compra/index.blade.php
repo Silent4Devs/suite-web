@@ -204,11 +204,17 @@
                             let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
                             let htmlBotones =
                                 `
+                                @foreach ($requisiciones as  $requisicion)
                                 <div class="btn-group">
                                     <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
                                     <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.nombre}');"> <i class="fa-solid fa-box-archive"></i></a>
+                                    <a href="{{ route('contract_manager.orden-compra.show', ['id' => $requisicion->id]) }}"
+                                                title="Ver/Imprimir" >
+                                                <i class="fa-solid fa-print fa-xl"></i>
+                                </a>
                                 </div>
 
+                                @endforeach
                             `;
                             return htmlBotones;
                         }

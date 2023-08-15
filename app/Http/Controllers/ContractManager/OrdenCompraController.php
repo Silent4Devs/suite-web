@@ -121,7 +121,6 @@ class OrdenCompraController extends Controller
         $contratos = KatbolContrato::get();
         $centro_costos = KatbolCentroCosto::get();
         $monedas = KatbolMoneda::get();
-
         return view('contract_manager.ordenes-compra.edit', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas'));
     }
 

@@ -241,8 +241,8 @@ class RequisicionesController extends Controller
                 ]);
             }
             $organizacion = Organizacion::first();
-            Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
-            return redirect(route('requisiciones'));
+            Mail::to('saul.ramirez@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+            return redirect(route('contract_manager.requisiciones'));
 
     }
 
@@ -303,7 +303,7 @@ class RequisicionesController extends Controller
         $organizacion = Organizacion::first();
         $tipo_firma = 'rechazado_requisicion';
         Mail::to($requisicion->email)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
-        return redirect(route('requisiciones'));
+        return redirect(route('contract_manager.requisiciones'));
 
     }
 
@@ -336,4 +336,5 @@ class RequisicionesController extends Controller
         $pdf->setPaper('A4', 'portrait');
         return $pdf-> download('requisicion.pdf');
     }
+
 }
