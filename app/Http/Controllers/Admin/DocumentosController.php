@@ -469,7 +469,7 @@ class DocumentosController extends Controller
             $revisores1 = [];
             $documento = Documento::find($documento_id);
             $documento->load('elaborador', 'macroproceso');
-            Mail::to($documento->elaborador->email)->send(new ConfirmacionSolicitudAprobacionMail($documento));
+            Mail::to(removeUnicodeCharacters($documento->elaborador->email))->send(new ConfirmacionSolicitudAprobacionMail($documento));
             $numero_revision = RevisionDocumento::where('documento_id', $documento_id)->max('no_revision') ? intval(RevisionDocumento::where('documento_id', $documento_id)->max('no_revision')) + 1 : 1;
 
             $historialRevisionDocumento = HistorialRevisionDocumento::create([
@@ -490,7 +490,7 @@ class DocumentosController extends Controller
                         'documento_id' => $documento_id,
                         'version' => $documento->version,
                     ]);
-                    Mail::to($revisor->empleado->email)->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
+                    Mail::to(removeUnicodeCharacters($revisor->empleado->email))->send(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
                 }
             }
 

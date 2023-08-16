@@ -75,7 +75,7 @@ class EnviarCorreoFelicitaciones extends Command
                     $correodestinatario = $cumpleañero->email;
 
                     $email = new FelicitacionesMail($nombre, $correodestinatario, $imgpastel, $imgtab);
-                    Mail::to($correodestinatario)->send($email);
+                    Mail::to(removeUnicodeCharacters($correodestinatario))->send($email);
                     // dd('Si manda el correo');
                     $empcump->update([
                         'enviado' => true,
