@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('titulo', 'Contratos')
 
@@ -170,7 +170,7 @@
 
                     <div class="row">
                         <div class="col s12 m12">
-                            {{-- <div class="card"> --}}
+                            <div class="card">
                                 <div class="card-content">
                                     <table align="center">
                                         <thead>
@@ -211,14 +211,15 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            {{-- </div> --}}
+                            </div>
                         </div>
                     </div>
-                    <div class="card-content">
+                    <div class="card">
+                        <div class="card-content">
 
-                        @livewire('factura.factura-component', ['contrato_id' => $contratos->id,
-                        'show_contrato'=>false, 'contrato_total'=>$contratos->monto_pago])
-
+                            @livewire('factura.factura-component', ['contrato_id' => $contratos->id,
+                            'show_contrato'=>false, 'contrato_total'=>$contratos->monto_pago])
+                        </div>
                     </div>
             </div>
         </li>
@@ -228,8 +229,12 @@
             <div class="collapsible-body">
                 <div class="row">
                     <div class="col s12 m12 l12">
-                        @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id,
-                        'show_contrato'=>false])
+                        <div class="card">
+                            <div class="card-content">
+                                @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>false])
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -240,8 +245,12 @@
             <div class="collapsible-body">
                 <div class="row">
                     <div class="col s12 m12 l12">
-                        @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id,
-                        'show_contrato'=>false])
+                        <div class="card">
+                            <div class="card-content">
+                                @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>false])
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -252,8 +261,12 @@
             <div class="collapsible-body">
                 <div class="row">
                     <div class="col s12 m12 l12">
-                        @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id,
-                        'show_contrato'=>false])
+                        <div class="card">
+                            <div class="card-content">
+                                @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>false])
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -266,12 +279,11 @@
                     <div class="col s12 m12 l12">
                         <div class="card">
                             <div class="card-content">
-
-                                {{-- @livewire('ampliacion-contratos.ampliacion-component', [
+                                @livewire('ampliacion-contratos.ampliacion-component', [
                                 'contrato_id' => $contratos->id,
                                 'show_contrato'=>false,
                                 'fecha_fin_contrato'=>$contratos->fecha_fin
-                                ]) --}}
+                                ])
                             </div>
                         </div>
                     </div>
@@ -286,9 +298,9 @@
                     <div class="col s12 m12 l12">
                         <div class="card">
                             <div class="card-content">
-                                {{-- @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' =>
+                                @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' =>
                                 $contratos->id,
-                                'show_contrato'=>false]) --}}
+                                'show_contrato'=>false])
                             </div>
                         </div>
                     </div>
@@ -301,11 +313,13 @@
             <div class="collapsible-body">
                 <div class="row">
                     <div class="col s12 m12 l12">
-
-                        @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' =>
-                        $contratos->id,
-                        'show_contrato'=>false])
-
+                        <div class="card">
+                            <div class="card-content">
+                                @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' =>
+                                $contratos->id,
+                                'show_contrato'=>false])
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -314,7 +328,7 @@
 
     <div class="row">
         <div class="col s12 right-align" style="padding-right: 30px !important;">
-            <a href="{{ url('contratos') }}" class="btn-redondeado waves-effect waves-light btn" >Salir sin llenar</a>
+            <a href="{{ route('admin.contratos-katbol.index') }}" class="btn-redondeado waves-effect waves-light btn" >Salir sin llenar</a>
         </div>
     </div>
 

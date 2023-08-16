@@ -17,7 +17,6 @@
         <div>
             <!-- No Contrato Field -->
             <input wire:model.defer="contrato_id" type="hidden" value="{{ $contrato_id }}">
-            <div class="mb-4  row">
                 <div class="row">
                     <div class="col s12 m3 distancia">
                         <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-invoice-dollar iconos-crear"></i>No. factura<font class="asterisco">*</font></label>
@@ -32,9 +31,8 @@
                     <div class="col s12 m3 distancia">
                         <div wire:ignore>
                             <label for="no_contrato" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha recepción<font class="asterisco">*</font></label>
-                            <input id="" type="text" wire:model.defer="fecha_recepcion"
-                            class="form-control fechas" onchange="this.dispatchEvent(new InputEvent('input'))"
-                            style="margin-bottom: 0" required>
+                            <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_recepcion"
+                            class="form-control" style="margin-bottom: 0" required>
                         </div>
                         @error('fecha_recepcion')
                             <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
@@ -45,20 +43,19 @@
                     <div class="col s12 m3 distancia">
                         <div wire:ignore>
                             <label for="no_contrato" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha liberación<font class="asterisco">*</font></label>
-                            <input id="" type="text" wire:model.defer="fecha_liberacion"
-                            class="form-control fechas" onchange="this.dispatchEvent(new InputEvent('input'))"
-                            style="margin-bottom: 0" required>
+                            <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_liberacion"
+                            class="form-control" style="margin-bottom: 0" required>
                         </div>
                         @error('fecha_liberacion')
                             <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
                         @enderror
                     </div>
-
+                </div>
+                <div class="row">
                     {{-- Monto Factura --}}
-
                     <div class="col s12 m3 distancia" wire:ignore>
                         <label for="no_contrato" class="txt-tamaño"><i class="fas fa-dollar-sign iconos-crear"></i>Monto factura<font class="asterisco">*</font></label>
-                        <input type="text" wire:model.defer="monto_factura" id="monto_factura"
+                        <input type="number" min="0" wire:model.defer="monto_factura" id="monto_factura"
                             class="form-control" required>
                         @error('monto_factura')
                             <span class="red-text">{{ $message }}</span>
@@ -68,8 +65,8 @@
                     {{-- Concepto --}}
 
                     <div class="col s12 m12 distancia">
-                        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-pen-square iconos-crear"></i>Concepto<font class="asterisco">*</font></label>
-                        <textarea style="padding:15px;" type="text" wire:model.defer="concepto" class="text_area" required></textarea>
+                        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-pen-square iconos-crear"></i>Concepto<font class="asterisco">*</font></label><br>
+                        <textarea style="padding:15px;" type="text" wire:model.defer="concepto" required></textarea>
                         @error('concepto')
                             <span class="red-text">{{ $message }}</span>
                         @enderror
@@ -238,7 +235,6 @@
 
 
 
-            </div>
             <!--row-->
 
         </div>

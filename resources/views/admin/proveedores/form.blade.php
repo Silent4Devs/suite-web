@@ -48,7 +48,8 @@
     <div class="col s12 m6 distancia">
         <label for="id_fiscale" class="txt-tamaño"><i class="fas fa-file-alt iconos-crear"></i>Persona fiscal<font class="asterisco">*</font></label><br>
         <select class="selectBuscar form-control" name="id_fiscale" class="required center-align" >
-             disabled    @foreach ($personas as $persona)
+            @if (!$personas->isEmpty())
+             @foreach ($personas as $persona)
                     <option value="{{$persona->id}}"
                         {{ $persona->id == $persona->id ? 'selected' : '' }}>
                         {{ $persona->persona_fiscal }}</option>

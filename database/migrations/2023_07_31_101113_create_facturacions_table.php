@@ -32,6 +32,8 @@ return new class extends Migration
             $table->string('estatus')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('created_by');
+            $table->integer('updated_by');
         });
     }
 

@@ -22,6 +22,8 @@ return new class extends Migration
             $table->date('fecha_fin')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('created_by');
+            $table->integer('updated_by');
 
             //Foreign
             $table->foreign('contrato_id')->references('id')->on('contratos');

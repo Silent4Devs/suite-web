@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreign('factura_id')->references('id')->on('facturacion');
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('created_by');
+            $table->integer('updated_by');
         });
     }
 

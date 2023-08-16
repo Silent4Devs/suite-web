@@ -2,7 +2,7 @@
 
 namespace App\Models\Katbol;
 
-use App\User;
+use App\Models\Empleado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -34,6 +34,6 @@ class RevisionesFactura extends Model implements Auditable
 
     public function asignado()
     {
-        return $this->belongsTo(User::class, 'asignado_id');
+        return $this->belongsTo(Empleado::class, 'asignado_id', 'id');
     }
 }

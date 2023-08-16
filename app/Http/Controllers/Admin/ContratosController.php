@@ -12,13 +12,13 @@ use App\Models\Empleado;
 use App\Models\Area;
 use App\Models\Katbol\CedulaCumplimiento;
 use App\Models\Katbol\CierreContrato;
-use App\Models\Contratos;
-use App\Models\ConveniosModificatorios;
+use App\Models\Katbol\Contratos;
+use App\Models\Katbol\ConveniosModificatorios;
 use App\Models\Katbol\DolaresContrato;
-use App\Models\EntregaMensual;
-use App\Models\Factura;
+use App\Models\Katbol\EntregaMensual;
+use App\Models\Katbol\Factura;
 use App\Models\Organizacion;
-use App\Models\Proveedores;
+use App\Models\Katbol\Proveedores;
 use App\Repositories\ContratoRepository;
 use App\Rules\NumeroContrato;
 use App\Models\User;
@@ -350,11 +350,11 @@ class ContratosController extends AppBaseController
             'cumple' => true,
         ]);
 
-        dd('Guarda todo bien');
-        notify()->success('¡El registro fue cargado exitosamente!');
+        // dd('Guarda todo bien');
+        // notify()->success('¡El registro fue cargado exitosamente!');
 
         //return redirect(route('contratos.index'));
-        return redirect('contratoinsert?param='.$contrato->id);
+        return redirect('admin/contratos-katbol/contratoinsert/'.$contrato->id);
     }
 
     /**
@@ -443,7 +443,7 @@ class ContratosController extends AppBaseController
      * @param  UpdateContratoRequest  $request
      * @return Response
      */
-    public function update($id, UpdateContratoRequest $request)
+    public function update($id, Request $request)
     {
         // dd($request->signed);
         $validatedData = $request->validate([

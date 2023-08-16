@@ -124,6 +124,7 @@
                         class="fas fa-handshake iconos-crear"></i>Visualizar Convenios Modificados</a>
             </div>
         @endif
+    </div>
 
         {{-- <div class="col s12 m4 distancia">
                 <label for="no_contrato" class="txt-tamaño"><i class="material-icons-outlined iconos-crear">article</i>N° Contrato<font class="asterisco">*</font></label>
@@ -137,8 +138,8 @@
                 </div>
             </div> --}}
 
-
-        <div class="col s12 m4 distancia form-group">
+    <div class="row">
+        <div class="col s4 m4">
             <label for="no_contrato" class="txt-tamaño"><i class="material-icons-outlined iconos-crear">article</i>N°
                 Contrato<font class="asterisco">*
                 </font></label>
@@ -156,7 +157,7 @@
                 @endif --}}
         </div>
 
-        <div class="col s12 m4 distancia">
+        <div class="col s4 m4">
             <label for="" class="txt-tamaño"><i class="material-icons-outlined iconos-crear">article</i>Tipo de
                 contrato<font class="asterisco">*</font></label>
             <div>
@@ -198,19 +199,22 @@
             </div>
         </div>
 
-        <div class="col s12 m4 distancia">
+        <div class="col s4 m4">
             <label for="nombre_servicio" class="txt-tamaño"><i
                     class="material-icons-outlined iconos-crear">design_services</i>Nombre del servicio<font
                     class="asterisco">*</font></label>
-            <textarea style="margin-left:20px; width:97%; text-align:justify" id="textarea1" class="materialize-textarea"
-                value="{{ $contrato->nombre_servicio }}" name="nombre_servicio" {{ $show_contrato ? 'readonly' : '' }} required>{{ $contrato->nombre_servicio }}</textarea>
+            <textarea id="textarea1" class="textarea"
+                value="{{ $contrato->nombre_servicio }}" name="nombre_servicio" {{ $show_contrato ? 'readonly' : '' }}
+                @if($show_contrato) disabled @endif required>{{ $contrato->nombre_servicio }}</textarea>
             @if ($errors->has('nombre_servicio'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('nombre_servicio') }}
                 </div>
             @endif
         </div>
+    </div>
 
+    <div class="row">
         <div class="col s12 m4 distancia">
             <label for="no_contrato" class="txt-tamaño"><i
                     class="material-icons-outlined iconos-crear">article</i>Nombre del proveedor<font class="asterisco">*</font></label>
@@ -231,7 +235,7 @@
         <div class="col s12 m4 distancia">
             <label for="no_proyecto" class="txt-tamaño"><i
                     class="material-icons-outlined iconos-crear">confirmation_number</i>Número de proyecto</label>
-            <input type="text" name="no_proyecto" id="no_proyecto" value="{{ $contrato->no_proyecto }}">
+            <input type="text" name="no_proyecto" id="no_proyecto" value="{{ $contrato->no_proyecto }}" @if($show_contrato) disabled @endif>
         </div>
 
         @if ($areas->count() > 0)
@@ -239,7 +243,7 @@
                 <label for="area_id" class="txt-tamaño"><i
                         class="material-icons-outlined iconos-crear">area_chart</i>Área a la que pertenece el
                     contrato</label>
-                <select class="" name="area_id" id="area_id" required>
+                <select class="" name="area_id" id="area_id" @if($show_contrato) disabled @endif required>
                     @foreach ($areas as $area)
                         <option {{ $area->id == $contrato->area_id ? 'selected' : '' }} value="{{ $area->id }}">
                             {{ $area->area }}</option>
@@ -252,8 +256,9 @@
                 @endif
             </div>
         @endif
+    </div>
 
-
+    <div class="row">
         <div class="col s12 m6 distancia">
             <label for="fase" class="txt-tamaño"><i
                     class="material-icons-outlined iconos-crear">holiday_village</i>Fase<font class="asterisco">*</font>
@@ -286,7 +291,7 @@
                     class="material-icons-outlined iconos-crear">design_services</i>Objetivo del servicio<font
                     class="asterisco">*</font></label>
             <textarea style="margin-left:20px; width:97%; text-align:justify" id="textarea1" class="materialize-textarea"
-                value="{{ $contrato->objetivo }}" name="objetivo" {{ $show_contrato ? 'readonly' : '' }} required>{{ $contrato->objetivo }}</textarea>
+                value="{{ $contrato->objetivo }}" name="objetivo" @if($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
             @if ($errors->has('objetivo'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('objetivo') }}
@@ -438,6 +443,8 @@
                     </div>
                 @endif
         </div>
+    </div>
+    <div class="row">
         <div class="col s12 m6 distancia">
             <label for="no_contrato" class="txt-tamaño"><i class="material-icons-outlined iconos-crear">paid</i>No.
                 Pagos<font class="asterisco">*</font></label>
@@ -472,7 +479,8 @@
                 ];
             @endphp
             <div id="contenedor_dolares">
-                <select name="tipo_cambio" id="dolares_filtro" class="form-control" required>
+                <select name="tipo_cambio" id="dolares_filtro" class="form-control"
+                @if($show_contrato) disabled @endif required>
                     <option value="">Seleccione </option>
                     @foreach ($divisas as $key => $divisa)
                         <option value='{{ $divisa }}'
@@ -487,6 +495,8 @@
                 @endif
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col s12 m4 distancia">
             <label for="no_contrato" class="txt-tamaño"><i class="material-icons-outlined iconos-crear">paid</i>Monto
                 de Pago M.X.N.<font class="asterisco">*</font></label>
@@ -622,6 +632,8 @@
 <div class="card card-content">
     <div class="row">
         <h4 class="sub-titulo-form col s12">RESPONSABLES</h4>
+    </div>
+    <div class="row">
         <div class="col s12 m4 distancia">
             <label class="txt-tamaño"><i class="material-icons-outlined iconos-crear">supervisor_account</i>Nombre del
                 Supervisor 1<font class="asterisco">*
@@ -649,6 +661,8 @@
                 </div>
             @endif
         </div>
+    </div>
+    <div class="row">
         <div class="col s12 m4 distancia">
             <label class="txt-tamaño"><i class="material-icons-outlined iconos-crear">supervisor_account</i>Nombre del
                 Supervisor 2</label>
@@ -711,7 +725,8 @@
                 <button id="clear" class="btn btn-danger btn-sm">Borrar firma</button>
             <br/>
         </div> --}}
-
+    </div>
+    <div class="row">
         <div class="col s12 m12 distancia">
             <table class="table-fianza">
                 <thead>
