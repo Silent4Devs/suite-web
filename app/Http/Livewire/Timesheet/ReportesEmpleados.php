@@ -669,7 +669,7 @@ class ReportesEmpleados extends Component
                 $semanas_faltantes = $sem_falt;
             }
         }
-        Mail::to($empleado->email)->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
+        Mail::to(removeUnicodeCharacters($empleado->email))->send(new TimesheetCorreoRetraso($empleado, $semanas_faltantes));
 
         $this->alert('success', 'Correo Enviado!');
 
