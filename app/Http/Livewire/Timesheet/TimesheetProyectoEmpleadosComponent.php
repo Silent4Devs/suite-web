@@ -98,7 +98,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
         }
 
         if ($this->proyecto->tipo === 'Externo') {
-            $time_proyect_empleado = TimesheetProyectoEmpleado::create([
+            $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
                 'proyecto_id' => $this->proyecto->id,
                 'empleado_id' => $empleado_add_proyecto->id,
                 'area_id' => $empleado_add_proyecto->area_id,
@@ -107,7 +107,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
             ]);
             $this->resetInput();
         } else {
-            $time_proyect_empleado = TimesheetProyectoEmpleado::create([
+            $time_proyect_empleado = TimesheetProyectoEmpleado::firstOrCreate([
                 'proyecto_id' => $this->proyecto->id,
                 'empleado_id' => $empleado_add_proyecto->id,
                 'area_id' => $empleado_add_proyecto->area_id,

@@ -162,7 +162,7 @@ class EmpleadoCreateEditComponent extends Component
             'supervisor_id' => $this->supervisor_id,
             'antiguedad' => $this->antiguedad,
             'estatus' => $this->estatus,
-            'email' => $this->email,
+            'email' => removeUnicodeCharacters($this->email),
             'telefono' => $this->telefono,
             'genero' => $this->genero,
             'n_empleado' => $this->n_empleado,

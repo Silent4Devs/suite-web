@@ -35,7 +35,6 @@ class Kernel extends ConsoleKernel
         // $schedule->command('notify:ev360')->daily()->timezone('America/Mexico_City');
         // $schedule->command('capacitacion:usuario')
         //     ->everyFiveMinutes();
-        $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everySixHours();
         //$schedule->command('cache:clearall')->everyTwoHours();
         $schedule->command(EnviarCorreoFelicitaciones::class)
             ->timezone('America/Mexico_City')
