@@ -41,7 +41,8 @@ class Kernel extends ConsoleKernel
             ->dailyAt('10:00')
             ->withoutOverlapping()
             ->onOneServer();
-        $schedule->command('backup:run')->dailyAt('02:00')->sendOutputTo(storage_path('logs/scheduled.log'));
+        //$schedule->command('backup:run')->dailyAt('02:00')->sendOutputTo(storage_path('logs/scheduled.log'));
+        $schedule->command('backup:run');
     }
 
     /**
