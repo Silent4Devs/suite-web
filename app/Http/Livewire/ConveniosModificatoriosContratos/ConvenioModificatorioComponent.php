@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\ConveniosModificatoriosContratos;
 
 use App\Functions\FormatearFecha;
-use App\Models\Katbol\Contratos;
+use App\Models\Katbol\Contrato;
 use App\Models\Katbol\ConveniosModificatorios;
 use App\Models\Katbol\ConveniosModificatoriosFile;
 use App\Models\Organizacion;
@@ -82,7 +82,7 @@ class ConvenioModificatorioComponent extends Component
             'no_convenio' => 'required',
         ]);
 
-        $contrato = Contratos::find($this->contrato_id);
+        $contrato = Contrato::find($this->contrato_id);
 
         $convenios = ConveniosModificatorios::where('contrato_id', '=', $this->contrato_id)->get();
         // if ($contrato->convenios) {
@@ -180,7 +180,7 @@ class ConvenioModificatorioComponent extends Component
         $date = Carbon::now();
         $date = $date->format('d-m-Y');
 
-        $contrato = Contratos::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
+        $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
         if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
             Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
         }
@@ -218,7 +218,7 @@ class ConvenioModificatorioComponent extends Component
             $this->alert('info', 'No se encontro ningun PDF cargado!');
         } else {
             //return Storage::disk('pdf')->download($pdf->pdf);
-            $contrato = Contratos::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
+            $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
 
             return response()->download(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/convenios/pdf/'.$convenios_file->convenios_file));
         }

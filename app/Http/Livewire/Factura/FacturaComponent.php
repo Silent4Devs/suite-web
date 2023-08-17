@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Factura;
 use App\Functions\FacturasRevisionesData;
 use App\Functions\FormatearFecha;
 use App\Models\Katbol\AmpliacionContrato;
-use App\Models\Katbol\Contratos;
+use App\Models\Katbol\Contrato;
 use App\Models\Katbol\Factura;
 use App\Models\Katbol\FacturaFile;
 use App\Models\Organizacion;
@@ -141,7 +141,7 @@ class FacturaComponent extends Component
     public function store(Request $request)
     {
         // dd($request->all());
-        $contrato_model = Contratos::find($this->contrato_id);
+        $contrato_model = Contrato::find($this->contrato_id);
         $this->fecha_inicio_contrato = $contrato_model->fecha_inicio;
         $this->fecha_fin_contrato = $contrato_model->fecha_fin;
         // dd($contrato_model);
@@ -243,7 +243,7 @@ class FacturaComponent extends Component
 
             //### Facturas reestructuracion ####
 
-            $contrato = Contratos::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
+            $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
             if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
                 Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
             }
@@ -306,7 +306,7 @@ class FacturaComponent extends Component
 
     public function update()
     {
-        $contrato_model = Contratos::find($this->contrato_id);
+        $contrato_model = Contrato::find($this->contrato_id);
         $this->fecha_inicio_contrato = $contrato_model->fecha_inicio;
         $this->fecha_fin_contrato = $contrato_model->fecha_fin;
 
@@ -401,7 +401,7 @@ class FacturaComponent extends Component
             $facturaFile = FacturaFile::find($factura->id);
 
             //### Facturas GESTION ARCHIVOS ####
-            $contrato = Contratos::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
+            $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
             if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
                 Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
             }
@@ -456,7 +456,7 @@ class FacturaComponent extends Component
         if ($pdf == null) {
             $this->alert('info', 'No se encontro ningun PDF cargado!');
         } else {
-            $contrato = Contratos::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
+            $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
             if (is_file(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/pdf/'.$pdf->pdf))) {
                 return response()->download(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/pdf/'.$pdf->pdf));
             } else {

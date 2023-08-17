@@ -59,7 +59,7 @@ class AmpliacionComponent extends Component
         ]);
 
         //Contrato
-        $contrato = Contratos::find($this->contrato_id);
+        $contrato = Contrato::find($this->contrato_id);
         $monto_pago = $contrato->monto_pago;
         $contrato_ampliado = AmpliacionContrato::where('contrato_id', '=', $this->contrato_id)->get();
         if ($contrato->contrato_ampliado) {
@@ -128,7 +128,7 @@ class AmpliacionComponent extends Component
         ]);
 
         //Contrato
-        $contrato = Contratos::find($this->contrato_id);
+        $contrato = Contrato::find($this->contrato_id);
         $monto_pago = $contrato->monto_pago;
         $contrato_ampliado = AmpliacionContrato::find($this->ampliacion_id);
         if ($contrato->contrato_ampliado) {

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Katbol\Contratos;
+use App\Models\Katbol\Contrato;
 
 /**
  * Class ContratoRepository.
@@ -58,6 +58,6 @@ class ContratoRepository extends BaseRepository
      **/
     public function model()
     {
-        return Contratos::class;
+        return Contrato::class;
     }
 }

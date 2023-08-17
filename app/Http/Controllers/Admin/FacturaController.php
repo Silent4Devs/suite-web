@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\Katbol\Contratos;
+use App\Models\Katbol\Contrato;
 use App\Models\Factura;
 use App\Models\FacturaFile;
 use Illuminate\Http\Request;
@@ -124,7 +124,7 @@ class FacturaController extends Controller
     public function ContratoInsert($id)
     {
         // dd($id);
-        $contrato = Contratos::find($id);
+        $contrato = Contrato::find($id);
 
         return view('admin.facturas.index')
             ->with('ids', $id)

@@ -126,16 +126,16 @@
                                 <a href="{{ route('admin.contratos-katbol.show', [$contrato->id]) }}"
                                     style="color:#2395AA;"><i class="material-icons-outlined">visibility </i>
                                 </a>
-                                @can('admin.contratos-katbol.edit')
+                                {{-- @can('admin.contratos-katbol.edit') --}}
                                 @if ($areas->count() > 0)
                                     <a href="{{ route('admin.contratos-katbol.edit', [$contrato->id]) }}"
                                     style="color:#2395AA;"><i class="material-icons-outlined">edit</i></a>
                                 @endif
 
-                                @endcan
-                                @can('admin.contratos-katbol.destroy')
+                                {{-- @endcan --}}
+                                {{-- @can('admin.contratos-katbol.destroy') --}}
                                     {!! Form::button('<i class="material-icons">delete_outline</i>', ['type' => 'submit', 'style' => 'color:#2395AA', 'onclick' => "return confirm('Esta seguro de eliminar el registro?')"]) !!}
-                                @endcan
+                                {{-- @endcan --}}
                             </div>
                             {!! Form::close() !!}
                         </td>

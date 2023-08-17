@@ -54,6 +54,8 @@ return new class extends Migration
             $table->string('firma1')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
         });
     }
 

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\EntregableMensual;
 
 use App\Functions\FormatearFecha;
-use App\Models\Katbol\Contratos;
+use App\Models\Katbol\Contrato;
 use App\Models\Katbol\EntregableFile;
 use App\Models\Katbol\EntregaMensual;
 use App\Models\Katbol\Factura;
@@ -109,7 +109,7 @@ class Entregablecomponent extends Component
     public function mount($contrato_id, $show_contrato)
     {
         $this->contrato_id = $contrato_id;
-        $this->contrato = Contratos::find($contrato_id);
+        $this->contrato = Contrato::find($contrato_id);
         $this->cumplimiento = true;
         $this->aplica_deductiva = false;
         $this->show_contrato = $show_contrato;
@@ -160,7 +160,7 @@ class Entregablecomponent extends Component
             'updated_by' => auth()->user()->empleado->id,
         ]);
 
-        $contrato = Contratos::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
+        $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
         if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
             Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato);
         }
@@ -315,7 +315,7 @@ class Entregablecomponent extends Component
         $entregableFile  = EntregableFile::where('entregable_id',$entM->id);
 
         // dd($entregableFile->get());
-        $contrato = Contratos::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
+        $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
         if (!Storage::exists('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato)) {
             Storage::makeDirectory('public/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato);
         }
@@ -402,7 +402,7 @@ class Entregablecomponent extends Component
         if ($pdf == null) {
             $this->alert('info', 'No se encontro ningun PDF cargado!');
         } else {
-            $contrato = Contratos::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
+            $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
             if (is_file(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf/'.$pdf->pdf))) {
                 return response()->download(storage_path('app/public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/entregables/pdf/'.$pdf->pdf));
             } else {

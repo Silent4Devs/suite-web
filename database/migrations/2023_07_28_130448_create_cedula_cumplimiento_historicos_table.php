@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('cumple', 10)->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->unsignedBigInteger('id_cedula');
             //Foreign
             $table->foreign('contrato_id')->references('id')->on('contratos');
