@@ -85,9 +85,9 @@ services:
       # ofelia.job-exec.schedulecron.schedule: "@hourly"
       # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
       ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-      ofelia.job-exec.run_queues_worker.command: "./run_queues_worker.sh"
+      ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
       ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
-      ofelia.job-exec.run_schedules_worker.command: "./infra/ofelia/run_schedules_worker.sh"
+      ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:run"
     tty: true
     volumes:
       - .:/var/www/html
