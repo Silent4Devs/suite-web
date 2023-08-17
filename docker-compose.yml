@@ -16,10 +16,6 @@ services:
     image: nginx:stable-alpine
     container_name: nginx-tabantaj
     restart: unless-stopped
-    labels:
-      ofelia.enabled: "true"
-      ofelia.job-exec.datecron.schedule: "@hourly"
-      ofelia.job-exec.datecron.command: "uname -a"
     tty: true
     ports:
       - 80:80
@@ -83,8 +79,12 @@ services:
     restart: unless-stopped
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.schedulecron.schedule: "@hourly"
-      ofelia.job-exec.schedulecron.command: "php artisan schedule:run"
+      # ofelia.job-exec.schedulecron.schedule: "@hourly"
+      # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
+      ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
+      ofelia.job-exec.run_queues_worker.command: "/infra/ofelia/run_queues_worker.sh"
+      ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
+      ofelia.job-exec.run_schedules_worker.command: "/infra/ofelia/run_schedules_worker.sh"
     tty: true
     volumes:
       - .:/var/www/html
