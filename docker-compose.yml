@@ -82,9 +82,9 @@ services:
       # ofelia.job-exec.schedulecron.schedule: "@hourly"
       # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
       ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-      ofelia.job-exec.run_queues_worker.command: "/infra/ofelia/run_queues_worker.sh"
+      ofelia.job-exec.run_queues_worker.command: "./infra/ofelia/run_queues_worker.sh"
       ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
-      ofelia.job-exec.run_schedules_worker.command: "/infra/ofelia/run_schedules_worker.sh"
+      ofelia.job-exec.run_schedules_worker.command: "./infra/ofelia/run_schedules_worker.sh"
     tty: true
     volumes:
       - .:/var/www/html
