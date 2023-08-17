@@ -1362,6 +1362,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //Escuela cursos intructor
     Route::resource('courses', 'Escuela\Instructor\CourseController');
+
+    Route::get('curso-estudiante', 'CursoEstudiante@index')->name('curso-estudiante');
+    Route::get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
