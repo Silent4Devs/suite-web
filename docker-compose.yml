@@ -84,7 +84,7 @@ services:
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.schedulecron.schedule: "@hourly"
-      ofelia.job-exec.schedulecron.command: "php /var/www/html/artisan schedule:run >> /dev/null 2>&1"
+      ofelia.job-exec.schedulecron.command: "php /var/www/html/artisan schedule:run"
     tty: true
     volumes:
       - .:/var/www/html
