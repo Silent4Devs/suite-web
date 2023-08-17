@@ -1,2 +1,2 @@
 #!/bin/sh
-php queue:work --daemon --tries=4 --sleep=5
+php artisan queue:work --daemon --tries=4 --sleep=5
