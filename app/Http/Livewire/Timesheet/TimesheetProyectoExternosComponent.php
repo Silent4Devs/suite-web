@@ -68,7 +68,7 @@ class TimesheetProyectoExternosComponent extends Component
                 'costo_tercero' => ['required'],
             ]);
         }
-        $time_proyect_externo = TimesheetProyectoProveedor::create([
+        $time_proyect_externo = TimesheetProyectoProveedor::firstOrCreate([
             'proyecto_id' => $this->proyecto->id,
             'proveedor_tercero' => $this->externo_añadido,
             'horas_tercero' => $this->horas_tercero,

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TimesheetProyectoEmpleado extends Model implements Auditable
 {
@@ -21,6 +22,22 @@ class TimesheetProyectoEmpleado extends Model implements Auditable
         'costo_hora',
         'correo_enviado',
     ];
+
+    public static function getAllByEmpleadoIdNoBloqueado($empleado_id)
+    {
+        return
+            Cache::remember('GetAllByEmpleadoId_' . $empleado_id, 3600 * 1, function () use ($empleado_id) {
+                return self::with('empleado')->where('empleado_id', $empleado_id)->where('usuario_bloqueado', false)->get();
+            });
+    }
+
+    public static function getAllByEmpleadoIdExistsNoBloqueado($empleado_id)
+    {
+        return
+            Cache::remember('GetAllByEmpleadoId_' . $empleado_id, 3600 * 1, function () use ($empleado_id) {
+                return self::where('empleado_id', $empleado_id)->where('usuario_bloqueado', false)->exists();
+            });
+    }
 
     public function empleado()
     {

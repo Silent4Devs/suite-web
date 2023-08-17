@@ -145,7 +145,7 @@ class SolicitudDayOffController extends Controller
         $supervisor = Empleado::find($request->autoriza);
         $solicitante = Empleado::find($request->empleado_id);
         $solicitud = SolicitudDayOff::create($request->all());
-        Mail::to($supervisor->email)->send(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud));
+        Mail::to(removeUnicodeCharacters($supervisor->email))->send(new MailSolicitudDayOff($solicitante, $supervisor, $solicitud));
 
         Flash::success('Solicitud creada satisfactoriamente.');
 
@@ -191,7 +191,7 @@ class SolicitudDayOffController extends Controller
         $solicitante = Empleado::find($request->empleado_id);
 
         $solicitud->update($request->all());
-        Mail::to($solicitante->email)->send(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud));
+        Mail::to(removeUnicodeCharacters($solicitante->email))->send(new MailRespuestaDayOff($solicitante, $supervisor, $solicitud));
 
         Flash::success('Respuesta enviada satisfactoriamente.');
 

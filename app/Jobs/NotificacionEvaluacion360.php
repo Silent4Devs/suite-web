@@ -42,6 +42,6 @@ class NotificacionEvaluacion360 implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->email)->send(new NotificacionEvaluador($this->evaluacion, $this->evaluador, $this->evaluados));
+        Mail::to(removeUnicodeCharacters($this->email))->send(new NotificacionEvaluador($this->evaluacion, $this->evaluador, $this->evaluados));
     }
 }

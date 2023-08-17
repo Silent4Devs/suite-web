@@ -1,5 +1,20 @@
 version: "3.8"
 services:
+  ofelia:
+    build:
+      context: "./infra/ofelia/"
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - nginx-tabantaj
+      - php
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      ofelia.job-local.my-test-job.schedule: "@hourly"
+      ofelia.job-local.my-test-job.command: "date"
+
   nginx-tabantaj:
     image: nginx:stable-alpine
     container_name: nginx-tabantaj
@@ -65,6 +80,14 @@ services:
     #image: johnvo95/tabantaj_php-tabantaj:latest
     container_name: php-tabantaj
     restart: unless-stopped
+    labels:
+      ofelia.enabled: "true"
+      # ofelia.job-exec.schedulecron.schedule: "@hourly"
+      # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
+      ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
+      ofelia.job-exec.run_queues_worker.command: "./run_queues_worker.sh"
+      ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
+      ofelia.job-exec.run_schedules_worker.command: "./infra/ofelia/run_schedules_worker.sh"
     tty: true
     volumes:
       - .:/var/www/html

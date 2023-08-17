@@ -103,7 +103,7 @@ class EnvioDocumentosController extends Controller
         $solicitud = EnvioDocumentos::create($request->all());
         $coordinador = Empleado::find($request->id_coordinador);
         $solicitante = Empleado::find($request->id_solicita);
-        Mail::to($coordinador->email)->send(new MailMensajeria($solicitante, $coordinador, $solicitud));
+        Mail::to(removeUnicodeCharacters($coordinador->email))->send(new MailMensajeria($solicitante, $coordinador, $solicitud));
 
         Flash::success('Solicitud creada satisfactoriamente.');
 

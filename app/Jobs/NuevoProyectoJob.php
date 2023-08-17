@@ -44,7 +44,7 @@ class NuevoProyectoJob implements ShouldQueue
     public function handle()
     {
         //
-        Mail::to($this->email)
-        ->send(new NotificacionNuevoProyecto($this->proyecto, $this->identificador, $this->cliente, $this->empleado, $this->id));
+        Mail::to(removeUnicodeCharacters($this->email))
+            ->send(new NotificacionNuevoProyecto($this->proyecto, $this->identificador, $this->cliente, $this->empleado, $this->id));
     }
 }
