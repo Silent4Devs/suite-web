@@ -1,7 +1,10 @@
 version: "3.8"
 services:
   ofelia:
-    image: mcuadros/ofelia:latest
+    build:
+      context: "./infra/ofelia/"
+      dockerfile: Dockerfile
+    restart: unless-stopped
     depends_on:
       - nginx-tabantaj
       - php
@@ -82,7 +85,7 @@ services:
       # ofelia.job-exec.schedulecron.schedule: "@hourly"
       # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
       ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-      ofelia.job-exec.run_queues_worker.command: "./infra/ofelia/run_queues_worker.sh"
+      ofelia.job-exec.run_queues_worker.command: "./run_queues_worker.sh"
       ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
       ofelia.job-exec.run_schedules_worker.command: "./infra/ofelia/run_schedules_worker.sh"
     tty: true
