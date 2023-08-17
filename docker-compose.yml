@@ -9,7 +9,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
-      ofelia.job-local.my-test-job.schedule: "@every 5s"
+      ofelia.job-local.my-test-job.schedule: "@hourly"
       ofelia.job-local.my-test-job.command: "date"
 
   nginx-tabantaj:
@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.datecron.schedule: "@every 5s"
+      ofelia.job-exec.datecron.schedule: "@hourly"
       ofelia.job-exec.datecron.command: "uname -a"
     tty: true
     ports:
