@@ -5,7 +5,6 @@ namespace App\Providers;
 use Carbon\Carbon;
 use App\Models\VersionesIso;
 use Laravel\Passport\Passport;
-use Spatie\Health\Facades\Health;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Filesystem\Filesystem;
@@ -13,9 +12,6 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use App\Extensions\CustomSessionHandler;
-use Spatie\Health\Checks\Checks\DatabaseCheck;
-use Spatie\Health\Checks\Checks\EnvironmentCheck;
-use Spatie\Health\Checks\Checks\UsedDiskSpaceCheck;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,14 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Health::checks([
-            UsedDiskSpaceCheck::new()
-                ->warnWhenUsedSpaceIsAbovePercentage(70)
-                ->failWhenUsedSpaceIsAbovePercentage(90),
-            EnvironmentCheck::new(),
-            DatabaseCheck::new(),
-            //DebugModeCheck::new(),
-        ]);
         Passport::ignoreRoutes();
     }
 
