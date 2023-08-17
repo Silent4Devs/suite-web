@@ -89,7 +89,7 @@ class TimesheetService
             $contador_times_papelera_areas = 0;
             $empleados_array = [];
             foreach ($area->totalEmpleados as $empleado) {
-                $times_esperados_empleado = intval(date_diff($empleado->antiguedad, $this->carbon->now())->format('%R%a') / 7);
+                $times_esperados_empleado = intval(date_diff(Carbon::parse($empleado->antiguedad), $this->carbon->now())->format('%R%a') / 7);
                 $times_complete_esperados_area += $times_esperados_empleado;
                 $papelera = 0;
                 $pendiente = 0;
