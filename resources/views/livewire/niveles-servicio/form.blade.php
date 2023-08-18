@@ -80,12 +80,12 @@
     </div> --}}
 
     <div class="col s12 m12 distancia">
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-invoice iconos-crear"></i>Descripción<font class="asterisco">*</font></label>
+        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-invoice iconos-crear"></i>Descripción<font class="asterisco">*</font></label><br>
         <textarea wire:model.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="text_area" required></textarea>
         @error('descripcion') <span class="red-text">{{ $message }}</span> @enderror
     </div>
     <div class="col s12 m12 distancia">
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-alt iconos-crear"></i>Información<font class="asterisco">*</font></label>
+        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-alt iconos-crear"></i>Información<font class="asterisco">*</font></label><br>
         <textarea wire:model.debounce.800ms="info_consulta" id="textarea2" class="text_area" style="padding:15px;" required>
         </textarea>
         @error('info_consulta') <span class="red-text">{{ $message }}</span> @enderror

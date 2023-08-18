@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreign('solicitante_id')->references('id')->on('users');
             $table->foreign('asignado_id')->references('id')->on('users');
             $table->string('created_by')->nullable();
-            $table->string('update_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->json('informacion')->nullable();
             $table->longText('plantilla_contenido')->nullable();
             $table->unsignedBigInteger('plantilla_id')->nullable();

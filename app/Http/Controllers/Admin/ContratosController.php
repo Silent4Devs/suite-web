@@ -12,13 +12,13 @@ use App\Models\Empleado;
 use App\Models\Area;
 use App\Models\Katbol\CedulaCumplimiento;
 use App\Models\Katbol\CierreContrato;
-use App\Models\Contratos;
-use App\Models\ConveniosModificatorios;
+use App\Models\Katbol\Contrato;
+use App\Models\Katbol\ConveniosModificatorios;
 use App\Models\Katbol\DolaresContrato;
-use App\Models\EntregaMensual;
-use App\Models\Factura;
+use App\Models\Katbol\EntregaMensual;
+use App\Models\Katbol\Factura;
 use App\Models\Organizacion;
-use App\Models\Proveedores;
+use App\Models\Katbol\Proveedores;
 use App\Repositories\ContratoRepository;
 use App\Rules\NumeroContrato;
 use App\Models\User;
@@ -57,7 +57,7 @@ class ContratosController extends AppBaseController
         $usuario_actual = Empleado::find(auth()->user()->empleado->id);
         $areas = Area::get();
 
-        $contratos = Contratos::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'proveedores.nombre_comercial')
+        $contratos = Contrato::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'proveedores.nombre_comercial')
             ->join('proveedores', 'contratos.proveedor_id', '=', 'proveedores.id')
             ->leftjoin('cedula_cumplimiento', 'contratos.id', '=', 'cedula_cumplimiento.contrato_id')
             ->get();
@@ -69,14 +69,14 @@ class ContratosController extends AppBaseController
     }
 
     /**
-     * Show the form for creating a new Contratos.
+     * Show the form for creating a new Contrato.
      *
      * @return Response
      */
     public function create()
     {
         // dd($id->all());
-        $contratos = new Contratos;
+        $contratos = new Contrato;
         // dd($contratos);
         $areas = Area::get();
         $organizacion = Organizacion::first();
@@ -170,7 +170,7 @@ class ContratosController extends AppBaseController
 
         $input = $request->all();
 
-        $ultimo_id = Contratos::get('id')->last();
+        $ultimo_id = Contrato::get('id')->last();
         $date = Carbon::now()->format('dmY');
 
         $formatoFecha = new FormatearFecha;
@@ -299,7 +299,7 @@ class ContratosController extends AppBaseController
                 Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones');
             }
             $file->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones', $contrato->id.$fecha_inicio.$nombre);
-            $contratos = Contratos::find($contrato->id);
+            $contratos = Contrato::find($contrato->id);
             $contratos->documento = $contrato->id.$fecha_inicio.$nombre;
             $contratos->save();
         }
@@ -350,11 +350,11 @@ class ContratosController extends AppBaseController
             'cumple' => true,
         ]);
 
-        dd('Guarda todo bien');
-        notify()->success('¡El registro fue cargado exitosamente!');
+        // dd('Guarda todo bien');
+        // notify()->success('¡El registro fue cargado exitosamente!');
 
         //return redirect(route('contratos.index'));
-        return redirect('contratoinsert?param='.$contrato->id);
+        return redirect('admin/contratos-katbol/contratoinsert/'.$contrato->id);
     }
 
     /**
@@ -370,16 +370,16 @@ class ContratosController extends AppBaseController
         $organizacion = Organizacion::first();
         $areas = Area::get();
         if (empty($contrato)) {
-            notify()->error('¡El registro no fue encontrado!');
+            // notify()->error('¡El registro no fue encontrado!');
 
             return redirect(route('admin.contratos-katbol.index'));
         }
         $proveedor_id = $contrato->proveedor_id;
-        $contratos = Contratos::with('ampliaciones')->find($id);
+        $contratos = Contrato::with('ampliaciones')->find($id);
         $proveedores = Proveedores::get();
-        $contrato->fecha_inicio = $contrato->fecha_inicio != null ? $formatoFecha->formatearFecha($contrato->fecha_inicio, 'Y-m-d', 'd-m-Y') : null;
-        $contrato->fecha_fin = $contrato->fecha_fin != null ? $formatoFecha->formatearFecha($contrato->fecha_fin, 'Y-m-d', 'd-m-Y') : null;
-        $contrato->fecha_firma = $contrato->fecha_firma != null ? $formatoFecha->formatearFecha($contrato->fecha_firma, 'Y-m-d', 'd-m-Y') : null;
+        $contrato->fecha_inicio = $contrato->fecha_inicio;
+        $contrato->fecha_fin = $contrato->fecha_fin;
+        $contrato->fecha_firma = $contrato->fecha_firma;
         $descargar_archivo =
             '/public/storage/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato;
         $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
@@ -410,17 +410,17 @@ class ContratosController extends AppBaseController
             return redirect(route('admin.contratos-katbol.index'));
         }
         $proveedor_id = $contrato->proveedor_id;
-        $contratos = Contratos::with('ampliaciones', 'dolares')->find($id);
+        $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
         // dd($contratos);
         $proveedores = Proveedores::get();
         if (! is_null($contrato->fecha_inicio)) {
-            $contrato->fecha_inicio = $formatoFecha->formatearFecha($contrato->fecha_inicio, 'Y-m-d', 'd-m-Y');
+            $contrato->fecha_inicio = $contrato->fecha_inicio;
         }
         if (! is_null($contrato->fecha_fin)) {
-            $contrato->fecha_fin = $formatoFecha->formatearFecha($contrato->fecha_fin, 'Y-m-d', 'd-m-Y');
+            $contrato->fecha_fin = $contrato->fecha_fin;
         }
         if (! is_null($contrato->fecha_firma)) {
-            $contrato->fecha_firma = $formatoFecha->formatearFecha($contrato->fecha_firma, 'Y-m-d', 'd-m-Y');
+            $contrato->fecha_firma = $contrato->fecha_firma;
         } else {
             $fecha_firma = null;
         }
@@ -443,7 +443,7 @@ class ContratosController extends AppBaseController
      * @param  UpdateContratoRequest  $request
      * @return Response
      */
-    public function update($id, UpdateContratoRequest $request)
+    public function update($id, Request $request)
     {
         // dd($request->signed);
         $validatedData = $request->validate([
@@ -530,16 +530,16 @@ class ContratosController extends AppBaseController
         $contrato = $this->contratoRepository->find($id);
 
         if (empty($contrato)) {
-            notify()->error('¡Contrato not found!');
+            // notify()->error('¡Contrato not found!');
 
             return redirect(route('admin.contratos-katbol.index'));
         }
 
         $formatoFecha = new FormatearFecha;
-        $fecha_inicio = $formatoFecha->formatearFecha($request->fecha_inicio, 'd-m-Y', 'Y-m-d');
-        $fecha_fin = $formatoFecha->formatearFecha($request->fecha_fin, 'd-m-Y', 'Y-m-d');
+        $fecha_inicio = $request->fecha_inicio;
+        $fecha_fin = $request->fecha_fin;
         if ($request->fecha_firma != null) {
-            $fecha_firma = $formatoFecha->formatearFecha($request->fecha_firma, 'd-m-Y', 'Y-m-d');
+            $fecha_firma = $request->fecha_firma;
         } else {
             $fecha_firma = null;
         }
@@ -667,12 +667,12 @@ class ContratosController extends AppBaseController
             }
 
             $file->storeAs('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/penalizaciones', $contrato->id.$fecha_inicio.$nombre);
-            $contratos = Contratos::find($contrato->id);
+            $contratos = Contrato::find($contrato->id);
             $contratos->documento = $contrato->id.$fecha_inicio.$nombre;
             $contratos->save();
         }
         //## FIN UPDATE REES####
-        notify()->success('¡Se ha actualizado la información del contrato satisfactoriamente!');
+        // notify()->success('¡Se ha actualizado la información del contrato satisfactoriamente!');
 
         return redirect(route('admin.contratos-katbol.index'));
     }
@@ -691,13 +691,13 @@ class ContratosController extends AppBaseController
         $contrato = $this->contratoRepository->find($id);
 
         if (empty($contrato)) {
-            notify()->error('¡Se ha actualizado la información del contrato satisfactoriamente!');
+            // notify()->error('¡Se ha actualizado la información del contrato satisfactoriamente!');
 
             return redirect(route('admin.contratos-katbol.index'));
         }
 
         $this->contratoRepository->delete($id);
-        notify()->success('¡Se ha eliminado la información del contrato satisfactoriamente.!');
+        // notify()->success('¡Se ha eliminado la información del contrato satisfactoriamente.!');
 
         return redirect(route('admin.contratos-katbol.index'));
     }
@@ -707,21 +707,21 @@ class ContratosController extends AppBaseController
         if ($request->ajax()) {
             switch ($request->name) {
                 case 'no_pagos':
-                    $gapun = Contratos::findOrFail($id);
+                    $gapun = Contrato::findOrFail($id);
                     $gapun->no_pagos = $request->value;
                     $gapun->save();
 
                     return response()->json(['success' => true]);
                     break;
                 case 'tipo_contrato':
-                    $gapun = Contratos::findOrFail($id);
+                    $gapun = Contrato::findOrFail($id);
                     $gapun->tipo_contrato = $request->value;
                     $gapun->save();
 
                     return response()->json(['success' => true]);
                     break;
                 case 'nombre_servicio':
-                    $gapun = Contratos::findOrFail($id);
+                    $gapun = Contrato::findOrFail($id);
                     $gapun->nombre_servicio = $request->value;
                     $gapun->save();
 
@@ -739,17 +739,17 @@ class ContratosController extends AppBaseController
         if (isset($request->id_contrato)) {
             $id_contrato = $request->id_contrato;
             $no_contrato = $request->no_contrato;
-            $pertenece_no_contrato_editable = Contratos::where('id', '=', $id_contrato)->where('no_contrato', '=', $no_contrato)->exists();
+            $pertenece_no_contrato_editable = Contrato::where('id', '=', $id_contrato)->where('no_contrato', '=', $no_contrato)->exists();
 
             if ($no_contrato != '' || $no_contrato != null) {
-                $existeNumeroContrato = Contratos::where('no_contrato', '=', $no_contrato)->exists();
+                $existeNumeroContrato = Contrato::where('no_contrato', '=', $no_contrato)->exists();
 
                 return ['existe' => $existeNumeroContrato, 'pertenece' => $pertenece_no_contrato_editable];
             }
         } else {
             $no_contrato = $request->no_contrato;
             if ($no_contrato != '' || $no_contrato != null) {
-                $existeNumeroContrato = Contratos::where('no_contrato', '=', $no_contrato)->exists();
+                $existeNumeroContrato = Contrato::where('no_contrato', '=', $no_contrato)->exists();
 
                 return ['existe' => $existeNumeroContrato];
             }
@@ -762,7 +762,7 @@ class ContratosController extends AppBaseController
     {
         // $this->authorize('haveaccess', 'contratos.edit');
         $is_ampliado = $request->ampliado; // 0 -> no ampliado, 1 -> ampliado
-        $contrato = Contratos::find($id);
+        $contrato = Contrato::find($id);
 
         if ($is_ampliado) {
             $contrato->update([
@@ -783,7 +783,7 @@ class ContratosController extends AppBaseController
     {
         // $this->authorize('haveaccess', 'contratos.edit');
         $is_convenio = $request->convenio; // 0 -> no convenios, 1 -> convenios
-        $contrato = Contratos::find($id);
+        $contrato = Contrato::find($id);
 
         if ($is_convenio) {
             $contrato->update([
@@ -853,7 +853,7 @@ class ContratosController extends AppBaseController
     {
         $contrato_id = $request->contratoId;
 
-        $contrato = Contratos::find($contrato_id);
+        $contrato = Contrato::find($contrato_id);
         $facturas = Factura::where('contrato_id', $contrato_id)->get();
         $entregables = EntregaMensual::where('contrato_id', $contrato_id)->get();
         $convenios = ConveniosModificatorios::where('contrato_id', $contrato_id)->get();
@@ -870,7 +870,7 @@ class ContratosController extends AppBaseController
     {
         if ($request->ajax()) {
             $no_contrato = $request->no_contrato;
-            $documentoExists = Contratos::where('no_contrato', '=', $no_contrato)->exists();
+            $documentoExists = Contrato::where('no_contrato', '=', $no_contrato)->exists();
             if ($documentoExists) {
                 return response()->json(['exists' => true]);
             } else {

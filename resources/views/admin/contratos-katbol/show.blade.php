@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('titulo', 'Contratos')
 
@@ -241,10 +241,10 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="card-content">
+                            <div class="card-content">
                                 @livewire('factura.factura-component', ['contrato_id' => $contratos->id,
                                 'show_contrato'=>true, 'contrato_total'=>$contratos->monto_pago])
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -259,8 +259,8 @@
                         <div class="card">
                             <div class="card-content">
 
-                                {{-- @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true]) --}}
+                                @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>true])
 
                             </div>
                         </div>
@@ -277,8 +277,8 @@
                         <div class="card">
                             <div class="card-content">
 
-                                {{-- @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true]) --}}
+                                @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>true])
 
                             </div>
                         </div>
@@ -295,8 +295,8 @@
                         <div class="card">
                             <div class="card-content">
 
-                                {{-- @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true]) --}}
+                                @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>true])
 
                             </div>
                         </div>
@@ -313,8 +313,8 @@
                         <div class="card">
                             <div class="card-content">
 
-                                {{-- @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true]) --}}
+                                @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id,
+                                'show_contrato'=>true])
 
                             </div>
                         </div>
@@ -340,11 +340,9 @@
 
 
 
-                                {{-- @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' =>
-
+                                @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' =>
                                 $contratos->id,
-
-                                'show_contrato'=>true]) --}}
+                                'show_contrato'=>true])
 
                             </div>
 
@@ -361,7 +359,7 @@
 
     <div class="row">
         <div class="col s12 right-align">
-            <a href="{{ url('contratos') }}" class="btn-redondeado waves-effect waves-light btn">Salir</a>
+            <a href="{{ route('admin.contratos-katbol.index') }}" class="btn-redondeado btn btn-primary">Salir</a>
         </div>
     </div>
 

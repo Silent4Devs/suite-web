@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Models\Katbol\AmpliacionContrato;
+use App\Models\Katbol\DolaresContrato;
 
 /**
  * Class Contrato.
@@ -248,7 +250,7 @@ class Contrato extends Model implements Auditable
     //Relaciones
     public function ampliaciones()
     {
-        return $this->hasMany(AmpliacionContrato::class);
+        return $this->hasMany(AmpliacionContrato::class, 'contrato_id');
     }
 
     public function cedulas()
@@ -273,12 +275,12 @@ class Contrato extends Model implements Auditable
 
     public function dolares()
     {
-        return $this->hasMany(DolaresContrato::class);
+        return $this->hasMany(DolaresContrato::class, 'contrato_id');
     }
 
     public function getArchivoAttribute()
     {
-        $archivo = Contrato::where('contrato_id', $this->id)->first();
+        $archivo = Contratos::where('contrato_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
         // dd($archivo);
         $ruta = asset('storage/contratos/');

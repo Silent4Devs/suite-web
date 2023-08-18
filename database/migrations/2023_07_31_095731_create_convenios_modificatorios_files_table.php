@@ -15,10 +15,8 @@ return new class extends Migration
     {
         Schema::create('convenios_modificatorios_files', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('contrato_id')->nullable();
-            $table->string('no_convenio');
-            $table->date('fecha')->nullable();
-            $table->longText('descripcion')->nullable();
+            $table->string('convenios_file')->nullable();
+            $table->unsignedInteger('convenios_modificatorios_id');
             $table->timestamps();
             $table->softDeletes();
         });

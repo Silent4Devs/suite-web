@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 @section('content')
 @section('titulo', 'Histórico cédula de cumplimiento')
     <div class="row">

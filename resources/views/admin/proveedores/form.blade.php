@@ -48,7 +48,8 @@
     <div class="col s12 m6 distancia">
         <label for="id_fiscale" class="txt-tamaño"><i class="fas fa-file-alt iconos-crear"></i>Persona fiscal<font class="asterisco">*</font></label><br>
         <select class="selectBuscar form-control" name="id_fiscale" class="required center-align" >
-             disabled    @foreach ($personas as $persona)
+            @if (!$personas->isEmpty())
+             @foreach ($personas as $persona)
                     <option value="{{$persona->id}}"
                         {{ $persona->id == $persona->id ? 'selected' : '' }}>
                         {{ $persona->persona_fiscal }}</option>
@@ -218,17 +219,17 @@
         @endif
 
     </div>
-    @if (!$show_proveedor)
     {{-- <div class="row"> --}}
         <div class="col s12 right-align distancia">
             <a href="{{ route('admin.proveedores.index') }}" class="btn btn-secundario" style="background: #959595 !important">Cancelar</a>
-            <button class="btn" type="submit">
+            @if (!$show_proveedor)
+            <button class="btn-redondeado btn btn-danger" type="submit">
                 GUARDAR
             </button>
+            @endif
         </div>
     {{-- </div> --}}
     <!--row-->
-@endif
 </div>
 
 

@@ -1,22 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
-use App\Models\Proveedores;
+use App\Models\Katbol\HistoricoCedulaCumplimiento;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class ProveedoresController extends Controller
+class HistoricoCedulaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($cedula_id)
     {
-        //
-    }
+        $items_historico = HistoricoCedulaCumplimiento::where('id_cedula', '=', $cedula_id)->paginate(10);
 
+        return view('livewire.cedula-cumplimiento.historico-component', compact('items_historico'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -41,10 +43,10 @@ class ProveedoresController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Proveedores  $proveedores
+     * @param  \App\Models\CedulaCumplimientoHistorico  $cedulaCumplimientoHistorico
      * @return \Illuminate\Http\Response
      */
-    public function show(Proveedores $proveedores)
+    public function show(CedulaCumplimientoHistorico $cedulaCumplimientoHistorico)
     {
         //
     }
@@ -52,10 +54,10 @@ class ProveedoresController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Proveedores  $proveedores
+     * @param  \App\Models\CedulaCumplimientoHistorico  $cedulaCumplimientoHistorico
      * @return \Illuminate\Http\Response
      */
-    public function edit(Proveedores $proveedores)
+    public function edit(CedulaCumplimientoHistorico $cedulaCumplimientoHistorico)
     {
         //
     }
@@ -64,10 +66,10 @@ class ProveedoresController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Proveedores  $proveedores
+     * @param  \App\Models\CedulaCumplimientoHistorico  $cedulaCumplimientoHistorico
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Proveedores $proveedores)
+    public function update(Request $request, CedulaCumplimientoHistorico $cedulaCumplimientoHistorico)
     {
         //
     }
@@ -75,10 +77,10 @@ class ProveedoresController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Proveedores  $proveedores
+     * @param  \App\Models\CedulaCumplimientoHistorico  $cedulaCumplimientoHistorico
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Proveedores $proveedores)
+    public function destroy(CedulaCumplimientoHistorico $cedulaCumplimientoHistorico)
     {
         //
     }

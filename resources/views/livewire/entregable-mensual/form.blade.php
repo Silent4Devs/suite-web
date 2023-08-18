@@ -10,41 +10,42 @@
         <div class="mb-4 row">
             <!-- Area Field -->
             <div class="row">
-                <div class="col s12 distancia">
+                <div class="col s6">
                     <label for="" class="txt-tamaño"><i class="fas fa-paste iconos-crear"></i>Nombre entregable<font class="asterisco">*</font></label>
                     <input type="text" wire:model.debounce.800ms="nombre_entregable" class="form-control" required>
                     @error('nombre_entregable') <span class="red-text">{{ $message }}</span> @enderror
                 </div>
-                <div class="col s12 distancia">
+                <div class="col s6">
                     <label for="" class="txt-tamaño"><i class="fas fa-file-alt iconos-crear"></i>Descripción<font class="asterisco">*</font></label>
                     <textarea wire:model.debounce.800ms="descripcion"  style="padding:15px;" class="text_area" required></textarea>
                     @error('descripcion') <span class="red-text">{{ $message }}</span> @enderror
                 </div>
-
-                <div class="col s12 m4 distancia" >
+            </div>
+            <div class="row">
+                <div class="col s4 m4" >
                     <div wire:ignore>
                         <label for="" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha entrega inicial<font class="asterisco">*</font></label>
-                        <input type="text" wire:model.defer="plazo_entrega_inicio" class="form-control fechas"
-                            onchange="this.dispatchEvent(new InputEvent('input'))" required readonly>
+                        <input type="date" wire:model.defer="plazo_entrega_inicio" class="form-control" min="1945-01-01" required>
                     </div>
                     @error('plazo_entrega_inicio') <span class="red-text">{{ $message }}</span> @enderror
                 </div>
-                <div class="col s12 m4 distancia" >
+                <div class="col s12 m4" >
                     <div wire:ignore>
                         <label for="" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha entrega final<font class="asterisco">*</font></label>
-                        <input type="text" wire:model.defer="plazo_entrega_termina" class="form-control fechas"
-                            onchange="this.dispatchEvent(new InputEvent('input'))" required readonly>
+                        <input type="date" wire:model.defer="plazo_entrega_termina" class="form-control" min="1945-01-01"
+                         required>
                     </div>
                     @error('plazo_entrega_termina') <span class="red-text">{{ $message }}</span> @enderror
                 </div>
-                <div class="col s12 m4 distancia">
+                <div class="col s12 m4">
                     <div wire:ignore>
                         <label for="" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha entrega real<font class="asterisco">*</font></label>
-                        <input type="text" wire:model.fechas="entrega_real" class="form-control fechas"
-                        onchange="this.dispatchEvent(new InputEvent('input'))" required readonly>
+                        <input type="date" wire:model.fechas="entrega_real" class="form-control" min="1945-01-01" required>
                     </div>
                     @error('entrega_real') <span class="red-text">{{ $message }}</span> @enderror
                 </div>
+            </div>
+            <div class="row">
                 <div class="col s12 m4 distancia">
                     <label for="" class="txt-tamaño"><i class="fas fa-thumbs-down iconos-crear"></i>
                         <i class="fas fa-thumbs-up iconos-crear" style="margin-left:2px;"></i>Cumple<font class="asterisco">*</font></label>
@@ -68,15 +69,18 @@
                     </select>
                     @error('factura_id') <span class="red-text">{{ $message }}</span> @enderror
                 </div>
+
             <!--row-->
-                <!-- Nombre Servicio Field -->
+            </div>
+            <!-- Nombre Servicio Field -->
+            <div class="row">
                 <div class="col s12 m12 distancia">
-                    <label for="" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Observaciones<font class="asterisco">*</font></label>
+                    <label for="" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Observaciones<font class="asterisco">*</font></label><br>
                     <textarea wire:model.debounce.800ms="observaciones" style="padding:15px;" class="text_area" required></textarea>
                     @error('observaciones') <span class="red-text">{{ $message }}</span> @enderror
                 </div>
-
-
+            </div>
+            <div class="row">
                 <div wire:ignore class="col s12 m6">
 
                     @if (is_null($organizacion))
@@ -195,7 +199,7 @@
     });
 
 </script>
-<script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', ()=>{
         $('.fechas').datepicker({
             firstDay: true,
@@ -266,4 +270,4 @@
         //M.AutoInit();
     });
 
-</script>
+</script> --}}
