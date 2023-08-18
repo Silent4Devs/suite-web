@@ -350,7 +350,7 @@
                                 </li>
                             @endcan
 
-                            @can('timesheet_administrador_proyectos_access')
+                            {{-- @can('timesheet_administrador_proyectos_access')
                                 <li>
                                     <a href="{{ route('admin.timesheet-proyectos') }}">
                                         <div>
@@ -359,7 +359,7 @@
                                         </div>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan --}}
                             @can('timesheet_administrador_tareas_proyectos_access')
                                 <li>
                                     <a href="{{ route('admin.timesheet-tareas') }}">
@@ -370,7 +370,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            {{-- @can('timesheet_administrador_reportes_access') --}}
+                            @can('timesheet_administrador_reportes_access')
                             @if($organizacion->fecha_registro_timesheet && $time_exist)
                                 <li>
                                     <a href="{{ route('admin.timesheet-reportes') }}">
@@ -391,8 +391,8 @@
                                     <strong class="text-danger text-center" style="position:absolute; top:20px; left: 0; width: 100%;">Seleccione fecha de inicio del timesheet</strong>
                                 </li>
                             @endif
-                            {{-- @endcan --}}
-                            {{-- @can('timesheet_administrador_dashboard_access') --}}
+                            @endcan
+                            @can('timesheet_administrador_dashboard_access')
                                 <li>
                                     <a href="{{ route('admin.timesheet-dashboard') }}">
                                         <div>
@@ -401,7 +401,7 @@
                                         </div>
                                     </a>
                                 </li>
-                            {{-- @endcan --}}
+                            @endcan
 
 
 
