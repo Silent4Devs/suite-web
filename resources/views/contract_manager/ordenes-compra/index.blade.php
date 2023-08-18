@@ -172,20 +172,23 @@
                         name: 'referencia'
                     },
                     {
-                        data: 'producto_id',
-                        name: 'producto_id'
+                        data: 'productos_requisiciones',
+                        render: function(data, type, row) {
+                        return data[0].producto.descripcion;
+                        }
+
                     },
                     {
                         data: 'proveedor_catalogo',
                         name: 'proveedor_catalogo'
                     },
                     {
-                        data: 'estatus',
-                        name: 'estatus'
+                        data: 'estado',
+                        name: 'estado'
                     },
                     {
-                        data: 'contrato_id',
-                        name: 'contrato_id'
+                        data: 'contrato.nombre_servicio',
+                        name: 'contrato.nombre_servicio'
                     },
                     {
                         data: 'area',
@@ -204,16 +207,17 @@
                             let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
                             let htmlBotones =
                                 `
+                                <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+
                                 @foreach ($requisiciones as  $requisicion)
+                                @if($requisicion->firma_comprador_orden)
                                 <div class="btn-group">
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.nombre}');"> <i class="fa-solid fa-box-archive"></i></a>
                                     <a href="{{ route('contract_manager.orden-compra.show', ['id' => $requisicion->id]) }}"
                                                 title="Ver/Imprimir" >
-                                                <i class="fa-solid fa-print fa-xl"></i>
-                                </a>
+                                                <i class="fa-solid fa-print"></i>
+                                    </a>
                                 </div>
-
+                                @endif
                                 @endforeach
                             `;
                             return htmlBotones;

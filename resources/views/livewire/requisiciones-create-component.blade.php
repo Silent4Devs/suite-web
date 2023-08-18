@@ -92,7 +92,7 @@
                             Área que solicita <font class="asterisco">*</font>
                         </label>
                         <input id="area_print" name="area"
-                            value="@isset(Auth::user()->empleado_tabantaj) {{ Auth::user()->empleado_tabantaj->area->area }} @endisset"
+                            value="@isset($this->user_actual->empleado->area->area) {{ $this->user_actual->empleado->area->area }} @endisset"
                             readonly style="background: #eaf0f1" class="browser-default" type="text">
                     </div>
                 </div>
@@ -190,8 +190,7 @@
             </div>
 
             <div class="col s12 right-align">
-                {{--  <a href="{{ route('proveedores.index') }}" class="btn btn-secundario" style="background: #959595 !important">Cancelar</a>  --}}
-                <button class="btn" type="submit">
+                <button class="btn btn-primary" type="submit">
                     Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                 </button>
             </div>
@@ -376,12 +375,8 @@
                                     AGREGAR PROVEEDOR</div>
                             </div>
 
-                            <div class="col s12 right-align">
-                                <div class="btn btn-secundario"
-                                    onclick="$('.tabs').tabs('select', 'paso-servicio'); @this.set('habilitar_proveedores', false);"
-                                    style="background: #959595 !important"><i class="fa-solid fa-chevron-left icon-prior"></i>
-                                    Regresar </div>
-                                <button class="btn" type="submit">
+                            <div class="col s12 ">
+                                <button class="btn btn-primary"  type="submit">
                                     Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                                 </button>
                             </div>
@@ -705,7 +700,6 @@
       <b>  <H1>LA EXTENCIÓN DE ARCHIVO NO ES VALIDA</H1> </b>
     @endif
 
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         var emailV = document.getElementById('emailV');
@@ -740,10 +734,121 @@
             }
         }
     </script>
-    <script>
-        $(".not-select2").select2('destroy');
-   </script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.signature.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
 
+    @section('scripts')
+    <script>
+         $(".not-select2").select2('destroy');
+    </script>
+        <script>
+            Livewire.on('render_firma', (id_tab) => {
+                var signaturePad = $('#firma_content').signature({
+                    syncField: '#firma',
+                    syncFormat: 'PNG',
+                    change: function(event, ui) {
+                        if (signaturePad.signature().length > 0) {
+                            // La firma está presente, lo que indica que se ha terminado de firmar
+                            console.log("Firma completada");
+                            // Ejecutar código adicional aquí
+                            // ...
+                            console.log('ferras');
+                        } else {
+                            // La firma está vacía, lo que indica que aún no se ha firmado
+                            console.log("No se ha firmado");
+                        }
+                    }
+                });
+
+                $('#clear').click(function(e) {
+                    e.preventDefault();
+                    signaturePad.signature('clear');
+                    $("#firma").val('');
+                });
+            });
+        </script>
+
+<script>
+            document.addEventListener("DOMContentLoaded", () => {
+                @this.set('products_servs_count', 1);
+
+                // $('.tabs').tabs();
+                // Livewire.on('cambiarTab', (id_tab) => {
+                //     $('.tabs').tabs('select', id_tab);
+                //     $('.paso-tab[data-id="' + id_tab + '"]').addClass('active');
+                // });
+
+            //     var fecha = new Date();
+            //     document.getElementById("fecha-solicitud-input").value = fecha.toJSON().slice(0, 10);
+            });
+
+            function printArea() {
+                let area = $('#select_solicitante option:selected').attr("data-area");
+                document.querySelector('#area_print').value = area;
+            }
+
+            function addCard(tipo_card) {
+                if (tipo_card === 'servicio') {
+                    let card = document.querySelector('.card-product');
+                    let nueva_card = document.createElement("div");
+                    nueva_card.classList.add("card");
+                    nueva_card.classList.add("card-content");
+                    nueva_card.classList.add("card-product");
+                    let cards_count = document.querySelectorAll('.card-product').length + 1;
+                    nueva_card.setAttribute("data-count", cards_count);
+                    let id_nueva_card = 'product-serv-' + cards_count;
+                    nueva_card.setAttribute('id', id_nueva_card);
+
+                    let caja_cards = document.querySelector('.caja-card-product');
+                    caja_cards.appendChild(nueva_card);
+                    document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
+
+                    document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name', 'cantidad_' + cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name', 'producto_' + cards_count);
+                    document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute('name', 'especificaciones_' + cards_count);
+                    @this.set('products_servs_count', cards_count);
+                }
+
+                if (tipo_card === 'proveedor') {
+
+                    //@this.set('proveedores_count', {{$proveedores_count + 1}});
+
+                    Livewire.emit('actualizarCountProveedores');
+                }
+            }
+
+            function deleteProduct(){
+                document.querySelector('.card-product:hover').remove();
+            }
+
+            function deleteProveedor(){
+                document.querySelector('.card-proveedor:hover').remove();
+            }
+        </script>
+
+        <script>
+            $('.select_contratos').select2({
+             templateResult: productTemplate,
+             escapeMarkup: function(m) { return m; }
+
+             });
+
+             function productTemplate(state) {
+             var original = state.element;
+
+             result =  ' <strong> '+  $(original).data('no') + ' </strong> '+ $(original).data('servicio') + ' <strong> '+ $(original).data('proveedor')+' </strong> ';
+
+             return result;
+           }
+        </script>
+
+        <script>
+            // Livewire.on('select2', () => {
+            //     setTimeout(() => {
+            //         $('.select2').select2();
+            //     }, 1000);
+            // });
+        </script>
+
+    @endsection
 </div>

@@ -434,7 +434,7 @@
                 </div>
             </div>
             <div class="flex" style="justify-content: flex-end; margin-top:50px; gap:10px;">
-                <a  href="" class="btn" style="background: #959595 !important">Regresar</a>
+                <a  href="http://tabantaj.test/contract_manager/orden-compra" class="btn" style="background: #959595 !important">Regresar</a>
                 <button class="btn btn-primary" onclick="mensaje()">Guardar</button>
             </div>
         </form>

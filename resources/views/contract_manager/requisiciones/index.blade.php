@@ -174,15 +174,18 @@
                     },
                     {
                         data: 'productos_requisiciones',
-                        name: 'productos_requisiciones'
+                        render: function(data, type, row) {
+                        return data[0].producto.descripcion;
+                        }
+
                     },
                     {
                         data: 'proveedor_catalogo',
                         name: 'proveedor_catalogo'
                     },
                     {
-                        data: 'estatus',
-                        name: 'estatus'
+                        data: 'estado',
+                        name: 'estado'
                     },
                     {
                         data: 'contrato.nombre_servicio',
@@ -207,7 +210,6 @@
                                 `
                                 <div class="btn-group">
                                     <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.nombre}');"> <i class="fa-solid fa-box-archive"></i></a>
                                 </div>
 
                             `;

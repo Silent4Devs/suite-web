@@ -46,7 +46,7 @@ class RequisicionesController extends Controller
         $requisiciones_solicitante=null;
         $id = Auth::user()->id;
 
-        $requisiciones_solicitante=KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal','productos_requisiciones')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
+        $requisiciones_solicitante=KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal','productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 

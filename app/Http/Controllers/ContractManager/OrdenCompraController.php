@@ -42,7 +42,7 @@ class OrdenCompraController extends Controller
      */
     public function index()
     {
-            $requisiciones =  KatbolRequsicion::where('estado', 'firmada')->Orwhere('estado_orden', 'rechazado_oc')->Orwhere('estado_orden', 'curso')->Orwhere('estado_orden', 'fin')->orderByDesc('id')->get();
+            $requisiciones =  KatbolRequsicion::with('productos_requisiciones.producto', 'contrato')->where('estado', 'firmada')->Orwhere('estado_orden', 'rechazado_oc')->Orwhere('estado_orden', 'curso')->Orwhere('estado_orden', 'fin')->orderByDesc('id')->get();
             $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
             if (is_null($organizacion_actual)) {
                 $organizacion_actual = new Organizacion();
@@ -67,9 +67,9 @@ class OrdenCompraController extends Controller
 
     public function getRequisicionIndex(Request $request)
     {
-        $requisiciones_solicitante=KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
+        $requisiciones =  KatbolRequsicion::with('productos_requisiciones.producto', 'contrato')->where('estado', 'firmada')->Orwhere('estado_orden', 'rechazado_oc')->Orwhere('estado_orden', 'curso')->Orwhere('estado_orden', 'fin')->orderByDesc('id')->get();
 
-        return datatables()->of($requisiciones_solicitante)->toJson();
+        return datatables()->of($requisiciones)->toJson();
     }
 
     /**

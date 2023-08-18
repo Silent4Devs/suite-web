@@ -51,7 +51,6 @@ class RequisicionesCreateComponent extends Component
     public $compradores;
     public $contratos;
     public $proveedores;
-    public $user_tabantaj;
     public $productos;
     public $organizacion;
     public $requisicion_id;
@@ -71,6 +70,8 @@ class RequisicionesCreateComponent extends Component
 
     // tabs
     public $habilitar_firma = false;
+
+    public $user_actual;
 
     public $habilitar_alerta = false;
     public $habilitar_proveedores = false;
@@ -98,8 +99,8 @@ class RequisicionesCreateComponent extends Component
         $this->proveedores = KatbolProveedorOC::where('estado', false)->get();
         $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
         $this->contratos = KatbolContrato::get();
-        $this->productos = KatbolProducto::where('archivo', false)->orderby('id', 'asc')->get();
-        $this->user_tabantaj = ModelsUser::with('empleado.area')->get();
+        $this->productos = KatbolProducto::where('archivo', false)->get();
+        $this->user_actual = Auth::user();
         $this->organizacion = Organizacion::first();
     }
 
@@ -120,7 +121,7 @@ class RequisicionesCreateComponent extends Component
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => $data['area'],
+                'area' => $this->user_actual->empleado->area->area,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
@@ -130,7 +131,7 @@ class RequisicionesCreateComponent extends Component
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => $data['area'],
+                'area' => $this->user_actual->empleado->area->area,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
@@ -147,7 +148,6 @@ class RequisicionesCreateComponent extends Component
         for($i = 1; $i <= $this->products_servs_count; $i++){
             if(isset($data['especificaciones_'.$i])){
                 $producto_req = new KatbolProductoRequisicion();
-
                 $producto_req->espesificaciones = $data['especificaciones_'.$i];
                 $producto_req->cantidad = $data['cantidad_'.$i];
                 $producto_req->producto_id =$data['producto_'.$i];
