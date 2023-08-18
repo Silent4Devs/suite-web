@@ -236,7 +236,7 @@
 
 </div>
 <br>
-{{-- {{ $facturas->links('pagination-materializecss') }} --}}
+{{-- {{ $facturas->links() }} --}}
 <script>
     document.addEventListener("DOMContentLoaded",()=>{
         $('.select_pagination').change(function(e) {

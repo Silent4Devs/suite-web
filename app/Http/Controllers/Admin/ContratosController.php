@@ -377,9 +377,9 @@ class ContratosController extends AppBaseController
         $proveedor_id = $contrato->proveedor_id;
         $contratos = Contrato::with('ampliaciones')->find($id);
         $proveedores = Proveedores::get();
-        $contrato->fecha_inicio = $contrato->fecha_inicio != null ? $formatoFecha->formatearFecha($contrato->fecha_inicio, 'Y-m-d', 'd-m-Y') : null;
-        $contrato->fecha_fin = $contrato->fecha_fin != null ? $formatoFecha->formatearFecha($contrato->fecha_fin, 'Y-m-d', 'd-m-Y') : null;
-        $contrato->fecha_firma = $contrato->fecha_firma != null ? $formatoFecha->formatearFecha($contrato->fecha_firma, 'Y-m-d', 'd-m-Y') : null;
+        $contrato->fecha_inicio = $contrato->fecha_inicio;
+        $contrato->fecha_fin = $contrato->fecha_fin;
+        $contrato->fecha_firma = $contrato->fecha_firma;
         $descargar_archivo =
             '/public/storage/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato;
         $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();

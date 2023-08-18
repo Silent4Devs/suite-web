@@ -192,7 +192,7 @@
 
 </div>
 
-{{-- {{ $nivelesServicio->links('pagination-materializecss') }} --}}
+{{-- {{ $nivelesServicio->links() }} --}}
 <script>
     $(document).ready(function() {
         $('.select_pagination_niveles').change(function(e) {

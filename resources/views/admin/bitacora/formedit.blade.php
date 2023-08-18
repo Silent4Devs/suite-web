@@ -145,7 +145,8 @@
                 Contrato<font class="asterisco">*
                 </font></label>
             <input class="form-control {{ $errors->has('no_contrato') ? 'is-invalid' : '' }}" type="text"
-                name="no_contrato" id="no_contrato" value="{{ old('no_contrato', $contrato->no_contrato) }}" required>
+                name="no_contrato" id="no_contrato" value="{{ old('no_contrato', $contrato->no_contrato) }}"
+                @if ($show_contrato) disabled @endif required>
             <span id="existCode"></span>
             @if ($errors->has('no_contrato'))
                 <span class="text-danger">{{ $errors->first('no_contrato') }}</span>
@@ -405,7 +406,8 @@
                 class="fa-solid fa-calendar-days"></i>&nbsp;Fecha de inicio<font
                     class="asterisco">*</font></label>
             <input type="date" name="fecha_inicio" id="fecha_inicio"
-            class = "form-control" value="{{ old('fecha_inicio', $contrato->fecha_inicio) }}">
+            class = "form-control" value="{{ old('fecha_inicio', $contrato->fecha_inicio) }}" required
+            @if ($show_contrato) disabled @endif>
             {{-- {!! Form::text('fecha_inicio', $contrato->fecha_inicio, [
                 'class' => 'form-control fecha_inicio_contrato', 'required',
                 $show_contrato ? 'disabled' : '',
@@ -423,7 +425,8 @@
                 class="fa-solid fa-calendar-days"></i>&nbsp;Fecha fin<font class="asterisco">*
                 </font></label>
             <input type="date" name="fecha_fin" id="fecha_fin"
-            class = "form-control" value="{{ old('fecha_fin', $contrato->fecha_fin) }}">
+            class = "form-control" value="{{ old('fecha_fin', $contrato->fecha_fin) }}"
+            @if ($show_contrato) disabled @endif>
             {{-- {!! Form::text('fecha_fin', $contrato->fecha_fin, [
                 'class' => 'form-control fecha_fin_contrato' ,'required',
                 $show_contrato ? 'disabled' : '',
@@ -440,7 +443,8 @@
                 class="fa-solid fa-calendar-days"></i>&nbsp;Fecha de firma<font
                     class="asterisco">*</font></label>
             <input type="date" name="fecha_firma" id="fecha_firma"
-            class = "form-control" value="{{ old('fecha_firma', $contrato->fecha_firma) }}">
+            class = "form-control" value="{{ old('fecha_firma', $contrato->fecha_firma) }}"
+            @if ($show_contrato) disabled @endif>
             {{-- {!! Form::text('fecha_firma', $contrato->fecha_firma, [
                 'class' => 'form-control datepicker',
                 $show_contrato ? 'disabled' : '',
