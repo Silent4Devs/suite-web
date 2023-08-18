@@ -33,7 +33,7 @@
             <p style=" margin-top:10px;">
                 Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
             </p><br>
-            <form method="POST" action="{{ route('requisiciones.pdf', ['id' => $requisicion->id]) }}">
+            <form method="POST" action="{{ route('contract_manager.requisiciones.pdf', ['id' => $requisicion->id]) }}">
                 @csrf
                 <button style="background-color: #4ca998; border-color: #fff; border-radius: 5px; padding:10px 24px; font-size:16px">
                     <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir Requisición
@@ -323,7 +323,7 @@
                 <div class="flex print-none" >
                     <div class="flex-item">
                         <small ><i style="color: #2395AA;">-NOTA : En caso de ser capacitación se necesita el visto bueno de Gestión de talento.</i></small>
-                        <button class="btn btn info"  style="position: relative;   left:40%;"><a  href="{{route('requisiciones')}}" style="color: #EEEEEE">Regresar</a></button>
+                        <button class="btn btn info"  style="position: relative;   left:40%;"><a  href="{{route('contract_manager.requisiciones')}}" style="color: #EEEEEE">Regresar</a></button>
                     </div>
                 </div>
             </div>

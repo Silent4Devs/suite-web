@@ -109,7 +109,7 @@ class RequisicionesController extends Controller
 
         $user = ModelsUser::where('id',  $requisicion->id_user)->first();
 
-        $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_tabantaj_id)->first();
+        $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
 
         $supervisor = $empleado->supervisor->name;
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
@@ -325,7 +325,7 @@ class RequisicionesController extends Controller
 
         $user = ModelsUser::where('id',  $requisiciones->id_user)->first();
 
-        $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_tabantaj_id)->first();
+        $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
 
         $supervisor = $empleado->supervisor->name;
 

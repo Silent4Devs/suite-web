@@ -203,14 +203,21 @@
                         data: 'id',
                         name: 'actions',
                         render: function(data, type, row, meta) {
-                            let requisiciones = @json($requisiciones_solicitante);
+                            let requisiciones_solicitante = @json($requisiciones_solicitante);
                             let urlButtonArchivar = `/contract_manager/requisiciones/archivar/${data}`;
-                            let urlButtonEdit = `/contract_manager/requisiciones/${data}/edit`;
+                            let urlButtonEdit = `/contract_manager/requisiciones/edit/${data}`;
                             let htmlBotones =
                                 `
+                                <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+
+                                @foreach ($requisiciones_solicitante as  $requisicion)
                                 <div class="btn-group">
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('contract_manager.requisiciones.show', ['id' => $requisicion->id]) }}"
+                                                title="Ver/Imprimir" >
+                                                <i class="fa-solid fa-print"></i>
+                                    </a>
                                 </div>
+                                @endforeach
 
                             `;
                             return htmlBotones;
