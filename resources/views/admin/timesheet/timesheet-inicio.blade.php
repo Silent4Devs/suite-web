@@ -350,7 +350,7 @@
                                 </li>
                             @endcan
 
-                            {{-- @can('timesheet_administrador_proyectos_access')
+                            @can('timesheet_administrador_proyectos_access')
                                 <li>
                                     <a href="{{ route('admin.timesheet-proyectos') }}">
                                         <div>
@@ -359,7 +359,7 @@
                                         </div>
                                     </a>
                                 </li>
-                            @endcan --}}
+                            @endcan
                             @can('timesheet_administrador_tareas_proyectos_access')
                                 <li>
                                     <a href="{{ route('admin.timesheet-tareas') }}">
