@@ -42,8 +42,8 @@
 							<table class="caja-info">
 								<tr>
 									<td style="padding: 10px 30px 10px 30px;">
-										<img class="img-firts" vspace="15" hspace="7" width="100" height="70" src="" style="margin: auto; margin-top: 30px;"><br><br>
-										<img class="img-firts" width="150" height="150" src="" style="margin: auto; margin-top: 30px;">
+										<img class="img-firts" vspace="15" hspace="7" width="100" height="70" src="{{$logo}}" style="margin: auto; margin-top: 30px;"><br><br>
+										<img class="img-firts" width="150" height="150" src="{{$img_requi}}" style="margin: auto; margin-top: 30px;">
 
 										@if($tipo_firma_siguiente != 'firma_solicitante')
 

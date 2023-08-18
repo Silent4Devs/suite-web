@@ -186,7 +186,6 @@
                         }
                     }
                 }
-
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,

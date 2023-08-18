@@ -173,8 +173,8 @@
                         name: 'referencia'
                     },
                     {
-                        data: 'producto_id',
-                        name: 'producto_id'
+                        data: 'productos_requisiciones',
+                        name: 'productos_requisiciones'
                     },
                     {
                         data: 'proveedor_catalogo',
@@ -185,8 +185,8 @@
                         name: 'estatus'
                     },
                     {
-                        data: 'contrato_id',
-                        name: 'contrato_id'
+                        data: 'contrato.nombre_servicio',
+                        name: 'contrato.nombre_servicio'
                     },
                     {
                         data: 'area',

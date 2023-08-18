@@ -75,14 +75,31 @@ class RequisicionesEmail extends Mailable
         }
     }
 
-    // public function getBase64($url){
+    public function getBase64($url){
 
-    //     $img_route = $url;
-    //     $logo_base = file_get_contents($img_route);
-    //     $img = 'data:image/png;base64,' . base64_encode($logo_base);
+        try {
+            $img_route = $url;
+            $logo_base = file_get_contents($img_route);
+            $img = 'data:image/png;base64,' . base64_encode($logo_base);
 
-    //     return $img;
-    // }
+            return $img;
+
+            } catch (\Exception $e) {
+
+                try {
+
+                    $img_route = $url;
+                    $logo_base = Storage::get($img_route);
+                    $img = 'data:image/png;base64,' . base64_encode($logo_base);
+                    return $img;
+
+                } catch (\Throwable $th) {
+
+                    $img = 'data:image/png;base64,' . '';
+                    return $img;
+                }
+            }
+    }
 
     /**
      * Build the message.
@@ -100,11 +117,11 @@ class RequisicionesEmail extends Mailable
                         'tipo_firma' => $this->tipo_firma,
                         'tipo_firma_siguiente' => $this->tipo_firma_siguiente,
 
-                        // 'logo' => $this->getBase64($this->organizacion->logotipo),
-                        // 'img_twitter' => $this->getBase64(asset('img/twitter.png')),
-                        // 'img_linkedin' => $this->getBase64(asset('img/linkedin.png')),
-                        // 'img_facebook' => $this->getBase64(asset('img/facebook.png')),
-                        // 'img_requi' => $this->getBase64(asset('img/img_req.png')),
+                        'logo' => $this->getBase64($this->organizacion->logotipo),
+                        'img_twitter' => $this->getBase64(asset('img/twitter.png')),
+                        'img_linkedin' => $this->getBase64(asset('img/linkedin.png')),
+                        'img_facebook' => $this->getBase64(asset('img/facebook.png')),
+                        'img_requi' => $this->getBase64(asset('img/img_req.png')),
                     ]);
     }
 }
