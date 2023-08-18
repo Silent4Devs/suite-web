@@ -95,7 +95,7 @@
     }
 </style>
 
-<form method="POST" action="{{ route('admin.contratos-katbol.store') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('contract_manager.contratos-katbol.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="card card-content">
         <div class="row">
@@ -746,7 +746,7 @@
             </div>
             <div class="row">
                 <div class="col s12 m12 right-align btn-grd distancia">
-                    <a id="btnCancelar" href="{{ route('admin.contratos-katbol.index') }}" class="btn-redondeadotn btn btn-default"
+                    <a id="btnCancelar" href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn-redondeadotn btn btn-default"
                         style="background: #959595 !important">Cancelar</a>
                     {!! Form::submit('Guardar', ['class' => 'btn-redondeado btn btn-primary', 'id' => 'btnGuardar']) !!}
                 </div>
@@ -788,7 +788,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.contratos-katbol.checkCode') }}",
+                url: "{{ route('contract_manager.contratos-katbol.checkCode') }}",
                 data: {
                     _token: "{{ csrf_token() }}",
                     no_contrato
@@ -861,7 +861,7 @@
         }
 
         const inputFile = document.getElementById('adjuntarContrato');
-        const url = "{{ route('admin.contratos-katbol.fileUploadTmp') }}";
+        const url = "{{ route('contract_manager.contratos-katbol.fileUploadTmp') }}";
         inputFile.addEventListener('change', function(e) {
             const formData = new FormData();
             const tmpName = this.getAttribute('tmp-file-name');

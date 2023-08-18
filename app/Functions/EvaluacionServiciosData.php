@@ -2,8 +2,8 @@
 
 namespace App\Functions;
 
-use App\Models\Katbol\EvaluacionServicio;
-use App\Models\Katbol\NivelesServicio;
+use App\Models\ContractManager\EvaluacionServicio;
+use App\Models\ContractManager\NivelesServicio;
 use Carbon\Carbon;
 
 class EvaluacionServiciosData

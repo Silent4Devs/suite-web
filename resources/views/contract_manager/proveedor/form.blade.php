@@ -221,7 +221,7 @@
     </div>
     {{-- <div class="row"> --}}
         <div class="col s12 right-align distancia">
-            <a href="{{ route('admin.proveedores.index') }}" class="btn btn-secundario" style="background: #959595 !important">Cancelar</a>
+            <a href="{{route('contract_manager.proveedor.index') }}" class="btn btn-secundario" style="background: #959595 !important">Cancelar</a>
             @if (!$show_proveedor)
             <button class="btn-redondeado btn btn-danger" type="submit">
                 GUARDAR

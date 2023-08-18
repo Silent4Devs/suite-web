@@ -127,38 +127,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('puestos', 'PuestosController');
     Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
 
-    //Katbol
-    //Proveedores
-    Route::resource('proveedores', 'ProveedoresController');
 
-    //Contratos
-    //## API - Revisar en tiempo real si contrato ya existe ###
-    Route::post('contratos-katbol/numero/existe', 'ContratosController@revisarSiNumeroContratoExiste')->name('contratos-katbol.noContratoExistencia');
-    Route::post('contratos-katbol/{id}/ampliacion', 'ContratosController@updateAmpliacion')->name('contratos-katbol.ampliacion');
-    Route::post('contratos-katbol/{id}/convenios', 'ContratosController@updateConvenios')->name('contratos-katbol.convenios');
-    // Route::post('contratos-katbol/update/{id}', 'ContratosController@update')->name('contracontratos-katboltos.update');
-    Route::post('contratos-katbol/contrato-file-upload-tmp', 'ContratosController@uploadInTmpDirectory')->name('contratos-katbol.fileUploadTmp');
-    // Route::get('download/{file}', 'ContratosController@getDownload');
-    Route::post('contratos-katbol/archivos', 'ContratosController@obtenerArchivos')->name('contratos-katbol.obtenerArchivos');
-    Route::get('contratos-katbol/file/download', 'ContratosController@downloadFile')->name('downloadFile');
-    // Route::post('contratos/identificadorExist', 'ContratosController@identificadorExist')->name('contratos-katbol.identificadorExist');
-
-    Route::post('contratos-katbol/check-code', 'ContratosController@checkCode')->name('contratos-katbol.checkCode');
-    Route::resource('contratos-katbol', 'ContratosController');
-    Route::get('contratos-katbol/exportar/contratos', 'ContratosController@exportTo')->name('reportecliente.exportar');
-    Route::put('contratos-katbol/contratopago/{id}', 'ContratosController@Campos')->name('contratos-katbol.contratopago');
-    Route::get('contratos-katbol/contratoinsert/{id}', 'FacturaController@ContratoInsert')->name('contratos-katbol.Insertar');
-    Route::get('contratos-katbol/eval-nivel/{id}', 'ContratosController@evaluacion')->name('contratos-katbol.evaluacion');
-    Route::get('contratos-katbol/revision-factura/{id}', 'ContratosController@revision')->name('contratos-katbol.revision');
-
-    Route::post('contratos-katbol/validateDocument', 'ContratoController@validateDocument')->name('contratos-katbol.validar-documento');
-
-    Route::resource('bitacoras', 'BitacoraController');
-
-    Route::resource('facturas', 'FacturaController');
-    Route::get('facturas/exportar', 'FacturaController@exportTo')->name('adeudoproveedor.exportar');
-
-    Route::get('cedula/{id_cedula}/historico', 'HistoricoCedulaController@index')->name('cedula.historico');
 
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
         // Visitantes
@@ -1503,6 +1472,41 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'contractmanager', 'middleware' => ['auth', '2fa', 'active']], function () {
 
     //KATBOL
+
+    Route::view('katbol', 'contract_manager.katbol.index')->name('katbol');
+
+    //Proveedores
+    Route::resource('proveedor', 'ProveedoresController');
+
+    //Contratos
+    //## API - Revisar en tiempo real si contrato ya existe ###
+    Route::post('contratos-katbol/numero/existe', 'ContratosController@revisarSiNumeroContratoExiste')->name('contratos-katbol.noContratoExistencia');
+    Route::post('contratos-katbol/{id}/ampliacion', 'ContratosController@updateAmpliacion')->name('contratos-katbol.ampliacion');
+    Route::post('contratos-katbol/{id}/convenios', 'ContratosController@updateConvenios')->name('contratos-katbol.convenios');
+    // Route::post('contratos-katbol/update/{id}', 'ContratosController@update')->name('contracontratos-katboltos.update');
+    Route::post('contratos-katbol/contrato-file-upload-tmp', 'ContratosController@uploadInTmpDirectory')->name('contratos-katbol.fileUploadTmp');
+    // Route::get('download/{file}', 'ContratosController@getDownload');
+    Route::post('contratos-katbol/archivos', 'ContratosController@obtenerArchivos')->name('contratos-katbol.obtenerArchivos');
+    Route::get('contratos-katbol/file/download', 'ContratosController@downloadFile')->name('downloadFile');
+    // Route::post('contratos/identificadorExist', 'ContratosController@identificadorExist')->name('contratos-katbol.identificadorExist');
+
+    Route::post('contratos-katbol/check-code', 'ContratosController@checkCode')->name('contratos-katbol.checkCode');
+    Route::resource('contratos-katbol', 'ContratosController');
+    Route::get('contratos-katbol/exportar/contratos', 'ContratosController@exportTo')->name('reportecliente.exportar');
+    Route::put('contratos-katbol/contratopago/{id}', 'ContratosController@Campos')->name('contratos-katbol.contratopago');
+    Route::get('contratos-katbol/contratoinsert/{id}', 'FacturaController@ContratoInsert')->name('contratos-katbol.Insertar');
+    Route::get('contratos-katbol/eval-nivel/{id}', 'ContratosController@evaluacion')->name('contratos-katbol.evaluacion');
+    Route::get('contratos-katbol/revision-factura/{id}', 'ContratosController@revision')->name('contratos-katbol.revision');
+
+    Route::post('contratos-katbol/validateDocument', 'ContratoController@validateDocument')->name('contratos-katbol.validar-documento');
+
+    Route::resource('bitacoras', 'BitacoraController');
+
+    Route::resource('facturas', 'FacturaController');
+    Route::get('facturas/exportar', 'FacturaController@exportTo')->name('adeudoproveedor.exportar');
+
+    Route::get('cedula/{id_cedula}/historico', 'HistoricoCedulaController@index')->name('cedula.historico');
+
     Route::get('productos/archivados', 'ProductoController@view_archivados')->name('productos.view_archivados');
     Route::post('productos/list/get/archivados', 'ProductoController@getArchivadosIndex')->name('productos.getArchivadosIndex');
     Route::resource('productos', 'ProductoController');

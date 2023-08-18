@@ -4,8 +4,8 @@ namespace App\Http\Livewire\NivelesServicio;
 
 use App\Functions\EvaluacionServiciosData;
 use App\Functions\FormatearFecha;
-use App\Models\Katbol\EvaluacionServicio;
-use App\Models\Katbol\NivelesServicio;
+use App\Models\ContractManager\EvaluacionServicio;
+use App\Models\ContractManager\NivelesServicio;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;

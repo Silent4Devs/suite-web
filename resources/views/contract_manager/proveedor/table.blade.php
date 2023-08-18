@@ -51,17 +51,17 @@
                     <td>{{ $proveedores->objeto_descripcion }}</td>
                     <td>{{ $proveedores->cobertura }}</td>
                     <td>
-                        {!! Form::open(['route' => ['admin.proveedores.destroy', $proveedores->id], 'method' => 'delete']) !!}
+                        {!! Form::open(['route' => ['contract_manager.proveedor.destroy', $proveedores->id], 'method' => 'delete']) !!}
                         <div class='row'>
                             <div class="col s4">
-                                <a href="{{ route('admin.proveedores.show', [$proveedores->id]) }}"
+                                <a href="{{route('contract_manager.proveedor.show', [$proveedores->id]) }}"
                                     style="color:#2395AA;">
                                     <i class="fa-solid fa-eye" title="Mostrar"> </i>
                                 </a>
                             </div>
                             <div class="col s4">
                                 {{-- @can('proveedores.edit') --}}
-                                    <a href="{{ route('admin.proveedores.edit', [$proveedores->id]) }}"
+                                    <a href="{{route('contract_manager.proveedor.edit', [$proveedores->id]) }}"
                                         style="color:#2395AA;">
                                         <i class="fas fa-edit" title="Editar"></i>
                                     </a>

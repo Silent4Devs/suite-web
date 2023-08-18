@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\Katbol\Contrato;
+use App\Models\ContractManager\Contrato;
 use App\Models\Factura;
 use App\Models\FacturaFile;
 use Illuminate\Http\Request;

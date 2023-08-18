@@ -3,10 +3,10 @@
 namespace App\Http\Livewire\EntregableMensual;
 
 use App\Functions\FormatearFecha;
-use App\Models\Katbol\Contrato;
-use App\Models\Katbol\EntregableFile;
-use App\Models\Katbol\EntregaMensual;
-use App\Models\Katbol\Factura;
+use App\Models\ContractManager\Contrato;
+use App\Models\ContractManager\EntregableFile;
+use App\Models\ContractManager\EntregaMensual;
+use App\Models\ContractManager\Factura;
 use App\Models\Organizacion;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;

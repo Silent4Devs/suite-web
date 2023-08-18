@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\CierreContratos;
 
-use App\Models\Katbol\CierreContrato;
+use App\Models\ContractManager\CierreContrato;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;

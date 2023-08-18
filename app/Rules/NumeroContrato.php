@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Models\Katbol\Contrato;
+use App\Models\ContractManager\Contrato;
 use Illuminate\Contracts\Validation\Rule;
 
 class NumeroContrato implements Rule

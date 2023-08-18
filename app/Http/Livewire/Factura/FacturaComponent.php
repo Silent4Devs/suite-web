@@ -4,12 +4,12 @@ namespace App\Http\Livewire\Factura;
 
 use App\Functions\FacturasRevisionesData;
 use App\Functions\FormatearFecha;
-use App\Models\Katbol\AmpliacionContrato;
-use App\Models\Katbol\Contrato;
-use App\Models\Katbol\Factura;
-use App\Models\Katbol\FacturaFile;
+use App\Models\ContractManager\AmpliacionContrato;
+use App\Models\ContractManager\Contrato;
+use App\Models\ContractManager\Factura;
+use App\Models\ContractManager\FacturaFile;
 use App\Models\Organizacion;
-use App\Models\Katbol\RevisionesFactura;
+use App\Models\ContractManager\RevisionesFactura;
 use App\Models\User;
 use App\Models\Empleado;
 use Carbon\Carbon;

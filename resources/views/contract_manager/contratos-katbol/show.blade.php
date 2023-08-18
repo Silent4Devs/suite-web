@@ -76,7 +76,7 @@
                         <!-- <div class="box box-primary">-->
                         <div class="box-body">
                             <div class="row">
-                                {!! Form::model($contrato, ['route' => ['admin.contratos-katbol.update', $contrato->id], 'method' => 'patch', 'enctype' => 'multipart/form-data']) !!}
+                                {!! Form::model($contrato, ['route' => ['contract_manager.contratos-katbol.update', $contrato->id], 'method' => 'patch', 'enctype' => 'multipart/form-data']) !!}
 
                                 @include('admin.bitacora.formedit', ["show_contrato"=>true])
 
@@ -169,7 +169,7 @@
                                 <td>{{ $contratos->estatus }}</td>
                                 <td style="text-align: center">
                                     <form id="ampliacion_form"
-                                        action="{{ route('admin.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}" method="POST">
+                                        action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}" method="POST">
                                         @method("PATCH")
                                         <p>
                                             <label>
@@ -182,7 +182,7 @@
                                 </td>
                                 <td style="text-align: center">
                                     <form id="ampliacion_form"
-                                        action="{{ route('admin.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}" method="POST">
+                                        action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}" method="POST">
                                         @method("PATCH")
                                         <p>
                                             <label>
@@ -359,7 +359,7 @@
 
     <div class="row">
         <div class="col s12 right-align">
-            <a href="{{ route('admin.contratos-katbol.index') }}" class="btn-redondeado btn btn-primary">Salir</a>
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn-redondeado btn btn-primary">Salir</a>
         </div>
     </div>
 

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Katbol\Contrato;
+use App\Models\ContractManager\Contrato;
 
 /**
  * Class ContratoRepository.

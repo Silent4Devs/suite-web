@@ -139,7 +139,7 @@
                             <td>
                                 <!-- Modal Trigger -->
                                 <a class="waves-effect waves-light btn modal-trigger" target="_blank"
-                                    href="{!! route('admin.contratos-katbol.evaluacion', [$tem->id]) !!}"> <i class="large material-icons">insert_chart</i>
+                                    href="{!! route('contract_manager.contratos-katbol.evaluacion', [$tem->id]) !!}"> <i class="large material-icons">insert_chart</i>
                                 </a>
                             </td>
                             <td>

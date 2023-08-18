@@ -4,7 +4,7 @@
 @section('titulo', 'Clientes')
 
   <form>
-      @include('admin.proveedores.form', ['show_proveedor'=>true])
+      @include('contract_manager.proveedor.form', ['show_proveedor'=>true])
   </form>
 
 @endsection
@@ -17,7 +17,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.proveedores.massDestroy') }}",
+    url: "{{route('contract_manager.proveedor.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -50,7 +50,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.proveedores.index') }}",
+    ajax: "{{route('contract_manager.proveedor.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },

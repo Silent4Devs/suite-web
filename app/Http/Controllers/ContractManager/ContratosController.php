@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\ContractManager;
 
 use App\Exports\ReporteClienteExport;
 use App\Functions\CierreContratoData;
@@ -10,15 +10,15 @@ use App\Http\Requests\CreateContratoRequest;
 use App\Http\Requests\UpdateContratoRequest;
 use App\Models\Empleado;
 use App\Models\Area;
-use App\Models\Katbol\CedulaCumplimiento;
-use App\Models\Katbol\CierreContrato;
-use App\Models\Katbol\Contrato;
-use App\Models\Katbol\ConveniosModificatorios;
-use App\Models\Katbol\DolaresContrato;
-use App\Models\Katbol\EntregaMensual;
-use App\Models\Katbol\Factura;
+use App\Models\ContractManager\CedulaCumplimiento;
+use App\Models\ContractManager\CierreContrato;
+use App\Models\ContractManager\Contrato;
+use App\Models\ContractManager\ConveniosModificatorios;
+use App\Models\ContractManager\DolaresContrato;
+use App\Models\ContractManager\EntregaMensual;
+use App\Models\ContractManager\Factura;
 use App\Models\Organizacion;
-use App\Models\Katbol\Proveedores;
+use App\Models\ContractManager\Proveedores;
 use App\Repositories\ContratoRepository;
 use App\Rules\NumeroContrato;
 use App\Models\User;
@@ -64,7 +64,7 @@ class ContratosController extends AppBaseController
 
         $organizacion = Organizacion::first();
 
-        return view('admin.contratos-katbol.index', compact('usuario_actual', 'areas'))
+        return view('contract_manager.contratos-katbol.index', compact('usuario_actual', 'areas'))
             ->with('contratos', $contratos);
     }
 
@@ -85,7 +85,7 @@ class ContratosController extends AppBaseController
         // $this->authorize('haveaccess', 'contratos.create');
         $proveedores = Proveedores::select('id', 'razon_social', 'nombre_comercial')->get();
 
-        return view('admin.contratos-katbol.create', compact('dolares', 'organizacion', 'areas'))->with('proveedores', $proveedores)->with('contratos', $contratos);
+        return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas'))->with('proveedores', $proveedores)->with('contratos', $contratos);
     }
 
     /**
@@ -372,7 +372,7 @@ class ContratosController extends AppBaseController
         if (empty($contrato)) {
             // notify()->error('¡El registro no fue encontrado!');
 
-            return redirect(route('admin.contratos-katbol.index'));
+            return redirect(route('contract_manager.contratos-katbol.index'));
         }
         $proveedor_id = $contrato->proveedor_id;
         $contratos = Contrato::with('ampliaciones')->find($id);
@@ -386,7 +386,7 @@ class ContratosController extends AppBaseController
         $dolares = DolaresContrato::where('contrato_id', $id)->first();
 
         //dd($descargar_archivo);
-        return view('admin.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+        return view('contract_manager.contratos-katbol.show', compact('proveedor_id', 'dolares', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
     }
 
     /**
@@ -407,7 +407,7 @@ class ContratosController extends AppBaseController
         if (empty($contrato)) {
             // toastr()->error('Contratos not found.');
 
-            return redirect(route('admin.contratos-katbol.index'));
+            return redirect(route('contract_manager.contratos-katbol.index'));
         }
         $proveedor_id = $contrato->proveedor_id;
         $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
@@ -433,7 +433,7 @@ class ContratosController extends AppBaseController
         // dd($dolares);
         $organizacion = Organizacion::first();
 
-        return view('admin.contratos-katbol.edit', compact('proveedor_id', 'dolares', 'organizacion', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+        return view('contract_manager.contratos-katbol.edit', compact('proveedor_id', 'dolares', 'organizacion', 'areas'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
     }
 
     /**
@@ -532,7 +532,7 @@ class ContratosController extends AppBaseController
         if (empty($contrato)) {
             // notify()->error('¡Contrato not found!');
 
-            return redirect(route('admin.contratos-katbol.index'));
+            return redirect(route('contract_manager.contratos-katbol.index'));
         }
 
         $formatoFecha = new FormatearFecha;
@@ -674,7 +674,7 @@ class ContratosController extends AppBaseController
         //## FIN UPDATE REES####
         // notify()->success('¡Se ha actualizado la información del contrato satisfactoriamente!');
 
-        return redirect(route('admin.contratos-katbol.index'));
+        return redirect(route('contract_manager.contratos-katbol.index'));
     }
 
     /**
@@ -693,13 +693,13 @@ class ContratosController extends AppBaseController
         if (empty($contrato)) {
             // notify()->error('¡Se ha actualizado la información del contrato satisfactoriamente!');
 
-            return redirect(route('admin.contratos-katbol.index'));
+            return redirect(route('contract_manager.contratos-katbol.index'));
         }
 
         $this->contratoRepository->delete($id);
         // notify()->success('¡Se ha eliminado la información del contrato satisfactoriamente.!');
 
-        return redirect(route('admin.contratos-katbol.index'));
+        return redirect(route('contract_manager.contratos-katbol.index'));
     }
 
     public function Campos(Request $request, $id)
@@ -881,6 +881,6 @@ class ContratosController extends AppBaseController
 
     public function evaluacion($id)
     {
-        return view('admin.contratos-katbol.evaluacion')->with('ids', $id);
+        return view('contract_manager.contratos-katbol.evaluacion')->with('ids', $id);
     }
 }

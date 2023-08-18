@@ -130,14 +130,14 @@
                             <button class="waves-effect waves-light btn" data-action="contrato" data-contrato-id="{{$contrato->id}}">Archivos</button>
                         </td>
                         <td class="botones_accion" style="min-width: 100px;">
-                            {!! Form::open(['route' => ['admin.contratos-katbol.destroy', $contrato->id], 'method' => 'delete']) !!}
+                            {!! Form::open(['route' => ['contract_manager.contratos-katbol.destroy', $contrato->id], 'method' => 'delete']) !!}
                             <div class='btn-group'>
-                                <a href="{{ route('admin.contratos-katbol.show', [$contrato->id]) }}"
+                                <a href="{{ route('contract_manager.contratos-katbol.show', [$contrato->id]) }}"
                                     style="color:#2395AA;"><i class="fa-solid fa-eye" title="Mostrar"> </i>
                                 </a>
                                 {{-- @can('contratos.edit') --}}
                                 @if ($areas->count() > 0)
-                                    <a href="{{ route('admin.contratos-katbol.edit', [$contrato->id]) }}"
+                                    <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}"
                                     style="color:#2395AA;"><i class="fas fa-edit" title="Editar"></i></a>
                                 @endif
 
@@ -165,7 +165,7 @@
 
     document.addEventListener("DOMContentLoaded", ()=>{
         document.getElementById("contratos-table").addEventListener("click", (e)=>{
-            let url = "{{route('admin.contratos-katbol.obtenerArchivos')}}"
+            let url = "{{route('contract_manager.contratos-katbol.obtenerArchivos')}}"
             if(e.target.getAttribute("data-action") == "contrato" ) {
                 let contratoId = e.target.getAttribute("data-contrato-id");
                 $.ajax({

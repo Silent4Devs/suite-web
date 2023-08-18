@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\CedulaCumplimiento;
 
-use App\Models\Katbol\CedulaCumplimiento;
-use App\Models\Katbol\CierreContrato;
-use App\Models\Katbol\EntregaMensual;
-use App\Models\Katbol\Factura;
-use App\Models\Katbol\NivelesServicio;
+use App\Models\ContractManager\CedulaCumplimiento;
+use App\Models\ContractManager\CierreContrato;
+use App\Models\ContractManager\EntregaMensual;
+use App\Models\ContractManager\Factura;
+use App\Models\ContractManager\NivelesServicio;
 use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;

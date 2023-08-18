@@ -3,9 +3,9 @@
 namespace App\Http\Livewire\ConveniosModificatoriosContratos;
 
 use App\Functions\FormatearFecha;
-use App\Models\Katbol\Contrato;
-use App\Models\Katbol\ConveniosModificatorios;
-use App\Models\Katbol\ConveniosModificatoriosFile;
+use App\Models\ContractManager\Contrato;
+use App\Models\ContractManager\ConveniosModificatorios;
+use App\Models\ContractManager\ConveniosModificatoriosFile;
 use App\Models\Organizacion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;

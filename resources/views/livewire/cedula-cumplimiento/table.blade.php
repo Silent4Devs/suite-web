@@ -54,7 +54,7 @@
                                 </button>
                                 @livewire('cedula-cumplimiento.historico-component',['cedula_id'=>$cedula->id])
                             </div> --}}
-                            <a class="btn" href="{{ route('admin.cedula.historico', $cedula->id) }}" target="_blank"><i
+                            <a class="btn" href="{{ route('contract_manager.cedula.historico', $cedula->id) }}" target="_blank"><i
                                     class="fas fa-history"></i></a>
                         </td>
                     @endif

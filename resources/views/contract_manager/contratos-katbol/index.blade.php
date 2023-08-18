@@ -55,7 +55,7 @@
                     </div>
                       {{-- @can ('contratos.create') --}}
                         @if ($areas->count() > 0)
-                            <a class="btn btn-success" style=" margin: 13px 12px 12px 10px; "href="{{ route('admin.contratos-katbol.create') }}" type="submit" name="action">Agregar Contrato <sup>+</sup></a>
+                            <a class="btn btn-success" style=" margin: 13px 12px 12px 10px; "href="{{ route('contract_manager.contratos-katbol.create') }}" type="submit" name="action">Agregar Contrato <sup>+</sup></a>
                         @else
                             <a class="right btn waves-effect waves-light btn-redondeado" style=" margin: 13px 12px 12px 10px; "href="#" type="submit" name="action"> Antes de crear un contrato se necesita registrar proveedores y áreas <i class="material-icons right">add</i></a>
                         @endif
@@ -83,10 +83,10 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane mb-4 fade show active" id="nav-contarea" role="tabpanel"
                             aria-labelledby="nav-contarea-tab">
-                            @include('admin.contratos-katbol.table')
+                            @include('contract_manager.contratos-katbol.table')
                         </div>
                         <div class="tab-pane mb-4 fade" id="nav-contorg" role="tabpanel" aria-labelledby="nav-contorg-tab">
-                            @include('admin.contratos-katbol.table_all')
+                            @include('contract_manager.contratos-katbol.table_all')
                         </div>
                     </div>
                 </div>

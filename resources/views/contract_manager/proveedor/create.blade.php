@@ -3,7 +3,7 @@
 @section('content')
 @section('titulo', 'Clientes')
 {{-- {{ Breadcrumbs::render('proveedores_create') }} --}}
-    <form method="POST" action="{{ route('admin.proveedores.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{route('contract_manager.proveedor.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="card card-content row">
@@ -271,7 +271,7 @@
             </div>
             <!--form-group-->
             <div class="col s12 right-align distancia">
-                <a href="{{ route('admin.proveedores.index') }}" class="btn-redondeado btn btn-default" style="background: #959595 !important">Cancelar</a>
+                <a href="{{route('contract_manager.proveedor.index') }}" class="btn-redondeado btn btn-default" style="background: #959595 !important">Cancelar</a>
                 <button class="btn-redondeado btn btn-danger" type="submit">
                     GUARDAR
                 </button>

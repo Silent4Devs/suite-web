@@ -3,10 +3,10 @@
 @section('content')
 @section('titulo', 'Clientes')
 {{-- {{ Breadcrumbs::render('proveedores_edit', $proveedores) }} --}}
-<form method="POST" action="{{ route('admin.proveedores.update', [$proveedores->id]) }}" enctype="multipart/form-data">
+<form method="POST" action="{{route('contract_manager.proveedor.update', [$proveedores->id]) }}" enctype="multipart/form-data">
     @method('PUT')
     @csrf
-    @include('admin.proveedores.form', ['show_proveedor' => false])
+    @include('contract_manager.proveedor.form', ['show_proveedor' => false])
 </form>
 
 @endsection
@@ -19,7 +19,7 @@
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.proveedores.massDestroy') }}",
+                url: "{{route('contract_manager.proveedor.massDestroy') }}",
                 className: 'btn-danger',
                 action: function(e, dt, node, config) {
                     var ids = $.map(dt.rows({
@@ -62,7 +62,7 @@
             serverSide: true,
             retrieve: true,
             aaSorting: [],
-            ajax: "{{ route('admin.proveedores.index') }}",
+            ajax: "{{route('contract_manager.proveedor.index') }}",
             columns: [{
                     data: 'placeholder',
                     name: 'placeholder'

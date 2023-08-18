@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\ContractManager;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProveedoresRequest;
@@ -34,7 +34,7 @@ class ProveedoresController extends Controller
         // $logo_actual = asset('img/logo_katbol.png');
         $empresa_actual = $organizacion_actual->empresa;
         // dd($logo_actual);
-        return view('admin.proveedores.index', compact('proveedores', 'logo_actual', 'empresa_actual'));
+        return view('contract_manager.proveedor.index', compact('proveedores', 'logo_actual', 'empresa_actual'));
         // ->with('proveedores', $proveedor, 'logo_actual', $logo_actual, 'empresa_actual', $empresa_actual);
     }
 
@@ -45,7 +45,7 @@ class ProveedoresController extends Controller
         // $this->authorize('haveaccess', 'proveedores.create');
         $personas = Fiscale::get();
         // dd($provedoresSeeder);
-        return view('admin.proveedores.create', compact('personas'));
+        return view('contract_manager.proveedor.create', compact('personas'));
     }
 
     public function store(Request $request)
@@ -86,7 +86,7 @@ class ProveedoresController extends Controller
         ($proveedores);
         // dd($proveedores);
 
-        return redirect()->route('admin.proveedores.index')->with('success', 'Proveedor Registrado');
+        return redirect()->route('contract_manager.proveedor.index')->with('success', 'Proveedor Registrado');
     }
 
     public function show($id)
@@ -97,10 +97,10 @@ class ProveedoresController extends Controller
         if (empty($proveedor)) {
             notify()->error('Proveedor not found');
 
-            return redirect(route('admin.proveedores.index'));
+            return redirect(route('contract_manager.proveedor.index'));
         }
 
-        return view('admin.proveedores.show')->with('proveedores', $proveedor)->with('personas', $personas);
+        return view('contract_manager.proveedor.show')->with('proveedores', $proveedor)->with('personas', $personas);
     }
 
     /**
@@ -116,7 +116,7 @@ class ProveedoresController extends Controller
         $personas = Fiscale::get();
         // dd($personas);
 
-        return view('admin.proveedores.edit')->with('proveedores', $proveedor)->with('personas', $personas);
+        return view('contract_manager.proveedor.edit')->with('proveedores', $proveedor)->with('personas', $personas);
     }
 
     /**
@@ -145,7 +145,7 @@ class ProveedoresController extends Controller
         $proveedor = Proveedores::find($id);
         $proveedor->update($request->all());
         //  dd($proveedor);
-        return redirect()->route('admin.proveedores.index')->with('success', '¡El registro fue actualizado exitosamente!');
+        return redirect()->route('contract_manager.proveedor.index')->with('success', '¡El registro fue actualizado exitosamente!');
 
     }
 
@@ -161,6 +161,6 @@ class ProveedoresController extends Controller
     {
         // $this->authorize('haveaccess', 'proveedores.destroy');
         Proveedores::destroy($id);
-        return redirect()->route('admin.proveedores.index')->with('success', '¡El registro fue eliminado exitosamente!');
+        return redirect()->route('contract_manager.proveedor.index')->with('success', '¡El registro fue eliminado exitosamente!');
     }
 }

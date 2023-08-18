@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
-use App\Models\Katbol\AmpliacionContrato;
-use App\Models\Katbol\DolaresContrato;
+use App\Models\ContractManager\AmpliacionContrato;
+use App\Models\ContractManager\DolaresContrato;
 
 /**
  * Class Contrato.

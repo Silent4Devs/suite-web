@@ -45,7 +45,7 @@
                         </div>
                         {{-- @can('proveedores.create') --}}
                             <a class="btn btn-success" style=" margin: 13px 12px 12px 10px; "
-                            href="{{ route('admin.proveedores.create') }}"
+                            href="{{route('contract_manager.proveedor.create') }}"
                                 type="submit" name="action">Agregar Cliente <sup>+</sup>
                             </a>
                         {{-- @endcan --}}
@@ -61,7 +61,7 @@
                     <div class="box box-primary">
                         <div class="box-body">
                             <div class="row">
-                                @include('admin.proveedores.table')
+                                @include('contract_manager.proveedor.table')
                             </div>
                         </div>
                     </div>

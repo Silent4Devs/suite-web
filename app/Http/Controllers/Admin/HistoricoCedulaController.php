@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\Katbol\HistoricoCedulaCumplimiento;
+use App\Models\ContractManager\HistoricoCedulaCumplimiento;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

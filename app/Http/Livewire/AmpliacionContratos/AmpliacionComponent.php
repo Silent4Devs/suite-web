@@ -3,8 +3,8 @@
 namespace App\Http\Livewire\AmpliacionContratos;
 
 use App\Functions\FormatearFecha;
-use App\Models\Katbol\AmpliacionContrato;
-use App\Models\Katbol\Contrato;
+use App\Models\ContractManager\AmpliacionContrato;
+use App\Models\ContractManager\Contrato;
 use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;

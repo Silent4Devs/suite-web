@@ -44,7 +44,7 @@
                                 <td>{{ $contratos->estatus }}</td>
                                 <td style="text-align: center !important">
                                     <form id="ampliacion_form"
-                                        action="{{ route('admin.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}"
+                                        action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}"
                                         method="POST">
                                         @method("PATCH")
                                         <p >
@@ -58,7 +58,7 @@
                                 </td>
                                 <td style="text-align: center !important">
                                     <form id="convenio_form"
-                                        action="{{ route('admin.contratos-katbol.convenios', ['id' => $contratos->id]) }}"
+                                        action="{{ route('contract_manager.contratos-katbol.convenios', ['id' => $contratos->id]) }}"
                                         method="POST">
                                         @method("PATCH")
                                         <p>
@@ -101,7 +101,7 @@
                                                     <tr class="black-text">
                                                         <td>
                                                             <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                                data-url="{{ route('admin.contratos-katbol.contratopago', $contratos->id) }}"
+                                                                data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
                                                                 data-title="Número de contrato"
                                                                 data-value="{{ $contratos->no_pagos }}" class="no_pagos"
                                                                 data-name="no_pagos">
@@ -109,7 +109,7 @@
                                                         </td>
                                                         <td>
                                                             <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                                data-url="{{ route('admin.contratos-katbol.contratopago', $contratos->id) }}"
+                                                                data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
                                                                 data-title="Tipo de contrato"
                                                                 data-value="{{ $contratos->tipo_contrato }}"
                                                                 class="tipo_contrato" data-name="tipo_contrato">
@@ -117,7 +117,7 @@
                                                         </td>
                                                         <td>
                                                             <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                                data-url="{{ route('admin.contratos-katbol.contratopago', $contratos->id) }}"
+                                                                data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
                                                                 data-title="Nombre de servicio"
                                                                 data-value="{{ $contratos->nombre_servicio }}"
                                                                 class="nombre_servicio" data-name="nombre_servicio">
@@ -259,7 +259,7 @@
     <div class="row">
 
         <div class="col s12 right-align">
-            <a href="{{ route('admin.contratos-katbol.index') }}" class="btn-redondeado btn btn-primary">Salir sin llenar</a>
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn-redondeado btn btn-primary">Salir sin llenar</a>
         </div>
 
     </div>
