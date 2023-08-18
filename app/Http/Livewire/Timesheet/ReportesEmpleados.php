@@ -357,7 +357,6 @@ class ReportesEmpleados extends Component
                 'estatus' => $empleado_list->estatus,
 
                 'horas_totales' => $horas_totales_empleado_calendar,
-                // 'horas_totales' => $horas_total_time,
 
                 'name' => $empleado_list->name,
                 'area' => $empleado_list->area ? $empleado_list->area->area : '',
