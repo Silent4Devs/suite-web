@@ -148,6 +148,20 @@ services:
     # command:
     #   - --redis.addr=redis-tabantaj:6379
 
+  nginx-exporter-tabantaj:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: nginx-exporter-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 9113:9113
+    volumes:
+      - ./infra/nginx/default.conf:/etc/nginx-exporter/nginx.conf:ro
+    command:
+      - -nginx.scrape-uri=http://localhost:80/stub_status
+    networks:
+      - tabantajnetwork
+
   grafana-tabantaj:
     image: grafana/grafana
     container_name: grafana-tabantaj
