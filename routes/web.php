@@ -27,8 +27,8 @@ Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@ed
 Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
 
 
-Route::post('provedor_reporte', 'Katbol\ReporteRequisicionController@AjaxRequestProveedores')->name('provedor_reporte');
-Route::post('contrato_reporte', 'Katbol\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
+Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestProveedores')->name('provedor_reporte');
+Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
 
 Auth::routes();
 
@@ -170,7 +170,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('visitantes/cita-textual', 'VisitanteQuoteController')->names('visitantes.cita-textual');
         Route::resource('visitantes', 'VisitantesController');
         // Fin visitantes
-
         Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
         Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
         Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
@@ -1501,26 +1500,71 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 
 
-Route::group(['prefix' => 'katbol', 'as' => 'katbol.', 'namespace' => 'Katbol', 'middleware' => ['auth', '2fa', 'active']], function () {
+Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'contractmanager', 'middleware' => ['auth', '2fa', 'active']], function () {
 
     //KATBOL
+    Route::get('productos/archivados', 'ProductoController@view_archivados')->name('productos.view_archivados');
+    Route::post('productos/list/get/archivados', 'ProductoController@getArchivadosIndex')->name('productos.getArchivadosIndex');
     Route::resource('productos', 'ProductoController');
     Route::post('productos/archivar/{id}', 'ProductoController@archivar')->name('productos.archivar');
     Route::post('productos/list/get', 'ProductoController@getProductosIndex')->name('productos.getProductosIndex');
 
+
+    Route::get('sucursales/archivados', 'SucursalController@view_archivados')->name('sucursales.view_archivados');
+    Route::post('sucursales/list/get/archivados', 'SucursalController@getArchivadosIndex')->name('sucursales.getArchivadosIndex');
     Route::resource('sucursales', 'SucursalController');
     Route::post('sucursales/archivar/{id}', 'SucursalController@archivar')->name('sucursales.archivar');
     Route::post('sucursales/list/get', 'SucursalController@getSucursalesIndex')->name('sucursales.getSucursalesIndex');
 
+
+    Route::get('proveedores/archivados', 'ProveedoresOController@view_archivados')->name('proveedores.view_archivados');
+    Route::post('proveedores/list/get/archivados', 'ProveedoresOController@getArchivadosIndex')->name('proveedores.getArchivadosIndex');
     Route::resource('proveedores', 'ProveedoresOController');
     Route::post('proveedores/archivar/{id}', 'ProveedoresOController@archivar')->name('proveedores.archivar');
     Route::post('proveedores/list/get', 'ProveedoresOController@getProveedoresIndex')->name('proveedores.getProveedoresIndex');
 
+
+    Route::get('compradores/archivados', 'CompradoresController@view_archivados')->name('compradores.view_archivados');
+    Route::post('compradores/list/get/archivados', 'CompradoresController@getArchivadosIndex')->name('compradores.getArchivadosIndex');
+    Route::resource('compradores', 'CompradoresController');
+    Route::post('compradores/archivar/{id}', 'CompradoresController@archivar')->name('compradores.archivar');
+    Route::post('compradores/list/get', 'CompradoresController@getCompradoresIndex')->name('compradores.getCompradoresIndex');
+
+
+    Route::get('centro-costos/archivados', 'CentroCostosController@view_archivados')->name('centro-costos.view_archivados');
+    Route::post('centro-costos/list/get/archivados', 'CentroCostosController@getArchivadosIndex')->name('centro-costos.getArchivadosIndex');
     Route::resource('centro-costos', 'CentroCostosController');
     Route::post('centro-costos/archivar/{id}', 'CentroCostosController@archivar')->name('centro-costos.archivar');
     Route::post('centro-costos/list/get', 'CentroCostosController@getCentroCostosIndex')->name('centro-costos.getCentroCostosIndex');
 
     Route::resource('reportes', 'ReporteRequisicionController');
     Route::post('excelContratos', 'ReporteRequisicionController@ExcelContratos')->name('excelContratos');
+
+
+    //requisiciones
+    Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
+    Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
+    Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
+    Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
+    Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
+    Route::post('requisiciones/pdf/{id}', 'RequisicionesController@pdf')->name('requisiciones.pdf');
+    Route::post('requisiciones/destroy/{id}', 'RequisicionesController@destroy')->name('requisiciones.destroy');
+    Route::post('requisiciones/firma', 'RequisicionesController@guardarFirmaAprobacion')->name('requisiciones.firma');
+    Route::get('requisiciones/firmar/{tipo_firma}/{id}', 'RequisicionesController@Firmar')->name('requisiciones.firmar');
+    Route::post('requisiciones/firma-update/{tipo_firma}/{id}', 'RequisicionesController@FirmarUpdate')->name('requisiciones.firmar-update');
+    Route::get('requisiciones/archivo', 'RequisicionesController@archivo')->name('requisiciones.archivo');
+    Route::post('requisiciones/archivo-estado/{id}', 'RequisicionesController@estado')->name('requisiciones.estado');
+    Route::post('requisiciones/rechazada/{id}', 'RequisicionesController@rechazada')->name('requisiciones.rechazada');
+
+    // ordenes de compra
+    Route::get('orden-compra', 'OrdenCompraController@index')->name('orden-compra');
+    Route::post('orden-compra/list/get', 'OrdenCompraController@getRequisicionIndex')->name('orden-compra.getRequisicionIndex');
+    Route::get('orden-compra/{id}/edit', 'OrdenCompraController@edit')->name('orden-compra.edit');
+    Route::post('orden-compra/update/{id}', 'OrdenCompraController@update')->name('orden-compra.update');
+    Route::get('orden-compra/show/{id}', 'OrdenCompraController@show')->name('orden-compra.show');
+    Route::post('orden-compra/pdf/{id}', 'OrdenCompraController@pdf')->name('orden-compra.pdf');
+    Route::post('orden-compra/rechazada/{id}', 'OrdenCompraController@rechazada')->name('orden-compra.rechazada');
+    Route::get('orden-compra/firmar/{tipo_firma}/{id}', 'OrdenCompraController@firmar')->name('orden-compra.firmar');
+    Route::post('orden-compra/firma-update/{tipo_firma}/{id}', 'OrdenCompraController@FirmarUpdate')->name('orden-compra.firmar-update');
 
 });
