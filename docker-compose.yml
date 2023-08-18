@@ -88,6 +88,7 @@ services:
       - .:/var/www/html
     ports:
       - 9000:80
+      - 9000:9000 # Expose the PHP-FPM status page
     networks:
       - tabantajnetwork
     # deploy:
@@ -159,6 +160,19 @@ services:
       - ./infra/nginx/default.conf:/etc/nginx-exporter/nginx.conf:ro
     command:
       - -nginx.scrape-uri=http://nginx-tabantaj/stub_status
+    networks:
+      - tabantajnetwork
+
+  php-exporter-tabantaj:
+    image: hipages/php-fpm_exporter
+    container_name: php-exporter-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 9001:9001
+    environment:
+      PHP_FPM_EXPORTER_LISTEN: "0.0.0.0:9001"
+      PHP_FPM_EXPORTER_STATUS_URL: "http://php-tabantaj:9000/status"
     networks:
       - tabantajnetwork
 
