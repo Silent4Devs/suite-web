@@ -132,16 +132,6 @@ services:
     networks:
       - tabantajnetwork
 
-  grafana-tabantaj:
-    image: grafana/grafana
-    container_name: grafana-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 3000:3000
-    networks:
-      - tabantajnetwork
-
   redis-exporter-tabantaj:
     image: oliver006/redis_exporter:v1.22.0-alpine
     container_name: redis-exporter-tabantaj
@@ -157,6 +147,16 @@ services:
       REDIS_PASS: null
     # command:
     #   - --redis.addr=redis-tabantaj:6379
+
+  grafana-tabantaj:
+    image: grafana/grafana
+    container_name: grafana-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3000:3000
+    networks:
+      - tabantajnetwork
 
   # elastik-search-tabantaj:
   #   image: elasticsearch:8.8.1
