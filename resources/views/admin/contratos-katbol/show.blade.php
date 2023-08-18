@@ -359,7 +359,7 @@
 
     <div class="row">
         <div class="col s12 right-align">
-            <a href="{{ route('admin.contratos-katbol.index') }}" class="btn-redondeado waves-effect waves-light btn">Salir</a>
+            <a href="{{ route('admin.contratos-katbol.index') }}" class="btn-redondeado btn btn-primary">Salir</a>
         </div>
     </div>
 

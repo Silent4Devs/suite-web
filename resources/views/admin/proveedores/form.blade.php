@@ -219,17 +219,17 @@
         @endif
 
     </div>
-    @if (!$show_proveedor)
     {{-- <div class="row"> --}}
         <div class="col s12 right-align distancia">
             <a href="{{ route('admin.proveedores.index') }}" class="btn btn-secundario" style="background: #959595 !important">Cancelar</a>
-            <button class="btn" type="submit">
+            @if (!$show_proveedor)
+            <button class="btn-redondeado btn btn-danger" type="submit">
                 GUARDAR
             </button>
+            @endif
         </div>
     {{-- </div> --}}
     <!--row-->
-@endif
 </div>
 
 
