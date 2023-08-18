@@ -172,7 +172,7 @@ services:
       - 9001:9001
     environment:
       PHP_FPM_EXPORTER_LISTEN: "0.0.0.0:9001"
-      PHP_FPM_EXPORTER_STATUS_URL: "http://php-tabantaj:9000/status"
+      PHP_FPM_EXPORTER_STATUS_URL: "http://php-exporter-tabantaj:9001/status"
     networks:
       - tabantajnetwork
 
