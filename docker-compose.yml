@@ -158,7 +158,7 @@ services:
     volumes:
       - ./infra/nginx/default.conf:/etc/nginx-exporter/nginx.conf:ro
     command:
-      - -nginx.scrape-uri=http://localhost:80/stub_status
+      - -nginx.scrape-uri=http://nginx-tabantaj/stub_status
     networks:
       - tabantajnetwork
 
