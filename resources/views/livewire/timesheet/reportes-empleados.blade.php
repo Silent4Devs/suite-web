@@ -1,7 +1,4 @@
 <div class="caja_anima_reporte">
-    @php
-        use App\Models\Empleado;
-    @endphp
     <div class="card card-body">
         <div class="row print-none" style="margin: 0 !important;">
             <x-loading-indicator />
@@ -166,7 +163,7 @@
                     <tbody>
                         @foreach ($empleados as $empleado_td)
                             <tr>
-                                <td class="cde-foto"><img src="{{ Empleado::select('id')->find($empleado_td['id'])->avatar_ruta }}"
+                                <td class="cde-foto"><img src="{{ $empleado_td['avatar_ruta'] }}"
                                         class="img_empleado">
                                 </td>
                                 <td class="cde-nombre">{{ $empleado_td['name'] }}</td>

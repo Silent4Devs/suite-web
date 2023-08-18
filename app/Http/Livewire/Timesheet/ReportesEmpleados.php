@@ -47,7 +47,7 @@ class ReportesEmpleados extends Component
         $this->empleados_estatus = 'alta';
         $this->fecha_inicio = Carbon::now()->endOfMonth()->subMonth(1)->format('Y-m-d');
         $this->fecha_fin = Carbon::now()->format('Y-m-d');
-        $this->empleadosQuery = Empleado::select('id', 'antiguedad', 'estatus', 'name', 'puesto', 'fecha_baja', 'area_id')->with('area')->get();
+        $this->empleadosQuery = Empleado::select('id', 'antiguedad', 'estatus', 'name', 'puesto', 'fecha_baja', 'area_id', 'foto')->with('area')->get();
     }
 
     public function updatedAreaId($value)
