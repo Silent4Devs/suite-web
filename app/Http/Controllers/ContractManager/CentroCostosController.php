@@ -5,6 +5,8 @@ namespace App\Http\Controllers\ContractManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\CentroCosto;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class CentroCostosController extends Controller
 {
@@ -15,7 +17,7 @@ class CentroCostosController extends Controller
      */
     public function index()
     {
-
+        abort_if(Gate::denies('katbol_centro_costos_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $centros = CentroCosto::select('id', 'clave', 'descripcion', 'estado', 'archivo')->where('archivo', false)->get();
         $centros_id = CentroCosto::get()->pluck('id');
         $ids = [];
@@ -41,6 +43,7 @@ class CentroCostosController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('katbol_centro_costos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('contract_manager.centro-costos.create');
     }
 
@@ -80,7 +83,7 @@ class CentroCostosController extends Controller
      */
     public function edit($id)
     {
-
+        abort_if(Gate::denies('katbol_centro_costos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $centros = CentroCosto::find($id);
 
         return view('contract_manager.centro-costos.edit', compact('centros'));
@@ -134,6 +137,7 @@ class CentroCostosController extends Controller
 
     public function archivar($id)
     {
+        abort_if(Gate::denies('katbol_centro_costos_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $centro = CentroCosto::find($id);
         if($centro->archivo === false){
             $centro->update([

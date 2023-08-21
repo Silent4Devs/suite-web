@@ -21,6 +21,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class RequisicionesController extends Controller
 {
@@ -32,6 +34,7 @@ class RequisicionesController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('katbol_requisiciones_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal','productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {
@@ -86,6 +89,7 @@ class RequisicionesController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('katbol_requisiciones_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $sucursales = KatbolSucursal::get();
         $compradores = KatbolComprador::get();
         $contratos = KatbolContrato::with('proveedor')->get();
@@ -129,6 +133,7 @@ class RequisicionesController extends Controller
      */
     public function edit($id)
     {
+        abort_if(Gate::denies('katbol_requisiciones_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $requisiciondata = KatbolRequsicion::with('sucursal', 'comprador', 'contrato')->find($id);
             $organizacion = Organizacion::select('empresa', 'logotipo')->first();
 
@@ -266,6 +271,7 @@ class RequisicionesController extends Controller
      */
     public function estado($id)
     {
+        abort_if(Gate::denies('katbol_requisiciones_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $requisicion = KatbolRequsicion::find($id);
         if($requisicion->archivo === false){
             $requisicion->update([

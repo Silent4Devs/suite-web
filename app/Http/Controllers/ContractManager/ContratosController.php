@@ -22,12 +22,13 @@ use App\Models\ContractManager\Proveedores;
 use App\Repositories\ContratoRepository;
 use App\Rules\NumeroContrato;
 use App\Models\User;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
-use Response;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AppBaseController;
 
@@ -39,10 +40,6 @@ class ContratosController extends AppBaseController
     public function __construct(ContratoRepository $contratoRepo)
     {
         $this->contratoRepository = $contratoRepo;
-    //     $this->middleware('permission:contratos.index')->only('index');
-    //     $this->middleware('permission:contratos.create')->only('store');
-    //     $this->middleware('permission:contratos.destroy')->only('destroy');
-    //     $this->middleware('permission:contratos.edit')->only('update');
     }
 
     /**
@@ -53,8 +50,8 @@ class ContratosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        // $this->authorize('haveaccess', 'contratos.index');
-        $usuario_actual = Empleado::find(auth()->user()->empleado->id);
+        abort_if(Gate::denies('katbol_contratos_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $usuario_actual = Empleado::find(auth()->user()->empleado_id);
         $areas = Area::get();
 
         $contratos = Contrato::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'proveedores.nombre_comercial')
@@ -75,14 +72,12 @@ class ContratosController extends AppBaseController
      */
     public function create()
     {
-        // dd($id->all());
+        abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $contratos = new Contrato;
-        // dd($contratos);
         $areas = Area::get();
         $organizacion = Organizacion::first();
         // $dolares = DolaresContrato::where('contrato_id', $id)->first();
         $dolares = null;
-        // $this->authorize('haveaccess', 'contratos.create');
         $proveedores = Proveedores::select('id', 'razon_social', 'nombre_comercial')->get();
 
         return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas'))->with('proveedores', $proveedores)->with('contratos', $contratos);
@@ -397,10 +392,8 @@ class ContratosController extends AppBaseController
      */
     public function edit($id)
     {
-        // dd($id);
-        // $this->authorize('haveaccess', 'contratos.edit');
+        abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $contrato = $this->contratoRepository->find($id);
-        // dd($contrato
         $areas = Area::get();
         // dd($areas->count());
         $formatoFecha = new FormatearFecha;
@@ -687,7 +680,7 @@ class ContratosController extends AppBaseController
      */
     public function destroy($id)
     {
-        // $this->authorize('haveaccess', 'contratos.destroy');
+        abort_if(Gate::denies('katbol_contratos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $contrato = $this->contratoRepository->find($id);
 
         if (empty($contrato)) {
@@ -760,7 +753,7 @@ class ContratosController extends AppBaseController
 
     public function updateAmpliacion(Request $request, $id)
     {
-        // $this->authorize('haveaccess', 'contratos.edit');
+        abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $is_ampliado = $request->ampliado; // 0 -> no ampliado, 1 -> ampliado
         $contrato = Contrato::find($id);
 

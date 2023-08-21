@@ -186,7 +186,7 @@
                     <a class="nav-link" id="nav-liderazgo-tab" data-type="liderazgo" data-toggle="tab" href="#nav-liderazgo"
                         role="tab" aria-controls="nav-liderazgo" aria-selected="false">
                         <i class="bi bi-brightness-high"></i>
-                        Liderazgo
+                        Administracion de Contratos
                     </a>
                 </div>
             </nav>
@@ -196,7 +196,7 @@
                     @include('contract_manager.katbol.gestion-contratos')
                 </div>
                 <div class="tab-pane mb-4 fade" id="nav-liderazgo" role="tabpanel" aria-labelledby="nav-liderazgo-tab">
-                    @include('admin.iso27001.components.liderazgo')
+                    @include('contract_manager.katbol.administracion-gestion-contratos')
                 </div>
             </div>
         </div>

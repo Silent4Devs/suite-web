@@ -5,6 +5,8 @@ namespace App\Http\Controllers\ContractManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Producto;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductoController extends Controller
 {
@@ -16,7 +18,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-
+        abort_if(Gate::denies('katbol_producto_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $productos = Producto::select('id', 'clave', 'descripcion')->where('archivo', false)->get();
         $productos_id = Producto::get()->pluck('id');
         $ids = [];
@@ -45,6 +47,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('katbol_producto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('contract_manager.productos.create');
     }
 
@@ -84,7 +87,7 @@ class ProductoController extends Controller
      */
     public function edit($id)
     {
-
+        abort_if(Gate::denies('katbol_producto_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $productos = Producto::find($id);
 
         return view('contract_manager.productos.edit', compact('productos'));
@@ -143,6 +146,7 @@ class ProductoController extends Controller
      */
     public function archivar($id)
     {
+        abort_if(Gate::denies('katbol_producto_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $productos = Producto::find($id);
 
         if($productos->archivo === false){

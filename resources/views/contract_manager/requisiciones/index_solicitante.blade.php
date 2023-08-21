@@ -97,7 +97,8 @@
                 }
 
             ];
-                let btnAgregar = {
+            let btnAgregar = {
+                @can("katbol_requisiciones_agregar")
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar requisicion',
                     url: "{{ route('contract_manager.requisiciones.create') }}",
@@ -108,9 +109,11 @@
                         } = config;
                         window.location.href = url;
                     }
+                @endcan
                 };
                 dtButtons.push(btnAgregar);
                 let archivarButton = {
+                    @can("katbol_requisiciones_archivar")
                     text: 'Archivar Registro',
                     url: "",
                     className: 'btn-danger',
@@ -144,6 +147,7 @@
                                 })
                         }
                     }
+                    @endcan
                 }
 
             let dtOverrideGlobals = {
@@ -208,14 +212,18 @@
                             let urlButtonEdit = `/contract_manager/requisiciones/edit/${data}`;
                             let htmlBotones =
                                 `
-                                <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                @can('katbol_requisiciones_modificar')
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                @endcan
 
                                 @foreach ($requisiciones_solicitante as  $requisicion)
                                 <div class="btn-group">
-                                    <a href="{{ route('contract_manager.requisiciones.show', ['id' => $requisicion->id]) }}"
-                                                title="Ver/Imprimir" >
-                                                <i class="fa-solid fa-print"></i>
-                                    </a>
+                                    @can('katbol_requisiciones_imprimir')
+                                        <a href="{{ route('contract_manager.requisiciones.show', ['id' => $requisicion->id]) }}"
+                                                    title="Ver/Imprimir" >
+                                                    <i class="fa-solid fa-print"></i>
+                                        </a>
+                                    @endcan
                                 </div>
                                 @endforeach
 

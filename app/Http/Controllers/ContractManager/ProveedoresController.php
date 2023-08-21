@@ -8,7 +8,8 @@ use App\Models\ContractManager\Fiscale;
 use App\Models\Organizacion;
 use App\Models\ContractManager\Proveedores;
 use Illuminate\Http\Request;
-use Response;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProveedoresController extends Controller
 {
@@ -21,7 +22,7 @@ class ProveedoresController extends Controller
      */
     public function index()
     {
-        // $this->authorize('haveaccess', 'proveedores.index');
+        abort_if(Gate::denies('katbol_proveedores_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proveedores = Proveedores::get();
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {
@@ -40,6 +41,7 @@ class ProveedoresController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('katbol_proveedores_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $personas = Fiscale::select('id', 'persona_fiscal')->get();
         // dd($personas);
         // $this->authorize('haveaccess', 'proveedores.create');
@@ -111,7 +113,7 @@ class ProveedoresController extends Controller
      */
     public function edit($id)
     {
-        // $this->authorize('haveaccess', 'proveedores.edit');
+        abort_if(Gate::denies('katbol_proveedores_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proveedor = Proveedores::find($id);
         $personas = Fiscale::get();
         // dd($personas);
@@ -159,7 +161,7 @@ class ProveedoresController extends Controller
      */
     public function destroy($id)
     {
-        // $this->authorize('haveaccess', 'proveedores.destroy');
+        abort_if(Gate::denies('katbol_proveedores_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         Proveedores::destroy($id);
         return redirect()->route('contract_manager.proveedor.index')->with('success', '¡El registro fue eliminado exitosamente!');
     }

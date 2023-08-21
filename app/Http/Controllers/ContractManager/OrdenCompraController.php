@@ -5,18 +5,11 @@ namespace App\Http\Controllers\ContractManager;
 use App\Models\CentroCosto;
 use Illuminate\Http\Request;
 use App\Models\Organizacion;
-use App\Models\Proveedores;
-use App\Models\Contrato;
-use App\Models\Producto;
-use App\Models\ProductoRequisicion;
-use App\Models\Requsicion;
-use App\Models\Comprador;
+use App\Models\ContractManager\Proveedores;
+use App\Models\ContractManager\Producto;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RequisicionesEmail;
 use App\Models\EmpleadoT;
-use App\Models\Moneda;
-use App\Models\ProveedorIndistinto;
-use App\Models\ProveedorOC;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +24,8 @@ use App\Models\ContractManager\ProductoRequisicion as KatbolProductoRequisicion;
 use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrdenCompraController extends Controller
 {
@@ -42,6 +37,7 @@ class OrdenCompraController extends Controller
      */
     public function index()
     {
+            abort_if(Gate::denies('katbol_ordenes_compra_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $requisiciones =  KatbolRequsicion::with('productos_requisiciones.producto', 'contrato')->where('estado', 'firmada')->Orwhere('estado_orden', 'rechazado_oc')->Orwhere('estado_orden', 'curso')->Orwhere('estado_orden', 'fin')->orderByDesc('id')->get();
             $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
             if (is_null($organizacion_actual)) {
@@ -115,6 +111,7 @@ class OrdenCompraController extends Controller
      */
     public function edit($id)
     {
+        abort_if(Gate::denies('katbol_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $requisicion = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal','productos_requisiciones.producto')->where('archivo', false)->find($id);
         $proveedores = KatbolProveedorOC::get();
         $proveedor = KatbolProveedorOC::where('id', $requisicion->proveedor_id)->first();

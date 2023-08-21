@@ -126,16 +126,16 @@
                                 <a href="{{ route('contract_manager.contratos-katbol.show', [$contrato->id]) }}"
                                     style="color:#2395AA;"><i class="fa-solid fa-eye" title="Mostrar"> </i>
                                 </a>
-                                {{-- @can('contract_manager.contratos-katbol.edit') --}}
+                                @can('katbol_contratos_modificar')
                                 @if ($areas->count() > 0)
                                     <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}"
                                     style="color:#2395AA;"><i class="fas fa-edit" title="Editar"></i></a>
                                 @endif
 
-                                {{-- @endcan --}}
-                                {{-- @can('contract_manager.contratos-katbol.destroy') --}}
+                                @endcan
+                                @can('katbol_contratos_eliminar')
                                     {!! Form::button('<i class="fas fa-trash text-danger"></i>', ['type' => 'submit', 'style' => 'color:#2395AA', 'onclick' => "return confirm('Esta seguro de eliminar el registro?')"]) !!}
-                                {{-- @endcan --}}
+                                @endcan
                             </div>
                             {!! Form::close() !!}
                         </td>

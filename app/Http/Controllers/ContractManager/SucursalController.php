@@ -5,6 +5,8 @@ namespace App\Http\Controllers\ContractManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Sucursal;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class SucursalController extends Controller
 {
@@ -15,7 +17,7 @@ class SucursalController extends Controller
      */
     public function index()
     {
-
+        abort_if(Gate::denies('katbol_sucursales_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', false)->get();
         $sucursales_id = Sucursal::get()->pluck('id');
         $ids = [];
@@ -41,6 +43,7 @@ class SucursalController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('katbol_sucursales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('contract_manager.sucursales.create');
     }
 
@@ -69,7 +72,7 @@ class SucursalController extends Controller
                 $file->move(base_path('public/razon_social'), $nombre);
                 $sucursales->mylogo = $nombre;
                 $sucursales->save();
-    
+
             }
 
             return redirect('/contract_manager/sucursales');
@@ -94,7 +97,7 @@ class SucursalController extends Controller
      */
     public function edit($id)
     {
-
+        abort_if(Gate::denies('katbol_sucursales_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $sucursales = Sucursal::find($id);
 
         return view('contract_manager.sucursales.edit', compact('sucursales'));
@@ -123,11 +126,11 @@ class SucursalController extends Controller
 
 
             $file = $request->file('mylogo');
-    
+
             if ($file != null) {
                 $nombre = uniqid().'.'.$file->getClientOriginalExtension();
                 $file->move(base_path('public/razon_social'), $nombre);
-    
+
                 $sucursal->update([
                     'clave' => $request->clave,
                     'descripcion' => $request->descripcion,
@@ -153,6 +156,7 @@ class SucursalController extends Controller
      */
     public function archivar($id)
     {
+        abort_if(Gate::denies('katbol_sucursales_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $sucursal = Sucursal::find($id);
         if($sucursal->archivo === false){
             $sucursal->update([

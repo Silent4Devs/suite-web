@@ -53,13 +53,13 @@
                         <h3 class="titulo-form">INSTRUCCIONES</h3>
                         <p class="instrucciones">En esta sección podrá dar de alta los contratos de esta organización.</p>
                     </div>
-                      {{-- @can ('contratos.create') --}}
+                      @can ('katbol_contratos_agregar')
                         @if ($areas->count() > 0)
                             <a class="btn btn-success" style=" margin: 13px 12px 12px 10px; "href="{{ route('contract_manager.contratos-katbol.create') }}" type="submit" name="action">Agregar Contrato <sup>+</sup></a>
                         @else
                             <a class="right btn waves-effect waves-light btn-redondeado" style=" margin: 13px 12px 12px 10px; "href="#" type="submit" name="action"> Antes de crear un contrato se necesita registrar proveedores y áreas <i class="material-icons right">add</i></a>
                         @endif
-                      {{-- @endcan --}}
+                      @endcan
                     </div>
                 </section>
                 <div class="card-body">
@@ -70,13 +70,13 @@
                                     <i class="fa-regular fa-file-lines"></i>
                                     Contratos del Área
                                 </a>
-                            {{-- @can ('contratos.create') --}}
+                            @can ('katbol_contratos_agregar')
                                 <a class="nav-link" id="nav-contorg-tab" data-type="liderazgo" data-toggle="tab"
                                     href="#nav-contorg" role="tab" aria-controls="nav-contorg" aria-selected="false">
                                     <i class="fa-regular fa-file-lines"></i>
                                     Contratos de la Organización
                                 </a>
-                            {{-- @endcan --}}
+                            @endcan
                         </div>
                     </nav>
 
@@ -91,9 +91,6 @@
                     </div>
                 </div>
             </div>
-
-                            {{-- @can ('contratos.create') --}}
-                            {{-- @endcan --}}
 
                             <div class="text-center">
 

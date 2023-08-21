@@ -4,6 +4,8 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\ProveedorOC;
 use Illuminate\Http\Request;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProveedoresOController extends Controller
 {
@@ -14,7 +16,7 @@ class ProveedoresOController extends Controller
      */
     public function index()
     {
-
+        abort_if(Gate::denies('katbol_proveedores_ordenes_compra_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proveedores = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', false)->get();
         $proveedores_id = ProveedorOC::get()->pluck('id');
         $ids = [];
@@ -39,6 +41,7 @@ class ProveedoresOController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('katbol_proveedores_ordenes_compra_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('contract_manager.proveedores.create');
     }
 
@@ -86,7 +89,7 @@ class ProveedoresOController extends Controller
      */
     public function edit($id)
     {
-
+        abort_if(Gate::denies('katbol_proveedores_ordenes_compra_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proveedores = ProveedorOC::find($id);
 
         return view('contract_manager.proveedores.edit', compact('proveedores'));
@@ -139,6 +142,7 @@ class ProveedoresOController extends Controller
      */
     public function archivar($id)
     {
+        abort_if(Gate::denies('katbol_proveedores_ordenes_compra_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proveedores = ProveedorOC::find($id);
         if($proveedores->estado === false){
             $proveedores->update([

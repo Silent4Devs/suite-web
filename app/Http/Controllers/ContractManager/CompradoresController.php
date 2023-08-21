@@ -5,6 +5,8 @@ namespace App\Http\Controllers\ContractManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Comprador;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class CompradoresController extends Controller
 {
@@ -16,7 +18,7 @@ class CompradoresController extends Controller
      */
     public function index()
     {
-
+        abort_if(Gate::denies('katbol_producto_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $compradores = Comprador::select('id', 'clave', 'nombre', 'estado')->where('archivo', false)->get();
         $compradores_id = Comprador::get()->pluck('id');
         $ids = [];
@@ -45,6 +47,7 @@ class CompradoresController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('katbol_producto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('contract_manager.compradores.create');
     }
 
@@ -85,7 +88,7 @@ class CompradoresController extends Controller
      */
     public function edit($id)
     {
-
+        abort_if(Gate::denies('katbol_producto_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $compradores = Comprador::find($id);
 
         return view('contract_manager.compradores.edit', compact('compradores'));
@@ -122,6 +125,7 @@ class CompradoresController extends Controller
      */
     public function archivar($id)
     {
+        abort_if(Gate::denies('katbol_producto_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $compradores = Comprador::find($id);
 
         if($compradores->archivo === false){

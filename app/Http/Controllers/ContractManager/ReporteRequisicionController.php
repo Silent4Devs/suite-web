@@ -3,14 +3,7 @@
 namespace App\Http\Controllers\ContractManager;
 
 use App\Exports\ContratosExport;
-use App\Models\AmpliacionContrato;
-use App\Models\CedulaCumplimiento;
-use App\Models\CierreContrato;
-use App\Models\EntregaMensual;
-use App\Models\Factura;
-use App\Models\NivelesServicio;
 use App\Models\Organizacion;
-use App\Models\Reporte;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\AmpliacionContrato as KatbolAmpliacionContrato;
@@ -24,6 +17,8 @@ use App\Models\ContractManager\Proveedores as KatbolProveedores;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ReporteRequisicionController extends Controller
 {
@@ -34,6 +29,7 @@ class ReporteRequisicionController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('katbol_reportes_requisicion_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proveedores = KatbolProveedores::get();
         $contratos = Contrato::get();
 
