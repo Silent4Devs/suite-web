@@ -180,7 +180,7 @@
 
             <div class="col s12 right-align ">
                 {{--  <a href="{{ route('proveedores.index') }}" class="btn btn-secundario" style="background: #959595 !important">Cancelar</a>  --}}
-                <button class="btn" type="submit">
+                <button class="btn btn-primary" type="submit">
                     Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                 </button>
             </div>
@@ -1085,8 +1085,7 @@
             </div> --}}
 
             <div class="col s12 right-align">
-                <div class="btn btn-secundario" onclick="$('.tabs').tabs('select', 'paso-servicio'); @this.set('habilitar_proveedores', false);" style="background: #959595 !important"><i class="fa-solid fa-chevron-left icon-prior"></i> Regresar </div>
-                <button class="btn" type="submit">
+                <button class="btn btn-primary" type="submit">
                     Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                 </button>
             </div>
@@ -1391,7 +1390,7 @@
                     </div>
                     <div class="flex" style="justify-content: end; gap:10px;">
                         <div class="btn btn-secundario" onclick="$('.tabs').tabs('select', 'paso-proveedores'); @this.set('habilitar_firma', false);  @this.set('habilitar_proveedores', true);" style="background: #959595 !important"><i class="fa-solid fa-chevron-left icon-prior"></i> Regresar </div>
-                        <button onclick="validar()" class="btn" type="submit"  >Firmar</button>
+                        <button onclick="validar()" class="btn btn-primary" type="submit"  >Firmar</button>
                     </div>
                 </div>
             </form>

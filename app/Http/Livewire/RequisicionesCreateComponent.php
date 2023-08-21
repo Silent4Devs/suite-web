@@ -20,24 +20,9 @@ use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicio
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\Organizacion;
-use App\Models\Requsicion;
-use App\Models\Producto;
-use App\Models\ProductoRequisicion;
-use App\Models\ProvedorRequisicionCatalogo;
-use App\Models\ProveedorIndistinto;
-use App\Models\ProveedorOC;
-use App\Models\ProveedorRequisicion;
-use App\Models\Sucursal;
 use App\Models\User as ModelsUser;
-use App\Models\UserTabantaj;
-use App\User;
-use GuzzleHttp\Psr7\Response;
-use Intervention\Image\ImageManagerStatic as Image;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\File;
 use Livewire\WithFileUploads;
 use RealRashid\SweetAlert\Facades\Alert;
 

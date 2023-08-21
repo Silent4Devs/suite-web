@@ -209,10 +209,10 @@
                                 `
                                 <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
 
-                                @foreach ($requisiciones as  $requisicion)
+                                @foreach ($requisiciones as  $requisicion => $valor)
                                 @if($requisicion->firma_comprador_orden)
                                 <div class="btn-group">
-                                    <a href="{{ route('contract_manager.orden-compra.show', ['id' => $requisicion->id]) }}"
+                                    <a href="{{ route('contract_manager.orden-compra.show', ['id' => $valor->id]) }}"
                                                 title="Ver/Imprimir" >
                                                 <i class="fa-solid fa-print"></i>
                                     </a>

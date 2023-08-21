@@ -92,7 +92,7 @@ class RequisicionesEditComponent extends Component
         $this->productos = ContractManagerProducto::where('archivo', false)->get();
         $this->user_tabantaj = ModelsUser::with('empleado')->get();
         $this->organizacion = Organizacion::first();
-        $this->users = Empleado::all();
+        // $this->users = Empleado::get();
         $this->proveedores = ContractManagerProveedorOC::where('estado', false)->get();
         $this->editrequisicion =
             ContractManagerRequsicion::with('sucursal', 'comprador', 'contrato', 'productos_requisiciones', 'provedores_requisiciones', 'provedores_indistintos_requisiciones', 'provedores_requisiciones_catalogo')
@@ -324,7 +324,7 @@ class RequisicionesEditComponent extends Component
 
             $user = ModelsUser::where('id', $this->editrequisicion->id_user)->first();
 
-            $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_tabantaj_id)->first();
+            $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
 
             $supervisor = $empleado->supervisor->email;
 

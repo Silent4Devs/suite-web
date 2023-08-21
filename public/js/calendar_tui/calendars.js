@@ -118,6 +118,51 @@ function hexToRGBA(hex) {
     addCalendar(calendar);
 
 
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = 'Contratos';
+    calendar.color = '#2E2E2E';
+    calendar.bgColor = '#CFD8DF';
+    calendar.dragBgColor = '#CFD8DF';
+    calendar.borderColor = '#CFD8DF';
+    addCalendar(calendar);
+
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = 'Fecha de recepción de factura';
+    calendar.color = '#2E2E2E';
+    calendar.bgColor = '#CFD8DF';
+    calendar.dragBgColor = '#CFD8DF';
+    calendar.borderColor = '#CFD8DF';
+    addCalendar(calendar);
+
+
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = 'Fecha de liberación de factura';
+    calendar.color = '#2E2E2E';
+    calendar.bgColor = '#CFD8DF';
+    calendar.dragBgColor = '#CFD8DF';
+    calendar.borderColor = '#CFD8DF';
+    addCalendar(calendar);
+
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = 'Revisión de entregables';
+    calendar.color = '#2E2E2E';
+    calendar.bgColor = '#CFD8DF';
+    calendar.dragBgColor = '#CFD8DF';
+    calendar.borderColor = '#CFD8DF';
+    addCalendar(calendar);
+
+
 
 
 
