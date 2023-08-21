@@ -8,6 +8,8 @@ use App\Models\FacturaFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class FacturaController extends Controller
 {
@@ -123,6 +125,7 @@ class FacturaController extends Controller
 
     public function ContratoInsert($id)
     {
+        abort_if(Gate::denies('katbol_contratos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($id);
         $contrato = Contrato::find($id);
 
