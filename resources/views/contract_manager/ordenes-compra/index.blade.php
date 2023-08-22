@@ -207,7 +207,9 @@
                             let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
                             let htmlBotones =
                                 `
-                                <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                @can('katbol_ordenes_compra_modificar')
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                @endcan
 
                                 @foreach ($requisiciones as  $requisicion => $valor)
                                 @if($requisicion->firma_comprador_orden)

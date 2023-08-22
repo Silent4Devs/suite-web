@@ -60,17 +60,17 @@
                                 </a>
                             </div>
                             <div class="col s4">
-                                {{-- @can('proveedores.edit') --}}
+                                @can('katbol_proveedores_modificar')
                                     <a href="{{route('contract_manager.proveedor.edit', [$proveedores->id]) }}"
                                         style="color:#2395AA;">
                                         <i class="fas fa-edit" title="Editar"></i>
                                     </a>
-                                {{-- @endcan --}}
+                                @endcan
                             </div>
                             <div class="col s4">
-                                {{-- @can('proveedores.destroy') --}}
+                                @can('katbol_proveedores_eliminar')
                                     {!! Form::button('<i class="fas fa-trash" title="Borrar"></i>', ['type' => 'submit', 'style' => 'color: #2395AA;', 'onclick' => "return confirm('Esta seguro de eliminar el registro?')"]) !!}
-                                {{-- @endcan --}}
+                                @endcan
                             </div>
                         </div>
                         {!! Form::close() !!}

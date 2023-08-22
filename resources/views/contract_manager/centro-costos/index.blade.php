@@ -109,6 +109,7 @@
 
             ];
             let btnAgregar = {
+                @can('katbol_centro_costos_agregar')
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar Centro',
                     url: "{{ route('contract_manager.centro-costos.create') }}",
@@ -119,9 +120,11 @@
                         } = config;
                         window.location.href = url;
                     }
+                @endcan
             };
 
             let btnArchivar = {
+                @can('katbol_centro_costos_archivar')
                     text: '<i class="fa-solid fa-box-archive"></i> Archivados',
                     titleAttr: 'Archivar comprador',
                     url: "{{ route('contract_manager.centro-costos.view_archivados') }}",
@@ -132,10 +135,12 @@
                         } = config;
                         window.location.href = url;
                     },
+                @endcan
             };
 
             dtButtons.push(btnAgregar, btnArchivar);
             let archivoButton = {
+                @can('katbol_centro_costos_archivar')
                     text: 'Archivar Registro',
                     url: "{{ route('contract_manager.centro-costos.archivar', ['id' => $ids]) }}",
                     className: 'btn-danger',
@@ -169,6 +174,7 @@
                                 })
                         }
                     }
+                @endcan
             }
 
             let dtOverrideGlobals = {
@@ -202,8 +208,12 @@
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.clave}');"> <i class="fa-solid fa-box-archive"></i></a>
+                                    @can('katbol_centro_costos_modificar')
+                                        <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    @endcan
+                                    @can('katbol_centro_costos_archivar')
+                                        <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.clave}');"> <i class="fa-solid fa-box-archive"></i></a>
+                                    @endcan
                                 </div>
 
                             `;

@@ -110,6 +110,7 @@
 
             ];
             let btnAgregar = {
+                @can('katbol_producto_agregar')
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar producto',
                     url: "{{ route('contract_manager.productos.create') }}",
@@ -120,9 +121,11 @@
                         } = config;
                         window.location.href = url;
                     }
+                @endcan
             };
 
             let btnArchivar = {
+                @can('katbol_producto_archivar')
                     text: '<i class="fa-solid fa-box-archive"></i> Archivados',
                     titleAttr: 'Archivar producto',
                     url: "{{ route('contract_manager.productos.view_archivados') }}",
@@ -134,11 +137,13 @@
                         window.location.href = url;
                         console.log(url);
                     },
+                @endcan
             };
 
             dtButtons.push(btnAgregar, btnArchivar);
 
             let archivoButton = {
+                @can('katbol_producto_archivar')
                     text: 'Archivar Registro',
                     url: "{{ route('contract_manager.productos.archivar', ['id' => $ids]) }}",
                     className: 'btn-danger',
@@ -172,6 +177,7 @@
                                 })
                         }
                     }
+                @endcan
             }
 
             let dtOverrideGlobals = {
@@ -205,8 +211,12 @@
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
+                                @can('katbol_producto_modificar')
                                     <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                @endcan
+                                @can('katbol_producto_archivar')
                                     <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.clave}');"> <i class="fa-solid fa-box-archive"></i></a>
+                                @endcan
                                 </div>
 
                             `;

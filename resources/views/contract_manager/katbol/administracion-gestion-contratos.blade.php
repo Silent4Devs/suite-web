@@ -3,7 +3,7 @@
         @can('katbol_ordenes_compra_acceso')
             <li><a href="{{ route('contract_manager.contratos-katbol.index') }}">
                     <div>
-                        <i class="fa-regular fa-file-lines"></i><br>
+                        <i class="fa-solid fa-file-invoice"></i>
                         Ordenes de Compra
                     </div>
                 </a></li>
@@ -11,7 +11,7 @@
         @can('katbol_proveedores_ordenes_compra_acceso')
                 <li><a href="{{ route('contract_manager.proveedores.index') }}">
                     <div>
-                        <i class="fa-solid fa-id-badge"></i><br>
+                        <i class="fa-solid fa-address-card"></i>
                         Proveedores de Ordenes de Compra
                     </div>
                 </a></li>
@@ -27,7 +27,7 @@
         @can('katbol_compradores_acceso')
                 <li><a href="{{ route('contract_manager.compradores.index') }}">
                     <div>
-                        <i class="fa-solid fa-calendar-day"></i><br>
+                        <i class="fa-solid fa-user-tie"></i>
                         Compradores
                     </div>
                 </a></li>
@@ -35,7 +35,7 @@
         @can('katbol_centro_costos_acceso')
                 <li><a href="{{ route('contract_manager.centro-costos.index') }}">
                     <div>
-                        <i class="fa-solid fa-id-badge"></i><br>
+                        <i class="fa-solid fa-landmark"></i>
                         Centro de Costos
                     </div>
                 </a></li>
@@ -43,7 +43,7 @@
         @can('katbol_sucursales_acceso')
             <li><a href="{{ route('contract_manager.sucursales.index') }}">
                     <div>
-                        <i class="fa-solid fa-calendar-day"></i><br>
+                        <i class="fa-solid fa-building-user"></i>
                         Sucursales
                     </div>
                 </a></li>
@@ -51,7 +51,7 @@
         @can('katbol_reportes_requisicion_acceso')
                 <li><a href="{{ route('contract_manager.reportes.index') }}">
                     <div>
-                        <i class="fa-solid fa-calendar-day"></i><br>
+                        <i class="fa-solid fa-file-circle-question"></i>
                         Reportes de Requisicion
                     </div>
                 </a></li>
