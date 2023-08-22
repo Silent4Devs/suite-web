@@ -180,12 +180,12 @@
                 <div class="nav nav-tabs" id="tabsIso27001" role="tablist">
                     <a class="nav-link active" id="nav-contexto-tab" data-type="contexto" data-toggle="tab"
                         href="#nav-contexto" role="tab" aria-controls="nav-contexto" aria-selected="true">
-                        <i class="bi bi-body-text"></i>
+                        <i class="fa-solid fa-file"></i>
                         Gestion de Contratos
                     </a>
                     <a class="nav-link" id="nav-liderazgo-tab" data-type="liderazgo" data-toggle="tab" href="#nav-liderazgo"
                         role="tab" aria-controls="nav-liderazgo" aria-selected="false">
-                        <i class="bi bi-brightness-high"></i>
+                        <i class="fa-solid fa-file-pen"></i>
                         Administracion de Contratos
                     </a>
                 </div>

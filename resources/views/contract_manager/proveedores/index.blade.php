@@ -131,6 +131,7 @@
 
             ];
                 let btnAgregar = {
+                    @can('katbol_proveedores_ordenes_compra_agregar')
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar proveedor',
                     url: "{{ route('contract_manager.proveedores.create') }}",
@@ -141,8 +142,10 @@
                         } = config;
                         window.location.href = url;
                     }
+                    @endcan
                 };
                 let btnArchivar = {
+                    @can('katbol_proveedores_ordenes_compra_archivar')
                     text: '<i class="fa-solid fa-box-archive"></i>Archivados',
                     titleAttr: 'Archivar proveedor',
                     url: "{{ route('contract_manager.proveedores.view_archivados') }}",
@@ -153,9 +156,11 @@
                         } = config;
                         window.location.href = url;
                     }
+                    @endcan
                 };
                 dtButtons.push(btnAgregar, btnArchivar);
                 let archivarButton = {
+                    @can('katbol_proveedores_ordenes_compra_archivar')
                     text: 'Archivar Registro',
                     url: "{{ route('contract_manager.proveedores.archivar', ['id' => $ids]) }}",
                     className: 'btn-danger',
@@ -189,6 +194,7 @@
                                 })
                         }
                     }
+                    @endcan
                 }
 
             let dtOverrideGlobals = {
@@ -255,8 +261,12 @@
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                    <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.nombre}');"> <i class="fa-solid fa-box-archive"></i></a>
+                                    @can('katbol_proveedores_ordenes_compra_modificar')
+                                        <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    @endcan
+                                    @can('katbol_proveedores_ordenes_compra_archivar')
+                                        <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.nombre}');"> <i class="fa-solid fa-box-archive"></i></a>
+                                    @endcan
                                 </div>
 
                             `;

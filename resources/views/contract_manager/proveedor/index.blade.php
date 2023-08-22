@@ -43,12 +43,12 @@
                             <h3 class="titulo-form">INSTRUCCIONES</h3>
                             <p class="instrucciones">En esta sección podrá dar de alta a los clientes que participarán dentro del flujo de contratos.</p>
                         </div>
-                        {{-- @can('proveedores.create') --}}
+                        @can('katbol_proveedores_agregar')
                             <a class="btn btn-success" style=" margin: 13px 12px 12px 10px; "
                             href="{{route('contract_manager.proveedor.create') }}"
                                 type="submit" name="action">Agregar Cliente <sup>+</sup>
                             </a>
-                        {{-- @endcan --}}
+                        @endcan
                     </div>
 
                     @include('partials.flashMessages')
