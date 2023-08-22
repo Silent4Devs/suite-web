@@ -230,8 +230,6 @@ class ReportesEmpleados extends Component
                 ->where('empleado_id', $empleado_list->id)
                 ->where('estatus', '!=', 'rechazado')
                 ->where('estatus', '!=', 'papelera')
-                ->with('horas')
-                ->select('id')
                 ->get();
 
             $horas_semana = 0;
