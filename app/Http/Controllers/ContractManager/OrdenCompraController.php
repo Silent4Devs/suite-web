@@ -24,8 +24,12 @@ use App\Models\ContractManager\ProductoRequisicion as KatbolProductoRequisicion;
 use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+<<<<<<< Updated upstream
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
+=======
+use App\Models\User as ModelsUser;
+>>>>>>> Stashed changes
 
 class OrdenCompraController extends Controller
 {
@@ -237,10 +241,8 @@ class OrdenCompraController extends Controller
             $requisicion->fecha_firma_comprador_orden =  $fecha;
             $requisicion->save();
 
-            // correo de compras orden
-            $comprador = KatbolComprador::where('id', $requisicion->comprador_id)->first();
             // correo de finanzas
-            $userEmail = $comprador->user->email;
+            $userEmail = $requisicion->email;
         }
         if($tipo_firma == 'firma_finanzas_orden'){
             $fecha =  date('d-m-Y');
@@ -251,13 +253,14 @@ class OrdenCompraController extends Controller
                 'estado' => 'firmada_final',
                 'estado_orden' => 'fin',
             ]);
-            // correo de finanzas
+
             $userEmail = $requisicion->email;
+
         }
         $organizacion = Organizacion::first();
-        Mail::to('saul.ramirez@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
 
-        return redirect('contract_manager/orden-compra');
+        return redirect(route('orden-compra'));
 
 
     }

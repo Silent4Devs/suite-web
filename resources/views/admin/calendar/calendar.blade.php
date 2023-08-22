@@ -284,10 +284,7 @@
                     isReadOnly: true,
                 },
             @endforeach
-
-
             @foreach ($eventos as $evento)
-
                 {
                     id: 'evento{{ $evento->id }}',
                     calendarId: '4',
@@ -307,8 +304,6 @@
                     `,
                 },
             @endforeach
-
-
             @foreach ($cumples_aniversarios as $cumple)
                 {
                     id: 'cumple{{ $cumple->id }}',
@@ -327,8 +322,6 @@
                     `,
                 },
             @endforeach
-
-
             @foreach ($cumples_aniversarios as $aniversario)
                 {
                     id: 'aniversario{{ $aniversario->id }}',
@@ -348,7 +341,6 @@
                 },
             @endforeach
             @foreach ($oficiales as $oficial)
-
                 {
                     id: 'oficial{{ $oficial->id }}',
                     calendarId: '7',
@@ -360,6 +352,43 @@
                     isReadOnly: true,
                 },
             @endforeach
+            @foreach ($contratos as $contrato)
+            {
+                id: 'contrato{{ $contrato->id }}',
+                calendarId: '8',
+                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Contrato: {{ $contrato->nombre_servicio }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{ \Carbon\Carbon::parse($contrato->fecha_inicio)->format('Y-m-d') }}',
+                end: '{{ \Carbon\Carbon::parse($contrato->fecha_fin)->format('Y-m-d') }}',
+                isReadOnly: true,
+            },
+           @endforeach
+           @foreach ($fecha_resepcion_liberacion as $fecha_resepcion_liberacion_iterado)
+            {
+                id: 'fecha_resepcion_liberacion_iterado{{ $fecha_resepcion_liberacion_iterado->id }}',
+                calendarId: '9',
+                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Factura: {{ $fecha_resepcion_liberacion_iterado->concepto }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{ \Carbon\Carbon::parse($fecha_resepcion_liberacion_iterado->fecha_recepcion)->format('Y-m-d') }}',
+                end: '{{ \Carbon\Carbon::parse($fecha_resepcion_liberacion_iterado->fecha_liberacion)->format('Y-m-d') }}',
+                isReadOnly: true,
+            },
+           @endforeach
+           @foreach ($revision_entregables as $revisiones)
+            {
+
+                id: 'revisiones{{ $revisiones->id }}',
+                calendarId: '11',
+                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revision de entregables: {{ $revisiones->nombre_entregable }}',
+                category: 'allday',
+                dueDateClass: '',
+                start: '{{ \Carbon\Carbon::parse($revisiones->plazo_entrega_inicio)->format('Y-m-d') }}',
+                end: '{{ \Carbon\Carbon::parse($revisiones->plazo_entrega_termina)->format('Y-m-d') }}',
+                isReadOnly: true,
+            },
+           @endforeach
         ];
     </script>
 
