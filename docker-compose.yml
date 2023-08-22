@@ -132,16 +132,6 @@ services:
     networks:
       - tabantajnetwork
 
-  grafana-tabantaj:
-    image: grafana/grafana
-    container_name: grafana-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 3000:3000
-    networks:
-      - tabantajnetwork
-
   redis-exporter-tabantaj:
     image: oliver006/redis_exporter:v1.22.0-alpine
     container_name: redis-exporter-tabantaj
@@ -157,6 +147,43 @@ services:
       REDIS_PASS: null
     # command:
     #   - --redis.addr=redis-tabantaj:6379
+
+  nginx-exporter-tabantaj:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: nginx-exporter-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 9113:9113
+    volumes:
+      - ./infra/nginx/default.conf:/etc/nginx-exporter/nginx.conf:ro
+    command:
+      - -nginx.scrape-uri=http://nginx-tabantaj/stub_status
+    networks:
+      - tabantajnetwork
+
+  # php-exporter-tabantaj:
+  #   image: hipages/php-fpm_exporter
+  #   container_name: php-exporter-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 9001:9001
+  #   environment:
+  #     PHP_FPM_EXPORTER_LISTEN: "0.0.0.0:9001"
+  #     PHP_FPM_EXPORTER_STATUS_URL: "http://php-exporter-tabantaj:9001/status"
+  #   networks:
+  #     - tabantajnetwork
+
+  grafana-tabantaj:
+    image: grafana/grafana
+    container_name: grafana-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3000:3000
+    networks:
+      - tabantajnetwork
 
   # elastik-search-tabantaj:
   #   image: elasticsearch:8.8.1
