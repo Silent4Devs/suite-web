@@ -80,23 +80,26 @@
                                                 @endif
 											</p>
 
-                                            @if ($tipo_firma_siguiente != 'firma_solicitante_orden_finalizado'  && $tipo_firma_siguiente != 'firma_jefe'  && $tipo_firma_siguiente != 'firma_compras'  && $tipo_firma_siguiente != 'firma_solicitante'  && $tipo_firma_siguiente != 'firma_finanzas'  && $tipo_firma_siguiente === 'orden_rechazado' && $tipo_firma_siguiente != 'requisicion_rechazado')
+                                            @if ($tipo_firma_siguiente != 'firma_solicitante_orden_finalizado'  && $tipo_firma_siguiente != 'firma_jefe'  && $tipo_firma_siguiente != 'firma_compras'  && $tipo_firma_siguiente != 'firma_solicitante'  && $tipo_firma_siguiente != 'firma_finanzas'  && ($tipo_firma_siguiente === 'orden_rechazado' || $tipo_firma_siguiente == 'firma_comprador_orden' ||  $tipo_firma_siguiente == 'firma_finanzas_orden' || $tipo_firma_siguiente == 'firma_solicitante_orden') && $tipo_firma_siguiente != 'requisicion_rechazado')
                                             <p style="font-size: 14px; margin-top: 30px;">
 												Para ingresar a la orden de compra dé clic a la siguiente liga, está le llevará directamente a la pantalla para que visualice el documento el cual deberá firmar si lo autoriza.
 											</p>
                                             @else
                                             <p style="font-size: 14px; margin-top: 30px;">
-												Para ingresar a la requisición dé clic a la siguiente liga, está le llevará directamente a la pantalla para que visualice el documento el cual deberá firmar si lo autoriza.
+                                                @if ($tipo_firma_siguiente != 'firma_solicitante_orden_finalizado')
+                                                Para ingresar a la requisición dé clic a la siguiente liga, está le llevará directamente a la pantalla para que visualice el documento el cual deberá firmar si lo autoriza.
+                                                @endif
+
 											</p>
                                             @endif
 
 
 											@if(($tipo_firma_siguiente == 'firma_comprador_orden') or ($tipo_firma_siguiente == 'firma_finanzas_orden') or ($tipo_firma_siguiente == 'firma_solicitante_orden'))
-												<a class="link" href="{{ route('contract_manager.orden-compra.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('contract_manager.orden-compra.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
+												<a class="link" href="{{ route('orden-compra.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('orden-compra.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
 											@endif
 
 											@if(($tipo_firma_siguiente == 'firma_jefe') or ($tipo_firma_siguiente == 'firma_finanzas') or ($tipo_firma_siguiente == 'firma_compras'))
-												<a class="link" href="{{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
+												<a class="link" href="{{ route('requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
 											@endif
 
 										@endif
@@ -126,15 +129,15 @@
 										@endif
 
                                         @if($tipo_firma_siguiente == 'firma_solicitante_orden_finalizado')
-                                        <a class="link" href="{{ route('contract_manager.orden-compra.show', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
+                                        <a class="link" href="{{ route('orden-compra.show', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
                                         @endif
 
                                         @if($tipo_firma_siguiente == 'orden_rechazado')
-                                        <a class="link" href="{{ route('contract_manager.orden-compra.edit', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('contract_manager.orden-compra.edit', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
+                                        <a class="link" href="{{ route('orden-compra.edit', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('orden-compra.edit', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
                                         @endif
 
                                         @if($tipo_firma_siguiente == 'requisicion_rechazado')
-                                        <a class="link" href="{{ route('contract_manager.requisiciones.edit', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('contract_manager.requisiciones.edit', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
+                                        <a class="link" href="{{ route('requisiciones.edit', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('requisiciones.edit', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
                                         @endif
 
 
@@ -143,9 +146,9 @@
 								</table>
 							<br><br>
 							<div class="caja-blue" style="background-color: #2567AE; padding: 25px 0px;">
-								{{-- <a href="https://www.facebook.com/silent4business" style="margin: 10px;"><img src="{{ $img_facebook }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
+								<a href="https://www.facebook.com/silent4business" style="margin: 10px;"><img src="{{ $img_facebook }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
 								<a href="https://twitter.com/silent4business" style="margin: 10px;"><img src="{{ $img_twitter }}" width="25px"></a>&nbsp;&nbsp;&nbsp;
-								<a href="https://www.linkedin.com/company/silent4business/mycompany/" style="margin: 0px 10px;"><img src="{{ $img_linkedin }}" width="25px"></a> --}}
+								<a href="https://www.linkedin.com/company/silent4business/mycompany/" style="margin: 0px 10px;"><img src="{{ $img_linkedin }}" width="25px"></a>
 							</div>
 							<p>
 								SISTEMA DE REQUISICIONES Y ORDENES DE COMPRA
