@@ -129,20 +129,26 @@ services:
     networks:
       - tabantajnetwork
 
-  node_exporter-tabantaj:
-    image: quay.io/prometheus/node-exporter:latest
-    container_name: node_exporter-tabantaj
+  prometheus-node-exporter-tabantaj:
+    image: prom/node-exporter:latest
+    container_name: prometheus-node-exporter-tabantaj
     restart: unless-stopped
-    tty: true
-    ports:
-      - 9100:9100
-    command:
-      - '--path.rootfs=/host'
-    pid: host
     volumes:
-      - '/:/host:ro,rslave'
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
     networks:
       - tabantajnetwork
+    privileged: true
+    depends_on:
+      - prometheus-tabantaj
+    ports:
+      - 9100:9100
 
   redis-exporter-tabantaj:
     image: oliver006/redis_exporter:v1.22.0-alpine
