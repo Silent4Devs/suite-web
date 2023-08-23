@@ -50,8 +50,9 @@ class ContratosController extends AppBaseController
      */
     public function index(Request $request)
     {
+        dd(auth()->user()->empleado);
         abort_if(Gate::denies('katbol_contratos_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $usuario_actual = Empleado::find(auth()->user()->empleado_id);
+        $usuario_actual = Empleado::find(auth()->user()->empleado->id);
         $areas = Area::get();
 
         $contratos = Contrato::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'proveedores.nombre_comercial')
@@ -574,7 +575,7 @@ class ContratosController extends AppBaseController
             'area_id' => $areas->count() > 0 ? $request->area_id : null,
             'area_administrador' => $request->area_administrador,
             'no_proyecto' => $request->no_proyecto,
-            'updated_by' => auth()->id(),
+            'updated_by' => auth()->user()->empleado->id,
         ], $id);
 
         $dolares = DolaresContrato::where('contrato_id', $id)->first();
@@ -760,12 +761,12 @@ class ContratosController extends AppBaseController
         if ($is_ampliado) {
             $contrato->update([
                 'contrato_ampliado' => $is_ampliado,
-                'updated_by' => auth()->id(),
+                'updated_by' => auth()->user()->empleado->id,
             ]);
         } else {
             $contrato->update([
                 'contrato_ampliado' => $is_ampliado,
-                'updated_by' => auth()->id(),
+                'updated_by' => auth()->user()->empleado->id,
             ]);
         }
 
@@ -781,12 +782,12 @@ class ContratosController extends AppBaseController
         if ($is_convenio) {
             $contrato->update([
                 'convenio_modificatorio' => $is_convenio,
-                'updated_by' => auth()->id(),
+                'updated_by' => auth()->user()->empleado->id,
             ]);
         } else {
             $contrato->update([
                 'convenio_modificatorio' => $is_convenio,
-                'updated_by' => auth()->id(),
+                'updated_by' => auth()->user()->empleado->id,
             ]);
         }
 

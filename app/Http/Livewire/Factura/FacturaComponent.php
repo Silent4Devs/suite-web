@@ -145,21 +145,21 @@ class FacturaComponent extends Component
         $this->fecha_inicio_contrato = $contrato_model->fecha_inicio;
         $this->fecha_fin_contrato = $contrato_model->fecha_fin;
         // dd($contrato_model);
-        // $this->monto_factura = $this->monto_factura == null ? '$0.00' : $this->monto_factura;
-        // $this->validate([
-        //     'no_factura' => ['required', 'regex:/^[\s\w-]*$/'],
-        //     'fecha_recepcion' => 'required|after_or_equal:fecha_inicio_contrato',
-        //     // 'no_revisiones' => 'required|numeric|min:0',
-        //     'fecha_liberacion' => 'required|before_or_equal:fecha_fin_contrato',
-        //     'monto_factura' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
-        //     // 'estatus' => 'required',
-        //     'concepto' => 'required',
-        //     // 'hallazgos_comentarios' => 'nullable'
-        // ], [
-        //     'fecha_recepcion.after_or_equal' => 'La fecha de recepción no puede ser antes de la fecha inicio del contrato',
-        //     'fecha_liberacion.before_or_equal' => 'La fecha de recepción no puede ser despues de la fecha fin del contrato',
-        //     'monto_factura.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
-        // ]);
+        $this->monto_factura = $this->monto_factura == null ? '$0.00' : $this->monto_factura;
+        $this->validate([
+            'no_factura' => ['required', 'regex:/^[\s\w-]*$/'],
+            'fecha_recepcion' => 'required|after_or_equal:fecha_inicio_contrato',
+            // 'no_revisiones' => 'required|numeric|min:0',
+            'fecha_liberacion' => 'required|before_or_equal:fecha_fin_contrato',
+            'monto_factura' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
+            // 'estatus' => 'required',
+            'concepto' => 'required',
+            // 'hallazgos_comentarios' => 'nullable'
+        ], [
+            'fecha_recepcion.after_or_equal' => 'La fecha de recepción no puede ser antes de la fecha inicio del contrato',
+            'fecha_liberacion.before_or_equal' => 'La fecha de recepción no puede ser despues de la fecha fin del contrato',
+            'monto_factura.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
+        ]);
         //dd($this);
 
         $monto_factura = null;

@@ -16,10 +16,10 @@
                     </div>
                 </a></li>
         @endcan
-        @can('katbol_productos_acceso')
+        @can('katbol_producto_acceso')
             <li><a href="{{ route('contract_manager.productos.index') }}">
                     <div>
-                        <i class="fa-solid fa-calendar-day"></i><br>
+                        <i class="fa-brands fa-product-hunt"></i>
                         Productos
                     </div>
                 </a></li>
@@ -51,7 +51,7 @@
         @can('katbol_reportes_requisicion_acceso')
                 <li><a href="{{ route('contract_manager.reportes.index') }}">
                     <div>
-                        <i class="fa-solid fa-file-circle-question"></i>
+                        <i class="fa-solid fa-file-circle-exclamation"></i>
                         Reportes de Requisicion
                     </div>
                 </a></li>
