@@ -80,10 +80,6 @@
     {{-- {{ Breadcrumbs::render('capital-humano') }} --}}
     <div style="display:flex; justify-content:space-between;">
         <h5 class="titulo_general_funcion">Capital Humano </h5>
-        <a href="{{ route('admin.home') }}" class="btn btn-success">
-            <i class="fas fa-chart-pie mr-2"></i>
-            Dashboard
-        </a>
     </div>
     <div class="card">
         <div class="card-body">
