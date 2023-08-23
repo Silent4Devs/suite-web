@@ -148,7 +148,23 @@ services:
     depends_on:
       - prometheus-tabantaj
     ports:
-      - 9101:9100
+      - 9100:9100
+
+  cadvisor-tabantaj:
+    image: google/cadvisor:latest
+    container_name: cadvisor-tabantaj
+    restart: unless-stopped
+    depends_on:
+      - prometheus-tabantaj
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - 8081:8080
+    networks:
+      - tabantajnetwork
 
   redis-exporter-tabantaj:
     image: oliver006/redis_exporter:v1.22.0-alpine
