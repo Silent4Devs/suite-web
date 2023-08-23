@@ -90,10 +90,6 @@ services:
       - 9000:80
     networks:
       - tabantajnetwork
-    # deploy:
-    #   replicas: 1 # Set the desired number of replicas
-    #   restart_policy:
-    #     condition: on-failure
 
   redis-tabantaj:
     image: redis:alpine
@@ -129,6 +125,22 @@ services:
       - 9090:9090
     volumes:
       - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - tabantajnetwork
+
+  node_exporter-tabantaj:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 9100:9100
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host
+    pid: host
+    volumes:
+      - '/:/host:ro,rslave'
     networks:
       - tabantajnetwork
 
