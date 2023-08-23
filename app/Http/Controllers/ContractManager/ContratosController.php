@@ -50,7 +50,7 @@ class ContratosController extends AppBaseController
      */
     public function index(Request $request)
     {
-        dd(auth()->user()->empleado);
+        // dd(auth()->user()->empleado);
         abort_if(Gate::denies('katbol_contratos_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $usuario_actual = Empleado::find(auth()->user()->empleado->id);
         $areas = Area::get();
