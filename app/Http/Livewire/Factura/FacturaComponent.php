@@ -145,7 +145,7 @@ class FacturaComponent extends Component
         $this->fecha_inicio_contrato = $contrato_model->fecha_inicio;
         $this->fecha_fin_contrato = $contrato_model->fecha_fin;
         // dd($contrato_model);
-        // $this->monto_factura = $this->monto_factura == null ? '$0.00' : $this->monto_factura;
+        $this->monto_factura = $this->monto_factura == null ? '$0.00' : $this->monto_factura;
         // $this->validate([
         //     'no_factura' => ['required', 'regex:/^[\s\w-]*$/'],
         //     'fecha_recepcion' => 'required|after_or_equal:fecha_inicio_contrato',
