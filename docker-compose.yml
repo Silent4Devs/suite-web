@@ -159,7 +159,7 @@ services:
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      # - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - /var/lib/docker/:/var/lib/docker:ro
     ports:
       - 8081:8080
