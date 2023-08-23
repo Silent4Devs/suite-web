@@ -173,18 +173,14 @@ services:
     networks:
       - tabantajnetwork
 
-  # php-exporter-tabantaj:
-  #   image: hipages/php-fpm_exporter
-  #   container_name: php-exporter-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 9001:9001
-  #   environment:
-  #     PHP_FPM_EXPORTER_LISTEN: "0.0.0.0:9001"
-  #     PHP_FPM_EXPORTER_STATUS_URL: "http://php-exporter-tabantaj:9001/status"
-  #   networks:
-  #     - tabantajnetwork
+  postgres-exporter-tabantaj:
+    image: prometheuscommunity/postgres-exporter
+    ports:
+      - 9187:9187
+    environment:
+      DATA_SOURCE_NAME: "postgresql://homestead:secret@postgres-tabantaj:5432/homestead?sslmode=disable"
+    networks:
+      - tabantajnetwork
 
   grafana-tabantaj:
     image: grafana/grafana:8.1.8
