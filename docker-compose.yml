@@ -148,7 +148,7 @@ services:
     depends_on:
       - prometheus-tabantaj
     ports:
-      - 9100:9100
+      - 9101:9100
 
   cadvisor-tabantaj:
     image: google/cadvisor:latest
