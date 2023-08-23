@@ -31,3 +31,6 @@ scrape_configs:
   - job_name: grafana-tabantaj  # Add Grafana service
     static_configs:
       - targets: ['grafana-tabantaj:3000']
+  - job_name: node-exporter-tabantaj  # Add Node Exporter service
+    static_configs:
+      - targets: ['node-exporter-tabantaj:9100']
