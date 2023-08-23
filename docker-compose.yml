@@ -187,7 +187,7 @@ services:
   #     - tabantajnetwork
 
   grafana-tabantaj:
-    image: grafana/grafana:8
+    image: grafana/grafana:8.5
     container_name: grafana-tabantaj
     restart: unless-stopped
     tty: true
