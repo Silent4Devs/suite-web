@@ -209,7 +209,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - grafana-data:/etc/grafana/provisioning
+      - /opt/grafana:/etc/grafana/provisioning
     ports:
       - 3000:3000
     networks:
@@ -261,8 +261,6 @@ volumes:
   tabantaj-db:
     driver: local
   pgadmin-data:
-    driver: local
-  grafana-data:
     driver: local
 
 networks:
