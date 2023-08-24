@@ -2,32 +2,38 @@ global:
   scrape_interval:     15s
   evaluation_interval: 15s
 
+# Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+    monitor: 'codelab-monitor'
+
 rule_files:
   # - "first.rules"
   # - "second.rules"
 
 scrape_configs:
+
   - job_name: prometheus
     static_configs:
       - targets: ['localhost:9090']
+
   - job_name: redis-exporter
     static_configs:
       - targets: ['redis-exporter-tabantaj:9121']
+
+  # prometheus-nginx-exporter
   - job_name: nginx-exporter
     static_configs:
       - targets: ['nginx-exporter-tabantaj:9113']
-  - job_name: nginx-tabantaj
+
+  - job_name: postgres-exporter
     static_configs:
-      - targets: ['nginx-tabantaj:80']
-  - job_name: php-tabantaj  # Add PHP service
+      - targets: ["postgres-exporter-tabantaj:9187"]
+
+  - job_name: prometheus-node-exporter-tabantaj  # Add Node Exporter service
     static_configs:
-      - targets: ['php-tabantaj:9000']
-  - job_name: postgres-tabantaj  # Add Postgres service
-    static_configs:
-      - targets: ['postgres-tabantaj:5432']
-  - job_name: rdadmin-tabantaj  # Add rdadmin service
-    static_configs:
-      - targets: ['rdadmin-tabantaj:6360']
-  - job_name: grafana-tabantaj  # Add Grafana service
-    static_configs:
-      - targets: ['grafana-tabantaj:3000']
+      - targets: ['prometheus-node-exporter-tabantaj:9100']
+
+  # - job_name: cadvisor-exporter-tabantaj  # Add Node Exporter service
+  #   static_configs:
+  #     - targets: ['cadvisor-exporter-tabantaj:8081']
