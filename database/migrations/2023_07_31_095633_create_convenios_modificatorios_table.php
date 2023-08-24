@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('convenios_modificatorios', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('contrato_id')->nullable();
             $table->string('no_convenio');
             $table->date('fecha')->nullable();

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('proveedores', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('razon_social')->nullable();
             $table->string('nombre_comercial')->nullable();
             $table->string('rfc')->nullable();

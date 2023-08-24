@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('proveedor_indistintos', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('requisicion_id')->nullable();
             // $table->foreign('requisicion_id')->references('id')->on('requsiciones')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('proveedor_indistinto_id')->nullable();

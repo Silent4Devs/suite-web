@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('ampliacion_contratos', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('contrato_id')->nullable();
             $table->decimal('importe', 15, 2)->nullable();
             $table->decimal('monto_total_ampliado', 15, 2)->nullable();

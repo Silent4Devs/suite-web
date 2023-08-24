@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('cierre_contratos', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->integer('no')->nullable();
             $table->unsignedBigInteger('contrato_id')->nullable();
             $table->foreign('contrato_id')->references('id')->on('contratos');

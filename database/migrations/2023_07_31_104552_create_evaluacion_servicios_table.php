@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('evaluacion_servicio', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('servicio_id')->nullable();
             $table->foreign('servicio_id')->references('id')->on('niveles_servicio');
             $table->date('fecha')->nullable();

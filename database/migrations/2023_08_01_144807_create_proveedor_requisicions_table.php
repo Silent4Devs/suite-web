@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('proveedor_requisicions', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->longText('proveedor')->nullable();
             $table->longText('detalles')->nullable();
             $table->longText('tipo')->nullable();

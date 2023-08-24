@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('requisiciones', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->date('fecha')->nullable();
             $table->string('entrega')->nullable();
             $table->boolean('estatus')->nullable();
@@ -63,7 +63,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user')->nullable();
             $table->string('area');
             $table->string('email')->nullable();
-            
+
             //foreign
             $table->unsignedBigInteger('proveedor_id')->nullable();
             $table->foreign('proveedor_id')->references('id')->on('proveedores')->onUpdate('cascade')->onDelete('cascade');
