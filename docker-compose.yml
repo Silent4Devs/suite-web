@@ -260,7 +260,7 @@ volumes:
     driver: local
   pgadmin-data:
     driver: local
-  elastic-search-tabantaj:
+  elasticsearch:
     driver: local
 
 networks:
