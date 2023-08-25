@@ -30,10 +30,18 @@ scrape_configs:
     static_configs:
       - targets: ["postgres-exporter-tabantaj:9187"]
 
-  - job_name: prometheus-node-exporter-tabantaj  # Add Node Exporter service
+  - job_name: prometheus-node-exporter-tabantaj
     static_configs:
       - targets: ['prometheus-node-exporter-tabantaj:9100']
 
-  # - job_name: cadvisor-exporter-tabantaj  # Add Node Exporter service
+  - job_name: logstash-exporter-tabantaj
+    static_configs:
+      - targets: ['logstash-exporter-tabantaj:5044']
+
+  - job_name: elastic-exporter-tabantaj
+    static_configs:
+      - targets: ['elastic-exporter-tabantaj:9200']
+
+  # - job_name: cadvisor-exporter-tabantaj
   #   static_configs:
   #     - targets: ['cadvisor-exporter-tabantaj:8081']
