@@ -200,7 +200,7 @@ services:
       - tabantajnetwork
 
   elastic-search-tabantaj:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
     container_name: elastic-search-tabantaj
     restart: unless-stopped
     tty: true
@@ -222,7 +222,7 @@ services:
       - tabantajnetwork
 
   elasticsearch-logs-tabantaj:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
     container_name: elasticsearch-logs-tabantaj
     environment:
       - node.name=elasticsearch-logs
@@ -242,14 +242,14 @@ services:
       - tabantajnetwork
 
   logstash-tabantaj:
-    image: docker.elastic.co/logstash/logstash:7.17.0
+    image: docker.elastic.co/logstash/logstash:8.8.1
     container_name: logstash-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
       - ./infra/logstash:/usr/share/logstash/pipeline
     environment:
-      ELASTICSEARCH_HOST: "http://localhost"
+      ELASTICSEARCH_HOST: "http://192.168.9.78"
       ELASTICSEARCH_PORT: 9200
     ports:
       - 5044:5044
