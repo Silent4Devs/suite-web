@@ -150,22 +150,6 @@ services:
     ports:
       - 9101:9100
 
-  # cadvisor-tabantaj:
-  #   image: google/cadvisor:latest
-  #   container_name: cadvisor-tabantaj
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - prometheus-tabantaj
-  #   volumes:
-  #     - /:/rootfs:ro
-  #     - /var/run:/var/run:rw
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  #     - /var/lib/docker/:/var/lib/docker:ro
-  #   ports:
-  #     - 8081:8080
-  #   networks:
-  #     - tabantajnetwork
-
   redis-exporter-tabantaj:
     image: oliver006/redis_exporter:v1.22.0-alpine
     container_name: redis-exporter-tabantaj
@@ -215,45 +199,59 @@ services:
     networks:
       - tabantajnetwork
 
-  # elastik-search-tabantaj:
-  #   image: elasticsearch:8.8.1
-  #   container_name: elastik-search-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 9200:9200
-  #     - 9300:9300
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   environment:
-  #     - discovery.type=single-node
-  #   networks:
-  #     - tabantajnetwork
+  elastic-search-tabantaj:
+    image: elasticsearch:8.8.1
+    container_name: elastic-search-tabantaj
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 9200:9200
+      - 9300:9300
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=docker-cluster
+      - discovery.type=single-mode
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    networks:
+      - tabantajnetwork
 
-  # kibana-tabantaj:
-  #   image: kibana:8.8.1
-  #   container_name: kibana-tabantaj
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 5601:5601
-  #   networks:
-  #     - tabantajnetwork
+  logstash-tabantaj:
+    image: logstash:8.8.1
+    container_name: logstash-tabantaj
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - type: bind
+        source: .
+        target: /usr/share/logstash/pipeline
+        read_only: true
+    ports:
+      - 5044:5044
+    depends_on:
+      - elastic-search-tabantaj
+    networks:
+      - tabantajnetwork
 
-  # logstash-tabantaj:
-  #   image: logstash:8.8.1
-  #   container_name: logstash-tabantaj
+
+  # cadvisor-tabantaj:
+  #   image: google/cadvisor:latest
+  #   container_name: cadvisor-tabantaj
   #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - 5000:5000
+  #   depends_on:
+  #     - prometheus-tabantaj
   #   volumes:
-  #     - type: bind
-  #       source: ./infra/elk
-  #       target: /usr/share/logstash/pipeline
-  #       read_only: true
+  #     - /:/rootfs:ro
+  #     - /var/run:/var/run:rw
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #     - /var/lib/docker/:/var/lib/docker:ro
+  #   ports:
+  #     - 8081:8080
   #   networks:
   #     - tabantajnetwork
 
@@ -261,6 +259,8 @@ volumes:
   tabantaj-db:
     driver: local
   pgadmin-data:
+    driver: local
+  elastic-search-tabantaj:
     driver: local
 
 networks:
