@@ -200,7 +200,7 @@ services:
       - tabantajnetwork
 
   elastic-search-tabantaj:
-    image: elasticsearch:8.8.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
     container_name: elastic-search-tabantaj
     restart: unless-stopped
     tty: true
@@ -216,21 +216,41 @@ services:
     environment:
       - node.name=elasticsearch
       - cluster.name=docker-cluster
-      - discovery.type=single-mode
+      - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
     networks:
       - tabantajnetwork
 
+  elasticsearch-logs-tabantaj:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    container_name: elasticsearch-logs-tabantaj
+    environment:
+      - node.name=elasticsearch-logs
+      - cluster.name=docker-cluster
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch-logs:/usr/share/elasticsearch/data
+    ports:
+      - 9201:9200
+      - 9301:9300
+    networks:
+      - tabantajnetwork
+
   logstash-tabantaj:
-    image: logstash:8.8.1
+    image: docker.elastic.co/logstash/logstash:7.17.0
     container_name: logstash-tabantaj
     restart: unless-stopped
     tty: true
     volumes:
-      - type: bind
-        source: .
-        target: /usr/share/logstash/pipeline
-        read_only: true
+      - ./infra/logstash:/usr/share/logstash/pipeline
+    environment:
+      ELASTICSEARCH_HOST: "http://localhost"
+      ELASTICSEARCH_PORT: 9200
     ports:
       - 5044:5044
     depends_on:
@@ -261,6 +281,8 @@ volumes:
   pgadmin-data:
     driver: local
   elasticsearch:
+    driver: local
+  elasticsearch-logs:
     driver: local
 
 networks:
