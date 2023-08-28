@@ -39,7 +39,6 @@
         "spatie/calendar-links": "^1.6",
         "spatie/geocoder": "^3.10",
         "spatie/laravel-backup": "^8.1",
-        "spatie/laravel-health": "^1.7",
         "spatie/laravel-medialibrary": "^10.0",
         "spatie/url": "^2.0",
         "tucker-eric/eloquentfilter": "^3.2",
@@ -77,7 +76,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
