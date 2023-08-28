@@ -183,10 +183,37 @@
                         </a>
                     </li>
 
+                    <li><a href="{{ route('admin.categories.index') }}">
+                            <div>
+                                <i class="fas fa-layer-group"></i>
+                                <br>
+                                Categorias Escuela
+                            </div>
+                        </a>
+                    </li>
+
+                    <li><a href="{{ route('admin.levels.index') }}">
+                            <div>
+                                <img src="{{ asset('assets/levels.svg') }}" width="60" height="70" style="margin-top: -10px;">
+                                <br>
+                                Niveles Escuela
+                            </div>
+                        </a>
+                    </li>
+
+                    <li><a href="{{ route('admin.categories.index') }}">
+                            <div>
+                                <i class="fa-solid fa-chart-pie"></i>
+                                <br>
+                                Dashboard
+                            </div>
+                        </a>
+                    </li>
+
             </ul>
         </div>
     @endcan
-  
+
     <li>
         <a href="Ausencias">
             <div>
@@ -196,7 +223,7 @@
             </div>
         </a>
     </li>
- 
+
     @can('beneficios_acceder')
     <li>
         <a href="#">
