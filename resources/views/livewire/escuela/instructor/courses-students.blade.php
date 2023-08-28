@@ -1,32 +1,30 @@
 <div>
 
+    {{-- <h4 class="mb-4 text-2xl font-bold">Estudiantes del curso</h4> --}}
 
-    <h1 class="mb-4 text-2xl font-bold">Estudiantes del curso</h1>
+    @livewire('escuela.estudiantes-crear', ['course' => $course])
 
 
-    @livewire('estudiantes-crear', ['course' => $course])
-
-    <x-table-responsive>
 
         @if ($students->count())
-            <table class="min-w-full divide-y divide-gray-200 ">
-                <thead class="bg-gray-50">
+            <table class="table table-bordered w-100 datatable-User">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col"
-                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-left ">
                             Nombre
                         </th>
                         <th scope="col"
-                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-left ">
                             Email
                         </th>
                         <th scope="col"
-                            class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-left ">
                             Opciones
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="">
                     @foreach ($students as $student)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -64,13 +62,12 @@
             </div>
         @endif
 
-    </x-table-responsive>
 
 
 </div>
-@section('css')
+{{-- @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 @section('js')
 @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
-@stop
+@stop --}}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\escuela;
+namespace App\Models\Escuela;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,14 +17,14 @@ class Section extends Model
 
     public function lessons()
     {
-        return $this->hasMany('App\Models\Lesson');
+        return $this->hasMany('App\Models\Escuela\Lesson');
     }
 
 
     //Relacion uno a muchos inversa
     public function course()
     {
-        return $this->belongsTo('App\Models\Course');
+        return $this->belongsTo('App\Models\Escuela\Course');
     }
 
     public function evaluations()

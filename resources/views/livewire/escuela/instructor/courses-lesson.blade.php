@@ -38,13 +38,15 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="grid items-center mb-2 grid-col-1 md:grid-cols-6 md:gap-3">
+                        </div>
                         <div class="flex justify-end gap-2">
                             <button wire:click="cancel" type="button" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-gray-700 uppercase transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50">
                                 Cancelar
                             </button>
-                            <x-jet-danger-button style="background-color:#333" type="submit"  >
+                            <button style="background-color:#333" type="submit"  >
                               Actualizar
-                            </x-jet-danger-button>
+                            </button>
                         </div>
                     </form>
                 @else
@@ -81,10 +83,10 @@
                         </div>
 
                         <div class="mb-3">
-                            @livewire('instructor.lesson-description', ['lesson' => $item], key('lesson-description' . $item->id))
+                            @livewire('escuela.instructor.lesson-description', ['lesson' => $item], key('lesson-description' . $item->id))
                         </div>
                         <div class="mb-3">
-                            @livewire('instructor.lesson-resources', ['lesson' => $item], key('lesson-resource' . $item->id))
+                            @livewire('escuela.instructor.lesson-resources', ['lesson' => $item], key('lesson-resource' . $item->id))
                         </div>
                     </div>
                 @endif
@@ -141,10 +143,10 @@
                     </div>
                 </div>
                 <div class="flex justify-end gap-2">
-                    <x-jet-danger-button wire:click="cancel" @click="open = false" type="button" style="background-color:white"
+                    <button wire:click="cancel" @click="open = false" type="button" style="background-color:white"
                     class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-gray-700 uppercase transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50">
-                    Cancelar</x-jet-danger-button>
-                    <x-jet-button wire:click="store" style="background-color:#333">Crear</x-jet-button>
+                    Cancelar</button>
+                    <button wire:click="store" style="background-color:#333">Crear</button>
                 </div>
             </article>
         </div>

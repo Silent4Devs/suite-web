@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\escuela;
+namespace App\Models\Escuela;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,27 +53,27 @@ class Course extends Model
 
     public function reviews()
     {
-        return $this->hasMany('App\Models\Review');
+        return $this->hasMany('App\Models\Escuela\Review');
     }
 
     public function requirements()
     {
-        return $this->hasMany('App\Models\Requirement');
+        return $this->hasMany('App\Models\Escuela\Requirement');
     }
 
     public function goals()
     {
-        return $this->hasMany('App\Models\Goal');
+        return $this->hasMany('App\Models\Escuela\Goal');
     }
 
     public function audiences()
     {
-        return $this->hasMany('App\Models\Audience');
+        return $this->hasMany('App\Models\Escuela\Audience');
     }
 
     public function sections()
     {
-        return $this->hasMany('App\Models\Section');
+        return $this->hasMany('App\Models\Escuela\Section');
     }
 
     //Relacion uno a muchos inversa
@@ -84,22 +84,22 @@ class Course extends Model
 
     public function level()
     {
-        return $this->belongsTo('App\Models\Level');
+        return $this->belongsTo('App\Models\Escuela\Level');
     }
 
     public function category()
     {
-        return $this->belongsTo('App\Models\Category');
+        return $this->belongsTo('App\Models\Escuela\Category');
     }
 
     public function price()
     {
-        return $this->belongsTo('App\Models\Level');
+        return $this->belongsTo('App\Models\Escuela\Level');
     }
 
     public function usuarioscursos()
     {
-        return $this->hasMany('App\Models\UsuariosCursos');
+        return $this->hasMany('App\Models\Escuela\UsuariosCursos');
     }
 
     //Relacion muchos a muchos
@@ -112,13 +112,13 @@ class Course extends Model
 
     public function image()
     {
-        return $this->morphOne('App\Models\Image', 'imageable');
+        return $this->morphOne('App\Models\Escuela\Image', 'imageable');
     }
 
     //Relacion hasManyThrough
     // Relación entre course y lessons
     public function lessons()
     {
-        return $this->hasManyThrough('App\Models\Lesson', 'App\Models\Section');
+        return $this->hasManyThrough('App\Models\Escuela\Lesson', 'App\Models\Escuela\Section');
     }
 }

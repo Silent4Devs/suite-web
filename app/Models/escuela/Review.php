@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\escuela;
+namespace App\Models\Escuela;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +22,6 @@ class Review extends Model
 
     public function course()
     {
-        return $this->belongsTo('App\Models\Course');
+        return $this->belongsTo('App\Models\Escuela\Course');
     }
 }

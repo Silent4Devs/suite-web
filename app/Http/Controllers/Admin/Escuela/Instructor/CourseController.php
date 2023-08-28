@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Escuela\Instructor;
 
-use App\Models\escuela\Level;
-use App\Models\escuela\Price;
-use App\Models\escuela\Course;
-use App\Models\escuela\Category;
+use App\Models\Escuela\Level;
+use App\Models\Escuela\Price;
+use App\Models\Escuela\Course;
+use App\Models\Escuela\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use RealRashid\SweetAlert\Facades\Alert;
+// use RealRashid\SweetAlert\Facades\Alert;
+
 
 class CourseController extends Controller
 {
@@ -56,7 +57,8 @@ class CourseController extends Controller
             'level_id' => 'required',
             // 'price_id' => 'required',
             'file' => 'required',
-        ],[
+        ]
+        ,[
             'subtitle.required' => 'El campo subtítulo es obligatorio',
             'slug.required' => 'El campo slug es obligatorio',
             'title.required' => 'El campo título es obligatorio',
@@ -66,7 +68,7 @@ class CourseController extends Controller
             'file.required' => 'El campo imagen es obligatorio',
         ]);
 
-        // dd('hola');
+        // dd($request->all());
 
         $course = Course::create($request->all());
 
@@ -79,8 +81,8 @@ class CourseController extends Controller
             ]);
         }
 
-        Alert::toast('El curso fue añadido exitosamente', 'success');
-        return redirect()->route('instructor.courses.index');
+        // Alert::toast('El curso fue añadido exitosamente', 'success');
+        return redirect()->route('admin.courses.index');
     }
 
     /**
@@ -91,7 +93,7 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return view('instructor.courses.show', compact('course'));
+        return view('admin.escuela.instructor.courses.show', compact('course'));
     }
 
     /**
@@ -102,13 +104,14 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        $this->authorize('dicatated', $course);
+        // $this->authorize('dicatated', $course);
 
         $categories = Category::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');
 
-        return view('instructor.courses.edit', compact('course', 'categories', 'levels', 'prices'));
+        return view('admin.escuela.instructor.courses.edit', compact('course', 'categories', 'levels', 'prices'));
+
     }
 
     /**
@@ -120,7 +123,6 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        $this->authorize('dicatated', $course);
         $request->validate([
             'title' => 'required',
             'slug' => ['required', "unique:courses,slug,$course->id,id"],
@@ -158,8 +160,8 @@ class CourseController extends Controller
             }
         }
 
-        Alert::toast('El curso fue actualizado exitosamente', 'success');
-        return redirect()->route('instructor.courses.index');
+        // Alert::toast('El curso fue actualizado exitosamente', 'success');
+        return redirect()->route('admin.courses.index');
     }
 
     /**
@@ -175,7 +177,7 @@ class CourseController extends Controller
 
     public function goals(Course $course)
     {
-        return view('instructor.courses.goals', compact('course'));
+        return view('admin.escuela.instructor.courses.goals', compact('course'));
     }
 
     public function status(Course $course){

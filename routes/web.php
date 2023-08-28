@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
     Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
@@ -1360,11 +1359,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('lista-documentos/destroy/{id}', 'ListaDocumentosEmpleados@destroy')->name('lista-documentos-empleados-destroy');
     });
 
-    //Escuela cursos intructor
+    //Escuela cursos instructor
     Route::resource('courses', 'Escuela\Instructor\CourseController');
 
     Route::get('curso-estudiante', 'CursoEstudiante@index')->name('curso-estudiante');
     Route::get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
+    // Route::get('courses/{course}/curriculum', '\App\Http\Livewire\Escuela\Instructor\CoursesCurriculum'  )->name('courses.curriculum');
+    // Route::get('courses/{course}/curriculum', 'Escuela\Instructor\CourseCurriculumController@show')->name('courses.curriculum');
+    // Route::get('courses/{course}/goals', 'Escuela\Instructor\CourseController@goals')->name('courses.goals');
+    // Route::get('courses/{course}/students', 'Escuela\Instructor\CoursesStudents')->name('courses.students');
+    // Route::get('courses/{course}/evaluation', 'Escuela\Instructor\EvaluacionesInstructor')->name('courses.evaluation');
+    // Route::post('courses/{course}/status', 'Escuela\Instructor\CourseController@status')->name('courses.status');
+    Route::get('courses/{course}/evaluation/{evaluation}', 'Escuela\Instructor\CourseQuestionController@index')->name('courses.evaluation.questions');
+    // Route::get('courses/{course}/quizdetail', 'Escuela\Instructor\TableQuizDetails')->name('courses.quizdetails');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {

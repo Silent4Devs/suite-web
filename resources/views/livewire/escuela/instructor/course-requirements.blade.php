@@ -1,37 +1,48 @@
 <section class="mt-4">
-    <h1 class="text-2xl font-bold">Requisitos del curso</h1>
-    <hr class="mt-2 mb-6">
+    <h1>Requisitos del curso</h1>
+    <hr class="mt-2 mb-6 bg-primary">
 
     @foreach ($course->requirements as $item)
-        <article class="mb-4 card">
-            <div class="bg-gray-100 card-body">
                 @if ($requirement->id == $item->id)
+                <div class="registro rounded p-2">
                     <form wire:submit.prevent='update'>
-                        <input wire:model="requirement.name" class="w-full form-input">
+                        <input wire:model="requirement.name" class="form-control">
                         @error('requirement.name') <span class="text-red-500">{{ $message }}</span> @enderror
                     </form>
+                </div>
                 @else
-                    <header class="flex justify-between">
-                        <h1>{{ $item->name }}</h1>
-                        <div>
-                            <i wire:click="edit({{ $item }})"
-                                class="text-blue-500 cursor-pointer fas fa-edit"></i>
-                            <i wire:click="destroy({{ $item }})"
-                                class="ml-2 text-red-500 cursor-pointer fas fa-trash"></i>
+                <div class="registro rounded pt-2 pl-4 pr-4">
+                    <div class="row justify-content-start">
+                        <div class="col-9">
+                            <h4 style="color:#3086AF;">{{ $item->name }}</h4>
                         </div>
-                    </header>
+                        <div class="col-3 d-flex justify-content-end">
+                            <i wire:click="edit({{ $item }})"
+                                    class="m-1 text-blue-500 cursor-pointer fas fa-edit"></i>
+                            <i wire:click="destroy({{ $item }})"
+                                    class="m-1 text-red-500 cursor-pointer fas fa-trash"></i>
+                        </div>
+                    </div>
+                </div>
+
                 @endif
-            </div>
-        </article>
     @endforeach
 
-    <article class="card">
-        <div class="bg-gray-100 card-body">
-            <form wire:submit.prevent="store">
-                <input wire:model="name" class="w-full form-input" placeholder="Agregar el nombre del requisito">
-                @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
+    <article class="card shadow-none">
+        <div class="card-body">
+            <form wire:submit.prevent="store" class="form-group">
+                {!! Form::label('title', 'Agregar el nombre del requisito*',[
+                'class' => 'pl-0']) !!}
+                <div class="grid grid-cols-2 gap-4 mt-2 row justify-content-start">
+                    <div class="col-9 pl-0">
+                        <input wire:model="name" class="form-control" placeholder="Agregar el nombre del requisito">
+                        @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="col-3 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-light text-primary">Agregar <i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
                 <div class="flex justify-end mt-2">
-                    <button type="submit" class="inline-flex items-center px-4 py-2 m-4 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25">Agregar requisito</button>
                 </div>
             </form>
         </div>

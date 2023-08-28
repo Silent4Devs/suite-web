@@ -1,7 +1,8 @@
+
 <div>
 
     <h1 class="mb-8 text-2xl font-bold">Lecciones</h1>
-    
+
     @forelse($course->sections as $item)
         <article class="mb-4 rounded shadow bg-gray-50" x-data="{open: {{ ($loop->first ? 'true' : 'false') }} }">
             @if ($section->id == $item->id)
@@ -31,9 +32,9 @@
                     </div>
                 </div>
 
-                <div x-show="open">
-                    @livewire('instructor.courses-lesson', ['section' => $item], key($item->id))
-                </div>
+                {{-- <div x-show="open"> --}}
+                    @livewire('escuela.instructor.courses-lesson', ['section' => $item], key($item->id))
+                {{-- </div> --}}
             @endif
         </article>
     @empty
@@ -71,3 +72,4 @@
     </div>
 
 </div>
+

@@ -1,21 +1,21 @@
 <div>
     {{-- <livewire:datatable model="App\Models\Evaluation" name="evaluations" include="id, name, description, linkedTo"  /> --}}
-    <x-loading-indicator wire:loading/>
-    <x-table-responsive>
-        <table class="min-w-full divide-y divide-gray-200 ">
-            <thead class="bg-gray-50">
+    {{-- <x-loading-indicator wire:loading/> --}}
+    {{-- <x-table-responsive> --}}
+        <table class="table">
+            <thead class="">
                 <tr>
                     <th scope="col"
-                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left  uppercase">
                         Nombre
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left  uppercase">
                         Descripción
                     </th>
-                  
+
                     <th scope="col"
-                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left  uppercase">
                         Opciones
                     </th>
                 </tr>
@@ -25,17 +25,17 @@
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">{{ $evaluacion->name }}</div>
-                            
+
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900" style="text-align: justify;">{!! $evaluacion->description!!}</div>
                         </td>
-                       
+
                         <td class="px-3 py-2 whitespace-nowrap">
 
-                           @livewire('instructor.questions',['evaluation_id'=>$evaluacion->id],key($evaluacion->id))
+                           @livewire('escuela.instructor.questions',['evaluation_id'=>$evaluacion->id],key($evaluacion->id))
 
-                           <a href="{{route('instructor.courses.evaluation.questions',['course'=>$course->slug,'evaluation'=>$evaluacion->id])}}"><i style="font-size:10pt; color:#60DC8F" class="ml-1 fas fa-file-alt" title="Ver preguntas" ></i></a>
+                           <a href="{{route('admin.courses.evaluation.questions',['course'=>$course->slug,'evaluation'=>$evaluacion->id])}}"><i style="font-size:10pt; color:#60DC8F" class="ml-1 fas fa-file-alt" title="Ver preguntas" ></i></a>
 
                             <i style="font-size:10pt" class="ml-1 text-blue-500 cursor-pointer fas fa-edit"
                                 wire:click.prevent="edit({{ $evaluacion->id }})"></i>
@@ -52,6 +52,8 @@
          <div class="px-6 py-4">
                 {{ $evaluaciones->links() }}
             </div>
-    </x-table-responsive>
-    
+    {{-- </x-table-responsive> --}}
+
 </div>
+
+
