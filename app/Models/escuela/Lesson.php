@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\escuela;
+namespace App\Models\Escuela;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,18 +23,18 @@ class Lesson extends Model
 
     public function description()
     {
-        return $this->hasOne('App\Models\Description');
+        return $this->hasOne('App\Models\Escuela\Description');
     }
 
     //Relacion uno a muchos inversa
     public function section()
     {
-        return $this->belongsTo('App\Models\Section');
+        return $this->belongsTo('App\Models\Escuela\Section');
     }
 
     public function platform()
     {
-        return $this->belongsTo('App\Models\Platform');
+        return $this->belongsTo('App\Models\Escuela\Platform');
     }
 
     //Relacion muchos a muchos
@@ -47,18 +47,18 @@ class Lesson extends Model
 
     public function resource()
     {
-        return $this->morphOne('App\Models\Resource', 'resourceable');
+        return $this->morphOne('App\Models\Escuela\Resource', 'resourceable');
     }
 
     //Relacion uno a muchos polimorfica
 
     public function comments()
     {
-        return $this->morphMany('App\Models\Comment', 'commentable');
+        return $this->morphMany('App\Models\Escuela\Comment', 'commentable');
     }
 
     public function reactions()
     {
-        return $this->morphMany('App\Models\Reaction', 'reactionable');
+        return $this->morphMany('App\Models\Escuela\Reaction', 'reactionable');
     }
 }

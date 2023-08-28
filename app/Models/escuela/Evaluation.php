@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Models\escuela;
+namespace App\Models\Escuela;
 
+use App\Models\Escuela\Instructor\Question;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Evaluation extends Model
 {
@@ -25,7 +27,7 @@ class Evaluation extends Model
 
     public function users()
     {
-        return $this->hasMany('App\Models\UserEvaluation');
+        return $this->hasMany('App\Models\Escuela\UserEvaluation');
     }
 
     public function getCompletedAttribute()

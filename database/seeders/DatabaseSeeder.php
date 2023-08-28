@@ -64,8 +64,9 @@ class DatabaseSeeder extends Seeder
                 // VacacionesPermisosSeeder::class,
                 // PermisosBIASeeder::class,
                 // AjustesAIASeeder::class,
-                PermisosEscuelaAdminSeeder::class,
-                PermisosEscuelaInstructor::class
+                // PermisosEscuelaAdminSeeder::class,
+                // PermisosEscuelaInstructorSeeder::class,
+                PlatformSeeder::class
 
             ]
         );
