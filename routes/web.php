@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
     Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
@@ -1373,6 +1374,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::post('courses/{course}/status', 'Escuela\Instructor\CourseController@status')->name('courses.status');
     Route::get('courses/{course}/evaluation/{evaluation}', 'Escuela\Instructor\CourseQuestionController@index')->name('courses.evaluation.questions');
     // Route::get('courses/{course}/quizdetail', 'Escuela\Instructor\TableQuizDetails')->name('courses.quizdetails');
+    //categorias para el administrador de escuela
+    Route::resource('categories', 'Escuela\Admin\CategoryController');
+    Route::resource('levels', 'Escuela\Admin\LevelController');
+    Route::resource('home', 'Escuela\Admin\HomeController');
+    /*Route::resource('prices', PriceController::class)->names('prices');
+    Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('courses/{course}', [CourseController::class, 'show'])->name('courses.show');
+    Route::post('courses/{course}/approved', [CourseController::class, 'approved'])->name('courses.approved');*/
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
