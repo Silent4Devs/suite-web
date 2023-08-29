@@ -40,13 +40,14 @@ class TimesheetHorasEdit extends Component
         $this->horas = TimesheetHoras::where('timesheet_id', $this->timesheet_id)->get();
     }
 
-    public function removerFila($id)
+    public function removerFila($id, $tr)
     {
         if ($id != null) {
-            $this->horas_excluidas[] = $id;
-            $this->horas = $this->horas->except($this->horas_excluidas);
+            $hora_eliminada = TimesheetHoras::find($id);
+            $hora_eliminada->delete();
+
+            $this->emit('removeTr', $tr);
         }
-        $this->emit('calcularSumatoriasFacturables');
     }
 
     public function updatedContador($value)
@@ -57,6 +58,8 @@ class TimesheetHorasEdit extends Component
     public function render()
     {
         $this->timesheet = Timesheet::find($this->timesheet_id);
+
+        $this->emit('calcularSumatoriasFacturables');
 
         return view('livewire.timesheet-horas-edit');
     }
