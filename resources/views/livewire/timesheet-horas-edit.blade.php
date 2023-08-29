@@ -337,6 +337,35 @@
     </script>
 
     <script type="text/javascript">
+        document.querySelector('.tabla-llenar-horas').addEventListener('click', (e) => {
+            let element = e.target;
+            if (e.target.tagName == 'I') {
+                element = e.target.closest('div');
+            }
+            if (element.classList.contains('btn_destroy_tr')) {
+                let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
+                let tr_element = element.closest('tr');
+                Livewire.emit('removerFila', tr_element.getAttribute('data-model'), tr_seleccionado);
+                $(tr_seleccionado).remove();
+            }
+            Livewire.on('removeTr', (tr_select_live) => {
+                $(tr_select_live).remove();
+            });
+
+            if (element.classList.contains('btn_clear_tr')) {
+
+                let tr_seleccionado = '#' + $('.btn_clear_tr:hover').attr('data-tr');
+
+                document.querySelector(tr_seleccionado + ' textarea').value = null;
+                document.querySelector(tr_seleccionado + ' #suma_horas_fila_1').innerText = '';
+                let inputs_1 = document.querySelectorAll(tr_seleccionado + ' input');
+                inputs_1.forEach(input => {
+                    input.value = null;
+                });
+                calcularSumatoriasFacturables();
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
 
             window.initSelect2 = () => {
@@ -428,7 +457,7 @@
                                 'success'
                             ).then(() => {
                                 window.location.href =
-                                '{{ route('admin.timesheet-inicio') }}';
+                                    '{{ route('admin.timesheet-inicio') }}';
                             });
                         } else {
                             if (response.status == 520) {
@@ -464,7 +493,7 @@
             }
 
             document.querySelector('.btn_enviar_formulario').addEventListener('click',
-            procesarInformacionTimesheet);
+                procesarInformacionTimesheet);
             document.querySelector('#enviar_aprobacion_time').addEventListener('click',
                 procesarInformacionTimesheet);
 
