@@ -3,7 +3,7 @@
 
     <div style="background-color: #dff1ff; border-top: 10px solid #008cff; border-radius: 4px;" class="p-2 mb-5">
         <strong> Nota: </strong>
-        Los proyectos cancelados o terminados se desactivaran en la copia del tiemsheet
+        Los proyectos cancelados o terminados se desactivaran en la copia del timesheet
     </div>
 
     <form id="form_timesheet" action="{{ route('admin.timesheet.store') }}" method="POST">
