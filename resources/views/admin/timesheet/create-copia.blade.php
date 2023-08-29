@@ -1,22 +1,20 @@
 @extends('layouts.admin')
 @section('content')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
 
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/timesheet.css') }}">
+    {{ Breadcrumbs::render('timesheet-create') }}
 
-	{{ Breadcrumbs::render('timesheet-create') }}
-
-	<h5 class="col-12 titulo_general_funcion">
+    <h5 class="col-12 titulo_general_funcion">
         TimeSheet: <font style="font-weight:lighter;"> Registrar Jornada Laboral</font>
-	 </h5>
+    </h5>
 
-	<div class="card card-body">
-		<div class="row">
+    <div class="card card-body">
+        <div class="row">
             <x-loading-indicator />
-			@livewire('timesheet.timesheet-horas-create-copia', ['proyectos'=>$proyectos, 'tareas'=>$tareas, 'origen'=>'create-copia', 'timesheet_id'=>$timesheet->id])
+            @livewire('timesheet.timesheet-horas-create-copia', ['proyectos' => $proyectos, 'tareas' => $tareas, 'origen' => 'create-copia', 'timesheet_id' => $timesheet->id])
 
-		</div>
-	</div>
-
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -24,19 +22,18 @@
 
     <script type="text/javascript">
         $('.select2').select2({
-            'theme' : 'bootstrap4',
+            'theme': 'bootstrap4',
         });
     </script>
     <script type="text/javascript">
-
-        document.addEventListener('DOMContentLoaded', ()=>{
+        document.addEventListener('DOMContentLoaded', () => {
             let fechasRegistradas = @json($fechasRegistradas);
 
             let dia_semana = @json($organizacion->dia_timesheet);
 
             function toISODate(d) {
                 const z = n => ('0' + n).slice(-2);
-                return d.getFullYear() + '-' + z(d.getMonth()+1) + '-' + z(d.getDate());
+                return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
             }
 
 
@@ -47,41 +44,53 @@
                     function(date) {
 
                         if (dia_semana == 'Domingo') {
-                            return (date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
+                            return (date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 ||
+                                date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
                         }
                         if (dia_semana == 'Lunes') {
-                            return (date.getDay() === 0 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
+                            return (date.getDay() === 0 || date.getDay() === 2 || date.getDay() === 3 ||
+                                date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
                         }
                         if (dia_semana == 'Martes') {
-                            return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
+                            return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 3 ||
+                                date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
                         }
                         if (dia_semana == 'Miércoles') {
-                            return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
+                            return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 ||
+                                date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6);
                         }
                         if (dia_semana == 'Jueves') {
-                            return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 5 || date.getDay() === 6);
+                            return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 ||
+                                date.getDay() === 3 || date.getDay() === 5 || date.getDay() === 6);
                         }
                         if (dia_semana == 'Viernes') {
-                            return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 6);
+                            return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 ||
+                                date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 6);
                         }
                         if (dia_semana == 'Sábado') {
-                            return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5);
+                            return (date.getDay() === 0 || date.getDay() === 1 || date.getDay() === 2 ||
+                                date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5);
                         }
                     },
-                    function(date){
+                    function(date) {
                         const rdatedData = fechasRegistradas;
-                        return rdatedData.includes (toISODate(date));
+                        return rdatedData.includes(toISODate(date));
                     }
                 ],
                 locale: {
                     firstDayOfWeek: 1,
                     weekdays: {
-                      shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                      longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                        longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes',
+                            'Sábado'],
                     },
                     months: {
-                      shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
-                      longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct',
+                            'Nov', 'Dic'
+                        ],
+                        longhand: ['Enero', 'Febrero', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                            'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                        ],
                     },
                 },
             });
@@ -89,15 +98,15 @@
 
         // --------------------------------------------------------
 
-        document.querySelector('.tabla-llenar-horas').addEventListener('change', (e)=>{
+        document.querySelector('.tabla-llenar-horas').addEventListener('change', (e) => {
 
             if (e.target.type == 'number') {
-            	if (Number(e.target.value) > 24) {
-            		e.target.value = 24;
-            	}
-            	if (Number(e.target.value) <= 0) {
-            		e.target.value = null;
-            	}
+                if (Number(e.target.value) > 24) {
+                    e.target.value = 24;
+                }
+                if (Number(e.target.value) <= 0) {
+                    e.target.value = null;
+                }
                 updateValue(e.srcElement.getAttribute('data-i'));
             }
 
@@ -106,45 +115,20 @@
             }
         });
 
-        document.querySelector('.tabla-llenar-horas').addEventListener('click', (e)=>{
-            let element = e.target;
-            if (e.target.tagName == 'I') {
-                element = e.target.closest('div');
-            }
-            if (element.classList.contains('btn_destroy_tr')) {
-                let tr_seleccionado = '#' + $('.btn_destroy_tr:hover').attr('data-tr');
-                let tr_element = element.closest('tr');
-                Livewire.emit('removerFila', tr_element.getAttribute('data-model'));
-                $(tr_seleccionado).remove();
-            }
-            if (element.classList.contains('btn_clear_tr')) {
-
-                let tr_seleccionado = '#' + $('.btn_clear_tr:hover').attr('data-tr');
-
-                document.querySelector(tr_seleccionado + ' textarea').value = null;
-                document.querySelector(tr_seleccionado + ' #suma_horas_fila_1').innerText = '';
-                let inputs_1 = document.querySelectorAll(tr_seleccionado + ' input');
-                inputs_1.forEach(input =>{
-                    input.value = null;
-                });
-                calcularSumatoriasFacturables();
-            }
-        });
-
         let contador_filas = @json($horas_count);
         for (var i = 1; i <= contador_filas; i++) {
-        	updateValue(i);
+            updateValue(i);
         }
 
         function updateValue(index) {
 
-            const suma_horas =  Number($('#ingresar_hora_lunes_' + index).val())+
-                                Number($('#ingresar_hora_martes_' + index).val())+
-                                Number($('#ingresar_hora_miercoles_' + index).val())+
-                                Number($('#ingresar_hora_jueves_' + index).val())+
-                                Number($('#ingresar_hora_viernes_' + index).val())+
-                                Number($('#ingresar_hora_sabado_' + index).val())+
-                                Number($('#ingresar_hora_domingo_' + index).val());
+            const suma_horas = Number($('#ingresar_hora_lunes_' + index).val()) +
+                Number($('#ingresar_hora_martes_' + index).val()) +
+                Number($('#ingresar_hora_miercoles_' + index).val()) +
+                Number($('#ingresar_hora_jueves_' + index).val()) +
+                Number($('#ingresar_hora_viernes_' + index).val()) +
+                Number($('#ingresar_hora_sabado_' + index).val()) +
+                Number($('#ingresar_hora_domingo_' + index).val());
 
 
             document.getElementById('suma_horas_fila_' + index).textContent = suma_horas + ' h';
@@ -153,18 +137,18 @@
 
             calcularSumatoriasFacturables();
         }
-        function calcularSumatoriasFacturables(){
+
+        function calcularSumatoriasFacturables() {
 
             // lunes ----------------------------------
             let input_lunes = document.querySelectorAll('input[data-dia="lunes"]');
             let suma_horas_lunes = 0;
             let suma_horas_lunes_no_fact = 0;
-            input_lunes.forEach(item =>{
+            input_lunes.forEach(item => {
                 let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input')?.checked;
                 if (es_facturable) {
                     suma_horas_lunes += Number(item.value);
-                }
-                else{
+                } else {
                     suma_horas_lunes_no_fact += Number(item.value);
                 }
             });
@@ -175,12 +159,11 @@
             let input_martes = document.querySelectorAll('input[data-dia="martes"]');
             let suma_horas_martes = 0;
             let suma_horas_martes_no_fact = 0;
-            input_martes.forEach(item =>{
+            input_martes.forEach(item => {
                 let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input')?.checked;
                 if (es_facturable) {
                     suma_horas_martes += Number(item.value);
-                }
-                else{
+                } else {
                     suma_horas_martes_no_fact += Number(item.value);
                 }
             });
@@ -191,12 +174,11 @@
             let input_miercoles = document.querySelectorAll('input[data-dia="miercoles"]');
             let suma_horas_miercoles = 0;
             let suma_horas_miercoles_no_fact = 0;
-            input_miercoles.forEach(item =>{
+            input_miercoles.forEach(item => {
                 let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input')?.checked;
                 if (es_facturable) {
                     suma_horas_miercoles += Number(item.value);
-                }
-                else{
+                } else {
                     suma_horas_miercoles_no_fact += Number(item.value);
                 }
             });
@@ -207,12 +189,11 @@
             let input_jueves = document.querySelectorAll('input[data-dia="jueves"]');
             let suma_horas_jueves = 0;
             let suma_horas_jueves_no_fact = 0;
-            input_jueves.forEach(item =>{
+            input_jueves.forEach(item => {
                 let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input')?.checked;
                 if (es_facturable) {
                     suma_horas_jueves += Number(item.value);
-                }
-                else{
+                } else {
                     suma_horas_jueves_no_fact += Number(item.value);
                 }
             });
@@ -223,12 +204,11 @@
             let input_viernes = document.querySelectorAll('input[data-dia="viernes"]');
             let suma_horas_viernes = 0;
             let suma_horas_viernes_no_fact = 0;
-            input_viernes.forEach(item =>{
+            input_viernes.forEach(item => {
                 let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input')?.checked;
                 if (es_facturable) {
                     suma_horas_viernes += Number(item.value);
-                }
-                else{
+                } else {
                     suma_horas_viernes_no_fact += Number(item.value);
                 }
             });
@@ -239,12 +219,11 @@
             let input_sabado = document.querySelectorAll('input[data-dia="sabado"]');
             let suma_horas_sabado = 0;
             let suma_horas_sabado_no_fact = 0;
-            input_sabado.forEach(item =>{
+            input_sabado.forEach(item => {
                 let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input')?.checked;
                 if (es_facturable) {
                     suma_horas_sabado += Number(item.value);
-                }
-                else{
+                } else {
                     suma_horas_sabado_no_fact += Number(item.value);
                 }
             });
@@ -255,19 +234,21 @@
             let input_domingo = document.querySelectorAll('input[data-dia="domingo"]');
             let suma_horas_domingo = 0;
             let suma_horas_domingo_no_fact = 0;
-            input_domingo.forEach(item =>{
+            input_domingo.forEach(item => {
                 let es_facturable = item.closest('tr').querySelector('td:nth-child(3) input')?.checked;
                 if (es_facturable) {
                     suma_horas_domingo += Number(item.value);
-                }
-                else{
+                } else {
                     suma_horas_domingo_no_fact += Number(item.value);
                 }
             });
 
-            let total_h_fact = suma_horas_lunes + suma_horas_martes + suma_horas_miercoles + suma_horas_jueves + suma_horas_viernes + suma_horas_sabado + suma_horas_domingo;
+            let total_h_fact = suma_horas_lunes + suma_horas_martes + suma_horas_miercoles + suma_horas_jueves +
+                suma_horas_viernes + suma_horas_sabado + suma_horas_domingo;
 
-            let total_h_no_fact = suma_horas_lunes_no_fact + suma_horas_martes_no_fact + suma_horas_miercoles_no_fact + suma_horas_jueves_no_fact + suma_horas_viernes_no_fact + suma_horas_sabado_no_fact + suma_horas_domingo_no_fact;
+            let total_h_no_fact = suma_horas_lunes_no_fact + suma_horas_martes_no_fact + suma_horas_miercoles_no_fact +
+                suma_horas_jueves_no_fact + suma_horas_viernes_no_fact + suma_horas_sabado_no_fact +
+                suma_horas_domingo_no_fact;
 
             document.getElementById('suma_dia_domingo').innerText = suma_horas_domingo + ' h';
             document.getElementById('suma_dia_domingo_no_fact').innerText = suma_horas_domingo_no_fact + ' h';
@@ -276,21 +257,21 @@
             document.getElementById('total_h_no_facts').innerText = 'Total: ' + total_h_no_fact + ' h';
 
         }
-        Livewire.on('calcularSumatoriasFacturables', ()=>{
+        Livewire.on('calcularSumatoriasFacturables', () => {
             calcularSumatoriasFacturables();
         });
 
         setTimeout(() => {
-        	sumarFilas();
+            sumarFilas();
         }, 1000);
 
-        function sumarFilas(){
-	        let total_horas_filas = 0;
-	        let tota_filas_elemnt = document.querySelectorAll('.total_filas');
-	        tota_filas_elemnt.forEach(item=>{
-	        	total_horas_filas += Number(item.innerHTML.split(' ')[0]);
-	        });
-	        document.getElementById('total_horas_filas').innerText = total_horas_filas + ' h';
+        function sumarFilas() {
+            let total_horas_filas = 0;
+            let tota_filas_elemnt = document.querySelectorAll('.total_filas');
+            tota_filas_elemnt.forEach(item => {
+                total_horas_filas += Number(item.innerHTML.split(' ')[0]);
+            });
+            document.getElementById('total_horas_filas').innerText = total_horas_filas + ' h';
         }
 
         // $('.ingresar_horas').focus(function(){
