@@ -278,7 +278,7 @@ class EmpleadoController extends Controller
             'perfil_empleado_id' => $request->perfil_empleado_id,
             'supervisor_id' => $request->supervisor_id,
             'antiguedad' => $request->antiguedad,
-            'email' => trim(preg_replace('/\s/u', ' ', $request->email)),
+            'email' => removeUnicodeCharacters($request->email),
             'estatus' => 'alta',
             'telefono' => $request->telefono,
             'genero' => $request->genero,
@@ -340,7 +340,7 @@ class EmpleadoController extends Controller
         $generatedPassword = $this->generatePassword();
         $user = User::create([
             'name' => $empleado->name,
-            'email' => $empleado->email,
+            'email' => removeUnicodeCharacters($empleado->email),
             'password' => $generatedPassword['hash'],
             'n_empleado' => $empleado->n_empleado,
             'empleado_id' => $empleado->id,
@@ -351,7 +351,7 @@ class EmpleadoController extends Controller
             User::findOrFail($user->id)->roles()->sync(4);
         }
         //Send email with generated password
-        Mail::to($empleado->email)->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
+        Mail::to(removeUnicodeCharacters($empleado->email))->send(new EnviarCorreoBienvenidaTabantaj($empleado, $generatedPassword['password']));
 
         return $user;
     }
@@ -1142,7 +1142,7 @@ class EmpleadoController extends Controller
             'supervisor_id' => $request->supervisor_id,
             'antiguedad' => $request->antiguedad,
             'estatus' => $request->estatus,
-            'email' => $request->email,
+            'email' => removeUnicodeCharacters($request->email),
             'telefono' => $request->telefono,
             'genero' => $request->genero,
             'estatus' => 'alta',

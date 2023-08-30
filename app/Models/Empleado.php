@@ -194,6 +194,10 @@ class Empleado extends Model implements Auditable
         });
     }
 
+    public function TimesheetProyectoEmpleado(){
+        return $this->hasMany(TimesheetProyectoEmpleado::class, 'empleado_id', 'id');
+    }
+
     public static function getreportesAll()
     {
         return Cache::remember('empleados_reportes_all', 3600 * 24, function () {

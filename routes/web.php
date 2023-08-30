@@ -35,7 +35,7 @@ Auth::routes();
 // Tabla-Calendario
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'active']], function () {
-
+    Route::get('/', 'InicioUsuarioController@index')->name('inicio-Usuario.index');
     //log-viewer
     Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
     // Users
@@ -602,7 +602,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
         Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
 
-        Route::get('/', 'HomeController@index')->name('home');
+        // Route::get('/', 'HomeController@index')->name('home');
         // Permissions
         Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
         Route::resource('permissions', 'PermissionsController');

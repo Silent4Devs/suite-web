@@ -318,7 +318,7 @@
                                             </a>
                                             <strong class="text-danger text-center" style="position:absolute; top:20px; left: 0; width: 100%;">Necesaria fecha de inicio del timesheet</strong>
                                         </li>
-                                    @endif                                    
+                                    @endif
                                 @endcan
                             </ul>
                         </div>
@@ -436,7 +436,7 @@
                 </div>
                 <div class="col-12 form-group">
                     <label>Establecer limite de semanas que el colaborador puede adelantar</label>
-                    <input id="semanas_adicionales" class="form-control" type="number" name="semanas_adicionales" value="{{ $organizacion->semanas_adicionales }}" min="0" max="12">                
+                    <input id="semanas_adicionales" class="form-control" type="number" name="semanas_adicionales" value="{{ $organizacion->semanas_adicionales }}" min="0" max="12">
                 </div>
                 <div class="form-group col-12">
                     <label>Seleccione el día de inicio de la jornada laboral</label>
@@ -503,7 +503,7 @@
                             Domingo
                         </option>
                     </select>
-                </div>               
+                </div>
                 <div class="col-12 text-right">
                     <div type="button" class="btn btn_cancelar" data-dismiss="modal">Cancelar</div>
                     <button class="btn btn-success">Guardar</button>

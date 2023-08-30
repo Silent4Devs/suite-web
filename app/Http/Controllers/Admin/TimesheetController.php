@@ -284,7 +284,7 @@ class TimesheetController extends Controller
 
             try {
                 // Enviar correo
-                Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
+                Mail::to(removeUnicodeCharacters($aprobador->email))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_nuevo, $solicitante));
             } catch (Throwable $e) {
                 report($e);
 
@@ -507,7 +507,7 @@ class TimesheetController extends Controller
 
             try {
                 // Enviar correo
-                Mail::to($aprobador->email)->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
+                Mail::to(removeUnicodeCharacters($aprobador->email))->send(new TimesheetHorasSolicitudAprobacion($aprobador, $timesheet_edit, $solicitante));
             } catch (Throwable $e) {
                 report($e);
 
@@ -831,7 +831,7 @@ class TimesheetController extends Controller
 
         try {
             // Enviar correo
-            Mail::to($solicitante->email)->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
+            Mail::to(removeUnicodeCharacters($solicitante->email))->send(new TimesheetSolicitudAprobada($aprobador, $aprobar, $solicitante));
         } catch (Throwable $e) {
             report($e);
 
@@ -856,7 +856,7 @@ class TimesheetController extends Controller
 
         try {
             // Enviar correo
-            Mail::to($solicitante->email)->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
+            Mail::to(removeUnicodeCharacters($solicitante->email))->send(new TimesheetSolicitudRechazada($aprobador, $rechazar, $solicitante));
         } catch (Throwable $e) {
             report($e);
 
@@ -958,7 +958,9 @@ class TimesheetController extends Controller
 
         return view('admin.timesheet.reportes', compact(
             // 'clientes', 'proyectos', 'tareas',
-            'logo_actual', 'empresa_actual'));
+            'logo_actual',
+            'empresa_actual'
+        ));
     }
 
     public function reportesRegistros()
@@ -1073,10 +1075,10 @@ class TimesheetController extends Controller
         // dd("Si llega a la funcion");
         $verificacion_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->exists();
         // dd($emp_proyectos);
-        if ($verificacion_proyectos === false) {
-            return null;
-        } else {
+        if ($verificacion_proyectos) {
             $emp_proyectos = TimesheetProyectoEmpleado::where('empleado_id', '=', $id)->with('empleado', 'proyecto')->get();
+        } else {
+            return null;
         }
 
         foreach ($emp_proyectos as $ep) {
@@ -1099,15 +1101,16 @@ class TimesheetController extends Controller
             if ($ep->proyecto->tipo === 'Externo') {
                 if ($tot_horas_proyecto > $ep->horas_asignadas) {
                     // if($ep->correo_enviado == false){
+                    $empleado_query = Empleado::select('id', 'name', 'email', 'foto')->get();
 
-                    $aprobador = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->supervisor_id);
+                    $aprobador = $empleado_query->find(auth()->user()->empleado->supervisor_id);
 
-                    $empleado = Empleado::select('id', 'name', 'email', 'foto')->find(auth()->user()->empleado->id);
+                    $empleado = $empleado_query->find(auth()->user()->empleado->id);
                     //Se comentaron los correos a quienes se les enviara al final
                     // Mail::to(['marco.luna@silent4business.com', 'eugenia.gomez@silent4business.com', $aprobador->email, $empleado->email])
                     try {
                         // Enviar correo
-                        Mail::to('marco.luna@silent4business.com')
+                        Mail::to(removeUnicodeCharacters('marco.luna@silent4business.com'))
                             ->send(new TimesheetHorasSobrepasadas($ep->empleado->name, $ep->proyecto->proyecto, $tot_horas_proyecto, $ep->horas_asignadas));
                     } catch (Throwable $e) {
                         report($e);
