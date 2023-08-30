@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\ContractManager;
 
 use App\Models\ContractManager\Contrato;
 use App\Models\Factura;

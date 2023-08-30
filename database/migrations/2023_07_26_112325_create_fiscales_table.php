@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('fiscales', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('persona_fiscal')->nullable();
             $table->timestamps();
         });

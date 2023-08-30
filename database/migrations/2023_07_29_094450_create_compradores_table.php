@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('compradores', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('nombre')->nullable();
             $table->string('clave')->nullable();
             $table->string('estado')->nullable();

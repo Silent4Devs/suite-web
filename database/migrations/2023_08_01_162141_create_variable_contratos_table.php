@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('variables_contratos', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
 
             $table->unsignedBigInteger('generar_contrato_id')->nullable();
             // $table->foreign('generar_contrato_id')->references('id')->on('generar_contrato');

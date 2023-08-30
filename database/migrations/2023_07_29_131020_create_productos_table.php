@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('productos', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->longText('descripcion')->nullable();
             $table->boolean('archivo')->default(false);
             $table->string('clave')->nullable();

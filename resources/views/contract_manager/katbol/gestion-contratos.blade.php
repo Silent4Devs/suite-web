@@ -17,7 +17,7 @@
                 </a></li>
         @endcan
         {{-- @can('partes_interesadas_acceder') --}}
-            {{-- <li><a href="{{ route('contract_manager.dashb') }}">
+        {{-- <li><a href="{{ route('contract_manager.dashb') }}">
                     <div>
                         <i class="bi bi-layout-wtf"></i><br>
                         Dashboard
@@ -25,7 +25,7 @@
                 </a></li> --}}
         {{-- @endcan --}}
         @can('calendario_corporativo_acceder')
-            <li><a href="{{ route('admin.calendario.index') }}">
+            <li><a href="{{ route('admin.systemCalendar') }}">
                     <div>
                         <i class="fa-solid fa-calendar-day"></i><br>
                         Calendario

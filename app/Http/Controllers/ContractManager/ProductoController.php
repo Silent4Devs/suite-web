@@ -35,7 +35,7 @@ class ProductoController extends Controller
 
     public function getProductosIndex()
     {
-        $query = Producto::select('id', 'clave', 'descripcion')->where('archivo', false)->get();
+        $query = Producto::select('id', 'clave', 'descripcion')->where('archivo', false)->get()->sortBy('clave');
 
         return datatables()->of($query)->toJson();
     }

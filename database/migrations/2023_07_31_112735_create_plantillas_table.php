@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('plantillas', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('nom_plantilla');
             $table->longText('contenido');
             $table->json('variables_utilizadas')->nullable();

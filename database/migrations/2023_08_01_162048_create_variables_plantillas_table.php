@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('variables_plantillas', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('nombre');
             $table->longText('descripcion');
             $table->string('tipo');

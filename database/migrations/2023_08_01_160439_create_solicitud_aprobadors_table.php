@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('solicitudes_aprobadores', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('estatus')->nullable();
             $table->unsignedBigInteger('solicitud_id')->nullable();
             // $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onUpdate('cascade')->onDelete('cascade');

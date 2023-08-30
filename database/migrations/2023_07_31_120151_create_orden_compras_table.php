@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orden_compras', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->date('fecha')->nullable();
             $table->date('fecha_entrega')->nullable();
             $table->boolean('fecha_pago')->nullable();

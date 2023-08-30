@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('convenios_modificatorios_files', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('convenios_file')->nullable();
             $table->unsignedInteger('convenios_modificatorios_id');
             $table->timestamps();

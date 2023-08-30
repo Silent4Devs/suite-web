@@ -350,7 +350,7 @@ class ContratosController extends AppBaseController
         // notify()->success('¡El registro fue cargado exitosamente!');
 
         //return redirect(route('contratos.index'));
-        return redirect('admin/contratos-katbol/contratoinsert/'.$contrato->id);
+        return redirect('contract_manager/contratos-katbol/contratoinsert/'.$contrato->id);
     }
 
     /**

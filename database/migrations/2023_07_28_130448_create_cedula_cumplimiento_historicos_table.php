@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('cedula_cumplimiento_historico', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('contrato_id')->nullable();
             $table->string('elaboro')->nullable();
             $table->string('reviso')->nullable();

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('productos_requisicion', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->longText('espesificaciones');
             $table->integer('cantidad');
             //foreign
