@@ -64,18 +64,36 @@ class DatabaseSeeder extends Seeder
                 // VacacionesPermisosSeeder::class,
                 // PermisosBIASeeder::class,
                 // AjustesAIASeeder::class,
-                VersionIsoHistoricoSeeder::class,
-                GapUnoCatalogoIsoSeeder::class,
-                GapTresCatalogoIsoSeeder::class,
-                ClasificacionSeeder::class,
-                GapDosCatalogoIsoSeeder::class,
-                Declaracion_aplicabilidad_concentrado_Seeder::class,
-                Declaracion_aplicabilidad_responsable_Seeder::class,
-                Declaracion_aplicabilidad_aprobador_Seeder::class,
-                PermissionVersionesIso::class,
-                PermissionsAgregarEmpExtProyectos::class,
-                PermisosDashboardTimesheet::class,
-                PermisosTimesheetAdministrador::class,
+                // VersionIsoHistoricoSeeder::class,
+                // GapUnoCatalogoIsoSeeder::class,
+                // GapTresCatalogoIsoSeeder::class,
+                // ClasificacionSeeder::class,
+                // GapDosCatalogoIsoSeeder::class,
+                // Declaracion_aplicabilidad_concentrado_Seeder::class,
+                // Declaracion_aplicabilidad_responsable_Seeder::class,
+                // Declaracion_aplicabilidad_aprobador_Seeder::class,
+                // PermissionVersionesIso::class,
+                // PermissionsAgregarEmpExtProyectos::class,
+                // PermisosDashboardTimesheet::class,
+                // PermisosTimesheetAdministrador::class,
+
+
+
+                //Katbol
+                CentroCostosTableSeeder::class,
+                CompradoresTableSeeder::class,
+                ProductosTableSeeder::class,
+                ProveedorOCSTableSeeder::class,
+                SucursalesTableSeeder::class,
+                // FacturacionTableSeeder::class,
+                // ProveedoresTableSeeder::class,
+                ContratosTableSeeder::class,
+                // ConveniosModificatoriosTableSeeder::class,
+                // EntregasMensualesTableSeeder::class,
+                // CierreContratosTableSeeder::class,
+                PermisosKatbol::class,
+
+
             ]
         );
     }
