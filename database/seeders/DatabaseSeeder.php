@@ -91,6 +91,7 @@ class DatabaseSeeder extends Seeder
                 // ConveniosModificatoriosTableSeeder::class,
                 // EntregasMensualesTableSeeder::class,
                 // CierreContratosTableSeeder::class,
+                PermisosKatbol::class,
 
 
             ]

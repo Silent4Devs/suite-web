@@ -73,7 +73,7 @@ class FacturaController extends Controller
         $facturafile->save();
 
         //dd($factura, $facturafile, $nombrep, $nombrex);
-        notify()->success('¡Se ha registrado satisfactoriamente el contrato!');
+        // notify()->success('¡Se ha registrado satisfactoriamente el contrato!');
 
         return redirect(route('contratos.create'));
     }

@@ -146,7 +146,7 @@
                         <td>{{ $factura->no_factura }}</td>
                         <td>
                             <i class="fas fa-calendar-alt"></i>
-                            {{ $factura->fecha_recepcion ? date('d-m-Y', strtotime($factura->fecha_recepcion)) : ''}}
+                            {{ $factura->fecha_recepcion ? date('d-m-Y', strtotime($factura->fecha_recepcion)) : '' }}
                         </td>
                         <td>
                             <i class="fas fa-calendar-alt"></i>
@@ -175,8 +175,8 @@
                         </td>
                         <td style="text-align: center">
                             @if ($factura->xml == null)
-                            -
-                                @else
+                                -
+                            @else
                                 <a wire:click="exportXml({{ $factura->id }})"
                                     class="btn-floating teal waves-effect waves-light red"><i
                                         class="material-icons">file_download</i></a>
@@ -185,7 +185,7 @@
                         <td style="text-align: center">
                             @if ($factura->pdf == null)
                                 -
-                                @else
+                            @else
                                 <a wire:click="exportPdf({{ $factura->id }})"
                                     class="btn-floating deep-purple waves-effect waves-light red"><i
                                         class="material-icons">file_download</i></a>
@@ -200,7 +200,7 @@
                                 </a>
                             </td>
                             <td>
-                                <button wire:click="$emit('triggerDeleteFactura',{{ $factura->id}})"
+                                <button wire:click="$emit('triggerDeleteFactura',{{ $factura->id }})"
                                     class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>
@@ -213,7 +213,8 @@
     @else
         @if ($search != null || $search != '')
             <br>
-            <div style="background-color: #f8f8f8;padding: 15px;
+            <div
+                style="background-color: #f8f8f8;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: rgb(0, 0, 0);
@@ -223,7 +224,8 @@
             </div>
         @else
             <br>
-            <div style="background-color: #f8f8f8;padding: 15px;
+            <div
+                style="background-color: #f8f8f8;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: rgb(0, 0, 0);
@@ -236,9 +238,9 @@
 
 </div>
 <br>
-{{-- {{ $facturas->links() }} --}}
+{{ $facturas->links() }}
 <script>
-    document.addEventListener("DOMContentLoaded",()=>{
+    document.addEventListener("DOMContentLoaded", () => {
         $('.select_pagination').change(function(e) {
             e.preventDefault();
             @this.set('pagination', e.target.value);
@@ -247,7 +249,8 @@
     window.addEventListener('paginadorFacturas', function(e) {
         $('.select_pagination').formSelect();
     });
-    document.addEventListener('confirmDeleteEventFactura', function(e) {;
+    document.addEventListener('confirmDeleteEventFactura', function(e) {
+        ;
         Swal.fire({
             title: '¿Esta seguro que desea eliminar la factura?',
             icon: 'warning',

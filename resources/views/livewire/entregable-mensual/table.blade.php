@@ -1,4 +1,3 @@
-
 <div class="row" style="margin: 0;">
     <div class="col l6">
         <label for="search"><i class="fas fa-search"></i> Busca por nombre o descripción del entregable</label>
@@ -36,7 +35,8 @@
                             @endfor
                         </p>
                     </th>
-                    <th style="cursor: pointer; vertical-align: top; min-width: 500px !important;" wire:click="order('descripcion')">
+                    <th style="cursor: pointer; vertical-align: top; min-width: 500px !important;"
+                        wire:click="order('descripcion')">
                         <p class="grey-text letra-ngt">Descripción&nbsp;@for ($i = 0; $i < 60; $i++)
                                 &nbsp;
                             @endfor
@@ -57,7 +57,8 @@
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('cumplimiento')">
                         <p class="grey-text letra-ngt">Cumplimiento</p>
                     </th>
-                    <th style="cursor: pointer; vertical-align: top; min-width: 300px !important;" wire:click="order('observaciones')">
+                    <th style="cursor: pointer; vertical-align: top; min-width: 300px !important;"
+                        wire:click="order('observaciones')">
                         <p class="grey-text letra-ngt">Observaciones&nbsp;@for ($i = 0; $i < 60; $i++)
                                 &nbsp;
                             @endfor
@@ -114,7 +115,7 @@
                                 <p style="text-align:center">{{ $em->factura->no_factura }}</p>
                             @endif
                         </td>
-                        <td class="alineacion" >
+                        <td class="alineacion">
                             @if ($em->cumplimiento)
                                 <i class="material-icons green-text">check</i>
                             @else
@@ -124,8 +125,8 @@
                         <td class="alineacion">{{ $em->observaciones }}</td>
                         <td style="text-align:center">
                             @if ($em->pdf == null)
-                                    -
-                                @else
+                                -
+                            @else
                                 <a wire:click="exportPdf({{ $em->entregable_id }})"
                                     class="btn-floating teal waves-effect waves-light red"><i
                                         class="material-icons">file_download</i></a>
@@ -157,7 +158,7 @@
                                 </a>
                             </td>
                             <td class="alineacion">
-                                <button wire:click="$emit('triggerDeleteEntregable',{{ $em->entregable_id}})"
+                                <button wire:click="$emit('triggerDeleteEntregable',{{ $em->entregable_id }})"
                                     class="btn red">
                                     <i class="material-icons">delete</i>
                                 </button>
@@ -170,7 +171,8 @@
     @else
         @if ($search != null || $search != '')
             <br>
-            <div style="background-color: #f8f8f8;padding: 15px;
+            <div
+                style="background-color: #f8f8f8;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: rgb(0, 0, 0);
@@ -180,7 +182,8 @@
             </div>
         @else
             <br>
-            <div style="background-color: #f8f8f8;padding: 15px;
+            <div
+                style="background-color: #f8f8f8;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: rgb(0, 0, 0);
@@ -191,7 +194,7 @@
         @endif
     @endif
 </div>
-{{-- {{ $entregamensuales->links('pagination-materializecss') }} --}}
+{{ $entregamensuales->links() }}
 
 
 <script>

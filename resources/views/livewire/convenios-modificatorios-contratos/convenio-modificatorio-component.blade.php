@@ -1,5 +1,4 @@
 <div>
-    <h1>Convenios Modificatorios</h1>
     <div>
         @include('livewire.convenios-modificatorios-contratos.table')
     </div>

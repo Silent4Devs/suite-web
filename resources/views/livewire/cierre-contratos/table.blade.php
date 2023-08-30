@@ -53,7 +53,9 @@
                     </th>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('observaciones')">
                         <p class="grey-text letra-ngt">
-                            @for ($i = 0; $i < 10; $i++)&nbsp;@endfor
+                            @for ($i = 0; $i < 10; $i++)
+                                &nbsp;
+                            @endfor
                             &nbsp;Observaciones
                         </p>
                         @if ($sort == 'observaciones')
@@ -109,7 +111,8 @@
     @else
         @if ($search != null || $search != '')
             <br>
-            <div style="background-color: #f8f8f8;padding: 15px;
+            <div
+                style="background-color: #f8f8f8;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: rgb(0, 0, 0);
@@ -119,7 +122,8 @@
             </div>
         @else
             <br>
-            <div style="background-color: #f8f8f8;padding: 15px;
+            <div
+                style="background-color: #f8f8f8;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: rgb(0, 0, 0);
@@ -131,7 +135,7 @@
     @endif
 
 </div>
-{{-- {{ $cierrecontratos->links('pagination-materializecss') }} --}}
+{{-- {{ $cierrecontratos->links() }} --}}
 <script>
     $(document).ready(function() {
         $('.select_pagination_cierre_contrato').change(function(e) {
@@ -158,5 +162,4 @@
         })
 
     });
-
 </script>
