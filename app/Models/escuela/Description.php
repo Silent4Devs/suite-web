@@ -13,6 +13,12 @@ class Description extends Model
 
     protected $guarded = ['id'];
 
+    protected $fillable = [
+        // 'course_id',
+        'name',
+
+    ];
+
     //relacion uno a uno inversa
 
     public function lesson()

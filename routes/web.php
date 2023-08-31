@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
+use App\Http\Livewire\Escuela\CourseStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -1364,8 +1365,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Escuela cursos instructor
     Route::resource('courses', 'Escuela\Instructor\CourseController');
 
-    Route::get('curso-estudiante', 'CursoEstudiante@index')->name('curso-estudiante');
+    Route::get('curso-estudiante/{course}', 'CursoEstudiante@cursoEstudiante')->name('curso-estudiante');
     Route::get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
+    Route::get('curso-estudiante/{course}/evaluacion/{evaluation}', 'CursoEstudiante@evaluacionEstudiante')->name('curso.evaluacion');
     // Route::get('courses/{course}/curriculum', '\App\Http\Livewire\Escuela\Instructor\CoursesCurriculum'  )->name('courses.curriculum');
     // Route::get('courses/{course}/curriculum', 'Escuela\Instructor\CourseCurriculumController@show')->name('courses.curriculum');
     // Route::get('courses/{course}/goals', 'Escuela\Instructor\CourseController@goals')->name('courses.goals');
@@ -1373,7 +1375,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Route::get('courses/{course}/evaluation', 'Escuela\Instructor\EvaluacionesInstructor')->name('courses.evaluation');
     // Route::post('courses/{course}/status', 'Escuela\Instructor\CourseController@status')->name('courses.status');
     Route::get('courses/{course}/evaluation/{evaluation}', 'Escuela\Instructor\CourseQuestionController@index')->name('courses.evaluation.questions');
-    // Route::get('courses/{course}/quizdetail', 'Escuela\Instructor\TableQuizDetails')->name('courses.quizdetails');
+    Route::get('courses/{course}/evaluacion/{evaluation}/quizdetail', 'CursoEstudiante@tableQuizDetails')->name('courses.quizdetails');
     //categorias para el administrador de escuela
     Route::resource('categories', 'Escuela\Admin\CategoryController');
     Route::resource('levels', 'Escuela\Admin\LevelController');

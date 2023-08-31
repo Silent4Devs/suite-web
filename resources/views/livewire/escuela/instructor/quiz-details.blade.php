@@ -106,7 +106,7 @@
                                 @php
                                     $correctAnswer = $question->answers
                                         ->filter(function ($item) {
-                                            return $item->is_correct == '1';
+                                            return $item->is_correct == 'true';
                                         })
                                         ->first();
                                     

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Escuela;
 
-use App\Models\Course;
-use App\Models\Evaluation;
-use App\Models\Instructor\Answer;
-use App\Models\Instructor\Question;
-use App\Models\Instructor\UserAnswer;
-use App\Models\UserEvaluation;
+use App\Models\Escuela\Course;
+use App\Models\Escuela\Evaluation;
+use App\Models\Escuela\Instructor\Answer;
+use App\Models\Escuela\Instructor\Question;
+use App\Models\Escuela\Instructor\UserAnswer;
+use App\Models\Escuela\UserEvaluation;
 use Livewire\Component;
 
 class AnswerEvaluationUser extends Component
@@ -32,22 +32,23 @@ class AnswerEvaluationUser extends Component
     public $correctQuestions;
     public $percentageEvaluationUser;
 
-    protected $rules=[
-        'answer'=>'required'
+    protected $rules = [
+        'answer' => 'required'
     ];
 
-    protected $messages=[
-        'answer.required'=>'La respuesta es obligatoria'
+    protected $messages = [
+        'answer.required' => 'La respuesta es obligatoria'
     ];
 
-    public function mount(Course $course, Evaluation $evaluation)
+    public function mount($course_id, $evaluacion_id)
     {
-        $this->course = $course;
+        $this->course = Course::find($course_id);
+        $evaluation = Evaluation::find($evaluacion_id);
         $this->getEvaluation($evaluation);
         $this->totalQuizQuestions = count($this->evaluation->questions);
         $this->startQuiz();
-        $this->answeredQuestions=UserAnswer::where('evaluation_id',$this->evaluation->id)->where('user_id',auth()->id())->pluck('question_id')->toArray();
-        $this->count=count($this->answeredQuestions)+1;
+        $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', auth()->id())->pluck('question_id')->toArray();
+        $this->count = count($this->answeredQuestions) + 1;
     }
 
     public function getNextQuestion()
@@ -55,8 +56,8 @@ class AnswerEvaluationUser extends Component
         //Return a random question from the section selected by the user for quiz.
         // disabled because having issues with shuffle, it works but in a wierd way.
 
-       
-        $this->answeredQuestions=UserAnswer::where('evaluation_id',$this->evaluation->id)->where('user_id',auth()->id())->pluck('question_id')->toArray();
+
+        $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', auth()->id())->pluck('question_id')->toArray();
 
         $question = Question::where('evaluation_id', $this->evaluation->id)
             ->whereNotIn('id', $this->answeredQuestions)
@@ -111,12 +112,11 @@ class AnswerEvaluationUser extends Component
 
     public function showResults()
     {
-        
-        $this->showResults= true;
-        $this->correctQuestions = UserAnswer::Questions($this->evaluation->id)->where('is_correct' ,true)->count();
-        $totalQuestions=$this->totalQuizQuestions==0?1:$this->totalQuizQuestions;
-        $this->percentage=($this->correctQuestions*100)/$totalQuestions;
 
+        $this->showResults = true;
+        $this->correctQuestions = UserAnswer::Questions($this->evaluation->id)->where('is_correct', true)->count();
+        $totalQuestions = $this->totalQuizQuestions == 0 ? 1 : $this->totalQuizQuestions;
+        $this->percentage = ($this->correctQuestions * 100) / $totalQuestions;
     }
 
     public function nextQuestion()
@@ -125,7 +125,7 @@ class AnswerEvaluationUser extends Component
         // Push all the question ids to quiz_header table to retreve them while displaying the quiz details
         $this->questionsTaken = UserAnswer::Questions($this->evaluation->id)->get();
         $choicesCorrect = Answer::where('question_id', $this->currentQuestion->id)->where('is_correct', true)->pluck('id')->toArray();
-    
+
         $isChoiceCorrect = !in_array($this->answer, $choicesCorrect);
         // Insert the current question_id, answer_id and whether it is correnct or wrong to quiz table.
         UserAnswer::create([
@@ -155,8 +155,6 @@ class AnswerEvaluationUser extends Component
 
         // Get a random questoin
         $this->currentQuestion = $this->getNextQuestion();
-       
-
     }
 
     public function getEvaluation($evaluation)
@@ -166,8 +164,8 @@ class AnswerEvaluationUser extends Component
 
     public function render()
     {
-      
 
-        return view('livewire.answer-evaluation-user');
+
+        return view('livewire.escuela.answer-evaluation-user');
     }
 }
