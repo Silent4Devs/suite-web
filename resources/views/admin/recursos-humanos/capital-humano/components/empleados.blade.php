@@ -201,7 +201,7 @@
                         </a>
                     </li>
 
-                    <li><a href="{{ route('admin.categories.index') }}">
+                    <li><a href="{{ route('admin.dashboardescuela.index') }}">
                             <div>
                                 <i class="fa-solid fa-chart-pie"></i>
                                 <br>
