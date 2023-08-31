@@ -1383,7 +1383,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //categorias para el administrador de escuela
     Route::resource('categories', 'Escuela\Admin\CategoryController');
     Route::resource('levels', 'Escuela\Admin\LevelController');
-    Route::resource('home', 'Escuela\Admin\HomeController');
+    Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
     /*Route::resource('prices', PriceController::class)->names('prices');
     Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
     Route::get('courses/{course}', [CourseController::class, 'show'])->name('courses.show');
@@ -1592,5 +1592,4 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::post('orden-compra/rechazada/{id}', 'OrdenCompraController@rechazada')->name('orden-compra.rechazada');
     Route::get('orden-compra/firmar/{tipo_firma}/{id}', 'OrdenCompraController@firmar')->name('orden-compra.firmar');
     Route::post('orden-compra/firma-update/{tipo_firma}/{id}', 'OrdenCompraController@FirmarUpdate')->name('orden-compra.firmar-update');
-
 });
