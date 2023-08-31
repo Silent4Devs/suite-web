@@ -1,0 +1,10 @@
+<svg id="Componente_101_1" data-name="Componente 101 – 1" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 70 70">
+  <g id="corporate_fare_black_24dp" transform="translate(7.315 7.621)">
+    <rect id="Rectángulo_675" data-name="Rectángulo 675" width="56" height="55" transform="translate(-0.315 0.379)" fill="none"/>
+    <path id="Trazado_1381" data-name="Trazado 1381" d="M24.842,12.137V3H2V44.116H47.685V12.137ZM20.274,39.548H6.568V34.979H20.274Zm0-9.137H6.568V25.842H20.274Zm0-9.137H6.568V16.705H20.274Zm0-9.137H6.568V7.568H20.274ZM43.116,39.548H24.842V16.705H43.116ZM38.548,21.274H29.411v4.568h9.137Zm0,9.137H29.411v4.568h9.137Z" transform="translate(2.568 3.853)" fill="#2395aa"/>
+  </g>
+  <g id="Rectángulo_680" data-name="Rectángulo 680" fill="none" stroke="#2395aa" stroke-width="4">
+    <rect width="70" height="70" rx="6" stroke="none"/>
+    <rect x="2" y="2" width="66" height="66" rx="4" fill="none"/>
+  </g>
+</svg>

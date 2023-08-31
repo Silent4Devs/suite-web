@@ -42,11 +42,13 @@ class TimesheetHorasCreateCopia extends Component
         $this->timesheet = Timesheet::find($this->timesheet_id);
     }
 
-    public function removerFila($id)
+    public function removerFila($id, $tr)
     {
         if ($id != null) {
             $this->horas_excluidas[] = $id;
             $this->horas = $this->horas->except($this->horas_excluidas);
+
+            $this->emit('removeTr', $tr);
         }
         $this->emit('calcularSumatoriasFacturables');
     }
