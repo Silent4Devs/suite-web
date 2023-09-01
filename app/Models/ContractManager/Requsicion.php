@@ -75,23 +75,23 @@ class Requsicion extends Model
     //relacion-contrato
     public function contrato()
     {
-      return $this->hasOne(Contrato::class, 'id', 'contrato_id');
+        return $this->hasOne(Contrato::class, 'id', 'contrato_id');
     }
     //relacion-comprador
     public function comprador()
     {
-      return $this->hasOne(Comprador::class, 'id', 'comprador_id');
+        return $this->hasOne(Comprador::class, 'id', 'comprador_id');
     }
     //relacion-sucursal
     public function sucursal()
     {
-      return $this->hasOne(Sucursal::class, 'id', 'sucursal_id');
+        return $this->hasOne(Sucursal::class, 'id', 'sucursal_id');
     }
-     //relacion-productos_requisiciones
-     public function productos_requisiciones()
-     {
-       return $this->hasMany(ProductoRequisicion::class, 'requisiciones_id', 'id');
-     }
+    //relacion-productos_requisiciones
+    public function productos_requisiciones()
+    {
+        return $this->hasMany(ProductoRequisicion::class, 'requisiciones_id', 'id');
+    }
 
     //relacion-provedores_requisiciones
     public function provedores_requisiciones()
@@ -123,10 +123,10 @@ class Requsicion extends Model
         $parte1 = floor($numero / 10000) % 100;
         $parte2 = $numero % 10000;
 
-        if($this->estado == 'firmada'){
-          $tipo = 'OC-';
-        }else{
-          $tipo = 'RQ-';
+        if ($this->estado == 'firmada' || $this->estado_orden == 'rechazado_oc' || $this->estado_orden == 'curso' || $this->estado_orden == 'fin') {
+            $tipo = 'OC-';
+        } else {
+            $tipo = 'RQ-';
         }
 
         $codigo = $tipo . sprintf('%02d-%04d', $parte1, $parte2);

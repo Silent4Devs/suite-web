@@ -1,7 +1,7 @@
 @can('administracion_sistema_gestion_contratos_acceder')
     <ul class="mt-4">
         @can('katbol_ordenes_compra_acceso')
-            <li><a href="{{ route('contract_manager.contratos-katbol.index') }}">
+            <li><a href="{{ route('contract_manager.orden-compra') }}">
                     <div>
                         <i class="fa-solid fa-file-invoice"></i>
                         Ordenes de Compra

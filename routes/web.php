@@ -1548,6 +1548,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     //requisiciones
     Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
     Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
+    Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
     Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
     Route::get('requisiciones/edit/{id}', 'RequisicionesController@edit')->name('requisiciones.edit');
     Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
@@ -1565,10 +1566,10 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::post('orden-compra/list/get', 'OrdenCompraController@getRequisicionIndex')->name('orden-compra.getRequisicionIndex');
     Route::get('orden-compra/{id}/edit', 'OrdenCompraController@edit')->name('orden-compra.edit');
     Route::post('orden-compra/update/{id}', 'OrdenCompraController@update')->name('orden-compra.update');
+    Route::post('orden-compra/destroy/{id}', 'OrdenCompraController@destroy')->name('orden-compra.destroy');
     Route::get('orden-compra/show/{id}', 'OrdenCompraController@show')->name('orden-compra.show');
     Route::post('orden-compra/pdf/{id}', 'OrdenCompraController@pdf')->name('orden-compra.pdf');
     Route::post('orden-compra/rechazada/{id}', 'OrdenCompraController@rechazada')->name('orden-compra.rechazada');
     Route::get('orden-compra/firmar/{tipo_firma}/{id}', 'OrdenCompraController@firmar')->name('orden-compra.firmar');
     Route::post('orden-compra/firma-update/{tipo_firma}/{id}', 'OrdenCompraController@FirmarUpdate')->name('orden-compra.firmar-update');
-
 });

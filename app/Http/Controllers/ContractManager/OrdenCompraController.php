@@ -37,8 +37,8 @@ class OrdenCompraController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('katbol_ordenes_compra_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $requisiciones =  KatbolRequsicion::with('productos_requisiciones.producto', 'contrato')->where('estado', 'firmada')->Orwhere('estado_orden', 'rechazado_oc')->Orwhere('estado_orden', 'curso')->Orwhere('estado_orden', 'fin')->orderByDesc('id')->get();
+        $user = Auth::user();
+
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {
             $organizacion_actual = new Organizacion();
@@ -47,17 +47,35 @@ class OrdenCompraController extends Controller
         }
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
-
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
-        $requisiciones_id = KatbolRequsicion::get()->pluck('id');
-        $ids = [];
+        if ($user->roles()->first()->name  === 'Admin') {
+            $all_requisiciones = KatbolRequsicion::where('estado', 'firmada')
+                ->where('archivo', false)
+                ->Orwhere('estado_orden', 'rechazado_oc')
+                ->Orwhere('estado_orden', 'curso')
+                ->Orwhere('estado_orden', 'fin')
+                ->orderByDesc('id')
+                ->get();
 
-        foreach ($requisiciones_id as $id) {
-            $ids =  $id;
+            return view('contract_manager.ordenes-compra.index', compact('all_requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
+        } else {
+            $comprador = KatbolComprador::where('id_user', $user->empleado_tabantaj_id)->first();
+            $id = 0;
+            if ($comprador) {
+                $id = $comprador->id;
+            }
+            $requisiciones = KatbolRequsicion::where('estado', 'firmada')
+                ->where('archivo', false)
+                ->where('comprador_id', $id)
+                ->Orwhere('estado_orden', 'rechazado_oc')
+                ->Orwhere('estado_orden', 'curso')
+                ->Orwhere('estado_orden', 'fin')
+                ->orderByDesc('id')
+                ->get();
+
+            return view('contract_manager.ordenes-compra.index_solicitante', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
         }
-
-        return view('contract_manager.ordenes-compra.index', compact('ids', 'requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
     }
 
     public function getRequisicionIndex(Request $request)
@@ -134,13 +152,13 @@ class OrdenCompraController extends Controller
     public function update(Request $request, $id)
     {
         $requisicion = KatbolRequsicion::find($id);
+
         $requisicion->update([
             'fecha_entrega' => $request->fecha_entrega,
             'pago' => $request->pago,
             'dias_credito' => $request->dias_credito,
             'moneda' => $request->moneda,
             'cambio' => $request->cambio,
-
             'proveedor_id' => $request->proveedor_id,
             'direccion_envio_proveedor' => $request->direccion_envio,
             'credito_proveedor' => $request->credito_proveedor,
@@ -198,7 +216,11 @@ class OrdenCompraController extends Controller
      */
     public function destroy($id)
     {
-        //
+        KatbolRequsicion::destroy($id);
+
+        notify()->success('¡El registro fue eliminado exitosamente!');
+
+        return redirect(route('contract_manager.orden-compra'));
     }
 
     public function firmar($tipo_firma, $id)
@@ -218,55 +240,50 @@ class OrdenCompraController extends Controller
 
     public function FirmarUpdate(Request $request, $tipo_firma, $id)
     {
+        $request->validate([
+            'firma' => 'required',
+        ]);
 
-        try {
-            $request->validate([
-                'firma' => 'required',
-            ]);
+        $requisicion = KatbolRequsicion::find($id);
 
-            $requisicion = KatbolRequsicion::find($id);
+        $requisicion->update([
+            $tipo_firma => $request->firma,
+            'estado_orden' => 'curso',
+        ]);
+
+        if ($tipo_firma == 'firma_solicitante_orden') {
+
+            $fecha =  date('d-m-Y');
+            $requisicion->fecha_firma_solicitante_orden =  $fecha;
+            $requisicion->save();
+
+            $user =  'lourdes.abadia@silent4business.com';
+            $userEmail = $user;
+        }
+        if ($tipo_firma == 'firma_comprador_orden') {
+            $fecha =  date('d-m-Y');
+            $requisicion->fecha_firma_comprador_orden =  $fecha;
+            $requisicion->save();
+
+            // correo de finanzas
+            $userEmail = $requisicion->email;
+        }
+        if ($tipo_firma == 'firma_finanzas_orden') {
+            $fecha =  date('d-m-Y');
+            $requisicion->fecha_firma_finanzas_orden =  $fecha;
+            $requisicion->save();
 
             $requisicion->update([
-                $tipo_firma => $request->firma,
-                'estado_orden' => 'curso',
+                'estado' => 'firmada_final',
+                'estado_orden' => 'fin',
             ]);
 
-            if ($tipo_firma == 'firma_solicitante_orden') {
-
-                $fecha =  date('d-m-Y');
-                $requisicion->fecha_firma_solicitante_orden =  $fecha;
-                $requisicion->save();
-
-                $user =  'lourdes.abadia@silent4business.com';
-                $userEmail = $user;
-            }
-            if ($tipo_firma == 'firma_comprador_orden') {
-                $fecha =  date('d-m-Y');
-                $requisicion->fecha_firma_comprador_orden =  $fecha;
-                $requisicion->save();
-
-                // correo de finanzas
-                $userEmail = $requisicion->email;
-            }
-            if ($tipo_firma == 'firma_finanzas_orden') {
-                $fecha =  date('d-m-Y');
-                $requisicion->fecha_firma_finanzas_orden =  $fecha;
-                $requisicion->save();
-
-                $requisicion->update([
-                    'estado' => 'firmada_final',
-                    'estado_orden' => 'fin',
-                ]);
-
-                $userEmail = $requisicion->email;
-            }
-            $organizacion = Organizacion::first();
-            Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
-
-            return redirect(route('orden-compra'));
-        } catch (\Exception $e) {
-            return view('contract_manager.ordenes-compra.error');
+            $userEmail = $requisicion->email;
         }
+        $organizacion = Organizacion::first();
+        Mail::to('saul.ramirez@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+
+        return redirect(route('contract_manager.orden-compra'));
     }
 
     /**

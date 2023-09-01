@@ -199,14 +199,6 @@
                     </div>
                     <div class="row">
                         <div class="col s12 l4">
-                            <strong>Envio:</strong><br><br>
-                            {{$provee->envio}}
-                        </div>
-                        <div class="col s12 l4">
-                            <strong>Facturación:</strong><br><br>
-                            {{$provee->facturacion}}
-                        </div>
-                        <div class="col s12 l4">
                             <strong>Fecha Inicio:</strong><br><br>
                             {{ date('d-m-Y', strtotime($provee->fecha_inicio)) }}
                         </div>

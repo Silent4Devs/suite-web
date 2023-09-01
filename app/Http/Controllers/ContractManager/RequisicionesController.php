@@ -181,6 +181,20 @@ class RequisicionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function destroy($id)
+    {
+        KatbolRequsicion::destroy($id);
+
+        return redirect(route('contract_manager.requisiciones'));
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function Firmar($tipo_firma, $id)
     {
 
@@ -207,6 +221,12 @@ class RequisicionesController extends Controller
         }
     }
 
+
+    function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -215,46 +235,42 @@ class RequisicionesController extends Controller
      */
     public function FirmarUpdate(Request $request, $tipo_firma, $id)
     {
-        try {
-            $request->validate([
-                'firma' => 'required',
-            ]);
+        $request->validate([
+            'firma' => 'required',
+        ]);
 
-            $requisicion = KatbolRequsicion::find($id);
-            $requisicion->update([
-                $tipo_firma => $request->firma,
-            ]);
+        $requisicion = KatbolRequsicion::find($id);
+        $requisicion->update([
+            $tipo_firma => $request->firma,
+        ]);
 
-            if ($tipo_firma == 'firma_jefe') {
-                $fecha =  date('d-m-Y');
-                $requisicion->fecha_firma_jefe_requi =  $fecha;
-                $requisicion->save();
-                $userEmail = 'lourdes.abadia@silent4business.com';
-            }
-            if ($tipo_firma == 'firma_finanzas') {
-                $fecha =  date('d-m-Y');
-                $requisicion->fecha_firma_finanzas_requi =  $fecha;
-                $requisicion->save();
-                $comprador = KatbolComprador::where('id', $requisicion->comprador_id)->first();
-                $userEmail = $comprador->user->email;
-            }
-            if ($tipo_firma == 'firma_compras') {
-                $fecha =  date('d-m-Y');
-                $requisicion->fecha_firma_comprador_requi =  $fecha;
-                $requisicion->save();
-
-                // correo de compras
-                $userEmail = $requisicion->email;
-                $requisicion->update([
-                    'estado' => 'firmada'
-                ]);
-            }
-            $organizacion = Organizacion::first();
-            Mail::to('saul.ramirez@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
-            return redirect(route('contract_manager.requisiciones'));
-        } catch (\Exception $e) {
-            return view('contract_manager.requisiciones.error');
+        if ($tipo_firma == 'firma_jefe') {
+            $fecha =  date('d-m-Y');
+            $requisicion->fecha_firma_jefe_requi =  $fecha;
+            $requisicion->save();
+            $userEmail = 'lourdes.abadia@silent4business.com';
         }
+        if ($tipo_firma == 'firma_finanzas') {
+            $fecha =  date('d-m-Y');
+            $requisicion->fecha_firma_finanzas_requi =  $fecha;
+            $requisicion->save();
+            $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+            $userEmail = trim($this->removeUnicodeCharacters($comprador->user->email));
+        }
+        if ($tipo_firma == 'firma_compras') {
+            $fecha =  date('d-m-Y');
+            $requisicion->fecha_firma_comprador_requi =  $fecha;
+            $requisicion->save();
+
+            // correo de compras
+            $userEmail = $requisicion->email;
+            $requisicion->update([
+                'estado' => 'firmada'
+            ]);
+        }
+        $organizacion = Organizacion::first();
+        Mail::to('saul.ramirez@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        return redirect(route('contract_manager.requisiciones'));
     }
 
     /**
@@ -265,9 +281,19 @@ class RequisicionesController extends Controller
      */
     public function archivo()
     {
-        $requisiciones = KatbolRequsicion::where('archivo', true)->get();
 
-        return view('contract_manager.requisiciones.archivo', compact('requisiciones'));
+        $requisiciones = KatbolRequsicion::where('archivo', true)->get();
+        $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
+
+        return view('contract_manager.requisiciones.archivo', compact('requisiciones', 'proveedor_indistinto'));
+    }
+
+
+    public function getRequisicionIndexArchivo(Request $request)
+    {
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', true)->orderByDesc('id')->get();
+
+        return datatables()->of($requisiciones)->toJson();
     }
 
     /**
@@ -278,7 +304,6 @@ class RequisicionesController extends Controller
      */
     public function estado($id)
     {
-        abort_if(Gate::denies('katbol_requisiciones_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $requisicion = KatbolRequsicion::find($id);
         if ($requisicion->archivo === false) {
             $requisicion->update([
@@ -289,7 +314,14 @@ class RequisicionesController extends Controller
                 'archivo' => false,
             ]);
         }
+
+        $requisiciones = KatbolRequsicion::where('archivo', true)->get();
+        $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
+
+        return view('contract_manager.requisiciones.archivo', compact('requisiciones', 'proveedor_indistinto'));
     }
+
+
 
 
     /**
@@ -327,27 +359,22 @@ class RequisicionesController extends Controller
      */
     public function pdf($id)
     {
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
+        $organizacion = Organizacion::select('empresa', 'logotipo')->first();
+        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisiciones->id)->pluck('proveedor_id')->toArray();
 
-        try {
-            $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->find($id);
-            $organizacion = Organizacion::select('empresa', 'logotipo')->first();
-            $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisiciones->id)->pluck('proveedor_id')->toArray();
+        $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-            $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
+        $user = ModelsUser::where('id',  $requisiciones->id_user)->first();
 
-            $user = ModelsUser::where('id',  $requisiciones->id_user)->first();
+        $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
 
-            $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
+        $supervisor = $empleado->supervisor->name;
 
-            $supervisor = $empleado->supervisor->name;
+        $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisiciones->id)->first();
 
-            $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisiciones->id)->first();
-
-            $pdf = PDF::loadView('requisiciones_pdf', compact('requisiciones', 'organizacion', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
-            $pdf->setPaper('A4', 'portrait');
-            return $pdf->download('requisicion.pdf');
-        } catch (\Exception $e) {
-            return view('contract_manager.requisiciones.error');
-        }
+        $pdf = PDF::loadView('requisiciones_pdf', compact('requisiciones', 'organizacion', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->download('requisicion.pdf');
     }
 }
