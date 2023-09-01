@@ -1,4 +1,16 @@
 @extends('layouts.admin')
+<style>
+    table{
+    table-layout: fixed;
+    width: 500px;
+   }
+
+   th, td {
+    border: 1px solid blue;
+    width: 110px;
+    word-wrap: break-word
+    }
+</style>
 @section('content')
     <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
     <div class="mt-5 card">
@@ -110,8 +122,22 @@
                         window.location.href = url;
                     }
                 @endcan
-                };
-                dtButtons.push(btnAgregar);
+            };
+
+            let btnArchivar = {
+                    text: '<i class="fa-solid fa-box-archive"></i> Archivados',
+                    titleAttr: 'Archivar producto',
+                    url: "{{ route('contract_manager.requisiciones.archivo') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                        console.log(url);
+                    },
+            };
+                dtButtons.push(btnAgregar, btnArchivar);
                 let archivarButton = {
                     @can("katbol_requisiciones_archivar")
                     text: 'Archivar Registro',
@@ -208,25 +234,25 @@
                         name: 'actions',
                         render: function(data, type, row, meta) {
                             let requisiciones_solicitante = @json($requisiciones_solicitante);
-                            let urlButtonArchivar = `/contract_manager/requisiciones/archivar/${data}`;
+                            let urlButtonArchivar = `/contract_manager/requisiciones/archivo-estado/${data}`;
+                            let urlButtonEliminar = `/contract_manager/requisiciones/destroy/${data}`;
+                            let urlButtonShow = `/contract_manager/requisiciones/show/${data}`;
                             let urlButtonEdit = `/contract_manager/requisiciones/edit/${data}`;
                             let htmlBotones =
                                 `
-                                @can('katbol_requisiciones_modificar')
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                @endcan
-
-                                @foreach ($requisiciones_solicitante as  $requisicion)
                                 <div class="btn-group">
+                                    @can('katbol_requisiciones_modificar')
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit fa-lg"></i></a>
+                                    @endcan
                                     @can('katbol_requisiciones_imprimir')
-                                        <a href="{{ route('contract_manager.requisiciones.show', ['id' => $requisicion->id]) }}"
+                                        <a href="${urlButtonShow}"
                                                     title="Ver/Imprimir" >
                                                     <i class="fa-solid fa-print"></i>
                                         </a>
                                     @endcan
+                                    <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.folio}');"> <i class="fa-solid fa-box-archive fa-lg"></i></a>
+                                    <a title="Eliminar" class="btn btn-sm text-blue"  onclick="Eliminar('${urlButtonEliminar}','${row.folio}');">  <i class="fa-solid fa-trash fa-lg"></i></a>
                                 </div>
-                                @endforeach
-
                             `;
                             return htmlBotones;
                         }
@@ -260,14 +286,14 @@
                             beforeSend: function() {
                                 Swal.fire(
                                     '¡Estamos Archivar!',
-                                    `El proveedor: ${nombre} está siendo archivado`,
+                                    `La requisición: ${nombre} está siendo archivado`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
                                     'Archivando!',
-                                    `El proveedor: ${nombre} ha sido archivado`,
+                                    `La requisición: ${nombre} ha sido archivado`,
                                     'success'
                                 )
                                 table.ajax.reload();
@@ -284,6 +310,53 @@
                     }
                 })
             }
+
+            window.Eliminar = function(url, nombre) {
+                Swal.fire({
+                    title: `¿Estás seguro de eliminar el siguiente registro?`,
+                    html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, eliminar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            headers: {
+                                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: url,
+                            beforeSend: function() {
+                                Swal.fire(
+                                    '¡Estamos eliminar!',
+                                    `La requisición: ${nombre} está siendo eliminado`,
+                                    'info'
+                                )
+                            },
+                            success: function(response) {
+                                Swal.fire(
+                                    'Eliminar!',
+                                    `La requisición: ${nombre} ha sido eliminado`,
+                                    'success'
+                                )
+                                table.ajax.reload();
+                            },
+                            error: function(error) {
+                                console.log(error);
+                                Swal.fire(
+                                    'Ocurrió un error',
+                                    `Error: ${error.responseJSON.message}`,
+                                    'error'
+                                )
+                            }
+                        });
+                    }
+                })
+            }
+
 
         });
     </script>

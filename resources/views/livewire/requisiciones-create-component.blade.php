@@ -563,31 +563,6 @@
                                         </div>
                                         <div class="row">
                                             <div class="col s12 l4">
-                                                <strong>Envio:</strong><br><br>
-                                                @isset($prov->envio)
-                                                {{ $prov->envio }}
-                                                @endisset
-                                            </div>
-                                            <div class="col s12 l4">
-                                                <strong>Facturación:</strong><br><br>
-                                                @isset($prov->facturacion)
-                                                {{ $prov->facturacion }}
-                                                @endisset
-                                            </div>
-                                            <div class="col s12 l4">
-                                                <strong>Dirección:</strong><br><br>
-                                                @isset($prov->direccion)
-                                                {{ $prov->direccion }}
-                                                @endisset
-                                            </div>
-                                            <div class="col s12 l4">
-                                                <br>
-                                                <strong>Crédito:</strong><br><br>
-                                                @isset($prov->credito)
-                                                {{ $prov->credito }}
-                                                @endisset
-                                            </div>
-                                            <div class="col s12 l4">
                                                 <br>
                                                 <strong>Fecha Inicio:</strong><br><br>
                                                 {{ date('d-m-Y', strtotime($prov->fecha_inicio)) }}
@@ -684,10 +659,7 @@
                                             </div>
                                         </div>
                                         <div class="flex" style="justify-content: end; gap:10px;">
-                                            <div class="btn btn-secundario" onclick="$('.tabs').tabs('select', 'paso-proveedores'); @this.set('habilitar_firma', false); @this.set('habilitar_proveedores', true);"
-                                                style="background: #959595 !important"><i class="fa-solid fa-chevron-left icon-prior"></i>
-                                                Regresar </div>
-                                            <button onclick="validar()" class="btn" type="submit">Firmar</button>
+                                            <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
                                         </div>
                                     </div>
                                 </form>
