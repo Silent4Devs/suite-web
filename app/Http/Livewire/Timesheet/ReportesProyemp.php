@@ -12,6 +12,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Exports\ReporteColaboradorTarea;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Http;
 
 class ReportesProyemp extends Component
 {
@@ -222,14 +223,53 @@ class ReportesProyemp extends Component
             ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'rechazado')->count();
     }
 
+    // public function exportExcel()
+    // {
+    //     $date = Carbon::now();
+    //     $date = $date->format('d-m-Y');
+
+    //     $file_name = 'Reporte Colaborador-Tarea' . $date . '.xlsx';
+    //     // dd($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
+    //     return Excel::download(new ReporteColaboradorTarea($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id, $this->proy_id), $file_name);
+    // }
+
     public function exportExcel()
     {
-        $date = Carbon::now();
-        $date = $date->format('d-m-Y');
+        $response = Http::post('http://127.0.0.1:3000/api/timesheet/proyecto', [
 
-        $file_name = 'Reporte Colaborador-Tarea' . $date . '.xlsx';
-        // dd($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
-        return Excel::download(new ReporteColaboradorTarea($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id, $this->proy_id), $file_name);
+            'emp_id' => '',
+
+            'fecha_inicio' => '',
+
+        ]);
+
+
+
+        if ($response->successful()) {
+
+            // Get the XLS content from the response
+
+            $xlsContent = $response->body();
+
+
+
+            // Provide the XLS file as a download response
+
+            return response($xlsContent, 200)
+
+                ->header('Content-Type', 'application/vnd.ms-excel')
+
+                ->header('Content-Disposition', 'attachment; filename=timesheet_report.xlsx');
+        } else {
+
+            // Handle the error if the request is not successful
+
+            return response()->json([
+
+                'message' => 'Failed to retrieve the XLS file from the API',
+
+            ], $response->status());
+        }
     }
 
     public function todos()
