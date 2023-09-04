@@ -14,7 +14,6 @@ class Declaracion_aplicabilidad_concentrado_Seeder extends Seeder
      */
     public function run()
     {
-
         $Controles = [
             [
                 'id_gap_dos_catalogo' => '1',

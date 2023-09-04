@@ -16,7 +16,6 @@ class AddHorasAsignadasTable extends Migration
         Schema::table('timesheet_proyectos', function (Blueprint $table) {
             //
             $table->bigInteger('horas_proyecto')->nullable();
-
         });
     }
 

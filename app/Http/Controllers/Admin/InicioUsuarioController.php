@@ -1275,7 +1275,6 @@ class InicioUsuarioController extends Controller
 
     public function updateVersionIso(Request $request)
     {
-
         foreach ($request->toArray() as $var) {
             if ($var === false) {
                 $valor = false;

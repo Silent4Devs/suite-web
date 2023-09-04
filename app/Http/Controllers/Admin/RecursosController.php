@@ -643,6 +643,7 @@ class RecursosController extends Controller
             foreach ($recurso->empleados as $empleado) {
                 Mail::to(removeUnicodeCharacters($empleado->email))->send(new CapacitacionCanceladaMail($recurso, $empleado));
             }
+
             // $extension = pathinfo($request->file('certificado')->getClientOriginalName(), PATHINFO_EXTENSION);
             // $certificadoImg = "CERTIFICADO_{$empleado->n_empleado}.{$extension}";
             // $route = "public/capacitaciones/certificados/{$carpetaCapacitacion}/{$empleado->n_empleado}";

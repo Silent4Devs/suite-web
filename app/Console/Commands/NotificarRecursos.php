@@ -47,11 +47,11 @@ class NotificarRecursos extends Command
                 foreach ($recurso->participantes as $participante) {
                     $mensaje = '';
                     if ($diferencia_dias == 0) {
-                        $mensaje = 'Hoy tienes el curso y capacitación siguiente: '.$recurso->cursoscapacitaciones;
+                        $mensaje = 'Hoy tienes el curso y capacitación siguiente: ' . $recurso->cursoscapacitaciones;
                     } elseif ($diferencia_dias == 1) {
-                        $mensaje = 'Falta '.$diferencia_dias.' día para el curso y capacitación siguiente: '.$recurso->cursoscapacitaciones;
+                        $mensaje = 'Falta ' . $diferencia_dias . ' día para el curso y capacitación siguiente: ' . $recurso->cursoscapacitaciones;
                     } else {
-                        $mensaje = 'Faltan '.$diferencia_dias.' días para el curso y capacitación siguiente: '.$recurso->cursoscapacitaciones;
+                        $mensaje = 'Faltan ' . $diferencia_dias . ' días para el curso y capacitación siguiente: ' . $recurso->cursoscapacitaciones;
                     }
                     Notification::send($participante, new TaskRecursosNotification('recurso', 'Recurso', $mensaje, $participante, 'task'));
                 }

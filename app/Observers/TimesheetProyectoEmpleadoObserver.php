@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use Illuminate\Support\Facades\Cache;
 use App\Models\TimesheetProyectoEmpleado;
+use Illuminate\Support\Facades\Cache;
 
 class TimesheetProyectoEmpleadoObserver
 {

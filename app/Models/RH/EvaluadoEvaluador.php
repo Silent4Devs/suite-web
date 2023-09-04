@@ -9,7 +9,6 @@ use OwenIt\Auditing\Contracts\Auditable;
 class EvaluadoEvaluador extends Model implements Auditable
 {
     use HasFactory;
-
     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'ev360_evaluado_evaluador';

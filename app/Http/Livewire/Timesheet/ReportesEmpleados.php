@@ -112,7 +112,6 @@ class ReportesEmpleados extends Component
 
     public function render()
     {
-
         $this->hoy = Carbon::now();
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
@@ -126,7 +125,6 @@ class ReportesEmpleados extends Component
         } else {
             $empleados_list = $this->empleadosQuery;
         }
-
 
         //calendario tabla
         $calendario_array = [];

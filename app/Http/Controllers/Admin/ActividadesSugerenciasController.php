@@ -38,7 +38,7 @@ class ActividadesSugerenciasController extends Controller
 
             $modelo = Sugerencias::find(intval($request->sugerencia_id));
             $actividad = ActividadSugerencia::find($actividad->id);
-            if (! count($modelo->planes)) {
+            if (!count($modelo->planes)) {
                 $this->vincularActividadesPlanDeAccion($actividad, $modelo);
             } else {
                 $plan = $modelo->planes->first();
@@ -53,12 +53,12 @@ class ActividadesSugerenciasController extends Controller
     public function vincularActividadesPlanDeAccion($actividad, $modelo, $planEdit = null, $edit = false)
     {
         if (isset($actividad)) {
-            if (! count($modelo->planes)) {
+            if (!count($modelo->planes)) {
                 $tasks = [
                     [
-                        'id' => 'tmp_'.(strtotime(now())).'_1',
+                        'id' => 'tmp_' . (strtotime(now())) . '_1',
                         'end' => strtotime(now()) * 1000,
-                        'name' => 'Sugerencia - '.$modelo->folio.'-'.$modelo->titulo,
+                        'name' => 'Sugerencia - ' . $modelo->folio . '-' . $modelo->titulo,
                         'level' => 0,
                         'start' => strtotime(now()) * 1000,
                         'canAdd' => true,
@@ -77,9 +77,9 @@ class ActividadesSugerenciasController extends Controller
                         'assigs' => [],
                     ],
                     [
-                        'id' => 'tmp_'.(strtotime(now())).rand(1, 1000),
+                        'id' => 'tmp_' . (strtotime(now())) . rand(1, 1000),
                         'end' => strtotime(now()) * 1000,
-                        'name' => $modelo->folio.'-'.$modelo->titulo,
+                        'name' => $modelo->folio . '-' . $modelo->titulo,
                         'level' => 1,
                         'start' => strtotime(now()) * 1000,
                         'canAdd' => true,
@@ -104,7 +104,7 @@ class ActividadesSugerenciasController extends Controller
                 foreach ($asignados as $asignado) {
                     // $empleado = Empleado::find($id);
                     $assigs[] = [
-                        'id' => 'tmp_'.time().'_'.$asignado->id,
+                        'id' => 'tmp_' . time() . '_' . $asignado->id,
                         'effort' => '0',
                         'roleId' => '1',
                         'resourceId' => $asignado->id,
@@ -115,7 +115,7 @@ class ActividadesSugerenciasController extends Controller
                 $end = strtotime($actividad->fecha_fin) * 1000;
                 $duration = Carbon::parse($actividad->fecha_inicio)->diffInDays(Carbon::parse($actividad->fecha_fin));
                 $tasks[] = [
-                    'id' => 'tmp_'.$start.'_'.$end.'_'.$actividad->id,
+                    'id' => 'tmp_' . $start . '_' . $end . '_' . $actividad->id,
                     'end' => $end,
                     'name' => $actividad->actividad,
                     'level' => 2,
@@ -145,7 +145,7 @@ class ActividadesSugerenciasController extends Controller
                 foreach ($asignados as $asignado) {
                     // $empleado = Empleado::find($id);
                     $assigs[] = [
-                        'id' => 'tmp_'.time().'_'.$asignado->id,
+                        'id' => 'tmp_' . time() . '_' . $asignado->id,
                         'effort' => '0',
                         'roleId' => '1',
                         'resourceId' => $asignado->id,
@@ -156,7 +156,7 @@ class ActividadesSugerenciasController extends Controller
                 $end = strtotime($actividad->fecha_fin) * 1000;
                 $duration = Carbon::parse($actividad->fecha_inicio)->diffInDays(Carbon::parse($actividad->fecha_fin));
                 $tasks[] = [
-                    'id' => 'tmp_'.$start.'_'.$end.'_'.$actividad->id,
+                    'id' => 'tmp_' . $start . '_' . $end . '_' . $actividad->id,
                     'end' => $end,
                     'name' => $actividad->actividad,
                     'level' => 2,
@@ -192,7 +192,7 @@ class ActividadesSugerenciasController extends Controller
                 $planImplementacion->changesReasonWhy = false;
                 $planImplementacion->selectedRow = 0;
                 $planImplementacion->zoom = '3d';
-                $planImplementacion->parent = 'Sugerencia - '.$modelo->folio;
+                $planImplementacion->parent = 'Sugerencia - ' . $modelo->folio;
                 $planImplementacion->norma = 'ISO 27001';
                 $planImplementacion->modulo_origen = 'Sugerencias';
                 $planImplementacion->objetivo = null;

@@ -12,8 +12,8 @@ class RevisionMinutasController extends Controller
     public function edit(RevisionMinuta $revisionMinuta)
     {
         $minuta = Minutasaltadireccion::find(intval($revisionMinuta->minuta_id));
-        if (! $minuta) {
-            abort_if(! $minuta, 404);
+        if (!$minuta) {
+            abort_if(!$minuta, 404);
         }
         $empleado = Empleado::find(intval($revisionMinuta->empleado_id));
 

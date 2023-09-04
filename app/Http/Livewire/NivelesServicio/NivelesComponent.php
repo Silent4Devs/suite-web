@@ -58,10 +58,10 @@ class NivelesComponent extends Component
         $niveles_servicio = NivelesServicio::select('id', 'nombre', 'metrica', 'unidad', 'info_consulta', 'meta', 'periodo_evaluacion', 'revisiones', 'area', 'descripcion')
             ->where('contrato_id', '=', $this->contrato_id)
             ->where(function ($query) {
-                $query->where('nombre', 'like', '%'.$this->search.'%')
-                    ->orWhere('descripcion', 'like', '%'.$this->search.'%')
-                    ->orWhere('id', 'like', '%'.$this->search.'%')
-                    ->orWhere('area', 'like', '%'.$this->search.'%');
+                $query->where('nombre', 'like', '%' . $this->search . '%')
+                    ->orWhere('descripcion', 'like', '%' . $this->search . '%')
+                    ->orWhere('id', 'like', '%' . $this->search . '%')
+                    ->orWhere('area', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->pagination);

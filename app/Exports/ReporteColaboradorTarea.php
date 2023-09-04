@@ -4,7 +4,6 @@ namespace App\Exports;
 
 use App\Models\TimesheetHoras;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Carbon\Carbon;
 
 class ReporteColaboradorTarea implements FromCollection
 {
@@ -51,9 +50,7 @@ class ReporteColaboradorTarea implements FromCollection
     }
 
     public function headings(): array
-
     {
-
         return [
 
             'ID',

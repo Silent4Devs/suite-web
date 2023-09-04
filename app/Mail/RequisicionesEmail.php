@@ -3,13 +3,10 @@
 namespace App\Mail;
 
 use App\Models\Empleado;
-use App\Models\EmpleadoT;
 use App\Models\User as ModelsUser;
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Storage;
 
 class RequisicionesEmail extends Mailable
@@ -28,20 +25,18 @@ class RequisicionesEmail extends Mailable
      * @return void
      */
 
-     //prueba
+    //prueba
     public function __construct($nueva_requisicion, $organizacion, $tipo_firma)
     {
-
         $this->requisicion = $nueva_requisicion;
         $this->organizacion = $organizacion;
         $this->tipo_firma = $tipo_firma;
 
-         $user = ModelsUser::where('id',  $this->requisicion->id_user)->first();
+        $user = ModelsUser::where('id', $this->requisicion->id_user)->first();
 
-         $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
+        $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
 
-         $this->supervisor = $empleado->supervisor->name;
-
+        $this->supervisor = $empleado->supervisor->name;
 
         // requisiciones
         if ($tipo_firma === 'firma_solicitante') {
@@ -75,30 +70,27 @@ class RequisicionesEmail extends Mailable
         }
     }
 
-    public function getBase64($url){
-
+    public function getBase64($url)
+    {
         try {
             $img_route = $url;
             $logo_base = file_get_contents($img_route);
             $img = 'data:image/png;base64,' . base64_encode($logo_base);
 
             return $img;
+        } catch (\Exception $e) {
+            try {
+                $img_route = $url;
+                $logo_base = Storage::get($img_route);
+                $img = 'data:image/png;base64,' . base64_encode($logo_base);
 
-            } catch (\Exception $e) {
+                return $img;
+            } catch (\Throwable $th) {
+                $img = 'data:image/png;base64,' . '';
 
-                try {
-
-                    $img_route = $url;
-                    $logo_base = Storage::get($img_route);
-                    $img = 'data:image/png;base64,' . base64_encode($logo_base);
-                    return $img;
-
-                } catch (\Throwable $th) {
-
-                    $img = 'data:image/png;base64,' . '';
-                    return $img;
-                }
+                return $img;
             }
+        }
     }
 
     /**
@@ -108,7 +100,6 @@ class RequisicionesEmail extends Mailable
      */
     public function build()
     {
-
         return $this->from('donot-reply@silent4business.com', 'Sender Name')
                     ->view('emails.requisiciones', [
                         'supervisor' =>  $this->supervisor,
@@ -125,4 +116,3 @@ class RequisicionesEmail extends Mailable
                     ]);
     }
 }
-

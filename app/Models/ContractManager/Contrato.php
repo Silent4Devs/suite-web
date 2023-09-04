@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
-use App\Models\ContractManager\AmpliacionContrato;
-use App\Models\ContractManager\DolaresContrato;
 
 /**
  * Class Contrato.
@@ -240,12 +238,9 @@ class Contrato extends Model implements Auditable
        * 'pmp_asignado' => 'none' */
     ];
 
-
-
     protected $appends = [
-        'nameproveedor'
+        'nameproveedor',
     ];
-
 
     //Relaciones
     public function ampliaciones()
@@ -285,13 +280,13 @@ class Contrato extends Model implements Auditable
         // dd($archivo);
         $ruta = asset('storage/contratos/');
         // $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato);
-        $ruta = $ruta.'/'.$archivo;
+        $ruta = $ruta . '/' . $archivo;
 
         return $ruta;
     }
 
     public function getNameProveedorAttribute()
     {
-        return $this->no_contrato  . '-' . $this->nombre_servicio;
+        return $this->no_contrato . '-' . $this->nombre_servicio;
     }
 }

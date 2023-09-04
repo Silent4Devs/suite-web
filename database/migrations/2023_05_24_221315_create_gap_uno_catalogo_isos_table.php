@@ -14,7 +14,8 @@ class CreateGapUnoCatalogoIsosTable extends Migration
     public function up()
     {
         Schema::create(
-            'gap_uno_catalogo_isos', function (Blueprint $table) {
+            'gap_uno_catalogo_isos',
+            function (Blueprint $table) {
                 $table->id();
                 $table->string('pregunta');
                 $table->timestamps();

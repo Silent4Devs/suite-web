@@ -14,7 +14,8 @@ class CreateDeclaracionAplicabilidadAprobarIsosTable extends Migration
     public function up()
     {
         Schema::create(
-            'declaracion_aplicabilidad_aprobar_isos', function (Blueprint $table) {
+            'declaracion_aplicabilidad_aprobar_isos',
+            function (Blueprint $table) {
                 $table->id();
                 $table->integer('estatus')->nullable();
                 $table->longText('comentarios')->nullable();

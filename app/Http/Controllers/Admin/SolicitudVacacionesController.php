@@ -12,13 +12,13 @@ use App\Models\SolicitudDayOff;
 use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\SolicitudVacaciones;
 use App\Models\Vacaciones;
+use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use App\Traits\ObtenerOrganizacion;
 
 class SolicitudVacacionesController extends Controller
 {

@@ -30,6 +30,6 @@ class PlanificacionSolicitudResponsableAprobador extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.planificacionControles.solicitud-firma-aprobador')->subject('Solicitud de aprobación del cambio '.$this->planificacionControles->folio_cambio);
+        return $this->view('mails.planificacionControles.solicitud-firma-aprobador')->subject('Solicitud de aprobación del cambio ' . $this->planificacionControles->folio_cambio);
     }
 }

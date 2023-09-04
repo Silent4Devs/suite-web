@@ -24,6 +24,5 @@ class VersionIso2013
         }
 
         return redirect()->back()->with('flash_message', 'No tiene permitido accesar a la version historica');
-
     }
 }
