@@ -1468,10 +1468,8 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
     Route::view('post_register', 'auth.post_register');
 });
 
-
-Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'contractmanager', 'middleware' => ['auth', '2fa', 'active']], function () {
-
-    //KATBOL
+//KATBOL
+Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'contractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
 
     Route::view('katbol', 'contract_manager.katbol.index')->name('katbol');
 
@@ -1547,6 +1545,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
 
     //requisiciones
     Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
+    Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.index_aprobadores');
     Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
     Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
     Route::get('requisiciones/show/{id}', 'RequisicionesController@show')->name('requisiciones.show');
@@ -1554,6 +1553,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::get('requisiciones/create', 'RequisicionesController@create')->name('requisiciones.create');
     Route::post('requisiciones/pdf/{id}', 'RequisicionesController@pdf')->name('requisiciones.pdf');
     Route::post('requisiciones/destroy/{id}', 'RequisicionesController@destroy')->name('requisiciones.destroy');
+    Route::get('requisiciones/aprobados/{id}', 'RequisicionesController@firmarAprobadores')->name('requisiciones.firmarAprobadores');
     Route::post('requisiciones/firma', 'RequisicionesController@guardarFirmaAprobacion')->name('requisiciones.firma');
     Route::get('requisiciones/firmar/{tipo_firma}/{id}', 'RequisicionesController@Firmar')->name('requisiciones.firmar');
     Route::post('requisiciones/firma-update/{tipo_firma}/{id}', 'RequisicionesController@FirmarUpdate')->name('requisiciones.firmar-update');
