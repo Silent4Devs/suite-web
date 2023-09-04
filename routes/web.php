@@ -1468,10 +1468,8 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
     Route::view('post_register', 'auth.post_register');
 });
 
-
+//KATBOL
 Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'contractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
-
-    //KATBOL
 
     Route::view('katbol', 'contract_manager.katbol.index')->name('katbol');
 
