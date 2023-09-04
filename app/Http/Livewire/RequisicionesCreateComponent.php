@@ -280,7 +280,7 @@ class RequisicionesCreateComponent extends Component
         $this->habilitar_firma = true;
     }
 
-    function removeUnicodeCharacters($string)
+    public function removeUnicodeCharacters($string)
     {
         return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }

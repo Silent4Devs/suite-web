@@ -42,7 +42,7 @@ class OrdenCompraController extends Controller
         $empresa_actual = $organizacion_actual->empresa;
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
-        if ($user->roles()->first()->name  === 'Admin') {
+        if ($user->roles()->first()->name === 'Admin') {
             $requisiciones = KatbolRequsicion::where('estado', 'firmada')
                 ->where('archivo', false)
                 ->Orwhere('estado_orden', 'rechazado_oc')
@@ -52,7 +52,7 @@ class OrdenCompraController extends Controller
                 ->get();
 
             return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
-        } elseif ($user->roles()->first()->name  === 'Compras') {
+        } elseif ($user->roles()->first()->name === 'Compras') {
             $comprador = KatbolComprador::where('id_user', $user->empleado_tabantaj_id)->first();
             $id = 0;
             if ($comprador) {
