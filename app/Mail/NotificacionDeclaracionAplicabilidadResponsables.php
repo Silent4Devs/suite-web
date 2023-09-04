@@ -40,6 +40,6 @@ class NotificacionDeclaracionAplicabilidadResponsables extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadResponsable')->subject('Aprobación/rechazo del control '.$this->aplicabilidad->anexo_indice);
+        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadResponsable')->subject('Aprobación/rechazo del control ' . $this->aplicabilidad->anexo_indice);
     }
 }

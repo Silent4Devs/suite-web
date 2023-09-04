@@ -11,7 +11,7 @@ use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class Facturacion
+ * Class Facturacion.
  *
  * @property int $id
  * @property int|null $contrato_id
@@ -127,8 +127,8 @@ class Factura extends Model implements Auditable
     {
         $archivo = FacturaFile::where('factura_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
-        $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato.'/facturas/pdf');
-        $ruta = $ruta.'/'.$archivo;
+        $ruta = asset('storage/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/facturas/pdf');
+        $ruta = $ruta . '/' . $archivo;
 
         return $ruta;
     }

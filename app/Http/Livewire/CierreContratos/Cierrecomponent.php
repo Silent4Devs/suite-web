@@ -41,9 +41,9 @@ class Cierrecomponent extends Component
     {
         $cierre_contratos = CierreContrato::where('contrato_id', $this->contrato_id)
             ->where(function ($query) {
-                $query->where('aspectos', 'like', '%'.$this->search.'%')
-                    ->orWhere('cumple', 'like', '%'.$this->search.'%')
-                    ->orWhere('observaciones', 'like', '%'.$this->search.'%');
+                $query->where('aspectos', 'like', '%' . $this->search . '%')
+                    ->orWhere('cumple', 'like', '%' . $this->search . '%')
+                    ->orWhere('observaciones', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->pagination);

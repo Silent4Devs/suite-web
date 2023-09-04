@@ -114,7 +114,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
         $foda = $entendimientoOrganizacion->create($request->all());
         // Almacenamiento de participantes relacionados
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $foda);
         }
 
@@ -171,7 +171,7 @@ class EntendimientoOrganizacionController extends Controller
         ]);
 
         $entendimientoOrganizacion->update($request->all());
-        if (! is_null($request->participantes)) {
+        if (!is_null($request->participantes)) {
             $this->vincularParticipantes($request->participantes, $entendimientoOrganizacion);
         }
 

@@ -15,7 +15,6 @@ class Producto extends Model
         'id',
         'descripcion',
         'archivo',
-        'clave'
+        'clave',
     ];
-
 }

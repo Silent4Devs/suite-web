@@ -80,7 +80,6 @@ class SystemCalendarController extends Controller
 
         $niveles_servicio = EntregaMensual::select('nombre_entregable', 'plazo_entrega_inicio', 'plazo_entrega_termina')->get();
 
-
         $cumples_aniversarios = Empleado::getaltaAll();
         $nombre_organizacion = Organizacion::getFirst();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';

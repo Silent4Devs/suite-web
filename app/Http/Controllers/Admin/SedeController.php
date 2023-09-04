@@ -226,6 +226,7 @@ class SedeController extends Controller
     {
         abort_if(Gate::denies('sedes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $sede = Sede::find($request);
+
         //dd($sede);
         return view('admin.sedes.ubicacion', compact('sede'));
     }

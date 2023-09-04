@@ -123,7 +123,7 @@ class CategoriaCapacitacionController extends Controller
     {
         abort_if(Gate::denies('capacitaciones_categorias_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
-            'nombre' => 'required|string|unique:categoria_capacitacions,nombre,'.$categoriaCapacitacion->id,
+            'nombre' => 'required|string|unique:categoria_capacitacions,nombre,' . $categoriaCapacitacion->id,
         ], ['nombre.unique' => 'Esta categoria ya ha sido utilizada']);
         $categoriaCapacitacion->update($request->all());
 

@@ -146,6 +146,7 @@ class IndicadoresSgsiController extends Controller
             'ano' => 'required',
         ]);
         $indicadoresSgsi = IndicadoresSgsi::create($request->all());
+
         //return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with('success', 'Guardado con éxito');
     }
@@ -272,7 +273,6 @@ class IndicadoresSgsiController extends Controller
         $variables = $request->all('variables');
         // dd($variables);
         if ($variables['variables'] == null) {
-
             $indicadoresSgsi = IndicadoresSgsi::find($id['id']);
 
             if ($indicadoresSgsi->formula_raw == null) {
@@ -283,7 +283,7 @@ class IndicadoresSgsiController extends Controller
             $chars = ['$', '/', '*', '-', '+'];
             $onlyconsonants = $formula_r;
             foreach ($chars as $key => $char) {
-                $onlyconsonants = str_replace($char, '!'.$char, $onlyconsonants);
+                $onlyconsonants = str_replace($char, '!' . $char, $onlyconsonants);
             }
 
             $formula_array = explode('!', $onlyconsonants);

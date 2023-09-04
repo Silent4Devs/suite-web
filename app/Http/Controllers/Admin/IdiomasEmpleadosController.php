@@ -55,7 +55,7 @@ class IdiomasEmpleadosController extends Controller
             // Get just ext
             $extension = $request->file('certificado')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $path = $request->file('certificado')->storeAs('public/idiomas_empleados', $fileNameToStore);
 
@@ -116,7 +116,7 @@ class IdiomasEmpleadosController extends Controller
                 // Get just ext
                 $extension = $request->file('certificado')->getClientOriginalExtension();
                 // Filename to store
-                $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
                 // Upload Image
                 $path = $request->file('certificado')->storeAs('public/idiomas_empleados', $fileNameToStore);
 

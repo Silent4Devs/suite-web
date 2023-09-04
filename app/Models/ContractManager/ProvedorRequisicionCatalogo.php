@@ -13,13 +13,12 @@ class ProvedorRequisicionCatalogo extends Model
     'requisicion_id',
     'proveedor_id',
     'fecha_inicio',
-    'fecha_fin'
+    'fecha_fin',
     ];
 
     protected $with = ['provedores'];
 
     public $table = 'proveedores_requisiciones_catalogos';
-
 
     public function provedores()
     {

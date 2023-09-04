@@ -30,6 +30,6 @@ class SolicitudDayOff extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.Dayoff.solicitud')->subject('Solicitud de Day-Off de: '.$this->solicitante->name)->cc('gestiondetalento@silent4business.com');
+        return $this->view('mails.Dayoff.solicitud')->subject('Solicitud de Day-Off de: ' . $this->solicitante->name)->cc('gestiondetalento@silent4business.com');
     }
 }

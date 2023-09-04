@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Models\Empleado;
 use App\Models\ListaDocumentoEmpleado;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;

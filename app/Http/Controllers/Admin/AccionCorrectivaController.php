@@ -239,6 +239,7 @@ class AccionCorrectivaController extends Controller
              $generar->Generate($request['pdf-value'], $accionCorrectiva);      */
 
         Flash::success('Registro guardado exitosamente');
+
         // return redirect('admin/plan-correctiva?param=' . $accionCorrectiva->id);
         return redirect()->route('admin.accion-correctivas.edit', $accionCorrectiva);
     }
@@ -347,6 +348,7 @@ class AccionCorrectivaController extends Controller
 
         $actividades = ActividadAccionCorrectiva::with('responsables')->where('accion_correctiva_id', $accionCorrectiva->id)->get();
         $accionCorrectiva->load('analisis', 'nombrereporta', 'puestoreporta', 'nombreregistra', 'puestoregistra', 'responsable_accion', 'nombre_autoriza', 'team', 'accioncorrectivaPlanaccionCorrectivas', 'planes');
+
         // dd($accionCorrectiva->planes);
         return view('admin.accionCorrectivas.show', compact('accionCorrectiva', 'actividades'));
     }

@@ -14,7 +14,8 @@ class CreateDeclaracionAplicabilidadConcentradoIsosTable extends Migration
     public function up()
     {
         Schema::create(
-            'declaracion_aplicabilidad_concentrado_isos', function (Blueprint $table) {
+            'declaracion_aplicabilidad_concentrado_isos',
+            function (Blueprint $table) {
                 $table->id();
                 $table->string('valoracion')->nullable();
                 //foreign

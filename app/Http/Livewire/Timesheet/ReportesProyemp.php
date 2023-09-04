@@ -2,17 +2,17 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Exports\ReporteColaboradorTarea;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Exports\ReporteColaboradorTarea;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Http;
 
 class ReportesProyemp extends Component
 {
@@ -117,7 +117,6 @@ class ReportesProyemp extends Component
         // $emp_area = Empleado::select('area_id')->find($this->emp_id);
         // $areas_emp = TimesheetProyectoArea::where('area_id', '=', $emp_area->area_id)->get();
         // $areas = Area::
-
     }
 
     public function updatedProyectoId($value)
@@ -153,8 +152,6 @@ class ReportesProyemp extends Component
                     $query->where('id', $this->proy_id);
                 }
             });
-
-
 
         $this->totalRegistrosMostrando = $query->count();
         $times = $query->paginate($this->perPage);
@@ -242,15 +239,10 @@ class ReportesProyemp extends Component
             'proy_id' => $this->proy_id,
         ]);
 
-
-
         if ($response->successful()) {
-
             // Get the XLS content from the response
 
             $xlsContent = $response->body();
-
-
 
             // Provide the XLS file as a download response
 
@@ -260,7 +252,6 @@ class ReportesProyemp extends Component
 
                 ->header('Content-Disposition', 'attachment; filename=timesheet_report.xlsx');
         } else {
-
             // Handle the error if the request is not successful
 
             return response()->json([

@@ -26,7 +26,7 @@ class MacroprocesoFactory extends Factory
 
         return [
             'codigo' => $this->faker->ean8,
-            'nombre' => 'Macroproceso'.$numero++,
+            'nombre' => 'Macroproceso' . $numero++,
             'id_grupo' => Grupo::all()->random()->id,
             'descripcion' => $this->faker->sentence(),
         ];

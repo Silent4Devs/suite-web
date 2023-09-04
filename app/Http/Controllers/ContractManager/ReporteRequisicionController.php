@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\ContractManager;
 
 use App\Exports\ContratosExport;
-use App\Models\Organizacion;
-use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\AmpliacionContrato as KatbolAmpliacionContrato;
 use App\Models\ContractManager\CedulaCumplimiento as KatbolCedulaCumplimiento;
@@ -14,10 +12,12 @@ use App\Models\ContractManager\EntregaMensual as KatbolEntregaMensual;
 use App\Models\ContractManager\Factura as KatbolFactura;
 use App\Models\ContractManager\NivelesServicio as KatbolNivelesServicio;
 use App\Models\ContractManager\Proveedores as KatbolProveedores;
+use App\Models\Organizacion;
+use Carbon\Carbon;
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
-use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ReporteRequisicionController extends Controller
@@ -118,7 +118,7 @@ class ReporteRequisicionController extends Controller
 
     public function ExcelContratos(Request $request)
     {
-        return Excel::download(new ContratosExport($request->id), 'Reporte '.$request->id.'-'.Carbon::now()->format('Y-m-D').'.xlsx');
+        return Excel::download(new ContratosExport($request->id), 'Reporte ' . $request->id . '-' . Carbon::now()->format('Y-m-D') . '.xlsx');
     }
 
     public function AjaxRequestProveedores(Request $request)
@@ -138,8 +138,8 @@ class ReporteRequisicionController extends Controller
                             <thead>
                                 <tr>
                                     <th><div class="logo_organizacion"></div></th>
-                                    <th><font style="font-weight: lighter;">Ficha de proveedor:</font> <br> <font>'.$it_proveedor->nombre_comercial.'</font></th>
-                                    <th>'.$hoy.'</th>
+                                    <th><font style="font-weight: lighter;">Ficha de proveedor:</font> <br> <font>' . $it_proveedor->nombre_comercial . '</font></th>
+                                    <th>' . $hoy . '</th>
                                 </tr>
                             </thead>
                         </table>
@@ -150,7 +150,7 @@ class ReporteRequisicionController extends Controller
                                 <th>Razón  social</th>
                             </tr>
                             <tr>
-                                <td><div>'.$it_proveedor->razon_social.'</div></td>
+                                <td><div>' . $it_proveedor->razon_social . '</div></td>
                             </tr>
                         </table>
                         <table class="line_dato">
@@ -159,8 +159,8 @@ class ReporteRequisicionController extends Controller
                                 <th> RFC persona moral o persona física</th>
                             </tr>
                             <tr>
-                                <td><div>'.$it_proveedor->nombre_comercial.'</div></td>
-                                <td><div>'.$it_proveedor->rfc.'</div></td>
+                                <td><div>' . $it_proveedor->nombre_comercial . '</div></td>
+                                <td><div>' . $it_proveedor->rfc . '</div></td>
                             </tr>
                         </table>
 
@@ -171,8 +171,8 @@ class ReporteRequisicionController extends Controller
                                 <th>Colonia</th>
                             </tr>
                             <tr>
-                                <td><div>'.$it_proveedor->calle.'</div></td>
-                                <td><div>'.$it_proveedor->colonia.'</div></td>
+                                <td><div>' . $it_proveedor->calle . '</div></td>
+                                <td><div>' . $it_proveedor->colonia . '</div></td>
                             </tr>
                         </table>
 
@@ -182,8 +182,8 @@ class ReporteRequisicionController extends Controller
                                 <th>Código postal</th>
                             </tr>
                             <tr>
-                                <td><div>'.$it_proveedor->ciudad.'</div></td>
-                                <td><div>'.$it_proveedor->codigo_postal.'</div></td>
+                                <td><div>' . $it_proveedor->ciudad . '</div></td>
+                                <td><div>' . $it_proveedor->codigo_postal . '</div></td>
                             </tr>
                         </table>
 
@@ -193,8 +193,8 @@ class ReporteRequisicionController extends Controller
                                 <th>Página web</th>
                             </tr>
                             <tr>
-                                <td><div>'.$it_proveedor->telefono.'</div></td>
-                                <td><div>'.$it_proveedor->pagina_web.'</div></td>
+                                <td><div>' . $it_proveedor->telefono . '</div></td>
+                                <td><div>' . $it_proveedor->pagina_web . '</div></td>
                             </tr>
                         </table>
 
@@ -205,8 +205,8 @@ class ReporteRequisicionController extends Controller
                                 <th>Puesto </th>
                             </tr>
                             <tr>
-                                <td><div>'.$it_proveedor->nombre_completo.'</div></td>
-                                <td><div>'.$it_proveedor->puesto.' </div></td>
+                                <td><div>' . $it_proveedor->nombre_completo . '</div></td>
+                                <td><div>' . $it_proveedor->puesto . ' </div></td>
                             </tr>
                         </table>
 
@@ -216,8 +216,8 @@ class ReporteRequisicionController extends Controller
                                 <th>Celular </th>
                             </tr>
                             <tr>
-                                <td><div>'.$it_proveedor->correo.'</div></td>
-                                <td><div>'.$it_proveedor->celular.' </div></td>
+                                <td><div>' . $it_proveedor->correo . '</div></td>
+                                <td><div>' . $it_proveedor->celular . ' </div></td>
                             </tr>
                         </table>
 
@@ -227,7 +227,7 @@ class ReporteRequisicionController extends Controller
                                 <th>Objeto social / descripción del servicio o producto</th>
                             </tr>
                             <tr>
-                                <td><div>'.$it_proveedor->objeto_descripcion.'</div></td>
+                                <td><div>' . $it_proveedor->objeto_descripcion . '</div></td>
                             </tr>
                         </table>
 
@@ -236,7 +236,7 @@ class ReporteRequisicionController extends Controller
                                 <th>Cobertura, rango geográfico en el cual presta los servicios</th>
                             </tr>
                             <tr>
-                                <td><div>'.$it_proveedor->cobertura.'</div></td>
+                                <td><div>' . $it_proveedor->cobertura . '</div></td>
                             </tr>
                         </table>
 
@@ -255,20 +255,20 @@ class ReporteRequisicionController extends Controller
                                 <th>Fase</th>
                                 <th>Monto</th>
                             </tr>';
-            if (! empty($contratos_de_proveedor)) {
+            if (!empty($contratos_de_proveedor)) {
                 foreach ($contratos_de_proveedor as $it_contrato_de_proveedor) {
                     $r1 = '
 
                                     <tr>
-                                        <td>'.$it_contrato_de_proveedor->no_contrato.'</td>
-                                        <td>'.$it_contrato_de_proveedor->nombre_servicio.'</td>
-                                        <td>'.$it_contrato_de_proveedor->tipo_contrato.'</td>
-                                        <td>'.$it_contrato_de_proveedor->vigencia_contrato.'</td>
-                                        <td>'.$it_contrato_de_proveedor->fecha_inicio.'</td>
-                                        <td>'.$it_contrato_de_proveedor->fecha_fin.'</td>
-                                        <td>'.$it_contrato_de_proveedor->estatus.'</td>
-                                        <td>'.$it_contrato_de_proveedor->fase.'</td>
-                                        <td>$'.number_format($it_contrato_de_proveedor->monto_pago, 2).'</td>
+                                        <td>' . $it_contrato_de_proveedor->no_contrato . '</td>
+                                        <td>' . $it_contrato_de_proveedor->nombre_servicio . '</td>
+                                        <td>' . $it_contrato_de_proveedor->tipo_contrato . '</td>
+                                        <td>' . $it_contrato_de_proveedor->vigencia_contrato . '</td>
+                                        <td>' . $it_contrato_de_proveedor->fecha_inicio . '</td>
+                                        <td>' . $it_contrato_de_proveedor->fecha_fin . '</td>
+                                        <td>' . $it_contrato_de_proveedor->estatus . '</td>
+                                        <td>' . $it_contrato_de_proveedor->fase . '</td>
+                                        <td>$' . number_format($it_contrato_de_proveedor->monto_pago, 2) . '</td>
                                     </tr>';
                     $reporte_generado .= $r1;
                 }
@@ -314,8 +314,8 @@ class ReporteRequisicionController extends Controller
                         <thead>
                             <tr>
                                 <th><div class="logo_organizacion"></div></th>
-                                <th><font style="font-weight: lighter;">Contrato:</font> <br> <font> '.$it_contrato->no_contrato.' </font></th>
-                                <th>'.$hoy.'</th>
+                                <th><font style="font-weight: lighter;">Contrato:</font> <br> <font> ' . $it_contrato->no_contrato . ' </font></th>
+                                <th>' . $hoy . '</th>
                             </tr>
                         </thead>
                     </table>
@@ -323,7 +323,7 @@ class ReporteRequisicionController extends Controller
                     <h1>INFORMACIÓN GENERAL DEL CONTRATO</h1>
                     <table class="arriba_derecha">
                         <tr>
-                            <td><div><font style="font-weight: bolder;">N° Contrato:</font> '.$it_contrato->no_contrato.'</div></td>
+                            <td><div><font style="font-weight: bolder;">N° Contrato:</font> ' . $it_contrato->no_contrato . '</div></td>
                         </tr>
                     </table>
                     <table class="line_dato">
@@ -331,7 +331,7 @@ class ReporteRequisicionController extends Controller
                             <th>Nombre del servicio</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_contrato->nombre_servicio.'</div></td>
+                            <td><div>' . $it_contrato->nombre_servicio . '</div></td>
                         </tr>
                     </table>
 
@@ -341,8 +341,8 @@ class ReporteRequisicionController extends Controller
                             <th style="width: 70%;">Tipo de contrato</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_contrato->vigencia_contrato.'</div></td>
-                            <td><div>'.$it_contrato->tipo_contrato.'</div></td>
+                            <td><div>' . $it_contrato->vigencia_contrato . '</div></td>
+                            <td><div>' . $it_contrato->tipo_contrato . '</div></td>
                         </tr>
                     </table>
 
@@ -353,9 +353,9 @@ class ReporteRequisicionController extends Controller
                             <th>Fecha firma</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_contrato->fecha_inicio.'</div></td>
-                            <td><div>'.$it_contrato->fecha_fin.'</div></td>
-                            <td><div>'.$it_contrato->fecha_firma.'</div></td>
+                            <td><div>' . $it_contrato->fecha_inicio . '</div></td>
+                            <td><div>' . $it_contrato->fecha_fin . '</div></td>
+                            <td><div>' . $it_contrato->fecha_firma . '</div></td>
                         </tr>
                     </table>
 
@@ -365,8 +365,8 @@ class ReporteRequisicionController extends Controller
                             <th>Monto de pago M.X.N.</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_contrato->no_pagos.'</div></td>
-                            <td><div>$'.number_format($it_contrato->monto_pago, 2).'</div></td>
+                            <td><div>' . $it_contrato->no_pagos . '</div></td>
+                            <td><div>$' . number_format($it_contrato->monto_pago, 2) . '</div></td>
 
                         </tr>
                     </table>
@@ -377,8 +377,8 @@ class ReporteRequisicionController extends Controller
                             <th>Monto mínimo M.X.N.</th>
                         </tr>
                         <tr>
-                            <td><div>$'.number_format($it_contrato->maximo, 2).'</div></td>
-                            <td><div>$'.number_format($it_contrato->minimo, 2).'</div></td>
+                            <td><div>$' . number_format($it_contrato->maximo, 2) . '</div></td>
+                            <td><div>$' . number_format($it_contrato->minimo, 2) . '</div></td>
                         </tr>
                     </table>
 
@@ -388,7 +388,7 @@ class ReporteRequisicionController extends Controller
                             <th>Fianza o responsabilidad civil: Número de folio</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_contrato->folio.'</div></td>
+                            <td><div>' . $it_contrato->folio . '</div></td>
                         </tr>
                     </table>
 
@@ -399,7 +399,7 @@ class ReporteRequisicionController extends Controller
                             <th>Nombre del supervisor</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_contrato->pmp_asignado.'</div></td>
+                            <td><div>' . $it_contrato->pmp_asignado . '</div></td>
                         </tr>
                     </table>
 
@@ -409,8 +409,8 @@ class ReporteRequisicionController extends Controller
                             <th>Área</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_contrato->puesto.'</div></td>
-                            <td><div>'.$it_contrato->area.'</div></td>
+                            <td><div>' . $it_contrato->puesto . '</div></td>
+                            <td><div>' . $it_contrato->area . '</div></td>
                         </tr>
                     </table>
 
@@ -419,7 +419,7 @@ class ReporteRequisicionController extends Controller
                             <th>Nombre del administrador</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_contrato->administrador_contrato.'</div></td>
+                            <td><div>' . $it_contrato->administrador_contrato . '</div></td>
                         </tr>
                     </table>
 
@@ -429,8 +429,8 @@ class ReporteRequisicionController extends Controller
                             <th>Área</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_contrato->cargo_administrador.'</div></td>
-                            <td><div>'.$it_contrato->area_administrador.'</div></td>
+                            <td><div>' . $it_contrato->cargo_administrador . '</div></td>
+                            <td><div>' . $it_contrato->area_administrador . '</div></td>
                         </tr>
                     </table>';
 
@@ -451,8 +451,8 @@ class ReporteRequisicionController extends Controller
                             <th>Revisó los resultados</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_cedula->elaboro.'</div></td>
-                            <td><div>'.$it_cedula->reviso.'</div></td>
+                            <td><div>' . $it_cedula->elaboro . '</div></td>
+                            <td><div>' . $it_cedula->reviso . '</div></td>
                         </tr>
                     </table>
 
@@ -462,8 +462,8 @@ class ReporteRequisicionController extends Controller
                             <th>Cumple</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_cedula->autorizo.'</div></td>
-                            <td><div>'.strtoupper($cumple_cedula_cumplimineto).'</div></td>
+                            <td><div>' . $it_cedula->autorizo . '</div></td>
+                            <td><div>' . strtoupper($cumple_cedula_cumplimineto) . '</div></td>
                         </tr>
                     </table>
 
@@ -473,8 +473,8 @@ class ReporteRequisicionController extends Controller
                             <th>Documento</th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_contrato->folio.'</div></td>
-                            <td><div>'.$it_contrato->file_contrato.'</div></td>
+                            <td><div>' . $it_contrato->folio . '</div></td>
+                            <td><div>' . $it_contrato->file_contrato . '</div></td>
                         </tr>
                     </table>
 
@@ -483,7 +483,7 @@ class ReporteRequisicionController extends Controller
                             <th> Conclusiones generales </th>
                         </tr>
                         <tr>
-                            <td><div>'.$it_cedula->conclusiones_generales.'</div></td>
+                            <td><div>' . $it_cedula->conclusiones_generales . '</div></td>
                         </tr>
                     </table>';
                 $reporte_generado .= $reporte_generado_1;
@@ -506,7 +506,7 @@ class ReporteRequisicionController extends Controller
                             <th>Estatus</th>
                         </tr>';
             $reporte_generado .= $reporte_generado_2;
-            if (! empty($facturas_de_contrato)) {
+            if (!empty($facturas_de_contrato)) {
                 foreach ($facturas_de_contrato as $it_facturas_de_contrato) {
                     if ($it_facturas_de_contrato->cumple == 1) {
                         $cumple_factura = 'si';
@@ -520,16 +520,16 @@ class ReporteRequisicionController extends Controller
 
                     $r1 = '
                         <tr>
-                            <td>'.$it_facturas_de_contrato->no_factura.'</td>
-                            <td>'.$it_facturas_de_contrato->fecha_recepcion.'</td>
-                            <td>'.$it_facturas_de_contrato->fecha_liberacion.'</td>
-                            <td>'.$it_facturas_de_contrato->no_revisiones.'</td>
-                            <td>'.$cumple_factura.'</td>
-                            <td>$'.number_format($it_facturas_de_contrato->monto_factura, 2).'</td>
+                            <td>' . $it_facturas_de_contrato->no_factura . '</td>
+                            <td>' . $it_facturas_de_contrato->fecha_recepcion . '</td>
+                            <td>' . $it_facturas_de_contrato->fecha_liberacion . '</td>
+                            <td>' . $it_facturas_de_contrato->no_revisiones . '</td>
+                            <td>' . $cumple_factura . '</td>
+                            <td>$' . number_format($it_facturas_de_contrato->monto_factura, 2) . '</td>
 
-                            <td>$'.number_format($factura_iva, 2).'</td>
-                            <td>$'.number_format($subtotal_factura, 2).' </td>
-                            <td>'.$it_facturas_de_contrato->estatus.'</td>
+                            <td>$' . number_format($factura_iva, 2) . '</td>
+                            <td>$' . number_format($subtotal_factura, 2) . ' </td>
+                            <td>' . $it_facturas_de_contrato->estatus . '</td>
                         </tr>';
                     $reporte_generado .= $r1;
                 }
@@ -556,17 +556,17 @@ class ReporteRequisicionController extends Controller
                             <th>Consultar</th>
                         </tr>';
             $reporte_generado .= $r2;
-            if (! empty($niveles_de_contrato)) {
+            if (!empty($niveles_de_contrato)) {
                 foreach ($niveles_de_contrato as $it_niveles_de_contrato) {
                     $r3 = '
                         <tr>
-                            <td>'.$it_niveles_de_contrato->id.'</td>
-                            <td>'.$it_niveles_de_contrato->nombre.'</td>
-                            <td>'.$it_niveles_de_contrato->descripcion.'</td>
-                            <td>'.$it_niveles_de_contrato->periodo_evaluacion.'</td>
-                            <td>'.$it_niveles_de_contrato->area.'</td>
-                            <td>'.$it_niveles_de_contrato->periodo_evaluacion.'</td>
-                            <td>'.$it_niveles_de_contrato->info_consulta.'</td>
+                            <td>' . $it_niveles_de_contrato->id . '</td>
+                            <td>' . $it_niveles_de_contrato->nombre . '</td>
+                            <td>' . $it_niveles_de_contrato->descripcion . '</td>
+                            <td>' . $it_niveles_de_contrato->periodo_evaluacion . '</td>
+                            <td>' . $it_niveles_de_contrato->area . '</td>
+                            <td>' . $it_niveles_de_contrato->periodo_evaluacion . '</td>
+                            <td>' . $it_niveles_de_contrato->info_consulta . '</td>
                         </tr>';
                     $reporte_generado .= $r3;
                 }
@@ -593,7 +593,7 @@ class ReporteRequisicionController extends Controller
                         </tr>';
             $reporte_generado .= $r4;
 
-            if (! empty($entregables_de_contrato)) {
+            if (!empty($entregables_de_contrato)) {
                 foreach ($entregables_de_contrato as $it_entregables_de_contrato) {
                     if ($it_entregables_de_contrato->cumplimiento == 1) {
                         $cumple_entregables = 'si';
@@ -603,13 +603,13 @@ class ReporteRequisicionController extends Controller
 
                     $r5 = '
                         <tr>
-                            <td>'.$it_entregables_de_contrato->nombre_entregable.'</td>
-                            <td>'.$it_entregables_de_contrato->descripcion.'</td>
-                            <td>'.$it_entregables_de_contrato->plazo_entrega_inicio.'</td>
-                            <td>'.$it_entregables_de_contrato->plazo_entrega_termina.'</td>
-                            <td>'.$it_entregables_de_contrato->entrega_real.'</td>
-                            <td>'.$cumple_entregables.'</td>
-                            <td>'.$it_entregables_de_contrato->observaciones.'</td>
+                            <td>' . $it_entregables_de_contrato->nombre_entregable . '</td>
+                            <td>' . $it_entregables_de_contrato->descripcion . '</td>
+                            <td>' . $it_entregables_de_contrato->plazo_entrega_inicio . '</td>
+                            <td>' . $it_entregables_de_contrato->plazo_entrega_termina . '</td>
+                            <td>' . $it_entregables_de_contrato->entrega_real . '</td>
+                            <td>' . $cumple_entregables . '</td>
+                            <td>' . $it_entregables_de_contrato->observaciones . '</td>
                         </tr>';
                     $reporte_generado .= $r5;
                 }
@@ -632,7 +632,7 @@ class ReporteRequisicionController extends Controller
                         </tr>';
             $reporte_generado .= $r6;
 
-            if (! empty($entregables_de_contrato)) {
+            if (!empty($entregables_de_contrato)) {
                 foreach ($entregables_de_contrato as $it_entregables_de_contrato) {
                     if ($it_entregables_de_contrato->aplica_deductiva == 1) {
                         $aplica_deductiva_render = 'si';
@@ -641,10 +641,10 @@ class ReporteRequisicionController extends Controller
                     }
                     $r7 = '
                         <tr>
-                            <td>'.$it_entregables_de_contrato->nombre_entregable.'</td>
-                            <td>'.$aplica_deductiva_render.'</td>
-                            <td>'.$it_entregables_de_contrato->justificacion_deductiva_penalizacion.'</td>
-                            <td>$'.number_format(floatval($it_entregables_de_contrato->deductiva_penalizacion), 2).'</td>
+                            <td>' . $it_entregables_de_contrato->nombre_entregable . '</td>
+                            <td>' . $aplica_deductiva_render . '</td>
+                            <td>' . $it_entregables_de_contrato->justificacion_deductiva_penalizacion . '</td>
+                            <td>$' . number_format(floatval($it_entregables_de_contrato->deductiva_penalizacion), 2) . '</td>
                         </tr>';
                     $reporte_generado .= $r7;
                 }
@@ -661,7 +661,7 @@ class ReporteRequisicionController extends Controller
                             <th>Observaciones</th>
                         </tr>';
             $reporte_generado .= $r8;
-            if (! empty($cierre_de_contrato)) {
+            if (!empty($cierre_de_contrato)) {
                 foreach ($cierre_de_contrato as $it_cierre_de_contrato) {
                     if ($it_cierre_de_contrato->cumple == 1) {
                         $cumple_cierre = 'si';
@@ -670,9 +670,9 @@ class ReporteRequisicionController extends Controller
                     }
                     $r9 = '
                         <tr>
-                            <td>'.$it_cierre_de_contrato->aspectos.'</td>
-                            <td>'.$cumple_cierre.'</td>
-                            <td>'.$it_cierre_de_contrato->observaciones.'</td>
+                            <td>' . $it_cierre_de_contrato->aspectos . '</td>
+                            <td>' . $cumple_cierre . '</td>
+                            <td>' . $it_cierre_de_contrato->observaciones . '</td>
                         </tr>';
                     $reporte_generado .= $r9;
                 }
@@ -696,15 +696,15 @@ class ReporteRequisicionController extends Controller
                             <th>Fecha fin</th>
                         </tr>';
             $reporte_generado .= $r10;
-            if (! empty($ampliacion_de_contrato)) {
+            if (!empty($ampliacion_de_contrato)) {
                 foreach ($ampliacion_de_contrato as $it_ampliacion_de_contrato) {
                     $r11 = '
                         <tr>
-                            <td>'.$it_contrato->no_contrato.'</td>
-                            <td>$'.number_format($it_ampliacion_de_contrato->importe, 2).'</td>
-                            <td>$'.number_format($it_ampliacion_de_contrato->monto_total_ampliado, 2).'</td>
-                            <td>'.$it_ampliacion_de_contrato->fecha_inicio.'</td>
-                            <td>'.$it_ampliacion_de_contrato->fecha_fin.'</td>
+                            <td>' . $it_contrato->no_contrato . '</td>
+                            <td>$' . number_format($it_ampliacion_de_contrato->importe, 2) . '</td>
+                            <td>$' . number_format($it_ampliacion_de_contrato->monto_total_ampliado, 2) . '</td>
+                            <td>' . $it_ampliacion_de_contrato->fecha_inicio . '</td>
+                            <td>' . $it_ampliacion_de_contrato->fecha_fin . '</td>
                         </tr>';
                     $reporte_generado .= $r11;
                 }
