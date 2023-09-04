@@ -154,7 +154,7 @@ class ReportesProyemp extends Component
             });
 
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->paginate($this->perPage);
+        $times = $query->fastPaginate($this->perPage);
 
         // $this->totalRegistrosMostrando = $proyemp->count();
 
@@ -232,7 +232,7 @@ class ReportesProyemp extends Component
 
     public function exportExcel()
     {
-        $response = Http::post('http://127.0.0.1:3000/api/timesheet/proyecto', [
+        $response = Http::post(env('GOSERVICES_API') . '/api/timesheet/proyecto', [
             'emp_id' => $this->emp_id,
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_fin' => $this->fecha_fin,
@@ -241,23 +241,20 @@ class ReportesProyemp extends Component
 
         if ($response->successful()) {
             // Get the XLS content from the response
+            $xlsContent = $response->getBody()->getContents();
 
-            $xlsContent = $response->body();
+            $headers = [
+                'Content-Type' => 'application/octet-stream',
+                'Content-Disposition' => 'attachment; filename=timesheet_report.xlsx',
+            ];
 
-            // Provide the XLS file as a download response
-
-            return response($xlsContent, 200)
-
-                ->header('Content-Type', 'application/vnd.ms-excel')
-
-                ->header('Content-Disposition', 'attachment; filename=timesheet_report.xlsx');
+            return response()->streamDownload(function () use ($xlsContent) {
+                echo $xlsContent;
+            }, 'timesheet_report.xlsx', $headers);
         } else {
             // Handle the error if the request is not successful
-
             return response()->json([
-
                 'message' => 'Failed to retrieve the XLS file from the API',
-
             ], $response->status());
         }
     }
