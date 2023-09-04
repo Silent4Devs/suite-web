@@ -50,7 +50,7 @@ class OrdenCompraController extends Controller
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
         if ($user->roles()->first()->name  === 'Admin') {
-            $all_requisiciones = KatbolRequsicion::where('estado', 'firmada')
+            $requisiciones = KatbolRequsicion::where('estado', 'firmada')
                 ->where('archivo', false)
                 ->Orwhere('estado_orden', 'rechazado_oc')
                 ->Orwhere('estado_orden', 'curso')
@@ -58,8 +58,8 @@ class OrdenCompraController extends Controller
                 ->orderByDesc('id')
                 ->get();
 
-            return view('contract_manager.ordenes-compra.index', compact('all_requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
-        } else {
+            return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
+        } elseif ($user->roles()->first()->name  === 'Compras') {
             $comprador = KatbolComprador::where('id_user', $user->empleado_tabantaj_id)->first();
             $id = 0;
             if ($comprador) {
@@ -68,13 +68,18 @@ class OrdenCompraController extends Controller
             $requisiciones = KatbolRequsicion::where('estado', 'firmada')
                 ->where('archivo', false)
                 ->where('comprador_id', $id)
-                ->Orwhere('estado_orden', 'rechazado_oc')
-                ->Orwhere('estado_orden', 'curso')
-                ->Orwhere('estado_orden', 'fin')
                 ->orderByDesc('id')
                 ->get();
 
-            return view('contract_manager.ordenes-compra.index_solicitante', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
+            return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
+        } else {
+            $requisiciones = KatbolRequsicion::where('estado', 'firmada')
+                ->where('archivo', false)
+                ->where('id_user', $user->id)
+                ->orderByDesc('id')
+                ->get();
+
+            return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
         }
     }
 

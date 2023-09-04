@@ -1,18 +1,18 @@
 @extends('layouts.admin')
+<style>
+    table{
+    table-layout: fixed;
+    width: 500px;
+   }
+
+   th, td {
+    border: 1px solid blue;
+    width: 130px;
+    word-wrap: break-word
+    }
+</style>
 @section('content')
-    <style>
-        .table tr td:nth-child(1) {
-            min-width: 200px !important;
-        }
-
-        .table tr td:nth-child(4) {
-            min-width: 200px !important;
-        }
-
-    </style>
-     @include('flash::message')
-     @include('partials.flashMessages')
-    <h5 class="col-12 titulo_general_funcion">Orden De Compra</h5>
+    <h5 class="col-12 titulo_general_funcion">Requisiciones</h5>
     <div class="mt-5 card">
 
         <div class="card-body datatable-fix">
@@ -109,7 +109,9 @@
                 }
 
             ];
+
                 let archivarButton = {
+                    @can("katbol_requisiciones_archivar")
                     text: 'Archivar Registro',
                     url: "",
                     className: 'btn-danger',
@@ -143,6 +145,7 @@
                                 })
                         }
                     }
+                    @endcan
                 }
 
             let dtOverrideGlobals = {
@@ -152,7 +155,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: {
-                    url: "{{ route('contract_manager.orden-compra.getRequisicionIndex') }}",
+                    url: "{{ route('contract_manager.requisiciones.getRequisicionIndex') }}",
                     type: 'POST',
                     data: {
                         _token: _token
@@ -203,22 +206,16 @@
                         name: 'actions',
                         render: function(data, type, row, meta) {
                             let requisiciones = @json($requisiciones);
-                            let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
-                            let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
+                            let urlButtonEdit = `/contract_manager/requisiciones/aprobados/${data}`;
                             let htmlBotones =
                                 `
-                                @can('katbol_ordenes_compra_modificar')
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                @endcan
-
-                                @foreach ($requisiciones as  $requisicion => $valor)
                                 <div class="btn-group">
-                                    <a href="{{ route('contract_manager.orden-compra.show', ['id' => $valor->id]) }}"
-                                                title="Ver/Imprimir" >
-                                                <i class="fa-solid fa-print"></i>
-                                    </a>
+                                    @can('katbol_requisiciones_modificar')
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit fa-xl"></i></a>
+                                    @endcan
                                 </div>
-                                @endforeach
+
+
                             `;
                             return htmlBotones;
                         }
@@ -252,14 +249,60 @@
                             beforeSend: function() {
                                 Swal.fire(
                                     '¡Estamos Archivar!',
-                                    `La orden de compra: ${nombre} está siendo archivado`,
+                                    `La requisición: ${nombre} está siendo archivado`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
                                     'Archivando!',
-                                    `La orden de compra: ${nombre} ha sido archivado`,
+                                    `La requisición: ${nombre} ha sido archivado`,
+                                    'success'
+                                )
+                                table.ajax.reload();
+                            },
+                            error: function(error) {
+                                console.log(error);
+                                Swal.fire(
+                                    'Ocurrió un error',
+                                    `Error: ${error.responseJSON.message}`,
+                                    'error'
+                                )
+                            }
+                        });
+                    }
+                })
+            }
+
+            window.Eliminar = function(url, nombre) {
+                Swal.fire({
+                    title: `¿Estás seguro de eliminar el siguiente registro?`,
+                    html: `<strong><i class="mr-2 fas fa-exclamation-triangle"></i>${nombre}</strong>`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, eliminar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            headers: {
+                                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: url,
+                            beforeSend: function() {
+                                Swal.fire(
+                                    '¡Estamos eliminar!',
+                                    `La requisición: ${nombre} está siendo eliminado`,
+                                    'info'
+                                )
+                            },
+                            success: function(response) {
+                                Swal.fire(
+                                    'Eliminar!',
+                                    `La requisición: ${nombre} ha sido eliminado`,
                                     'success'
                                 )
                                 table.ajax.reload();

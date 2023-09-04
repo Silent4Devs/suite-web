@@ -205,20 +205,18 @@
                             let requisiciones = @json($requisiciones);
                             let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
                             let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
+                            let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;
                             let htmlBotones =
                                 `
-                                @can('katbol_ordenes_compra_modificar')
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                @endcan
-
-                                @foreach ($requisiciones as  $requisicion => $valor)
                                 <div class="btn-group">
-                                    <a href="{{ route('contract_manager.orden-compra.show', ['id' => $valor->id]) }}"
-                                                title="Ver/Imprimir" >
+                                    @can('katbol_ordenes_compra_modificar')
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    @endcan
+                                    <a href="${urlButtonShow}"
+                                                title="Ver/Imprimir" class="btn btn-sm" >
                                                 <i class="fa-solid fa-print"></i>
                                     </a>
                                 </div>
-                                @endforeach
                             `;
                             return htmlBotones;
                         }
