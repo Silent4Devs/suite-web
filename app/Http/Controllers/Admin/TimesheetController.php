@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\NuevoProyectoJob;
 use App\Mail\TimesheetHorasSobrepasadas;
 use App\Mail\TimesheetHorasSolicitudAprobacion;
 use App\Mail\TimesheetSolicitudAprobada;
@@ -20,7 +21,6 @@ use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetTarea;
 use App\Services\TimesheetService;
 use App\Traits\ObtenerOrganizacion;
-use App\Jobs\NuevoProyectoJob;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

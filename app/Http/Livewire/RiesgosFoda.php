@@ -92,6 +92,7 @@ class RiesgosFoda extends Component
     public function render()
     {
         $analisis = AnalisisDeRiesgo::where('tipo', 'Seguridad de la información')->get();
+
         // dd($analisis);
         return view('livewire.riesgos-foda', compact('analisis'));
     }

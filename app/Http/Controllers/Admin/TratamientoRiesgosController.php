@@ -124,6 +124,7 @@ class TratamientoRiesgosController extends Controller
 
         // dd($request);
         $tratamientoRiesgo = TratamientoRiesgo::create($request->all());
+
         // dd($tratamientoRiesgo);
         return redirect()->route('admin.tratamiento-riesgos.index')->with('success', 'Guardado con éxito');
     }

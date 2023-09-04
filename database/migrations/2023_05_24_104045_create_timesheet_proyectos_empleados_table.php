@@ -28,7 +28,6 @@ class CreateTimesheetProyectosEmpleadosTable extends Migration
             $table->bigInteger('horas_asignadas')->nullable();
             $table->bigInteger('costo_hora')->nullable();
             $table->timestamps();
-
         });
     }
 

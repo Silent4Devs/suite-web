@@ -9,6 +9,5 @@ use OwenIt\Auditing\Contracts\Auditable;
 class EvaluacionesIndicadorInfo extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-
     use HasFactory;
 }

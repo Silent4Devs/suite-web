@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use App\Mail\RequisicionesEmail;
-use App\Models\Organizacion;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Models\Empleado;
+use App\Mail\RequisicionesEmail;
 use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;
 use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
@@ -15,13 +11,14 @@ use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\Empleado;
+use App\Models\Organizacion;
 use App\Models\User as ModelsUser;
-use App\User;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use PDF;
 use Gate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -60,9 +57,8 @@ class RequisicionesController extends Controller
         $ids = [];
 
         foreach ($requisicion_id as $id) {
-            $ids =  $id;
+            $ids = $id;
         }
-
 
         $id = Auth::user()->id;
         $roles = ModelsUser::find($id)->roles()->get();
@@ -74,7 +70,6 @@ class RequisicionesController extends Controller
             }
         }
     }
-
 
     public function getRequisicionIndex(Request $request)
     {
@@ -98,8 +93,6 @@ class RequisicionesController extends Controller
         return view('contract_manager.requisiciones.create', compact('sucursales', 'compradores', 'contratos'));
     }
 
-
-
     /**
      * Display the specified resource.
      *
@@ -108,14 +101,13 @@ class RequisicionesController extends Controller
      */
     public function show($id)
     {
-
         try {
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
             $organizacion = Organizacion::select('empresa', 'logotipo')->first();
 
-            $user = ModelsUser::where('id',  $requisicion->id_user)->first();
+            $user = ModelsUser::where('id', $requisicion->id_user)->first();
 
-            $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
+            $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
 
             $supervisor = $empleado->supervisor->name;
             $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
@@ -154,7 +146,6 @@ class RequisicionesController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $request->validate([
             'clave' => 'required',
             'descripcion' => 'required',
@@ -177,7 +168,6 @@ class RequisicionesController extends Controller
         return redirect()->route('catalogos');
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -191,7 +181,6 @@ class RequisicionesController extends Controller
         return redirect(route('contract_manager.requisiciones'));
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -200,15 +189,14 @@ class RequisicionesController extends Controller
      */
     public function Firmar($tipo_firma, $id)
     {
-
         try {
             $requisicion = KatbolRequsicion::where('id', $id)->first();
             $organizacion = Organizacion::first();
             $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-            $user = ModelsUser::where('id',  $requisicion->id_user)->first();
+            $user = ModelsUser::where('id', $requisicion->id_user)->first();
 
-            $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
+            $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
 
             $supervisor = $empleado->supervisor->name;
 
@@ -224,8 +212,7 @@ class RequisicionesController extends Controller
         }
     }
 
-
-    function removeUnicodeCharacters($string)
+    public function removeUnicodeCharacters($string)
     {
         return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }
@@ -248,27 +235,27 @@ class RequisicionesController extends Controller
         ]);
 
         if ($tipo_firma == 'firma_jefe') {
-            $fecha =  date('d-m-Y');
-            $requisicion->fecha_firma_jefe_requi =  $fecha;
+            $fecha = date('d-m-Y');
+            $requisicion->fecha_firma_jefe_requi = $fecha;
             $requisicion->save();
             $userEmail = 'lourdes.abadia@silent4business.com';
         }
         if ($tipo_firma == 'firma_finanzas') {
-            $fecha =  date('d-m-Y');
-            $requisicion->fecha_firma_finanzas_requi =  $fecha;
+            $fecha = date('d-m-Y');
+            $requisicion->fecha_firma_finanzas_requi = $fecha;
             $requisicion->save();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
             $userEmail = trim($this->removeUnicodeCharacters($comprador->user->email));
         }
         if ($tipo_firma == 'firma_compras') {
-            $fecha =  date('d-m-Y');
-            $requisicion->fecha_firma_comprador_requi =  $fecha;
+            $fecha = date('d-m-Y');
+            $requisicion->fecha_firma_comprador_requi = $fecha;
             $requisicion->save();
 
             // correo de compras
             $userEmail = $requisicion->email;
             $requisicion->update([
-                'estado' => 'firmada'
+                'estado' => 'firmada',
             ]);
         }
         $organizacion = Organizacion::first();
@@ -362,9 +349,6 @@ class RequisicionesController extends Controller
         return view('contract_manager.requisiciones.archivo', compact('requisiciones', 'proveedor_indistinto'));
     }
 
-
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -387,10 +371,9 @@ class RequisicionesController extends Controller
         $organizacion = Organizacion::first();
         $tipo_firma = 'rechazado_requisicion';
         Mail::to($requisicion->email)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+
         return redirect(route('contract_manager.requisiciones'));
     }
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -406,9 +389,9 @@ class RequisicionesController extends Controller
 
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-        $user = ModelsUser::where('id',  $requisiciones->id_user)->first();
+        $user = ModelsUser::where('id', $requisiciones->id_user)->first();
 
-        $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
+        $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
 
         $supervisor = $empleado->supervisor->name;
 
@@ -416,6 +399,7 @@ class RequisicionesController extends Controller
 
         $pdf = PDF::loadView('requisiciones_pdf', compact('requisiciones', 'organizacion', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
         $pdf->setPaper('A4', 'portrait');
+
         return $pdf->download('requisicion.pdf');
     }
 }

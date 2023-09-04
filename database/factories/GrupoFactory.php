@@ -24,7 +24,7 @@ class GrupoFactory extends Factory
         static $number = 1;
 
         return [
-            'nombre' => 'Grupo '.$number++,
+            'nombre' => 'Grupo ' . $number++,
             'descripcion' => $this->faker->sentence(),
             'color' => $this->faker->hexColor,
         ];

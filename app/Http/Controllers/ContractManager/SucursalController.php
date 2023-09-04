@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Sucursal;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SucursalController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -23,7 +23,7 @@ class SucursalController extends Controller
         $ids = [];
 
         foreach ($sucursales_id as $id) {
-            $ids =  $id;
+            $ids = $id;
         }
 
         return view('contract_manager.sucursales.index', compact('sucursales', 'ids'));
@@ -44,6 +44,7 @@ class SucursalController extends Controller
     public function create()
     {
         abort_if(Gate::denies('katbol_sucursales_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('contract_manager.sucursales.create');
     }
 
@@ -55,27 +56,25 @@ class SucursalController extends Controller
      */
     public function store(Request $request)
     {
+        $sucursales = new Sucursal();
+        $sucursales->clave = $request->clave;
+        $sucursales->descripcion = $request->descripcion;
+        $sucursales->rfc = $request->rfc;
+        $sucursales->empresa = $request->empresa;
+        $sucursales->cuenta_contable = $request->cuenta_contable;
+        $sucursales->zona = $request->zona;
+        $sucursales->direccion = $request->direccion;
 
-            $sucursales = new Sucursal();
-            $sucursales->clave = $request->clave;
-            $sucursales->descripcion = $request->descripcion;
-            $sucursales->rfc = $request->rfc;
-            $sucursales->empresa = $request->empresa;
-            $sucursales->cuenta_contable = $request->cuenta_contable;
-            $sucursales->zona = $request->zona;
-            $sucursales->direccion = $request->direccion;
+        $file = $request->file('mylogo');
 
-            $file = $request->file('mylogo');
+        if ($file != null) {
+            $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(base_path('public/razon_social'), $nombre);
+            $sucursales->mylogo = $nombre;
+            $sucursales->save();
+        }
 
-            if ($file != null) {
-                $nombre = uniqid().'.'.$file->getClientOriginalExtension();
-                $file->move(base_path('public/razon_social'), $nombre);
-                $sucursales->mylogo = $nombre;
-                $sucursales->save();
-
-            }
-
-            return redirect('/contract_manager/sucursales');
+        return redirect('/contract_manager/sucursales');
     }
 
     /**
@@ -112,43 +111,41 @@ class SucursalController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $request->validate([
-             'clave' => 'required',
-             'descripcion' => 'required',
-             'rfc' => 'required',
-             'empresa' => 'required',
-             'cuenta_contable' => 'required',
-             'zona' => 'required',
-             'direccion' => 'required',
-             'mylogo' => 'required',
+        $request->validate([
+         'clave' => 'required',
+         'descripcion' => 'required',
+         'rfc' => 'required',
+         'empresa' => 'required',
+         'cuenta_contable' => 'required',
+         'zona' => 'required',
+         'direccion' => 'required',
+         'mylogo' => 'required',
+        ]);
+        $sucursal = Sucursal::find($id);
+
+        $file = $request->file('mylogo');
+
+        if ($file != null) {
+            $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(base_path('public/razon_social'), $nombre);
+
+            $sucursal->update([
+                'clave' => $request->clave,
+                'descripcion' => $request->descripcion,
+                'rfc' => $request->rfc,
+                'empresa' => $request->empresa,
+                'cuenta_contable' => $request->cuenta_contable,
+                'estado' => $request->estado,
+                'zona' =>  $request->zona,
+                'direccion' =>  $request->direccion,
+                'mylogo' =>   $nombre,
             ]);
-            $sucursal = Sucursal::find($id);
+        }
 
-
-            $file = $request->file('mylogo');
-
-            if ($file != null) {
-                $nombre = uniqid().'.'.$file->getClientOriginalExtension();
-                $file->move(base_path('public/razon_social'), $nombre);
-
-                $sucursal->update([
-                    'clave' => $request->clave,
-                    'descripcion' => $request->descripcion,
-                    'rfc' => $request->rfc,
-                    'empresa' => $request->empresa,
-                    'cuenta_contable' => $request->cuenta_contable,
-                    'estado' => $request->estado,
-                    'zona' =>  $request->zona,
-                    'direccion' =>  $request->direccion,
-                    'mylogo' =>   $nombre,
-                ]);
-            }
-
-            return redirect('/contract_manager/sucursales');
+        return redirect('/contract_manager/sucursales');
     }
 
-
-     /**
+    /**
      * Remove the specified resource from storage.
      *
      *
@@ -158,32 +155,31 @@ class SucursalController extends Controller
     {
         abort_if(Gate::denies('katbol_sucursales_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $sucursal = Sucursal::find($id);
-        if($sucursal->archivo === false){
+        if ($sucursal->archivo === false) {
             $sucursal->update([
                 'archivo' => true,
             ]);
-
-        }else{
+        } else {
             $sucursal->update([
                 'archivo' => false,
             ]);
         }
+
         return redirect('/contract_manager/sucursales');
     }
 
     public function view_archivados()
     {
-      $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
-      $sucursales_id = Sucursal::get()->pluck('id');
-      $ids = [];
+        $sucursales = Sucursal::select('id', 'clave', 'descripcion', 'rfc', 'empresa', 'cuenta_contable', 'estado', 'zona', 'archivo', 'direccion', 'mylogo')->where('archivo', true)->get();
+        $sucursales_id = Sucursal::get()->pluck('id');
+        $ids = [];
 
-      foreach ($sucursales_id as $id) {
-          $ids =  $id;
-      }
+        foreach ($sucursales_id as $id) {
+            $ids = $id;
+        }
 
-      return view('contract_manager.sucursales.archivo', compact('sucursales', 'ids'));
+        return view('contract_manager.sucursales.archivo', compact('sucursales', 'ids'));
     }
-
 
     public function getArchivadosIndex(Request $request)
     {

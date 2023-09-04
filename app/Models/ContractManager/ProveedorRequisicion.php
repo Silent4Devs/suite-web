@@ -25,5 +25,4 @@ class ProveedorRequisicion extends Model
     ];
 
     public $table = 'proveedor_requisicions';
-
 }

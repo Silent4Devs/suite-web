@@ -33,7 +33,7 @@ class ConveniosModificatorios extends Model implements Auditable
 
     public function modificados()
     {
-        return $this->belongsTo(ConveniosModificatorios::class, 'contrato_id', 'id');
+        return $this->belongsTo(self::class, 'contrato_id', 'id');
     }
 
     public function file()
@@ -45,8 +45,8 @@ class ConveniosModificatorios extends Model implements Auditable
     {
         $archivo = ConveniosModificatoriosFile::where('convenios_modificatorios_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
-        $ruta = asset('storage/contratos/'.$this->contrato->id.'_contrato_'.$this->contrato->no_contrato.'/convenios/pdf');
-        $ruta = $ruta.'/'.$archivo;
+        $ruta = asset('storage/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/convenios/pdf');
+        $ruta = $ruta . '/' . $archivo;
 
         return $ruta;
 

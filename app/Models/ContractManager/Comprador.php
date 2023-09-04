@@ -3,15 +3,12 @@
 namespace App\Models\ContractManager;
 
 use App\Models\Empleado;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Auditable as AuditableTrait;
 
 class Comprador extends Model
 {
     use HasFactory;
-
 
     public $table = 'compradores';
 
@@ -20,7 +17,7 @@ class Comprador extends Model
         'nombre',
         'estado',
         'id_user',
-        'archivo'
+        'archivo',
     ];
 
     public function user()

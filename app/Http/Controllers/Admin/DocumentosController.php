@@ -726,6 +726,7 @@ class DocumentosController extends Controller
 
             return view('admin.documentos.versions-document', compact('documento', 'versiones', 'path_documento'));
         }
+
         // dd($versiones);
         return view('admin.documentos.versions-document', compact('documento', 'versiones'));
     }

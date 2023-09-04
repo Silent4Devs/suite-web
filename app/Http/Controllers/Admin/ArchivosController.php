@@ -55,7 +55,7 @@ class ArchivosController extends Controller
             });
 
             $table->editColumn('nombre', function ($row) {
-                return $row->nombre ? '<a href="'.$row->nombre->getUrl().'" target="_blank">'.trans('global.downloadFile').'</a>' : '';
+                return $row->nombre ? '<a href="' . $row->nombre->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
             $table->addColumn('estado_estado', function ($row) {
                 return $row->estado ? $row->estado->estado : '';
@@ -89,7 +89,7 @@ class ArchivosController extends Controller
         $archivo = Archivo::create($request->all());
 
         if ($request->input('nombre', false)) {
-            $archivo->addMedia(storage_path('tmp/uploads/'.$request->input('nombre')))->toMediaCollection('nombre');
+            $archivo->addMedia(storage_path('tmp/uploads/' . $request->input('nombre')))->toMediaCollection('nombre');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -117,12 +117,12 @@ class ArchivosController extends Controller
         $archivo->update($request->all());
 
         if ($request->input('nombre', false)) {
-            if (! $archivo->nombre || $request->input('nombre') !== $archivo->nombre->file_name) {
+            if (!$archivo->nombre || $request->input('nombre') !== $archivo->nombre->file_name) {
                 if ($archivo->nombre) {
                     $archivo->nombre->delete();
                 }
 
-                $archivo->addMedia(storage_path('tmp/uploads/'.$request->input('nombre')))->toMediaCollection('nombre');
+                $archivo->addMedia(storage_path('tmp/uploads/' . $request->input('nombre')))->toMediaCollection('nombre');
             }
         } elseif ($archivo->nombre) {
             $archivo->nombre->delete();

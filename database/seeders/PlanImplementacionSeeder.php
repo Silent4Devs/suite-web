@@ -17,7 +17,7 @@ class PlanImplementacionSeeder extends Seeder
     {
         $planbs = [
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'1',
+                'id' => 'tmp' . Carbon::now()->timestamp . '1',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'PLAN DE TRABAJO BASE',
                 'level' => '0',
@@ -36,7 +36,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'2',
+                'id' => 'tmp' . Carbon::now()->timestamp . '2',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'ANALISIS INICIAL',
                 'level' => '1',
@@ -55,7 +55,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'3',
+                'id' => 'tmp' . Carbon::now()->timestamp . '3',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Realizar levantamiento de información con formulario de estado actual',
                 'level' => '2',
@@ -74,7 +74,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'4',
+                'id' => 'tmp' . Carbon::now()->timestamp . '4',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Evaluar tablero y presentar resultados a dirección',
                 'level' => '2',
@@ -93,7 +93,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'5',
+                'id' => 'tmp' . Carbon::now()->timestamp . '5',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Identificar brechas y esfuerzos',
                 'level' => '2',
@@ -112,7 +112,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'6',
+                'id' => 'tmp' . Carbon::now()->timestamp . '6',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'PLANEACIÓN',
                 'level' => '1',
@@ -131,7 +131,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'7',
+                'id' => 'tmp' . Carbon::now()->timestamp . '7',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Identificar el Contexto de la Organización',
                 'level' => '2',
@@ -150,7 +150,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'8',
+                'id' => 'tmp' . Carbon::now()->timestamp . '8',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Entendimiento de las necesidades y expectativas de las partes interesadas',
                 'level' => '2',
@@ -169,7 +169,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'9',
+                'id' => 'tmp' . Carbon::now()->timestamp . '9',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Manual del SGI',
                 'level' => '2',
@@ -188,7 +188,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'10',
+                'id' => 'tmp' . Carbon::now()->timestamp . '10',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Elaborar matriz FODA',
                 'level' => '2',
@@ -207,7 +207,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'11',
+                'id' => 'tmp' . Carbon::now()->timestamp . '11',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Determinar Alcance del SGSI',
                 'level' => '2',
@@ -226,7 +226,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'12',
+                'id' => 'tmp' . Carbon::now()->timestamp . '12',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Política de Seguridad de Información',
                 'level' => '2',
@@ -245,7 +245,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'13',
+                'id' => 'tmp' . Carbon::now()->timestamp . '13',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Objetivos del SGSI',
                 'level' => '2',
@@ -264,7 +264,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'14',
+                'id' => 'tmp' . Carbon::now()->timestamp . '14',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Análisis y Evaluación de Riesgos',
                 'level' => '2',
@@ -283,7 +283,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'15',
+                'id' => 'tmp' . Carbon::now()->timestamp . '15',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Inventario de activos de Información',
                 'level' => '2',
@@ -302,7 +302,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'16',
+                'id' => 'tmp' . Carbon::now()->timestamp . '16',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Evaluación y valoración del Riesgo',
                 'level' => '2',
@@ -321,7 +321,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'17',
+                'id' => 'tmp' . Carbon::now()->timestamp . '17',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Plan de Tratamiento de Riesgos conforme a los controles de seguridad',
                 'level' => '2',
@@ -340,7 +340,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'18',
+                'id' => 'tmp' . Carbon::now()->timestamp . '18',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Declaración de aplicabilidad SoA',
                 'level' => '2',
@@ -359,7 +359,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'19',
+                'id' => 'tmp' . Carbon::now()->timestamp . '19',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'SOPORTE',
                 'level' => '1',
@@ -378,7 +378,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'20',
+                'id' => 'tmp' . Carbon::now()->timestamp . '20',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Compromiso de la Alta Dirección',
                 'level' => '2',
@@ -397,7 +397,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'21',
+                'id' => 'tmp' . Carbon::now()->timestamp . '21',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Asignación de Recursos',
                 'level' => '2',
@@ -416,7 +416,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'22',
+                'id' => 'tmp' . Carbon::now()->timestamp . '22',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Conformar el Comité de Seguridad',
                 'level' => '2',
@@ -435,7 +435,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'23',
+                'id' => 'tmp' . Carbon::now()->timestamp . '23',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Elaborar matriz de roles y responsabilidades',
                 'level' => '2',
@@ -454,7 +454,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'24',
+                'id' => 'tmp' . Carbon::now()->timestamp . '24',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Competencias y capacitación',
                 'level' => '2',
@@ -473,7 +473,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'25',
+                'id' => 'tmp' . Carbon::now()->timestamp . '25',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Descripciones de puesto',
                 'level' => '2',
@@ -492,7 +492,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'26',
+                'id' => 'tmp' . Carbon::now()->timestamp . '26',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Control de capacitación del personal',
                 'level' => '2',
@@ -511,7 +511,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'27',
+                'id' => 'tmp' . Carbon::now()->timestamp . '27',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Comunicación del SGSI',
                 'level' => '2',
@@ -530,7 +530,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'28',
+                'id' => 'tmp' . Carbon::now()->timestamp . '28',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'OPERACIÓN DE SGSI',
                 'level' => '1',
@@ -549,7 +549,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'29',
+                'id' => 'tmp' . Carbon::now()->timestamp . '29',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Procesos de gestión',
                 'level' => '2',
@@ -568,7 +568,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'30',
+                'id' => 'tmp' . Carbon::now()->timestamp . '30',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Información documentada',
                 'level' => '2',
@@ -587,7 +587,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'31',
+                'id' => 'tmp' . Carbon::now()->timestamp . '31',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Acciones correctivas',
                 'level' => '2',
@@ -606,7 +606,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'32',
+                'id' => 'tmp' . Carbon::now()->timestamp . '32',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Auditoria interna',
                 'level' => '2',
@@ -625,7 +625,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'33',
+                'id' => 'tmp' . Carbon::now()->timestamp . '33',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Gestión de incidentes de seguridad de la información',
                 'level' => '2',
@@ -644,7 +644,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'34',
+                'id' => 'tmp' . Carbon::now()->timestamp . '34',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Manual de Políticas de seguridad de la información',
                 'level' => '2',
@@ -663,7 +663,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'35',
+                'id' => 'tmp' . Carbon::now()->timestamp . '35',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.5 Políticas de seguridad de información',
                 'level' => '2',
@@ -682,7 +682,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'36',
+                'id' => 'tmp' . Carbon::now()->timestamp . '36',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.6 Organización de la seguridad de información',
                 'level' => '2',
@@ -701,7 +701,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'37',
+                'id' => 'tmp' . Carbon::now()->timestamp . '37',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.7 Seguridad en recursos humanos',
                 'level' => '2',
@@ -720,7 +720,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'38',
+                'id' => 'tmp' . Carbon::now()->timestamp . '38',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.8 Administración de activos',
                 'level' => '2',
@@ -739,7 +739,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'39',
+                'id' => 'tmp' . Carbon::now()->timestamp . '39',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.9 Control de acceso',
                 'level' => '2',
@@ -758,7 +758,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'40',
+                'id' => 'tmp' . Carbon::now()->timestamp . '40',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.10 Criptografía',
                 'level' => '2',
@@ -777,7 +777,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'41',
+                'id' => 'tmp' . Carbon::now()->timestamp . '41',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.11 Seguridad física y ambiental',
                 'level' => '2',
@@ -796,7 +796,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'42',
+                'id' => 'tmp' . Carbon::now()->timestamp . '42',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.12 Seguridad en operaciones',
                 'level' => '2',
@@ -815,7 +815,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'43',
+                'id' => 'tmp' . Carbon::now()->timestamp . '43',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.13 Seguridad en comunicaciones',
                 'level' => '2',
@@ -834,7 +834,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'44',
+                'id' => 'tmp' . Carbon::now()->timestamp . '44',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.14 Adquisición, desarrollo y mantenimiento de sistemas',
                 'level' => '2',
@@ -853,7 +853,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'45',
+                'id' => 'tmp' . Carbon::now()->timestamp . '45',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.15 Relación con proveedores',
                 'level' => '2',
@@ -872,7 +872,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'46',
+                'id' => 'tmp' . Carbon::now()->timestamp . '46',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.16 Administración de incidentes de seguridad de la información',
                 'level' => '2',
@@ -891,7 +891,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'47',
+                'id' => 'tmp' . Carbon::now()->timestamp . '47',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.17 Aspectos de seguridad de la información en la administración de continuidad del negocio',
                 'level' => '2',
@@ -910,7 +910,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'48',
+                'id' => 'tmp' . Carbon::now()->timestamp . '48',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'A.18 Cumplimiento',
                 'level' => '2',
@@ -929,7 +929,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'49',
+                'id' => 'tmp' . Carbon::now()->timestamp . '49',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'EVALUACIÓN',
                 'level' => '1',
@@ -948,7 +948,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'50',
+                'id' => 'tmp' . Carbon::now()->timestamp . '50',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Auditoría Interna',
                 'level' => '2',
@@ -967,7 +967,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'51',
+                'id' => 'tmp' . Carbon::now()->timestamp . '51',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Evaluación',
                 'level' => '2',
@@ -986,7 +986,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'52',
+                'id' => 'tmp' . Carbon::now()->timestamp . '52',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Reporte de Auditoría',
                 'level' => '2',
@@ -1005,7 +1005,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'53',
+                'id' => 'tmp' . Carbon::now()->timestamp . '53',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Consolidación de Información para la Revisión de la Dirección',
                 'level' => '2',
@@ -1024,7 +1024,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'54',
+                'id' => 'tmp' . Carbon::now()->timestamp . '54',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Revisión de la Dirección',
                 'level' => '2',
@@ -1043,7 +1043,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'55',
+                'id' => 'tmp' . Carbon::now()->timestamp . '55',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Revisión de resultados de auditoría y desempeño del SGSI',
                 'level' => '2',
@@ -1062,7 +1062,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'56',
+                'id' => 'tmp' . Carbon::now()->timestamp . '56',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'MEJORA CONTINUA',
                 'level' => '1',
@@ -1081,7 +1081,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'57',
+                'id' => 'tmp' . Carbon::now()->timestamp . '57',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Documentación de Acciones Correctivas y mejora',
                 'level' => '2',
@@ -1100,7 +1100,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'58',
+                'id' => 'tmp' . Carbon::now()->timestamp . '58',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Cierre de acciones de mejora',
                 'level' => '2',
@@ -1119,7 +1119,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'59',
+                'id' => 'tmp' . Carbon::now()->timestamp . '59',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Cierre de acciones correctivas de la Auditoria Interna y/o externa',
                 'level' => '2',
@@ -1138,7 +1138,7 @@ class PlanImplementacionSeeder extends Seeder
                 'progressByWorklog' => false,
             ],
             [
-                'id' => 'tmp'.Carbon::now()->timestamp.'60',
+                'id' => 'tmp' . Carbon::now()->timestamp . '60',
                 'end' => Carbon::now()->timestamp * 1000,
                 'name' => 'Cierre de acciones correctivas derivadas de la Revisión de la Dirección',
                 'level' => '2',
