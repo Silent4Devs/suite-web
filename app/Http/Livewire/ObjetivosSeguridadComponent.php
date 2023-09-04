@@ -123,7 +123,7 @@ class ObjetivosSeguridadComponent extends Component
             }
         }
 
-        $result = eval('return '.$formula_final.';');
+        $result = eval('return ' . $formula_final . ';');
         EvaluacionObjetivo::create([
             'evaluacion' => $this->evaluacion,
             'fecha' => $this->fecha,
@@ -169,7 +169,7 @@ class ObjetivosSeguridadComponent extends Component
             }
         }
 
-        $result = eval('return '.$formula_final.';');
+        $result = eval('return ' . $formula_final . ';');
 
         $evaluaciones->update([
             'evaluacion' => $this->evaluacion,

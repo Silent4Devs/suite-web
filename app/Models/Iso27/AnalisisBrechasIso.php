@@ -41,5 +41,4 @@ class AnalisisBrechasIso extends Model implements Auditable
     // {
     //     return $this->hasMany(GapUno::class, 'analisis_brechas_id');
     // }
-
 }

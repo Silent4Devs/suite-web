@@ -38,6 +38,6 @@ class TaskRecursosEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('App.Users.Models.'.$this->user);
+        return new PrivateChannel('App.Users.Models.' . $this->user);
     }
 }

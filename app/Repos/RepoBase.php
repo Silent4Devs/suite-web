@@ -20,7 +20,7 @@ abstract class RepoBase
     abstract public function create($data);
 
     /**
-     * Encuentra todos los elementos
+     * Encuentra todos los elementos.
      *
      * @param  array  $select
      * @param  array  $filter
@@ -40,7 +40,7 @@ abstract class RepoBase
     }
 
     /**
-     * Encuentra solo un elemento
+     * Encuentra solo un elemento.
      *
      * @param  array  $select
      * @param  array  $filter
@@ -55,7 +55,7 @@ abstract class RepoBase
     }
 
     /**
-     * Elimina un registro mediante su ID
+     * Elimina un registro mediante su ID.
      *
      * @param [type] $id
      * @return void
@@ -66,7 +66,7 @@ abstract class RepoBase
     }
 
     /**
-     * Encuentra un elemento por su ID
+     * Encuentra un elemento por su ID.
      *
      * @param [type] $id
      * @return void
@@ -77,7 +77,7 @@ abstract class RepoBase
     }
 
     /**
-     * Actualiza un elemento en la base de datos
+     * Actualiza un elemento en la base de datos.
      *
      * @param [type] $id
      * @param  array  $data
@@ -93,7 +93,7 @@ abstract class RepoBase
     }
 
     /**
-     * Get the value of paramOrder
+     * Get the value of paramOrder.
      */
     public function getParamOrder()
     {
@@ -101,7 +101,7 @@ abstract class RepoBase
     }
 
     /**
-     * Set the value of paramOrder
+     * Set the value of paramOrder.
      *
      * @return  self
      */
@@ -113,7 +113,7 @@ abstract class RepoBase
     }
 
     /**
-     * Get the value of order
+     * Get the value of order.
      */
     public function getOrder()
     {
@@ -121,7 +121,7 @@ abstract class RepoBase
     }
 
     /**
-     * Set the value of order
+     * Set the value of order.
      *
      * @return  self
      */

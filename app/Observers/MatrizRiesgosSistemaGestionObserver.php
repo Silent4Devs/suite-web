@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
+use App\Models\MatrizRiesgosSistemaGestion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use App\Models\MatrizRiesgosSistemaGestion;
 
 class MatrizRiesgosSistemaGestionObserver
 {

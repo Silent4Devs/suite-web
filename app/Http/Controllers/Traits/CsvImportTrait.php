@@ -13,7 +13,7 @@ trait CsvImportTrait
     {
         try {
             $filename = $request->input('filename', false);
-            $path = storage_path('app/csv_import/'.$filename);
+            $path = storage_path('app/csv_import/' . $filename);
 
             $hasHeader = $request->input('hasHeader', false);
 
@@ -21,7 +21,7 @@ trait CsvImportTrait
             $fields = array_flip(array_filter($fields));
 
             $modelName = $request->input('modelName', false);
-            $model = "App\Models\\".$modelName;
+            $model = "App\Models\\" . $modelName;
 
             $reader = new SpreadsheetReader($path);
             $insert = [];
@@ -79,18 +79,18 @@ trait CsvImportTrait
         $lines[] = $reader->next();
         $lines[] = $reader->next();
 
-        $filename = Str::random(10).'.csv';
+        $filename = Str::random(10) . '.csv';
         $file->storeAs('csv_import', $filename);
 
         $modelName = $request->input('model', false);
-        $fullModelName = "App\Models\\".$modelName;
+        $fullModelName = "App\Models\\" . $modelName;
 
         $model = new $fullModelName();
         $fillables = $model->getFillable();
 
         $redirect = url()->previous();
 
-        $routeName = 'admin.'.strtolower(Str::plural(Str::kebab($modelName))).'.processCsvImport';
+        $routeName = 'admin.' . strtolower(Str::plural(Str::kebab($modelName))) . '.processCsvImport';
 
         return view('csvImport.parseInput', compact('headers', 'filename', 'fillables', 'hasHeader', 'modelName', 'lines', 'redirect', 'routeName'));
     }

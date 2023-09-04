@@ -327,6 +327,7 @@ class RevisionDocumentoController extends Controller
                     $historialDocumento->update([
                         'estatus' => strval(Documento::DOCUMENTO_RECHAZADO),
                     ]);
+
                     // $documentoActual = Documento::with('elaborador')->find($documento->id);
                     // $this->sendMailNotPublish($documentoActual->elaborador->email, $documentoActual);
                     return;
