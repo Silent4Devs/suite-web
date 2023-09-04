@@ -236,11 +236,10 @@ class ReportesProyemp extends Component
     public function exportExcel()
     {
         $response = Http::post('http://127.0.0.1:3000/api/timesheet/proyecto', [
-
-            'emp_id' => '',
-
-            'fecha_inicio' => '',
-
+            'emp_id' => $this->emp_id,
+            'fecha_inicio' => $this->fecha_inicio,
+            'fecha_fin' => $this->fecha_fin,
+            'proy_id' => $this->proy_id,
         ]);
 
 
