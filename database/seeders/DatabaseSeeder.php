@@ -66,8 +66,8 @@ class DatabaseSeeder extends Seeder
                 // AjustesAIASeeder::class,
                 // PermisosEscuelaAdminSeeder::class,
                 // PermisosEscuelaInstructorSeeder::class,
-                PlatformSeeder::class,
-                PermisosEscuelaAdminSeeder::class
+                // PlatformSeeder::class,
+                // PermisosEscuelaAdminSeeder::class
                 //PermisosEscuelaInstructor::class
 
             ]
