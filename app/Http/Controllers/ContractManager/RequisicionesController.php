@@ -21,8 +21,12 @@ use Illuminate\Support\Facades\Mail;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class RequisicionesController extends Controller
 {
+
+    public $bandera = true;
+
     /**
      * Display a listing of the resource.
      *
@@ -255,8 +259,7 @@ class RequisicionesController extends Controller
             ]);
         }
         $organizacion = Organizacion::first();
-        Mail::to('saul.ramirez@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
-
+        Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         return redirect(route('contract_manager.requisiciones'));
     }
 
@@ -268,17 +271,57 @@ class RequisicionesController extends Controller
      */
     public function archivo()
     {
-        $requisiciones = KatbolRequsicion::where('archivo', true)->get();
+
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', true)->get();
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
         return view('contract_manager.requisiciones.archivo', compact('requisiciones', 'proveedor_indistinto'));
     }
 
-    public function getRequisicionIndexArchivo(Request $request)
-    {
-        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', true)->orderByDesc('id')->get();
 
-        return datatables()->of($requisiciones)->toJson();
+    public function indexAprobadores()
+    {
+        $id = Auth::user()->id;
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
+        $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
+
+        return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto'));
+    }
+
+
+    public function firmarAprobadores($id)
+    {
+        $bandera =  true;
+        $requisicion = KatbolRequsicion::where('id', $id)->first();
+        if ($requisicion->firma_solicitante === null) {
+            $tipo_firma = "firma_solicitante";
+        } elseif ($requisicion->firma_jefe === null) {
+            $tipo_firma = "firma_jefe";
+        } elseif ($requisicion->firma_finanzas === null) {
+            $tipo_firma = "firma_finanzas";
+        } elseif ($requisicion->firma_compras === null) {
+            $tipo_firma = "firma_compras";
+        } else {
+            $tipo_firma = "firma_final_aprobadores";
+            $bandera =  $this->bandera = false;
+        }
+
+        $organizacion = Organizacion::first();
+        $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
+        $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
+        $user = ModelsUser::where('id',  $requisicion->id_user)->first();
+
+        $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
+
+        $supervisor = $empleado->supervisor->name;
+
+        $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
+
+        $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisicion->id)->first();
+
+        $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
+
+        return view('contract_manager.requisiciones.firmar', compact('requisicion', 'organizacion', 'bandera', 'contrato', 'comprador', 'tipo_firma', 'supervisor', 'proveedores_catalogo', 'proveedor_indistinto'));
     }
 
     /**

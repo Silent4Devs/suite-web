@@ -314,10 +314,6 @@ class RequisicionesEditComponent extends Component
         }
     }
 
-    public function removeUnicodeA0($string)
-    {
-        return str_replace("\u{A0}", '', $string);
-    }
 
     public function removeUnicodeCharacters($string)
     {

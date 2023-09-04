@@ -136,8 +136,22 @@
                         window.location.href = url;
                         console.log(url);
                     },
-            };
-                dtButtons.push(btnAgregar, btnArchivar);
+               };
+
+               let btnAprobacion = {
+                    text: '<i class="fa-solid fa-box-archive"></i> Aprobadores',
+                    titleAttr: 'Aprobadores requisicion',
+                    url: "{{ route('contract_manager.requisiciones.index_aprobadores') }}",
+                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                    action: function(e, dt, node, config) {
+                        let {
+                            url
+                        } = config;
+                        window.location.href = url;
+                        console.log(url);
+                    },
+               };
+                dtButtons.push(btnAgregar, btnArchivar, btnAprobacion);
                 let archivarButton = {
                     @can("katbol_requisiciones_archivar")
                     text: 'Archivar Registro',
@@ -237,6 +251,7 @@
                             let urlButtonArchivar = `/contract_manager/requisiciones/archivo-estado/${data}`;
                             let urlButtonEliminar = `/contract_manager/requisiciones/destroy/${data}`;
                             let urlButtonEdit = `/contract_manager/requisiciones/edit/${data}`;
+                            let urlButtonShow = `/contract_manager/requisiciones/show/${data}`;
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
@@ -249,7 +264,7 @@
                                                     <i class="fa-solid fa-print"></i>
                                         </a>
                                     @endcan
-                                    <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.folio}');"> <i class="fa-solid fa-box-archive fa-lg"></i></a>
+                                    <a title="Archivar" class="btn btn-sm"  onclick="Archivar('${urlButtonArchivar}','${row.folio}');"> <i class="fa-solid fa-box-archive fa-lg"></i></a>
                                     <a title="Eliminar" class="btn btn-sm text-blue"  onclick="Eliminar('${urlButtonEliminar}','${row.folio}');">  <i class="fa-solid fa-trash fa-lg"></i></a>
                                 </div>
 
