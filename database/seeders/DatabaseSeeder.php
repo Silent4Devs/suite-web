@@ -77,8 +77,6 @@ class DatabaseSeeder extends Seeder
                 // PermisosDashboardTimesheet::class,
                 // PermisosTimesheetAdministrador::class,
 
-
-
                 //Katbol
                 CentroCostosTableSeeder::class,
                 CompradoresTableSeeder::class,
@@ -92,7 +90,6 @@ class DatabaseSeeder extends Seeder
                 // EntregasMensualesTableSeeder::class,
                 // CierreContratosTableSeeder::class,
                 PermisosKatbol::class,
-
 
             ]
         );

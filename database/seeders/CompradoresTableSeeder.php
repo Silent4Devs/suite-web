@@ -6,45 +6,38 @@ use Illuminate\Database\Seeder;
 
 class CompradoresTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-
-
         \DB::table('compradores')->delete();
 
-        \DB::table('compradores')->insert(array (
-            0 =>
-            array (
+        \DB::table('compradores')->insert([
+            0 => [
                 'id' => 1,
-                'nombre' => NULL,
+                'nombre' => null,
                 'clave' => '1',
                 'estado' => 'AC',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
                 'archivo' => 0,
                 'id_user' => 133,
-            ),
-            1 =>
-            array (
+            ],
+            1 => [
                 'id' => 2,
-                'nombre' => NULL,
+                'nombre' => null,
                 'clave' => '2',
                 'estado' => 'AC',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-                'deleted_at' => NULL,
+                'created_at' => null,
+                'updated_at' => null,
+                'deleted_at' => null,
                 'archivo' => 0,
                 'id_user' => 254,
-            ),
-        ));
-
-
+            ],
+        ]);
     }
 }

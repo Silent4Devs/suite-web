@@ -25,6 +25,7 @@ class EV360ConductasController extends Controller
                 'competencia_id' => intval($request->competencia_id),
             ]);
         }
+
         // $this->resetCounter(intval($request->competencia_id));
         return response()->json(['success' => true]);
     }

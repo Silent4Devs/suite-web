@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\ContractManager\HistoricoCedulaCumplimiento;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class HistoricoCedulaController extends Controller
 {
@@ -19,6 +19,7 @@ class HistoricoCedulaController extends Controller
 
         return view('livewire.cedula-cumplimiento.historico-component', compact('items_historico'));
     }
+
     /**
      * Show the form for creating a new resource.
      *

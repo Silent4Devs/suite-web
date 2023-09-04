@@ -15,6 +15,6 @@ class ProveedorIndistinto extends Model
         'requisicion_id',
         'proveedor_indistinto_id',
         'fecha_inicio',
-        'fecha_fin'
+        'fecha_fin',
     ];
 }

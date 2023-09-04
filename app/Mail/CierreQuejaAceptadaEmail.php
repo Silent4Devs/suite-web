@@ -30,6 +30,6 @@ class CierreQuejaAceptadaEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.quejasCliente.cierreQuejaAceptada')->subject('La resolución de la queja '.$this->quejas->folio.' ha sido aprobada');
+        return $this->view('mails.quejasCliente.cierreQuejaAceptada')->subject('La resolución de la queja ' . $this->quejas->folio . ' ha sido aprobada');
     }
 }

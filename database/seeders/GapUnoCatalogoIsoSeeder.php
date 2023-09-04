@@ -14,7 +14,6 @@ class GapUnoCatalogoIsoSeeder extends Seeder
      */
     public function run()
     {
-
         $Catalgo = [
 
             [

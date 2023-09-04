@@ -21,7 +21,6 @@ class ContratosExport implements FromArray, WithHeadings, ShouldAutoSize, WithSt
 
     public function array(): array
     {
-
         //Reporte de contratos
         $reporte = "
         SELECT distinct(f.no_factura) as numero_factura, f.monto_factura as importe_factura,
@@ -37,7 +36,6 @@ class ContratosExport implements FromArray, WithHeadings, ShouldAutoSize, WithSt
         and c.id = $this->id
         order by f.no_factura asc;";
         $result1 = DB::SELECT($reporte);
-
 
         return $result1;
     }

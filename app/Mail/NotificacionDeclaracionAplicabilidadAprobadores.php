@@ -39,6 +39,6 @@ class NotificacionDeclaracionAplicabilidadAprobadores extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadAprobadores')->subject('Solicitud de atención del control '.$this->aplicabilidad->anexo_indice);
+        return $this->view('mails.declaracionAplicabilidad.notificacionDeclaracionAplicabilidadAprobadores')->subject('Solicitud de atención del control ' . $this->aplicabilidad->anexo_indice);
     }
 }

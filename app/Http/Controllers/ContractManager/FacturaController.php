@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\ContractManager;
 
+use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Contrato;
 use App\Models\Factura;
 use App\Models\FacturaFile;
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\Controller;
-use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class FacturaController extends Controller

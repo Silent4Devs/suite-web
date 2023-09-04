@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Audit;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 class VisualizarLogsComponent extends Component
@@ -15,7 +15,7 @@ class VisualizarLogsComponent extends Component
         $articles = Audit::get();
 
         return view('livewire.visualizar-logs-component', [
-            'articles' => $articles
+            'articles' => $articles,
         ]);
     }
 }

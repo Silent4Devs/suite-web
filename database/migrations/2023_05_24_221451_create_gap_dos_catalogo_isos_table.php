@@ -14,7 +14,8 @@ class CreateGapDosCatalogoIsosTable extends Migration
     public function up()
     {
         Schema::create(
-            'gap_dos_catalogo_isos', function (Blueprint $table) {
+            'gap_dos_catalogo_isos',
+            function (Blueprint $table) {
                 $table->id();
                 $table->string('control_iso')->nullable();
                 $table->longText('anexo_politica')->nullable();

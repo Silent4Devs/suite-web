@@ -80,5 +80,4 @@ class Solicitudes extends Model implements Auditable
     {
         return $this->belongsTo(Area::class, 'area_id');
     }
-
 }

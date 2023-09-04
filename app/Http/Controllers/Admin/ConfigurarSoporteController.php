@@ -167,6 +167,7 @@ class ConfigurarSoporteController extends Controller
     {
         // return response()->json(['test' => 'test']);
         $empleados = Empleado::find($request->id);
+
         // dd($empleados);
         // return response()->json([$empleados->extension]);
         return response()->json(['id_puesto' => $empleados->id, 'puesto' => $empleados->puesto, 'telefono' => $empleados->telefono, 'extension' => $empleados->extension, 'telefono_movil' => $empleados->telefono_movil, 'email' => $empleados->email]);

@@ -72,8 +72,8 @@
                         class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
                         <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                         Exportar Excel</button> --}}
-                            <button id="btnExportarproyemp" class="btn-sm rounded pr-2"
-                                style="background-color:#b9eeb9; border: #fff">
+                            <button id="" class="btn-sm rounded pr-2"
+                                style="background-color:#b9eeb9; border: #fff" wire:click="exportExcel()">
                                 <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
                                     title="Exportar Excel"></i>
                                 Exportar Excel
@@ -123,19 +123,19 @@
                                     {!! $time->timesheet->fin !!}
                                 </td>
                                 <td>
-                                    {{ $time->timesheet->empleado->name}}
+                                    {{ $time->timesheet->empleado->name }}
                                 </td>
                                 <td>
-                                    {{ $time->timesheet->aprobador->name}}
+                                    {{ $time->timesheet->aprobador->name }}
                                 </td>
                                 <td>
-                                    {{ $time->proyecto->proyecto}}
+                                    {{ $time->proyecto->proyecto }}
                                 </td>
                                 <td>
-                                    {{ $time->tarea->tarea}}
+                                    {{ $time->tarea->tarea }}
                                 </td>
                                 <td>
-                                    {{ $time->descripcion}}
+                                    {{ $time->descripcion }}
                                 </td>
                                 <td>
                                     {{ $time->horas_lunes + $time->horas_martes + $time->horas_miercoles + $time->horas_jueves + $time->horas_viernes + $time->horas_sabado + $time->horas_domingo }}
@@ -173,19 +173,19 @@
                                     {!! $time->timesheet->finLetras !!}
                                 </td>
                                 <td>
-                                    {{ $time->timesheet->empleado->name}}
+                                    {{ $time->timesheet->empleado->name }}
                                 </td>
                                 <td>
-                                    {{ $time->timesheet->aprobador->name}}
+                                    {{ $time->timesheet->aprobador->name }}
                                 </td>
                                 <td>
-                                    {{ $time->proyecto->proyecto}}
+                                    {{ $time->proyecto->proyecto }}
                                 </td>
                                 <td>
-                                    {{ $time->tarea->tarea}}
+                                    {{ $time->tarea->tarea }}
                                 </td>
                                 <td>
-                                    {{ $time->descripcion}}
+                                    {{ $time->descripcion }}
                                 </td>
                                 <td>
                                     {{ $time->horas_lunes + $time->horas_martes + $time->horas_miercoles + $time->horas_jueves + $time->horas_viernes + $time->horas_sabado + $time->horas_domingo }}

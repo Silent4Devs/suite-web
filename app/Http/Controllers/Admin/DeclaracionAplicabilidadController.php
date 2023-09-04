@@ -221,6 +221,7 @@ class DeclaracionAplicabilidadController extends Controller
                 case 'aplica2':
                     try {
                         $gapun = DeclaracionAplicabilidadResponsable::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
+
                         // $gapun->aplica = $request->value;
                         return response()->json(['success' => true, 'id' => $id]);
                     } catch (Throwable $e) {
@@ -387,6 +388,7 @@ class DeclaracionAplicabilidadController extends Controller
         $nombre_pdf = 'Analisis Inicial ' . Carbon::now()->format('d-m-Y') . '.pdf';
         $content = $pdf->download()->getOriginalContent();
         Storage::put('public/Normas/ISO27001/Analísis Inicial/' . $nombre_pdf, $content);
+
         //$pdf->download(storage_path('Normas/ISO27001/Analísis Inicial/' . $nombre_pdf));
         return $pdf->setPaper('a4', 'landscape')->stream();
 

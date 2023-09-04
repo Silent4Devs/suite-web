@@ -146,7 +146,7 @@ class Timesheet extends Model implements Auditable
     }
 
     /**
-     * TODO: Esta funcion debería estar en la implementación de i18n
+     * TODO: Esta funcion debería estar en la implementación de i18n.
      *
      * @return void
      */
@@ -182,7 +182,7 @@ class Timesheet extends Model implements Auditable
     }
 
     /**
-     * TODO: Esta funcion debería estar en un servicio
+     * TODO: Esta funcion debería estar en un servicio.
      *
      * @return void
      */
@@ -201,7 +201,7 @@ class Timesheet extends Model implements Auditable
     }
 
     /**
-     * TODO: Esta funcion debería estar en un servicio
+     * TODO: Esta funcion debería estar en un servicio.
      *
      * @return void
      */
