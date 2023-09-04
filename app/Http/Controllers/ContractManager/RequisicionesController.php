@@ -272,7 +272,7 @@ class RequisicionesController extends Controller
             ]);
         }
         $organizacion = Organizacion::first();
-        Mail::to('saul.ramirez@silent4business.com')->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+        Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
         return redirect(route('contract_manager.requisiciones'));
     }
 

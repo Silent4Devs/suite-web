@@ -333,14 +333,9 @@ class RequisicionesEditComponent extends Component
         }
     }
 
-    function removeUnicodeA0($string)
-    {
-        return str_replace("\u{A0}", '', $string);
-    }
 
     function removeUnicodeCharacters($string)
     {
         return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }
 }
-

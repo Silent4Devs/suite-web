@@ -290,6 +290,11 @@ class RequisicionesCreateComponent extends Component
         $this->habilitar_firma = true;
     }
 
+    function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
     public function Firmar($data)
     {
         $this->habilitar_proveedores = false;
@@ -316,7 +321,7 @@ class RequisicionesCreateComponent extends Component
 
             $supervisor = $empleado->supervisor->email;
 
-            Mail::to('saul.ramirez@silent4business.com')->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
+            Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 
             return redirect(route('contract_manager.requisiciones'));
         }
