@@ -88,7 +88,6 @@ class Empleado extends Model implements Auditable
         'actual_birdthday', 'actual_aniversary', 'obtener_antiguedad', 'empleados_pares', 'competencias_asignadas', 'es_supervisor', 'fecha_min_timesheet',
     ];
 
-
     protected $with = ['area', 'supervisor'];
 
     //, 'jefe_inmediato', 'empleados_misma_area'
@@ -194,7 +193,8 @@ class Empleado extends Model implements Auditable
         });
     }
 
-    public function TimesheetProyectoEmpleado(){
+    public function TimesheetProyectoEmpleado()
+    {
         return $this->hasMany(TimesheetProyectoEmpleado::class, 'empleado_id', 'id');
     }
 

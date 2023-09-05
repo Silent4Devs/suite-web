@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Comprador;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CompradoresController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -24,13 +23,10 @@ class CompradoresController extends Controller
         $ids = [];
 
         foreach ($compradores_id as $id) {
-            $ids =  $id;
+            $ids = $id;
         }
 
         return view('contract_manager.compradores.index', compact('compradores', 'ids'));
-
-
-
     }
 
     public function getCompradoresIndex(Request $request)
@@ -48,6 +44,7 @@ class CompradoresController extends Controller
     public function create()
     {
         abort_if(Gate::denies('katbol_producto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('contract_manager.compradores.create');
     }
 
@@ -59,14 +56,13 @@ class CompradoresController extends Controller
      */
     public function store(Request $request)
     {
+        $compradores = new Comprador();
+        $compradores->nombre = $request->nombre;
+        $compradores->clave = $request->clave;
+        $compradores->id_user = $request->id_user;
+        $compradores->save();
 
-            $compradores = new Comprador();
-            $compradores->nombre = $request->nombre;
-            $compradores->clave = $request->clave;
-            $compradores->id_user = $request->id_user;
-            $compradores->save();
-
-            return redirect('/contract_manager/compradores');
+        return redirect('/contract_manager/compradores');
     }
 
     /**
@@ -103,18 +99,18 @@ class CompradoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $request->validate([
-             'nombre' => 'required',
-             'clave' => 'required',
-            ]);
-            $comprador = Comprador::find($id);
+        $request->validate([
+         'nombre' => 'required',
+         'clave' => 'required',
+        ]);
+        $comprador = Comprador::find($id);
 
-            $comprador->update([
-                'nombre' => $request->nombre,
-                'clave' => $request->clave
-            ]);
+        $comprador->update([
+            'nombre' => $request->nombre,
+            'clave' => $request->clave,
+        ]);
 
-            return redirect('/contract_manager/compradores');
+        return redirect('/contract_manager/compradores');
     }
 
     /**
@@ -128,35 +124,31 @@ class CompradoresController extends Controller
         abort_if(Gate::denies('katbol_producto_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $compradores = Comprador::find($id);
 
-        if($compradores->archivo === false){
+        if ($compradores->archivo === false) {
             $compradores->update([
                 'archivo' => true,
             ]);
-
-        }else{
+        } else {
             $compradores->update([
                 'archivo' => false,
             ]);
-
         }
 
         return redirect('/contract_manager/compradores');
     }
 
-
     public function view_archivados()
     {
-      $compradores = Comprador::where('archivo', true)->get();
-      $compradores_id = Comprador::get()->pluck('id');
-      $ids = [];
+        $compradores = Comprador::where('archivo', true)->get();
+        $compradores_id = Comprador::get()->pluck('id');
+        $ids = [];
 
-      foreach ($compradores_id as $id) {
-          $ids =  $id;
-      }
+        foreach ($compradores_id as $id) {
+            $ids = $id;
+        }
 
-      return view('contract_manager.compradores.archivo', compact('compradores', 'ids'));
+        return view('contract_manager.compradores.archivo', compact('compradores', 'ids'));
     }
-
 
     public function getArchivadosIndex(Request $request)
     {
@@ -164,6 +156,4 @@ class CompradoresController extends Controller
 
         return datatables()->of($query)->toJson();
     }
-
-
 }

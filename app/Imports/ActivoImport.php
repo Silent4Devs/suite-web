@@ -98,6 +98,7 @@ class ActivoImport implements ToModel
     public function obtenerUbicacionPorId($ubicacion)
     {
         $ubicacion_bd = Sede::getAll()->where('id', $ubicacion)->first();
+
         // dd($ubicacion_bd);
         return $ubicacion_bd->id;
     }
@@ -105,6 +106,7 @@ class ActivoImport implements ToModel
     public function obtenerMarcaPorId($marca)
     {
         $marca_bd = Marca::select('id', 'nombre')->where('id', $marca)->first();
+
         // dd($marca_bd);
         return $marca_bd->id;
     }
@@ -112,6 +114,7 @@ class ActivoImport implements ToModel
     public function obtenerModeloPorId($modelo)
     {
         $modelo_bd = Modelo::select('id', 'nombre')->where('id', $modelo)->first();
+
         // dd($modelo_bd);
         return $modelo_bd->id;
     }

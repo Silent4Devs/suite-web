@@ -34,6 +34,6 @@ class SolicitudAceptacionTratamientoRiesgo extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.tratamientoRiesgos.solicitud-aceptacion-riesgo')->subject('Solicitud de aprobación del riesgo ID '.$this->tratamientoRiesgo->identificador);
+        return $this->view('mails.tratamientoRiesgos.solicitud-aceptacion-riesgo')->subject('Solicitud de aprobación del riesgo ID ' . $this->tratamientoRiesgo->identificador);
     }
 }

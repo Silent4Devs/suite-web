@@ -17,11 +17,11 @@ class PermissionRoleTableSeeder extends Seeder
                 && substr($permission->title, 0, 14) != 'configuracion_';
         });
 
-        if (! is_null(Role::find(2))) {
+        if (!is_null(Role::find(2))) {
             Role::findOrFail(2)->permissions()->sync($consultor_permissions);
         }
 
-        if (! is_null(Role::find(3))) {
+        if (!is_null(Role::find(3))) {
             $consulta_permission = $admin_permissions->filter(function ($permission) {
                 return
                     $permission->title == 'mi_perfil_access'
@@ -49,7 +49,7 @@ class PermissionRoleTableSeeder extends Seeder
             Role::findOrFail(3)->permissions()->sync($consulta_permission);
         }
 
-        if (! is_null(Role::find(4))) {
+        if (!is_null(Role::find(4))) {
             $colaborador_permission = $admin_permissions->filter(function ($permission) {
                 return
                     $permission->title == 'mi_perfil_acceder'

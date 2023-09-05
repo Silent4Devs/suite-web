@@ -9,7 +9,6 @@ class ProveedorOC extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'id',
         'nombre',
@@ -22,7 +21,7 @@ class ProveedorOC extends Model
         'envio',
         'credito',
         'fecha_inicio',
-        'fecha_fin'
+        'fecha_fin',
         ];
 
     public $table = 'proveedor_o_c_s';

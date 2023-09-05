@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\ContractManager;
+
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\ProveedorOC;
-use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProveedoresOController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -22,7 +23,7 @@ class ProveedoresOController extends Controller
         $ids = [];
 
         foreach ($proveedores_id as $id) {
-            $ids =  $id;
+            $ids = $id;
         }
 
         return view('contract_manager.proveedores.index', compact('proveedores', 'ids'));
@@ -31,6 +32,7 @@ class ProveedoresOController extends Controller
     public function getproveedoresIndex(Request $request)
     {
         $query = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', false)->get();
+
         return datatables()->of($query)->toJson();
     }
 
@@ -42,6 +44,7 @@ class ProveedoresOController extends Controller
     public function create()
     {
         abort_if(Gate::denies('katbol_proveedores_ordenes_compra_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('contract_manager.proveedores.create');
     }
 
@@ -53,21 +56,20 @@ class ProveedoresOController extends Controller
      */
     public function store(Request $request)
     {
+        $proveedores = new ProveedorOC();
+        $proveedores->nombre = $request->nombre;
+        $proveedores->razon_social = $request->razon_social;
+        $proveedores->rfc = $request->rfc;
+        $proveedores->contacto = $request->contacto;
+        $proveedores->facturacion = $request->facturacion;
+        $proveedores->direccion = $request->direccion;
+        $proveedores->envio = $request->envio;
+        $proveedores->credito = $request->credito;
+        $proveedores->fecha_inicio = $request->fecha_inicio;
+        $proveedores->fecha_fin = $request->fecha_fin;
+        $proveedores->save();
 
-            $proveedores = new ProveedorOC();
-            $proveedores->nombre = $request->nombre;
-            $proveedores->razon_social = $request->razon_social;
-            $proveedores->rfc = $request->rfc;
-            $proveedores->contacto = $request->contacto;
-            $proveedores->facturacion = $request->facturacion;
-            $proveedores->direccion = $request->direccion;
-            $proveedores->envio = $request->envio;
-            $proveedores->credito = $request->credito;
-            $proveedores->fecha_inicio = $request->fecha_inicio;
-            $proveedores->fecha_fin = $request->fecha_fin;
-            $proveedores->save();
-
-            return redirect('/contract_manager/proveedores');
+        return redirect('/contract_manager/proveedores');
     }
 
     /**
@@ -104,37 +106,36 @@ class ProveedoresOController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $request->validate([
-             'nombre' => 'required',
-             'razon_social' => 'required',
-             'contacto' => 'required',
-             'facturacion' => 'required',
-             'direccion' => 'required',
-             'envio' => 'required',
-             'credito' => 'required',
-             'fecha_inicio' => 'required',
-             'fecha_fin' => 'required',
-            ]);
-            $proveedores = ProveedorOC::find($id);
+        $request->validate([
+         'nombre' => 'required',
+         'razon_social' => 'required',
+         'contacto' => 'required',
+         'facturacion' => 'required',
+         'direccion' => 'required',
+         'envio' => 'required',
+         'credito' => 'required',
+         'fecha_inicio' => 'required',
+         'fecha_fin' => 'required',
+        ]);
+        $proveedores = ProveedorOC::find($id);
 
-            $proveedores->update([
-                'nombre' => $request->nombre,
-                'razon_social' => $request->razon_social,
-                'contacto' => $request->contacto,
-                'facturacion' => $request->facturacion,
-                'cuenta_contable' => $request->cuenta_contable,
-                'direccion' => $request->direccion,
-                'envio' => $request->envio,
-                'credito' => $request->credito,
-                'fecha_inicio' => $request->fecha_inicio,
-                'fecha_fin' => $request->fecha_fin,
-            ]);
+        $proveedores->update([
+            'nombre' => $request->nombre,
+            'razon_social' => $request->razon_social,
+            'contacto' => $request->contacto,
+            'facturacion' => $request->facturacion,
+            'cuenta_contable' => $request->cuenta_contable,
+            'direccion' => $request->direccion,
+            'envio' => $request->envio,
+            'credito' => $request->credito,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+        ]);
 
-            return redirect('/contract_manager/proveedores');
+        return redirect('/contract_manager/proveedores');
     }
 
-
-     /**
+    /**
      * Remove the specified resource from storage.
      *
      *
@@ -144,12 +145,11 @@ class ProveedoresOController extends Controller
     {
         abort_if(Gate::denies('katbol_proveedores_ordenes_compra_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $proveedores = ProveedorOC::find($id);
-        if($proveedores->estado === false){
+        if ($proveedores->estado === false) {
             $proveedores->update([
                 'estado' => true,
             ]);
-
-        }else{
+        } else {
             $proveedores->update([
                 'estado' => false,
             ]);
@@ -158,20 +158,18 @@ class ProveedoresOController extends Controller
         return redirect('/contract_manager/proveedores');
     }
 
-
     public function view_archivados()
     {
-      $proveedores = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', true)->get();
-      $proveedores_id = ProveedorOC::get()->pluck('id');
-      $ids = [];
+        $proveedores = ProveedorOC::select('id', 'nombre', 'razon_social', 'rfc', 'contacto', 'estado', 'facturacion', 'direccion', 'envio', 'credito', 'fecha_inicio', 'fecha_fin')->where('estado', true)->get();
+        $proveedores_id = ProveedorOC::get()->pluck('id');
+        $ids = [];
 
-      foreach ($proveedores_id as $id) {
-          $ids =  $id;
-      }
+        foreach ($proveedores_id as $id) {
+            $ids = $id;
+        }
 
-      return view('contract_manager.proveedores.archivo', compact('proveedores', 'ids'));
+        return view('contract_manager.proveedores.archivo', compact('proveedores', 'ids'));
     }
-
 
     public function getArchivadosIndex(Request $request)
     {
@@ -179,5 +177,4 @@ class ProveedoresOController extends Controller
 
         return datatables()->of($query)->toJson();
     }
-
 }

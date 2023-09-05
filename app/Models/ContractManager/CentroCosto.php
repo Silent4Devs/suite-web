@@ -9,7 +9,6 @@ class CentroCosto extends Model
 {
     use HasFactory;
 
-
     public $table = 'centro_costos';
 
     public $fillable = [
@@ -19,6 +18,4 @@ class CentroCosto extends Model
         'estado',
         'archivo',
     ];
-
-
 }

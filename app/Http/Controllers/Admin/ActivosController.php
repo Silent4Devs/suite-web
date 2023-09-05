@@ -244,6 +244,7 @@ class ActivosController extends Controller
         $tipos = Tipoactivo::getAll();
         $categoriasSeleccionado = $activo->tipoactivo_id;
         $subcategoriaSeleccionado = $activo->subtipo_id;
+
         // dd($subcategoriaSeleccionado);
         return view('admin.activos.edit', compact('tipoactivos', 'subtipos', 'duenos', 'ubicacions', 'empleados', 'area', 'marcas', 'modelos', 'tipos', 'activo', 'procesos', 'categoriasSeleccionado', 'subcategoriaSeleccionado'));
     }

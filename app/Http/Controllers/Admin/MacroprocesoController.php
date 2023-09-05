@@ -93,6 +93,7 @@ class MacroprocesoController extends Controller
             ]
         );
         $macroprocesos = Macroproceso::create($request->all());
+
         // Flash::success('<h5 class="text-center">Macroproceso agregado satisfactoriamente</h5>');
         return redirect()->route('admin.macroprocesos.index')->with('success', 'Guardado con éxito');
     }

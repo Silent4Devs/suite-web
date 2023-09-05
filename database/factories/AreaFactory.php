@@ -25,7 +25,7 @@ class AreaFactory extends Factory
         static $numero = 1;
 
         return [
-            'area' => 'Area '.$numero++,
+            'area' => 'Area ' . $numero++,
             'id_grupo' => Grupo::all()->random()->id,
             'id_reporta' => Area::all()->count() ? Area::all()->random()->id : null,
             'descripcion' => $this->faker->sentence(),

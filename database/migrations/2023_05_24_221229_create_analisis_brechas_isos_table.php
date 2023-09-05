@@ -14,7 +14,8 @@ class CreateAnalisisBrechasIsosTable extends Migration
     public function up()
     {
         Schema::create(
-            'analisis_brechas_isos', function (Blueprint $table) {
+            'analisis_brechas_isos',
+            function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('nombre');
                 $table->date('fecha');

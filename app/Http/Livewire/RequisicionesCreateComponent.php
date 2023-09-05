@@ -3,12 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Mail\RequisicionesEmail;
-use App\Mail\RequsicionEmail;
-use Livewire\Component;
-use App\Models\Comprador;
-use App\Models\Contrato;
-use App\Models\Empleado;
-use App\Models\EmpleadoT;
 use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;
 use App\Models\ContractManager\Producto as KatbolProducto;
@@ -19,14 +13,13 @@ use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicion;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Livewire\Component;
 use Livewire\WithFileUploads;
-use RealRashid\SweetAlert\Facades\Alert;
-
-use function PHPUnit\Framework\isEmpty;
 
 class RequisicionesCreateComponent extends Component
 {
@@ -79,7 +72,6 @@ class RequisicionesCreateComponent extends Component
 
     public function mount()
     {
-
         $this->sucursales = KatbolSucursal::where('archivo', false)->get();
         $this->proveedores = KatbolProveedorOC::where('estado', false)->get();
         $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
@@ -136,7 +128,7 @@ class RequisicionesCreateComponent extends Component
                 $producto_req->espesificaciones = $data['especificaciones_' . $i];
                 $producto_req->cantidad = $data['cantidad_' . $i];
                 $producto_req->producto_id = $data['producto_' . $i];
-                $producto_req->requisiciones_id  =  $this->nueva_requisicion->id;
+                $producto_req->requisiciones_id = $this->nueva_requisicion->id;
                 $producto_req->save();
             }
         }
@@ -144,7 +136,7 @@ class RequisicionesCreateComponent extends Component
         $this->requisicion_id = $this->nueva_requisicion->id;
         $id = Auth::user()->id;
         $this->nueva_requisicion->update([
-            'id_user' =>  $id
+            'id_user' =>  $id,
         ]);
 
         $this->habilitar_proveedores = true;
@@ -181,47 +173,45 @@ class RequisicionesCreateComponent extends Component
         $this->provedores_colllection = collect();
         for ($i = 0; $i <= $this->proveedores_count; $i++) {
             if (isset($data['proveedor_' . $i])) {
-
                 if ($this->selectedInput[$prove_count] === 'otro') {
-
                     if (!empty($this->selectOption[$prove_count]) && isset($this->selectOption[$prove_count])) {
                     } else {
                         $this->selectOption[$prove_count] = 'indistinto';
                     }
 
                     if ($this->selectOption[$prove_count] === 'sugerido') {
-
                         // nuevo proveedor
                         $proveedor_req = new KatbolProveedorRequisicion();
                         $proveedor_req->proveedor = $data['proveedor_' . $i];
                         $proveedor_req->detalles = $data['detalles_' . $i];
                         $proveedor_req->tipo = $data['tipo_' . $i];
-                        $proveedor_req->comentarios  =  $data['comentarios_' . $i];
+                        $proveedor_req->comentarios = $data['comentarios_' . $i];
                         $proveedor_req->contacto = $data['contacto_' . $i];
                         $proveedor_req->cel = $data['contacto_telefono_' . $i];
                         $proveedor_req->contacto_correo = $data['contacto_correo_' . $i];
                         $proveedor_req->url = $data['contacto_url_' . $i];
-                        $proveedor_req->fecha_inicio  =   $data['contacto_fecha_inicio_' . $i];
-                        $proveedor_req->fecha_fin  =   $data['contacto_fecha_fin_' . $i];
-                        $proveedor_req->requisiciones_id  =  $this->requisicion_id;
+                        $proveedor_req->fecha_inicio = $data['contacto_fecha_inicio_' . $i];
+                        $proveedor_req->fecha_fin = $data['contacto_fecha_fin_' . $i];
+                        $proveedor_req->requisiciones_id = $this->requisicion_id;
 
                         // cotizacion y validacion
                         $cotizacion_actual = $this->cotizaciones[$cotizacion_count];
                         if (
                             $cotizacion_actual->getClientOriginalExtension() === 'pdf' || $cotizacion_actual->getClientOriginalExtension() === 'docx'
                             || $cotizacion_actual->getClientOriginalExtension() === 'pptx' || $cotizacion_actual->getClientOriginalExtension() === 'point'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'xml'  || $cotizacion_actual->getClientOriginalExtension() === 'jpeg'
-                            || $cotizacion_actual->getClientOriginalExtension() === 'jpg'  || $cotizacion_actual->getClientOriginalExtension() === 'png'
+                            || $cotizacion_actual->getClientOriginalExtension() === 'xml' || $cotizacion_actual->getClientOriginalExtension() === 'jpeg'
+                            || $cotizacion_actual->getClientOriginalExtension() === 'jpg' || $cotizacion_actual->getClientOriginalExtension() === 'png'
                             || $cotizacion_actual->getClientOriginalExtension() === 'xlsx' || $cotizacion_actual->getClientOriginalExtension() === 'xlsm'
                             || $cotizacion_actual->getClientOriginalExtension() === 'csv'
                         ) {
                             $this->habilitar_alerta = false;
                             $name_cotizacion = 'requisicion_' . $this->requisicion_id . 'cotizazcion_' . $cotizacion_count . '_' . uniqid() . '.' . $cotizacion_actual->getClientOriginalExtension();
                             $ruta_cotizacion = $cotizacion_actual->storeAs('public/cotizaciones_requisiciones_proveedores/', $name_cotizacion);
-                            $proveedor_req->cotizacion  =  $name_cotizacion;
+                            $proveedor_req->cotizacion = $name_cotizacion;
                             $proveedor_req->save();
                         } else {
                             $this->habilitar_alerta = true;
+
                             return false;
                         }
 
@@ -230,7 +220,7 @@ class RequisicionesCreateComponent extends Component
                         $this->dataFirma();
                     } else {
                         $this->provedores_indistinto_catalogo = collect();
-                        $this->provedores_indistinto_catalogo =  KatbolProveedorIndistinto::create([
+                        $this->provedores_indistinto_catalogo = KatbolProveedorIndistinto::create([
                             'requisicion_id' =>   $this->nueva_requisicion->id,
                             //  'proveedor_indistinto_id' =>  $data['proveedor_otro'.$i],
                             'fecha_inicio' => $data['contacto_fecha_inicio_' . $i],
@@ -244,7 +234,7 @@ class RequisicionesCreateComponent extends Component
                 } else {
                     $this->proveedores_catalogo = KatbolProveedorOC::where('id', $this->selectedInput[$prove_count])->first();
                     $this->provedores_colllection_catalogo = collect();
-                    $this->provedores_colllection_catalogo =  KatbolProvedorRequisicionCatalogo::create([
+                    $this->provedores_colllection_catalogo = KatbolProvedorRequisicionCatalogo::create([
                         'requisicion_id' =>   $this->nueva_requisicion->id,
                         'proveedor_id' => $this->selectedInput[$prove_count],
                         'fecha_inicio'  => $data['contacto_fecha_inicio_' . $i],
@@ -261,7 +251,7 @@ class RequisicionesCreateComponent extends Component
                         'proveedoroc_id' =>  $this->proveedores_catalogo->id,
                     ]);
 
-                    $proveedores_escogidos =  KatbolProvedorRequisicionCatalogo::where('requisicion_id',  $this->nueva_requisicion->id)->pluck('proveedor_id')->toArray();
+                    $proveedores_escogidos = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->nueva_requisicion->id)->pluck('proveedor_id')->toArray();
 
                     $this->proveedores_show = KatbolProveedorOC::whereIn('id', $proveedores_escogidos)->get();
 
@@ -290,20 +280,25 @@ class RequisicionesCreateComponent extends Component
         $this->habilitar_firma = true;
     }
 
+    public function removeUnicodeCharacters($string)
+    {
+        return preg_replace('/[^\x00-\x7F]/u', '', $string);
+    }
+
     public function Firmar($data)
     {
         $this->habilitar_proveedores = false;
 
-        $userr =  Auth::user();
+        $userr = Auth::user();
 
         if ($data['firma']) {
             $this->nueva_requisicion->update([
                 'firma_solicitante' => $data['firma'],
-                'estado' => "curso",
+                'estado' => 'curso',
                 'email' => $userr->email,
             ]);
 
-            $fecha =  date('d-m-Y');
+            $fecha = date('d-m-Y');
             $this->nueva_requisicion->fecha_firma_solicitante_requi = $fecha;
             $this->nueva_requisicion->save();
 
@@ -312,11 +307,11 @@ class RequisicionesCreateComponent extends Component
 
             $user = ModelsUser::where('id', $this->nueva_requisicion->id_user)->first();
 
-            $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
+            $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
 
             $supervisor = $empleado->supervisor->email;
 
-            Mail::to('saul.ramirez@silent4business.com')->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
+            Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 
             return redirect(route('contract_manager.requisiciones'));
         }

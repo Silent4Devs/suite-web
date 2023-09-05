@@ -7,7 +7,6 @@ use App\Models\AuditoriaAnual;
 use App\Models\CategoriaCapacitacion;
 use App\Models\ControlDocumento;
 use App\Models\Documento;
-use App\Models\IncidentesDeSeguridad;
 use App\Models\IncidentesSeguridad;
 use App\Models\IndicadoresSgsi;
 use App\Models\PlanBaseActividade;
@@ -351,6 +350,7 @@ class HomeController
             array_push($evaluaciones, $evaluacion['resultado']);
             array_push($evaluacion_nombre, $evaluacion['nombre']);
         }
+
         // dd(DB::getQueryLog());
         // dd($evaluacion_nombre);
         return view('home', compact(

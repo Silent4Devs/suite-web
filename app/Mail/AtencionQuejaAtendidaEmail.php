@@ -30,6 +30,6 @@ class AtencionQuejaAtendidaEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.quejasCliente.atencion-queja')->subject('La queja con folio '.$this->quejas->folio.' esta siendo atendida');
+        return $this->view('mails.quejasCliente.atencion-queja')->subject('La queja con folio ' . $this->quejas->folio . ' esta siendo atendida');
     }
 }

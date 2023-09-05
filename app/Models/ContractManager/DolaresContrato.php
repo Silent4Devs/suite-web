@@ -9,7 +9,7 @@ use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class DolaresContrato
+ * Class DolaresContrato.
  *
  * @property int $id
  * @property int|null $contrato_id

@@ -14,7 +14,8 @@ class CreateClasificacionIsosTable extends Migration
     public function up()
     {
         Schema::create(
-            'clasificacion_isos', function (Blueprint $table) {
+            'clasificacion_isos',
+            function (Blueprint $table) {
                 $table->id();
                 $table->string('nombre')->nullable();
                 $table->timestamps();

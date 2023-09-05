@@ -50,6 +50,7 @@ class PartesInteresadaImport implements ToCollection
                 array_push($clausulas_id, $clausula_bd->id);
             }
         }
+
         // dd($clausulas_id);
         return $clausulas_id;
     }

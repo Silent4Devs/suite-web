@@ -19,7 +19,7 @@ class Sucursal extends Model
         'zona',
         'archivo',
         'direccion',
-        'mylogo'
+        'mylogo',
     ];
 
     public $table = 'sucursales';

@@ -5,15 +5,14 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProveedoresRequest;
 use App\Models\ContractManager\Fiscale;
-use App\Models\Organizacion;
 use App\Models\ContractManager\Proveedores;
-use Illuminate\Http\Request;
+use App\Models\Organizacion;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProveedoresController extends Controller
 {
-
     /**
      * Show the application dashboard.
      *
@@ -34,6 +33,7 @@ class ProveedoresController extends Controller
 
         // $logo_actual = asset('img/logo_katbol.png');
         $empresa_actual = $organizacion_actual->empresa;
+
         // dd($logo_actual);
         return view('contract_manager.proveedor.index', compact('proveedores', 'logo_actual', 'empresa_actual'));
         // ->with('proveedores', $proveedor, 'logo_actual', $logo_actual, 'empresa_actual', $empresa_actual);
@@ -46,6 +46,7 @@ class ProveedoresController extends Controller
         // dd($personas);
         // $this->authorize('haveaccess', 'proveedores.create');
         $personas = Fiscale::get();
+
         // dd($provedoresSeeder);
         return view('contract_manager.proveedor.create', compact('personas'));
     }
@@ -146,9 +147,9 @@ class ProveedoresController extends Controller
 
         $proveedor = Proveedores::find($id);
         $proveedor->update($request->all());
+
         //  dd($proveedor);
         return redirect()->route('contract_manager.proveedor.index')->with('success', '¡El registro fue actualizado exitosamente!');
-
     }
 
     /**
@@ -163,6 +164,7 @@ class ProveedoresController extends Controller
     {
         abort_if(Gate::denies('katbol_proveedores_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         Proveedores::destroy($id);
+
         return redirect()->route('contract_manager.proveedor.index')->with('success', '¡El registro fue eliminado exitosamente!');
     }
 }

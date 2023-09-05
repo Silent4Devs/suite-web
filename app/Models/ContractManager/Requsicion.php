@@ -61,11 +61,11 @@ class Requsicion extends Model
         'proveedor_catalogo_id',
         'ids_proveedores',
         'proveedoroc_id',
-        'email'
+        'email',
     ];
 
     protected $appends = [
-        'folio'
+        'folio',
     ];
 
     public $table = 'requisiciones';
@@ -77,16 +77,19 @@ class Requsicion extends Model
     {
         return $this->hasOne(Contrato::class, 'id', 'contrato_id');
     }
+
     //relacion-comprador
     public function comprador()
     {
         return $this->hasOne(Comprador::class, 'id', 'comprador_id');
     }
+
     //relacion-sucursal
     public function sucursal()
     {
         return $this->hasOne(Sucursal::class, 'id', 'sucursal_id');
     }
+
     //relacion-productos_requisiciones
     public function productos_requisiciones()
     {

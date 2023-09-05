@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Producto;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductoController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -24,13 +23,10 @@ class ProductoController extends Controller
         $ids = [];
 
         foreach ($productos_id as $id) {
-            $ids =  $id;
+            $ids = $id;
         }
 
         return view('contract_manager.productos.index', compact('productos', 'ids'));
-
-
-
     }
 
     public function getProductosIndex()
@@ -48,6 +44,7 @@ class ProductoController extends Controller
     public function create()
     {
         abort_if(Gate::denies('katbol_producto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('contract_manager.productos.create');
     }
 
@@ -59,13 +56,12 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+        $productos = new Producto();
+        $productos->descripcion = $request->descripcion;
+        $productos->clave = $request->clave;
+        $productos->save();
 
-            $productos = new Producto();
-            $productos->descripcion = $request->descripcion;
-            $productos->clave = $request->clave;
-            $productos->save();
-
-            return redirect('/contract_manager/productos');
+        return redirect('/contract_manager/productos');
     }
 
     /**
@@ -102,34 +98,32 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $request->validate([
-             'descripcion' => 'required',
-             'clave' => 'required',
-            ]);
-            $sucursal = Producto::find($id);
+        $request->validate([
+         'descripcion' => 'required',
+         'clave' => 'required',
+        ]);
+        $sucursal = Producto::find($id);
 
-            $sucursal->update([
-                'descripcion' => $request->descripcion,
-                'clave' => $request->clave
-            ]);
+        $sucursal->update([
+            'descripcion' => $request->descripcion,
+            'clave' => $request->clave,
+        ]);
 
-            return redirect('/contract_manager/productos');
+        return redirect('/contract_manager/productos');
     }
-
 
     public function view_archivados()
     {
-      $productos = Producto::select('id', 'clave', 'descripcion')->where('archivo', true)->get();
-      $productos_id = Producto::get()->pluck('id');
-      $ids = [];
+        $productos = Producto::select('id', 'clave', 'descripcion')->where('archivo', true)->get();
+        $productos_id = Producto::get()->pluck('id');
+        $ids = [];
 
-      foreach ($productos_id as $id) {
-          $ids =  $id;
-      }
+        foreach ($productos_id as $id) {
+            $ids = $id;
+        }
 
-      return view('contract_manager.productos.archivo', compact('productos', 'ids'));
+        return view('contract_manager.productos.archivo', compact('productos', 'ids'));
     }
-
 
     public function getArchivadosIndex(Request $request)
     {
@@ -149,20 +143,16 @@ class ProductoController extends Controller
         abort_if(Gate::denies('katbol_producto_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $productos = Producto::find($id);
 
-        if($productos->archivo === false){
+        if ($productos->archivo === false) {
             $productos->update([
                 'archivo' => true,
             ]);
-
-        }else{
+        } else {
             $productos->update([
                 'archivo' => false,
             ]);
-
         }
 
         return redirect('/contract_manager/productos');
     }
-
-
 }

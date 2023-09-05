@@ -48,7 +48,7 @@ class CustomSessionHandler implements \SessionHandlerInterface
 
     public function read($sessionId)
     {
-        if ($this->files->isFile($path = $this->path.'/'.$sessionId)) {
+        if ($this->files->isFile($path = $this->path . '/' . $sessionId)) {
             if ($this->files->lastModified($path) >= Carbon::now()->subMinutes($this->minutes)->getTimestamp()) {
                 return $this->files->sharedGet($path);
             }
@@ -58,27 +58,27 @@ class CustomSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function write($sessionId, $data)
     {
-        $this->files->put($this->path.'/'.$sessionId, $data, true);
+        $this->files->put($this->path . '/' . $sessionId, $data, true);
 
         return true;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function destroy($sessionId)
     {
-        $this->files->delete($this->path.'/'.$sessionId);
+        $this->files->delete($this->path . '/' . $sessionId);
 
         return true;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function gc($lifetime)
     {
@@ -86,7 +86,7 @@ class CustomSessionHandler implements \SessionHandlerInterface
             ->in($this->path)
             ->files()
             ->ignoreDotFiles(true)
-            ->date('<= now - '.$lifetime.' seconds');
+            ->date('<= now - ' . $lifetime . ' seconds');
 
         foreach ($files as $file) {
             $this->files->delete($file->getRealPath());

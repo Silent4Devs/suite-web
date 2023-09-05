@@ -312,6 +312,7 @@
             </div>
         </div>
     </div>
+    @if ($bandera)
     <div class="card card-content" style="margin-bottom: 30px">
         <form method="POST" id="myForm" action="{{ route('contract_manager.requisiciones.firmar-update', ['tipo_firma' => $tipo_firma, 'id' => $requisicion->id]) }}">
             @csrf
@@ -349,6 +350,7 @@
             </div>
         </form>
     </div>
+    @endif
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
