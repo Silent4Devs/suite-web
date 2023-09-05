@@ -1,4 +1,15 @@
 <style>
+    textarea.ajustable {
+        height: auto;
+        min-height: 50px;
+        /* Adjust as needed */
+        max-height: 500px;
+        min-width: 250px;
+        max-width: 350px;
+        /* Adjust as needed */
+        overflow-y: auto;
+    }
+
     .iconos-crear {
         font-size: 20pt;
         margin-right: 18px;
@@ -46,13 +57,16 @@
     #existCode {
         font-weight: bold;
     }
+
     .input-code {
         border-bottom: : 2px solid rgb(18, 118, 250) !important;
     }
+
     .exists {
         border-bottom: : 2px solid red !important;
         color: red !important;
     }
+
     .not-exists {
         /* border-bottom: 2px solid rgb(18, 250, 114) !important; */
     }
@@ -88,8 +102,12 @@
 <link rel="stylesheet" type="text/css" href="http://keith-wood.name/css/jquery.signature.css">
 
 <style>
-    .kbw-signature { width: 100%; height: 200px;}
-    #sig canvas{
+    .kbw-signature {
+        width: 100%;
+        height: 200px;
+    }
+
+    #sig canvas {
         width: 100% !important;
         height: auto;
     }
@@ -98,33 +116,38 @@
 <form method="POST" action="{{ route('contract_manager.contratos-katbol.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="card card-content">
-        <div class="row">
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
 
-            <div class="col m12" style="margin-bottom: 30px;">
+            <div class="col m12" style="margin-top: 30px;">
                 <h3 class="titulo-form">INSTRUCCIONES</h3>
                 <p class="instrucciones">Por favor ingrese los datos del contrato para poder darlo de alta</p>
             </div>
 
         </div>
-        <div class="row">
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
             <h4 class="sub-titulo-form col s12">INFORMACIÓN GENERAL DEL CONTRATO</h4>
         </div>
-        <div class="row">
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
             <div class="col s12 m12 distancia">
                 <label>
                     {{-- <input type="checkbox" class="filled-in" checked="checked" /> --}}
-                    <input type="checkbox" name="identificador_privado" id="check" value="1" onchange="javascript:showContent()" />
+                    <input type="checkbox" name="identificador_privado" id="check" value="1"
+                        onchange="javascript:showContent()" />
                     <span>Contrato Privado</span>
-                  </label>
+                </label>
             </div>
             <input type="text" name="contrato_privado" style="visibility:hidden">
         </div>
 
+        <div class="row" style="margin-left: 10px;margin-right: 10px;">
             @if ($contratos->no_contrato == null)
-                <div class="col s12 m4 distancia form-group" >
-                    <label for="no_contrato" class="txt-tamaño"><i
-                            class="fa-regular fa-file-lines"></i>&nbsp;N° Contrato<font class="asterisco">*
-                        </font></label>
+                <div class="distancia
+            form-group col-md-4">
+                    <label for="no_contrato" class="txt-tamaño"><i class="far fa-file-alt iconos-crear"></i>&nbsp;N°
+                        Contrato
+                        <font class="asterisco">*
+                        </font>
+                    </label>
                     <input class="form-control" {{ $errors->has('no_contrato') ? 'is-invalid' : '' }} type="text"
                         name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}" required>
                     <span id="existCode"></span>
@@ -148,9 +171,11 @@
 
 
 
-            <div class="col s12 m4 distancia">
-                <label for="tipo_contrato" class="txt-tamaño"><i
-                        class="fa-regular fa-file-lines"></i>&nbsp;Tipo de contrato<font class="asterisco">*</font></label>
+            <div class="distancia form-group col-md-4">
+                <label for="tipo_contrato" class="txt-tamaño"><i class="far fa-file-alt iconos-crear"></i>&nbsp;Tipo de
+                    contrato
+                    <font class="asterisco">*</font>
+                </label>
                 <select name="tipo_contrato" class="form-control required">
                     <option value="Fábrica de desarrollo">Fábrica de desarrollo</option>
                     <option value="Fábrica de pruebas">Fábrica de pruebas</option>
@@ -185,24 +210,26 @@
                     </div>
                 @endif
             </div>
-            <div class="col s12 m4 distancia">
-                <label for="nombre_servicio" class="txt-tamaño"><i class="fa-solid fa-file-signature"></i>
-                    &nbsp;Nombre del servicio<font
-                        class="asterisco">*</font></label>
-                <textarea id="textarea1" class="texto-linea form-control materialize-textarea" name="nombre_servicio" required>{{ old('nombre_servicio') }}</textarea>
+            <div class="distancia form-group col-md-4">
+                <label for="nombre_servicio" class="txt-tamaño"><i class="fas fa-file iconos-crear"></i>
+                    &nbsp;Nombre del servicio<font class="asterisco">*</font></label>
+                <div class="form-floating">
+                    <textarea id="textarea1" class="ajustable form-control" name="nombre_servicio" required>{{ old('nombre_servicio') }}</textarea>
+                </div>
                 @if ($errors->has('nombre_servicio'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('nombre_servicio') }}
                     </div>
                 @endif
             </div>
+        </div>
 
 
-
-            <div class="col s12 m4 distancia">
-                <label for="proveedor_id" class="txt-tamaño"><i
-                        class="fa-regular fa-file-lines"></i>&nbsp;Nombre del proveedor<font
-                        class="asterisco">*</font></label>
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="distancia form-group col-md-4">
+                <label for="proveedor_id" class="txt-tamaño"><i class="far fa-file-alt iconos-crear"></i>&nbsp;Nombre
+                    del
+                    proveedor<font class="asterisco">*</font></label>
                 <select name="proveedor_id" class="form-control required">
                     @if ($proveedores)
                         @foreach ($proveedores as $proveedores)
@@ -220,8 +247,10 @@
                     </div>
                 @endif
             </div>
-            <div class="col s12 m4 distancia">
-                <label for="no_proyecto" class="txt-tamaño"><i class="fa-solid fa-barcode"></i>&nbsp;Número de proyecto</label>
+            <div class="distancia form-group col-md-4">
+                <label for="no_proyecto" class="txt-tamaño"><i class="fas fa-barcode iconos-crear"></i>&nbsp;Número
+                    de
+                    proyecto</label>
                 <input class="form-control" type="text" name="no_proyecto" id="no_proyecto">
                 @if ($errors->has('no_proyecto'))
                     <div class="invalid-feedback red-text">
@@ -245,11 +274,11 @@
             </div> --}}
 
 
-            <div class="col s12 m4 distancia">
-                <label for="area_id" class="txt-tamaño"><i class="fa-solid fa-layer-group"></i> Área a la que
+            <div class="distancia form-group col-md-4">
+                <label for="area_id" class="txt-tamaño"><i class="fas fa-street-view iconos-crear"></i> Área a la
+                    que
                     pertenece el contrato:</label>
-                <select class=" {{ $errors->has('area_id') ? 'is-invalid' : '' }} form-control" name="area_id" id="area_id"
-                    required>
+                <select class=" form-control" name="area_id" id="area_id" required>
                     <option disabled>Seleccione área</option>
                     {{-- <option value="" selected disabled>Seleccione área</option> --}}
                     @foreach ($areas as $area)
@@ -262,11 +291,12 @@
                     </div>
                 @endif
             </div>
+        </div>
 
 
-        <div class="row">
-            <div class="col s6 m6 distancia">
-                <label for="fase" class="txt-tamaño"><i class="fa-solid fa-file-pen"></i>
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="form-group col-md-6">
+                <label for="fase" class="txt-tamaño"><i class="fas fa-clipboard-check iconos-crear"></i>
                     &nbsp;Fase<font class="asterisco">*
                     </font></label>
                 <select name="fase" class="form-control">
@@ -300,10 +330,9 @@
                     </div>
                 </div>
             </div> --}}
-            <div class="col s6 m6 distancia">
-                <label for="objetivo" class="txt-tamaño"><i class="fa-solid fa-bullseye"></i>
-                    Objetivo del servicio<font
-                        class="asterisco">*</font></label>
+            <div class="form-group col-md-6">
+                <label for="objetivo" class="txt-tamaño"><i class="fas fa-bullseye iconos-crear"></i>
+                    Objetivo del servicio<font class="asterisco">*</font></label>
                 <textarea id="textarea1" class="texto-linea form-control" name="objetivo" required>{{ old('objetivo') }}</textarea>
                 @if ($errors->has('objetivo'))
                     <div class="invalid-feedback red-text">
@@ -315,28 +344,29 @@
                 @endif
             </div>
         </div>
-        <div class="row">
-            <div class="col s12 m2 distancia">
-                <label for="estatus" class="txt-tamaño"><i class="fa-solid fa-file-circle-question"></i>&nbsp;
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="form-group col-md-4">
+                <label for="estatus" class="txt-tamaño"><i class="fas fa-signal iconos-crear"></i>&nbsp;
                     Estatus<font class="asterisco">*</font>
                 </label><br>
-                {{ Form::select('estatus', ['vigentes' => 'Vigente', 'Cerrado' => 'Cerrado', 'renovaciones' => 'Renovación']) }}
+                {{ Form::select('estatus', ['vigentes' => 'Vigente', 'Cerrado' => 'Cerrado', 'renovaciones' => 'Renovación'], null, ['class' => 'form-control']) }}
                 @if ($errors->has('estatus'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('estatus') }}
                     </div>
                 @endif
             </div>
-            <div class="col s12 m6 distancia">
-                <label for="estatus" class="txt-tamaño"><i class="fa-solid fa-file-contract"></i>&nbsp;Adjuntar Contrato<font
-                        class="asterisco">*</font></label><br>
+            <div class="form-group col-md-4">
+                <label for="estatus" class="txt-tamaño"><i
+                        class="fas fa-file-contract iconos-crear"></i>&nbsp;Adjuntar
+                    Contrato<font class="asterisco">*</font></label><br>
                 <div class="">
                     <div class="file-field input-field">
                         <div class="btn">
                             <span>PDF</span>
                             <input type="file" name="file_contrato" class="form-control input_file_validar"
-                             id="file_contrato" placeholder="Elegir documento pdf"
-                            accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" required>
+                                id="file_contrato" placeholder="Elegir documento pdf"
+                                accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" required>
                             {{-- <input type="hidden" id="fileContratoName" name="file_contrato" value="">
                             <input class="input_file_validar form-control" id="adjuntarContrato" type="file"
                                 accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"> --}}
@@ -344,11 +374,11 @@
                         {{-- <div class="file-path-wrapper">
                             <input class="file-path validate" type="text" placeholder="Elegir documento pdf"
                                 required> --}}
-                                 @if ($errors->has('file_contrato'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('file_contrato') }}
-                        </div>
-                    @endif
+                        @if ($errors->has('file_contrato'))
+                            <div class="invalid-feedback red-text">
+                                {{ $errors->first('file_contrato') }}
+                            </div>
+                        @endif
                         {{-- </div> --}}
                     </div>
 
@@ -367,10 +397,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col s12 m4 distancia">
+            <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño"><i
-                        class="fa-solid fa-calendar-days"></i>&nbsp;Vigencia<font
-                        class="asterisco">*</font></label><br>
+                        class="fas fa-calendar-alt iconos-crear"></i>&nbsp;Vigencia
+                    <font class="asterisco">*</font>
+                </label><br>
                 {!! Form::text('vigencia_contrato', null, ['class' => 'form-control', 'required']) !!}
                 @if ($errors->has('vigencia_contrato'))
                     <div class="invalid-feedback red-text">
@@ -379,13 +410,13 @@
                 @endif
             </div>
         </div>
-        <div class="row">
-            <div class="col s12 m4 distancia">
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño"><i
-                        class="fa-solid fa-calendar-days"></i>&nbsp;Fecha de inicio<font
-                        class="asterisco">*</font></label>
-                <input type="date" name="fecha_inicio" id="fecha_inicio"
-                class = "form-control required" required>
+                        class="fas fa-calendar-alt iconos-crear"></i>&nbsp;Fecha
+                    de
+                    inicio<font class="asterisco">*</font></label>
+                <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" required>
                 {{-- {!! Form::text('fecha_inicio', null, ['class' => 'form-control fecha_inicio_contrato', 'required']) !!}  --}}
                 @if ($errors->has('fecha_inicio'))
                     <div class="invalid-feedback red-text" style="position:absolute;">
@@ -393,12 +424,14 @@
                     </div>
                 @endif
             </div>
-            <div class="col s12 m4 distancia">
+            <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño"><i
-                        class="fa-solid fa-calendar-days"></i>&nbsp;Fecha fin<font
-                        class="asterisco">*</font></label>
-                <input type="date" name="fecha_fin" id="fecha_fin" value="{{old('fecha_fin', '')}}"
-                class = 'form-control required' required>
+                        class="fas fa-calendar-alt iconos-crear"></i>&nbsp;Fecha
+                    fin
+                    <font class="asterisco">*</font>
+                </label>
+                <input type="date" name="fecha_fin" id="fecha_fin" value="{{ old('fecha_fin', '') }}"
+                    class='form-control' required>
                 {{-- {!! Form::text('fecha_fin', old('fecha_fin'), [
                     'class' => 'form-control fecha_fin_contrato required',
                     'required',
@@ -409,12 +442,12 @@
                     </div>
                 @endif
             </div>
-            <div class="col s12 m4 distancia">
+            <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño"><i
-                        class="fa-solid fa-calendar-days"></i>&nbsp;Fecha de firma<font
-                        class="asterisco">*</font></label>
-                <input type="date" name="fecha_firma" id="fecha_firma"
-                class = "form-control">
+                        class="fas fa-calendar-alt iconos-crear"></i>&nbsp;Fecha
+                    de
+                    firma<font class="asterisco">*</font></label>
+                <input type="date" name="fecha_firma" id="fecha_firma" class="form-control" required>
                 {{-- {!! Form::text('fecha_firma', old('fecha_firma'), ['class' => 'form-control fecha_firma', 'required']) !!} --}}
                 @if ($errors->has('fecha_firma'))
                     <div class="invalid-feedback red-text">
@@ -423,13 +456,11 @@
                 @endif
             </div>
         </div>
-        <div class="row">
-            <div class="col s12 m6 distancia">
-                <label for="no_contrato" class="txt-tamaño"><i
-                        class="fa-solid fa-dollar-sign"></i>&nbsp;No.
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="form-group col-md-4">
+                <label for="no_contrato" class="txt-tamaño"><i class="fas fa-dollar-sign iconos-crear"></i>&nbsp;No.
                     Pagos<font class="asterisco">*</font></label><br>
-                <input type="number" name="no_pagos" id="no_pagos" class="form-control required"
-                min="1">
+                <input type="number" name="no_pagos" id="no_pagos" class="form-control required" min="1">
                 {{-- {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!} --}}
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">
@@ -442,10 +473,12 @@
 
 
 
-            <div class="col s12 m6 distancia">
-                <label for="no_contrato" class="txt-tamaño"><i
-                        class="fa-solid fa-dollar-sign"></i>&nbsp;Tipo Cambio<font class="asterisco">*
-                    </font></label>
+            <div class="form-group col-md-4">
+                <label for="no_contrato" class="txt-tamaño"><i class="fas fa-dollar-sign iconos-crear"></i>&nbsp;Tipo
+                    Cambio
+                    <font class="asterisco">*
+                    </font>
+                </label>
                 @php
                     $divisas = [
                         '0' => 'MXN',
@@ -478,129 +511,142 @@
                 </div>
             </div>
         </div>
-            {{-- modal --}}
-            <div class="col s12">
-                <div id="campos_dolares" class="{{ $contratos->tipo_cambio == 'USD' ? '' : 'd-none' }}">
-                    <div class="col l12 m12 s12">
-                        <div class="card hoverable">
-                            <div class="card-content center-align">
+        {{-- modal --}}
+        <div class="col s12">
+            <div id="campos_dolares" class="{{ $contratos->tipo_cambio == 'USD' ? '' : 'd-none' }}">
+                <div class="col l12 m12 s12">
+                    <div class="card hoverable">
+                        <div class="card-content center-align">
 
-                                <table>
-                                    <thead>
-                                        <tr>
+                            <table>
+                                <thead>
+                                    <tr>
 
-                                            <br>
-                                            <th>
-                                                <p class="grey-text txt-frm">
-                                                    <i class="fas fa-dollar-sign iconos-crear"></i>Valor del Dolar
-                                                </p>
-                                            </th>
-                                            <th>
-                                                <p class="grey-text txt-frm"><i
-                                                        class="fas fa-dollar-sign iconos-crear"></i>Monto de
-                                                    pago
-                                                </p>
-                                            </th>
-                                            <th>
-                                                <p class="grey-text txt-frm"><i
-                                                        class="fas fa-dollar-sign iconos-crear"></i>Monto
-                                                    Máximo
-                                                </p>
-                                            </th>
-                                            <th>
-                                                <p class="grey-text txt-frm"><i
-                                                        class="fas fa-dollar-sign iconos-crear"></i>Monto
-                                                    Mínimo
-                                                </p>
-                                            </th>
+                                        <br>
+                                        <th>
+                                            <p class="grey-text txt-frm">
+                                                <i class="fas fa-dollar-sign iconos-crear"></i>Valor del Dolar
+                                            </p>
+                                        </th>
+                                        <th>
+                                            <p class="grey-text txt-frm"><i
+                                                    class="fas fa-dollar-sign iconos-crear"></i>Monto de
+                                                pago
+                                            </p>
+                                        </th>
+                                        <th>
+                                            <p class="grey-text txt-frm"><i
+                                                    class="fas fa-dollar-sign iconos-crear"></i>Monto
+                                                Máximo
+                                            </p>
+                                        </th>
+                                        <th>
+                                            <p class="grey-text txt-frm"><i
+                                                    class="fas fa-dollar-sign iconos-crear"></i>Monto
+                                                Mínimo
+                                            </p>
+                                        </th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
 
-                                                {!! Form::text('valor_dolar', !is_null($dolares) ? $dolares->valor_dolar : null, [
-                                                    'class' => 'form-control',
-                                                    'id' => 'valor_dol',
-                                                    'autocomplete' => 'off',
-                                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                                ]) !!}
+                                            {!! Form::text('valor_dolar', !is_null($dolares) ? $dolares->valor_dolar : null, [
+                                                'class' => 'form-control',
+                                                'id' => 'valor_dol',
+                                                'autocomplete' => 'off',
+                                                'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                            ]) !!}
 
-                                            </td>
+                                        </td>
 
-                                            <td>
-                                                {!! Form::text('monto_dolares', !is_null($dolares) ? $dolares->monto_dolares : null, [
-                                                    'class' => 'form-control',
-                                                    'id' => 'dolar',
-                                                    'autocomplete' => 'off',
-                                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                                ]) !!}
-                                            </td>
-
-
-                                            <td>
-                                                {!! Form::text('maximo_dolares', !is_null($dolares) ? $dolares->maximo_dolares : null, [
-                                                    'class' => 'form-control',
-                                                    'id' => 'dolar_maximo',
-                                                    'autocomplete' => 'off',
-                                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                                ]) !!}
-
-                                            </td>
-
-                                            <td>
-                                                {!! Form::text('minimo_dolares', !is_null($dolares) ? $dolares->minimo_dolares : null, [
-                                                    'class' => 'form-control',
-                                                    'id' => 'dolar_minimo',
-                                                    'autocomplete' => 'off',
-                                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                                ]) !!}
-
-                                            </td>
+                                        <td>
+                                            {!! Form::text('monto_dolares', !is_null($dolares) ? $dolares->monto_dolares : null, [
+                                                'class' => 'form-control',
+                                                'id' => 'dolar',
+                                                'autocomplete' => 'off',
+                                                'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                            ]) !!}
+                                        </td>
 
 
+                                        <td>
+                                            {!! Form::text('maximo_dolares', !is_null($dolares) ? $dolares->maximo_dolares : null, [
+                                                'class' => 'form-control',
+                                                'id' => 'dolar_maximo',
+                                                'autocomplete' => 'off',
+                                                'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                            ]) !!}
 
-                                        </tr>
+                                        </td>
+
+                                        <td>
+                                            {!! Form::text('minimo_dolares', !is_null($dolares) ? $dolares->minimo_dolares : null, [
+                                                'class' => 'form-control',
+                                                'id' => 'dolar_minimo',
+                                                'autocomplete' => 'off',
+                                                'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                            ]) !!}
+
+                                        </td>
+
+
+
+                                    </tr>
+                                    @php
+                                        $contrato_importe_total = $contratos->monto_pago;
+                                    @endphp
+                                    @foreach ($contratos->ampliaciones as $ampliacion)
                                         @php
-                                            $contrato_importe_total = $contratos->monto_pago;
+                                            $contrato_importe_total += $ampliacion->importe;
                                         @endphp
-                                        @foreach ($contratos->ampliaciones as $ampliacion)
-                                            @php
-                                                $contrato_importe_total += $ampliacion->importe;
-                                            @endphp
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-        <div class="row">
-            <div class="col s12 m4 distancia">
+        </div>
+        <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+            <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño"><i
-                        class="fa-solid fa-dollar-sign"></i>&nbsp;Monto de Pago M.X.N.<font
-                        class="asterisco">*</font></label>
-                {!! Form::text('monto_pago', null, ['id' => 'teste', 'class' => 'form-control', 'autocomplete' => 'off', 'required']) !!}
+                        class="fas fa-dollar-sign iconos-crear"></i>&nbsp;Monto de
+                    Pago M.X.N.<font class="asterisco">*</font></label>
+                {!! Form::text('monto_pago', null, [
+                    'id' => 'teste',
+                    'class' => 'form-control',
+                    'autocomplete' => 'off',
+                    'required',
+                ]) !!}
                 @if ($errors->has('monto_pago'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('monto_pago') }}
-                        </div>
-                    @endif
+                    <div class="invalid-feedback red-text">
+                        {{ $errors->first('monto_pago') }}
+                    </div>
+                @endif
             </div>
-            <div class="col s12 m4 distancia">
+            <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño"><i
-                        class="fa-solid fa-dollar-sign"></i>&nbsp;Monto máximo M.X.N.<font
-                        class="asterisco">*</font></label>
+                        class="fas fa-dollar-sign iconos-crear"></i>&nbsp;Monto
+                    máximo
+                    M.X.N.<font class="asterisco">*</font></label>
                 {!! Form::text('maximo', null, ['id' => 'este', 'class' => 'form-control', 'autocomplete' => 'off', 'required']) !!}
             </div>
-            <div class="col s12 m4 distancia">
+            <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño"><i
-                        class="fa-solid fa-dollar-sign"></i>&nbsp;Monto mínimo M.X.N.<font
-                        class="asterisco">*</font></label>
-                {!! Form::text('minimo', null, ['id' => 'prueba', 'class' => 'form-control', 'autocomplete' => 'off', 'required']) !!}
+                        class="fas fa-dollar-sign iconos-crear"></i>&nbsp;Monto
+                    mínimo
+                    M.X.N.<font class="asterisco">*</font></label>
+                {!! Form::text('minimo', null, [
+                    'id' => 'prueba',
+                    'class' => 'form-control',
+                    'autocomplete' => 'off',
+                    'required',
+                ]) !!}
             </div>
+        </div>
 
 
 
@@ -608,77 +654,76 @@
 
 
 
+        <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
             <div class="col s12 m4 distancia">
-                <div class="">
-                    <p style="color:#2395AA"><i class="fa-solid fa-file-invoice-dollar"></i>
+                <div class="form">
+                    <p style="color:#2395AA"><i class="fas fa-landmark iconos-crear"></i>
                         &nbsp;¿Aplica fianza o responsabilidad civil? </p>
                     <div class="switch" style="margin-top: 8px; margin-left: 8px;">
                         <label class="letra-ngt" style="margin-top: 5px;">
-                            No
                             <input id="check_aplica_fianza" type="checkbox" name="aplicaFinaza">
-                            <span class="lever"></span>
-                            Si
+                            <span class="lever">Si</span>
                         </label>
                     </div>
                 </div>
             </div>
         </div>
-            <style type="text/css">
-                .td_fianza {
-                    display: none;
-                }
-            </style>
-            <div class="col s12 m4 distancia">
-                <div class="td_fianza">
-                    <label class="txt-tamaño">Folio</label>
-                    {!! Form::text('folio', null, ['class' => 'form-control']) !!}
-                </div>
+        <style type="text/css">
+            .td_fianza {
+                display: none;
+            }
+        </style>
+        <div class="form-group col-md-12 distancia">
+            <div class="td_fianza">
+                <label class="txt-tamaño">Folio</label>
+                {!! Form::text('folio', null, ['class' => 'form-control']) !!}
             </div>
-            <div class="col s12 m4 distancia">
-                <div class="td_fianza">
-                    <label class="txt-tamaño ">Documento</label>
-                    <div class="file-field input-field">
-                        <div class="btn">
-                            <span>PDF</span>
-                            <input type="hidden" id="" name="" value="">
-                            <input class="input_file_validar" type="file" name="documento"
-                                accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" placeholder="Elegir documento pdf"
-                                readonly>
-                        </div>
+        </div>
+        <div class="form-group col-md-12 distancia">
+            <div class="td_fianza">
+                <label class="txt-tamaño ">Documento</label>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>PDF</span>
+                        <input type="hidden" id="" name="" value="">
+                        <input class="input_file_validar" type="file" name="documento"
+                            accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
                     </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate form-control" type="text"
+                            placeholder="Elegir documento pdf" readonly>
+                    </div>
+                </div>
 
-                    <div class="ml-4 display-flex">
-                        <label class="red-text">{{ $errors->first('Type') }}</label>
-                    </div>
+                <div class="ml-4 display-flex">
+                    <label class="red-text">{{ $errors->first('Type') }}</label>
                 </div>
             </div>
-        <div class="row">
+        </div>
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
             <h4 class="sub-titulo-form col s12">RESPONSABLES</h4>
         </div>
-        <div class="row">
-            <div class="col s12 m4 distancia">
-                <label class="txt-tamaño"><i class="fa-solid fa-user-tie"></i>&nbsp;Nombre
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="form-group col-md-4">
+                <label class="txt-tamaño"><i class="fas fa-user-tie iconos-crear"></i>&nbsp;Nombre
                     del Supervisor 1<font class="asterisco">*
                     </font></label>
                 <div>
                     {!! Form::text('pmp_asignado', null, ['class' => 'form-control', 'required']) !!}
-                      @if ($errors->has('pmp_asignado'))
+                    @if ($errors->has('pmp_asignado'))
                         <div class="invalid-feedback red-text">
                             {{ $errors->first('pmp_asignado') }}
                         </div>
                     @endif
                 </div>
             </div>
-            <div class="col s12 m4 distancia">
+            <div class="form-group col-md-4">
                 <label class="txt-tamaño"><i class="fas fa-briefcase iconos-crear"></i>&nbsp;Puesto</label>
                 <div>
                     {!! Form::text('puesto', null, ['class' => 'form-control']) !!}
                 </div>
             </div>
-            <div class="col s12 m4 distancia">
+            <div class="form-group col-md-4">
                 <label class="txt-tamaño"><i class="fas fa-puzzle-piece iconos-crear"></i>&nbsp;Área</label>
                 <div>
                     {!! Form::text('area', null, ['class' => 'form-control']) !!}
@@ -690,9 +735,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col s12 m4 distancia">
-                <label class="txt-tamaño"><i class="fa-solid fa-user-tie"></i>&nbsp;Nombre
+        <div class="row" style="margin-left: 10px; margin-right: 10px;">
+            <div class="form-group col-md-4">
+                <label class="txt-tamaño"><i class="fas fa-user-tie iconos-crear"></i>&nbsp;Nombre
                     del Supervisor 2</label>
                 <div>
                     {!! Form::text('administrador_contrato', null, ['class' => 'form-control']) !!}
@@ -703,7 +748,7 @@
                     @endif
                 </div>
             </div>
-            <div class="col s12 m4 distancia">
+            <div class="form-group col-md-4">
                 <label class="txt-tamaño"><i class="fas fa-briefcase iconos-crear"></i>&nbsp;Puesto</label>
                 <div>
                     {!! Form::text('cargo_administrador', null, ['class' => 'form-control']) !!}
@@ -714,7 +759,7 @@
                     @endif
                 </div>
             </div>
-            <div class="col s12 m4 distancia">
+            <div class="form-group col-md-4">
                 <label class="txt-tamaño"><i class="fas fa-puzzle-piece iconos-crear"></i>&nbsp;Área</label>
                 <div>
                     {!! Form::text('area_administrador', null, ['class' => 'form-control']) !!}
@@ -725,7 +770,8 @@
                     @endif
                 </div>
             </div>
-            {{-- <div class="row"></div>
+        </div>
+        {{-- <div class="row"></div>
             <div class="row">
             <label class="txt-tamaño" for="firma"><i class="fas fa-file-signature iconos-crear"></i>
                 Firma:</label>
@@ -743,15 +789,14 @@
                     </div>
             @endif
             </div> --}}
-            </div>
-            <div class="row">
-                <div class="col s12 m12 right-align btn-grd distancia">
-                    <a id="btnCancelar" href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn-redondeadotn btn btn-default"
-                        style="background: #959595 !important">Cancelar</a>
-                    {!! Form::submit('Guardar', ['class' => 'btn-redondeado btn btn-primary', 'id' => 'btnGuardar']) !!}
-                </div>
+        <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+            <div class="col s12 m12 right-align btn-grd distancia">
+                <a id="btnCancelar" href="{{ route('contract_manager.contratos-katbol.index') }}"
+                    class="btn btn_cancelar">Cancelar</a>
+                {!! Form::submit('Guardar', ['class' => 'btn btn-success', 'id' => 'btnGuardar']) !!}
             </div>
         </div>
+    </div>
     </div>
 </form>
 
@@ -770,10 +815,9 @@
         element = document.getElementById("no_contrato");
         check = document.getElementById("check");
         if (check.checked) {
-            element.style.display='none';
-        }
-        else {
-            element.style.display='block';
+            element.style.display = 'none';
+        } else {
+            element.style.display = 'block';
         }
     }
 </script>
@@ -1129,7 +1173,8 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css" rel="stylesheet">
+<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css"
+    rel="stylesheet">
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
@@ -1138,11 +1183,14 @@
 <link rel="stylesheet" type="text/css" href="http://keith-wood.name/css/jquery.signature.css">
 
 <script type="text/javascript">
-    var signaturePad = $('#signaturePad').signature({syncField: '#signature64', syncFormat: 'PNG'});
+    var signaturePad = $('#signaturePad').signature({
+        syncField: '#signature64',
+        syncFormat: 'PNG'
+    });
     $('#clear').click(function(e) {
         e.preventDefault();
         signaturePad.signature('clear');
-      $("#signature64").val('');
+        $("#signature64").val('');
     });
 </script>
 
