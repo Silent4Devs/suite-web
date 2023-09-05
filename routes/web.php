@@ -6,7 +6,6 @@ use App\Http\Controllers\Visitantes\RegistroVisitantesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
     Route::get('/salida', [RegistroVisitantesController::class, 'salida'])->name('salida');
@@ -25,7 +24,6 @@ Route::post('/minutas/revisiones/approve', 'RevisionMinutasController@approve')-
 Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->name('minutas.revisiones.reject');
 Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@edit')->name('minutas.revisiones.revisar');
 Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
-
 
 Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestProveedores')->name('provedor_reporte');
 Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
@@ -126,8 +124,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('puestos/process-csv-import', 'PuestosController@processCsvImport')->name('puestos.processCsvImport');
     Route::resource('puestos', 'PuestosController');
     Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
-
-
 
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
         // Visitantes
@@ -1469,8 +1465,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 
 //KATBOL
-Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'contractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
-
+Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['auth', '2fa', 'active']], function () {
     Route::view('katbol', 'contract_manager.katbol.index')->name('katbol');
 
     //Proveedores
@@ -1511,13 +1506,11 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::post('productos/archivar/{id}', 'ProductoController@archivar')->name('productos.archivar');
     Route::post('productos/list/get', 'ProductoController@getProductosIndex')->name('productos.getProductosIndex');
 
-
     Route::get('sucursales/archivados', 'SucursalController@view_archivados')->name('sucursales.view_archivados');
     Route::post('sucursales/list/get/archivados', 'SucursalController@getArchivadosIndex')->name('sucursales.getArchivadosIndex');
     Route::resource('sucursales', 'SucursalController');
     Route::post('sucursales/archivar/{id}', 'SucursalController@archivar')->name('sucursales.archivar');
     Route::post('sucursales/list/get', 'SucursalController@getSucursalesIndex')->name('sucursales.getSucursalesIndex');
-
 
     Route::get('proveedores/archivados', 'ProveedoresOController@view_archivados')->name('proveedores.view_archivados');
     Route::post('proveedores/list/get/archivados', 'ProveedoresOController@getArchivadosIndex')->name('proveedores.getArchivadosIndex');
@@ -1525,13 +1518,11 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::post('proveedores/archivar/{id}', 'ProveedoresOController@archivar')->name('proveedores.archivar');
     Route::post('proveedores/list/get', 'ProveedoresOController@getProveedoresIndex')->name('proveedores.getProveedoresIndex');
 
-
     Route::get('compradores/archivados', 'CompradoresController@view_archivados')->name('compradores.view_archivados');
     Route::post('compradores/list/get/archivados', 'CompradoresController@getArchivadosIndex')->name('compradores.getArchivadosIndex');
     Route::resource('compradores', 'CompradoresController');
     Route::post('compradores/archivar/{id}', 'CompradoresController@archivar')->name('compradores.archivar');
     Route::post('compradores/list/get', 'CompradoresController@getCompradoresIndex')->name('compradores.getCompradoresIndex');
-
 
     Route::get('centro-costos/archivados', 'CentroCostosController@view_archivados')->name('centro-costos.view_archivados');
     Route::post('centro-costos/list/get/archivados', 'CentroCostosController@getArchivadosIndex')->name('centro-costos.getArchivadosIndex');
@@ -1541,7 +1532,6 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
 
     Route::resource('reportes', 'ReporteRequisicionController');
     Route::post('excelContratos', 'ReporteRequisicionController@ExcelContratos')->name('excelContratos');
-
 
     //requisiciones
     Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');

@@ -124,21 +124,8 @@
                 @endcan
             };
 
-            let btnArchivar = {
-                    text: '<i class="fa-solid fa-box-archive"></i> Archivados',
-                    titleAttr: 'Archivar producto',
-                    url: "{{ route('contract_manager.requisiciones.archivo') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                        console.log(url);
-                    },
-            };
             let btnAprobacion = {
-                    text: '<i class="fa-solid fa-box-archive"></i> Aprobadores',
+                    text: '<i class="fa-solid fa-envelope"></i> Aprobadores',
                     titleAttr: 'Aprobadores requisicion',
                     url: "{{ route('contract_manager.requisiciones.index_aprobadores') }}",
                     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
@@ -150,7 +137,7 @@
                         console.log(url);
                     },
                };
-                dtButtons.push(btnAgregar, btnArchivar, btnAprobacion);
+                dtButtons.push(btnAgregar, btnAprobacion);
                 let archivarButton = {
                     @can("katbol_requisiciones_archivar")
                     text: 'Archivar Registro',

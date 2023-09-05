@@ -21,10 +21,8 @@ use Illuminate\Support\Facades\Mail;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
 
-
 class RequisicionesController extends Controller
 {
-
     public $bandera = true;
 
     /**
@@ -260,6 +258,7 @@ class RequisicionesController extends Controller
         }
         $organizacion = Organizacion::first();
         Mail::to($userEmail)->send(new RequisicionesEmail($requisicion, $organizacion, $tipo_firma));
+
         return redirect(route('contract_manager.requisiciones'));
     }
 
@@ -271,13 +270,11 @@ class RequisicionesController extends Controller
      */
     public function archivo()
     {
-
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', true)->get();
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
         return view('contract_manager.requisiciones.archivo', compact('requisiciones', 'proveedor_indistinto'));
     }
-
 
     public function indexAprobadores()
     {
@@ -288,30 +285,29 @@ class RequisicionesController extends Controller
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto'));
     }
 
-
     public function firmarAprobadores($id)
     {
-        $bandera =  true;
+        $bandera = true;
         $requisicion = KatbolRequsicion::where('id', $id)->first();
         if ($requisicion->firma_solicitante === null) {
-            $tipo_firma = "firma_solicitante";
+            $tipo_firma = 'firma_solicitante';
         } elseif ($requisicion->firma_jefe === null) {
-            $tipo_firma = "firma_jefe";
+            $tipo_firma = 'firma_jefe';
         } elseif ($requisicion->firma_finanzas === null) {
-            $tipo_firma = "firma_finanzas";
+            $tipo_firma = 'firma_finanzas';
         } elseif ($requisicion->firma_compras === null) {
-            $tipo_firma = "firma_compras";
+            $tipo_firma = 'firma_compras';
         } else {
-            $tipo_firma = "firma_final_aprobadores";
-            $bandera =  $this->bandera = false;
+            $tipo_firma = 'firma_final_aprobadores';
+            $bandera = $this->bandera = false;
         }
 
         $organizacion = Organizacion::first();
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
-        $user = ModelsUser::where('id',  $requisicion->id_user)->first();
+        $user = ModelsUser::where('id', $requisicion->id_user)->first();
 
-        $empleado = Empleado::with('supervisor')->where('id',  $user->empleado_id)->first();
+        $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
 
         $supervisor = $empleado->supervisor->name;
 

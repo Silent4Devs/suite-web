@@ -314,7 +314,6 @@ class RequisicionesEditComponent extends Component
         }
     }
 
-
     public function removeUnicodeCharacters($string)
     {
         return preg_replace('/[^\x00-\x7F]/u', '', $string);
