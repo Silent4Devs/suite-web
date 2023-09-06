@@ -95,11 +95,11 @@
 
 
 											@if(($tipo_firma_siguiente == 'firma_comprador_orden') or ($tipo_firma_siguiente == 'firma_finanzas_orden') or ($tipo_firma_siguiente == 'firma_solicitante_orden'))
-												<a class="link" href="{{ route('orden-compra.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('orden-compra.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
+												<a class="link" href="{{ route('contract_manager.orden-compra.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('contract_manager.orden-compra.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
 											@endif
 
 											@if(($tipo_firma_siguiente == 'firma_jefe') or ($tipo_firma_siguiente == 'firma_finanzas') or ($tipo_firma_siguiente == 'firma_compras'))
-												<a class="link" href="{{ route('requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
+												<a class="link" href="{{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
 											@endif
 
 										@endif
@@ -129,15 +129,15 @@
 										@endif
 
                                         @if($tipo_firma_siguiente == 'firma_solicitante_orden_finalizado')
-                                        <a class="link" href="{{ route('orden-compra.show', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
+                                        <a class="link" href="{{ route('contract_manager.orden-compra.show', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('contract_manager.requisiciones.firmar', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
                                         @endif
 
                                         @if($tipo_firma_siguiente == 'orden_rechazado')
-                                        <a class="link" href="{{ route('orden-compra.edit', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('orden-compra.edit', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
+                                        <a class="link" href="{{ route('contract_manager.orden-compra.edit', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('contract_manager.orden-compra.edit', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
                                         @endif
 
                                         @if($tipo_firma_siguiente == 'requisicion_rechazado')
-                                        <a class="link" href="{{ route('requisiciones.edit', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('requisiciones.edit', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
+                                        <a class="link" href="{{ route('contract_manager.requisiciones.edit', ['id' => $requisicion->id]) }}" style=" display: block; font-size: 13px;">{{ route('contract_manager.requisiciones.edit', ['tipo_firma' => $tipo_firma_siguiente,'id' => $requisicion->id]) }}</a>
                                         @endif
 
 

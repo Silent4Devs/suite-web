@@ -38,6 +38,6 @@ class AreaExists implements Rule
      */
     public function message()
     {
-        return 'El área '.$this->nombre.' no existe';
+        return 'El área ' . $this->nombre . ' no existe';
     }
 }

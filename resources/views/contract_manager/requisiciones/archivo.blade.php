@@ -7,7 +7,7 @@
 
    th, td {
     border: 1px solid blue;
-    width: 110px;
+    width: 130px;
     word-wrap: break-word
     }
 </style>
@@ -17,7 +17,7 @@
 
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 datatable-Requisiciones">
+            <table class="table table-bordered w-100 datatable-Requisiciones-archivo">
                 <thead class="thead-dark">
                     <tr>
 
@@ -80,7 +80,7 @@
                 },
                 {
                     extend: 'print',
-                    title: `Proveedores ${new Date().toLocaleDateString().trim()}`,
+                    title: `Requisiciones ${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fas fa-print" style="font-size: 1.1rem;"></i>',
                     className: "btn-sm rounded pr-2",
                     titleAttr: 'Imprimir',
@@ -109,11 +109,10 @@
                 }
 
             ];
-            let btnAgregar = {
-                @can("katbol_requisiciones_agregar")
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar requisicion',
-                    url: "{{ route('contract_manager.requisiciones.create') }}",
+                let btnRegresar = {
+                    text: '<i class="fa-solid fa-backward"></i> Requisiciones',
+                    titleAttr: 'Regresar requisicion',
+                    url: "{{ route('contract_manager.requisiciones') }}",
                     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
                     action: function(e, dt, node, config) {
                         let {
@@ -121,25 +120,9 @@
                         } = config;
                         window.location.href = url;
                     }
-                @endcan
             };
-
-            let btnAprobacion = {
-                    text: '<i class="fa-solid fa-envelope"></i> Aprobadores',
-                    titleAttr: 'Aprobadores requisicion',
-                    url: "{{ route('contract_manager.requisiciones.index_aprobadores') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                        console.log(url);
-                    },
-               };
-                dtButtons.push(btnAgregar, btnAprobacion);
+                dtButtons.push(btnRegresar);
                 let archivarButton = {
-                    @can("katbol_requisiciones_archivar")
                     text: 'Archivar Registro',
                     url: "",
                     className: 'btn-danger',
@@ -173,7 +156,6 @@
                                 })
                         }
                     }
-                    @endcan
                 }
 
             let dtOverrideGlobals = {
@@ -183,7 +165,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: {
-                    url: "{{ route('contract_manager.requisiciones.getRequisicionIndex') }}",
+                    url: "{{ route('contract_manager.requisiciones.getRequisicionIndexArchivo') }}",
                     type: 'POST',
                     data: {
                         _token: _token
@@ -233,10 +215,9 @@
                         data: 'id',
                         name: 'actions',
                         render: function(data, type, row, meta) {
-                            let requisiciones_solicitante = @json($requisiciones_solicitante);
+                            let requisiciones = @json($requisiciones);
                             let urlButtonArchivar = `/contract_manager/requisiciones/archivo-estado/${data}`;
                             let urlButtonEliminar = `/contract_manager/requisiciones/destroy/${data}`;
-                            let urlButtonShow = `/contract_manager/requisiciones/show/${data}`;
                             let urlButtonEdit = `/contract_manager/requisiciones/edit/${data}`;
                             let htmlBotones =
                                 `
@@ -250,9 +231,11 @@
                                                     <i class="fa-solid fa-print"></i>
                                         </a>
                                     @endcan
-                                    <a title="Archivar" class="btn btn-sm"  onclick="Archivar('${urlButtonArchivar}','${row.folio}');"> <i class="fa-solid fa-box-archive fa-lg"></i></a>
+                                    <a title="Archivar" class="btn btn-sm text-blue"  onclick="Archivar('${urlButtonArchivar}','${row.folio}');"> <i class="fa-solid fa-box-archive fa-lg"></i></a>
                                     <a title="Eliminar" class="btn btn-sm text-blue"  onclick="Eliminar('${urlButtonEliminar}','${row.folio}');">  <i class="fa-solid fa-trash fa-lg"></i></a>
                                 </div>
+
+
                             `;
                             return htmlBotones;
                         }
@@ -263,7 +246,7 @@
                     [0, 'desc']
                 ]
             };
-            let table = $('.datatable-Requisiciones').DataTable(dtOverrideGlobals);
+            let table = $('.datatable-Requisiciones-archivo').DataTable(dtOverrideGlobals);
 
             window.Archivar = function(url, nombre) {
                 Swal.fire({
@@ -357,7 +340,7 @@
                 })
             }
 
-
         });
     </script>
 @endsection
+

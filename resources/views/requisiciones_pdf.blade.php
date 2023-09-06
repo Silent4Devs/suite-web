@@ -27,7 +27,7 @@
                 </td>
                 <td class="td-blue-header">
                     <h5 style="color:#49598A;">REQUISICIÓN DE ADQUISICIONES</h5>
-                    Folio: {{ $requisiciones->folio}} <br>
+                    Folio: RQ-{{ $requisiciones->id}} <br>
                     Fecha de solicitud: {{ date('d-m-Y', strtotime($requisiciones->fecha))  }}
                 </td>
             </tr>
@@ -56,7 +56,7 @@
                 </td>
                 <td style="color: white;" >
                     <strong> Comprador: </strong> <br>
-                    {{ $requisiciones->comprador->user->name}}
+                    {{ $requisiciones->comprador->nombre}}
                 </td>
                 <td></td>
             </tr>
@@ -165,32 +165,6 @@
                         <strong> Contacto: </strong>  <br> <br>
                         @isset($prov->contacto)
                         {{$prov->contacto}}
-                        @endisset
-                    </td>
-                    <td>
-                        <strong> Envio: </strong> <br> <br>
-                        @isset($prov->envio)
-                        {{$prov->envio}}
-                        @endisset
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <strong> Facturación: </strong> <br> <br>
-                        @isset($prov->facturacion)
-                            {{ $prov->facturacion }}
-                        @endisset
-                    </td>
-                    <td colspan="2">
-                        <strong> Dirección: </strong> <br> <br>
-                        @isset($prov->direccion)
-                            {{ $prov->direccion }}
-                        @endisset
-                    </td>
-                    <td>
-                        <strong> Credito: </strong> <br> <br>
-                        @isset($prov->credito)
-                            {{ $prov->credito }}
                         @endisset
                     </td>
                 </tr>

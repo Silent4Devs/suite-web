@@ -47,11 +47,11 @@ class ImportEmpleadosCompnent extends Component
         $mb = 10;
         $kb = $mb * 1024;
         $this->validate([
-            'file' => 'required|mimes:xlsx,csv|max:'.$kb, // 1MB Max
+            'file' => 'required|mimes:xlsx,csv|max:' . $kb, // 1MB Max
         ], [
             'file.required' => 'El archivo de importación es requerido',
             'file.mimes' => 'Solo se permiten archivos tipo Excel y CSV',
-            'file.max' => 'El peso máximo del archivo es de '.$mb.' MB',
+            'file.max' => 'El peso máximo del archivo es de ' . $mb . ' MB',
         ]);
     }
 

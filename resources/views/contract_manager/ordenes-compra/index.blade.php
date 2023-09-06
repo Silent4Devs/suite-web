@@ -205,22 +205,18 @@
                             let requisiciones = @json($requisiciones);
                             let urlButtonArchivar = `/contract_manager/orden-compra/archivar/${data}`;
                             let urlButtonEdit = `/contract_manager/orden-compra/${data}/edit`;
+                            let urlButtonShow = `/contract_manager/orden-compra/show/${data}`;
                             let htmlBotones =
                                 `
-                                @can('katbol_ordenes_compra_modificar')
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-                                @endcan
-
-                                @foreach ($requisiciones as  $requisicion => $valor)
-                                @if($requisicion->firma_comprador_orden)
                                 <div class="btn-group">
-                                    <a href="{{ route('contract_manager.orden-compra.show', ['id' => $valor->id]) }}"
-                                                title="Ver/Imprimir" >
+                                    @can('katbol_ordenes_compra_modificar')
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+                                    @endcan
+                                    <a href="${urlButtonShow}"
+                                                title="Ver/Imprimir" class="btn btn-sm" >
                                                 <i class="fa-solid fa-print"></i>
                                     </a>
                                 </div>
-                                @endif
-                                @endforeach
                             `;
                             return htmlBotones;
                         }
@@ -254,14 +250,14 @@
                             beforeSend: function() {
                                 Swal.fire(
                                     '¡Estamos Archivar!',
-                                    `El proveedor: ${nombre} está siendo archivado`,
+                                    `La orden de compra: ${nombre} está siendo archivado`,
                                     'info'
                                 )
                             },
                             success: function(response) {
                                 Swal.fire(
                                     'Archivando!',
-                                    `El proveedor: ${nombre} ha sido archivado`,
+                                    `La orden de compra: ${nombre} ha sido archivado`,
                                     'success'
                                 )
                                 table.ajax.reload();

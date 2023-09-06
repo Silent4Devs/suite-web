@@ -20,6 +20,7 @@ class Porcentaje2022
         }
 
         $resultado = $gap1cont;
+
         //$porc2 = (round($gap12cont) * 20) / 100;
         return $resultado;
     }//termina func

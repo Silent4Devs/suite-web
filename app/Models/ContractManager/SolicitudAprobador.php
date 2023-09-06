@@ -2,10 +2,9 @@
 
 namespace App\Models\ContractManager;
 
+use App\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\User;
-
 
 class SolicitudAprobador extends Model
 {
@@ -19,7 +18,6 @@ class SolicitudAprobador extends Model
 
     const UPDATED_AT = 'updated_at';
 
-
     protected $fillable = [
         'solicitud_id',
         'usuario_id',
@@ -27,6 +25,7 @@ class SolicitudAprobador extends Model
         'created_by',
         'updated_by',
     ];
+
     public function aprobador()
     {
         return $this->belongsTo(User::class, 'usuario_id');

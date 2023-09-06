@@ -7,7 +7,7 @@
 
    th, td {
     border: 1px solid blue;
-    width: 110px;
+    width: 130px;
     word-wrap: break-word
     }
 </style>
@@ -109,35 +109,7 @@
                 }
 
             ];
-            let btnAgregar = {
-                @can("katbol_requisiciones_agregar")
-                    text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                    titleAttr: 'Agregar requisicion',
-                    url: "{{ route('contract_manager.requisiciones.create') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                    }
-                @endcan
-            };
 
-            let btnAprobacion = {
-                    text: '<i class="fa-solid fa-envelope"></i> Aprobadores',
-                    titleAttr: 'Aprobadores requisicion',
-                    url: "{{ route('contract_manager.requisiciones.index_aprobadores') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                        console.log(url);
-                    },
-               };
-                dtButtons.push(btnAgregar, btnAprobacion);
                 let archivarButton = {
                     @can("katbol_requisiciones_archivar")
                     text: 'Archivar Registro',
@@ -233,26 +205,17 @@
                         data: 'id',
                         name: 'actions',
                         render: function(data, type, row, meta) {
-                            let requisiciones_solicitante = @json($requisiciones_solicitante);
-                            let urlButtonArchivar = `/contract_manager/requisiciones/archivo-estado/${data}`;
-                            let urlButtonEliminar = `/contract_manager/requisiciones/destroy/${data}`;
-                            let urlButtonShow = `/contract_manager/requisiciones/show/${data}`;
-                            let urlButtonEdit = `/contract_manager/requisiciones/edit/${data}`;
+                            let requisiciones = @json($requisiciones);
+                            let urlButtonEdit = `/contract_manager/requisiciones/aprobados/${data}`;
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
                                     @can('katbol_requisiciones_modificar')
-                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit fa-lg"></i></a>
+                                    <a href="${urlButtonEdit}" class="btn btn-sm" title="Editar"><i class="fas fa-edit fa-xl"></i></a>
                                     @endcan
-                                    @can('katbol_requisiciones_imprimir')
-                                        <a href="${urlButtonShow}"
-                                                    title="Ver/Imprimir" >
-                                                    <i class="fa-solid fa-print"></i>
-                                        </a>
-                                    @endcan
-                                    <a title="Archivar" class="btn btn-sm"  onclick="Archivar('${urlButtonArchivar}','${row.folio}');"> <i class="fa-solid fa-box-archive fa-lg"></i></a>
-                                    <a title="Eliminar" class="btn btn-sm text-blue"  onclick="Eliminar('${urlButtonEliminar}','${row.folio}');">  <i class="fa-solid fa-trash fa-lg"></i></a>
                                 </div>
+
+
                             `;
                             return htmlBotones;
                         }
@@ -356,7 +319,6 @@
                     }
                 })
             }
-
 
         });
     </script>

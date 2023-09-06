@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -15,14 +14,14 @@ return new class extends Migration
     {
         Schema::table('timesheet_proyectos_empleados', function (Blueprint $table) {
             //
-            $table->unsignedFloat('horas_asignadas', 8,2)->change();
-            $table->unsignedFloat('costo_hora', 8,2)->change();
+            $table->unsignedFloat('horas_asignadas', 8, 2)->change();
+            $table->unsignedFloat('costo_hora', 8, 2)->change();
         });
 
         Schema::table('timesheet_proyectos_proveedores', function (Blueprint $table) {
             //
-            $table->unsignedFloat('horas_tercero', 8,2)->change();
-            $table->unsignedFloat('costo_tercero', 8,2)->change();
+            $table->unsignedFloat('horas_tercero', 8, 2)->change();
+            $table->unsignedFloat('costo_tercero', 8, 2)->change();
         });
     }
 

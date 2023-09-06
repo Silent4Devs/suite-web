@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\CentroCosto;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CentroCostosController extends Controller
 {
-      /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -23,7 +23,7 @@ class CentroCostosController extends Controller
         $ids = [];
 
         foreach ($centros_id as $id) {
-            $ids =  $id;
+            $ids = $id;
         }
 
         return view('contract_manager.centro-costos.index', compact('centros', 'ids'));
@@ -44,6 +44,7 @@ class CentroCostosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('katbol_centro_costos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('contract_manager.centro-costos.create');
     }
 
@@ -55,13 +56,12 @@ class CentroCostosController extends Controller
      */
     public function store(Request $request)
     {
+        $centro = new CentroCosto();
+        $centro->descripcion = $request->descripcion;
+        $centro->clave = $request->clave;
+        $centro->save();
 
-            $centro = new CentroCosto();
-            $centro->descripcion = $request->descripcion;
-            $centro->clave = $request->clave;
-            $centro->save();
-
-            return redirect('/contract_manager/centro-costos');
+        return redirect('/contract_manager/centro-costos');
     }
 
     /**
@@ -98,35 +98,33 @@ class CentroCostosController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $request->validate([
-             'descripcion' => 'required',
-             'clave' => 'required',
-            ]);
+        $request->validate([
+         'descripcion' => 'required',
+         'clave' => 'required',
+        ]);
 
-            $centros = CentroCosto::find($id);
+        $centros = CentroCosto::find($id);
 
-            $centros->update([
-                'descripcion' => $request->descripcion,
-                'clave' => $request->clave
-            ]);
+        $centros->update([
+            'descripcion' => $request->descripcion,
+            'clave' => $request->clave,
+        ]);
 
-            return redirect('/contract_manager/centro-costos');
+        return redirect('/contract_manager/centro-costos');
     }
-
 
     public function view_archivados()
     {
-      $centros = CentroCosto::select('id', 'clave', 'descripcion')->where('archivo', true)->get();
-      $centros_id = CentroCosto::get()->pluck('id');
-      $ids = [];
+        $centros = CentroCosto::select('id', 'clave', 'descripcion')->where('archivo', true)->get();
+        $centros_id = CentroCosto::get()->pluck('id');
+        $ids = [];
 
-      foreach ($centros_id as $id) {
-          $ids =  $id;
-      }
+        foreach ($centros_id as $id) {
+            $ids = $id;
+        }
 
-      return view('contract_manager.centro-costos.archivo', compact('centros', 'ids'));
+        return view('contract_manager.centro-costos.archivo', compact('centros', 'ids'));
     }
-
 
     public function getArchivadosIndex(Request $request)
     {
@@ -139,19 +137,16 @@ class CentroCostosController extends Controller
     {
         abort_if(Gate::denies('katbol_centro_costos_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $centro = CentroCosto::find($id);
-        if($centro->archivo === false){
-            $centro->update([
-                'archivo' => true,
-            ]);
-
-        }else{
+        if ($centro->archivo) {
             $centro->update([
                 'archivo' => false,
             ]);
+        } else {
+            $centro->update([
+                'archivo' => true,
+            ]);
         }
+
         return redirect('/contract_manager/centro-costos');
     }
-
-
-
 }

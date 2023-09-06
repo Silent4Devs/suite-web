@@ -65,6 +65,7 @@ class ProcesosOctaveController extends Controller
 
             return $table->make(true);
         }
+
         // dd($request->all());
         return view('admin.procesos-octave.index', compact('matriz'));
     }
@@ -76,7 +77,7 @@ class ProcesosOctaveController extends Controller
 
         $proceso_octave = MatrizOctaveProceso::where('matriz_id', $matriz)->pluck('id_proceso')->toArray();
         $procesos = $procesos->filter(function ($item) use ($proceso_octave) {
-            if (! in_array($item->id, $proceso_octave)) {
+            if (!in_array($item->id, $proceso_octave)) {
                 return $item;
             }
         });

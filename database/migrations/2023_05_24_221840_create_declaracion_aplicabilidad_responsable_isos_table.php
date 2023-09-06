@@ -14,7 +14,8 @@ class CreateDeclaracionAplicabilidadResponsableIsosTable extends Migration
     public function up()
     {
         Schema::create(
-            'declaracion_aplicabilidad_responsable_isos', function (Blueprint $table) {
+            'declaracion_aplicabilidad_responsable_isos',
+            function (Blueprint $table) {
                 $table->id();
                 $table->string('aplica')->nullable();
                 $table->longText('justificacion')->nullable();

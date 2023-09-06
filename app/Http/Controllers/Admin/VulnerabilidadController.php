@@ -114,6 +114,7 @@ class VulnerabilidadController extends AppBaseController
         abort_if(Gate::denies('vulnerabilidades_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $vulnerabilidad = Vulnerabilidad::with('idAmenaza')->find($id);
+
         // dd($vulnerabilidad);
         return view('admin.vulnerabilidads.show')->with('vulnerabilidad', $vulnerabilidad);
     }

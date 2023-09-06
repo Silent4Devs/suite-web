@@ -199,7 +199,7 @@ class FileManagerRepository implements ConfigRepository
     }
 
     /**
-     * Whether to slugify filenames
+     * Whether to slugify filenames.
      *
      * boolean
      */

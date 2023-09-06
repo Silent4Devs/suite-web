@@ -14,7 +14,6 @@ class Declaracion_aplicabilidad_responsable_Seeder extends Seeder
      */
     public function run()
     {
-
         $Controles = [
             [
                 'declaracion_id' => '1',
