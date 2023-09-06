@@ -124,13 +124,13 @@ class CompradoresController extends Controller
         abort_if(Gate::denies('katbol_producto_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $compradores = Comprador::find($id);
 
-        if ($compradores->archivo === false) {
+        if ($compradores->archivo) {
             $compradores->update([
-                'archivo' => true,
+                'archivo' => false,
             ]);
         } else {
             $compradores->update([
-                'archivo' => false,
+                'archivo' => true,
             ]);
         }
 
