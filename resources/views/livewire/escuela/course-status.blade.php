@@ -1,22 +1,22 @@
-<div>
-    <div class="mt-8">
-        <div class="container grid grid-cols-1 gap-8 lg:grid-cols-3">
-            <div class="lg:col-span-2">
-                <!--Para que me traiga correctamente el video hay que agregar -->
-                <div class="embed-responsive">
-                    {!!$current->iframe ? $current->iframe :'Sin registro'!!}
-                </div>
+<div class="d-flex" style="gap: 20px;">
+    <div style="width: 100%;">
+        <div>
+            {{-- <h5 class="col-12 titulo_general_funcion">Mis Cursos</h5> --}}
+            <!--Para que me traiga correctamente el video hay que agregar -->
+            <div>
+                {!! $current->iframe ? $current->iframe : 'Sin registro' !!}
+            </div>
 
+            <div class="card card-body d-flex justify-space-between">
                 <h1 class="mt-4 text-3xl font-bold text-gray-600">
                     {{ $current->name }}
                 </h1>
 
                 @if ($current->description)
                     <div class="text-gray-600">
-                        {{ $current->description->name }}
+                        {{ $current->description }}
                     </div>
                 @endif
-
                 <div class="flex justify-between mt-4">
                     <div class="flex items-center mt-4 cursor-pointer" wire:click="completed">
                         @if ($current->completed)
@@ -35,9 +35,9 @@
                     @endif
                 </div>
                 <div class="mt-2 card">
-                    <div class="flex font-bold text-gray-500 card-body">
+                    <div class="flex font-bold text-white-500 card-body">
                         @if ($this->previous)
-                            <a wire:click="changeLesson({{ $this->previous }})" class="cursor-pointer" href="">
+                            <a wire:click="changeLesson({{ $this->previous }})" class="cursor-pointer">
                                 Tema
                                 anterior</a>
                         @endif
@@ -48,92 +48,95 @@
 
                     </div>
                 </div>
-
-
             </div>
 
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="mb-4 text-2xl leading-8 text-center">{{ $course->title }}</h1>
 
-                    <div class="flex items-center">
-                        <figure>
-                            <img class="object-cover w-12 h-12 mr-4 rounded-full"
-                                src="{{ $course->teacher->profile_photo_url }}">
-                        </figure>
-                        <div>
-                            <p>{{ $course->teacher->name }}</p>
-                            <a class="text-sm text-blue-500"
-                                href="">{{ '@' . Str::slug($course->teacher->name, '') }}</a>
-                        </div>
-                    </div>
+        </div>
+    </div>
 
-                    <p class="mt-2 text-sm text-gray-600 ">{{ $this->advance . '%' }} completado</p>
-                    <div class="relative pt-1">
-                        <div class="flex h-2 mb-4 overflow-hidden text-xs bg-gray-200 rounded">
-                            <div style="width:{{ $this->advance . '%' }}"
-                                class="flex flex-col justify-center text-center text-white transition-all duration-500 bg-blue-500 shadow-none whitespace-nowrap">
-                            </div>
-                        </div>
-                    </div>
+    <div class="card card-body" style="width: 320px;">
+        <h1 class="mb-4 text-2xl leading-8 text-center">{{ $course->title }}</h1>
 
-                    <ul>
-                        @foreach ($course->sections as $section)
-                            <li class="mb-4 text-gray-600">
-                                <a class="inline mb-2 text-base font-bold">{{ $section->name }}</a>
-                                <ul>
-                                    @foreach ($section->lessons as $lesson)
-                                        <li class="flex">
-                                            <div>
-                                                @if ($lesson->completed)
-                                                    @if ($current->id == $lesson->id)
-                                                        <span
-                                                            class="inline-block w-4 h-4 mt-1 mr-2 border-2 border-yellow-300 rounded-full"></span>
-                                                    @else
-                                                        <span
-                                                            class="inline-block w-4 h-4 mt-1 mr-2 bg-yellow-300 rounded-full"></span>
-                                                    @endif
-                                                @else
-                                                    @if ($current->id == $lesson->id)
-                                                        <span
-                                                            class="inline-block w-4 h-4 mt-1 mr-2 border-2 border-gray-500 rounded-full"></span>
-                                                    @else
-                                                        <span
-                                                            class="inline-block w-4 h-4 mt-1 mr-2 bg-gray-500 rounded-full"></span>
-                                                    @endif
-                                                @endif
-                                            </div>
-                                            <a class="cursor:pointer"
-                                                wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}
+        <div class="flex items-center">
+            <figure>
+                <img class="object-cover w-12 h-12 mr-4 rounded-full" src="{{ $course->teacher->profile_photo_url }}">
+            </figure>
+            <div>
+                <p>{{ $course->teacher->name }}</p>
+                <a class="text-sm text-blue-500" href="">{{ '@' . Str::slug($course->teacher->name, '') }}</a>
+            </div>
+        </div>
 
-                                            </a>
-                                        </li>
-                                    @endforeach
-
-                                    @foreach ($section->evaluations as $evaluation)
-                                        @if($evaluation->questions->count()>0)
-                                            @php
-                                                $completed=in_array($evaluation->id, $evaluationsUser);
-                                            @endphp
-                                                <li class="flex">
-                                                    <div>
-                                                        <span
-                                                            class="inline-block w-4 h-4 mt-1 mr-2 rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500': 'border-gray-500' }}"></span>
-                                                    </div>
-                                                    <a class="cursor:pointer" href="{{route('courses.status.evaluation',['course'=>$course->slug,'evaluation'=>$evaluation->id])}}" 
-                                                        wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
-                                                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">Evaluación</span>
-
-                                                    </a>
-                                                </li>
-                                        @endif
-                                    @endforeach
-                                </ul>
-                            </li>
-                        @endforeach
-                    </ul>
+        <p class="mt-2 text-sm text-gray-600 ">{{ $this->advance . '%' }} completado</p>
+        <div class="relative pt-1">
+            <div class="flex h-2 mb-4 overflow-hidden text-xs bg-gray-200 rounded">
+                <div style="width:{{ $this->advance . '%' }}"
+                    class="flex flex-col justify-center text-center text-white transition-all duration-500 bg-blue-500 shadow-none whitespace-nowrap">
                 </div>
             </div>
         </div>
+
+        <ul>
+            @foreach ($course->sections as $section)
+                <li class="mb-4 text-gray-600">
+                    <a class="inline mb-2 text-base font-bold">{{ $section->name }}</a>
+                    <ul>
+                        @foreach ($section->lessons as $lesson)
+                            <li>
+                                <div>
+                                    @if ($lesson->completed)
+                                        @if ($current->id == $lesson->id)
+                                            <span
+                                                class="inline-block w-4 h-4 mt-1 mr-2 border-2 border-yellow-300 rounded-full">
+                                                <a class="cursor:pointer"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
+                                            </span>
+                                        @else
+                                            <span class="inline-block w-4 h-4 mt-1 mr-2 bg-yellow-300 rounded-full">
+                                                <a class="cursor:pointer"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
+                                            </span>
+                                        @endif
+                                    @else
+                                        @if ($current->id == $lesson->id)
+                                            <span
+                                                class="inline-block w-4 h-4 mt-1 mr-2 border-2 border-gray-500 rounded-full">
+                                                <a class="cursor:pointer"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
+                                            </span>
+                                        @else
+                                            <span class="inline-block w-4 h-4 mt-1 mr-2 bg-gray-500 rounded-full">
+                                                <a class="cursor:pointer"
+                                                    wire:click="changeLesson({{ $lesson }})">{{ $lesson->name }}</a>
+                                            </span>
+                                        @endif
+                                    @endif
+                                </div>
+                            </li>
+                        @endforeach
+
+                        @foreach ($section->evaluations as $evaluation)
+                            @if ($evaluation->questions->count() > 0)
+                                @php
+                                    $completed = in_array($evaluation->id, $evaluationsUser);
+                                @endphp
+                                <li class="flex">
+                                    <div>
+                                        <span
+                                            class="inline-block w-4 h-4 mt-1 mr-2 rounded-full border-2 {{ $completed ? 'bg-green-500  border-green-500' : 'border-gray-500' }}"></span>
+                                        <a class="cursor:pointer"
+                                            href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}"
+                                            wire:click="changeLesson({{ $lesson }})">{{ $evaluation->name }}
+                                            <span
+                                                class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">Evaluación</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </li>
+            @endforeach
+        </ul>
     </div>
 </div>

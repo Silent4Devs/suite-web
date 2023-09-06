@@ -32,20 +32,24 @@
                     </select>
                 </div>
 
-               
+
             </div>
             <div class="flex items-center justify-end mt-4">
-                <x-jet-button type="submit"  wire:click.prevent="findEvaluation">
+                <button type="submit" wire:click.prevent="findEvaluation">
                     {{ __('Buscar') }}
-                </x-jet-button>
+                </button>
             </div>
-          
+
             @if ($course != null && $evaluation != null)
-                @livewire('instructor.quiz-details', [
-                    'course' => $course,
-                    'evaluation' => $evaluation,
-                    'user'=>$user,
-                ],key($user))
+                @livewire(
+                    'escuela.instructor.quiz-details',
+                    [
+                        'course' => $course,
+                        'evaluation' => $evaluation,
+                        'user' => $user,
+                    ],
+                    key($user)
+                )
             @endif
 
         </div>

@@ -22,11 +22,8 @@ class UsuariosCursos extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-
-
-    // public function cursos()
-    // {
-    //     return $this->belongsTo(Course::class, 'course_id');
-    // }
-
+    public function cursos()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
+    }
 }

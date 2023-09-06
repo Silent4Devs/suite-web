@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Escuela\Category;
+use App\Models\Escuela\Course;
+use App\Models\Escuela\Evaluation;
+use App\Models\Escuela\Level;
+use App\Models\Escuela\UsuariosCursos;
 use Illuminate\Http\Request;
 
 class CursoEstudiante extends Controller
 {
+
+    public $category_id, $level_id;
+
     /**
      * Display a listing of the resource.
      */
@@ -17,12 +25,41 @@ class CursoEstudiante extends Controller
 
     public function misCursos()
     {
-        return view('admin.escuela.estudiante.mis-cursos');
+        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', auth()->user()->id)->get();
+        // $cursos = Course::get();
+        // $categories = Category::all();
+        // $levels = Level::all();
+        // $courses = Course::where('status', 3)
+        //     ->category($this->category_id)
+        //     ->level($this->level_id)
+        //     ->latest('id')->paginate(8);
+        // dd($categories, $levels, $courses);
+
+        return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario'));
     }
 
+    public function cursoEstudiante($curso_id)
+    {
+        $curso = Course::first($curso_id);
+        $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
+        return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
+    }
+
+    public function evaluacionEstudiante($curso_id, $evaluacion_id)
+    {
+
+        // dd("Llega hasta aca", $curso_id, $evaluacion_id);
+        return view('admin.escuela.estudiante.curso-evaluacion', compact('curso_id', 'evaluacion_id'));
+    }
     /**
      * Show the form for creating a new resource.
      */
+    public function tableQuizDetails($curso_id, $evaluacion_id)
+    {
+        // dd($curso_id);
+        return view('admin.escuela.instructor.quizdetails', compact('curso_id', 'evaluacion_id'));
+    }
+
     public function create()
     {
         //

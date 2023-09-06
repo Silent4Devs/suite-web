@@ -48,10 +48,10 @@
                     @foreach ($courses as $course)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 w-10 h-10">
+                            <div class="d-flex inline">
+                                <div>
                                     @isset($course->image)
-                                    <img class="w-10 h-10 rounded-full" src="{{ Storage::url($course->image->url) }}"
+                                    <img style="border-radius: 50%;width:150px;" src="{{ Storage::url($course->image->url) }}"
                                         alt="{{ $course->title }}">
                                     @else
                                     <img src="{{ asset('img/home/imagen-estudiantes.jpg') }}" id="picture" alt="Curso"
