@@ -113,19 +113,21 @@
         <div class="caja-cards-mis-cursos">
 
             @foreach ($cursos_usuario as $cu)
-                <p>{{$cu->cursos->image}}</p>
-                <div class="card card-body mi-curso">
-                    <div class="caja-img-mi-curso">
-                        <img src="{{ Storage::url($cu->cursos->image->url) }}" alt="">
-                    </div>
-                    <div class="caja-info-card-mc">
-                        <p><strong>{{ $cu->cursos->title }}</strong></p>
-                        <p style="margin-top: 13px;">32% Avance general</p>
-                        <div class="curso-progreso-barra">
-                            <div class="indicador-progreso-barra" style="width: 32%;"></div>
+            <div class="card card-body mi-curso">
+                        <p>{{$cu->cursos}}</p>
+                        <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}">
+                            <div class="caja-img-mi-curso">
+                                <img src="{{ Storage::url($cu->cursos->image->url) }}" alt="">
+                            </div>
+                        </a>
+                        <div class="caja-info-card-mc">
+                            <p><strong>{{ $cu->cursos->title }}</strong></p>
+                            <p style="margin-top: 13px;">32% Avance general</p>
+                            <div class="curso-progreso-barra">
+                                <div class="indicador-progreso-barra" style="width: 32%;"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
             @endforeach
 
         </div>

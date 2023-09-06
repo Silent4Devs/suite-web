@@ -26,6 +26,7 @@ class CursoEstudiante extends Controller
     public function misCursos()
     {
         $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', auth()->user()->id)->get();
+        // dd($cursos_usuario);
         // $cursos = Course::get();
         // $categories = Category::all();
         // $levels = Level::all();
@@ -40,7 +41,8 @@ class CursoEstudiante extends Controller
 
     public function cursoEstudiante($curso_id)
     {
-        $curso = Course::first($curso_id);
+        $curso = Course::where('id', $curso_id)->first();
+        // dd($curso_id, $curso);
         $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
         return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
     }

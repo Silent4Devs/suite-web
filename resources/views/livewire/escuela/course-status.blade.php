@@ -7,63 +7,58 @@
                 {!! $current->iframe ? $current->iframe : 'Sin registro' !!}
             </div>
 
-            <div class="card card-body d-flex justify-space-between">
-                <h1 class="mt-4 text-3xl font-bold text-gray-600">
-                    {{ $current->name }}
-                </h1>
+            <h4 class="mt-3">{{$current->name}}</h4>
 
-                @if ($current->description)
-                    <div class="text-gray-600">
-                        {{ $current->description }}
+            <div class="flex justify-between mt-4">
+                <div class="flex items-center mt-4 cursor-pointer" wire:click="completed">
+                    @if ($current->completed)
+                        <i class="text-2xl text-blue-600 fas fa-toggle-on"></i>
+                    @else
+                        <i class="text-2xl text-gray-600 fas fa-toggle-off"></i>
+                    @endif
+
+                    <p class="ml-2 text-sm">Marcar esta lección como terminada</p>
+                </div>
+                @if ($current->resource)
+                    <div class="flex text-gray-600 cursor-pointer item-center" wire:click="download">
+                        <i class="text-lg fas fa-download"></i>
+                        <p class="ml-2 text-sm">Descargar Recurso</p>
                     </div>
                 @endif
-                <div class="flex justify-between mt-4">
-                    <div class="flex items-center mt-4 cursor-pointer" wire:click="completed">
-                        @if ($current->completed)
-                            <i class="text-2xl text-blue-600 fas fa-toggle-on"></i>
-                        @else
-                            <i class="text-2xl text-gray-600 fas fa-toggle-off"></i>
-                        @endif
-
-                        <p class="ml-2 text-sm">Marcar esta lección como terminada</p>
-                    </div>
-                    @if ($current->resource)
-                        <div class="flex text-gray-600 cursor-pointer item-center" wire:click="download">
-                            <i class="text-lg fas fa-download"></i>
-                            <p class="ml-2 text-sm">Descargar Recurso</p>
-                        </div>
+            </div>
+            <div class="mt-2 card">
+                <div class="flex font-bold text-white-500 card-body">
+                    @if ($this->previous)
+                        <a wire:click="changeLesson({{ $this->previous }})" class="cursor-pointer mr-3">
+                            Tema anterior
+                        </a>
+                    @else
+                    <a class="cursor-pointer mr-3">
+                        Tema anterior
+                    </a>
                     @endif
-                </div>
-                <div class="mt-2 card">
-                    <div class="flex font-bold text-white-500 card-body">
-                        @if ($this->previous)
-                            <a wire:click="changeLesson({{ $this->previous }})" class="cursor-pointer">
-                                Tema
-                                anterior</a>
-                        @endif
-                        @if ($this->next)
-                            <a wire:click="changeLesson({{ $this->next }})" class="ml-auto cursor-pointer">Siguiente
-                                tema</a>
-                        @endif
-
-                    </div>
+                        <a wire:click="changeLesson({{ $this->next }})" class="ml-auto cursor-pointer">
+                            Siguiente tema
+                        </a>
                 </div>
             </div>
+            {{-- <div class="card card-body d-flex justify-space-between">
+            </div> --}}
 
 
         </div>
     </div>
 
     <div class="card card-body" style="width: 320px;">
-        <h1 class="mb-4 text-2xl leading-8 text-center">{{ $course->title }}</h1>
-
+        <h4>{{ $course->title }}</h6>
         <div class="flex items-center">
             <figure>
                 <img class="object-cover w-12 h-12 mr-4 rounded-full" src="{{ $course->teacher->profile_photo_url }}">
             </figure>
             <div>
                 <p>{{ $course->teacher->name }}</p>
-                <a class="text-sm text-blue-500" href="">{{ '@' . Str::slug($course->teacher->name, '') }}</a>
+                {{-- <a class="text-sm text-blue-500" href="">{{ '@' . Str::slug($course->teacher->name, '') }}</a> --}}
+                <p class="text-primary">{{$course->category->name}}</p>
             </div>
         </div>
 
