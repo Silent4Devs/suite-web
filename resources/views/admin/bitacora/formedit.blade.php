@@ -140,7 +140,8 @@
         @if ($convenios->count() > 0)
             <div class="col s12 right-align">
                 <a class="waves-effect waves-light btn modal-trigger" href="#convenios_modificados"><i
-                        class="fas fa-handshake iconos-crear"></i>Visualizar Convenios Modificados</a>
+                        class="fas fa-handshake iconos-crear"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Visualizar Convenios
+                    Modificados</a>
             </div>
         @endif
     </div>

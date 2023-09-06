@@ -1,7 +1,8 @@
-<div class="row" style="margin: 0;">
+<div class="row" style="margin-top: 30px; margin-left: 10px;">
     <div class="col l6">
-        <label for="search"><i class="fas fa-search"></i> Busca por nombre o descripción del entregable</label>
-        <input type="text" wire:model="search" placeholder="Buscar entregable">
+        <label for="search"><i class="fas fa-search iconos-crear"></i>Busca por nombre o descripción del
+            entregable</label>
+        <input type="text" wire:model="search" class="form-control" placeholder="Buscar entregable">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
 
@@ -24,9 +25,9 @@
     </div>
 </div>
 
-<div class="tabla_responsiva_edit_contratos datatable-fix">
+<div class="tabla_responsiva_edit_contratos tabla-cierre">
     @if ($entregamensuales->count())
-        <table id="tblEntregables">
+        <table id="tblEntregables" style="width: 100%;">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('nombre_entregable')">

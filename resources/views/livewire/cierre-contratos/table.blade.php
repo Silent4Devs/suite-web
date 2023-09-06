@@ -1,7 +1,7 @@
-<div class="row" style="margin: 0;">
+<div class="row" style="margin-top: 30px; margin-left: 10px;">
     <div class="col l6">
-        <label for="search"><i class="fas fa-search"></i> Buscador</label>
-        <input type="text" wire:model="search" placeholder="Buscar...">
+        <label for="search"><i class="fas fa-search iconos-crear"></i>Buscador</label>
+        <input type="text" wire:model="search" class="form-control" placeholder="Buscar...">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
 

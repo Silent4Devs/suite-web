@@ -1,31 +1,46 @@
 <section id="form_niveles">
 
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="distancia form-group col-md-4">
+            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-handshake iconos-crear"></i>Nombre<font
+                    class="asterisco">*</font></label>
+            <input type="text" wire:model.debounce.800ms="nombre" class="form-control" required>
+            @error('nombre')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
+        </div>
+        <div class="distancia form-group col-md-4">
+            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-ruler-combined iconos-crear"></i>Métrica<font
+                    class="asterisco">*</font></label>
+            <input type="text" wire:model.debounce.800ms="metrica" class="form-control" required>
+            @error('metrica')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
+        </div>
+        <div class="distancia form-group col-md-4">
+            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-weight iconos-crear"></i>Unidad<font
+                    class="asterisco">*</font></label>
+            <input type="text" wire:model.debounce.800ms="unidad" class="form-control" required>
+            @error('unidad')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="distancia form-group col-md-4">
+            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-flag iconos-crear"></i>SLA comprometido<font
+                    class="asterisco">*</font></label>
+            <input type="number" wire:model.debounce.800ms="meta" class="form-control" required step="0.1">
+            @error('meta')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
+        </div>
 
-    <div class="col s12 m4 distancia">
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-handshake iconos-crear"></i>Nombre<font class="asterisco">*</font></label>
-        <input type="text" wire:model.debounce.800ms="nombre" class="form-control" required>
-        @error('nombre') <span class="red-text">{{ $message }}</span> @enderror
-    </div>
-    <div class="col s12 m4 distancia">
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-ruler-combined iconos-crear"></i>Métrica<font class="asterisco">*</font></label>
-        <input type="text" wire:model.debounce.800ms="metrica" class="form-control" required>
-        @error('metrica') <span class="red-text">{{ $message }}</span> @enderror
-    </div>
-    <div class="col s12 m4 distancia">
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-weight iconos-crear"></i>Unidad<font class="asterisco">*</font></label>
-        <input type="text" wire:model.debounce.800ms="unidad" class="form-control" required>
-        @error('unidad') <span class="red-text">{{ $message }}</span> @enderror
-    </div>
-    <div class="col s12 m4 distancia">
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-flag iconos-crear"></i>SLA comprometido<font class="asterisco">*</font></label>
-        <input type="number" wire:model.debounce.800ms="meta" class="form-control" required step="0.1">
-        @error('meta') <span class="red-text">{{ $message }}</span> @enderror
-    </div>
-
-    <div class="col s12 m4 distancia" wire:ignore>
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Periodo
-            evaluación<font class="asterisco">*</font></label>
-            <select class="browser-default" name="periodo_evaluacion" wire:model.debounce.800ms="periodo_evaluacion" class="form-control" required>
+        <div class="distancia form-group col-md-4" wire:ignore>
+            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Periodo
+                evaluación<font class="asterisco">*</font></label>
+            <select class="browser-default form-control" name="periodo_evaluacion"
+                wire:model.debounce.800ms="periodo_evaluacion" class="form-control" required>
                 <option value="" disabled selected>Escoga una opción</option>
                 <option value="0">Por definir</option>
                 <option value="1">Unica vez</option>
@@ -39,25 +54,37 @@
                 <option value="9">Anual</option>
                 <option value="10">Multianual</option>
             </select>
-            @error('periodo_evaluacion') <span class="red-text">{{ $message }}</span> @enderror
+            @error('periodo_evaluacion')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="distancia form-group col-md-4">
+            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-clipboard-list iconos-crear"></i>Revisiones
+                <font class="asterisco">*</font>
+            </label>
+            <input id="revisiones_no" type="number" wire:model.debounce.800ms="revisiones" class="form-control"
+                required>
+            @error('revisiones')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
+        </div>
     </div>
 
-    <div class="col s12 m4 distancia">
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-clipboard-list iconos-crear"></i>Revisiones<font class="asterisco">*</font></label>
-        <input id="revisiones_no" type="number" wire:model.debounce.800ms="revisiones" class="form-control" required>
-        @error('revisiones') <span class="red-text">{{ $message }}</span> @enderror
-    </div>
-
-    <div class="col s12 m12 distancia">
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-clipboard-list iconos-crear"></i>Área<font class="asterisco">*</font></label>
-        <input type="text" wire:model.debounce.800ms="area" class="form-control" required>
-        @error('area') <span class="red-text">{{ $message }}</span> @enderror
-    </div>
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="distancia form-group col-md-4">
+            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-clipboard-list iconos-crear"></i>Área<font
+                    class="asterisco">*</font></label>
+            <input type="text" wire:model.debounce.800ms="area" class="form-control" required>
+            @error('area')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
+        </div>
 
 
 
-    <!-- Administrador Field -->
-    {{-- <div wire:ignore class="input-field col s12 m4">
+        <!-- Administrador Field -->
+        {{-- <div wire:ignore class="input-field col s12 m4">
         <small>
             <p class="grey-text letra-ngt"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha compromiso
                 <font class="asterisco">*</font>
@@ -79,17 +106,25 @@
         @error('fecha_real') <span class="red-text">{{ $message }}</span> @enderror
     </div> --}}
 
-    <div class="col s12 m12 distancia">
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-invoice iconos-crear"></i>Descripción<font class="asterisco">*</font></label><br>
-        <textarea wire:model.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="text_area" required></textarea>
-        @error('descripcion') <span class="red-text">{{ $message }}</span> @enderror
-    </div>
-    <div class="col s12 m12 distancia">
-        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-alt iconos-crear"></i>Información<font class="asterisco">*</font></label><br>
-        <textarea wire:model.debounce.800ms="info_consulta" id="textarea2" class="text_area" style="padding:15px;" required>
+        <div class="distancia form-group col-md-4">
+            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-invoice iconos-crear"></i>Descripción<font
+                    class="asterisco">*</font></label><br>
+            <textarea wire:model.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="form-control" required></textarea>
+            @error('descripcion')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
+        </div>
+        <div class="distancia form-group col-md-4">
+            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-alt iconos-crear"></i>Información<font
+                    class="asterisco">*</font></label><br>
+            <textarea wire:model.debounce.800ms="info_consulta" id="textarea2" class="form-control" style="padding:15px;"
+                required>
         </textarea>
-        @error('info_consulta') <span class="red-text">{{ $message }}</span> @enderror
+            @error('info_consulta')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
 
+        </div>
     </div>
 </section>
 
@@ -110,7 +145,6 @@
             }
         });
     });
-
 </script>
 
 <script>
@@ -169,5 +203,4 @@
         }).change();
 
     });
-
 </script>
