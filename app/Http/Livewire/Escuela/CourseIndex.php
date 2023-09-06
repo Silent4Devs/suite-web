@@ -18,6 +18,7 @@ class CourseIndex extends Component
 
     public $category_id;
     public $level_id;
+    public $selectioncategory, $selectionlevel;
 
     public function render()
     {
@@ -34,5 +35,24 @@ class CourseIndex extends Component
     public function resetFilters()
     {
         $this->reset(['category_id', 'level_id']);
+    }
+
+    public function categoryFilter()
+    {
+        // dd($this->selection);
+        if ($this->selectioncategory === 0) {
+            $this->resetFilters();
+        } else {
+            $this->category_id = $this->selectioncategory;
+        }
+    }
+
+    public function levelFilter()
+    {
+        if ($this->selectionlevel === 0) {
+            $this->resetFilters();
+        } else {
+            $this->level_id = $this->selectionlevel;
+        }
     }
 }

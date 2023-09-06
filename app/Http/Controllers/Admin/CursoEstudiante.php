@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Evaluation;
+use App\Models\Escuela\Level;
 use App\Models\Escuela\UsuariosCursos;
 use Illuminate\Http\Request;
 
 class CursoEstudiante extends Controller
 {
+
+    public $category_id, $level_id;
+
     /**
      * Display a listing of the resource.
      */
@@ -21,8 +26,16 @@ class CursoEstudiante extends Controller
     public function misCursos()
     {
         $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', auth()->user()->id)->get();
-        $cursos = Course::get();
-        return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario', 'cursos'));
+        // $cursos = Course::get();
+        // $categories = Category::all();
+        // $levels = Level::all();
+        // $courses = Course::where('status', 3)
+        //     ->category($this->category_id)
+        //     ->level($this->level_id)
+        //     ->latest('id')->paginate(8);
+        // dd($categories, $levels, $courses);
+
+        return view('admin.escuela.estudiante.mis-cursos', compact('cursos_usuario'));
     }
 
     public function cursoEstudiante($curso_id)

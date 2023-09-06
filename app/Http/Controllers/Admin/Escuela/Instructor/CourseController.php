@@ -48,25 +48,27 @@ class CourseController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'title' => 'required',
-            'slug' => 'required|unique:courses',
-            'subtitle' => 'required',
-            'description' => 'required',
-            'category_id' => 'required',
-            'level_id' => 'required',
-            // 'price_id' => 'required',
-            'file' => 'required',
-        ]
-        ,[
-            'subtitle.required' => 'El campo subtítulo es obligatorio',
-            'slug.required' => 'El campo slug es obligatorio',
-            'title.required' => 'El campo título es obligatorio',
-            'category_id.required' => 'El campo categoría es obligatorio',
-            'description.required' => 'El campo descripción es obligatorio',
-            'level_id.required' => 'El campo nivel es obligatorio',
-            'file.required' => 'El campo imagen es obligatorio',
-        ]);
+        $request->validate(
+            [
+                'title' => 'required',
+                'slug' => 'required|unique:courses',
+                'subtitle' => 'required',
+                'description' => 'required',
+                'category_id' => 'required',
+                'level_id' => 'required',
+                // 'price_id' => 'required',
+                'file' => 'required',
+            ],
+            [
+                'subtitle.required' => 'El campo subtítulo es obligatorio',
+                'slug.required' => 'El campo slug es obligatorio',
+                'title.required' => 'El campo título es obligatorio',
+                'category_id.required' => 'El campo categoría es obligatorio',
+                'description.required' => 'El campo descripción es obligatorio',
+                'level_id.required' => 'El campo nivel es obligatorio',
+                'file.required' => 'El campo imagen es obligatorio',
+            ]
+        );
 
         // dd($request->all());
 
@@ -74,7 +76,8 @@ class CourseController extends Controller
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
-            $url = Storage::put('cursos', $image);
+            // Storage::putFileAs('public/cursos', $image);
+            $url = Storage::put('public/cursos', $image);
 
             $course->image()->create([
                 'url' => $url,
@@ -111,7 +114,6 @@ class CourseController extends Controller
         $prices = Price::pluck('name', 'id');
 
         return view('admin.escuela.instructor.courses.edit', compact('course', 'categories', 'levels', 'prices'));
-
     }
 
     /**
@@ -132,7 +134,7 @@ class CourseController extends Controller
             'level_id' => 'required',
             // 'price_id' => 'required',
             'file' => 'image',
-        ],[
+        ], [
             'subtitle.required' => 'El campo subtítulo es obligatorio',
             'slug.required' => 'El campo slug es obligatorio',
             'title.required' => 'El campo título es obligatorio',
@@ -180,7 +182,8 @@ class CourseController extends Controller
         return view('admin.escuela.instructor.courses.goals', compact('course'));
     }
 
-    public function status(Course $course){
+    public function status(Course $course)
+    {
         $course->status = 2;
         $course->save();
 

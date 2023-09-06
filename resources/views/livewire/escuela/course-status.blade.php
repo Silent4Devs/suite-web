@@ -14,7 +14,7 @@
 
                 @if ($current->description)
                     <div class="text-gray-600">
-                        {{ $current->description->name }}
+                        {{ $current->description }}
                     </div>
                 @endif
                 <div class="flex justify-between mt-4">

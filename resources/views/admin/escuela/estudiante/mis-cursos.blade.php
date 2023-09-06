@@ -78,6 +78,10 @@
             border: 1px solid #e9e9e9;
         }
 
+        .caja-selects-catalogo form {
+            display: inline;
+        }
+
         .mi-c-catalogo-card {
             width: 320px;
         }
@@ -109,9 +113,10 @@
         <div class="caja-cards-mis-cursos">
 
             @foreach ($cursos_usuario as $cu)
+                <p>{{$cu->cursos->image}}</p>
                 <div class="card card-body mi-curso">
                     <div class="caja-img-mi-curso">
-                        <img src="{{ asset('img/gap_Ana.jpg') }}" alt="">
+                        <img src="{{ Storage::url($cu->cursos->image->url) }}" alt="">
                     </div>
                     <div class="caja-info-card-mc">
                         <p><strong>{{ $cu->cursos->title }}</strong></p>
@@ -131,17 +136,25 @@
         <h3 class="title-main-cursos" style="margin-top: 40px;">Catálogo de cursos</h3>
         <div class="caja-selects-catalogo">
             <select name="" id="">
-                <option value="">Todos los cursos</option>
+                <option value="null">Todos los cursos</option>
             </select>
-            <select name="" id="">
-                <option value="">Categorias</option>
+
+            <select name="category" id="categorySelect">
+                <option value="null">Categorias</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
             </select>
-            <select name="" id="">
-                <option value="">Niveles</option>
+            <button type="submit">Enviar</button>
+
+            <select name="level" id="levelSelect">
+                <option value="null">Niveles</option>
+                @foreach ($levels as $level)
+                    <option value="{{ $level->id }}">{{ $level->name }}</option>
+                @endforeach
             </select>
         </div>
         <div class="caja-cards-mis-cursos">
-
             @foreach ($cursos as $c)
                 <div class="card card-body mi-curso">
                     <div class="caja-img-mi-curso" style="margin-top: 15px;">
@@ -149,7 +162,7 @@
                     </div>
                     <div class="caja-info-card-mc">
                         <p style="font-size: 18px;"><strong>{{ $c->title }}</strong></p>
-                        <p style="margin-top: 0px;">Profesor: Administrador </p>
+                        <p style="margin-top: 0px;">Profesor: {{ $c->teacher->name }} </p>
                         <div class="mt-3 d-flex justify-content-between">
                             <div style="color: #E3A008; font-size: 18px;">
                                 <i class="fa-solid fa-star"></i>
@@ -174,4 +187,20 @@
 @endsection
 
 @section('scripts')
+    {{-- <script>
+    // Escucha el cambio en el select
+    $('#categorySelect').change(function() {
+        let selectedCategory = $(this).val();
+
+        // Realiza una solicitud AJAX para obtener los datos relacionados con la ciudad
+        $.ajax({
+            url: 'mis-cursos/' + selectedCategory,
+            type: 'GET',
+            success: function(data) {
+                // Actualiza el contenido del contenedor con los datos relacionados
+                // $('#cityData').html(data);
+            }
+        });
+    });
+</script> --}}
 @endsection
