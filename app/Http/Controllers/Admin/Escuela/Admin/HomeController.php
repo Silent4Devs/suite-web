@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Escuela\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
-use App\Models\Level;
+use App\Models\Escuela\Level;
 use App\Models\User;
 use Illuminate\Http\Request;
 
