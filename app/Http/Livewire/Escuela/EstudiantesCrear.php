@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Escuela;
+
 use App\Models\User;
 use App\Models\Escuela\Course;
 use Livewire\Component;
@@ -19,24 +20,24 @@ class EstudiantesCrear extends Component
         'user_id' => 'required',
     ];
     protected $messages = [
-        'user_id.required'=>'Debe seleccionar un usuario'
+        'user_id.required' => 'Debe seleccionar un usuario'
     ];
     public function mount(Course $course)
     {
         $this->course = $course;
-
     }
 
-    public function save(){
+    public function save()
+    {
         $this->validate();
         UsuariosCursos::create([
             'user_id' => $this->user_id,
             'course_id' => $this->course->id,
         ]);
-        $this->open=false;
+        // $this->open = false;
         $this->emit('UserStore');
-        $this->render_alerta('success','El estudiante se ha agregado exitosamente');
-
+        $this->render_alerta('success', 'El estudiante se ha agregado exitosamente');
+        $this->dispatchBrowserEvent('closeModal');
     }
 
     public function render_alerta($type, $message)
@@ -51,10 +52,10 @@ class EstudiantesCrear extends Component
 
     public function render()
     {
-        $usuariosInscritos=UsuariosCursos::with('usuarios')->where('course_id',$this->course->id)->pluck('user_id')->toArray();
+        $usuariosInscritos = UsuariosCursos::with('usuarios')->where('course_id', $this->course->id)->pluck('user_id')->toArray();
 
-        $this->usuarios = User::whereNotIn('id',$usuariosInscritos)->orderBy('name')->get();
-        return view('livewire.escuela.estudiantes-crear',['usuarios'=> $this->usuarios]);
+        $this->usuarios = User::whereNotIn('id', $usuariosInscritos)->orderBy('name')->get();
+        return view('livewire.escuela.estudiantes-crear', ['usuarios' => $this->usuarios]);
     }
 
 
@@ -64,4 +65,8 @@ class EstudiantesCrear extends Component
         $this->emit('select2');
     }
 
+    public function cancel()
+    {
+        $this->user_id = null;
+    }
 }

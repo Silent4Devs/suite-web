@@ -1,0 +1,13 @@
+<svg id="Componente_100_1" data-name="Componente 100 – 1" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 70 70">
+  <g id="Rectángulo_678" data-name="Rectángulo 678" fill="none" stroke="#2395aa" stroke-width="4">
+    <rect width="70" height="70" rx="6" stroke="none"/>
+    <rect x="2" y="2" width="66" height="66" rx="4" fill="none"/>
+  </g>
+  <g id="article_black_24dp" transform="translate(7.48 7.621)">
+    <rect id="Rectángulo_629" data-name="Rectángulo 629" width="56" height="55" transform="translate(-0.48 0.379)" fill="none"/>
+    <g id="Grupo_753" data-name="Grupo 753" transform="translate(6.77 7.284)">
+      <path id="Trazado_1328" data-name="Trazado 1328" d="M40.223,7.653v32.57H7.653V7.653h32.57m0-4.653H7.653A4.667,4.667,0,0,0,3,7.653v32.57a4.666,4.666,0,0,0,4.653,4.653h32.57a4.666,4.666,0,0,0,4.653-4.653V7.653A4.666,4.666,0,0,0,40.223,3Z" transform="translate(-3 -3)" fill="#2395aa"/>
+    </g>
+    <path id="Trazado_1329" data-name="Trazado 1329" d="M22.8,29.566H7V25.052H22.8Zm6.77-9.026H7V16.026H29.566Zm0-9.026H7V7H29.566Z" transform="translate(9.426 9.962)" fill="#2395aa"/>
+  </g>
+</svg>

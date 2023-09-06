@@ -61,9 +61,6 @@
                 <p>No hay usuarios registrados con estos parametros ...</p>
             </div>
         @endif
-
-
-
 </div>
 {{-- @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
