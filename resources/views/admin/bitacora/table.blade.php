@@ -5,7 +5,7 @@
         /* Adjust as needed */
         max-height: 500px;
         min-width: 250px;
-        max-width: 350px;
+        max-width: 400px;
         /* Adjust as needed */
         overflow-y: auto;
     }
@@ -458,8 +458,8 @@
         </div>
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
             <div class="form-group col-md-4">
-                <label for="no_contrato" class="txt-tamaño"><i class="fas fa-dollar-sign iconos-crear"></i>&nbsp;No.
-                    Pagos<font class="asterisco">*</font></label><br>
+                <label for="no_contrato" class="txt-tamaño"><i class="fas fa-dollar-sign iconos-crear"></i>
+                    &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
                 <input type="number" name="no_pagos" id="no_pagos" class="form-control required" min="1">
                 {{-- {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!} --}}
                 @if ($errors->has('no_pagos'))

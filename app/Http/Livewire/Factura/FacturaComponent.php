@@ -112,7 +112,7 @@ class FacturaComponent extends Component
         // ->orWhere('no_revisiones', 'like', '%' . $this->search . '%')
 
         return view('livewire.factura.factura-component', [
-            //'facturas' => Factura::orderBy('id', 'desc')->where('contrato_id', '=', $this->contrato_id)->get(),
+            // 'facturas' => Factura::orderBy('id', 'desc')->where('contrato_id', '=', $this->contrato_id)->get(),
             'facturas' => $facturas, 'organizacion' => $organizacion,
         ]);
     }
@@ -228,8 +228,8 @@ class FacturaComponent extends Component
                 'monto_factura' => $monto_factura,
                 'hallazgos_comentarios' => $this->hallazgos_comentarios,
                 'estatus' => $this->estatus,
-                'created_by' => auth()->user()->empleado->id,
-                'updated_by' => auth()->user()->empleado->id,
+                // 'created_by' => auth()->user()->empleado->id,
+                // 'updated_by' => auth()->user()->empleado->id,
             ]);
 
             $date = Carbon::now();
@@ -237,8 +237,8 @@ class FacturaComponent extends Component
 
             $facturaFile = FacturaFile::create([
                 'factura_id' => $factura->id,
-                'created_by' => auth()->user()->empleado->id,
-                'updated_by' => auth()->user()->empleado->id,
+                // 'created_by' => auth()->user()->empleado->id,
+                // 'updated_by' => auth()->user()->empleado->id,
             ]);
 
             //### Facturas reestructuracion ####
