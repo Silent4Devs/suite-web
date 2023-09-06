@@ -1,5 +1,5 @@
 <div class="card" x-data="{open: false}">
-    <div class="bg-gray-100 card-body">
+    <div class="card-body">
         <header>
             <h1 x-on:click="open = !open" class="cursor-pointer">Recursos de la lección</h1>
         </header>
@@ -13,8 +13,6 @@
                     <i wire:click="destroy" class="cursor-pointer fas fa-trash" style="color:red; font-size:10.5pt;"></i>
                 </div>
             @else
-
-
             <form wire:submit.prevent="save">
                 <div class="flex items-center">
                     <input wire:model="file" type="file" class="flex-1 form-input">

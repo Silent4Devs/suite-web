@@ -67,6 +67,7 @@ class DatabaseSeeder extends Seeder
                 //PermisosEscuelaInstructorSeeder::class,
                 // PlatformSeeder::class,
                 // PermisosEscuelaAdminSeeder::class,
+                //PermisosEscuelaInstructor::class
             ]
         );
     }
