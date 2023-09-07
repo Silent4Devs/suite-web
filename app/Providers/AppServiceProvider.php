@@ -61,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('version_iso', $version_iso);
         });
 
-        Lesson::observe(LessonObserver::class);
-        Section::observe(SectionObserver::class);
+        // Lesson::observe(LessonObserver::class);
+        // Section::observe(SectionObserver::class);
     }
 }
