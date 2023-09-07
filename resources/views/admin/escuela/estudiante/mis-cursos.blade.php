@@ -114,19 +114,18 @@
 
             @foreach ($cursos_usuario as $cu)
             <div class="card card-body mi-curso">
-                        <p>{{$cu->cursos}}</p>
                         <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}">
                             <div class="caja-img-mi-curso">
                                 <img src="{{ Storage::url($cu->cursos->image->url) }}" alt="">
                             </div>
                         </a>
-                        <div class="caja-info-card-mc">
+                        {{-- <div class="caja-info-card-mc">
                             <p><strong>{{ $cu->cursos->title }}</strong></p>
                             <p style="margin-top: 13px;">32% Avance general</p>
                             <div class="curso-progreso-barra">
                                 <div class="indicador-progreso-barra" style="width: 32%;"></div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
             @endforeach
 
@@ -189,20 +188,4 @@
 @endsection
 
 @section('scripts')
-    {{-- <script>
-    // Escucha el cambio en el select
-    $('#categorySelect').change(function() {
-        let selectedCategory = $(this).val();
-
-        // Realiza una solicitud AJAX para obtener los datos relacionados con la ciudad
-        $.ajax({
-            url: 'mis-cursos/' + selectedCategory,
-            type: 'GET',
-            success: function(data) {
-                // Actualiza el contenido del contenedor con los datos relacionados
-                // $('#cityData').html(data);
-            }
-        });
-    });
-</script> --}}
 @endsection

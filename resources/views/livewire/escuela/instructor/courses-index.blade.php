@@ -73,23 +73,27 @@
                             <div class="text-sm text-gray-500">Alumnos matriculados</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center text-sm text-gray-900">
-                                ({{ $course->rating }})
-                                <ul class="flex ml-2 text-sm">
+                            <div class="d-flex">
+                                <p>
+                                    ({{ $course->rating }})
+                                </p>
+                                <ul class="d-flex ml-2" style="list-style: none;">
                                     <li class="mr-1">
-                                        <i class="fas fa-star text-{{ $course->rating >= 1 ? 'yellow-400' : 'gray' }} "></i>
+                                        <i
+                                            class="fas fa-star" style="color: {{$course->rating >= 1 ? '#E3A008' : 'gray' }}; font-size: 18px;">
+                                        </i>
                                     </li>
                                     <li class="mr-1">
-                                        <i class="fas fa-star text-{{ $course->rating >= 2 ? 'yellow-400' : 'gray' }} "></i>
+                                        <i class="fas fa-star" style="color: {{$course->rating >= 2 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
                                     </li>
                                     <li class="mr-1">
-                                        <i class="fas fa-star text-{{ $course->rating >= 3 ? 'yellow-400' : 'gray' }} "></i>
+                                        <i class="fas fa-star" style="color: {{$course->rating >= 3 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
                                     </li>
                                     <li class="mr-1">
-                                        <i class="fas fa-star text-{{ $course->rating >= 4 ? 'yellow-400' : 'gray' }} "></i>
+                                        <i class="fas fa-star" style="color: {{$course->rating >= 4 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
                                     </li>
                                     <li class="mr-1">
-                                        <i class="fas fa-star text-{{ $course->rating >= 5 ? 'yellow-400' : 'gray' }} "></i>
+                                        <i class="fas fa-star" style="color: {{$course->rating >= 5 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
                                     </li>
                                 </ul>
                             </div>
@@ -121,8 +125,8 @@
                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                             <a href="{{ route('admin.courses.edit', $course) }}" class="text-blue-500 fas fa-edit"
                                 title="Editar"></a>
-                            {{-- <a href="{{ route('admin.instructor.courses.quizdetails', $course) }}" class="mr-2 fas fa-file-alt"
-                                style="color:#60DC8F" title="Consultar Evaluaciones"></a> --}}
+                            <a href="{{ route('admin.courses-quizdetails', $course) }}" class="mr-2 fas fa-file-alt"
+                                style="color:#60DC8F" title="Consultar Evaluaciones"></a>
                         </td>
                     </tr>
                     @endforeach

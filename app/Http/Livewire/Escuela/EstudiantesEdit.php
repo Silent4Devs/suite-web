@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Escuela;
+
 use App\Models\User;
 use App\Models\Course;
 use Livewire\Component;
-use App\Models\UsuariosCursos;
+use App\Models\Escuela\UsuariosCursos;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class EstudiantesEdit extends Component
@@ -12,14 +13,16 @@ class EstudiantesEdit extends Component
 
     public $student;
 
-    public function mount($student){
-        $this->student=$student;
+    public function mount($student)
+    {
+        $this->student = $student;
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
 
         UsuariosCursos::destroy($id);
-        Alert::toast('El rol fue eliminado exitosamente', 'success');
+        // Alert::toast('El rol fue eliminado exitosamente', 'success');
         $this->emit('UserStore');
     }
 

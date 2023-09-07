@@ -48,7 +48,7 @@
 
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane mb-4 fade" id="nav-info-curso" role="tabpanel" aria-labelledby="nav-contarea-tab">
-        <h1 class="mt-8 mb-2 text-2xl font-bold">Información del curso</h1>
+        <h4 >Información del curso</h1>
         <hr class="mt-2 mb-6">
         @livewire('escuela.instructor.publicar-course', ['course' => $course])
 

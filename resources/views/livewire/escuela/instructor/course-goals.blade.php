@@ -1,5 +1,5 @@
 <section>
-    <h1>Metas del curso</h1>
+    <h4>Metas del curso</h4>
     <hr class="mt-2 mb-6 bg-primary">
     @foreach ($course->goals as $item)
                 @if ($goal->id == $item->id)

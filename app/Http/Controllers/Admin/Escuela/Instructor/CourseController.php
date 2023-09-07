@@ -189,4 +189,9 @@ class CourseController extends Controller
 
         return back();
     }
+
+    public function quizDetails(Course $course)
+    {
+        return view('admin.escuela.instructor.evaluationquizdetails', compact('course'));
+    }
 }

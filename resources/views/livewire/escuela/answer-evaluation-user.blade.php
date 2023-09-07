@@ -59,48 +59,48 @@
                     <div class="flex flex-wrap -mx-2 lg:w-4/5 sm:mx-auto sm:mb-2">
                         <div class="w-full p-2 sm:w-1/2">
                             <div class="flex items-center h-full p-4 bg-gray-100 rounded">
-                                <svg fill=" none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                {{-- <svg fill=" none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="3" class="flex-shrink-0 w-6 h-6 mr-4 text-indigo-500"
                                     viewBox="0 0 24 24">
                                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                                     <path d="M22 4L12 14.01l-3-3"></path>
-                                </svg>
+                                </svg> --}}
                                 <span class="mr-5 font-medium text-purple-700 title-font">Respuestas
                                     correctas</span><span class="font-medium title-font">{{ $correctQuestions }}</span>
                             </div>
                         </div>
                         <div class="w-full p-2 sm:w-1/2">
                             <div class="flex items-center h-full p-4 bg-gray-100 rounded">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                {{-- <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="3" class="flex-shrink-0 w-6 h-6 mr-4 text-indigo-500"
                                     viewBox="0 0 24 24">
                                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                                     <path d="M22 4L12 14.01l-3-3"></path>
-                                </svg>
+                                </svg> --}}
                                 <span class="mr-5 font-medium text-purple-700 title-font">Total de preguntas</span><span
                                     class="font-medium title-font">{{ $totalQuizQuestions }}</span>
                             </div>
                         </div>
                         <div class="w-full p-2 sm:w-1/2">
                             <div class="flex items-center h-full p-4 bg-gray-100 rounded">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                {{-- <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="3" class="flex-shrink-0 w-6 h-6 mr-4 text-indigo-500"
                                     viewBox="0 0 24 24">
                                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                                     <path d="M22 4L12 14.01l-3-3"></path>
-                                </svg>
+                                </svg> --}}
                                 <span class="mr-5 font-medium text-purple-700 title-font">Porcentaje
                                 </span><span class="font-medium title-font">{{ round($percentage) . '%' }}</span>
                             </div>
                         </div>
                         <div class="w-full p-2 sm:w-1/2">
                             <div class="flex items-center h-full p-4 bg-gray-100 rounded">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                {{-- <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="3" class="flex-shrink-0 w-6 h-6 mr-4 text-indigo-500"
                                     viewBox="0 0 24 24">
                                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                                     <path d="M22 4L12 14.01l-3-3"></path>
-                                </svg>
+                                </svg> --}}
                                 <span class="mr-5 font-medium text-purple-700 title-font">Estado de la
                                     evaluación</span><span
                                     class="font-medium title-font">{{ round($percentage) > 60 ? 'Aprobado' : 'Reprobado' }}</span>

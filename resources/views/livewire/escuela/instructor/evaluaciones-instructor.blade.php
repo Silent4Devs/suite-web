@@ -1,7 +1,7 @@
 <div>
     {{-- <x-loading-indicator wire:loading /> --}}
 
-    <h2>Evaluaciones del curso</h2>
+    <h4>Evaluaciones del curso</h4>
     <hr class="mt-2 mb-6 bg-primary">
 
     <div class="card shadow-none">

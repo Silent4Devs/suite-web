@@ -5,8 +5,8 @@
         <div class="container px-5 py-5 mx-auto">
             <div class="grid grid-cols-2 gap-4 mt-2">
                 <div>
-                    <label>Alumno</label>
-                    <select class="form-input  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
+                    <label>Alumno:</label>
+                    <select class="form-control  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
                         name="user_id" id="user_id" wire:model.defer="user_id">
                         <option value="" selected>
                             Selecciona una opción
@@ -20,7 +20,7 @@
 
                 <div>
                     <label>Evaluación</label>
-                    <select class="form-input  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
+                    <select class="form-control  block w-full mt-2 mb-2 {{ $errors->has('user_id') ? 'is-invalid' : '' }}"
                         name="user_id" id="user_id" wire:model.defer="evaluation_id">
                         <option value="" selected>
                             Selecciona una opción

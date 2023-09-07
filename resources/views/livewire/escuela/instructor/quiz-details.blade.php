@@ -1,20 +1,19 @@
 <div>
     @if ($evaluationUser)
-        <div class="mt-4 overflow-hidden bg-white border-2 border-gray-300 shadow sm:rounded-lg">
+        <div class="card mt-4">
             <div class="px-4 py-5 sm:px-6">
-                <h1 class="text-sm font-medium leading-6 text-gray-900">
+                <h5 class="text-sm font-medium leading-6 text-gray-900">
                     Información de la evaluación
                 </h1>
                 <p class="max-w-2xl mt-1 text-sm text-gray-700">
 
                     <!-- \Carbon\Carbon::isDayOff($userQuizDetails->updated_at) -->
                     Realizaste esta evaluación el <span
-                        class="px-2 bg-green-300 rounded-lg text-bold">{{ $evaluationUser ? $evaluationUser->created_at->format('d-m-Y') : 'Evaluación no realizada' }}
+                        class="px-2 bg-success rounded-lg">{{ $evaluationUser ? $evaluationUser->created_at->format('d-m-Y') : 'Evaluación no realizada' }}
                     </span>
                 </p>
             </div>
             <div class="border-t border-gray-300">
-
                 <div>
                     {{-- @foreach ($userQuizDetails as $userQuizDetail) --}}
                     <div class="px-4 py-3 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -83,7 +82,7 @@
                 }
             @endphp
             @if (count($userAnswers))
-                <div class="mt-6 overflow-hidden bg-white shadow sm:rounded-lg">
+                <div class="card">
 
                     <div class="px-4 py-5 sm:px-6">
                         <span class="mr-2 font-extrabold"> {{ $loop->iteration }}.-</span><span
@@ -109,7 +108,7 @@
                                             return $item->is_correct == 'true';
                                         })
                                         ->first();
-                                    
+
                                 @endphp
                                 @isset($userAnswer['answer_id'])
                                     @if ($answer->id == $userAnswer['answer_id'])

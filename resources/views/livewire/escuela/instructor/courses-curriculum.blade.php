@@ -1,10 +1,11 @@
 
 <div>
 
-    <h1 class="mb-8 text-2xl font-bold">Lecciones</h1>
+    <h4>Lecciones</h4>
+    <hr class="mt-2">
 
     {{-- add new section --}}
-    <div class="mt-4" x-data="{open: false}">
+    <div class="mt-2" x-data="{open: false}">
         <div class="mb-3 d-flex justify-content-end">
             <button class="btn btn-outline-primary" wire:click="store" type="button">
                 AGREGAR NUEVA SECCIÓN <i class="fas fa-plus"></i>
@@ -69,7 +70,7 @@
                                     <i style="font-size:10pt" class= "fas fa-edit"></i>
                                 </div>
                                 <div wire:click="destroy({{ $item }})" class="d-inline">
-                                    <i style="font-size:10pt;" class="fas fa-trash"></i>
+                                    <i style="font-size:10pt;" class="m-1 fa-regular fa-trash-can"></i>
                                 </div>
 
                         </div>

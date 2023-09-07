@@ -1,5 +1,5 @@
 <section class="mt-4">
-    <h1>Audiencia del curso</h1>
+    <h4>Audiencia del curso</h4>
     <hr class="mt-2 mb-6 bg-primary">
 
     @foreach ($course->audiences as $item)
@@ -19,8 +19,7 @@
                             <div class="col-3 d-flex justify-content-end">
                                 <i wire:click="edit({{ $item }})"
                                     class="m-1 text-blue-500 cursor-pointer fas fa-edit"></i>
-                                <i wire:click="destroy({{ $item }})"
-                                    class="m-1 text-red-500 cursor-pointer fas fa-trash"></i>
+                                <i wire:click="destroy({{ $item }})"class="m-1 fa-regular fa-trash-can"></i>
                             </div>
                         </div>
                     </div>

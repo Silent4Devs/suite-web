@@ -45,7 +45,7 @@
                                 <div class="text-sm text-gray-900">{{ $student->email }}</div>
                             </td>
                             <td>
-                                <i style="font-size:12pt; color:red" class="ml-2 fas fa-trash" data-toggle="tooltip"
+                                <i style="font-size:12pt; color:red" class="m-1 fa-regular fa-trash-can" data-toggle="tooltip"
                                     data-placement="top" title="Eliminar"
                                     wire:click.prevent="destroy({{ $student->id }})"></i>
                             </td>
