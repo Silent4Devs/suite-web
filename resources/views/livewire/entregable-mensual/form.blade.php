@@ -7,20 +7,22 @@
     <div>
         <!-- No Contrato Field -->
         <input wire:model="contrato_id" type="hidden" value="{{ $contrato_id }}">
-        {{-- <div class="mb-4 row"> --}}
         <!-- Area Field -->
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
-            <div class="distancia form-group col-md-6">
-                <label for="" class="txt-tamaño"><i class="fas fa-paste iconos-crear"></i>Nombre entregable
+            <div class="distancia form-group col-md-8">
+                <label for="" class="txt-tamaño">Nombre entregable
                     <font class="asterisco">*</font>
                 </label>
-                <input type="text" wire:model.debounce.800ms="nombre_entregable" class="form-control" required>
+                <input type="text" maxlength="250" wire:model.debounce.800ms="nombre_entregable" class="form-control"
+                    required>
                 @error('nombre_entregable')
                     <span class="red-text">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="distancia form-group col-md-6">
-                <label for="" class="txt-tamaño"><i class="fas fa-file-alt iconos-crear"></i>Descripción
+        </div>
+        <div class="row" style="margin-left: 10px;margin-right: 10px;">
+            <div class="distancia form-group col-md-12">
+                <label for="" class="txt-tamaño">Descripción
                     <font class="asterisco">*</font>
                 </label>
                 <textarea wire:model.debounce.800ms="descripcion" style="padding:15px;" class="form-control" required></textarea>
@@ -32,7 +34,7 @@
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
             <div class="distancia form-group col-md-4">
                 <div wire:ignore>
-                    <label for="" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
+                    <label for="" class="txt-tamaño">Fecha
                         entrega inicial<font class="asterisco">*</font></label>
                     <input type="date" wire:model.defer="plazo_entrega_inicio" class="form-control" min="1945-01-01"
                         required>
@@ -43,7 +45,7 @@
             </div>
             <div class="distancia form-group col-md-4">
                 <div wire:ignore>
-                    <label for="" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
+                    <label for="" class="txt-tamaño">Fecha
                         entrega final<font class="asterisco">*</font></label>
                     <input type="date" wire:model.defer="plazo_entrega_termina" class="form-control" min="1945-01-01"
                         required>
@@ -54,7 +56,7 @@
             </div>
             <div class="distancia form-group col-md-4">
                 <div wire:ignore>
-                    <label for="" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha
+                    <label for="" class="txt-tamaño">Fecha
                         entrega real<font class="asterisco">*</font></label>
                     <input type="date" wire:model.fechas="entrega_real" class="form-control" min="1945-01-01"
                         required>
@@ -66,8 +68,8 @@
         </div>
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
             <div class="distancia form-group col-md-4">
-                <label for="" class="txt-tamaño"><i class="fas fa-thumbs-down iconos-crear"></i>
-                    <i class="fas fa-thumbs-up iconos-crear" style="margin-left:2px;"></i>Cumple<font class="asterisco">
+                <label for="" class="txt-tamaño">
+                    Cumple<font class="asterisco">
                         *</font></label>
                 <div class="switch">
                     <label class="grey-text letra-ngt">
@@ -79,7 +81,7 @@
                 </div>
             </div>
             <div class="distancia form-group col-md-4">
-                <label for="" class="txt-tamaño"><i class="fas fa-file iconos-crear"></i>Factura Relacionada
+                <label for="" class="txt-tamaño">Factura Relacionada
                     <font class="asterisco">*</font>
                 </label>
                 <select name="factura_id" id="factura_id" class="form-control" wire:model.defer="factura_id" required>
@@ -98,8 +100,8 @@
         </div>
         <!-- Nombre Servicio Field -->
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
-            <div class="distancia form-group col-md-6">
-                <label for="" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Observaciones
+            <div class="distancia form-group col-md-12">
+                <label for="" class="txt-tamaño">Observaciones
                     <font class="asterisco">*</font>
                 </label><br>
                 <textarea wire:model.debounce.800ms="observaciones" style="padding:15px;" class="form-control" required></textarea>
@@ -110,7 +112,6 @@
         </div>
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
             <div class="distancia form-group col-md-6" wire:ignore>
-
                 @if (is_null($organizacion))
                 @else
                     <div class="file-field input-field">
@@ -140,14 +141,16 @@
 
                 {{-- @if ($document_entregable)
                         <a href="{{ asset('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/entregables/pdf/' . $document_entregable) }}" target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-                            <i class="fas fa-file-download iconos-crear"></i> Descargar
+                             Descargar
                         </a>
                     @endif --}}
             </div>
+        </div>
 
+        <div class="row" style="margin-left: 10px;margin-right: 10px;">
             <div class="input-field col l12 m12 s12" x-data="{ show: @entangle('aplica_deductiva') }">
-                <div class="distancia form-group col-md-6" wire:ignore>
-                    <label for="" class="txt-tamaño"><i class="fas fa-clipboard iconos-crear"></i>¿Aplica
+                <div class="distancia form-group col-md-12" wire:ignore>
+                    <label for="" class="txt-tamaño">¿Aplica
                         deductiva/penalización?<font class="asterisco">*</font></label>
                     Si
                     <div class="switch">
@@ -158,48 +161,52 @@
                         </label>
                     </div>
                 </div>
-                <div class="distancia form-group col-md-6" x-show="show">
-                    <div class="distancia form-group col-md-12">
-                        <label for="" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>¿Por
-                            qué aplica la
-                            Deductiva/Penalización?<font class="asterisco">*</font></label>
-                        <textarea wire:model.debounce.800ms="justificacion_deductiva_penalizacion" style="padding:15px;" class="form-control"
-                            required></textarea>
-                        @error('justificacion_deductiva_penalizacion')
-                            <span class="red-text">{{ $message }}</span>
-                        @enderror
+                <div class="distancia form-group col-md-12" x-show="show">
+                    <div class="row">
+                        <div class="distancia form-group col-md-12">
+                            <label for="" class="txt-tamaño">¿Por
+                                qué aplica la
+                                Deductiva/Penalización?<font class="asterisco">*</font></label>
+                            <textarea wire:model.debounce.800ms="justificacion_deductiva_penalizacion" style="padding:15px;" class="form-control"
+                                required></textarea>
+                            @error('justificacion_deductiva_penalizacion')
+                                <span class="red-text">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
-                    <div class="distancia form-group col-md-12">
-                        <label for="" class="txt-tamaño">Monto Deductiva/Penalización</label>
-                        <input type="text" wire:model.debounce.800ms="deductiva_penalizacion"
-                            class="form-control deductiva_penalizacion">
-                        @error('deductiva_penalizacion')
-                            <span class="red-text">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="distancia form-group col-md-12">
-                        <label for="" class="txt-tamaño"><i class="fas fa-file iconos-crear"></i>Factura
-                            Relacionada<font class="asterisco">*</font></label>
-                        <select name="deductiva_factura_id" id="deductiva_factura_id" class="form-control"
-                            wire:model.defer="deductiva_factura_id">
-                            <option value="">Sin factura</option>
-                            @foreach ($facturas_entregables as $facturas)
-                                }
-                                <option value="{{ $facturas->id }}">{{ $facturas->no_factura }}</option>
-                            @endforeach
-                        </select>
-                        @error('deductiva_factura_id')
-                            <span class="red-text">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="distancia form-group col-md-12">
-                        <label for="" class="txt-tamaño"><i class="far fa-credit-card iconos-crear"></i>Nota
-                            de crédito<font class="asterisco">*</font></label>
-                        <input type="text" wire:model.debounce.800ms="nota_credito" class="form-control">
-                        @error('nota_credito')
-                            <span class="red-text">{{ $message }}</span>
-                        @enderror
-                        </divclass=>
+                    <div class="row">
+                        <div class="distancia form-group col-md-4">
+                            <label for="" class="txt-tamaño">Monto Deductiva/Penalización</label>
+                            <input type="text" maxlength="250" wire:model.debounce.800ms="deductiva_penalizacion"
+                                class="form-control deductiva_penalizacion">
+                            @error('deductiva_penalizacion')
+                                <span class="red-text">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="distancia form-group col-md-4">
+                            <label for="" class="txt-tamaño">Factura
+                                Relacionada<font class="asterisco">*</font></label>
+                            <select name="deductiva_factura_id" id="deductiva_factura_id" class="form-control"
+                                wire:model.defer="deductiva_factura_id">
+                                <option value="">Sin factura</option>
+                                @foreach ($facturas_entregables as $facturas)
+                                    }
+                                    <option value="{{ $facturas->id }}">{{ $facturas->no_factura }}</option>
+                                @endforeach
+                            </select>
+                            @error('deductiva_factura_id')
+                                <span class="red-text">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="distancia form-group col-md-4">
+                            <label for="" class="txt-tamaño">Nota
+                                de crédito<font class="asterisco">*</font></label>
+                            <input type="text" maxlength="250" wire:model.debounce.800ms="nota_credito"
+                                class="form-control">
+                            @error('nota_credito')
+                                <span class="red-text">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
 

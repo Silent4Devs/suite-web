@@ -27,7 +27,7 @@
 
 <div class="tabla_responsiva_edit_contratos tabla-cierre">
     @if ($entregamensuales->count())
-        <table id="tblEntregables" style="width: 100%;">
+        <table id="tblEntregables" class="table" style="width: 100%;">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('nombre_entregable')">

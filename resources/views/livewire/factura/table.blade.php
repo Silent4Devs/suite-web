@@ -24,7 +24,7 @@
 </div>
 <div class="tabla_responsiva_edit_contratos tabla-cierre">
     @if ($facturas->count())
-        <table style="width: 100%;">
+        <table class="table" style="width: 100%;">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('no_factura')">

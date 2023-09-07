@@ -1,3 +1,8 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
 <style>
     .iconos-crear {
         font-size: 20pt;
@@ -633,55 +638,47 @@
             </div>
         </div>
 
-
-
-
-
-
-
         <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
             <div class="col s12 m4 distancia">
-                <div class="form">
-                    <p style="color:#2395AA">
-                        &nbsp;¿Aplica fianza o responsabilidad civil? </p>
-                    <div class="switch" style="margin-top: 8px; margin-left: 8px;">
-                        <label class="letra-ngt" style="margin-top: 5px;">
-                            <input id="check_aplica_fianza" type="checkbox" name="aplicaFinaza">
-                            <span class="lever">Si</span>
-                        </label>
-                    </div>
+                <p style="color:#2395AA">
+                    &nbsp;¿Aplica fianza o responsabilidad civil? </p>
+                <div class="form custom-control custom-switch">
+                    No
+                    <input id="check_aplica_fianza" type="checkbox" name="aplicaFinaza"
+                        class="custom-control-input">
+                    Si
                 </div>
             </div>
-        </div>
-        <style type="text/css">
-            .td_fianza {
-                display: none;
-            }
-        </style>
-        <div class="form-group col-md-12 distancia">
-            <div class="td_fianza">
-                <label class="txt-tamaño">Folio</label>
-                {!! Form::text('folio', null, ['class' => 'form-control']) !!}
-            </div>
-        </div>
-        <div class="form-group col-md-12 distancia">
-            <div class="td_fianza">
-                <label class="txt-tamaño ">Documento</label>
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>PDF</span>
-                        <input type="hidden" id="" name="" value="">
-                        <input class="input_file_validar" type="file" name="documento"
-                            accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate form-control" type="text"
-                            placeholder="Elegir documento pdf" readonly>
-                    </div>
+            <style type="text/css">
+                .td_fianza {
+                    display: none;
+                }
+            </style>
+            <div class="form-group col-md-12 distancia">
+                <div class="td_fianza">
+                    <label class="txt-tamaño">Folio</label>
+                    {!! Form::text('folio', null, ['class' => 'form-control']) !!}
                 </div>
+            </div>
+            <div class="form-group col-md-12 distancia">
+                <div class="td_fianza">
+                    <label class="txt-tamaño ">Documento</label>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>PDF</span>
+                            <input type="hidden" id="" name="" value="">
+                            <input class="input_file_validar" type="file" name="documento"
+                                accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate form-control" type="text"
+                                placeholder="Elegir documento pdf" readonly>
+                        </div>
+                    </div>
 
-                <div class="ml-4 display-flex">
-                    <label class="red-text">{{ $errors->first('Type') }}</label>
+                    <div class="ml-4 display-flex">
+                        <label class="red-text">{{ $errors->first('Type') }}</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -793,6 +790,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 <script type="text/javascript">

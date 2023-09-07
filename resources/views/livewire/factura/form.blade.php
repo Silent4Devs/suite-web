@@ -13,21 +13,34 @@
             <!-- No Contrato Field -->
             <input wire:model.defer="contrato_id" type="hidden" value="{{ $contrato_id }}">
             <div class="row" style="margin-left: 10px;margin-right: 10px;">
-                <div class="distancia form-group col-md-4">
+                <div class="distancia form-group col-md-6">
                     <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-invoice-dollar iconos-crear"></i>No.
                         factura<font class="asterisco">*</font></label>
-                    <input type="text" wire:model.defer="no_factura" class="form-control" required>
+                    <input type="text" maxlength="255" wire:model.defer="no_factura" class="form-control" required>
                     @error('no_factura')
                         <span class="red-text">{{ $message }}</span>
                     @enderror
                 </div>
 
+                <div class="distancia form-group col-md-6" wire:ignore>
+                    {{-- Monto Factura --}}
+                    <label for="no_contrato" class="txt-tamaño"><i class="fas fa-dollar-sign iconos-crear"></i>Monto
+                        factura<font class="asterisco">*</font></label>
+                    <input type="number" min="0" wire:model.defer="monto_factura" id="monto_factura"
+                        class="form-control" required>
+                    @error('monto_factura')
+                        <span class="red-text">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="row" style="margin-left: 10px;margin-right: 10px;">
                 <!-- Fechas-->
 
                 <div class="distancia form-group col-md-4">
                     <div wire:ignore>
                         <label for="no_contrato" class="txt-tamaño"><i
-                                class="fas fa-calendar-alt iconos-crear"></i>Fecha recepción<font class="asterisco">*
+                                class="fas fa-calendar-alt iconos-crear"></i>Fecha
+                            recepción<font class="asterisco">*
                             </font></label>
                         <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_recepcion"
                             class="form-control" style="margin-bottom: 0" required>
@@ -35,13 +48,13 @@
                     @error('fecha_recepcion')
                         <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
                     @enderror
-
                 </div>
 
                 <div class="distancia form-group col-md-4">
                     <div wire:ignore>
                         <label for="no_contrato" class="txt-tamaño"><i
-                                class="fas fa-calendar-alt iconos-crear"></i>Fecha liberación<font class="asterisco">*
+                                class="fas fa-calendar-alt iconos-crear"></i>Fecha
+                            liberación<font class="asterisco">*
                             </font></label>
                         <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_liberacion"
                             class="form-control" style="margin-bottom: 0" required>
@@ -52,24 +65,12 @@
                 </div>
             </div>
             <div class="row" style="margin-left: 10px;margin-right: 10px;">
-                <div class="distancia form-group col-md-4" wire:ignore>
-                    {{-- Monto Factura --}}
-                    <label for="no_contrato" class="txt-tamaño"><i class="fas fa-dollar-sign iconos-crear"></i>Monto
-                        factura<font class="asterisco">*</font></label>
-                    <input type="number" min="0" wire:model.defer="monto_factura" id="monto_factura"
-                        class="form-control" required>
-                    @error('monto_factura')
-                        <span class="red-text">{{ $message }}</span>
-                    @enderror
-                </div>
-
                 {{-- Concepto --}}
-
-                <div class="distancia form-group col-md-8">
+                <div class="distancia form-group col-md-12">
                     <label for="no_contrato" class="txt-tamaño"><i class="fas fa-pen-square iconos-crear"></i>Concepto
                         <font class="asterisco">*</font>
                     </label><br>
-                    <textarea class="form-control" type="text" wire:model.defer="concepto" required></textarea>
+                    <textarea class="form-control" wire:model.defer="concepto" required></textarea>
                     @error('concepto')
                         <span class="red-text">{{ $message }}</span>
                     @enderror
@@ -233,7 +234,7 @@
                             <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
                                     class="fas fa-search iconos-crear"></i>Hallazgos / Comentarios</p>
                         </small>
-                        <textarea style="padding:15px;" type="text" wire:model.debounce.800ms="hallazgos_comentarios"
+                        <textarea style="padding:15px;" type="text" maxlength="255" wire:model.debounce.800ms="hallazgos_comentarios"
                             class="text_area"></textarea>
                         @error('hallazgos_comentarios') <span class="red-text">{{ $message }}</span> @enderror
                     </div>
