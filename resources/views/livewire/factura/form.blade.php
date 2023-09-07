@@ -14,7 +14,7 @@
             <input wire:model.defer="contrato_id" type="hidden" value="{{ $contrato_id }}">
             <div class="row" style="margin-left: 10px;margin-right: 10px;">
                 <div class="distancia form-group col-md-6">
-                    <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-invoice-dollar iconos-crear"></i>No.
+                    <label for="no_contrato" class="txt-tamaño">No.
                         factura<font class="asterisco">*</font></label>
                     <input type="text" maxlength="255" wire:model.defer="no_factura" class="form-control" required>
                     @error('no_factura')
@@ -24,7 +24,7 @@
 
                 <div class="distancia form-group col-md-6" wire:ignore>
                     {{-- Monto Factura --}}
-                    <label for="no_contrato" class="txt-tamaño"><i class="fas fa-dollar-sign iconos-crear"></i>Monto
+                    <label for="no_contrato" class="txt-tamaño">Monto
                         factura<font class="asterisco">*</font></label>
                     <input type="number" min="0" wire:model.defer="monto_factura" id="monto_factura"
                         class="form-control" required>
@@ -38,8 +38,7 @@
 
                 <div class="distancia form-group col-md-4">
                     <div wire:ignore>
-                        <label for="no_contrato" class="txt-tamaño"><i
-                                class="fas fa-calendar-alt iconos-crear"></i>Fecha
+                        <label for="no_contrato" class="txt-tamaño">Fecha
                             recepción<font class="asterisco">*
                             </font></label>
                         <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_recepcion"
@@ -52,8 +51,7 @@
 
                 <div class="distancia form-group col-md-4">
                     <div wire:ignore>
-                        <label for="no_contrato" class="txt-tamaño"><i
-                                class="fas fa-calendar-alt iconos-crear"></i>Fecha
+                        <label for="no_contrato" class="txt-tamaño">Fecha
                             liberación<font class="asterisco">*
                             </font></label>
                         <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_liberacion"
@@ -67,7 +65,7 @@
             <div class="row" style="margin-left: 10px;margin-right: 10px;">
                 {{-- Concepto --}}
                 <div class="distancia form-group col-md-12">
-                    <label for="no_contrato" class="txt-tamaño"><i class="fas fa-pen-square iconos-crear"></i>Concepto
+                    <label for="no_contrato" class="txt-tamaño">Concepto
                         <font class="asterisco">*</font>
                     </label><br>
                     <textarea class="form-control" wire:model.defer="concepto" required></textarea>
@@ -157,7 +155,7 @@
                         <small>
                             <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
                                     class="fas fa-thumbs-down iconos-crear"></i>
-                                <i class="fas fa-thumbs-up iconos-crear" style="margin-left:2px;"></i>Cumple<font
+                                Cumple<font
                                     class="asterisco">
                                     *</font>
                             </p>

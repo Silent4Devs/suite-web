@@ -1,6 +1,6 @@
 <div class="row" style="margin-top: 30px; margin-left: 10px;">
     <div class="col l6">
-        <label for="search"><i class="fas fa-search iconos-crear"></i> Busca un número de factura</label>
+        <label for="search">Busca un número de factura</label>
         <input type="text" class="form-control" wire:model="search" placeholder="Busca un número de factura">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>

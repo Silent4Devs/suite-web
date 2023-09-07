@@ -68,7 +68,7 @@ class ConvenioModificatorioComponent extends Component
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->pagination);
 
-        $this->dispatchBrowserEvent('paginadorConvenios');
+        // $this->dispatchBrowserEvent('paginadorConvenios');
 
         return view('livewire.convenios-modificatorios-contratos.convenio-modificatorio-component', [
             'convenio' => $convenios, 'organizacion' => $organizacion,

@@ -322,8 +322,8 @@
         <div class="form-group col-md-12">
             <label for="objetivo" class="txt-tamaño">
                 Objetivo del servicio<font class="asterisco">*</font></label>
-            <textarea style="margin-left:20px; width:97%; text-align:justify" id="textarea1" class="form-control"
-                value="{{ $contrato->objetivo }}" name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
+            <textarea style="text-align:justify" id="textarea1" class="form-control" value="{{ $contrato->objetivo }}"
+                name="objetivo" @if ($show_contrato) disabled @endif required>{{ $contrato->objetivo }}</textarea>
             @if ($errors->has('objetivo'))
                 <div class="invalid-feedback red-text">
                     {{ $errors->first('objetivo') }}
@@ -402,10 +402,8 @@
                     Descargar</a>
             @endif
         </div>
-    </div>
 
-    <div class="row" style="margin-left: 10px; margin-right: 10px;">
-        <div class="distancia form-group col-md-4">
+        <div class="distancia form-group col-md-6">
             <label for="no_contrato" class="txt-tamaño">Vigencia<font class="asterisco">*
                 </font></label>
             {!! Form::text('vigencia_contrato', $contrato->vigencia_contrato, [

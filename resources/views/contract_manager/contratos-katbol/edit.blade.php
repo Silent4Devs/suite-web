@@ -12,17 +12,17 @@
 
     <style>
         /* .asterisco {
-                                            color: red;
-                                            margin-left: 5px;
+                                                    color: red;
+                                                    margin-left: 5px;
 
-                                        } */
+                                                } */
 
         /*.select-wrapper input{
 
-                                        direction:rtl;
-                                        text-align:left;
+                                                direction:rtl;
+                                                text-align:left;
 
-                                        }*/
+                                                }*/
     </style>
 
     {{-- {{ Breadcrumbs::render('contratos_edit', $contrato) }} --}}
@@ -35,7 +35,7 @@
             <div class="card">
                 <div class="card-content blue-text" style="overflow-x:auto !important;">
                     <h3>Contrato</h3>
-                    <table class="refresco" id="tblContrato">
+                    <table class="refresco table" id="tblContrato">
                         <thead style="overflow-x:auto !important;">
                             <tr>
                                 <th>

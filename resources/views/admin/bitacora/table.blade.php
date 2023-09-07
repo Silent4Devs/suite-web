@@ -360,7 +360,6 @@
                 <div class="">
                     <div class="file-field input-field">
                         <div class="btn">
-                            <span>PDF</span>
                             <input type="file" name="file_contrato" class="form-control input_file_validar"
                                 id="file_contrato" placeholder="Elegir documento pdf"
                                 accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" required>
@@ -394,9 +393,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
                 <label for="no_contrato" class="txt-tamaño">Vigencia
                     <font class="asterisco">*</font>
                 </label><br>
@@ -469,7 +466,7 @@
 
 
             <div class="form-group col-md-4">
-                <label for="no_contrato" class="txt-tamaño">&nbsp;Tipo
+                <label for="no_contrato" class="txt-tamaño">Tipo
                     Cambio
                     <font class="asterisco">*
                     </font>
@@ -513,247 +510,222 @@
                     <div class="card hoverable">
                         <div class="card-content center-align">
 
-                            <table>
-                                <thead>
-                                    <tr>
-
-                                        <br>
-                                        <th>
-                                            <p class="grey-text txt-frm">
-                                                Valor del Dolar
-                                            </p>
-                                        </th>
-                                        <th>
-                                            <p class="grey-text txt-frm">Monto de
-                                                pago
-                                            </p>
-                                        </th>
-                                        <th>
-                                            <p class="grey-text txt-frm">Monto
-                                                Máximo
-                                            </p>
-                                        </th>
-                                        <th>
-                                            <p class="grey-text txt-frm">Monto
-                                                Mínimo
-                                            </p>
-                                        </th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-
-                                            {!! Form::text('valor_dolar', !is_null($dolares) ? $dolares->valor_dolar : null, [
-                                                'class' => 'form-control',
-                                                'id' => 'valor_dol',
-                                                'autocomplete' => 'off',
-                                                'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                            ]) !!}
-
-                                        </td>
-
-                                        <td>
-                                            {!! Form::text('monto_dolares', !is_null($dolares) ? $dolares->monto_dolares : null, [
-                                                'class' => 'form-control',
-                                                'id' => 'dolar',
-                                                'autocomplete' => 'off',
-                                                'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                            ]) !!}
-                                        </td>
-
-
-                                        <td>
-                                            {!! Form::text('maximo_dolares', !is_null($dolares) ? $dolares->maximo_dolares : null, [
-                                                'class' => 'form-control',
-                                                'id' => 'dolar_maximo',
-                                                'autocomplete' => 'off',
-                                                'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                            ]) !!}
-
-                                        </td>
-
-                                        <td>
-                                            {!! Form::text('minimo_dolares', !is_null($dolares) ? $dolares->minimo_dolares : null, [
-                                                'class' => 'form-control',
-                                                'id' => 'dolar_minimo',
-                                                'autocomplete' => 'off',
-                                                'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                            ]) !!}
-
-                                        </td>
-
-
-
-                                    </tr>
+                            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                                <div class="form-group col-md-3">
+                                    <label for="no_contrato" class="txt-tamaño">
+                                        Valor del Dolar
+                                    </label>
+                                    {!! Form::text('valor_dolar', !is_null($dolares) ? $dolares->valor_dolar : null, [
+                                        'class' => 'form-control',
+                                        'id' => 'valor_dol',
+                                        'autocomplete' => 'off',
+                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                    ]) !!}
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="no_contrato" class="txt-tamaño">
+                                        Monto de
+                                        pago
+                                    </label>
+                                    {!! Form::text('monto_dolares', !is_null($dolares) ? $dolares->monto_dolares : null, [
+                                        'class' => 'form-control',
+                                        'id' => 'dolar',
+                                        'autocomplete' => 'off',
+                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                    ]) !!}
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="no_contrato" class="txt-tamaño">
+                                        Monto
+                                        Máximo
+                                    </label>
+                                    {!! Form::text('maximo_dolares', !is_null($dolares) ? $dolares->maximo_dolares : null, [
+                                        'class' => 'form-control',
+                                        'id' => 'dolar_maximo',
+                                        'autocomplete' => 'off',
+                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                    ]) !!}
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="no_contrato" class="txt-tamaño">
+                                        Monto
+                                        Mínimo
+                                    </label>
+                                    {!! Form::text('minimo_dolares', !is_null($dolares) ? $dolares->minimo_dolares : null, [
+                                        'class' => 'form-control',
+                                        'id' => 'dolar_minimo',
+                                        'autocomplete' => 'off',
+                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                    ]) !!}
+                                </div>
+                            </div>
+                            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                                @php
+                                    $contrato_importe_total = $contratos->monto_pago;
+                                @endphp
+                                @foreach ($contratos->ampliaciones as $ampliacion)
                                     @php
-                                        $contrato_importe_total = $contratos->monto_pago;
+                                        $contrato_importe_total += $ampliacion->importe;
                                     @endphp
-                                    @foreach ($contratos->ampliaciones as $ampliacion)
-                                        @php
-                                            $contrato_importe_total += $ampliacion->importe;
-                                        @endphp
-                                    @endforeach
+                                @endforeach
                                 </tbody>
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
-            <div class="form-group col-md-4">
-                <label for="no_contrato" class="txt-tamaño">Monto de
-                    Pago M.X.N.<font class="asterisco">*</font></label>
-                {!! Form::text('monto_pago', null, [
-                    'id' => 'teste',
-                    'class' => 'form-control',
-                    'autocomplete' => 'off',
-                    'required',
-                ]) !!}
-                @if ($errors->has('monto_pago'))
-                    <div class="invalid-feedback red-text">
-                        {{ $errors->first('monto_pago') }}
-                    </div>
-                @endif
+            <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+                <div class="form-group col-md-4">
+                    <label for="no_contrato" class="txt-tamaño">Monto de
+                        Pago M.X.N.<font class="asterisco">*</font></label>
+                    {!! Form::text('monto_pago', null, [
+                        'id' => 'teste',
+                        'class' => 'form-control',
+                        'autocomplete' => 'off',
+                        'required',
+                    ]) !!}
+                    @if ($errors->has('monto_pago'))
+                        <div class="invalid-feedback red-text">
+                            {{ $errors->first('monto_pago') }}
+                        </div>
+                    @endif
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="no_contrato" class="txt-tamaño">Monto
+                        máximo
+                        M.X.N.<font class="asterisco">*</font></label>
+                    {!! Form::text('maximo', null, ['id' => 'este', 'class' => 'form-control', 'autocomplete' => 'off', 'required']) !!}
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="no_contrato" class="txt-tamaño">Monto
+                        mínimo
+                        M.X.N.<font class="asterisco">*</font></label>
+                    {!! Form::text('minimo', null, [
+                        'id' => 'prueba',
+                        'class' => 'form-control',
+                        'autocomplete' => 'off',
+                        'required',
+                    ]) !!}
+                </div>
             </div>
-            <div class="form-group col-md-4">
-                <label for="no_contrato" class="txt-tamaño">Monto
-                    máximo
-                    M.X.N.<font class="asterisco">*</font></label>
-                {!! Form::text('maximo', null, ['id' => 'este', 'class' => 'form-control', 'autocomplete' => 'off', 'required']) !!}
-            </div>
-            <div class="form-group col-md-4">
-                <label for="no_contrato" class="txt-tamaño"><i
-                        class="fas fa-dollar-sign iconos-crear"></i>&nbsp;Monto
-                    mínimo
-                    M.X.N.<font class="asterisco">*</font></label>
-                {!! Form::text('minimo', null, [
-                    'id' => 'prueba',
-                    'class' => 'form-control',
-                    'autocomplete' => 'off',
-                    'required',
-                ]) !!}
-            </div>
-        </div>
 
-        <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
-            <div class="col s12 m4 distancia">
-                <p style="color:#2395AA">
-                    &nbsp;¿Aplica fianza o responsabilidad civil? </p>
-                <div class="form custom-control custom-switch">
-                    No
-                    <input id="check_aplica_fianza" type="checkbox" name="aplicaFinaza"
-                        class="custom-control-input">
-                    Si
-                </div>
-            </div>
-            <style type="text/css">
-                .td_fianza {
-                    display: none;
-                }
-            </style>
-            <div class="form-group col-md-12 distancia">
-                <div class="td_fianza">
-                    <label class="txt-tamaño">Folio</label>
-                    {!! Form::text('folio', null, ['class' => 'form-control']) !!}
-                </div>
-            </div>
-            <div class="form-group col-md-12 distancia">
-                <div class="td_fianza">
-                    <label class="txt-tamaño ">Documento</label>
-                    <div class="file-field input-field">
-                        <div class="btn">
-                            <span>PDF</span>
-                            <input type="hidden" id="" name="" value="">
-                            <input class="input_file_validar" type="file" name="documento"
-                                accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate form-control" type="text"
-                                placeholder="Elegir documento pdf" readonly>
-                        </div>
+            <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
+                <div class="col s12 m4 distancia">
+                    <p style="color:#2395AA">
+                        &nbsp;¿Aplica fianza o responsabilidad civil? </p>
+                    <div class="form custom-control custom-switch">
+                        No
+                        <input id="check_aplica_fianza" type="checkbox" name="aplicaFinaza"
+                            class="custom-control-input">
+                        Si
                     </div>
+                </div>
+                <style type="text/css">
+                    .td_fianza {
+                        display: none;
+                    }
+                </style>
+                <div class="form-group col-md-12 distancia">
+                    <div class="td_fianza">
+                        <label class="txt-tamaño">Folio</label>
+                        {!! Form::text('folio', null, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="form-group col-md-12 distancia">
+                    <div class="td_fianza">
+                        <label class="txt-tamaño ">Documento</label>
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>PDF</span>
+                                <input type="hidden" id="" name="" value="">
+                                <input class="input_file_validar" type="file" name="documento"
+                                    accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate form-control" type="text"
+                                    placeholder="Elegir documento pdf" readonly>
+                            </div>
+                        </div>
 
-                    <div class="ml-4 display-flex">
-                        <label class="red-text">{{ $errors->first('Type') }}</label>
+                        <div class="ml-4 display-flex">
+                            <label class="red-text">{{ $errors->first('Type') }}</label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <h4 class="sub-titulo-form col s12">RESPONSABLES</h4>
-        </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="form-group col-md-4">
-                <label class="txt-tamaño">&nbsp;Nombre
-                    del Supervisor 1<font class="asterisco">*
-                    </font></label>
-                <div>
-                    {!! Form::text('pmp_asignado', null, ['class' => 'form-control', 'required']) !!}
-                    @if ($errors->has('pmp_asignado'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('pmp_asignado') }}
-                        </div>
-                    @endif
+            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                <h4 class="sub-titulo-form col s12">RESPONSABLES</h4>
+            </div>
+            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                <div class="form-group col-md-4">
+                    <label class="txt-tamaño">&nbsp;Nombre
+                        del Supervisor 1<font class="asterisco">*
+                        </font></label>
+                    <div>
+                        {!! Form::text('pmp_asignado', null, ['class' => 'form-control', 'required']) !!}
+                        @if ($errors->has('pmp_asignado'))
+                            <div class="invalid-feedback red-text">
+                                {{ $errors->first('pmp_asignado') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="txt-tamaño">&nbsp;Puesto</label>
+                    <div>
+                        {!! Form::text('puesto', null, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="txt-tamaño">&nbsp;Área</label>
+                    <div>
+                        {!! Form::text('area', null, ['class' => 'form-control']) !!}
+                        @if ($errors->has('area'))
+                            <div class="invalid-feedback red-text">
+                                {{ $errors->first('area') }}
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
-            <div class="form-group col-md-4">
-                <label class="txt-tamaño">&nbsp;Puesto</label>
-                <div>
-                    {!! Form::text('puesto', null, ['class' => 'form-control']) !!}
+            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                <div class="form-group col-md-4">
+                    <label class="txt-tamaño">&nbsp;Nombre
+                        del Supervisor 2</label>
+                    <div>
+                        {!! Form::text('administrador_contrato', null, ['class' => 'form-control']) !!}
+                        @if ($errors->has('administrador_contrato'))
+                            <div class="invalid-feedback red-text">
+                                {{ $errors->first('administrador_contrato') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="txt-tamaño">&nbsp;Puesto</label>
+                    <div>
+                        {!! Form::text('cargo_administrador', null, ['class' => 'form-control']) !!}
+                        @if ($errors->has('cargo_administrador'))
+                            <div class="invalid-feedback red-text">
+                                {{ $errors->first('cargo_administrador') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="txt-tamaño">&nbsp;Área</label>
+                    <div>
+                        {!! Form::text('area_administrador', null, ['class' => 'form-control']) !!}
+                        @if ($errors->has('area_administrador'))
+                            <div class="invalid-feedback red-text">
+                                {{ $errors->first('area_administrador') }}
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
-            <div class="form-group col-md-4">
-                <label class="txt-tamaño">&nbsp;Área</label>
-                <div>
-                    {!! Form::text('area', null, ['class' => 'form-control']) !!}
-                    @if ($errors->has('area'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('area') }}
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <div class="row" style="margin-left: 10px; margin-right: 10px;">
-            <div class="form-group col-md-4">
-                <label class="txt-tamaño">&nbsp;Nombre
-                    del Supervisor 2</label>
-                <div>
-                    {!! Form::text('administrador_contrato', null, ['class' => 'form-control']) !!}
-                    @if ($errors->has('administrador_contrato'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('administrador_contrato') }}
-                        </div>
-                    @endif
-                </div>
-            </div>
-            <div class="form-group col-md-4">
-                <label class="txt-tamaño">&nbsp;Puesto</label>
-                <div>
-                    {!! Form::text('cargo_administrador', null, ['class' => 'form-control']) !!}
-                    @if ($errors->has('cargo_administrador'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('cargo_administrador') }}
-                        </div>
-                    @endif
-                </div>
-            </div>
-            <div class="form-group col-md-4">
-                <label class="txt-tamaño">&nbsp;Área</label>
-                <div>
-                    {!! Form::text('area_administrador', null, ['class' => 'form-control']) !!}
-                    @if ($errors->has('area_administrador'))
-                        <div class="invalid-feedback red-text">
-                            {{ $errors->first('area_administrador') }}
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-        {{-- <div class="row"></div>
+            {{-- <div class="row"></div>
             <div class="row">
             <label class="txt-tamaño" for="firma">
                 Firma:</label>
@@ -771,14 +743,14 @@
                     </div>
             @endif
             </div> --}}
-        <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
-            <div class="col s12 m12 right-align btn-grd distancia">
-                <a id="btnCancelar" href="{{ route('contract_manager.contratos-katbol.index') }}"
-                    class="btn btn_cancelar">Cancelar</a>
-                {!! Form::submit('Guardar', ['class' => 'btn btn-success', 'id' => 'btnGuardar']) !!}
+            <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+                <div class="col s12 m12 right-align btn-grd distancia">
+                    <a id="btnCancelar" href="{{ route('contract_manager.contratos-katbol.index') }}"
+                        class="btn btn_cancelar">Cancelar</a>
+                    {!! Form::submit('Guardar', ['class' => 'btn btn-success', 'id' => 'btnGuardar']) !!}
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </form>
 

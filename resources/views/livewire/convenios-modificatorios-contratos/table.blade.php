@@ -1,6 +1,6 @@
 <div class="row" style="margin-top: 30px; margin-left: 10px;">
     <div class="col l6">
-        <label for="search"><i class="fas fa-search iconos-crear"></i> Busca un número de convenio</label>
+        <label for="search">Busca un número de convenio</label>
         <input type="text" wire:model="search" class="form-control" placeholder="Busca un número de convenio">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
@@ -23,7 +23,7 @@
 </div>
 <div class="tabla_responsiva_edit_contratos tabla-cierre">
     @if ($convenio->count())
-        <table style="width: 100%;">
+        <table class="table" style="width: 100%;">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top; text-align:center" class="letra-ngt grey-text">
@@ -114,8 +114,18 @@
     @endif
 
 </div>
-
-{{ $convenio->links() }}
+<div class="row">
+    {{-- <div class="col-6 p-0">
+        <strong>
+            Mostrando {{ $perPage }} de {{ $totalRegistrosMostrando }} resultados @if ($estatus)
+                <span class="badge badge-primary">(filtrando por {{ $estatus }})</span>
+            @endif
+        </strong>
+    </div> --}}
+    <div class="col-6 p-0" style="display: flex;justify-content: end">
+        {{ $convenio->links() }}
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $('.select_pagination').change(function(e) {

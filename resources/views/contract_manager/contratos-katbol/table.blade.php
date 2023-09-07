@@ -1,50 +1,59 @@
 {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/tablas/tablas.css') }}"> --}}
 
 
-        <div id="modal1" class="modal">
-            <div class="modal-content" id="contrato-modal"></div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
-            </div>
-        </div>
-{{--@dump($contratos)--}}
+<div id="modal1" class="modal">
+    <div class="modal-content" id="contrato-modal"></div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+</div>
+{{-- @dump($contratos) --}}
 <div>
-    <h1>Contratos del Área</h1>
+    <h4>Contratos del Área</h4>
 </div>
 
 <div class="caja_tabla_responsiva col s12 datatable-fix">
     <table class="table" id="contratos-table">
         <thead>
             <tr>
-                <th class="estilotd contratos-table">No.&nbsp;Contrato&nbsp;@for ($i = 0; $i < 15; $i++)&nbsp;@endfor</th>
-                <th class="estilotd contratos-table">Tipo</th>
-                <th class="estilotd contratos-table">Proveedor</th>
-                <th class="estilotd contratos-table">Número&nbsp;de&nbsp;Proyecto</th>
-                <th class="estilotd contratos-table">Servicio&nbsp;@for ($i = 0; $i < 80; $i++)&nbsp;@endfor</th>
-                <th class="estilotd contratos-table">Objetivo&nbsp;@for ($i = 0; $i < 100; $i++)&nbsp;@endfor</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table">Fecha&nbsp;Inicio</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table">Fecha&nbsp;Fin</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table">Cumple</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table">Vigencia&nbsp;@for ($i = 0; $i < 50; $i++)&nbsp;@endfor</th>
-                <th class="estilotd contratos-table">Pagos</th>{{-- Nueva --}}
+                <th>No. Contrato @for ($i = 0; $i < 15; $i++)
+                    @endfor
+                </th>
+                <th>Tipo</th>
+                <th>Proveedor</th>
+                <th>Número de Proyecto</th>
+                <th>Servicio @for ($i = 0; $i < 80; $i++)
+                    @endfor
+                </th>
+                <th>Objetivo @for ($i = 0; $i < 100; $i++)
+                    @endfor
+                </th>
+                {{-- Nueva --}}
+                <th>Fecha Inicio</th>{{-- Nueva --}}
+                <th>Fecha Fin</th>{{-- Nueva --}}
+                <th>Cumple</th>{{-- Nueva --}}
+                <th>Vigencia @for ($i = 0; $i < 50; $i++)
+                    @endfor
+                </th>
+                <th>Pagos</th>{{-- Nueva --}}
                 <th class="estilotd contratos-table-2">Administrador</th>
                 {{-- <th style="background-color:#787676; color:#ffff;">Descripción Servicios</th> --}}
-                <th class="estilotd contratos-table">Fecha&nbsp;Firma&nbsp;</th>{{-- Nueva --}}
+                <th>Fecha Firma </th>{{-- Nueva --}}
                 {{-- <th style="background-color:#787676; color:#ffff;">Periodo Pagos</th> --}}
-                <th class="estilotd contratos-table" style="min-width: 150px;">Monto Pago</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">Monto Pago</th>{{-- Nueva --}}
                 {{-- <th style="background-color:#787676; color:#ffff;">Fecha Inicio del Pago</th> --}}
-                <th class="estilotd contratos-table" style="min-width: 150px;">Mínimo</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table" style="min-width: 150px;">Máximo</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table"  style="min-width: 150px;">Área</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table"  style="min-width: 150px;">Área Admin.</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table"  style="min-width: 150px;">Puesto</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table" style="min-width: 150px;">PMP Asignado</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">Mínimo</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">Máximo</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">Área</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">Área Admin.</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">Puesto</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">PMP Asignado</th>{{-- Nueva --}}
                 {{-- <th style="background-color:#787676; color:#ffff;">Clasificación</th> --}}
-                <th class="estilotd contratos-table" style="min-width: 150px;">Fase</th>
-                <th class="estilotd contratos-table">¿Ampliado?</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table">¿Convenio?</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table">Estatus</th>
-                <th class="estilotd contratos-table">Download files</th>
+                <th style="min-width: 150px;">Fase</th>
+                <th>¿Ampliado?</th>{{-- Nueva --}}
+                <th>¿Convenio?</th>{{-- Nueva --}}
+                <th>Estatus</th>
+                <th>Download files</th>
                 <th class="botones_accion estilotd">Opciones</th>
 
 
@@ -52,27 +61,27 @@
         </thead>
         <tbody>
             @foreach ($contratos as $contrato)
-                @if($usuario_actual->area_id == $contrato->area_id)
+                @if ($usuario_actual->area_id == $contrato->area_id)
                     <tr>
-                        <td >{{ $contrato->no_contrato }}</td>
+                        <td>{{ $contrato->no_contrato }}</td>
                         <td class="espaciotd">{{ $contrato->tipo_contrato }}</td>
                         <td class="espaciotd">{{ $contrato->nombre_comercial }}</td>
                         <td class="espaciotd">{{ $contrato->no_proyecto }}</td>
                         <td>{{ $contrato->nombre_servicio }}</td>
                         <td>{{ $contrato->objetivo }}</td>{{-- nuevo --}}
                         <td>
-                            @if(is_null($contrato->fecha_inicio))
-                                 No hay fecha
+                            @if (is_null($contrato->fecha_inicio))
+                                No hay fecha
                             @else
-                               {{ Carbon\Carbon::createFromFormat('Y-m-d', $contrato->fecha_inicio)->format('d-m-Y') }}
+                                {{ Carbon\Carbon::createFromFormat('Y-m-d', $contrato->fecha_inicio)->format('d-m-Y') }}
                             @endif
                         </td>
                         {{-- nuevo --}}
                         <td>
-                            @if(is_null($contrato->fecha_fin))
-                                 No hay fecha
+                            @if (is_null($contrato->fecha_fin))
+                                No hay fecha
                             @else
-                            {{ Carbon\Carbon::createFromFormat('Y-m-d', $contrato->fecha_fin)->format('d-m-Y') }}
+                                {{ Carbon\Carbon::createFromFormat('Y-m-d', $contrato->fecha_fin)->format('d-m-Y') }}
                             @endif
                         </td>
                         {{-- nuevo --}}
@@ -95,8 +104,10 @@
                         <td class="espaciotd">{{ '$' . number_format($contrato->monto_pago, 2) }}</td>
                         {{-- nuevo --}}
                         {{-- <td style="text-align: center">{{ $contrato->fecha_inicio_pago }}</td> --}}
-                        <td class="espaciotd">{{ '$' . number_format($contrato->minimo, 2) }}</td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ '$' . number_format($contrato->maximo, 2) }}</td>{{-- nuevo --}}
+                        <td class="espaciotd">{{ '$' . number_format($contrato->minimo, 2) }}</td>
+                        {{-- nuevo --}}
+                        <td class="espaciotd">{{ '$' . number_format($contrato->maximo, 2) }}</td>
+                        {{-- nuevo --}}
                         <td class="espaciotd">{{ $contrato->area }}</td>{{-- nuevo --}}
                         <td class="espaciotd">{{ $contrato->area_administrador }}</td>{{-- nuevo --}}
                         <td class="espaciotd">{{ $contrato->puesto }}</td>{{-- nuevo --}}
@@ -118,16 +129,17 @@
                             @endif
                         </td>{{-- nuevo --}}
                         <td style="text-align: center">
-                            @if($contrato->estatus == 'vigentes')
-                            Vigente
+                            @if ($contrato->estatus == 'vigentes')
+                                Vigente
                             @elseif($contrato->estatus == 'renovaciones')
-                            Renovación
+                                Renovación
                             @else
-                            Cerrado
+                                Cerrado
                             @endif
                         </td>
                         <td style="text-align: center">
-                            <button class="waves-effect waves-light btn" data-action="contrato" data-contrato-id="{{$contrato->id}}">Archivos</button>
+                            <button class="waves-effect waves-light btn" data-action="contrato"
+                                data-contrato-id="{{ $contrato->id }}">Archivos</button>
                         </td>
                         <td class="botones_accion" style="min-width: 100px;">
                             {!! Form::open(['route' => ['contract_manager.contratos-katbol.destroy', $contrato->id], 'method' => 'delete']) !!}
@@ -136,13 +148,17 @@
                                     style="color:#2395AA;"><i class="fa-solid fa-eye" title="Mostrar"> </i>
                                 </a>
                                 @can('katbol_contratos_modificar')
-                                @if ($areas->count() > 0)
-                                    <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}"
-                                    style="color:#2395AA;"><i class="fas fa-edit" title="Editar"></i></a>
-                                @endif
+                                    @if ($areas->count() > 0)
+                                        <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}"
+                                            style="color:#2395AA;"><i class="fas fa-edit" title="Editar"></i></a>
+                                    @endif
                                 @endcan
                                 @can('katbol_contratos_eliminar')
-                                    {!! Form::button('<i class="fas fa-trash text-danger"></i>', ['type' => 'submit', 'style' => 'color:#2395AA', 'onclick' => "return confirm('Esta seguro de eliminar el registro?')"]) !!}
+                                    {!! Form::button('<i class="fas fa-trash text-danger"></i>', [
+                                        'type' => 'submit',
+                                        'style' => 'color:#2395AA',
+                                        'onclick' => "return confirm('Esta seguro de eliminar el registro?')",
+                                    ]) !!}
                                 @endcan
                             </div>
                             {!! Form::close() !!}
@@ -161,23 +177,29 @@
 </div>
 
 <script>
-
-    document.addEventListener("DOMContentLoaded", ()=>{
-        document.getElementById("contratos-table").addEventListener("click", (e)=>{
-            let url = "{{route('contract_manager.contratos-katbol.obtenerArchivos')}}"
-            if(e.target.getAttribute("data-action") == "contrato" ) {
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("contratos-table").addEventListener("click", (e) => {
+            let url = "{{ route('contract_manager.contratos-katbol.obtenerArchivos') }}"
+            if (e.target.getAttribute("data-action") == "contrato") {
                 let contratoId = e.target.getAttribute("data-contrato-id");
                 $.ajax({
                     type: "post",
                     url: url,
                     headers: {
                         'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
-                        },
-                    data: {contratoId},
+                    },
+                    data: {
+                        contratoId
+                    },
                     dataType: "json",
-                    success: function (response) {
+                    success: function(response) {
                         console.log(response);
-                        let {contrato, facturas, entregables, convenios} = response;
+                        let {
+                            contrato,
+                            facturas,
+                            entregables,
+                            convenios
+                        } = response;
                         let html = `
                         <div>
                     <h4 style="font-size: 20px">Contratos</h4>
@@ -214,17 +236,17 @@
                             </tr>
                         </thead>
                         <tbody>`
-                            facturas.forEach(factura => {
-                                html+=`
+                        facturas.forEach(factura => {
+                            html += `
                                 <tr>
                                     <td>${factura.no_factura}</td>
                                     <td>${factura.concepto}</td>
                                     <td><a href='${factura.archivo}' download class="btn btn-primary">Download</a></td>
                                 </tr>
                                 `
-                            });
+                        });
 
-                        html+=`</tbody>
+                        html += `</tbody>
                     </table>
                 </div>
                 <div>
@@ -239,16 +261,16 @@
                             </tr>
                         </thead>
                         <tbody>`
-                            entregables.forEach(entregable => {
-                                html+=`
+                        entregables.forEach(entregable => {
+                            html += `
                                 <tr>
                                     <td>${entregable.nombre_entregable}</td>
                                     <td>${entregable.descripcion}</td>
                                     <td><a href='${entregable.archivo}' download class="btn btn-primary">Download</a></td>
                                 </tr>
                                 `
-                            });
-                            html+=`</tbody>
+                        });
+                        html += `</tbody>
                     </table>
                 </div>
                 <div>
@@ -263,16 +285,16 @@
                             </tr>
                         </thead>
                         <tbody>`
-                            convenios.forEach(convenio => {
-                                html+=`
+                        convenios.forEach(convenio => {
+                            html += `
                                 <tr>
                                     <td>${convenio.no_convenio}</td>
                                     <td>${convenio.descripcion}</td>
                                     <td><a href='${convenio.archivo}' download class="btn btn-primary">Download</a></td>
                                 </tr>
                                 `
-                            });
-                            html+=`</tbody>
+                        });
+                        html += `</tbody>
                     </table>
                 </div>
                         `
@@ -287,5 +309,4 @@
         })
 
     })
-
 </script>

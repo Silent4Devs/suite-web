@@ -11,20 +11,17 @@
         <!-- Area Field -->
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
             <div class="distancia form-group col-md-6">
-                <i class="fas fa-paste iconos-crear"></i>Nombre del Convenio<font class="asterisco">*</font>
+                Nombre del Convenio<font class="asterisco">*</font>
                 <input type="text" wire:model.debounce.800ms="no_convenio" class="form-control">
                 @error('no_convenio')
                     <span class="red-text">{{ $message }}</span>
                 @enderror
             </div>
 
-            <div class="distancia form-group col-md-6">
-                <div wire:ignore class="input-field col s12">
-                    <i class="fas fa-calendar-alt iconos-crear"></i>Fecha del Convenio:<font class="asterisco">
-                        *</font>
-                    <input type="date" wire:model.debounce.800ms="fecha" min="1945-01-01" class="form-control"
-                        required>
-                </div>
+            <div class="distancia form-group col-md-6" wire:ignore>
+                Fecha del Convenio:<font class="asterisco">
+                    *</font>
+                <input type="date" wire:model.debounce.800ms="fecha" min="1945-01-01" class="form-control" required>
                 @error('fecha')
                     <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
                 @enderror
@@ -64,9 +61,11 @@
                 @enderror
             </div>
         </div>
+    </div>
 
-        <div class="input-field distancia form-group col-md-6"">
-            <i class="fas fa-file-invoice iconos-crear"></i>Descripción
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="input-field distancia form-group col-md-12">
+            Descripción
             <textarea wire:model.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="form-control"></textarea>
             @error('descripcion')
                 <span class="red-text">{{ $message }}</span>
