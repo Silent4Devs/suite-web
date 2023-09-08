@@ -31,7 +31,7 @@
 
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab" >
-            <div id="paso-servicio" class="tab-content" >
+            <div id="home" class="tab-content" >
                 <form method="POST" wire:submit.prevent="servicioStore(Object.fromEntries(new FormData($event.target)))" enctype="multipart/form-data">
                     <div class="card card-content">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
@@ -764,7 +764,7 @@
 
                 Livewire.on('cambiarTab', (id_tab) => {
                     // Activa la pestaña con ID 'profile'
-                    $('#myTab a[href="#profile"]').tab('show');
+                    $('#myTab a[href="#' + id_tab + '"]').tab('show');
                 });
 
                 var fecha = new Date();
