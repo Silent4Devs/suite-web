@@ -140,7 +140,7 @@ class RequisicionesCreateComponent extends Component
         ]);
 
         $this->habilitar_proveedores = true;
-        $this->emit('cambiarTab', 'paso-proveedores');
+        $this->emit('cambiarTab', 'profile');
     }
 
     public function proveedoresStore($data)
@@ -215,7 +215,7 @@ class RequisicionesCreateComponent extends Component
                             return false;
                         }
 
-                        $this->emit('cambiarTab', 'paso-firma');
+                        $this->emit('cambiarTab', 'contact');
 
                         $this->dataFirma();
                     } else {
@@ -227,7 +227,7 @@ class RequisicionesCreateComponent extends Component
                             'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                         ]);
 
-                        $this->emit('cambiarTab', 'paso-firma');
+                        $this->emit('cambiarTab', 'contact');
 
                         $this->dataFirma();
                     }
@@ -255,7 +255,7 @@ class RequisicionesCreateComponent extends Component
 
                     $this->proveedores_show = KatbolProveedorOC::whereIn('id', $proveedores_escogidos)->get();
 
-                    $this->emit('cambiarTab', 'paso-firma');
+                    $this->emit('cambiarTab', 'contact');
 
                     $this->dataFirma();
                 }
