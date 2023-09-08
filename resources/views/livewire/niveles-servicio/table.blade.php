@@ -22,9 +22,10 @@
         </div>
     </div>
 </div>
-<div class="tabla_responsiva_edit_contratos tabla-cierre">
+<div class="tabla_responsiva_edit_contratos tabla-cierre"
+    style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
     @if ($nivelesServicio->count())
-        <table class="table table-responsive" style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
+        <table class="table table-responsive">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('id')">

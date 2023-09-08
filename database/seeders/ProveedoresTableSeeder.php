@@ -17,7 +17,7 @@ class ProveedoresTableSeeder extends Seeder
 
         \DB::table('proveedores')->insert([
             0 => [
-                'id' => 1,
+
                 'razon_social' => 'Silent4Business S.A de C.V',
                 'nombre_comercial' => 'test',
                 'rfc' => null,
@@ -39,7 +39,7 @@ class ProveedoresTableSeeder extends Seeder
                 'id_fiscale' => null,
             ],
             1 => [
-                'id' => 2,
+
                 'razon_social' => 'Secretaría de Energía',
                 'nombre_comercial' => 'SENER',
                 'rfc' => 'SEN9412287J6',
@@ -61,7 +61,7 @@ class ProveedoresTableSeeder extends Seeder
                 'id_fiscale' => null,
             ],
             2 => [
-                'id' => 3,
+
                 'razon_social' => 'Braskem Idesa S.A.P.I.',
                 'nombre_comercial' => 'Brasken Idesa',
                 'rfc' => 'BID100428IX6',
@@ -83,7 +83,7 @@ class ProveedoresTableSeeder extends Seeder
                 'id_fiscale' => null,
             ],
             3 => [
-                'id' => 4,
+
                 'razon_social' => 'Instituto Nacional de Telecomunicaciones',
                 'nombre_comercial' => 'IFT',
                 'rfc' => 'IFD130924CX1',

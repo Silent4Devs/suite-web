@@ -17,7 +17,7 @@ class ProveedorOCSTableSeeder extends Seeder
 
         \DB::table('proveedor_o_c_s')->insert([
             0 => [
-                'id' => 1,
+
                 'nombre' => 'Proveedores Varios Nacionales',
                 'razon_social' => 'Proveedores Varios Nacionales',
                 'rfc' => 'N/A',
@@ -34,7 +34,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-31',
             ],
             1 => [
-                'id' => 2,
+
                 'nombre' => 'FAR SYSTEMS',
                 'razon_social' => 'FAR SYSTEMS S.C.P',
                 'rfc' => 'FSY0501188U8',
@@ -51,7 +51,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             2 => [
-                'id' => 3,
+
                 'nombre' => 'AURUM TECNOLOGIA',
                 'razon_social' => 'Aurum Tecnología S.A de C.V',
                 'rfc' => 'ATE130116Q28',
@@ -68,7 +68,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             3 => [
-                'id' => 4,
+
                 'nombre' => 'AXTEL',
                 'razon_social' => 'AXTEL S.A.B. DE C.V.',
                 'rfc' => 'AXT940727FP8',
@@ -85,7 +85,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             4 => [
-                'id' => 5,
+
                 'nombre' => 'AyR',
                 'razon_social' => 'AYR ENLACES EMPRESARIALES, S.A. DE C.V',
                 'rfc' => 'AEE1605054P1',
@@ -102,7 +102,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             5 => [
-                'id' => 6,
+
                 'nombre' => 'ContPAQi',
                 'razon_social' => 'HUGO GONZALEZ GUERRA',
                 'rfc' => 'GUGH791023DD0',
@@ -119,7 +119,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             6 => [
-                'id' => 7,
+
                 'nombre' => 'MS NOTARIO',
                 'razon_social' => 'MS NOTARIO S.C',
                 'rfc' => 'MNO930107ST1',
@@ -136,7 +136,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             7 => [
-                'id' => 8,
+
                 'nombre' => 'Notario 208',
                 'razon_social' => 'N208 S.C',
                 'rfc' => 'NXX1210186TA',
@@ -153,7 +153,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             8 => [
-                'id' => 9,
+
                 'nombre' => 'Neixar MXN',
                 'razon_social' => 'Neixar Systems S.A de C.V',
                 'rfc' => 'NSY060512CS6',
@@ -170,7 +170,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             9 => [
-                'id' => 10,
+
                 'nombre' => 'NOTARIA',
                 'razon_social' => 'NOTARIA REFORMA 420 S.C.',
                 'rfc' => 'NVE130306IT3',
@@ -187,7 +187,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             10 => [
-                'id' => 11,
+
                 'nombre' => 'OFFICE DEPOT',
                 'razon_social' => 'OFFICE DEPOT DE MÉXICO S.A DE C.V',
                 'rfc' => 'ODM950324V2A',
@@ -204,7 +204,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             11 => [
-                'id' => 12,
+
                 'nombre' => 'Online MÉXICO',
                 'razon_social' => 'Online Career Center MÉXICO S.API de C.V',
                 'rfc' => 'OCC9611015V7',
@@ -221,7 +221,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             12 => [
-                'id' => 13,
+
                 'nombre' => 'ESTRATEC',
                 'razon_social' => 'ESTRATEC SA DE CV',
                 'rfc' => 'EST850718Q51',
@@ -238,7 +238,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             13 => [
-                'id' => 14,
+
                 'nombre' => 'Zurich',
                 'razon_social' => 'Zurich Cia de Seguros S.A.',
                 'rfc' => 'ZSE950306M48',
@@ -255,7 +255,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             14 => [
-                'id' => 15,
+
                 'nombre' => 'PASE',
                 'razon_social' => 'PASE, SERVICIOS ELECTRÓNICOS S.A DE C.V',
                 'rfc' => 'ISD950921HE5',
@@ -272,7 +272,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             15 => [
-                'id' => 16,
+
                 'nombre' => 'NUBAJ',
                 'razon_social' => 'NUBAJ S.A. DE C.V.',
                 'rfc' => 'NUB130904HN0',
@@ -289,7 +289,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             16 => [
-                'id' => 17,
+
                 'nombre' => 'Aseguradora Aserta SA de CV',
                 'razon_social' => 'Aseguradora Aserta SA de CV',
                 'rfc' => 'AAS9207314T7',
@@ -306,7 +306,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             17 => [
-                'id' => 18,
+
                 'nombre' => 'COMERCIALIZADORA DE VALOR AGREGADO S.A DE C.V',
                 'razon_social' => 'COMERCIALIZADORA DE VALOR AGREGADO S.A DE C.V',
                 'rfc' => 'CVA9904266T9',
@@ -323,7 +323,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             18 => [
-                'id' => 19,
+
                 'nombre' => 'COMPUSOLUCIONES Y ASOCIADOS SA DE CV',
                 'razon_social' => 'COMPUSOLUCIONES Y ASOCIADOS SA DE CV',
                 'rfc' => 'CAS850526N64',
@@ -340,7 +340,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             19 => [
-                'id' => 20,
+
                 'nombre' => 'DKTM',
                 'razon_social' => 'DKTM SC',
                 'rfc' => 'DKV091106JI7',
@@ -357,7 +357,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             20 => [
-                'id' => 21,
+
                 'nombre' => 'GRUPO DICE SA DE CV',
                 'razon_social' => 'GRUPO DICE SA DE CV',
                 'rfc' => 'GDI880315IYA',
@@ -374,7 +374,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-15',
             ],
             21 => [
-                'id' => 22,
+
                 'nombre' => 'INGRAM',
                 'razon_social' => 'INGRAM MICRO MEXICO, S.A. DE C.V',
                 'rfc' => 'IMM9304016Z4',
@@ -391,7 +391,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             22 => [
-                'id' => 23,
+
                 'nombre' => 'MAAT',
                 'razon_social' => 'Maat Asesores SC',
                 'rfc' => 'MAS171023M71',
@@ -408,7 +408,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             23 => [
-                'id' => 24,
+
                 'nombre' => 'MAPS',
                 'razon_social' => 'MAYORISTAS DE PARTES Y SERVICIOS .SA de C.V',
                 'rfc' => 'MPS920227IL9',
@@ -425,7 +425,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-21',
             ],
             24 => [
-                'id' => 25,
+
                 'nombre' => 'ORBEN',
                 'razon_social' => 'ORBEN COMUNICACIONES SAPI DE CV',
                 'rfc' => 'OCO9804024E6',
@@ -442,7 +442,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             25 => [
-                'id' => 26,
+
                 'nombre' => 'WESTCON',
                 'razon_social' => 'WESTCON MEXICO S.A DE C.V',
                 'rfc' => 'WME000218GK3',
@@ -459,7 +459,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             26 => [
-                'id' => 27,
+
                 'nombre' => 'WISE',
                 'razon_social' => 'WISE SOLUTIONS SA DE CV',
                 'rfc' => 'WSO070403QP1',
@@ -476,7 +476,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             27 => [
-                'id' => 28,
+
                 'nombre' => 'X WEB',
                 'razon_social' => 'X WEB SA DE CV',
                 'rfc' => 'XWE0102149Q4',
@@ -493,7 +493,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             28 => [
-                'id' => 29,
+
                 'nombre' => 'XALINA',
                 'razon_social' => 'JUAN RAMON CHAN AQUINO',
                 'rfc' => 'CAAJ7409038M9',
@@ -510,7 +510,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             29 => [
-                'id' => 30,
+
                 'nombre' => 'VAINDEC',
                 'razon_social' => 'Vaindec SA de CV',
                 'rfc' => 'VAI1409222H1',
@@ -527,7 +527,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             30 => [
-                'id' => 31,
+
                 'nombre' => 'BMP CPNSULTORES',
                 'razon_social' => 'BMP CONSULTORES SA DE CV',
                 'rfc' => 'BCO140411M76',
@@ -544,7 +544,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             31 => [
-                'id' => 32,
+
                 'nombre' => 'KAIZEN',
                 'razon_social' => 'Kaizen Soluciones TIC, S.A. de C.V.',
                 'rfc' => 'KST150518K37',
@@ -561,7 +561,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             32 => [
-                'id' => 33,
+
                 'nombre' => 'ADMI PROCESOS',
                 'razon_social' => 'ADMINISTRACION DE PROCESOS DE TRANSFORMACION',
                 'rfc' => 'APT050613TQ6',
@@ -578,7 +578,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             33 => [
-                'id' => 34,
+
                 'nombre' => 'CESCE FIANZAS',
                 'razon_social' => 'CESCE FIANZAS MEXICO SA DE CV',
                 'rfc' => 'CFM1008302NA',
@@ -595,7 +595,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => '2023-01-29',
             ],
             34 => [
-                'id' => 35,
+
                 'nombre' => 'Ortiz Linares',
                 'razon_social' => 'Ortiz Linares Abogados Asociados S C',
                 'rfc' => 'OLA121130DG7',
@@ -612,7 +612,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             35 => [
-                'id' => 36,
+
                 'nombre' => 'SACRESA',
                 'razon_social' => 'Sacresa Consultores SA de CV',
                 'rfc' => 'SCO1103166EA',
@@ -629,7 +629,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             36 => [
-                'id' => 37,
+
                 'nombre' => 'JACQUES',
                 'razon_social' => 'SERVICIOS DE CONSULTORIA JURIDICA JACQUES FONTAINE S DE R.L D',
                 'rfc' => 'SCJ150226HCA',
@@ -646,7 +646,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             37 => [
-                'id' => 38,
+
                 'nombre' => 'Rayn Tech',
                 'razon_social' => 'Rayn Tech SA de CV',
                 'rfc' => 'RTE160922F37',
@@ -663,7 +663,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             38 => [
-                'id' => 39,
+
                 'nombre' => 'CONSEIL D AFFAIRES BELAYAGE SA DE CV',
                 'razon_social' => 'CONSEIL D AFFAIRES BELAYAGE SA DE CV',
                 'rfc' => 'CDA160427NP3',
@@ -680,7 +680,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             39 => [
-                'id' => 40,
+
                 'nombre' => 'Cyberpuerta SA de CV',
                 'razon_social' => 'Cyberpuerta SA de CV',
                 'rfc' => 'CYB080602ISA',
@@ -697,7 +697,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             40 => [
-                'id' => 41,
+
                 'nombre' => 'Estrategias BETA S.C.',
                 'razon_social' => 'Estrategias BETA S.C.',
                 'rfc' => 'EBE121221671',
@@ -714,7 +714,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             41 => [
-                'id' => 42,
+
                 'nombre' => 'CFE SUMINISTRADOR DE SERVICIOS BASICOS',
                 'razon_social' => 'CFE SUMINISTRADOR DE SERVICIOS BASICOS',
                 'rfc' => 'CSS160330CP7',
@@ -731,7 +731,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             42 => [
-                'id' => 43,
+
                 'nombre' => 'BANCO MERCANTIL DEL NORTE SA INSTITUCION DE BANCA MULTIPLE GRUPO FINANCIERO BANORTE',
                 'razon_social' => 'BANCO MERCANTIL DEL NORTE SA INSTITUCION DE BANCA MULTIPLE GRUPO FINANCIERO BANORTE',
                 'rfc' => 'BMN930209927',
@@ -748,7 +748,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             43 => [
-                'id' => 44,
+
                 'nombre' => 'DCH Global SA de CV',
                 'razon_social' => 'DCH Global SA de CV',
                 'rfc' => 'DGL151201382',
@@ -765,7 +765,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             44 => [
-                'id' => 45,
+
                 'nombre' => 'ANCIANO Y AYALA ABOGADOS, S.C.',
                 'razon_social' => 'ANCIANO Y AYALA ABOGADOS, S.C.',
                 'rfc' => 'AAA070921TB9',
@@ -782,7 +782,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             45 => [
-                'id' => 46,
+
                 'nombre' => 'TELEFONOS DE MEXICO S.A.B. DE C.V.',
                 'razon_social' => 'TELEFONOS DE MEXICO S.A.B. DE C.V.',
                 'rfc' => 'TME840315KT6',
@@ -799,7 +799,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             46 => [
-                'id' => 47,
+
                 'nombre' => 'APPLE',
                 'razon_social' => 'APPLE OPERATIONS MEXICO SA DE CV',
                 'rfc' => 'AOM920820BEA',
@@ -816,7 +816,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             47 => [
-                'id' => 48,
+
                 'nombre' => 'FREIGHT IDEAS SA DE CV',
                 'razon_social' => 'FREIGHT IDEAS SA DE CV',
                 'rfc' => 'FID080111867',
@@ -833,7 +833,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             48 => [
-                'id' => 49,
+
                 'nombre' => 'GLOBAL STD',
                 'razon_social' => 'GLOBAL STANDARDS S.C',
                 'rfc' => 'GST080421UT4',
@@ -850,7 +850,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             49 => [
-                'id' => 50,
+
                 'nombre' => 'NOTARIA 201 S.C.',
                 'razon_social' => 'NOTARIA 201 S.C.',
                 'rfc' => 'NDU161018QEA',
@@ -867,7 +867,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             50 => [
-                'id' => 51,
+
                 'nombre' => 'DELETE TECNOLOGY, SA DE CV',
                 'razon_social' => 'DELETE TECNOLOGY, SA DE CV',
                 'rfc' => 'SBL1008258T0',
@@ -884,7 +884,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             51 => [
-                'id' => 52,
+
                 'nombre' => 'Servicios en Limpieza y Mantenimiento DANFER SA de CV',
                 'razon_social' => 'Servicios en Limpieza y Mantenimiento DANFER SA de CV',
                 'rfc' => 'SLM121017V35',
@@ -901,7 +901,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             52 => [
-                'id' => 53,
+
                 'nombre' => 'GBT TRAVEL SERVICES MEXICO S DE RL DE CV',
                 'razon_social' => 'GBT TRAVEL SERVICES MEXICO S DE RL DE CV',
                 'rfc' => 'GTS131114AL9',
@@ -918,7 +918,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             53 => [
-                'id' => 54,
+
                 'nombre' => 'AFH CONSULTORES Y ASOCIADOS S.C.',
                 'razon_social' => 'AFH CONSULTORES Y ASOCIADOS S.C.',
                 'rfc' => 'AFH9301258P2',
@@ -935,7 +935,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             54 => [
-                'id' => 55,
+
                 'nombre' => 'UNIVERSIDAD DE LAS AMERICAS, A.C.',
                 'razon_social' => 'UNIVERSIDAD DE LAS AMERICAS, A.C.',
                 'rfc' => 'UAM630613SM7',
@@ -952,7 +952,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             55 => [
-                'id' => 56,
+
                 'nombre' => 'LAS MEJORES EMPRESAS PARA TRABAJAR SAPI DE CV',
                 'razon_social' => 'LAS MEJORES EMPRESAS PARA TRABAJAR SAPI DE CV',
                 'rfc' => 'GPT030828U24',
@@ -969,7 +969,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             56 => [
-                'id' => 57,
+
                 'nombre' => 'COMUNICACIÓN INTELIGENTE CBM SA DE CV',
                 'razon_social' => 'COMUNICACIÓN INTELIGENTE CBM SA DE CV',
                 'rfc' => 'CIC161018JC8',
@@ -986,7 +986,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             57 => [
-                'id' => 58,
+
                 'nombre' => 'AF SERVICIOS SGMM',
                 'razon_social' => 'AF SERVICIOS SGMM SA DE CV',
                 'rfc' => 'XAX010101000',
@@ -1003,7 +1003,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             58 => [
-                'id' => 59,
+
                 'nombre' => 'FUNDACIÓN POLITECNICO',
                 'razon_social' => 'FUNDACIÓN POLITECNICO AC',
                 'rfc' => 'FPO960828SY0',
@@ -1020,7 +1020,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             59 => [
-                'id' => 60,
+
                 'nombre' => 'FARCIERT',
                 'razon_social' => 'FARCIERT FLORES Y CIA SC',
                 'rfc' => 'FFL901019NM9',
@@ -1037,7 +1037,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             60 => [
-                'id' => 61,
+
                 'nombre' => 'DHL EXPRESS MEXICO S.A. DE C.V.',
                 'razon_social' => 'DHL EXPRESS MEXICO S.A. DE C.V.',
                 'rfc' => 'DEM8801152E9',
@@ -1054,7 +1054,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             61 => [
-                'id' => 62,
+
                 'nombre' => 'OPERADORA OMX S.A. DE C.V.',
                 'razon_social' => 'OPERADORA OMX S.A. DE C.V.',
                 'rfc' => 'OOM960429832',
@@ -1071,7 +1071,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             62 => [
-                'id' => 63,
+
                 'nombre' => 'HDI SEGUROS SA DE CV',
                 'razon_social' => 'HDI SEGUROS SA DE CV',
                 'rfc' => 'HSE701218532',
@@ -1088,7 +1088,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             63 => [
-                'id' => 64,
+
                 'nombre' => 'ASOCIACIÓN NACIONAL DE UNIVERSIDADES E INSTITUCIONES DE EDUCACIÓN SUPERIOR DE LA REPÚBLICA MEXICANA',
                 'razon_social' => 'ASOCIACIÓN NACIONAL DE UNIVERSIDADES E INSTITUCIONES DE EDUCACIÓN SUPERIOR DE LA REPÚBLICA MEXICANA',
                 'rfc' => 'ANU930617MQ5',
@@ -1105,7 +1105,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             64 => [
-                'id' => 65,
+
                 'nombre' => 'Avelina Mayela Ramirez Rivera',
                 'razon_social' => 'Avelina Mayela Ramirez Rivera',
                 'rfc' => 'RARA701016BJ5',
@@ -1122,7 +1122,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             65 => [
-                'id' => 66,
+
                 'nombre' => 'UNIVERSIDAD NACIONAL AUTONOMA DE MEXICO',
                 'razon_social' => 'UNIVERSIDAD NACIONAL AUTONOMA DE MEXICO',
                 'rfc' => 'UNA2907227Y5',
@@ -1139,7 +1139,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             66 => [
-                'id' => 67,
+
                 'nombre' => 'RADIOMOVIL DIPSA SA DE CV',
                 'razon_social' => 'RADIOMOVIL DIPSA SA DE CV',
                 'rfc' => 'RDI841003QJ4',
@@ -1156,7 +1156,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             67 => [
-                'id' => 68,
+
                 'nombre' => 'Asociación Mexicana de Lucha Contra el Cáncer A.C.',
                 'razon_social' => 'Asociación Mexicana de Lucha Contra el Cáncer A.C.',
                 'rfc' => 'AML7204246A1',
@@ -1173,9 +1173,9 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             68 => [
-                'id' => 69,
-            'nombre' => 'AMERICAN EXPRESS COMPANY (MEXICO), S.A. DE C.V.',
-            'razon_social' => 'AMERICAN EXPRESS COMPANY (MEXICO), S.A. DE C.V.',
+
+                'nombre' => 'AMERICAN EXPRESS COMPANY (MEXICO), S.A. DE C.V.',
+                'razon_social' => 'AMERICAN EXPRESS COMPANY (MEXICO), S.A. DE C.V.',
                 'rfc' => 'aec810901298',
                 'contacto' => 'N/A',
                 'estado' => 0,
@@ -1190,7 +1190,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             69 => [
-                'id' => 70,
+
                 'nombre' => 'SOCIEDAD PANAMERICANA DE ESTUDIOS EMPRESARIALES, A.C.',
                 'razon_social' => 'SOCIEDAD PANAMERICANA DE ESTUDIOS EMPRESARIALES, A.C.',
                 'rfc' => 'spe661112kj4',
@@ -1207,7 +1207,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             70 => [
-                'id' => 71,
+
                 'nombre' => 'ANTONIO ROSADO SÁNCHEZ',
                 'razon_social' => 'ANTONIO ROSADO SÁNCHEZ',
                 'rfc' => 'rosa381127qh2',
@@ -1224,7 +1224,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             71 => [
-                'id' => 72,
+
                 'nombre' => 'INTELICOMP S.A DE C.V',
                 'razon_social' => 'INTELICOMP S.A DE C.V',
                 'rfc' => 'INT031028KA5',
@@ -1241,7 +1241,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             72 => [
-                'id' => 73,
+
                 'nombre' => 'CHUBB',
                 'razon_social' => 'CHUBB SEGUROS MEXICO SA',
                 'rfc' => 'ASE901221SM4',
@@ -1258,7 +1258,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             73 => [
-                'id' => 74,
+
                 'nombre' => 'INSTITUTO SUPERIOR DE ESTUDIOS FISCALES A.C.',
                 'razon_social' => 'INSTITUTO SUPERIOR DE ESTUDIOS FISCALES A.C.',
                 'rfc' => 'ISE751222215',
@@ -1275,7 +1275,7 @@ class ProveedorOCSTableSeeder extends Seeder
                 'fecha_fin' => null,
             ],
             74 => [
-                'id' => 75,
+
                 'nombre' => 'Soluciones Integrales en Capacitación S.A. de C.V.',
                 'razon_social' => 'Soluciones Integrales en Capacitación S.A. de C.V.',
                 'rfc' => 'SIC980401K73',

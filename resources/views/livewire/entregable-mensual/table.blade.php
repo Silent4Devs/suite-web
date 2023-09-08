@@ -25,9 +25,10 @@
     </div>
 </div>
 
-<div class="tabla_responsiva_edit_contratos tabla-cierre">
+<div class="tabla_responsiva_edit_contratos tabla-cierre"
+    style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
     @if ($entregamensuales->count())
-        <table id="tblEntregables" class="table" style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
+        <table id="tblEntregables" class="table">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('nombre_entregable')">

@@ -22,9 +22,10 @@
         </div>
     </div>
 </div>
-<div class="tabla_responsiva_edit_contratos tabla-cierre">
+<div class="tabla_responsiva_edit_contratos tabla-cierre"
+    style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
     @if ($facturas->count())
-        <table class="table" style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
+        <table class="table">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('no_factura')">
