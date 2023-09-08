@@ -7,73 +7,76 @@
             font-size: 20pt;
             margin-right: 18px;
         }
-
-
-
-
-
     </style>
     <section id="form_factura">
         <div>
             <!-- No Contrato Field -->
             <input wire:model.defer="contrato_id" type="hidden" value="{{ $contrato_id }}">
-                <div class="row">
-                    <div class="col s12 m3 distancia">
-                        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-file-invoice-dollar iconos-crear"></i>No. factura<font class="asterisco">*</font></label>
-                        <input type="text" wire:model.defer="no_factura" class="form-control" required>
-                        @error('no_factura')
-                            <span class="red-text">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <!-- Fechas-->
-
-                    <div class="col s12 m3 distancia">
-                        <div wire:ignore>
-                            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha recepción<font class="asterisco">*</font></label>
-                            <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_recepcion"
-                            class="form-control" style="margin-bottom: 0" required>
-                        </div>
-                        @error('fecha_recepcion')
-                            <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
-                        @enderror
-
-                    </div>
-
-                    <div class="col s12 m3 distancia">
-                        <div wire:ignore>
-                            <label for="no_contrato" class="txt-tamaño"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha liberación<font class="asterisco">*</font></label>
-                            <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_liberacion"
-                            class="form-control" style="margin-bottom: 0" required>
-                        </div>
-                        @error('fecha_liberacion')
-                            <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
-                        @enderror
-                    </div>
+            <div class="row" style="margin-left: 10px;margin-right: 10px;">
+                <div class="distancia form-group col-md-6">
+                    <label for="no_contrato" class="txt-tamaño">No.
+                        factura<font class="asterisco">*</font></label>
+                    <input type="text" maxlength="255" wire:model.defer="no_factura" class="form-control" required>
+                    @error('no_factura')
+                        <span class="red-text">{{ $message }}</span>
+                    @enderror
                 </div>
-                <div class="row">
+
+                <div class="distancia form-group col-md-6" wire:ignore>
                     {{-- Monto Factura --}}
-                    <div class="col s12 m3 distancia" wire:ignore>
-                        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-dollar-sign iconos-crear"></i>Monto factura<font class="asterisco">*</font></label>
-                        <input type="number" min="0" wire:model.defer="monto_factura" id="monto_factura"
-                            class="form-control" required>
-                        @error('monto_factura')
-                            <span class="red-text">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    {{-- Concepto --}}
-
-                    <div class="col s12 m12 distancia">
-                        <label for="no_contrato" class="txt-tamaño"><i class="fas fa-pen-square iconos-crear"></i>Concepto<font class="asterisco">*</font></label><br>
-                        <textarea style="padding:15px;" type="text" wire:model.defer="concepto" required></textarea>
-                        @error('concepto')
-                            <span class="red-text">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    <label for="no_contrato" class="txt-tamaño">Monto
+                        factura<font class="asterisco">*</font></label>
+                    <input type="number" min="0" wire:model.defer="monto_factura" id="monto_factura"
+                        class="form-control" required>
+                    @error('monto_factura')
+                        <span class="red-text">{{ $message }}</span>
+                    @enderror
                 </div>
-                <div class="row">
-                    {{-- <div class="col s12 m4">
+            </div>
+            <div class="row" style="margin-left: 10px;margin-right: 10px;">
+                <!-- Fechas-->
+
+                <div class="distancia form-group col-md-4">
+                    <div wire:ignore>
+                        <label for="no_contrato" class="txt-tamaño">Fecha
+                            recepción<font class="asterisco">*
+                            </font></label>
+                        <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_recepcion"
+                            class="form-control" style="margin-bottom: 0" required>
+                    </div>
+                    @error('fecha_recepcion')
+                        <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="distancia form-group col-md-4">
+                    <div wire:ignore>
+                        <label for="no_contrato" class="txt-tamaño">Fecha
+                            liberación<font class="asterisco">*
+                            </font></label>
+                        <input id="" type="date" min="1945-01-01" wire:model.defer="fecha_liberacion"
+                            class="form-control" style="margin-bottom: 0" required>
+                    </div>
+                    @error('fecha_liberacion')
+                        <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="row" style="margin-left: 10px;margin-right: 10px;">
+                {{-- Concepto --}}
+                <div class="distancia form-group col-md-12">
+                    <label for="no_contrato" class="txt-tamaño">Concepto
+                        <font class="asterisco">*</font>
+                    </label><br>
+                    <textarea class="form-control" wire:model.defer="concepto" required></textarea>
+                    @error('concepto')
+                        <span class="red-text">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-left: 10px;margin-right: 10px;">
+            {{-- <div class="col s12 m4">
                         <div wire:ignore class="input-field col s12">
                             <small>
                                 <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
@@ -92,65 +95,67 @@
                         @error('estatus') <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
                         @enderror
                     </div> --}}
-                    <!-- Estatus Field -->
-                    <div wire:ignore class="input-field col s12 m6">
-                        <div class="file-field input-field">
-                            <div class="btn">
-                                <span>PDF</span>
-                                <input class="input_file_validar" type="file" wire:model.defer="pdf" accept="{{$organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt'}}"
-                                    id="upload{{ $iteration }}">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" wire:model.defer="pdf" placeholder="Elegir factura pdf"
-                                    readonly>
-                            </div>
-                        </div>
-
-                        <div wire:loading wire:target="pdf" class="s-12">
-                            {{-- <div class="progress">
-                                <div class="indeterminate"></div>
-                            </div> --}}
-                            <div>Cargando archivo</div>
-                        </div>
-                        <div class="ml-4 display-flex">
-                            <label class="red-text">{{ $errors->first('Type') }}</label>
-                            @error('pdf')
-                                <span class="red-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+            <!-- Estatus Field -->
+            <div wire:ignore class="input-field form-group col-md-6">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>PDF</span>
+                        <input class="input_file_validar" type="file" wire:model.defer="pdf"
+                            accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                            id="upload{{ $iteration }}">
                     </div>
-
-                    <div wire:ignore class="input-field col s12 m6">
-                        <div class="file-field input-field">
-                            <div class="btn">
-                                <span>XML</span>
-                                <input type="file" wire:model.defer="xml" accept="text/xml" id="upload{{ $iteration1 }}">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" wire:model.defer="xml" placeholder="Elegir factura xml"
-                                    readonly>
-                            </div>
-                        </div>
-                        <div wire:loading wire:target="xml">
-                            <div class="progress">
-                                <div class="indeterminate"></div>
-                            </div>
-                            <div>Cargando archivo</div>
-                        </div>
-                        <div class="ml-4 display-flex">
-                            <label class="red-text">{{ $errors->first('Type') }}</label>
-                            @error('xml')
-                                <span class="red-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" wire:model.defer="pdf" placeholder="Elegir factura pdf"
+                            readonly>
                     </div>
                 </div>
-                {{-- <div class="row">
+
+                <div wire:loading wire:target="pdf" class="s-12">
+                    {{-- <div class="progress">
+                                <div class="indeterminate"></div>
+                            </div> --}}
+                    <div>Cargando archivo</div>
+                </div>
+                <div class="ml-4 display-flex">
+                    <label class="red-text">{{ $errors->first('Type') }}</label>
+                    @error('pdf')
+                        <span class="red-text">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div wire:ignore class="input-field form-group col-md-6">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>XML</span>
+                        <input type="file" wire:model.defer="xml" accept="text/xml"
+                            id="upload{{ $iteration1 }}">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" wire:model.defer="xml" placeholder="Elegir factura xml"
+                            readonly>
+                    </div>
+                </div>
+                <div wire:loading wire:target="xml">
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                    <div>Cargando archivo</div>
+                </div>
+                <div class="ml-4 display-flex">
+                    <label class="red-text">{{ $errors->first('Type') }}</label>
+                    @error('xml')
+                        <span class="red-text">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+        </div>
+        {{-- <div class="row">
                     <div wire:ignore class="input-field col s12 m4">
                         <small>
                             <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
                                     class="fas fa-thumbs-down iconos-crear"></i>
-                                <i class="fas fa-thumbs-up iconos-crear" style="margin-left:2px;"></i>Cumple<font
+                                Cumple<font
                                     class="asterisco">
                                     *</font>
                             </p>
@@ -227,7 +232,7 @@
                             <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
                                     class="fas fa-search iconos-crear"></i>Hallazgos / Comentarios</p>
                         </small>
-                        <textarea style="padding:15px;" type="text" wire:model.debounce.800ms="hallazgos_comentarios"
+                        <textarea style="padding:15px;" type="text" maxlength="255" wire:model.debounce.800ms="hallazgos_comentarios"
                             class="text_area"></textarea>
                         @error('hallazgos_comentarios') <span class="red-text">{{ $message }}</span> @enderror
                     </div>
@@ -235,9 +240,8 @@
 
 
 
-            <!--row-->
+        <!--row-->
 
-        </div>
     </section>
 
     <script>
@@ -272,7 +276,7 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', ()=>{
+        document.addEventListener('DOMContentLoaded', () => {
             $('.fechas').datepicker({
                 firstDay: true,
                 format: 'dd-mm-yyyy',

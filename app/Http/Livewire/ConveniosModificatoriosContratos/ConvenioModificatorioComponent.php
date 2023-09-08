@@ -68,7 +68,7 @@ class ConvenioModificatorioComponent extends Component
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->pagination);
 
-        $this->dispatchBrowserEvent('paginadorConvenios');
+        // $this->dispatchBrowserEvent('paginadorConvenios');
 
         return view('livewire.convenios-modificatorios-contratos.convenio-modificatorio-component', [
             'convenio' => $convenios, 'organizacion' => $organizacion,
@@ -89,7 +89,7 @@ class ConvenioModificatorioComponent extends Component
         //Ampliación
         // $convenio_modificatorio = ConveniosModificatorios::find($this->convenio_id);
 
-        $formatoFecha = new FormatearFecha;
+        // $formatoFecha = new FormatearFecha;
 
         $fecha_formateada = $this->fecha;
 
@@ -128,9 +128,9 @@ class ConvenioModificatorioComponent extends Component
     public function edit($id)
     {
         $convenios = ConveniosModificatorios::find($id);
-        $formatoFecha = new FormatearFecha;
+        // $formatoFecha = new FormatearFecha;
 
-        $fecha_formateada = $formatoFecha->formatearFecha($convenios->fecha, 'Y-m-d', 'd-m-Y');
+        $fecha_formateada = $convenios->fecha;
 
         $this->convenio_id = $convenios->id;
         $this->contrato_id = $convenios->contrato_id;
@@ -145,8 +145,8 @@ class ConvenioModificatorioComponent extends Component
     {
         $convenios = ConveniosModificatorios::find($id);
 
-        $formatoFecha = new FormatearFecha;
-        $fecha_formateada = $formatoFecha->formatearFecha($convenios->fecha, 'Y-m-d', 'd-m-Y');
+        // $formatoFecha = new FormatearFecha;
+        $fecha_formateada = $convenios->fecha;
 
         $this->convenio_id = $convenios->id;
         $this->contrato_id = $convenios->contrato_id;
@@ -165,8 +165,8 @@ class ConvenioModificatorioComponent extends Component
         // $formatoFecha = new FormatearFecha;
         // $fecha_formateada = $formatoFecha->formatearFecha($convenios->fecha, 'Y-m-d', 'd-m-Y');
 
-        $formatoFecha = new FormatearFecha;
-        $fecha_formateada = $formatoFecha->formatearFecha($this->fecha, 'd-m-Y', 'Y-m-d');
+        // $formatoFecha = new FormatearFecha;
+        $fecha_formateada = $this->fecha;
 
         $convenios->update([
             'contrato_id' => $this->contrato_id,

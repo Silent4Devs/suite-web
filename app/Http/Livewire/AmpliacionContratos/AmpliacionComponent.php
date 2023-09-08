@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\AmpliacionContratos;
 
-use App\Functions\FormatearFecha;
+// use App\Functions\FormatearFecha;
 use App\Models\ContractManager\AmpliacionContrato;
 use App\Models\ContractManager\Contrato;
 use Carbon\Carbon;
@@ -51,7 +51,8 @@ class AmpliacionComponent extends Component
         $this->importe = $this->importe == null ? '$0.00' : $this->importe;
         $this->validate([
             'contrato_id' => 'required',
-            'importe' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
+            // 'importe' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
+            'importe' => ['required', "regex:/(^(?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'fecha_inicio' => 'required|after:fecha_fin_contrato',
             'fecha_fin' => 'required|after:fecha_inicio',
         ], [
@@ -69,9 +70,9 @@ class AmpliacionComponent extends Component
 
                 $monto_pago_ampliado = $monto_pago + $importe_decimal;
 
-                $formatoFecha = new FormatearFecha;
-                $fecha_inicial_formateada = $formatoFecha->formatearFecha($this->fecha_inicio, 'd-m-Y', 'Y-m-d');
-                $fecha_final_formateada = $formatoFecha->formatearFecha($this->fecha_fin, 'd-m-Y', 'Y-m-d');
+                // $formatoFecha = new FormatearFecha;
+                $fecha_inicial_formateada = $this->fecha_inicio;
+                $fecha_final_formateada = $this->fecha_fin;
 
                 AmpliacionContrato::create([
                     'contrato_id' => $this->contrato_id,
@@ -98,12 +99,12 @@ class AmpliacionComponent extends Component
     {
         $ampliacion = AmpliacionContrato::find($id);
 
-        $formatoFecha = new FormatearFecha;
+        // $formatoFecha = new FormatearFecha;
         // dd(date('d-m-Y', strtotime($ampliacion->fecha_inicio)));
 
         // $fecha_inicial_formateada = $formatoFecha->formatearFecha($ampliacion->fecha_inicio, 'Y-m-d', 'd-m-Y');
-        $fecha_inicial_formateada = Carbon::parse($ampliacion->fecha_inicio)->format('d-m-Y');
-        $fecha_final_formateada = Carbon::parse($ampliacion->fecha_fin)->format('d-m-Y');
+        $fecha_inicial_formateada = $ampliacion->fecha_inicio;
+        $fecha_final_formateada = $ampliacion->fecha_fin;
         // $fecha_final_formateada = $formatoFecha->formatearFecha($ampliacion->fecha_fin, 'Y-m-d', 'd-m-Y');
 
         $this->ampliacion_id = $ampliacion->id;
@@ -137,9 +138,9 @@ class AmpliacionComponent extends Component
 
             $monto_pago_ampliado = $monto_pago + $importe_decimal;
 
-            $formatoFecha = new FormatearFecha;
-            $fecha_inicial_formateada = $formatoFecha->formatearFecha($this->fecha_inicio, 'd-m-Y', 'Y-m-d');
-            $fecha_final_formateada = $formatoFecha->formatearFecha($this->fecha_fin, 'd-m-Y', 'Y-m-d');
+            // $formatoFecha = new FormatearFecha;
+            $fecha_inicial_formateada = $this->fecha_inicio;
+            $fecha_final_formateada = $this->fecha_fin;
 
             $contrato_ampliado->update([
                 'contrato_id' => $this->contrato_id,

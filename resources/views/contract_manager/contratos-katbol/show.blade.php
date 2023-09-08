@@ -5,11 +5,11 @@
 @section('content')
 
 
-    <link rel="stylesheet" type="text/css" href="{{asset('css/botones.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/formularios/contratos.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/iconos.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/letra.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/titulos.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/formularios/contratos.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/iconos.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/letra.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/titulos.css') }}">
 
 
     <style>
@@ -31,37 +31,23 @@
 
         }
 
-        .select-wrapper input{
+        .select-wrapper input {
 
-            direction:rtl;
-            text-align:left;
+            direction: rtl;
+            text-align: left;
 
         }
-
     </style>
-
-    <section>
-        <div class="row">
-            <div class="col s12 m12">
-                {{-- <div class="card">
-                <div class="card-content">
-                    <h4>Contrato {{$contrato->id}}</h4>
-                </div>
-            </div> --}}
-            </div>
-        </div>
-    </section>
-
 
     <div class="row">
         <div class="col s12 m12">
             <div class="" style="margin-top:-20px; margin-left:10px; margin-right:10px;">
                 <div class="">
                     <!--  <section class="content-header">
-                            <h1>
-                                Contrato
-                            </h1>
-                        </section>-->
+                                                    <h1>
+                                                        Contrato
+                                                    </h1>
+                                                </section>-->
 
                     <div class="col s12">
                         <div class="form-group diseño-titulo">
@@ -76,9 +62,13 @@
                         <!-- <div class="box box-primary">-->
                         <div class="box-body">
                             <div class="row">
-                                {!! Form::model($contrato, ['route' => ['contract_manager.contratos-katbol.update', $contrato->id], 'method' => 'patch', 'enctype' => 'multipart/form-data']) !!}
+                                {!! Form::model($contrato, [
+                                    'route' => ['contract_manager.contratos-katbol.update', $contrato->id],
+                                    'method' => 'patch',
+                                    'enctype' => 'multipart/form-data',
+                                ]) !!}
 
-                                @include('admin.bitacora.formedit', ["show_contrato"=>true])
+                                @include('admin.bitacora.formedit', ['show_contrato' => true])
 
                                 {!! Form::close() !!}
                             </div>
@@ -108,18 +98,18 @@
                                     <p class="grey-text" style="font-size:17px;font-weight:bold;">Fase</p>
                                 </th>
                                 <th>
-                                @if($contrato->tipo_cambio == 'USD' )
-                                <p></p>
-                                @else
-                                    <p class="grey-text" style="font-size:17px;font-weight:bold;">IVA</p>
-                                @endif
+                                    @if ($contrato->tipo_cambio == 'USD')
+                                        <p></p>
+                                    @else
+                                        <p class="grey-text" style="font-size:17px;font-weight:bold;">IVA</p>
+                                    @endif
                                 </th>
                                 <th>
-                                @if($contrato->tipo_cambio == 'USD' )
-                                <p></p>
-                                @else
-                                    <p class="grey-text" style="font-size:17px;font-weight:bold;">Subtotal</p>
-                                @endif
+                                    @if ($contrato->tipo_cambio == 'USD')
+                                        <p></p>
+                                    @else
+                                        <p class="grey-text" style="font-size:17px;font-weight:bold;">Subtotal</p>
+                                    @endif
                                 </th>
                                 <th>
                                     <p class="grey-text" style="font-size:17px;font-weight:bold;">Monto de pago total</p>
@@ -131,7 +121,8 @@
                                     <p class="grey-text" style="font-size:17px;font-weight:bold;">Habilitar ampliación</p>
                                 </th>
                                 <th style="text-align: center">
-                                    <p class="grey-text" style="font-size:17px;font-weight:bold;">Convenios Modificatorios</p>
+                                    <p class="grey-text" style="font-size:17px;font-weight:bold;">Convenios Modificatorios
+                                    </p>
                                 </th>
                             </tr>
                         </thead>
@@ -152,25 +143,26 @@
                                 </td>
                                 <td>{{ $contratos->fase }}</td>
                                 <td>
-                                @if($contrato->tipo_cambio == 'USD' )
-                                     <p></p>
-                                @else
-                                    $ {{ number_format(($contrato_importe_total / 1.16) * 0.16, 2) }}
-                                @endif
+                                    @if ($contrato->tipo_cambio == 'USD')
+                                        <p></p>
+                                    @else
+                                        $ {{ number_format(($contrato_importe_total / 1.16) * 0.16, 2) }}
+                                    @endif
                                 </td>
                                 <td>
-                                @if($contrato->tipo_cambio == 'USD' )
-                                     <p></p>
-                                @else
-                                    $ {{ number_format($contrato_importe_total / 1.16, 2) }}
-                                @endif
+                                    @if ($contrato->tipo_cambio == 'USD')
+                                        <p></p>
+                                    @else
+                                        $ {{ number_format($contrato_importe_total / 1.16, 2) }}
+                                    @endif
                                 </td>
                                 <td>$ {{ number_format($contrato_importe_total, 2) }}</td>
                                 <td>{{ $contratos->estatus }}</td>
                                 <td style="text-align: center">
                                     <form id="ampliacion_form"
-                                        action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}" method="POST">
-                                        @method("PATCH")
+                                        action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}"
+                                        method="POST">
+                                        @method('PATCH')
                                         <p>
                                             <label>
                                                 <input type="checkbox" class="checkbox"
@@ -182,8 +174,9 @@
                                 </td>
                                 <td style="text-align: center">
                                     <form id="ampliacion_form"
-                                        action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}" method="POST">
-                                        @method("PATCH")
+                                        action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}"
+                                        method="POST">
+                                        @method('PATCH')
                                         <p>
                                             <label>
                                                 <input type="checkbox" class="checkbox"
@@ -242,8 +235,7 @@
                                 </div>
                             </div>
                             <div class="card-content">
-                                @livewire('factura.factura-component', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true, 'contrato_total'=>$contratos->monto_pago])
+                                @livewire('factura.factura-component', ['contrato_id' => $contratos->id, 'show_contrato' => true, 'contrato_total' => $contratos->monto_pago])
                             </div>
                         </div>
                     </div>
@@ -259,8 +251,7 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true])
+                                @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id, 'show_contrato' => true])
 
                             </div>
                         </div>
@@ -277,8 +268,7 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true])
+                                @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => true])
 
                             </div>
                         </div>
@@ -295,8 +285,7 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true])
+                                @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => true])
 
                             </div>
                         </div>
@@ -313,8 +302,7 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id,
-                                'show_contrato'=>true])
+                                @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id, 'show_contrato' => true])
 
                             </div>
                         </div>
@@ -340,9 +328,7 @@
 
 
 
-                                @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' =>
-                                $contratos->id,
-                                'show_contrato'=>true])
+                                @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' => $contratos->id, 'show_contrato' => true])
 
                             </div>
 
@@ -357,21 +343,21 @@
         </li>
     </ul>
 
-    <div class="row">
-        <div class="col s12 right-align">
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn-redondeado btn btn-primary">Salir</a>
+    <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+        <div class="col s12 m12 right-align btn-grd distancia">
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class='btn btn-success'>Salir</a>
         </div>
     </div>
 
-    @if($contrato->documento)
+    @if ($contrato->documento)
         <script type="text/javascript">
-            $(document).ready(function(){
+            $(document).ready(function() {
                 $(".td_fianza").fadeIn(0);
             });
         </script>
-     @else
+    @else
         <script type="text/javascript">
-            $(document).ready(function(){
+            $(document).ready(function() {
                 $('.table-fianza').fadeOut(0);
             });
         </script>

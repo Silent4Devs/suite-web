@@ -17,7 +17,7 @@ class SucursalesTableSeeder extends Seeder
 
         \DB::table('sucursales')->insert([
             0 => [
-                'id' => 1,
+
                 'clave' => '1',
                 'descripcion' => 'SILENT4BUSINESS',
                 'empresa' => 'SILENT4BUSINESS, S.A. DE C.V.',
@@ -33,7 +33,7 @@ class SucursalesTableSeeder extends Seeder
                 'mylogo' => '64bab0a1488af.png',
             ],
             1 => [
-                'id' => 2,
+
                 'clave' => '3',
                 'descripcion' => 'SILENT4CLOUD',
                 'empresa' => 'SILENT4CLOUD, S.A. DE C.V.',
@@ -49,7 +49,7 @@ class SucursalesTableSeeder extends Seeder
                 'mylogo' => '64bab0877f72d.png',
             ],
             2 => [
-                'id' => 3,
+
                 'clave' => '5',
                 'descripcion' => 'INTELEKTICS',
                 'empresa' => 'INTELEKTICS, S.A. DE C.V.',

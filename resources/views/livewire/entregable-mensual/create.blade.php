@@ -1,5 +1,3 @@
-
-
 <!--<span class="card-title">Agregar Entregable</span>-->
 
 {{-- <div class="col s12">
@@ -15,9 +13,10 @@
     <!--<button wire:click="store" class="btn green">
         Guardar
     </button>-->
-  <div class="row">
-     <div class="col s12 right-align" style="margin-top:40px;" >
-        <button wire:click="store" type="submit" class="btn-redondeado btn btn-primary">Guardar</button>
-  </div>
+    <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+        <div class="col s12 m12 right-align btn-grd distancia">
+            <button wire:click="store" type="submit" class="btn btn-success">Guardar</button>
+        </div>
+    </div>
 
 </form>

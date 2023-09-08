@@ -148,13 +148,13 @@ class CentroCostosController extends Controller
     {
         abort_if(Gate::denies('katbol_centro_costos_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $centro = CentroCosto::find($id);
-        if ($centro->archivo === false) {
+        if ($centro->archivo) {
             $centro->update([
-                'archivo' => true,
+                'archivo' => false,
             ]);
         } else {
             $centro->update([
-                'archivo' => false,
+                'archivo' => true,
             ]);
         }
 

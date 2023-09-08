@@ -1,47 +1,48 @@
 <section id="form_ampliacion">
     <div>
         <input wire:model="contrato_id" type="hidden" value="{{ $contrato_id }}">
-        <div class="row ampliacion">
+        <div class="row" style="margin-left: 10px;margin-right: 10px;">
             <span class="spsty">
-                <p class="grey-text letra-ngt">Periodo de ampliación del contrato</p>
+                Periodo de ampliación del contrato
             </span>
         </div>
-        <div class="row">
-            <!-- Administrador Field -->
-            <div class="col s12 m6 l6">
-                <div wire:ignore class="input-field col s12">
-                    <small class="grey-text letra-ngt"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de inicio
-                        <span class="asterisco">*</span></small>
-                    <input type="text" wire:model.debounce.800ms="fecha_inicio" fecha-fin="{{ $fecha_fin_contrato }}"
-                        class="form-control fecha_inicio fechas_ampliacion"
-                        onchange="this.dispatchEvent(new InputEvent('input'))" style="margin-bottom: 0" readonly>
-                </div>
-                @error('fecha_inicio') <span class="red-text" style="margin-left: 5px">{{ $message }}</span>
+        <div class="row" style="margin-left: 10px;margin-right: 10px;">
+            <div wire:ignore class="distancia form-group col-md-6">
+                <!-- Administrador Field -->
+                Fecha de inicio<span class="asterisco">*</span>
+                <input type="date" min="1945-01-01" wire:model.debounce.800ms="fecha_inicio"
+                    fecha-fin="{{ $fecha_fin_contrato }}" class="form-control fecha_inicio fechas_ampliacion"
+                    onchange="this.dispatchEvent(new InputEvent('input'))" style="margin-bottom: 0">
+
+                @error('fecha_inicio')
+                    <span class="red-text" style="margin-left: 5px">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="col s12 m6 l6">
-                <div wire:ignore class="input-field col s12">
-                    <small class="grey-text letra-ngt"><i class="fas fa-calendar-alt iconos-crear"></i>Fecha de fin<font
-                            class="asterisco">*</font></small>
-                    <input type="text" wire:model.debounce.800ms="fecha_fin" class="form-control fecha_fin fechas_ampliacion"
-                        onchange="this.dispatchEvent(new InputEvent('input'))" style="margin-bottom: 0" readonly>
-                    @error('fecha_fin') <span class="red-text">{{ $message }}</span> @enderror
-                </div>
-                @error('fecha_fin') <span class="red-text" style="margin-left: 5px">{{ $message }}</span> @enderror
+            <div wire:ignore class="distancia form-group col-md-6">
+                Fecha de fin<font class="asterisco">*</font>
+                <input type="date" min="1945-01-01" wire:model.debounce.800ms="fecha_fin"
+                    class="form-control fecha_fin fechas_ampliacion"
+                    onchange="this.dispatchEvent(new InputEvent('input'))" style="margin-bottom: 0">
+                @error('fecha_fin')
+                    <span class="red-text">{{ $message }}</span>
+                @enderror
             </div>
+            @error('fecha_fin')
+                <span class="red-text" style="margin-left: 5px">{{ $message }}</span>
+            @enderror
         </div>
-        <div class="row ampliacion">
-            <span class="spsty">
-                <p class="grey-text letra-ngt">Importe de ampliación del contrato</p>
-            </span>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <small class="grey-text letra-ngt"><i class="fas fa-dollar-sign iconos-crear"></i>Importe<font
-                        class="asterisco">*</font></small>
-                <input type="text" wire:model.debounce.800ms="importe" class="form-control numero-mascara importe" required>
-                @error('importe') <span class="red-text">{{ $message }}</span> @enderror
-            </div>
+    </div>
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        Importe de ampliación del contrato
+    </div>
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="distancia form-group col-md-6">
+            Importe<font class="asterisco">*</font>
+            <input type="text" wire:model.debounce.800ms="importe" class="form-control numero-mascara importe"
+                required>
+            @error('importe')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
         </div>
     </div>
 </section>
@@ -178,5 +179,4 @@
     //     // $('select').formSelect();
     //     //M.AutoInit();
     // });
-
 </script>
