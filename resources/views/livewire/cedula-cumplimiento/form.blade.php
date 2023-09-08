@@ -1,38 +1,47 @@
 <section id="form_cedula">
-    <div>
-        <input wire:model.debounce.800ms="contrato_id" type="hidden" value="{{ $contrato_id }}">
-        <div class="row" style="margin: 0; padding-top: 10px">
-            <span style="padding-left: 5px; font-size: 16px">
-                <p class="grey-text" style="font-size:17px;font-weight:bold;">Periodo de ampliación del contrato</p>
-            </span>
-        </div>
+    <div class="row" style="margin: 0; padding-top: 10px">
+        <span style="padding-left: 5px; font-size: 16px">
+            <p class="grey-text" style="font-size:17px;font-weight:bold;">Periodo de ampliación del contrato</p>
+        </span>
+        <div>
+            <input wire:model.debounce.800ms="contrato_id" type="hidden" value="{{ $contrato_id }}">
             <!-- Administrador Field -->
-
-        <div class="col s12 m6 distancia">
-            <label for="" class="txt-tamaño"><i class="fas fa-user iconos-crear"></i>Elaboró el análisis<font class="asterisco">*</font></label>
+        </div>
+    </div>
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="distancia form-group col-md-4">
+            <label for="" class="txt-tamaño">Elaboró el análisis
+                <font class="asterisco">*</font>
+            </label>
             <input type="text" wire:model.debounce.800ms="elaboro" class="form-control">
 
-            @error('elaboro') <span class="red-text" style="margin-left: 5px">{{ $message }}</span>
+            @error('elaboro')
+                <span class="red-text" style="margin-left: 5px">{{ $message }}</span>
             @enderror
         </div>
 
-        <div class="col s12 m6 distancia">
-            <label for="" class="txt-tamaño"><i class="fas fa-user iconos-crear"></i>Revisó los resultados<font class="asterisco">*</font></label>
+        <div class="distancia form-group col-md-4">
+            <label for="" class="txt-tamaño">Revisó los resultados
+                <font class="asterisco">*</font>
+            </label>
             <input type="text" wire:model.debounce.800ms="reviso" class="form-control">
-            @error('reviso') <span class="red-text" style="margin-left: 5px">{{ $message }}</span>
+            @error('reviso')
+                <span class="red-text" style="margin-left: 5px">{{ $message }}</span>
             @enderror
         </div>
+    </div>
 
-        <div class="col s12 m6 distancia">
-            <label for="" class="txt-tamaño"><i class="fas fa-user iconos-crear"></i>Autorizó la cédula<font class="asterisco">*</font></label>
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="distancia form-group col-md-6">
+            <label for="" class="txt-tamaño">Autorizó la cédula<font class="asterisco">*</font></label>
             <input type="text" wire:model.debounce.800ms="autorizo" class="form-control">
-            @error('autorizo') <span class="red-text" style="margin-left: 5px">{{ $message }}</span>
+            @error('autorizo')
+                <span class="red-text" style="margin-left: 5px">{{ $message }}</span>
             @enderror
         </div>
 
-
-        <div class="col s12 m6 distancia">
-            <label for="" class="txt-tamaño"><i class="fas fa-user iconos-crear"></i>Cumple<font class="asterisco">*</font></label>
+        <div class="distancia form-group col-md-6">
+            <label for="" class="txt-tamaño">Cumple<font class="asterisco">*</font></label>
             <div class="switch">
                 <label>
                     No
@@ -65,5 +74,4 @@
         });
 
     });
-
 </script>

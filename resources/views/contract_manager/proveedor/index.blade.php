@@ -26,7 +26,6 @@
         box-shadow: none !important;
         color: white;
     }
-
 </style>
 
 {{-- {{ Breadcrumbs::render('proveedores') }} --}}
@@ -38,42 +37,54 @@
                 <section class="content-header">
                     <span class="card-title">
                     </span>
-                    <div class='btn-group'>
-                        <div class="col s8" style="margin-bottom: 15px;">
-                            <h3 class="titulo-form">INSTRUCCIONES</h3>
-                            <p class="instrucciones">En esta sección podrá dar de alta a los clientes que participarán dentro del flujo de contratos.</p>
+                    <div class='row'>
+                        <div class="col s12" style="margin-top: 20px; margin-left: 10px;">
+                            <h4>PROVEEDORES</h4>
                         </div>
-                        @can('katbol_proveedores_agregar')
-                            <a class="btn btn-success" style=" margin: 13px 12px 12px 10px; "
-                            href="{{route('contract_manager.proveedor.create') }}"
-                                type="submit" name="action">Agregar Cliente <sup>+</sup>
-                            </a>
-                        @endcan
                     </div>
-
-                    @include('partials.flashMessages')
-
-                </section>
-                <div class="content">
-                    <div class="clearfix"></div>
-
-                    <div class="clearfix"></div>
-                    <div class="box box-primary">
-                        <div class="box-body">
-                            <div class="row">
-                                @include('contract_manager.proveedor.table')
+                    <div class='row'>
+                        <div class='btn-group'>
+                            <div class="col s12" style="margin-top: 10px; margin-left: 10px;">
+                                <h6>INSTRUCCIONES</h6>
+                                <p>En esta sección podrá dar de alta a los clientes que participarán
+                                    dentro del flujo de contratos.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="text-center">
+                    <div class="btn-group">
+                        @can('katbol_proveedores_agregar')
+                            <a class="btn btn-success" style=" margin: 13px 12px 12px 10px; "
+                                href="{{ route('contract_manager.proveedor.create') }}" type="submit"
+                                name="action">Agregar
+                                Cliente <sup>+</sup>
+                            </a>
+                        @endcan
+                    </div>
+            </div>
 
+            @include('partials.flashMessages')
+
+            </section>
+            <div class="content">
+                <div class="clearfix"></div>
+
+                <div class="clearfix"></div>
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <div class="row">
+                            @include('contract_manager.proveedor.table')
+                        </div>
                     </div>
                 </div>
+                <div class="text-center">
 
+                </div>
             </div>
 
         </div>
+
     </div>
+</div>
 </div>
 @include('layouts.datatables_js')
 
@@ -104,7 +115,7 @@
                 {
                     extend: 'excelHtml5',
                     title: `Reporte de proveedores_${new Date().toLocaleDateString().trim()}`,
-                    text:  "<i class='fas fa-file-excel' style='font-size: 1.1rem'></i>",
+                    text: "<i class='fas fa-file-excel' style='font-size: 1.1rem'></i>",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
@@ -160,8 +171,7 @@
                         // Right side: A document title
                         doc['header'] = (function() {
                             return {
-                                columns: [
-                                    {
+                                columns: [{
                                         alignment: 'left',
                                         italics: true,
                                         text: 'KATBOL',

@@ -3,7 +3,7 @@
 </div>
 <div style=" overflow: hidden; overflow-y:auto; max-height: 250px !important;">
 
-    <table style="width: 100%;">
+    <table class="table" style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
         <thead>
             <tr>
                 <th style="vertical-align:top; max-width: 50px;">
@@ -35,46 +35,46 @@
             @endphp
             @forelse($consultaRevisiones as $revision)
                 @php
-                    $contador ++;
+                    $contador++;
                 @endphp
                 <tr>
                     <td>
-                        {{$contador}}
+                        {{ $contador }}
                     </td>
 
                     <td>
-                        {{$revision->estatus}}
+                        {{ $revision->estatus }}
                     </td>
                     <td>
                         @if ($revision->cumple)
                             <i class="material-icons green-text">check</i>
-                          @else
+                        @else
                             <i class="material-icons red-text">close</i>
                         @endif
                     </td>
 
                     <td>
-                        {{$revision->created_at}}
+                        {{ $revision->created_at }}
                     </td>
 
-                     <td>
-                        @if($revision->asignado)
-                            {{$revision->asignado->name}}
-                          @else
+                    <td>
+                        @if ($revision->asignado)
+                            {{ $revision->asignado->name }}
+                        @else
                             sin asignar
                         @endif
                     </td>
 
                     <td>
-                        {{$revision->observaciones}}
+                        {{ $revision->observaciones }}
                     </td>
                     <td>
-                        <button wire:click="revisionDelete({{$revision->id}})" class="btn red">
+                        <button wire:click="revisionDelete({{ $revision->id }})" class="btn red">
                             <i class="material-icons">delete</i>
                         </button>
                     </td>
                 </tr>
-                @empty
+            @empty
                 <tr>
                     <td colspan="6">Esta factura no tiene revisiones</td>
                 </tr>
@@ -86,44 +86,48 @@
 <div class="row" style="margin-top: 20px;">
     <div class="input-field col s12 m4">
         <small>
-            <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
-                    class="fas fa-clipboard-list iconos-crear"></i>No. revisión
+            <p class="grey-text" style="font-size:17px;font-weight:bold;">
+                No. revisión
             </p>
         </small>
-        <div class="form-control" style="margin-top: 15px">{{$no_revision}}</div>
-        <input type="hidden" value="{{$no_revision}}" name="no_revision" id="no_revision">
+        <div class="form-control" style="margin-top: 15px">{{ $no_revision }}</div>
+        <input type="hidden" value="{{ $no_revision }}" name="no_revision" id="no_revision">
     </div>
 
     <div class="col s12 m4" wire:ignore>
-        <div  class="input-field col s12">
+        <div class="input-field col s12">
             <small>
-                <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
-                        class="fas fa-file-invoice iconos-crear"></i>Estatus<font class="asterisco">*
+                <p class="grey-text" style="font-size:17px;font-weight:bold;">
+                    Estatus<font class="asterisco">*
                     </font>
                 </p>
             </small>
-            <select  name="estatus" id="estatus" class="" wire:model.defer="estatus" style="opacity:1 !important;">
+            <select name="estatus" id="estatus" class="form-control" wire:model.defer="estatus"
+                style="opacity:1 !important;">
                 <option value="" disabled selected>Elige una opción</option>
                 <option value="recibido">Recibido</option>
                 <option value="progreso">Progreso</option>
                 <option value="pagada">Pagada</option>
             </select>
         </div>
-        @error('estatus') <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
+        @error('estatus')
+            <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
         @enderror
     </div>
 
     <div class="col s12 m4" wire:ignore>
-        <div  class="input-field col s12">
+        <div class="input-field col s12">
             <small>
-                <p class="grey-text" style="font-size:17px;font-weight:bold;"><i class="fas fa-user iconos-crear"></i>Asignado<font class="asterisco">*
+                <p class="grey-text" style="font-size:17px;font-weight:bold;">
+                    Asignado<font class="asterisco">*
                     </font>
                 </p>
             </small>
-            <select name="asignado_id" id="asignado_id" class="" wire:model.defer="asignado_id" style="opacity:1 !important;">
+            <select name="asignado_id" id="asignado_id" class="form-control" wire:model.defer="asignado_id"
+                style="opacity:1 !important;">
                 <option value="" disabled selected>Elige una opción</option>
-                @foreach($usuarios as $usuario)
-                    <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                @foreach ($usuarios as $usuario)
+                    <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -131,10 +135,8 @@
 
     <div wire:ignore class="input-field col s12 m4">
         <small>
-            <p class="grey-text" style="font-size:17px;font-weight:bold; margin-top:15px"><i
-                    class="fas fa-thumbs-down iconos-crear"></i>
-                <i class="fas fa-thumbs-up iconos-crear" style="margin-left:2px;"></i>Cumple<font
-                    class="asterisco">
+            <p class="grey-text" style="font-size:17px;font-weight:bold; margin-top:15px">
+                Cumple<font class="asterisco">
                     *</font>
             </p>
         </small>
@@ -155,12 +157,14 @@
 <div class="row">
     <div class="input-field col s12 m12">
         <small>
-            <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
-                    class="fas fa-search iconos-crear"></i>Hallazgos / Comentarios</p>
+            <p class="grey-text" style="font-size:17px;font-weight:bold;">
+                Hallazgos / Comentarios</p>
         </small>
-        <textarea style="padding:15px;" type="text" name="hallazgos_comentarios" wire:model.defer="hallazgos_comentarios"
+        <textarea class="form-control" type="text" name="hallazgos_comentarios" wire:model.defer="hallazgos_comentarios"
             class="text_area"></textarea>
 
-        @error('hallazgos_comentarios') <span class="red-text">{{ $message }}</span> @enderror
+        @error('hallazgos_comentarios')
+            <span class="red-text">{{ $message }}</span>
+        @enderror
     </div>
 </div>

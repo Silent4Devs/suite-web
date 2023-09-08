@@ -112,7 +112,7 @@ class FacturaComponent extends Component
         // ->orWhere('no_revisiones', 'like', '%' . $this->search . '%')
 
         return view('livewire.factura.factura-component', [
-            //'facturas' => Factura::orderBy('id', 'desc')->where('contrato_id', '=', $this->contrato_id)->get(),
+            // 'facturas' => Factura::orderBy('id', 'desc')->where('contrato_id', '=', $this->contrato_id)->get(),
             'facturas' => $facturas, 'organizacion' => $organizacion,
         ]);
     }
@@ -206,7 +206,7 @@ class FacturaComponent extends Component
                 'showConfirmButton' =>  true,
             ]);
         } else {
-            $formatoFecha = new FormatearFecha;
+            // $formatoFecha = new FormatearFecha;
             if ($this->fecha_recepcion) {
                 $fecha_recepcion_formateada = $this->fecha_recepcion;
             }
@@ -228,8 +228,8 @@ class FacturaComponent extends Component
                 'monto_factura' => $monto_factura,
                 'hallazgos_comentarios' => $this->hallazgos_comentarios,
                 'estatus' => $this->estatus,
-                'created_by' => auth()->user()->empleado->id,
-                'updated_by' => auth()->user()->empleado->id,
+                // 'created_by' => auth()->user()->empleado->id,
+                // 'updated_by' => auth()->user()->empleado->id,
             ]);
 
             $date = Carbon::now();
@@ -237,8 +237,8 @@ class FacturaComponent extends Component
 
             $facturaFile = FacturaFile::create([
                 'factura_id' => $factura->id,
-                'created_by' => auth()->user()->empleado->id,
-                'updated_by' => auth()->user()->empleado->id,
+                // 'created_by' => auth()->user()->empleado->id,
+                // 'updated_by' => auth()->user()->empleado->id,
             ]);
 
             //### Facturas reestructuracion ####
@@ -280,10 +280,10 @@ class FacturaComponent extends Component
     {
         $factura = Factura::find($id);
 
-        $formatoFecha = new FormatearFecha;
+        // $formatoFecha = new FormatearFecha;
 
-        $fecha_recepcion_formateada = $formatoFecha->formatearFecha($factura->fecha_recepcion, 'Y-m-d', 'd-m-Y');
-        $fecha_liberacion_formateada = $formatoFecha->formatearFecha($factura->fecha_liberacion, 'Y-m-d', 'd-m-Y');
+        $fecha_recepcion_formateada = $factura->fecha_recepcion;
+        $fecha_liberacion_formateada = $factura->fecha_liberacion;
 
         $this->factura_id = $factura->id;
         $this->contrato_id = $factura->contrato_id;
@@ -314,8 +314,8 @@ class FacturaComponent extends Component
 
         $this->validate([
             'no_factura' => ['required', 'regex:/^[\s\w-]*$/'],
-            'fecha_recepcion' => 'required|after_or_equal:fecha_inicio_contrato|before_or_equal:fecha_fin_contrato',
-            'fecha_liberacion' => 'required|before_or_equal:fecha_fin_contrato|after_or_equal:fecha_inicio_contrato',
+            // 'fecha_recepcion' => 'required|after_or_equal:fecha_inicio_contrato|before_or_equal:fecha_fin_contrato',
+            // 'fecha_liberacion' => 'required|before_or_equal:fecha_fin_contrato|after_or_equal:fecha_inicio_contrato',
             // 'no_revisiones' => 'required|numeric|min:0',
             'monto_factura' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             // 'estatus' => 'required',
@@ -343,10 +343,10 @@ class FacturaComponent extends Component
 
         // $resta_valor_actual = (float) $this->monto_total_facturas - (float) $factura->monto_factura;
 
-        $formatoFecha = new FormatearFecha;
+        // $formatoFecha = new FormatearFecha;
 
-        $fecha_recepcion_formateada = $formatoFecha->formatearFecha($factura->fecha_recepcion, 'Y-m-d', 'd-m-Y');
-        $fecha_liberacion_formateada = $formatoFecha->formatearFecha($factura->fecha_liberacion, 'Y-m-d', 'd-m-Y');
+        $fecha_recepcion_formateada = $factura->fecha_recepcion;
+        $fecha_liberacion_formateada = $factura->fecha_liberacion;
 
         // dd($resta_valor_actual, $this->monto_total_facturas, $factura->monto_factura, $validacion_totales);
         $validacion_totales = (float) $monto_factura + (float) $this->monto_total_facturas;
@@ -373,10 +373,10 @@ class FacturaComponent extends Component
                 'showConfirmButton' =>  true,
             ]);
         } else {
-            $formatoFecha = new FormatearFecha;
+            // $formatoFecha = new FormatearFecha;
 
-            $fecha_recepcion_formateada = $formatoFecha->formatearFecha($this->fecha_recepcion, 'd-m-Y', 'Y-m-d');
-            $fecha_liberacion_formateada = $formatoFecha->formatearFecha($this->fecha_liberacion, 'd-m-Y', 'Y-m-d');
+            $fecha_recepcion_formateada = $this->fecha_recepcion;
+            $fecha_liberacion_formateada = $this->fecha_liberacion;
 
             //Se genera el log
             //DB::select('call actualiza_user(?, ?, ?)',array('facturacion', auth()->id(), $id_factura));

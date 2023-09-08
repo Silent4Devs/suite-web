@@ -13,11 +13,10 @@
     <!--<button wire:click="store" class="btn green">
         Guardar
     </button>-->
-
-    <div class="row">
-       <div class="col s12 right-align" style="margin-top:40px;">
-         <button type="submit" class="btn-redondeado btn btn-primary">Guardar</button>
-      </div>
-    </div>
+    {{-- <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+        <div class="col s12 m12 right-align btn-grd distancia">
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+    </div> --}}
 
 </form>

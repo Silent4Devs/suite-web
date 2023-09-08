@@ -1,7 +1,7 @@
-<div class="row" style="margin: 0;">
+<div class="row" style="margin-top: 30px; margin-left: 10px;">
     <div class="col l6">
-        <label for="search"><i class="fas fa-search"></i> Buscador</label>
-        <input type="text" wire:model="search" placeholder="Buscar...">
+        <label for="search">Buscador</label>
+        <input type="text" class="form-control" wire:model="search" placeholder="Buscar...">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
 
@@ -22,9 +22,10 @@
         </div>
     </div>
 </div>
-<div class="tabla_responsiva_edit_contratos tabla-cierre">
+<div class="tabla_responsiva_edit_contratos tabla-cierre"
+    style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
     @if ($nivelesServicio->count())
-        <table style="width: 100%;">
+        <table class="table table-responsive">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('id')">
@@ -169,7 +170,8 @@
     @else
         @if ($search != null || $search != '')
             <br>
-            <div style="background-color: #f8f8f8;padding: 15px;
+            <div
+                style="background-color: #f8f8f8;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: rgb(0, 0, 0);
@@ -179,7 +181,8 @@
             </div>
         @else
             <br>
-            <div style="background-color: #f8f8f8;padding: 15px;
+            <div
+                style="background-color: #f8f8f8;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: rgb(0, 0, 0);
@@ -252,5 +255,4 @@
             var instances = M.Modal.init(elems, options);
         });
     });
-
 </script>

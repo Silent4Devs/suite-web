@@ -1,5 +1,5 @@
-<div>
-    <table>
+<div style="margin-top: 30px; margin-left: 50px;">
+    <table class="tabla_responsiva_edit_contratos">
         <thead>
             <tr>
                 <th class="grey-text letra-ngt">No. Proyecto</th>
@@ -41,7 +41,7 @@
                                     <i class="material-icons">create</i>
                                 </button>
                             </a>
-                        {{--  </td>
+                            {{--  </td>
                         <td>
                             <button wire:click="$emit('triggerDeleteCumplimiento',{{$cedula->id}})" class="btn red">
                                 <i class="material-icons">delete</i>
@@ -54,8 +54,8 @@
                                 </button>
                                 @livewire('cedula-cumplimiento.historico-component',['cedula_id'=>$cedula->id])
                             </div> --}}
-                            <a class="btn" href="{{ route('contract_manager.cedula.historico', $cedula->id) }}" target="_blank"><i
-                                    class="fas fa-history"></i></a>
+                            <a class="btn" href="{{ route('contract_manager.cedula.historico', $cedula->id) }}"
+                                target="_blank"><i class="fas fa-history"></i></a>
                         </td>
                     @endif
                 </tr>
@@ -72,25 +72,20 @@
 
 
 <script>
-
-    document.addEventListener('confirmDeleteCedulaEvent', function (e) {
-       Swal.fire({
-      title: '¿Esta seguro que desea eliminarla?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-         @this.call('destroy',e.detail.cedula_id)
-        //console.log(e.detail.factura_id);
-      }
-    })
+    document.addEventListener('confirmDeleteCedulaEvent', function(e) {
+        Swal.fire({
+            title: '¿Esta seguro que desea eliminarla?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                @this.call('destroy', e.detail.cedula_id)
+                //console.log(e.detail.factura_id);
+            }
+        })
 
     });
-
-
-
-
 </script>

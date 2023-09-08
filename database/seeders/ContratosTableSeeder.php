@@ -17,7 +17,7 @@ class ContratosTableSeeder extends Seeder
 
         \DB::table('contratos')->insert([
             0 => [
-                'id' => 1,
+
                 'no_contrato' => '679',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 1,
@@ -58,12 +58,12 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             1 => [
-                'id' => 2,
+
                 'no_contrato' => 'SE-25-2018',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 2,
-            'nombre_servicio' => 'Servicio Administrado de Seguridad de la Información (SASI)',
-            'objetivo' => 'Servicio Administrado de Seguridad de la Información (SASI)',
+                'nombre_servicio' => 'Servicio Administrado de Seguridad de la Información (SASI)',
+                'objetivo' => 'Servicio Administrado de Seguridad de la Información (SASI)',
                 'fecha_inicio' => '2018-03-28',
                 'fecha_fin' => '2019-06-11',
                 'vigencia_contrato' => '12 meses',
@@ -99,7 +99,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             2 => [
-                'id' => 3,
+
                 'no_contrato' => '4600023294',
                 'tipo_contrato' => 'Infraestructura',
                 'proveedor_id' => 3,
@@ -126,7 +126,7 @@ class ContratosTableSeeder extends Seeder
                 'fase' => 'Ejecución',
                 'contrato_ampliado' => 0,
                 'estatus' => 'vigentes',
-            'file_contrato' => '32020-05-12AnexoIII-CONTRATACION DE SERVICOS DE SOPORTE A INFRAESTRUCTURA DE SISTEMAS INDUSTRIALES(v6).pdf',
+                'file_contrato' => '32020-05-12AnexoIII-CONTRATACION DE SERVICOS DE SOPORTE A INFRAESTRUCTURA DE SISTEMAS INDUSTRIALES(v6).pdf',
                 'folio' => null,
                 'documento' => null,
                 'convenio_modificatorio' => 0,
@@ -140,12 +140,12 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             3 => [
-                'id' => 4,
+
                 'no_contrato' => 'IFT-LPN-004-21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 4,
                 'nombre_servicio' => 'Servicios de Análisis de Vulnerabilidades',
-            'objetivo' => 'Servicios de Análisis de Vulnerabilidades del Instituto correspondiente a la partida 2, del procedimiento de licitación  pública nacional y electrónica número LA-04340999-E85-2020 integrados por:   2.1 Análisis de vulnerabilidades a activos (infraestructura y aplicaciones web) y 2.2 Respuesta a incidentes y análisis forenses.',
+                'objetivo' => 'Servicios de Análisis de Vulnerabilidades del Instituto correspondiente a la partida 2, del procedimiento de licitación  pública nacional y electrónica número LA-04340999-E85-2020 integrados por:   2.1 Análisis de vulnerabilidades a activos (infraestructura y aplicaciones web) y 2.2 Respuesta a incidentes y análisis forenses.',
                 'fecha_inicio' => '2021-01-01',
                 'fecha_fin' => '2022-12-31',
                 'vigencia_contrato' => '2 años',
@@ -180,6 +180,6 @@ class ContratosTableSeeder extends Seeder
                 'identificador_privado' => 0,
                 'firma1' => null,
             ],
-    ]);
+        ]);
     }
 }

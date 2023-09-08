@@ -1,7 +1,7 @@
-<div class="row" style="margin: 0;">
+<div class="row" style="margin-top: 30px; margin-left: 10px;">
     <div class="col l6">
-        <label for="search"><i class="fas fa-search"></i> Busca un número de convenio</label>
-        <input type="text" wire:model="search" placeholder="Busca un número de convenio">
+        <label for="search">Busca un número de convenio</label>
+        <input type="text" wire:model="search" class="form-control" placeholder="Busca un número de convenio">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
     <div wire:ignore class="input-field col l6 row"
@@ -23,20 +23,27 @@
 </div>
 <div class="tabla_responsiva_edit_contratos tabla-cierre">
     @if ($convenio->count())
-        <table style="width: 100%;">
+        <table class="table" style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top; text-align:center" class="letra-ngt grey-text">
-                        &nbsp;&nbsp;&nbsp;No.&nbsp;Convenio&nbsp;@for ($i = 0; $i < 10; $i++)&nbsp;@endfor
+                        &nbsp;&nbsp;&nbsp;No.&nbsp;Convenio&nbsp;@for ($i = 0; $i < 10; $i++)
+                            &nbsp;
+                        @endfor
                     </th>
                     <th class="letra-ngt grey-text">
-                        &nbsp;&nbsp;&nbsp;&nbsp;Fecha&nbsp;@for ($i = 0; $i < 13; $i++)&nbsp;@endfor
+                        &nbsp;&nbsp;&nbsp;&nbsp;Fecha&nbsp;@for ($i = 0; $i < 13; $i++)
+                            &nbsp;
+                        @endfor
                     </th>
                     <th class="letra-ngt grey-text">Convenios&nbsp;&nbsp;</th>
-                    <th class="letra-ngt grey-text center-align" style="margin-left:50px;" >
-                    <div class="valign-wrapper" style="margin-left:50px !important;">
-                      <p style="margin-left:50px !important;"  class="center-align"> Descripción&nbsp;@for ($i = 0; $i < 50; $i++)&nbsp;@endfor</p>
-                    </div>
+                    <th class="letra-ngt grey-text center-align" style="margin-left:50px;">
+                        <div class="valign-wrapper" style="margin-left:50px !important;">
+                            <p style="margin-left:50px !important;" class="center-align"> Descripción&nbsp;@for ($i = 0; $i < 50; $i++)
+                                    &nbsp;
+                                @endfor
+                            </p>
+                        </div>
                     </th>
                     @if (!$show_contrato)
                         <th class="letra-ngt grey-text">Editar</th>
@@ -83,7 +90,8 @@
     @else
         @if ($search != null || $search != '')
             <br>
-            <div style="background-color: #f8f8f8;padding: 15px;
+            <div
+                style="background-color: #f8f8f8;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: rgb(0, 0, 0);
@@ -93,7 +101,8 @@
             </div>
         @else
             <br>
-            <div style="background-color: #f8f8f8;padding: 15px;
+            <div
+                style="background-color: #f8f8f8;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: rgb(0, 0, 0);
@@ -105,8 +114,18 @@
     @endif
 
 </div>
-
-{{ $convenio->links() }}
+<div class="row">
+    {{-- <div class="col-6 p-0">
+        <strong>
+            Mostrando {{ $perPage }} de {{ $totalRegistrosMostrando }} resultados @if ($estatus)
+                <span class="badge badge-primary">(filtrando por {{ $estatus }})</span>
+            @endif
+        </strong>
+    </div> --}}
+    <div class="col-6 p-0" style="display: flex;justify-content: end">
+        {{ $convenio->links() }}
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $('.select_pagination').change(function(e) {

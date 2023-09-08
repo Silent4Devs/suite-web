@@ -1,7 +1,7 @@
-<div class="row" style="margin: 0;">
+<div class="row" style="margin-top: 30px; margin-left: 10px;">
     <div class="col l6">
-        <label for="search"><i class="fas fa-search"></i> Buscador</label>
-        <input type="text" wire:model="search" placeholder="Buscar...">
+        <label for="search">Buscador</label>
+        <input type="text" wire:model="search" class="form-control" placeholder="Buscar...">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
 
@@ -22,9 +22,10 @@
         </div>
     </div>
 </div>
-<div class="tabla_responsiva_edit_contratos tabla-cierre">
+<div class="tabla_responsiva_edit_contratos tabla-cierre"
+    style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
     @if ($cierrecontratos->count())
-        <table style="width: 100%">
+        <table class="table">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('aspectos')">
@@ -135,7 +136,7 @@
     @endif
 
 </div>
-{{-- {{ $cierrecontratos->links() }} --}}
+{{ $cierrecontratos->links() }}
 <script>
     $(document).ready(function() {
         $('.select_pagination_cierre_contrato').change(function(e) {

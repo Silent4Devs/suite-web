@@ -56,10 +56,10 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $productos = new Producto();
-        $productos->descripcion = $request->descripcion;
-        $productos->clave = $request->clave;
-        $productos->save();
+        Producto::create([
+            'descripcion' => $request->descripcion,
+            'clave' => $request->clave,
+        ]);
 
         return redirect('/contract_manager/productos');
     }
@@ -99,8 +99,8 @@ class ProductoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-         'descripcion' => 'required',
-         'clave' => 'required',
+            'descripcion' => 'required',
+            'clave' => 'required',
         ]);
         $sucursal = Producto::find($id);
 
