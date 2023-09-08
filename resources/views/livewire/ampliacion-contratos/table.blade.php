@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table" style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
     <thead>
         <tr>
             <th class="letra-ngt grey-text">No. Contrato</th>
