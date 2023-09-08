@@ -14,10 +14,10 @@
             <div class="card card-content caja-blue">
 
                 <div>
-                    <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width: 100px;">
+                    <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 50px; right: 430px;">
                 </div>
 
-                <div>
+                <div style="position: relative; top:-5rem; left: 50px;">
                     <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
                     <h5 style="font-size: 17px;">En esta sección podrás generar y procesar las Ordenes de Compra.</h5>
                 </div>

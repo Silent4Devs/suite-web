@@ -142,7 +142,7 @@
             let archivoButton = {
                 @can('katbol_centro_costos_archivar')
                     text: 'Archivar Registro',
-                    url: "{{ route('contract_manager.centro-costos.archivar', ['id' => $ids]) }}",
+                    url: "{{ route('contract_manager.centro-costos.archivar', ['id' => 1]) }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -191,8 +191,8 @@
                     }
                 },
                 columns: [{
-                        data: 'clave',
-                        name: 'clave'
+                        data: 'id',
+                        name: 'id'
                     },
                     {
                         data: 'descripcion',

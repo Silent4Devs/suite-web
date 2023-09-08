@@ -29479,7 +29479,7 @@ input[type=button].btn-block {
 }
 
 .card-group > .card {
-  margin-bottom: 15px;
+  margin-bottom: 150px;
 }
 @media (min-width: 576px) {
   .card-group {

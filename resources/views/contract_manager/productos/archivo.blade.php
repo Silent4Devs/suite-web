@@ -124,7 +124,7 @@
             dtButtons.push(btnRegresar);
             let archivoButton = {
                     text: 'Archivar Registro',
-                    url: "{{ route('contract_manager.productos.archivar', ['id' => $ids]) }}",
+                    url: "{{ route('contract_manager.productos.archivar', ['id' => 1]) }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({

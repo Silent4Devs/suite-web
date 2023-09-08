@@ -27,7 +27,7 @@
                 </td>
                 <td class="td-blue-header">
                     <h5 style="color:#49598A;">REQUISICIÓN DE ADQUISICIONES</h5>
-                    Folio: RQ-{{ $requisiciones->id}} <br>
+                    Folio: RQ-00-00-{{ $requisiciones->id}} <br>
                     Fecha de solicitud: {{ date('d-m-Y', strtotime($requisiciones->fecha))  }}
                 </td>
             </tr>

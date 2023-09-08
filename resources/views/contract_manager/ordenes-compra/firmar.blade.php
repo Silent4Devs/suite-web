@@ -13,10 +13,10 @@
     <div class="card card-content caja-blue" style="background-color:#49598A;">
 
         <div>
-            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="height: 50px;">
+            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 150px; right: 430px;">
         </div>
 
-        <div>
+        <div style="position: relative; top:-5rem; left: 50px;">
             <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3><br>
             <h5 style="font-size: 17px;">Firma tu Orden de Compra para que sea aprobado por las áreas correspondientes</h5><br>
             <p>
@@ -382,7 +382,7 @@
                             <input type="hidden" required name="firma" id="firma">
                         </div>
                         <div>
-                            <div class="btn" style="background: #959595 !important; transform: translateY(-40px) scale(0.8);" id="clear">Limpiar</div>
+                            <div class="btn btn-danger" id="clear">Limpiar</div>
                         </div>
                     </div>
                 </div>
@@ -397,7 +397,7 @@
             </form>
             <form method="POST" action="{{ route('contract_manager.orden-compra.rechazada', ['id' => $requisicion->id]) }}">
                 @csrf
-                <div class="flex" style="justify-content: space-between; gap:25px; margin-top:20px;">
+                <div class="flex" style="position: relative; top: -1rem; justify-content: space-between;">
                     @if($requisicion->firma_comprador_orden)
                         <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR ORDEN DE COMPRA</button>
                     @else
