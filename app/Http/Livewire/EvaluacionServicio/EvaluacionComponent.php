@@ -5,11 +5,11 @@ namespace App\Http\Livewire\EvaluacionServicio;
 use App\Models\ContractManager\EvaluacionServicio;
 use App\Models\ContractManager\NivelesServicio;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class EvaluacionComponent extends Component
 {
@@ -52,8 +52,8 @@ class EvaluacionComponent extends Component
             ->where('id', '=', $this->nivel_id)
             ->first();
 
-        $promedio_evaluaciones = EvaluacionServicio::where('servicio_id', '=', $this->nivel_id)
-        ->sum(DB::raw('CAST(promedio AS DECIMAL)'));
+            $promedio_evaluaciones = EvaluacionServicio::where('servicio_id', '=', $this->nivel_id)
+            ->sum(DB::raw('CAST(promedio AS DECIMAL)'));
 
         return view('livewire.evaluacion-servicio.evaluacion-component', [
             'EvaluacionServicio' => $evaluacion_servicio,
@@ -134,7 +134,7 @@ class EvaluacionComponent extends Component
 
         //$this->validate();
 
-        if (!is_null($this->eval_id)) {
+        if (! is_null($this->eval_id)) {
             $evalservicio = EvaluacionServicio::find($this->eval_id);
 
             $evalservicio->update([

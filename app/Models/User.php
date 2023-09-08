@@ -208,4 +208,9 @@ class User extends Authenticatable implements Auditable
             return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
         }
     }
+
+        public function reviews()
+    {
+        return $this->hasMany('App\Models\esculea\Review');
+    }
 }
