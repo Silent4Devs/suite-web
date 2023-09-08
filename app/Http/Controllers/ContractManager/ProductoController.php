@@ -56,10 +56,21 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        Producto::create([
-            'descripcion' => $request->descripcion,
-            'clave' => $request->clave,
-        ]);
+
+        $ids = Producto::pluck('id');
+
+        foreach ($ids as $id) {
+            $string1 = strval($id);
+            if ($string1  === $request->id) {
+                return view('contract_manager.proveedores.error');
+            }
+        }
+
+        $productos = new Producto();
+        $productos->id = $request->id;
+        $productos->descripcion = $request->descripcion;
+        $productos->clave = $request->clave;
+        $productos->save();
 
         return redirect('/contract_manager/productos');
     }
@@ -100,13 +111,13 @@ class ProductoController extends Controller
     {
         $request->validate([
             'descripcion' => 'required',
-            'clave' => 'required',
+            'id' => 'required',
         ]);
         $sucursal = Producto::find($id);
 
         $sucursal->update([
             'descripcion' => $request->descripcion,
-            'clave' => $request->clave,
+            'id' => $request->id,
         ]);
 
         return redirect('/contract_manager/productos');

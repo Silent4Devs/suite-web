@@ -4,21 +4,21 @@
 @section('titulo', 'Firmar Requisicion')
 <link rel="stylesheet" href="{{ asset('css/requisiciones.css') }}">
 
-<div class="card card-content caja-blue">
+    <div class="card card-content caja-blue">
 
-    <div>
-        <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width: 150px;">
-    </div>
+        <div>
+            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 100px; right: 430px;">
+        </div>
 
-    <div>
-        <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
-        <h5 style="font-size: 17px; margin-top:10px;">En esta sección puedes generar tu firma electrónica</h5>
-        <p style="margin-top:10px;">
-            Aquí podrás firmar, revisar y procesar solicitudes de compra de manera rápida y sencilla, optimizando el
-            flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
-        </p>
+        <div style="position: relative; top:-5rem; left: 80px;">
+            <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
+            <h5 style="font-size: 17px; margin-top:10px;">En esta sección puedes generar tu firma electrónica</h5>
+            <p style="margin-top:10px;">
+                Aquí podrás firmar, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br> optimizando el
+                flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
+            </p>
+        </div>
     </div>
-</div>
 <div id="paso-firma" class="tab-content">
     <div class="card card-item doc-requisicion">
         <div class="flex header-doc">
@@ -182,36 +182,16 @@
                     <strong>Contacto:</strong><br><br>
                     {{$prov->contacto}}
                 </div>
-
             </div>
             <div class="row">
-                <div class="col s12 l4">
-                    <strong>Envio:</strong><br><br>
-                    {{$prov->envio}}
-                </div>
-                <div class="col s12 l4">
-                    <strong>Facturación:</strong><br><br>
-                    {{$prov->facturacion}}
-                </div>
-                <div class="col s12 l4">
-                    <strong>Direccion:</strong><br><br>
-                    {{$prov->direccion}}
-                </div>
-                <div class="col s12 l4">
-                    <br>
-                    <strong>Crédito:</strong><br><br>
-                    {{$prov->credito}}
-                </div>
                 <div class="col s12 l4">
                     <strong>Fecha Inicio:</strong><br><br>
                     {{ date('d-m-Y', strtotime($prov->fecha_inicio)) }}
                 </div>
-                <div class="col s12 l4">
+                <div class="col s12 l2">
                     <strong>Fecha Fin:</strong><br><br>
                     {{ date('d-m-Y', strtotime($prov->fecha_fin)) }}
                 </div>
-
-
             </div>
         </div>
         @endforeach
@@ -312,7 +292,6 @@
             </div>
         </div>
     </div>
-    @if ($bandera)
     <div class="card card-content" style="margin-bottom: 30px">
         <form method="POST" id="myForm" action="{{ route('contract_manager.requisiciones.firmar-update', ['tipo_firma' => $tipo_firma, 'id' => $requisicion->id]) }}">
             @csrf
@@ -329,28 +308,22 @@
                         <input type="hidden" name="firma" id="firma">
                     </div>
                     <div>
-                        <div class="btn" style="background: #959595 !important; transform: translateY(-40px) scale(0.8);" id="clear">Limpiar</div>
+                        <div class="btn" style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);" id="clear">Limpiar</div>
                     </div>
                 </div>
             </div>
-            {{--  <div class="flex">
-                <div class="flex-item" style="display: flex; justify-content:center;">
-                    <div class="btn" style="background: #959595 !important" id="clear">Limpiar</div>
-                </div>
-            </div>  --}}
             <div class="flex" style="justify-content: end; gap:10px;">
                 {{--  <div class="btn btn-secundario" style="background: #959595 !important"><i class="fa-solid fa-chevron-left icon-prior"></i> Regresar </div>  --}}
             </div>
         </form>
         <form method="POST" action="{{ route('contract_manager.requisiciones.rechazada', ['id' => $requisicion->id]) }}">
             @csrf
-            <div class="flex" style="justify-content: space-between; gap:25px; margin-top:30px;">
+            <div class="flex" style="position: relative; top: -1rem;  justify-content: space-between;">
                 <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR REQUISICIÓN</button>
-                <div onclick="validar();" style="" class="btn">Guardar</div>
+                <div onclick="validar();" style="" class="btn btn-primary">Guardar</div>
             </div>
         </form>
     </div>
-    @endif
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -246,6 +246,7 @@ return [
         'Date' => Jenssegers\Date\Date::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Redis' => Illuminate\Support\Facades\Redis::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
 
     ],
 

@@ -34,6 +34,7 @@
         "phpoffice/phpword": "^1.0",
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.0",
+        "realrashid/sweet-alert": "^7.1",
         "sentry/sentry-laravel": "^3.6",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/calendar-links": "^1.6",

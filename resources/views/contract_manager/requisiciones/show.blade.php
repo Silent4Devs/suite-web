@@ -24,18 +24,18 @@
     <div class="card card-content caja-blue">
 
         <div>
-            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width: 150px;">
+            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 100px; right: 430px;">
         </div>
 
-        <div>
+        <div style="position: relative; top:-5rem; left: 80px;">
             <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido</h3>
             <h5 style="font-size: 17px; margin-top:10px;">En esta sección puedes ver tu requisición</h5>
             <p style=" margin-top:10px;">
-                Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
+                Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br> optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
             </p><br>
             <form method="POST" action="{{ route('contract_manager.requisiciones.pdf', ['id' => $requisicion->id]) }}">
                 @csrf
-                <button style="background-color: #4ca998; border-color: #fff; border-radius: 5px; padding:10px 24px; font-size:16px">
+                <button style="background-color: white; border-color: #fff; border-radius: 5px; padding:10px 24px; font-size:16px">
                     <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir Requisición
                 </button>
                </form>

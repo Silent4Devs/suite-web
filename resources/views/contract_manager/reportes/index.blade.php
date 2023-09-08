@@ -105,13 +105,13 @@
     .align{
         text-align: left !important;
         font-size: 18px;
-        color: #777777;
+        color:#345183;
         opacity: 100% !important;
     }
 
     .titulo-form, .sub-titulo-form {
             font-size: 18px;
-            color: #4c4790;
+            color: #345183;
             font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
@@ -129,17 +129,17 @@
 	        <div class="col s12 m8">
 	      		<a href="#organizacion" class="a_btn">
 	                <img src="{{ asset('img/reportes/org.svg') }}" style="left: 40px; width: 100%; padding-bottom: 6px;">
-	      			<span style="color: #2395AA;"><strong>Organización</strong></span>
+	      			<span style="color:#345183;"><strong>Organización</strong></span>
 	      		</a>
 
 	      		<a href="#proveedores" class="a_btn">
 	                <img src="{{ asset('img/reportes/prov.svg') }}" style="left: 40px; width: 100%; padding-bottom: 6px;">
-	                <span style="color: #2395AA;"><strong>Proveedores</strong></span>
+	                <span style="color:#345183;"><strong>Proveedores</strong></span>
 	      		</a>
 
 	      		<a href="#contratos" class="a_btn">
 	                <img src="{{ asset('img/reportes/contr.svg') }}" style="left: 40px; width: 100%; padding-bottom: 6px;">
-	                <span style="color: #2395AA;"><strong>Contratos</strong></span>
+	                <span style="color:#345183;"><strong>Contratos</strong></span>
 	      		</a>
 			</div>
 	    </div>
@@ -270,7 +270,7 @@
                         </button>
 	                </div>
 					<div class="seleccionar">
-						<select searchable="Buscar..." name="proveedor" id="proveedor">
+						<select class="form-control" searchable="Buscar..." name="proveedor" id="proveedor">
 		                    <option value="" selected disabled>Seleccione un proveedor</option>
 		                    @forelse($proveedores as $item_proveedor)
 		                        <option value="{{$item_proveedor->id}}">{{$item_proveedor->nombre_comercial}}</option>
@@ -316,7 +316,7 @@
                         </button>
 	                </div>
 					<div class="seleccionar">
-						<select searchable="Buscar..." name="contrato" id="contrato" class="">
+						<select class="form-control" searchable="Buscar..." name="contrato" id="contrato" class="">
 		                    <option value="" selected disabled>Seleccione un contrato</option>
 		                    @forelse($contratos as $item_contrato)
 		                        <option value="{{$item_contrato->id}}">{{$item_contrato->no_contrato}}</option>

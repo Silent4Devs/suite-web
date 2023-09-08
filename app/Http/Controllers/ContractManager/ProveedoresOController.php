@@ -5,8 +5,11 @@ namespace App\Http\Controllers\ContractManager;
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\ProveedorOC;
 use Gate;
+use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class ProveedoresOController extends Controller
 {
@@ -56,7 +59,17 @@ class ProveedoresOController extends Controller
      */
     public function store(Request $request)
     {
+        $ids = ProveedorOC::pluck('id');
+
+        foreach ($ids as $id) {
+            $string1 = strval($id);
+            if ($string1  === $request->id) {
+                return view('contract_manager.proveedores.error');
+            }
+        }
+
         $proveedores = new ProveedorOC();
+        $proveedores->id = $request->id;
         $proveedores->nombre = $request->nombre;
         $proveedores->razon_social = $request->razon_social;
         $proveedores->rfc = $request->rfc;
@@ -107,27 +120,20 @@ class ProveedoresOController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-         'nombre' => 'required',
-         'razon_social' => 'required',
-         'contacto' => 'required',
-         'facturacion' => 'required',
-         'direccion' => 'required',
-         'envio' => 'required',
-         'credito' => 'required',
-         'fecha_inicio' => 'required',
-         'fecha_fin' => 'required',
+            'nombre' => 'required',
+            'razon_social' => 'required',
+            'rfc' => 'required',
+            'contacto' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
         ]);
         $proveedores = ProveedorOC::find($id);
 
         $proveedores->update([
             'nombre' => $request->nombre,
             'razon_social' => $request->razon_social,
+            'rfc' => $request->rfc,
             'contacto' => $request->contacto,
-            'facturacion' => $request->facturacion,
-            'cuenta_contable' => $request->cuenta_contable,
-            'direccion' => $request->direccion,
-            'envio' => $request->envio,
-            'credito' => $request->credito,
             'fecha_inicio' => $request->fecha_inicio,
             'fecha_fin' => $request->fecha_fin,
         ]);

@@ -137,6 +137,20 @@
                         console.log(url);
                     },
                };
+
+            //    let btnArchivados = {
+            //         text: '<i class="fa-solid fa-envelope"></i> Archivados',
+            //         titleAttr: 'Archivados requisicion',
+            //         url: "{{ route('contract_manager.requisiciones.index_aprobadores') }}",
+            //         className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+            //         action: function(e, dt, node, config) {
+            //             let {
+            //                 url
+            //             } = config;
+            //             window.location.href = url;
+            //             console.log(url);
+            //         },
+            //    };
                 dtButtons.push(btnAgregar, btnAprobacion);
                 let archivarButton = {
                     @can("katbol_requisiciones_archivar")
@@ -191,8 +205,9 @@
                 },
                 columns: [
                     {
-                        data: 'folio',
-                        name: 'folio'
+                        data: 'id',
+                        name: 'id'
+
                     },
                     {
                         data: 'fecha',

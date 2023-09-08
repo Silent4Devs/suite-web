@@ -33,18 +33,6 @@
                             Contacto
                         </th>
                         <th style="vertical-align: top">
-                            Facturación
-                        </th>
-                        <th style="vertical-align: top">
-                            Envio
-                        </th>
-                        <th style="vertical-align: top">
-                            Dirección
-                        </th>
-                        <th style="vertical-align: top">
-                            Credito
-                        </th>
-                        <th style="vertical-align: top">
                             Fecha Inicio
                         </th>
                         <th style="vertical-align: top">
@@ -145,7 +133,7 @@
                 dtButtons.push(btnAgregar);
                 let archivarButton = {
                     text: 'Archivar Registro',
-                    url: "{{ route('contract_manager.proveedores.archivar', ['id' => $ids]) }}",
+                    url: "{{ route('contract_manager.proveedores.archivar', ['id' => 1]) }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -208,22 +196,6 @@
                     {
                         data: 'contacto',
                         name: 'contacto'
-                    },
-                    {
-                        data: 'facturacion',
-                        name: 'facturacion'
-                    },
-                    {
-                        data: 'envio',
-                        name: 'envio'
-                    },
-                    {
-                        data: 'direccion',
-                        name: 'direccion'
-                    },
-                    {
-                        data: 'credito',
-                        name: 'credito'
                     },
                     {
                         data: 'fecha_inicio',
