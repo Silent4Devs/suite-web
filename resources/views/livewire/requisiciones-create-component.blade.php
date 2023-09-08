@@ -1,5 +1,5 @@
 <div class="create-requisicion">
-    <div class="card card-content caja-blue">
+    <div class="card card-body caja-blue">
 
         <div>
             <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 100px; right: 430px;">
@@ -33,7 +33,7 @@
         <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab" >
             <div id="home" class="tab-content" >
                 <form method="POST" wire:submit.prevent="servicioStore(Object.fromEntries(new FormData($event.target)))" enctype="multipart/form-data">
-                    <div class="card card-content">
+                    <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
                         <hr style="margin: 30px 0px;">
 
@@ -122,7 +122,7 @@
                     </div>
 
                     <div class="caja-card-product caja-cards-inner" >
-                        <div id="product-serv-1" class="card card-content card-inner card-product" data-count="1">
+                        <div id="product-serv-1" class="card card-body card-inner card-product" data-count="1">
                             <div class="col s12">
                                 <div class="flex" style="justify-content: space-between">
                                     <h3 class="sub-titulo-form">Captura del producto o servicio</h3>
@@ -180,7 +180,7 @@
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div id="profile" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
                 <form id="form-proveedores" wire:submit.prevent="proveedoresStore(Object.fromEntries(new FormData($event.target)))" action="POST" enctype="multipart/form-data">
-                    <div class="card card-content">
+                    <div class="card card-body">
                         <h3 class="titulo-form">Solicitud de requisición</h3>
                         <hr style="margin: 20px 0px;">
                         <p>
@@ -192,7 +192,7 @@
                     </div>
                     <div class="caja-card-proveedor caja-cards-inner">
                         @for($i = 0; $i <= $proveedores_count; $i++)
-                            <div id="proveedor-card-{{$i}}" class="card card-content card-inner card-proveedor" data-count="{{$i}}">
+                            <div id="proveedor-card-{{$i}}" class="card card-body card-inner card-proveedor" data-count="{{$i}}">
                                 <div class="row">
                                     <div class="col s12 ">
                                         <div class="flex" style="justify-content: space-between">
@@ -617,7 +617,7 @@
                 </div>
                 <form method="POST" wire:submit.prevent="Firmar(Object.fromEntries(new FormData($event.target)))"
                     enctype="multipart/form-data">
-                    <div class="card card-content">
+                    <div class="card card-body">
                         <div class="">
                             <h5><strong>Firma*</strong></h5>
                             <p>
