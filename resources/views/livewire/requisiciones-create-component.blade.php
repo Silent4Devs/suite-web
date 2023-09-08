@@ -169,7 +169,7 @@
                             AGREGAR SERVICIOS Y PRODUCTOS</div>
                     </div>
 
-                    <div style="position: relative; top: -2rem; left: 70rem;">
+                    <div style="position: relative; top: -2rem; left: 55rem;">
                         <button class="btn btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
