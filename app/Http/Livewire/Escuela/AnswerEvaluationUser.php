@@ -55,7 +55,7 @@ class AnswerEvaluationUser extends Component
     {
         //Return a random question from the section selected by the user for quiz.
         // disabled because having issues with shuffle, it works but in a wierd way.
-
+        // dd("aqui");
 
         $this->answeredQuestions = UserAnswer::where('evaluation_id', $this->evaluation->id)->where('user_id', auth()->id())->pluck('question_id')->toArray();
 
@@ -126,7 +126,7 @@ class AnswerEvaluationUser extends Component
         $this->questionsTaken = UserAnswer::Questions($this->evaluation->id)->get();
         $choicesCorrect = Answer::where('question_id', $this->currentQuestion->id)->where('is_correct', true)->pluck('id')->toArray();
 
-        $isChoiceCorrect = !in_array($this->answer, $choicesCorrect);
+        $isChoiceCorrect = in_array($this->answer, $choicesCorrect);
         // Insert the current question_id, answer_id and whether it is correnct or wrong to quiz table.
         UserAnswer::create([
             'user_id' => auth()->id(),

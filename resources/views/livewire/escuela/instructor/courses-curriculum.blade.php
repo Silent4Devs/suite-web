@@ -32,7 +32,6 @@
             </div>
         </article> --}}
     </div>
-
     @forelse($course->sections as $item)
         <div class="card shadow-none" x-data="{open: {{ ($loop->first ? 'true' : 'false') }} }">
             @if ($section->id == $item->id)
@@ -46,7 +45,7 @@
                         @enderror
                     </form>
                 </header> --}}
-                <div class="card-header" style="background: #306BA9; color: #FFFFFF">
+                <div class="card-header" style="background: #306BA9; color: #FFFFFF;">
                     <div class="row ">
                         <div class="col-10">
                             <form class="flex-1" wire:submit.prevent="update">
@@ -60,14 +59,14 @@
                 </div>
             @else
                 {{-- show section --}}
-                <div class="card-header" style="background: #306BA9; color: #FFFFFF">
+                <div class="card-header" style="background: #306BA9; color: #FFFFFF; border-top-left-radius: 10px; border-top-right-radius: 10px;">
                     <div class="row ">
                         <div class="col-10">
                             <h3>{{ $item->name }}</h3>
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 d-flex justify-content-end">
                                 <div wire:click="edit({{ $item }})" class="d-inline">
-                                    <i style="font-size:10pt" class= "fas fa-edit"></i>
+                                    <i style="font-size:10pt" class= "fas fa-edit mr-3"></i>
                                 </div>
                                 <div wire:click="destroy({{ $item }})" class="d-inline">
                                     <i style="font-size:10pt;" class="m-1 fa-regular fa-trash-can"></i>
@@ -77,7 +76,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-
                     @livewire('escuela.instructor.courses-lesson', ['section' => $item], key($item->id))
                 </div>
             @endif

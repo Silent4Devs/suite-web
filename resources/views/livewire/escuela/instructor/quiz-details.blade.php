@@ -1,58 +1,50 @@
 <div>
     @if ($evaluationUser)
         <div class="card mt-4">
-            <div class="px-4 py-5 sm:px-6">
+            <div class="px-4 py-2">
                 <h5 class="text-sm font-medium leading-6 text-gray-900">
                     Información de la evaluación
                 </h1>
-                <p class="max-w-2xl mt-1 text-sm text-gray-700">
-
-                    <!-- \Carbon\Carbon::isDayOff($userQuizDetails->updated_at) -->
+                <p class="mt-1">
                     Realizaste esta evaluación el <span
-                        class="px-2 bg-success rounded-lg">{{ $evaluationUser ? $evaluationUser->created_at->format('d-m-Y') : 'Evaluación no realizada' }}
+                        class="px-2 bg-success text-white rounded">{{ $evaluationUser ? $evaluationUser->created_at->format('d-m-Y') : 'Evaluación no realizada' }}
                     </span>
                 </p>
             </div>
-            <div class="border-t border-gray-300">
+            <div class="border-top">
                 <div>
-                    {{-- @foreach ($userQuizDetails as $userQuizDetail) --}}
-                    <div class="px-4 py-3 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <div class="text-sm font-medium text-gray-700">
+                    <div class="px-4 py-3 row">
+                        <div class="col-3">
                             Lección evaluada
                         </div>
-                        <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        <div class="mt-1 col-3">
                             {{ $evaluation->section->name }}
 
                         </div>
                     </div>
-                    {{-- @endforeach --}}
-                    <div class="px-4 py-2 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <div class="text-sm font-medium text-gray-700">
+                    <div class="px-4 py-2 row">
+                        <div class="col-3">
                             Estatus
                         </div>
-                        <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        <div class="col-3">
                             <span
-                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-green-600 rounded-full">Terminado</span>
+                                class="bg-success text-white rounded px-2">Terminado</span>
 
                         </div>
                     </div>
-                    <div class="px-4 py-2 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <div class="text-sm font-medium text-gray-700">
+                    <div class="px-4 py-2 row">
+                        <div class="col-3">
                             Total de preguntas
                         </div>
-                        <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        <div class="col-3">
                             {{ $totalQuizQuestions }}
                         </div>
                     </div>
-                    <div class="px-4 py-2 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <div class="text-sm font-medium text-gray-700">
+                    <div class="px-4 py-2 row">
+                        <div class="col-3">
                             Porcentaje
                         </div>
-
-                        {{-- <div class="px-1 mt-1 text-sm text-gray-900 bg-red-300 rounded-lg sm:mt-0 sm:col-span-2">
-                    tiempo
-                </div> --}}
-                        <div class="mt-1 text-sm text-gray-900 bg-green-300 rounded-lg sm:mt-0 sm:col-span-2">
+                        <div class="col-9 bg-success text-white rounded">
                             {{ round($percentageEvaluationUser) }} %
                         </div>
                     </div>
@@ -90,7 +82,7 @@
                         <div x-data={show:false} class="block text-xs">
                             <div class="p-1" id="headingOne">
                                 <button @click="show=!show"
-                                    class="text-xs text-blue-500 underline hover:text-blue-700 focus:outline-none "
+                                    class="btn btn-link"
                                     type="button">
                                     Más detalle
                                 </button>
@@ -114,16 +106,17 @@
                                     @if ($answer->id == $userAnswer['answer_id'])
                                         @if ($userAnswer['is_correct'])
                                             <div
-                                                class="px-2 mt-1 text-sm font-extrabold text-white bg-green-500 rounded-lg max-w-auto ">
+                                                class="px-2 mt-1 bg-success text-white rounded">
                                                 <span class="mr-2 font-extrabold">{{ $alphabet[$key] }}</span>
                                                 {{ $answer->answer }}
 
                                             </div>
                                         @else
                                             <div
-                                                class="px-2 mt-1 text-sm font-extrabold text-white bg-green-500 rounded-lg max-w-auto ">
+                                                class="px-2 mt-1 ">
                                                 <span class="mr-2 font-extrabold">{{ $alphabet[$key] }}</span>
-                                                {{ $correctAnswer->answer }} <span class="p-1 font-extrabold">(Correct
+                                                {{ $correctAnswer->answer }}
+                                                <span class="p-1 font-extrabold">(Correct
                                                     Answer)</span>
                                             </div>
 
@@ -154,8 +147,7 @@
     @if ($user->id == null)
         <div class="flex items-center justify-end mt-4">
             <a type="submit"
-                class="inline-flex items-center px-4 py-2 m-4 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25"
-                href="{{ route('courses.status.evaluation', ['course' => $course, 'evaluation' => $evaluation]) }}">
+                class="btn btn-primary mb-4" href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}">
                 {{ __('Regresar') }}
             </a>
         </div>

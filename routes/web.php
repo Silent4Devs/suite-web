@@ -1376,6 +1376,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('courses/{course}', 'CursoEstudiante@show')->name('courses.show');
     Route::post('course/{course}/enrolled', 'CursoEstudiante@enrolled')->name('courses.enrolled');
     Route::get('courses/{course}/quizdetail', 'Escuela\Instructor\CourseController@quizDetails')->name('courses-quizdetails');
+    Route::get('courses/{course}/evaluation/{evaluation}/quiz-details', 'Escuela\QuizDetailsController@show')->name('courses.evaluation.quizdetails');
+
+
     // Route::get('courses/{course}/curriculum', '\App\Http\Livewire\Escuela\Instructor\CoursesCurriculum'  )->name('courses.curriculum');
     // Route::get('courses/{course}/curriculum', 'Escuela\Instructor\CourseCurriculumController@show')->name('courses.curriculum');
     // Route::get('courses/{course}/goals', 'Escuela\Instructor\CourseController@goals')->name('courses.goals');

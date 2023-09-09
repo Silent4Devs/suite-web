@@ -7,7 +7,7 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <table class="table table-bordered w-100 datatable datatable-Role">
+        <table class="table table-bordered w-100 datatable datatable-Role" id="tblLevels">
             <thead>
                 <tr>
                     <th style="background-color: #345183;">ID</th>
@@ -41,33 +41,10 @@
 @section('scripts')
     @parent
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let table = null;
-
-            function initDataTable() {
-                table = $('.datatable-Role').DataTable({
-                    "paging": true,
-                    "ordering": true,
-                    "info": true,
-                    "searching": true, // Habilita la búsqueda global
-                    "language": {
-                        "lengthMenu": "Mostrar _MENU_ registros",
-                        "search": "Buscar:",
-                        "paginate": {
-                            "first": "Primero",
-                            "last": "Último",
-                            "next": "Siguiente",
-                            "previous": "Anterior"
-                        },
-                        "info": "Mostrar _START_ a _END_ de _TOTAL_ registros",
-                    },
-                    "lengthMenu": [[5, 10, 20, 50, 100, -1], [5, 10, 20, 50, 100, "Todos"]],
-                    "pageLength": 5, // Por defecto, mostrará 10 registros por página
-                });
-            }
-
-            // Inicializa la tabla DataTable al cargar la página
-            initDataTable();
+        $(document).ready(function() {
+            let tblLevels = $("#tblLevels").DataTable({
+                buttons: [],
+            });
         });
     </script>
 @endsection

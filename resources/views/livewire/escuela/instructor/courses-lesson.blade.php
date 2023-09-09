@@ -16,7 +16,7 @@
                             id="abir{{ $item->id }}"></i>
                     </a> --}}
                     <a wire:click="destroy({{ $item }})" style="cursor: pointer">
-                        <i style="font-size:10pt; color:red;" class="m-1 fa-regular fa-trash-can" title="Eliminar"></i>
+                        <i style="font-size:10pt;" class="m-1 fa-regular fa-trash-can" title="Eliminar"></i>
                     </a>
                 </div>
             </div>

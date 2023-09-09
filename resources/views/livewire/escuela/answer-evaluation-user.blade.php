@@ -47,11 +47,10 @@
                         <p class="mt-10 text-md"> <span class="mr-2 font-extrabold text-blue-600">
                                 {{ auth()->user()->name . '!' }} </span> <a
                                 class="px-2 mx-2 underline bg-green-300 rounded-lg hover:green-400"
-                                href="{{ route('admin.courses.quizdetails', [
-                                    'course' => $course->id,
-                                    'evaluation' => $evaluation->id,
-                                ]) }}">Detalles
-                                de tu evaluación</a></p>
+                                href="{{ route('admin.courses.evaluation.quizdetails', [
+                                    'course' => $course,
+                                    'evaluation' => $evaluation,
+                                ])}}">Detalles de tu evaluación</a></p>
                         <progress class="mx-auto text-base leading-relaxed xl:w-2/4 lg:w-3/4"
                             id="quiz-{{ $userEvaluationId }}" value="{{ round($percentage) }}" max="100">
                             {{ round($percentage) }} </progress> <span> {{ round($percentage) }}% </span>
