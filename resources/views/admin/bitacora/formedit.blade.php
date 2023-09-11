@@ -685,23 +685,33 @@
                 <td>
                     <div class="inline input-field linea">
                         <div class="switch" style="margin-top: -5px; margin-left: 8px;">
-                            <label>
-                                @if (isset($contratos))
-                                    @if ($contrato->documento)
-                                        <input id="check_fianza" type="checkbox" name="aplicaFinaza" checked
-                                            {{ $show_contrato ? 'disabled' : '' }}>
-                                    @else
-                                        <input id="check_fianza" type="checkbox" name="aplicaFinaza"
-                                            {{ $show_contrato ? 'disabled' : '' }}>
-                                    @endif
+                            @if (isset($contratos))
+                                @if ($contrato->documento)
+                                    <div class="custom-control custom-switch form">
+                                        <input type="checkbox" class="custom-control-input" id="check_fianza"
+                                            name="aplicaFinaza" {{ $show_contrato ? 'disabled' : '' }} checked>
+                                        <label class="custom-control-label" for="check_fianza">No/Sí</label>
+                                    </div>
+                                    {{-- <input id="check_fianza" type="checkbox" name="aplicaFinaza" checked
+                                            {{ $show_contrato ? 'disabled' : '' }}> --}}
                                 @else
-                                    <input id="check_fianza" type="checkbox" name="aplicaFinaza"
-                                        {{ $show_contrato ? 'disabled' : '' }}>
+                                    <div class="custom-control custom-switch form">
+                                        <input type="checkbox" class="custom-control-input" id="check_fianza"
+                                            name="aplicaFinaza" {{ $show_contrato ? 'disabled' : '' }}>
+                                        <label class="custom-control-label" for="check_fianza">No/Sí</label>
+                                    </div>
+                                    {{-- <input id="check_fianza" type="checkbox" name="aplicaFinaza"
+                                            {{ $show_contrato ? 'disabled' : '' }}> --}}
                                 @endif
-
-                                <span class="lever"></span>
-                                Si
-                            </label>
+                            @else
+                                <div class="custom-control custom-switch form">
+                                    <input type="checkbox" class="custom-control-input" id="check_fianza"
+                                        name="aplicaFinaza" {{ $show_contrato ? 'disabled' : '' }}>
+                                    <label class="custom-control-label" for="check_fianza">No/Sí</label>
+                                </div>
+                                {{-- <input id="check_fianza" type="checkbox" name="aplicaFinaza"
+                                        {{ $show_contrato ? 'disabled' : '' }}> --}}
+                            @endif
                         </div>
                     </div>
                 </td>

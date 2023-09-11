@@ -62,17 +62,22 @@
             </div>
         </div>
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
-            <div class="distancia form-group col-md-4">
+            <div class="distancia form-group col-md-4" wire:ignore>
                 <label for="" class="txt-tamaño">
-                    Cumple<font class="asterisco">
-                        *</font></label>
-                <div class="switch">
+                    Cumple<font class="asterisco">*</font>
+                </label>
+                {{-- <div class="switch">
                     <label class="grey-text letra-ngt">
                         Si
                         <input type="checkbox" name="cumplimiento" class="cumplimiento form-control"
                             wire:model.debounce.800ms="cumplimiento" required>
                         <span class="lever"></span>
                     </label>
+                </div> --}}
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" wire:model="cumplimiento" class="custom-control-input" id="cumplimiento"
+                        name="cumplimiento">
+                    <label class="custom-control-label" for="cumplimiento">No/Sí</label>
                 </div>
             </div>
             <div class="distancia form-group col-md-4">
@@ -147,13 +152,18 @@
                 <div class="distancia form-group col-md-12" wire:ignore>
                     <label for="" class="txt-tamaño">¿Aplica
                         deductiva/penalización?<font class="asterisco">*</font></label>
-                    Si
+                    {{-- Si
                     <div class="switch">
                         <label class="grey-text letra-ngt">
                             <input type="checkbox" class="aplica_deductiva form-control"
                                 wire:model="aplica_deductiva" @change="show = !show">
                             <span class="lever"></span>
                         </label>
+                    </div> --}}
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" wire:model="aplica_deductiva" class="custom-control-input"
+                            id="aplica_deductiva" name="aplica_deductiva" @change="show = !show">
+                        <label class="custom-control-label" for="aplica_deductiva">No/Sí</label>
                     </div>
                 </div>
                 <div class="distancia form-group col-md-12" x-show="show">

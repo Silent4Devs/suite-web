@@ -113,6 +113,9 @@
         @endif
     @endif
 
+    <div class="col-6 p-0" style="display: flex;justify-content: end">
+        {{ $convenio->links('livewire::simple-tailwind') }}
+    </div>
 </div>
 <div class="row">
     {{-- <div class="col-6 p-0">
@@ -122,9 +125,6 @@
             @endif
         </strong>
     </div> --}}
-    <div class="col-6 p-0" style="display: flex;justify-content: end">
-        {{ $convenio->links() }}
-    </div>
 </div>
 <script>
     $(document).ready(function() {

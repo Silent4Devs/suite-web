@@ -621,9 +621,9 @@
                         Si
                     </div> --}}
                     <div class="custom-control custom-switch form">
-                        <input type="checkbox" class="custom-control-input" id="check_aplica_fianza" name="aplicaFinaza">
+                        <input type="checkbox" class="custom-control-input" id="check_aplica_fianza"
+                            name="aplicaFinaza">
                         <label class="custom-control-label" for="check_aplica_fianza">No/Sí</label>
-
                     </div>
                 </div>
                 <style type="text/css">

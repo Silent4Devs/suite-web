@@ -235,7 +235,7 @@
             </div>
         @endif
     @endif
-    {{ $facturas->links() }}
+    {{ $facturas->links('livewire::simple-tailwind') }}
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {

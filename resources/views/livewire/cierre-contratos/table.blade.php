@@ -135,7 +135,7 @@
     @endif
 
     <div class="col-12 d-flex justify-content-end">
-        {{ $cierrecontratos->links() }}
+        {{ $cierrecontratos->links('livewire::simple-tailwind') }}
     </div>
 
 </div>
