@@ -1,0 +1,10 @@
+<svg id="Componente_99_1" data-name="Componente 99 – 1" xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 70 70">
+  <g id="Rectángulo_679" data-name="Rectángulo 679" fill="none" stroke="#2395aa" stroke-width="4">
+    <rect width="70" height="70" rx="6" stroke="none"/>
+    <rect x="2" y="2" width="66" height="66" rx="4" fill="none"/>
+  </g>
+  <g id="assignment_ind_black_24dp" transform="translate(7 7)">
+    <path id="Trazado_1326" data-name="Trazado 1326" d="M0,0H55.32V55.32H0Z" fill="none"/>
+    <path id="Trazado_1327" data-name="Trazado 1327" d="M39.6,5.589H30.039a6.829,6.829,0,0,0-12.9,0H7.575A4.6,4.6,0,0,0,3,10.178V42.3a4.6,4.6,0,0,0,4.575,4.589H39.6A4.6,4.6,0,0,0,44.176,42.3V10.178A4.6,4.6,0,0,0,39.6,5.589ZM23.588,5.015A1.757,1.757,0,0,1,25.3,6.736,1.716,1.716,0,1,1,22.33,5.589,1.711,1.711,0,0,1,23.588,5.015ZM39.6,42.3H7.575V10.178H39.6ZM23.588,12.473a6.884,6.884,0,1,0,6.863,6.884A6.893,6.893,0,0,0,23.588,12.473Zm0,9.178a2.295,2.295,0,1,1,2.288-2.295A2.3,2.3,0,0,1,23.588,21.651ZM9.863,36.5v3.511H37.313V36.5c0-5.736-9.082-8.214-13.725-8.214S9.863,30.737,9.863,36.5Zm5.284-1.078c1.578-1.285,5.444-2.57,8.441-2.57s6.886,1.285,8.441,2.57Z" transform="translate(4.072 1.357)" fill="#2395aa"/>
+  </g>
+</svg>

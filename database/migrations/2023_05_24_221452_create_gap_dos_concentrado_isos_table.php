@@ -14,7 +14,8 @@ class CreateGapDosConcentradoIsosTable extends Migration
     public function up()
     {
         Schema::create(
-            'gap_dos_concentrado_isos', function (Blueprint $table) {
+            'gap_dos_concentrado_isos',
+            function (Blueprint $table) {
                 $table->id();
                 $table->string('valoracion')->nullable();
                 $table->longText('evidencia')->nullable();

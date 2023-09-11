@@ -916,6 +916,7 @@ class DeskController extends Controller
         abort_if(Gate::denies('centro_atencion_quejas_clientes_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $quejasClientes = QuejasCliente::with('evidencias_quejas', 'planes', 'cierre_evidencias', 'cliente', 'proyectos')->where('archivado', false)->get();
+
         // dd($quejasClientes);
         return datatables()->of($quejasClientes)->toJson();
     }
@@ -1265,6 +1266,7 @@ class DeskController extends Controller
         if ($request->ajax()) {
             return response()->json(['estatus' => 200]);
         }
+
         // return redirect()->route('admin.desk.quejas-edit', $id_quejas)->with('success', 'Reporte actualizado');
         return redirect()->route('admin.desk.index')->with('success', 'Reporte actualizado');
     }

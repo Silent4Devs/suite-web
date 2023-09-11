@@ -20,19 +20,19 @@ class UpdatePlanBaseActividadeRequest extends FormRequest
                 'required',
             ],
             'fecha_inicio' => [
-                'date_format:'.config('panel.date_format'),
+                'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
             'fecha_fin' => [
-                'date_format:'.config('panel.date_format'),
+                'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
             'compromiso' => [
-                'date_format:'.config('panel.date_format'),
+                'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
             'real' => [
-                'date_format:'.config('panel.date_format'),
+                'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
         ];

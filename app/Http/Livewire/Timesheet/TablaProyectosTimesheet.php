@@ -9,7 +9,6 @@ use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
-use Illuminate\Support\Facades\DB;
 
 class TablaProyectosTimesheet extends Component
 {

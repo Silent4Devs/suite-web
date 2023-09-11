@@ -2,15 +2,16 @@
 
 namespace App\Http\Livewire\Timesheet;
 
+use App\Exports\ReporteColaboradorTarea;
 use App\Models\Area;
 use App\Models\Empleado;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Exports\ReporteColaboradorTarea;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportesProyemp extends Component
@@ -116,7 +117,6 @@ class ReportesProyemp extends Component
         // $emp_area = Empleado::select('area_id')->find($this->emp_id);
         // $areas_emp = TimesheetProyectoArea::where('area_id', '=', $emp_area->area_id)->get();
         // $areas = Area::
-
     }
 
     public function updatedProyectoId($value)
@@ -153,142 +153,169 @@ class ReportesProyemp extends Component
                 }
             });
 
-
-
         $this->totalRegistrosMostrando = $query->count();
-        $times = $query->paginate($this->perPage);
+        $times = $query->fastPaginate($this->perPage);
 
         // $this->totalRegistrosMostrando = $proyemp->count();
 
         //Funcion para pintar contadores en los filtros de estatus
-        $this->establecerContadores();
+        // $this->establecerContadores();
 
         $this->emit('scriptTabla');
 
         return view('livewire.timesheet.reportes-proyemp', compact('times'));
     }
 
-    public function establecerContadores()
-    {
-        //Contador Todos los registros timesheet
-        $this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
-            if ($this->area_id == 0) {
-                return $query;
-            } else {
-                $query->where('area_id', $this->area_id);
-            }
-        })
-            ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->count();
+    // public function establecerContadores()
+    // {
+    //     //Contador Todos los registros timesheet
+    //     $this->todos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+    //         if ($this->area_id == 0) {
+    //             return $query;
+    //         } else {
+    //             $query->where('area_id', $this->area_id);
+    //         }
+    //     })
+    //         ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->count();
 
-        //Contador Todos los registros timesheet en borrador
-        $this->borrador_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
-            if ($this->area_id == 0) {
-                return $query;
-            } else {
-                $query->where('area_id', $this->area_id);
-            }
-        })
-            ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->count();
+    //     //Contador Todos los registros timesheet en borrador
+    //     $this->borrador_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+    //         if ($this->area_id == 0) {
+    //             return $query;
+    //         } else {
+    //             $query->where('area_id', $this->area_id);
+    //         }
+    //     })
+    //         ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->count();
 
-        //Contador Todos los registros timesheet en penduente
-        $this->pendientes_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
-            if ($this->area_id == 0) {
-                return $query;
-            } else {
-                $query->where('area_id', $this->area_id);
-            }
-        })
-            ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ?
-                $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->count();
+    //     //Contador Todos los registros timesheet en penduente
+    //     $this->pendientes_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+    //         if ($this->area_id == 0) {
+    //             return $query;
+    //         } else {
+    //             $query->where('area_id', $this->area_id);
+    //         }
+    //     })
+    //         ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ?
+    //             $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->count();
 
-        //Contador Todos los registros timesheet aprobados
-        $this->aprobados_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
-            if ($this->area_id == 0) {
-                return $query;
-            } else {
-                $query->where('area_id', $this->area_id);
-            }
-        })
-            ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'aprobado')->count();
+    //     //Contador Todos los registros timesheet aprobados
+    //     $this->aprobados_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+    //         if ($this->area_id == 0) {
+    //             return $query;
+    //         } else {
+    //             $query->where('area_id', $this->area_id);
+    //         }
+    //     })
+    //         ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'aprobado')->count();
 
-        //Contador Todos los registros timesheet rechazados
-        $this->rechazos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
-            if ($this->area_id == 0) {
-                return $query;
-            } else {
-                $query->where('area_id', $this->area_id);
-            }
-        })
-            ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'rechazado')->count();
-    }
+    //     //Contador Todos los registros timesheet rechazados
+    //     $this->rechazos_contador = Timesheet::select('id', 'empleado_id')->whereHas('empleado', function ($query) {
+    //         if ($this->area_id == 0) {
+    //             return $query;
+    //         } else {
+    //             $query->where('area_id', $this->area_id);
+    //         }
+    //     })
+    //         ->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'rechazado')->count();
+    // }
+
+    // public function exportExcel()
+    // {
+    //     $date = Carbon::now();
+    //     $date = $date->format('d-m-Y');
+
+    //     $file_name = 'Reporte Colaborador-Tarea' . $date . '.xlsx';
+    //     // dd($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
+    //     return Excel::download(new ReporteColaboradorTarea($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id, $this->proy_id), $file_name);
+    // }
 
     public function exportExcel()
     {
-        $date = Carbon::now();
-        $date = $date->format('d-m-Y');
+        $response = Http::post(env('GOSERVICES_API') . '/api/timesheet/proyecto', [
+            'emp_id' => $this->emp_id,
+            'fecha_inicio' => $this->fecha_inicio,
+            'fecha_fin' => $this->fecha_fin,
+            'proy_id' => $this->proy_id,
+        ]);
 
-        $file_name = 'Reporte Colaborador-Tarea' . $date . '.xlsx';
-        // dd($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id);
-        return Excel::download(new ReporteColaboradorTarea($this->fecha_inicio, $this->fecha_fin, $this->area_id, $this->emp_id, $this->proy_id), $file_name);
+        if ($response->successful()) {
+            // Get the XLS content from the response
+            $xlsContent = $response->getBody()->getContents();
+
+            $headers = [
+                'Content-Type' => 'application/octet-stream',
+                'Content-Disposition' => 'attachment; filename=timesheet_report.xlsx',
+            ];
+
+            return response()->streamDownload(function () use ($xlsContent) {
+                echo $xlsContent;
+            }, 'timesheet_report.xlsx', $headers);
+        } else {
+            // Handle the error if the request is not successful
+            return response()->json([
+                'message' => 'Failed to retrieve the XLS file from the API',
+            ], $response->status());
+        }
     }
 
-    public function todos()
-    {
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
-        $this->estatus = null;
-    }
+    // public function todos()
+    // {
+    //     // $this->times = Timesheet::whereHas('empleado', function ($query) {
+    //     //     if ($this->area_id == 0) {
+    //     //         return $query;
+    //     //     } else {
+    //     //         $query->where('area_id', $this->area_id);
+    //     //     }
+    //     // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->orderByDesc('fecha_dia')->get();
+    //     $this->estatus = null;
+    // }
 
-    public function papelera()
-    {
-        $this->estatus = 'papelera';
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->orderByDesc('fecha_dia')->get();
-    }
+    // public function papelera()
+    // {
+    //     $this->estatus = 'papelera';
+    //     // $this->times = Timesheet::whereHas('empleado', function ($query) {
+    //     //     if ($this->area_id == 0) {
+    //     //         return $query;
+    //     //     } else {
+    //     //         $query->where('area_id', $this->area_id);
+    //     //     }
+    //     // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'papelera')->orderByDesc('fecha_dia')->get();
+    // }
 
-    public function pendientes()
-    {
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->orderByDesc('fecha_dia')->get();
-        $this->estatus = 'pendiente';
-    }
+    // public function pendientes()
+    // {
+    //     // $this->times = Timesheet::whereHas('empleado', function ($query) {
+    //     //     if ($this->area_id == 0) {
+    //     //         return $query;
+    //     //     } else {
+    //     //         $query->where('area_id', $this->area_id);
+    //     //     }
+    //     // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'pendiente')->orderByDesc('fecha_dia')->get();
+    //     $this->estatus = 'pendiente';
+    // }
 
-    public function aprobados()
-    {
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'aprobado')->orderByDesc('fecha_dia')->get();
-        $this->estatus = 'aprobado';
-    }
+    // public function aprobados()
+    // {
+    //     // $this->times = Timesheet::whereHas('empleado', function ($query) {
+    //     //     if ($this->area_id == 0) {
+    //     //         return $query;
+    //     //     } else {
+    //     //         $query->where('area_id', $this->area_id);
+    //     //     }
+    //     // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'aprobado')->orderByDesc('fecha_dia')->get();
+    //     $this->estatus = 'aprobado';
+    // }
 
-    public function rechazos()
-    {
-        // $this->times = Timesheet::whereHas('empleado', function ($query) {
-        //     if ($this->area_id == 0) {
-        //         return $query;
-        //     } else {
-        //         $query->where('area_id', $this->area_id);
-        //     }
-        // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'rechazado')->orderByDesc('fecha_dia')->get();
-        $this->estatus = 'rechazado';
-    }
+    // public function rechazos()
+    // {
+    //     // $this->times = Timesheet::whereHas('empleado', function ($query) {
+    //     //     if ($this->area_id == 0) {
+    //     //         return $query;
+    //     //     } else {
+    //     //         $query->where('area_id', $this->area_id);
+    //     //     }
+    //     // })->where('fecha_dia', '>=', $this->fecha_inicio ? $this->fecha_inicio : '1900-01-01')->where('fecha_dia', '<=', $this->fecha_fin ? $this->fecha_fin : now()->format('Y-m-d'))->where('estatus', 'rechazado')->orderByDesc('fecha_dia')->get();
+    //     $this->estatus = 'rechazado';
+    // }
 }

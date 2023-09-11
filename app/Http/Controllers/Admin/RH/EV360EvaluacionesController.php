@@ -1308,6 +1308,7 @@ class EV360EvaluacionesController extends Controller
             'Sobresaliente' => $sobresaliente,
         ]);
         $calificaciones = $calificaciones->first();
+
         // dd($calificaciones);
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.resumen', compact('evaluacion', 'calificaciones', 'rangosResultados'));
     }
@@ -1445,6 +1446,7 @@ class EV360EvaluacionesController extends Controller
         $evaluado = $this->obtenerEquipoACargo($evaluador->children);
         $evaluado = $evaluador->children->first();
         $equipo = true;
+
         // dd($informacion_obtenida);
         return view('admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.mis-evaluaciones', compact('evaluacion', 'evaluador', 'equipo', 'evaluado'));
     }
@@ -1485,7 +1487,6 @@ class EV360EvaluacionesController extends Controller
 
     public function objetivostemporal()
     {
-
         $reacLA = EvaluadoEvaluador::where('evaluacion_id', '=', '24')->where('evaluado_id', '=', '140')->where('evaluador_id', '=', '132')
             ->where('tipo', '=', '1')->first();
         $reacLA->update([

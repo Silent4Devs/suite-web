@@ -47,6 +47,7 @@ class TareasComponent extends Component
     public function unreadTasks()
     {
         $this->view = 'no-leidas';
+
         //$this->getUnreadTasks();
         return response()->noContent();
     }
@@ -54,6 +55,7 @@ class TareasComponent extends Component
     public function tasksReaded()
     {
         $this->view = 'leidas';
+
         //$this->getReadedTasks();
         return response()->noContent();
     }

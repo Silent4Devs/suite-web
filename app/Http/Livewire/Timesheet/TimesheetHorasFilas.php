@@ -6,8 +6,8 @@ use App\Models\Empleado;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
-use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetProyectoArea;
+use App\Models\TimesheetProyectoEmpleado;
 use Livewire\Component;
 
 class TimesheetHorasFilas extends Component
@@ -48,20 +48,20 @@ class TimesheetHorasFilas extends Component
         $proyectos_array = collect();
         $proyectos_array = $comodines;
         // dd($proyectos_array);
-        if(!$proyectos->isEmpty()){
+        if (!$proyectos->isEmpty()) {
             foreach ($proyectos as $key => $proyecto) {
                 $proyectos_array->push(
                     $proyecto->proyecto
                 );
             }
             // dd('dentro del if', $proyectos_array);
-        }else{
+        } else {
             $proyectos_area = TimesheetProyectoArea::with('proyecto')->where('area_id', $empleado->area_id)->get();
             //Traer todos los proyectos que ya han sido asignados en el area
             $proyectos_filtro = TimesheetProyectoEmpleado::where('area_id', $empleado->area_id)->get();
             //foreach borramos los proyectos del area que ya han sido asignados
             //$proyectos_array = $proyectos_array->whereNotIn('id', $fpe->proyecto_id);
-            foreach($proyectos_area as $pa){
+            foreach ($proyectos_area as $pa) {
                 // dd($pa->proyectosAsignados);
                 $proyectos_array->push(
                     $pa->proyecto

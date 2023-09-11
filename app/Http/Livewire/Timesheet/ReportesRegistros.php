@@ -88,7 +88,6 @@ class ReportesRegistros extends Component
             $this->area_id = $value;
         }
 
-
         // $this->times = Timesheet::whereHas('empleado', function ($query) {
         //     if ($this->area_id == 0) {
         //         return $query;

@@ -89,6 +89,7 @@ class EmpleadoController extends Controller
     public function getExperiencia($empleado)
     {
         $experiencias = ExperienciaEmpleados::where('empleado_id', intval($empleado))->orderByDesc('inicio_mes')->get();
+
         // dd($experiencias);
         return datatables()->of($experiencias)->toJson();
     }
@@ -1299,6 +1300,7 @@ class EmpleadoController extends Controller
             $nombre = $request->nombre;
             if ($nombre != null) {
                 $usuarios = Empleado::alta()->with('area')->where('name', 'ILIKE', '%' . $nombre . '%')->take(5)->get();
+
                 // dd(compact('usuarios'));
                 return compact('usuarios');
             }

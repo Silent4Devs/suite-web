@@ -78,6 +78,7 @@ class PlanBaseActividadesController extends Controller
             });
 
             $table->rawColumns(['actions', 'placeholder', 'actividad_padre', 'ejecutar', 'guia', 'estatus', 'responsable', 'colaborador']);
+
             //$table->rawColumns(['actions', 'placeholder']);
             return $table->make(true);
         }

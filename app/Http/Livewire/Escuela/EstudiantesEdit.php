@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Livewire;
+use App\Models\User;
+use App\Models\Course;
+use Livewire\Component;
+use App\Models\UsuariosCursos;
+use RealRashid\SweetAlert\Facades\Alert;
+
+class EstudiantesEdit extends Component
+{
+
+    public $student;
+
+    public function mount($student){
+        $this->student=$student;
+    }
+
+    public function destroy($id){
+
+        UsuariosCursos::destroy($id);
+        Alert::toast('El rol fue eliminado exitosamente', 'success');
+        $this->emit('UserStore');
+    }
+
+    public function render()
+    {
+
+        return view('livewire.estudiantes-edit');
+    }
+}

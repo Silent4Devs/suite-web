@@ -20,6 +20,7 @@ class NuevoProyectoJob implements ShouldQueue
     public $empleado;
     public $email;
     public $id;
+
     /**
      * Create a new job instance.
      *
