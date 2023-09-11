@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-{{-- {{ Breadcrumbs::render('contratos_create') }} --}}
+    {{-- {{ Breadcrumbs::render('contratos_create') }} --}}
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}"> --}}
 
     <style>
@@ -10,7 +10,6 @@
             margin-left: 5px;
 
         }
-
     </style>
     <div class="row">
         <div class="col s12 m12">
@@ -46,8 +45,8 @@
                                     <form id="ampliacion_form"
                                         action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}"
                                         method="POST">
-                                        @method("PATCH")
-                                        <p >
+                                        @method('PATCH')
+                                        <p>
                                             <label>
                                                 <input type="checkbox" class="checkbox"
                                                     {{ $contratos->contrato_ampliado ? 'checked' : '' }} />
@@ -60,7 +59,7 @@
                                     <form id="convenio_form"
                                         action="{{ route('contract_manager.contratos-katbol.convenios', ['id' => $contratos->id]) }}"
                                         method="POST">
-                                        @method("PATCH")
+                                        @method('PATCH')
                                         <p>
                                             <label>
                                                 <input type="checkbox" class="checkbox_convenio"
@@ -100,7 +99,8 @@
                                                 <tbody>
                                                     <tr class="black-text">
                                                         <td>
-                                                            <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
+                                                            <a href="#" data-type="text"
+                                                                data-pk="{{ $contratos->id }}"
                                                                 data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
                                                                 data-title="Número de contrato"
                                                                 data-value="{{ $contratos->no_pagos }}" class="no_pagos"
@@ -108,7 +108,8 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
+                                                            <a href="#" data-type="text"
+                                                                data-pk="{{ $contratos->id }}"
                                                                 data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
                                                                 data-title="Tipo de contrato"
                                                                 data-value="{{ $contratos->tipo_contrato }}"
@@ -116,7 +117,8 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
+                                                            <a href="#" data-type="text"
+                                                                data-pk="{{ $contratos->id }}"
                                                                 data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
                                                                 data-title="Nombre de servicio"
                                                                 data-value="{{ $contratos->nombre_servicio }}"
@@ -132,8 +134,7 @@
                             </div>
                             <div class="card-content">
 
-                                @livewire('factura.factura-component', ['contrato_id' => $contratos->id,
-                                "show_contrato"=>false, 'contrato_total'=>$contratos->monto_pago])
+                                @livewire('factura.factura-component', ['contrato_id' => $contratos->id, 'show_contrato' => false, 'contrato_total' => $contratos->monto_pago])
 
                             </div>
                         </div>
@@ -150,8 +151,7 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id,
-                                "show_contrato"=>false])
+                                @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
 
                             </div>
                         </div>
@@ -168,8 +168,7 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id,
-                                "show_contrato"=>false])
+                                @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
 
                             </div>
                         </div>
@@ -186,8 +185,7 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id,
-                                "show_contrato"=>false])
+                                @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
 
                             </div>
                         </div>
@@ -205,9 +203,9 @@
                             <div class="card-content">
 
                                 @livewire('ampliacion-contratos.ampliacion-component', [
-                                'contrato_id' => $contratos->id,
-                                "show_contrato"=>false,
-                                'fecha_fin_contrato'=>$contratos->fecha_fin
+                                    'contrato_id' => $contratos->id,
+                                    'show_contrato' => false,
+                                    'fecha_fin_contrato' => $contratos->fecha_fin,
                                 ])
 
                             </div>
@@ -216,7 +214,7 @@
                 </div>
             </div>
         </li>
-        <li id="convenio_contrato_lista" >
+        <li id="convenio_contrato_lista">
             <div class="collapsible-header"><i class="fas fa-handshake"></i>Convenios Modificatorios
             </div>
             <div class="collapsible-body">
@@ -226,8 +224,8 @@
                             <div class="card-content">
 
                                 @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', [
-                                'contrato_id' => $contratos->id,
-                                "show_contrato"=>false,
+                                    'contrato_id' => $contratos->id,
+                                    'show_contrato' => false,
                                 ])
 
                             </div>
@@ -245,9 +243,7 @@
                         <div class="card">
                             <div class="card-content">
 
-                                @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' =>
-                                $contratos->id,
-                                'show_contrato'=>false])
+                                @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
                             </div>
                         </div>
                     </div>
@@ -255,118 +251,121 @@
             </div>
         </li>
     </ul>
-
-    <div class="row">
-
-        <div class="col s12 right-align">
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn-redondeado btn btn-primary">Salir sin llenar</a>
+    <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+        <div class="col s12 m12 right-align btn-grd distancia">
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn-success">Salir sin llenar</a>
         </div>
 
     </div>
 @endsection
 
 @section('scripts')
+    <script>
+        @section('x-editable')
+            $(document).ready(function() {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
 
-<script>
-    @section('x-editable')
-        $(document).ready(function () {
-        $.ajaxSetup({
-        headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-        });
+                //categories table
+                $(".no_pagos").editable({
+                    dataType: 'json',
+                    success: function(response, newValue) {
+                        console.log('Actualizado, response')
+                    }
+                });
+                $(".tipo_contrato").editable({
+                    dataType: 'json',
+                    success: function(response, newValue) {
+                        console.log('Actualizado, response')
+                    }
+                });
 
-        //categories table
-        $(".no_pagos").editable({
-        dataType: 'json',
-        success: function (response, newValue) {
-        console.log('Actualizado, response')
-        }
-        });
-        $(".tipo_contrato").editable({
-        dataType: 'json',
-        success: function (response, newValue) {
-        console.log('Actualizado, response')
-        }
-        });
-
-        $(".nombre_servicio").editable({
-        dataType: 'json',
-        success: function (response, newValue) {
-        console.log('Actualizado, response')
-        }
-        });
+                $(".nombre_servicio").editable({
+                    dataType: 'json',
+                    success: function(response, newValue) {
+                        console.log('Actualizado, response')
+                    }
+                });
 
 
-        $(".checkbox").click(function() {
-        let ampliado = 0;
-        let url = $("#ampliacion_form").attr("action");
-        if($(".checkbox").is(':checked')) {
-        ampliado = 1;
-        $.ajax({
-        type: "POST",
-        url: url,
-        data: {ampliado},
-        success: function (response) {
-        if (response.success == 1) {
-        $("#ampliacion_contrato_lista").show();
-        }
-        }
-        });
-        } else {
-        ampliado = 0;
-        $.ajax({
-        type: "POST",
-        url: url,
-        data: {ampliado},
-        success: function (response) {
-        if (response.success == 0) {
-        $("#ampliacion_contrato_lista").hide();
-        }
-        }
-        });
-        }
-        });
+                $(".checkbox").click(function() {
+                    let ampliado = 0;
+                    let url = $("#ampliacion_form").attr("action");
+                    if ($(".checkbox").is(':checked')) {
+                        ampliado = 1;
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: {
+                                ampliado
+                            },
+                            success: function(response) {
+                                if (response.success == 1) {
+                                    $("#ampliacion_contrato_lista").show();
+                                }
+                            }
+                        });
+                    } else {
+                        ampliado = 0;
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: {
+                                ampliado
+                            },
+                            success: function(response) {
+                                if (response.success == 0) {
+                                    $("#ampliacion_contrato_lista").hide();
+                                }
+                            }
+                        });
+                    }
+                });
 
-        $(".checkbox_convenio").click(function() {
-        let convenio = 0;
-        let url = $("#convenio_form").attr("action");
-        if($(".checkbox_convenio").is(':checked')) {
-        convenio = 1;
-        $.ajax({
-        type: "POST",
-        url: url,
-        data: {convenio},
-        success: function (response) {
-        if (response.success == 1) {
-        $("#convenio_contrato_lista").show();
-        }
-        }
-        });
-        } else {
-        convenio = 0;
-        $.ajax({
-        type: "POST",
-        url: url,
-        data: {convenio},
-        success: function (response) {
-        if (response.success == 0) {
-        $("#convenio_contrato_lista").hide();
-        }
-        }
-        });
-        }
-        });
-        });
+                $(".checkbox_convenio").click(function() {
+                    let convenio = 0;
+                    let url = $("#convenio_form").attr("action");
+                    if ($(".checkbox_convenio").is(':checked')) {
+                        convenio = 1;
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: {
+                                convenio
+                            },
+                            success: function(response) {
+                                if (response.success == 1) {
+                                    $("#convenio_contrato_lista").show();
+                                }
+                            }
+                        });
+                    } else {
+                        convenio = 0;
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: {
+                                convenio
+                            },
+                            success: function(response) {
+                                if (response.success == 0) {
+                                    $("#convenio_contrato_lista").hide();
+                                }
+                            }
+                        });
+                    }
+                });
+            });
 
-        function refreshTable() {
-        $('.refresco').fadeOut();
-        $('.refresco').load(url, function () {
-        $('.refresco').fadeIn();
-        });
-        }
-
-    @endsection
-
-</script>
+            function refreshTable() {
+                $('.refresco').fadeOut();
+                $('.refresco').load(url, function() {
+                    $('.refresco').fadeIn();
+                });
+            }
+        @endsection
+    </script>
 @endsection

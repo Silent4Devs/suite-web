@@ -256,7 +256,8 @@
                 auth()->user()->can('capital_humano_acceder') ||
                 auth()->user()->can('analisis_de_riesgo_integral_acceder') ||
                 auth()->user()->can('sistema_de_gestion_acceder') ||
-                auth()->user()->can('matriz_bia_menu_acceder'))
+                auth()->user()->can('matriz_bia_menu_acceder')||
+                auth()->user()->can('mis_cursos_acceder'))
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
             </li>
@@ -451,6 +452,24 @@
                     <i class="bi bi-globe2 iconos_menu letra_blanca"></i>
                     <font class="letra_blanca">Sistema de Gestión</font>
                 </a>
+            </li>
+        @endcan
+        @can('mis_cursos_acceder')
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
+                    <i class="bi bi-folder iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca"> Cursos </font>
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('mis_cursos_instructor')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.courses.index') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
+                            <font class="letra_blanca"> Instructor </font>
+                        </a>
+                    </li>
+                    @endcan
+                </ul>
             </li>
         @endcan
 
@@ -998,6 +1017,29 @@
                                 <font class="letra_blanca">Visualizar Logs</font>
                             </a>
                         </li>
+                    </ul>
+                </li>
+            @endcan
+            @can('esculea_admin_acceder')
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
+                        <i class="bi bi-folder iconos_menu letra_blanca"></i>
+                        <font class="letra_blanca"> Cursos </font>
+                    </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        @can('escuela_admin_dashboar')
+                        <li class="c-sidebar-nav-item">
+                            {{-- <a href="{{ route('admin.courses.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
+                                <font class="letra_blanca"> Instructor </font>
+                            </a> --}}
+                        </li>
+                        @endcan
+                        @can('escuela_admin_categorias')
+                        @endcan
+                        @can('escuela_admin_niveles')
+
+                        @endcan
                     </ul>
                 </li>
             @endcan

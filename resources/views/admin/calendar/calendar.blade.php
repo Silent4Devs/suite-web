@@ -228,11 +228,11 @@
         </div>
     </div>
 
-    <div class="row" style="width: 100% !important; padding-left: 26px;">
+    <div class="row">
         <div class="col s12 m12 l6">
             <div class="card z-depth-3">
                 <div class="card-content black-text">
-                    <span class="card-title">Entregables mensuales próximos</span>
+                    <span style="font-family: Arial, Helvetica, sans-serif" class="card-title">Entregables mensuales próximos</span>
                     <table>
                         <thead>
                             <tr>
@@ -266,7 +266,7 @@
         <div class="col s12 m12 l6">
             <div class="card z-depth-3">
                 <div class="card-content black-text">
-                    <span class="card-title">Próximas facturas a liberar</span>
+                    <span style="font-family: Arial, Helvetica, sans-serif" class="card-title">Próximas facturas a liberar</span>
                     <table>
                         <thead>
                             <tr>
@@ -301,22 +301,6 @@
                                                 <hr>
                                             @endif
                                         @endforeach
-
-                                        {{-- @foreach ($facturas_liberar1 as $nivel1)
-                                        <li>{{ 'Faltan 2 días para la liberación de la factura:' . $nivel1->no_factura }}
-                                        </li>
-                                        <li>{{ 'Con un importe de:' . $nivel1->monto_factura }}</li>
-                                        <li>{{ 'Fecha de liberación:' . $nivel1->fecha_liberacion }}</li>
-                                        <hr>
-                                        @endforeach
-
-                                        @foreach ($facturas_liberar2 as $nivel2)
-                                        <li>{{ 'Faltan 1 día para la liberación de la factura:' . $nivel2->no_factura }}
-                                        </li>
-                                        <li>{{ 'Con un importe de:' . $nivel2->monto_factura }}</li>
-                                        <li>{{ 'Fecha de liberación:' . $nivel2->fecha_liberacion }}</li>
-                                        <hr>
-                                        @endforeach --}}
                                     </ol>
                                 </td>
                             </tr>
@@ -345,26 +329,6 @@
     <script src="{{ asset('../js/calendar_tui/schedules.js') }}"></script>
     <script>
         ScheduleList = [
-
-
-            {{-- @foreach ($auditoria_internas as $it_auditoria_internas) --}}
-            //{
-            //    id: 'auditoria{{-- $it_auditoria_internas->id --}}',
-            //    calendarId: '3',
-            //    title: '<i class="fas fa-clipboard-list i_calendar_cuadro"></i> Alcance: {{-- $it_auditoria_internas->alcance --}}',
-            //    category: 'allday',
-            //    dueDateClass: '',
-            //    start: '{{-- \Carbon\Carbon::parse($it_auditoria_internas->fecha_inicio)->toDateTimeString() --}}',
-            //    end: '{{-- \Carbon\Carbon::parse($it_auditoria_internas->fecha_fin)->toDateTimeString() --}}',
-            //    isReadOnly : true,
-            //    body: `
-        //       <font style="font-weight: bold;">Inicio:</font> ${  {{-- @json($it_auditoria_internas->fecha_inicio->format("d-m-Y")) --}}  }<br>
-        //       <font style="font-weight: bold;">Fin:</font> ${  {{-- @json($it_auditoria_internas->fecha_fin->format("d-m-Y")) --}}  }<br>
-        //    `,
-            //},
-            {{-- @endforeach --}}
-
-
             @foreach ($recursos as $it_recursos)
                 {
                     id: 'recursos{{ $it_recursos->id }}',

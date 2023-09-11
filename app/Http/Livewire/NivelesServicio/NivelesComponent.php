@@ -13,7 +13,7 @@ use Livewire\WithPagination;
 
 class NivelesComponent extends Component
 {
-    use WithPagination, WithFileUploads,LivewireAlert;
+    use WithPagination, WithFileUploads, LivewireAlert;
 
     public $contrato_id;
 

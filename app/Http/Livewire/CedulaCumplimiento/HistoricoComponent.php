@@ -2,14 +2,14 @@
 
 namespace App\Http\Livewire\CedulaCumplimiento;
 
-use App\Models\HistoricoCedulaCumplimiento;
+use App\Models\ContractManager\HistoricoCedulaCumplimiento;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class HistoricoComponent extends Component
 {
-    use WithPagination,LivewireAlert;
+    use WithPagination, LivewireAlert;
 
     public $cedula_id;
 

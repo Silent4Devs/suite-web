@@ -12,17 +12,17 @@
 
     <style>
         /* .asterisco {
-                color: red;
-                margin-left: 5px;
+                                                            color: red;
+                                                            margin-left: 5px;
 
-            } */
+                                                        } */
 
         /*.select-wrapper input{
 
-            direction:rtl;
-            text-align:left;
+                                                        direction:rtl;
+                                                        text-align:left;
 
-            }*/
+                                                        }*/
     </style>
 
     {{-- {{ Breadcrumbs::render('contratos_edit', $contrato) }} --}}
@@ -30,12 +30,12 @@
 
 
 
-    <div class="row">
+    <div class="row" style="margin-left: 10px; margin-right: 10px; margin-top: 30px;">
         <div class="col s12 m12">
             <div class="card">
                 <div class="card-content blue-text" style="overflow-x:auto !important;">
-                    <span class="card-title">Contrato</span>
-                    <table class="refresco" id="tblContrato">
+                    <h3>Contrato</h3>
+                    <table class="refresco table" id="tblContrato">
                         <thead style="overflow-x:auto !important;">
                             <tr>
                                 <th>
@@ -327,9 +327,9 @@
         </li>
     </ul>
 
-    <div class="row">
-        <div class="col s12 right-align" style="padding-right: 30px !important;">
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn-redondeado btn btn-primary">Salir
+    <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+        <div class="col s12 m12 right-align btn-grd distancia">
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn-success">Salir
                 sin llenar</a>
         </div>
     </div>

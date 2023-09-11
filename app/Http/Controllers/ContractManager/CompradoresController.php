@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ContractManager;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContractManager\Comprador;
+use App\Models\Empleado;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +46,8 @@ class CompradoresController extends Controller
     {
         abort_if(Gate::denies('katbol_producto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('contract_manager.compradores.create');
+        $users = Empleado::where('estatus', 'alta')->orderBy('name')->get();
+        return view('contract_manager.compradores.create', compact('users'));
     }
 
     /**
@@ -56,10 +58,21 @@ class CompradoresController extends Controller
      */
     public function store(Request $request)
     {
+        $ids = Comprador::pluck('id');
+
+        foreach ($ids as $id) {
+            $string1 = strval($id);
+            if ($string1  === $request->id) {
+                return view('contract_manager.proveedores.error');
+            }
+        }
+
+        $empledo = Empleado::where('id', $request->nombre)->first();
         $compradores = new Comprador();
-        $compradores->nombre = $request->nombre;
         $compradores->clave = $request->clave;
-        $compradores->id_user = $request->id_user;
+        $compradores->id_user = $request->nombre;
+        $compradores->estado = $request->estado;
+        $compradores->nombre = $empledo->name;
         $compradores->save();
 
         return redirect('/contract_manager/compradores');
@@ -86,8 +99,9 @@ class CompradoresController extends Controller
     {
         abort_if(Gate::denies('katbol_producto_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $compradores = Comprador::find($id);
+        $users = Empleado::where('estatus', 'alta')->orderBy('name')->get();
 
-        return view('contract_manager.compradores.edit', compact('compradores'));
+        return view('contract_manager.compradores.edit', compact('compradores', 'users'));
     }
 
     /**
@@ -100,14 +114,15 @@ class CompradoresController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-         'nombre' => 'required',
-         'clave' => 'required',
+            'nombre' => 'required',
+            'estado' => 'required',
         ]);
         $comprador = Comprador::find($id);
+        $empledo = Empleado::where('id', $request->nombre)->first();
 
         $comprador->update([
-            'nombre' => $request->nombre,
-            'clave' => $request->clave,
+            'nombre' => $empledo->name,
+            'estado' => $request->estado,
         ]);
 
         return redirect('/contract_manager/compradores');
@@ -124,13 +139,13 @@ class CompradoresController extends Controller
         abort_if(Gate::denies('katbol_producto_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $compradores = Comprador::find($id);
 
-        if ($compradores->archivo === false) {
+        if ($compradores->archivo) {
             $compradores->update([
-                'archivo' => true,
+                'archivo' => false,
             ]);
         } else {
             $compradores->update([
-                'archivo' => false,
+                'archivo' => true,
             ]);
         }
 

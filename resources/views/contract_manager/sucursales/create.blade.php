@@ -7,18 +7,18 @@
             @csrf
             <div class="row">
                 <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="clave"><i class="fa-solid fa-key fa-lg"></i>&nbsp;&nbsp;Clave</label>
-                    <input  class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" type="clave" name="clave" id="clave" value="{{ old('clave') }}" required>
-                    @if($errors->has('clave'))
+                    <label class="required" for="id">&nbsp;&nbsp;Clave</label>
+                    <input  class="form-control  {{ $errors->has('id') ? 'is-invalid' : '' }}" type="number" name="id" id="id" value="{{ old('id') }}" required>
+                    @if($errors->has('id'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('clave') }}
+                            {{ $errors->first('id') }}
                         </div>
                     @endif
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="descripcion"><i class="fa-solid fa-file-lines fa-lg"></i>&nbsp;&nbsp;Descripción</label>
-                    <input   class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="descripcion" name="descripcion" id="descripcion" required>
+                    <label class="required" for="descripcion">&nbsp;&nbsp;Descripción</label>
+                    <input   class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" type="text" name="descripcion" id="descripcion" required>
                     @if($errors->has('descripcion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('descripcion') }}
@@ -27,8 +27,8 @@
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="rfc"><i class="fa-solid fa-fingerprint fa-lg"></i>&nbsp;&nbsp;RFC</label>
-                    <input   class="form-control {{ $errors->has('rfc') ? 'is-invalid' : '' }}" type="rfc" name="rfc" id="rfc" required>
+                    <label class="required" for="rfc">&nbsp;&nbsp;RFC</label>
+                    <input   class="form-control {{ $errors->has('rfc') ? 'is-invalid' : '' }}" type="text" name="rfc" id="rfc" required>
                     @if($errors->has('rfc'))
                         <div class="invalid-feedback">
                             {{ $errors->first('rfc') }}
@@ -37,8 +37,8 @@
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="empresa"><i class="fa-solid fa-building-ngo fa-lg"></i>&nbsp;&nbsp;Empresa</label>
-                    <input   class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="empresa" name="empresa" id="empresa" required>
+                    <label class="required" for="empresa">&nbsp;&nbsp;Empresa</label>
+                    <input   class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="empresa" id="empresa" required>
                     @if($errors->has('empresa'))
                         <div class="invalid-feedback">
                             {{ $errors->first('empresa') }}
@@ -47,8 +47,8 @@
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="cuenta_contable"><i class="fa-solid fa-calculator fa-lg"></i>&nbsp;&nbsp;Cuenta Contable</label>
-                    <input   class="form-control {{ $errors->has('cuenta_contable') ? 'is-invalid' : '' }}" type="cuenta_contable" name="cuenta_contable" id="cuenta_contable" required>
+                    <label class="required" for="cuenta_contable">&nbsp;&nbsp;Cuenta Contable</label>
+                    <input   class="form-control {{ $errors->has('cuenta_contable') ? 'is-invalid' : '' }}" type="number" name="cuenta_contable" id="cuenta_contable" required>
                     @if($errors->has('cuenta_contable'))
                         <div class="invalid-feedback">
                             {{ $errors->first('cuenta_contable') }}
@@ -57,8 +57,8 @@
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="zona"><i class="fa-solid fa-location-arrow fa-lg"></i>&nbsp;&nbsp;Zona</label>
-                    <input class="form-control {{ $errors->has('zona') ? 'is-invalid' : '' }}" type="zona" name="zona" id="zona" required>
+                    <label class="required" for="zona">&nbsp;&nbsp;Zona</label>
+                    <input class="form-control {{ $errors->has('zona') ? 'is-invalid' : '' }}" type="text" name="zona" id="zona" required>
                     @if($errors->has('zona'))
                         <div class="invalid-feedback">
                             {{ $errors->first('zona') }}
@@ -67,8 +67,8 @@
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group col-md-6 col-sm-6">
-                    <label class="required" for="direccion"><i class="fa-regular fa-address-book fa-lg"></i>&nbsp;&nbsp;Dirección</label>
-                    <input  class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" type="direccion" name="direccion" id="direccion" required>
+                    <label class="required" for="direccion">&nbsp;&nbsp;Dirección</label>
+                    <input  class="form-control {{ $errors->has('direccion') ? 'is-invalid' : '' }}" type="text" name="direccion" id="direccion" required>
                     @if($errors->has('direccion'))
                         <div class="invalid-feedback">
                             {{ $errors->first('direccion') }}
@@ -84,7 +84,7 @@
                             {{ $errors->first('mylogo') }}
                         </div>
                     @endif
-    
+
                 </div>
               </div>
 

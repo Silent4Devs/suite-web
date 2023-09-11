@@ -3,8 +3,10 @@
 use App\Http\Controllers\Admin\DocumentosController;
 use App\Http\Controllers\Admin\GrupoAreaController;
 use App\Http\Controllers\Visitantes\RegistroVisitantesController;
+use App\Http\Livewire\Escuela\CourseStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 Route::group(['prefix' => 'visitantes', 'as' => 'visitantes.', 'namespace' => 'Visitantes'], function () {
     Route::get('/presentacion', [RegistroVisitantesController::class, 'presentacion'])->name('presentacion');
@@ -124,6 +126,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('puestos/process-csv-import', 'PuestosController@processCsvImport')->name('puestos.processCsvImport');
     Route::resource('puestos', 'PuestosController');
     Route::get('consulta-puestos', 'PuestosController@consultaPuestos')->name('consulta-puestos');
+
+
 
     Route::group(['middleware' => ['auth', '2fa', 'active', 'primeros.pasos']], function () {
         // Visitantes
@@ -1362,6 +1366,29 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('lista-documentos/store', 'ListaDocumentosEmpleados@store')->name('lista-documentos-empleados-store');
         Route::get('lista-documentos/destroy/{id}', 'ListaDocumentosEmpleados@destroy')->name('lista-documentos-empleados-destroy');
     });
+
+    //Escuela cursos instructor
+    Route::resource('courses', 'Escuela\Instructor\CourseController');
+
+    Route::get('curso-estudiante/{course}', 'CursoEstudiante@cursoEstudiante')->name('curso-estudiante');
+    Route::get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
+    Route::get('curso-estudiante/{course}/evaluacion/{evaluation}', 'CursoEstudiante@evaluacionEstudiante')->name('curso.evaluacion');
+    // Route::get('courses/{course}/curriculum', '\App\Http\Livewire\Escuela\Instructor\CoursesCurriculum'  )->name('courses.curriculum');
+    // Route::get('courses/{course}/curriculum', 'Escuela\Instructor\CourseCurriculumController@show')->name('courses.curriculum');
+    // Route::get('courses/{course}/goals', 'Escuela\Instructor\CourseController@goals')->name('courses.goals');
+    // Route::get('courses/{course}/students', 'Escuela\Instructor\CoursesStudents')->name('courses.students');
+    // Route::get('courses/{course}/evaluation', 'Escuela\Instructor\EvaluacionesInstructor')->name('courses.evaluation');
+    // Route::post('courses/{course}/status', 'Escuela\Instructor\CourseController@status')->name('courses.status');
+    Route::get('courses/{course}/evaluation/{evaluation}', 'Escuela\Instructor\CourseQuestionController@index')->name('courses.evaluation.questions');
+    Route::get('courses/{course}/evaluacion/{evaluation}/quizdetail', 'CursoEstudiante@tableQuizDetails')->name('courses.quizdetails');
+    //categorias para el administrador de escuela
+    Route::resource('categories', 'Escuela\Admin\CategoryController');
+    Route::resource('levels', 'Escuela\Admin\LevelController');
+    Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
+    /*Route::resource('prices', PriceController::class)->names('prices');
+    Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('courses/{course}', [CourseController::class, 'show'])->name('courses.show');
+    Route::post('courses/{course}/approved', [CourseController::class, 'approved'])->name('courses.approved');*/
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {

@@ -133,7 +133,7 @@ class Entregablecomponent extends Component
 
         $deductiva_penalizacion = preg_replace('([$,])', '', $this->deductiva_penalizacion);
 
-        $formatoFecha = new FormatearFecha;
+        // $formatoFecha = new FormatearFecha;
         $fecha_inicial_formateada = $this->plazo_entrega_inicio;
         $fecha_final_formateada = $this->plazo_entrega_termina;
         $fecha_real_formateada = $this->entrega_real;
@@ -217,10 +217,10 @@ class Entregablecomponent extends Component
 
         // dd($this->document_entregable);
 
-        $formatoFecha = new FormatearFecha;
-        $fecha_inicial_formateada = !is_null($entM->plazo_entrega_inicio) ? $formatoFecha->formatearFecha($entM->plazo_entrega_inicio, 'Y-m-d', 'd-m-Y') : null;
-        $fecha_final_formateada = !is_null($entM->plazo_entrega_termina) ? $formatoFecha->formatearFecha($entM->plazo_entrega_termina, 'Y-m-d', 'd-m-Y') : null;
-        $fecha_real_formateada = !is_null($entM->entrega_real) ? $formatoFecha->formatearFecha($entM->entrega_real, 'Y-m-d', 'd-m-Y') : null;
+        // $formatoFecha = new FormatearFecha;
+        $fecha_inicial_formateada = !is_null($entM->plazo_entrega_inicio) ? $entM->plazo_entrega_inicio : null;
+        $fecha_final_formateada = !is_null($entM->plazo_entrega_termina) ? $entM->plazo_entrega_termina : null;
+        $fecha_real_formateada = !is_null($entM->entrega_real) ? $entM->entrega_real : null;
         $this->entregable_id = $entM->id;
         $this->nombre_entregable = $entM->nombre_entregable;
         $this->descripcion = $entM->descripcion;
@@ -289,10 +289,10 @@ class Entregablecomponent extends Component
         $entM = EntregaMensual::find($this->entregable_id);
         $deductiva_penalizacion = preg_replace('([$,])', '', $this->deductiva_penalizacion);
 
-        $formatoFecha = new FormatearFecha;
-        $fecha_inicial_formateada = $formatoFecha->formatearFecha($this->plazo_entrega_inicio, 'd-m-Y', 'Y-m-d');
-        $fecha_final_formateada = $formatoFecha->formatearFecha($this->plazo_entrega_termina, 'd-m-Y', 'Y-m-d');
-        $fecha_real_formateada = $formatoFecha->formatearFecha($this->entrega_real, 'd-m-Y', 'Y-m-d');
+        // $formatoFecha = new FormatearFecha;
+        $fecha_inicial_formateada = $this->plazo_entrega_inicio;
+        $fecha_final_formateada = $this->plazo_entrega_termina;
+        $fecha_real_formateada = $this->entrega_real;
 
         $entM->update([
             'contrato_id' => $this->contrato_id,

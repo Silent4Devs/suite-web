@@ -73,7 +73,7 @@ class RequisicionesEditComponent extends Component
 
     public $requi_firmar;
 
-    // protected $listeners = ['actualizarCountProveedores' => 'actualizarCountProveedores'];
+    protected $listeners = ['actualizarCountProveedores' => 'actualizarCountProveedores'];
 
     public function mount($requisiciondata)
     {
@@ -95,14 +95,14 @@ class RequisicionesEditComponent extends Component
         $this->proveedores_count_catalogo = $this->editrequisicion->provedores_requisiciones_catalogo->count();
     }
 
-    // public function actualizarCountProveedores()
-    // {
-    //     $this->proveedores_count = $this->proveedores_count + 1;
-    // }
-
     public function render()
     {
         return view('livewire.requisiciones-edit-component');
+    }
+
+    public function hydrate()
+    {
+        $this->emit('select2');
     }
 
     public function servicioUpdate($data, $editrequisicion)
@@ -142,7 +142,7 @@ class RequisicionesEditComponent extends Component
         $this->requisicion_id = $this->editar_requisicion->id;
 
         $this->habilitar_proveedores = true;
-        $this->emit('cambiarTab', 'paso-proveedores');
+        $this->emit('cambiarTab', 'profile');
     }
 
     public function proveedoresUpdate($data, $editrequisicion)
@@ -181,7 +181,7 @@ class RequisicionesEditComponent extends Component
                     'fecha_fin' => $data['contacto_fecha_fin_' . $i],
                 ]);
 
-                $this->emit('cambiarTab', 'paso-firma');
+                $this->emit('cambiarTab', 'contact');
 
                 $this->dataFirma($editrequisicion);
             }
@@ -221,7 +221,7 @@ class RequisicionesEditComponent extends Component
 
                     $cotizacion_count = $cotizacion_count + 1;
 
-                    $this->emit('cambiarTab', 'paso-firma');
+                    $this->emit('cambiarTab', 'contact');
 
                     $this->dataFirma($editrequisicion);
 
@@ -264,7 +264,7 @@ class RequisicionesEditComponent extends Component
 
                 $prove_count = $prove_count + 1;
 
-                $this->emit('cambiarTab', 'paso-firma');
+                $this->emit('cambiarTab', 'contact');
 
                 $this->dataFirma($editrequisicion);
             }

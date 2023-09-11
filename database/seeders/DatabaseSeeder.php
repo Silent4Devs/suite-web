@@ -91,6 +91,10 @@ class DatabaseSeeder extends Seeder
                 // CierreContratosTableSeeder::class,
                 PermisosKatbol::class,
 
+                //PermisosEscuelaInstructorSeeder::class,
+                // PlatformSeeder::class,
+                // PermisosEscuelaAdminSeeder::class,
+                //PermisosEscuelaInstructor::class
             ]
         );
     }

@@ -56,8 +56,18 @@ class SucursalController extends Controller
      */
     public function store(Request $request)
     {
+
+        $ids = Sucursal::pluck('id');
+
+        foreach ($ids as $id) {
+            $string1 = strval($id);
+            if ($string1  === $request->id) {
+                return view('contract_manager.proveedores.error');
+            }
+        }
+
         $sucursales = new Sucursal();
-        $sucursales->clave = $request->clave;
+        $sucursales->id = $request->id;
         $sucursales->descripcion = $request->descripcion;
         $sucursales->rfc = $request->rfc;
         $sucursales->empresa = $request->empresa;
@@ -112,14 +122,14 @@ class SucursalController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-         'clave' => 'required',
-         'descripcion' => 'required',
-         'rfc' => 'required',
-         'empresa' => 'required',
-         'cuenta_contable' => 'required',
-         'zona' => 'required',
-         'direccion' => 'required',
-         'mylogo' => 'required',
+            'id' => 'required',
+            'descripcion' => 'required',
+            'rfc' => 'required',
+            'empresa' => 'required',
+            'cuenta_contable' => 'required',
+            'zona' => 'required',
+            'direccion' => 'required',
+            'mylogo' => 'required',
         ]);
         $sucursal = Sucursal::find($id);
 
@@ -130,7 +140,7 @@ class SucursalController extends Controller
             $file->move(base_path('public/razon_social'), $nombre);
 
             $sucursal->update([
-                'clave' => $request->clave,
+                'id' => $request->id,
                 'descripcion' => $request->descripcion,
                 'rfc' => $request->rfc,
                 'empresa' => $request->empresa,

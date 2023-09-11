@@ -56,9 +56,20 @@ class CentroCostosController extends Controller
      */
     public function store(Request $request)
     {
+
+        $ids = CentroCosto::pluck('id');
+
+        foreach ($ids as $id) {
+            $string1 = strval($id);
+            if ($string1  === $request->id) {
+                return view('contract_manager.proveedores.error');
+            }
+        }
+
         $centro = new CentroCosto();
+        $centro->id = $request->id;
         $centro->descripcion = $request->descripcion;
-        $centro->clave = $request->clave;
+        $centro->clave = 0;
         $centro->save();
 
         return redirect('/contract_manager/centro-costos');
@@ -99,15 +110,15 @@ class CentroCostosController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-         'descripcion' => 'required',
-         'clave' => 'required',
+            'descripcion' => 'required',
+            'id' => 'required',
         ]);
 
         $centros = CentroCosto::find($id);
 
         $centros->update([
             'descripcion' => $request->descripcion,
-            'clave' => $request->clave,
+            'id' => $request->id,
         ]);
 
         return redirect('/contract_manager/centro-costos');
@@ -137,13 +148,13 @@ class CentroCostosController extends Controller
     {
         abort_if(Gate::denies('katbol_centro_costos_archivar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $centro = CentroCosto::find($id);
-        if ($centro->archivo === false) {
+        if ($centro->archivo) {
             $centro->update([
-                'archivo' => true,
+                'archivo' => false,
             ]);
         } else {
             $centro->update([
-                'archivo' => false,
+                'archivo' => true,
             ]);
         }
 

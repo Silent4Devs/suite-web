@@ -306,10 +306,10 @@ class ContratosController extends AppBaseController
             $nombre_f = $contrato->id . $fecha_inicio . $nombre;
             // dd($request->file('file_contrato'), $contrato->id, $contrato->no_contrato, $nombre_f);
             $archivo =
-            $request->file('file_contrato')
-            ->storeAs(trim('public/contratos/' . $contrato->id .
-            '_contrato_' . $contrato->no_contrato, $nombre_f .
-            '/entregables mensuales'), $nombre_f);
+                $request->file('file_contrato')
+                ->storeAs(trim('public/contratos/' . $contrato->id .
+                    '_contrato_' . $contrato->no_contrato, $nombre_f .
+                    '/entregables mensuales'), $nombre_f);
             // $ruta_file_contrato = Storage::url($archivo);
         }
         // Move file from tmp directory if name is send
@@ -455,7 +455,7 @@ class ContratosController extends AppBaseController
             // 'fecha_firma' => 'after:fecha_fin|before:fecha_inicio',
             'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',
             'no_pagos' => 'required',
-             'tipo_cambio' => 'required',
+            'tipo_cambio' => 'required',
             'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'maximo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
