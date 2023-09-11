@@ -614,11 +614,16 @@
                 <div class="col s12 m4 distancia">
                     <p style="color:#2395AA">
                         &nbsp;¿Aplica fianza o responsabilidad civil? </p>
-                    <div class="form custom-control custom-switch">
+                    {{-- <div class="form custom-control custom-switch">
                         No
                         <input id="check_aplica_fianza" type="checkbox" name="aplicaFinaza"
                             class="custom-control-input">
                         Si
+                    </div> --}}
+                    <div class="custom-control custom-switch form">
+                        <input type="checkbox" class="custom-control-input" id="check_aplica_fianza" name="aplicaFinaza">
+                        <label class="custom-control-label" for="check_aplica_fianza">No/Sí</label>
+
                     </div>
                 </div>
                 <style type="text/css">
