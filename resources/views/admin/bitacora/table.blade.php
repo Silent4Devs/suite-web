@@ -636,16 +636,17 @@
                     <div class="td_fianza">
                         <label class="txt-tamaño ">Documento</label>
                         <div class="file-field input-field">
+                            <span>PDF</span>
                             <div class="btn">
-                                <span>PDF</span>
                                 <input type="hidden" id="" name="" value="">
-                                <input class="input_file_validar" type="file" name="documento"
-                                    accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
+                                <input class="input_file_validar form-control" type="file" name="documento"
+                                    accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                                    readonly>
                             </div>
-                            <div class="file-path-wrapper">
+                            {{-- <div class="file-path-wrapper">
                                 <input class="file-path validate form-control" type="text"
                                     placeholder="Elegir documento pdf" readonly>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="ml-4 display-flex">
