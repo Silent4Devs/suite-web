@@ -19,6 +19,7 @@ use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
+use Livewire\Livewire;
 use Livewire\WithFileUploads;
 
 class RequisicionesCreateComponent extends Component
@@ -56,7 +57,12 @@ class RequisicionesCreateComponent extends Component
 
     public $habilitar_url = false;
 
+    public $active = "active";
+    public $disabled = "";
+
     public $requisicion;
+
+    public $isVisible;
 
     public $selectedInput = [];
     public $selectOption = [];
@@ -64,6 +70,7 @@ class RequisicionesCreateComponent extends Component
     public $provedores_colllection;
 
     protected $listeners = ['actualizarCountProveedores' => 'actualizarCountProveedores'];
+
 
     public function actualizarCountProveedores()
     {
@@ -141,6 +148,7 @@ class RequisicionesCreateComponent extends Component
 
         $this->habilitar_proveedores = true;
         $this->emit('cambiarTab', 'profile');
+        $this->active = "desActive";
     }
 
     public function proveedoresStore($data)
@@ -218,6 +226,7 @@ class RequisicionesCreateComponent extends Component
                         $this->emit('cambiarTab', 'contact');
 
                         $this->dataFirma();
+                        $this->disabled = "disabled";
                     } else {
                         $this->provedores_indistinto_catalogo = collect();
                         $this->provedores_indistinto_catalogo = KatbolProveedorIndistinto::create([
@@ -230,6 +239,8 @@ class RequisicionesCreateComponent extends Component
                         $this->emit('cambiarTab', 'contact');
 
                         $this->dataFirma();
+
+                        $this->disabled = "disabled";
                     }
                 } else {
                     $this->proveedores_catalogo = KatbolProveedorOC::where('id', $this->selectedInput[$prove_count])->first();
@@ -258,6 +269,7 @@ class RequisicionesCreateComponent extends Component
                     $this->emit('cambiarTab', 'contact');
 
                     $this->dataFirma();
+                    $this->disabled = "disabled";
                 }
                 $prove_count = $prove_count + 1;
                 $cotizacion_count = $cotizacion_count + 1;

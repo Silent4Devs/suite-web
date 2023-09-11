@@ -61,6 +61,9 @@ class OrdenCompraController extends Controller
             $requisiciones = KatbolRequsicion::where('estado', 'firmada')
                 ->where('archivo', false)
                 ->where('comprador_id', $id)
+                ->Orwhere('estado_orden', 'rechazado_oc')
+                ->Orwhere('estado_orden', 'curso')
+                ->Orwhere('estado_orden', 'fin')
                 ->orderByDesc('id')
                 ->get();
 
@@ -69,6 +72,9 @@ class OrdenCompraController extends Controller
             $requisiciones = KatbolRequsicion::where('estado', 'firmada')
                 ->where('archivo', false)
                 ->where('id_user', $user->id)
+                ->Orwhere('estado_orden', 'rechazado_oc')
+                ->Orwhere('estado_orden', 'curso')
+                ->Orwhere('estado_orden', 'fin')
                 ->orderByDesc('id')
                 ->get();
 
@@ -137,8 +143,9 @@ class OrdenCompraController extends Controller
         $contratos = KatbolContrato::get();
         $centro_costos = KatbolCentroCosto::get();
         $monedas = KatbolMoneda::get();
+        $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
 
-        return view('contract_manager.ordenes-compra.edit', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas'));
+        return view('contract_manager.ordenes-compra.edit', compact('requisicion', 'proveedores', 'contratos', 'centro_costos', 'monedas', 'contrato'));
     }
 
     /**
