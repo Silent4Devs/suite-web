@@ -342,42 +342,42 @@
                 <div class="file-field input-field">
 
                     <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
-                        <span>Documento</span>
+                        <span>Documento Actual:</span>
+                    </div>
+
+                    <div class="file-path-wrapper">
+                        <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
+                            type="text" maxlength="250" placeholder="Elegir documento pdf"
+                            {{ $show_contrato ? 'readonly' : '' }} readonly>
                     </div>
                     @if (!$show_contrato)
                         <div class="fondo_delete">
                             <div class="delete">
 
-                                <h1 class="titulo-alert">Esta seguro que desee cambiar el documento</h1>
+                                <h5 class="titulo-alert">Cambiar el documento:</h5>
                                 <p class="parrafo">Al cambiarlo se eliminara el archivo actual</p>
-                                <div align="right" class="caja_botones_alert">
+                                {{-- <div align="right" class="caja_botones_alert">
                                     <div class="cancelar btn">Cancelar</div>
-
-
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         @if (is_null($organizacion))
                         @else
-                            <div class="btn btn-accion">
+                            {{-- <div class="btn btn-accion">
                                 <span>OK</span>
-                                <input class="form-control input_file_validar" type="file" name="file_contrato"
-                                    accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" {{ $show_contrato ? 'disabled' : '' }}>
-                                @if ($errors->has('file_contrato'))
-                                    <div class="invalid-feedback red-text">
-                                        {{ $errors->first('file_contrato') }}
-                                    </div>
-                                @endif
-                            </div>
+                            </div> --}}
+                            <input class="form-control input_file_validar" type="file" name="file_contrato"
+                                accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" {{ $show_contrato ? 'disabled' : '' }}
+                                readonly>
+                            @if ($errors->has('file_contrato'))
+                                <div class="invalid-feedback red-text">
+                                    {{ $errors->first('file_contrato') }}
+                                </div>
+                            @endif
                         @endif
 
                     @endif
 
-                    <div class="file-path-wrapper">
-                        <input value="{{ $contrato->file_contrato }}" class="file-path validate" type="text"
-                            maxlength="250" placeholder="Elegir documento pdf" {{ $show_contrato ? 'readonly' : '' }}
-                            readonly>
-                    </div>
                     <small id="file_error" class="errors" style="color:red"></small>
                     <div id="loaderContractTmpFile" class="alert-contrato-async" style="display:none">
                         Estámos Guardando su archivo
@@ -399,7 +399,7 @@
             @if ($contrato->file_contrato != null)
                 <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato)) }}"
                     target="_blank" class=" descarga_archivo" style="margin-left:20px;">
-                    Descargar</a>
+                    Descargar archivo actual</a>
             @endif
         </div>
 
@@ -664,8 +664,8 @@
 </div>
 
 <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
-    <div class="col s12 m12 distancia">
-        <table class="table-fianza">
+    <div class="col s12 m12">
+        <table>
             <thead>
                 <th class=" "> <label> ¿Aplica fianza o
                         responsabilidad civil? </label></th>
@@ -719,7 +719,7 @@
                                 <div class="btn">
                                     <span>PDF</span>
                                     <input type="hidden" id="" name="" value="">
-                                    <input class="input_file_validar" type="file" name="documento"
+                                    <input class="input_file_validar form-control" type="file" name="documento"
                                         accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
                                 </div>
                                 <div class="file-path-wrapper">
