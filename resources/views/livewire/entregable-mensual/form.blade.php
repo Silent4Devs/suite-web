@@ -1,8 +1,3 @@
-{{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/iconos.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/letra.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/titulos.css') }}"> --}}
-
-
 <section id="form_entregable">
     <div>
         <!-- No Contrato Field -->
@@ -111,19 +106,19 @@
             </div>
         </div>
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
-            <div class="distancia form-group col-md-6" wire:ignore>
+            <div class="input-field form-group col-md-6">
                 @if (is_null($organizacion))
                 @else
-                    <div class="file-field input-field">
-                        <div class="btn" style="margin-right: 8px">
-                            <span>DOCUMENTO</span>
-                            <input class="input_file_validar" type="file" wire:model="pdf"
-                                accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
-                                id="upload{{ $iteration1 }}" class="input_file_validar">
-                        </div>
-                        <div class="file-path-wrapper">
+                    <div class="custom-file">
+                        {{-- <div class="btn" style="margin-right: 8px"> --}}
+                        <span>DOCUMENTO</span>
+                        <input class="form-control" type="file" wire:model.defer="pdf"
+                            accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                            id="upload{{ $iteration1 }}" readonly>
+                        {{-- </div> --}}
+                        {{-- <div class="file-path-wrapper">
                             <input class="file-path validate" wire:model="pdf" placeholder="Elegir factura" readonly>
-                        </div>
+                        </div> --}}
                     </div>
                 @endif
                 <div wire:loading wire:target="pdf" class="s-12">

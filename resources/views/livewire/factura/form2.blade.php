@@ -1,9 +1,9 @@
 <div class="row" style="margin: 0;">
 
 </div>
-<div style=" overflow: hidden; overflow-y:auto; max-height: 250px !important;">
+<div class="table-responsive" style=" overflow: hidden; overflow-y:auto; max-height: 250px !important;">
 
-    <table class="table" style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
+    <table class="table" style="margin-top: 30px;">
         <thead>
             <tr>
                 <th style="vertical-align:top; max-width: 50px;">

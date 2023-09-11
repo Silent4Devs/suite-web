@@ -22,8 +22,7 @@
         </div>
     </div>
 </div>
-<div class="tabla_responsiva_edit_contratos tabla-cierre"
-    style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
+<div class="table-responsive" style="margin-top: 30px;">
     @if ($cierrecontratos->count())
         <table class="table">
             <thead>
@@ -135,8 +134,11 @@
         @endif
     @endif
 
+    <div class="col-12 d-flex justify-content-end">
+        {{ $cierrecontratos->links() }}
+    </div>
+
 </div>
-{{ $cierrecontratos->links() }}
 <script>
     $(document).ready(function() {
         $('.select_pagination_cierre_contrato').change(function(e) {
