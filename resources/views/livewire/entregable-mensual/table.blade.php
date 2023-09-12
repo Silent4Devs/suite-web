@@ -25,8 +25,7 @@
     </div>
 </div>
 
-<div class="tabla_responsiva_edit_contratos tabla-cierre"
-    style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
+<div class="table-responsive" style="margin-top: 30px;">
     @if ($entregamensuales->count())
         <table id="tblEntregables" class="table">
             <thead>
@@ -195,9 +194,12 @@
             </div>
         @endif
     @endif
-</div>
-{{ $entregamensuales->links() }}
 
+    <div class="col-12 d-flex justify-content-end">
+        {{ $entregamensuales->links('livewire::simple-tailwind') }}
+    </div>
+
+</div>
 
 <script>
     $(document).ready(function() {

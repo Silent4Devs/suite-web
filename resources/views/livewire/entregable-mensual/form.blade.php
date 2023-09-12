@@ -1,8 +1,3 @@
-{{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/iconos.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/letra.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/titulos.css') }}"> --}}
-
-
 <section id="form_entregable">
     <div>
         <!-- No Contrato Field -->
@@ -67,17 +62,22 @@
             </div>
         </div>
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
-            <div class="distancia form-group col-md-4">
+            <div class="distancia form-group col-md-4" wire:ignore>
                 <label for="" class="txt-tamaño">
-                    Cumple<font class="asterisco">
-                        *</font></label>
-                <div class="switch">
+                    Cumple<font class="asterisco">*</font>
+                </label>
+                {{-- <div class="switch">
                     <label class="grey-text letra-ngt">
                         Si
                         <input type="checkbox" name="cumplimiento" class="cumplimiento form-control"
                             wire:model.debounce.800ms="cumplimiento" required>
                         <span class="lever"></span>
                     </label>
+                </div> --}}
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" wire:model="cumplimiento" class="custom-control-input" id="cumplimiento"
+                        name="cumplimiento">
+                    <label class="custom-control-label" for="cumplimiento">No/Sí</label>
                 </div>
             </div>
             <div class="distancia form-group col-md-4">
@@ -111,19 +111,19 @@
             </div>
         </div>
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
-            <div class="distancia form-group col-md-6" wire:ignore>
+            <div class="input-field form-group col-md-6">
                 @if (is_null($organizacion))
                 @else
-                    <div class="file-field input-field">
-                        <div class="btn" style="margin-right: 8px">
-                            <span>DOCUMENTO</span>
-                            <input class="input_file_validar" type="file" wire:model="pdf"
-                                accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
-                                id="upload{{ $iteration1 }}" class="input_file_validar">
-                        </div>
-                        <div class="file-path-wrapper">
+                    <div class="custom-file">
+                        {{-- <div class="btn" style="margin-right: 8px"> --}}
+                        <span>DOCUMENTO</span>
+                        <input class="form-control" type="file" wire:model.defer="pdf"
+                            accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                            id="upload{{ $iteration1 }}" readonly>
+                        {{-- </div> --}}
+                        {{-- <div class="file-path-wrapper">
                             <input class="file-path validate" wire:model="pdf" placeholder="Elegir factura" readonly>
-                        </div>
+                        </div> --}}
                     </div>
                 @endif
                 <div wire:loading wire:target="pdf" class="s-12">
@@ -152,13 +152,18 @@
                 <div class="distancia form-group col-md-12" wire:ignore>
                     <label for="" class="txt-tamaño">¿Aplica
                         deductiva/penalización?<font class="asterisco">*</font></label>
-                    Si
+                    {{-- Si
                     <div class="switch">
                         <label class="grey-text letra-ngt">
                             <input type="checkbox" class="aplica_deductiva form-control"
                                 wire:model="aplica_deductiva" @change="show = !show">
                             <span class="lever"></span>
                         </label>
+                    </div> --}}
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" wire:model="aplica_deductiva" class="custom-control-input"
+                            id="aplica_deductiva" name="aplica_deductiva" @change="show = !show">
+                        <label class="custom-control-label" for="aplica_deductiva">No/Sí</label>
                     </div>
                 </div>
                 <div class="distancia form-group col-md-12" x-show="show">
