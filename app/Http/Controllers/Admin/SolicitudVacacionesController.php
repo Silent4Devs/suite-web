@@ -248,10 +248,12 @@ class SolicitudVacacionesController extends Controller
             'año' => 'required|int',
             'autoriza' => 'required|int',
         ]);
+        //envio de email
         $supervisor = Empleado::find($request->autoriza);
         $solicitante = Empleado::find($request->empleado_id);
 
         $solicitud = SolicitudVacaciones::create($request->all());
+
         Mail::to(removeUnicodeCharacters($supervisor->email))->send(new MailSolicitudVacaciones($solicitante, $supervisor, $solicitud));
 
         Flash::success('Solicitud creada satisfactoriamente.');
