@@ -1,10 +1,9 @@
 @extends('layouts.admin')
 @section('content')
-@section('titulo', 'Histórico cédula de cumplimiento')
     <div class="row">
         <div class="col s12 m12">
             <div class="card">
-                <div class="card-content">
+                <div class="card-body">
                     <section class="content-header">
                         <span class="card-title">
                         </span>
@@ -74,9 +73,10 @@
                                             </tr>
                                         </tfoot> --}}
                                         </table>
-                                        {{ $items_historico->links('pagination-tradicional-materializecss') }}
+                                        {{ $items_historico->links() }}
                                     @else
-                                        <div style="background-color: #09996b;padding: 15px;
+                                        <div
+                                            style="background-color: #09996b;padding: 15px;
                                                                     margin-bottom: 20px;
                                                                     border: 1px solid transparent;
                                                                     color: white;

@@ -25,7 +25,7 @@ class CedulaCumplimientoComponent extends Component
 
     public $autorizo;
 
-    public $cumple;
+    public $cumple_cedula;
 
     public $show_contrato;
 
@@ -46,7 +46,7 @@ class CedulaCumplimientoComponent extends Component
     {
         $this->contrato_id = $contrato_id;
         $this->show_contrato = $show_contrato;
-        $this->cumple = true;
+        $this->cumple_cedula = true;
     }
 
     public function render()
@@ -68,13 +68,13 @@ class CedulaCumplimientoComponent extends Component
         $niveles_servicio = DB::SELECT($nivel);*/
 
         $niveles_servicio = NivelesServicio::join('evaluacion_servicio', 'niveles_servicio.id', '=', 'evaluacion_servicio.servicio_id')
-        ->where('contrato_id', '=', $this->contrato_id)
-        ->select([
-            'niveles_servicio.*',
-            DB::raw('ROUND(AVG(CAST(evaluacion_servicio.promedio AS NUMERIC)), 2) as p_general'),
-        ])
-        ->groupBy('niveles_servicio.id')
-        ->get();
+            ->where('contrato_id', '=', $this->contrato_id)
+            ->select([
+                'niveles_servicio.*',
+                DB::raw('ROUND(AVG(CAST(evaluacion_servicio.promedio AS NUMERIC)), 2) as p_general'),
+            ])
+            ->groupBy('niveles_servicio.id')
+            ->get();
 
         // dd($niveles_servicio->evaluacion_servicio->promedio);
 
@@ -112,7 +112,7 @@ class CedulaCumplimientoComponent extends Component
 
     public function store()
     {
-        $this->cumple = $this->cumple == null ? false : $this->cumple;
+        $this->cumple_cedula = $this->cumple_cedula == null ? false : $this->cumple_cedula;
         $this->validate();
 
         $cedula_cumplimiento = CedulaCumplimiento::where('contrato_id', '=', $this->contrato_id)->get();
@@ -123,7 +123,7 @@ class CedulaCumplimientoComponent extends Component
                 'elaboro' => $this->elaboro,
                 'reviso' => $this->reviso,
                 'autorizo' => $this->autorizo,
-                'cumple' => $this->cumple,
+                'cumple' => $this->cumple_cedula,
             ]);
             $this->default();
             $this->alert('success', 'Registro añadido!');
@@ -145,14 +145,14 @@ class CedulaCumplimientoComponent extends Component
             $cedula->reviso;
         $this->autorizo =
             $cedula->autorizo;
-        $this->cumple =
+        $this->cumple_cedula =
             $cedula->cumple;
         $this->view = 'edit';
     }
 
     public function update()
     {
-        $this->cumple = $this->cumple == null ? false : $this->cumple;
+        $this->cumple_cedula = $this->cumple_cedula == null ? false : $this->cumple_cedula;
         $this->validate();
         $cedula_cumplimiento = CedulaCumplimiento::find($this->cedula_id);
         // dd();
@@ -161,7 +161,7 @@ class CedulaCumplimientoComponent extends Component
             'elaboro' => $this->elaboro,
             'reviso' => $this->reviso,
             'autorizo' => $this->autorizo,
-            'cumple' => $this->cumple,
+            'cumple' => $this->cumple_cedula,
         ]);
         //$this->emit('renderHistorico');
         $this->default();
@@ -185,7 +185,7 @@ class CedulaCumplimientoComponent extends Component
         $this->elaboro = '';
         $this->reviso = '';
         $this->autorizo = '';
-        $this->cumple = true;
+        $this->cumple_cedula = true;
         $this->dispatchBrowserEvent('cedulaEventChanged');
         $this->view = 'create';
     }
