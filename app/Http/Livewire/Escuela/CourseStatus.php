@@ -55,6 +55,7 @@ class CourseStatus extends Component
     public function changeLesson(Lesson $lesson)
     {
         $this->current = $lesson;
+        // dd($this->current);
     }
 
 

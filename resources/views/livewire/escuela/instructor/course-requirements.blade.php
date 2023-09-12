@@ -19,8 +19,7 @@
                         <div class="col-3 d-flex justify-content-end">
                             <i wire:click="edit({{ $item }})"
                                     class="m-1 text-blue-500 cursor-pointer fas fa-edit"></i>
-                            <i wire:click="destroy({{ $item }})"
-                                    class="m-1 text-red-500 cursor-pointer fas fa-trash"></i>
+                            <i wire:click="destroy({{ $item }})" class="m-1 fa-regular fa-trash-can"></i>
                         </div>
                     </div>
                 </div>
@@ -31,10 +30,10 @@
     <article class="card shadow-none">
         <div class="card-body">
             <form wire:submit.prevent="store" class="form-group">
-                {!! Form::label('title', 'Agregar el nombre del requisito*',[
-                'class' => 'pl-0']) !!}
                 <div class="grid grid-cols-2 gap-4 mt-2 row justify-content-start">
                     <div class="col-9 pl-0">
+                        {!! Form::label('title', 'Agregar el nombre del requisito*',[
+                        'class' => 'pl-0']) !!}
                         <input wire:model="name" class="form-control" placeholder="Agregar el nombre del requisito">
                         @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
