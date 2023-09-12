@@ -85,7 +85,7 @@ class RequisicionesCreateComponent extends Component
         $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
         $this->contratos = KatbolContrato::get();
         $this->productos = KatbolProducto::where('archivo', false)->get();
-        $this->user_actual = Auth::user();
+        $this->user_actual = Auth::user()->empleado->area->area;
         $this->organizacion = Organizacion::first();
     }
 
@@ -106,7 +106,7 @@ class RequisicionesCreateComponent extends Component
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => $this->user_actual->empleado->area->area,
+                'area' => $this->user_actual,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
@@ -116,7 +116,7 @@ class RequisicionesCreateComponent extends Component
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => $this->user_actual->empleado->area->area,
+                'area' => $this->user_actual,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
