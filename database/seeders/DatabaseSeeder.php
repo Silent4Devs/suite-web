@@ -86,6 +86,7 @@ class DatabaseSeeder extends Seeder
                 // FacturacionTableSeeder::class,
                 ProveedoresTableSeeder::class,
                 ContratosTableSeeder::class,
+                MonedaSeedder::class,
                 // ConveniosModificatoriosTableSeeder::class,
                 // EntregasMensualesTableSeeder::class,
                 // CierreContratosTableSeeder::class,

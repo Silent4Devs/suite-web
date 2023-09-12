@@ -61,7 +61,7 @@ class RequisicionesController extends Controller
         $id = Auth::user()->id;
         $roles = ModelsUser::find($id)->roles()->get();
         foreach ($roles as $rol) {
-            if ($rol->name === 'Admin') {
+            if ($rol->title === 'Admin') {
                 return view('contract_manager.requisiciones.index', compact('ids', 'requisiciones', 'proveedor_indistinto', 'empresa_actual', 'logo_actual'));
             } else {
                 return view('contract_manager.requisiciones.index_solicitante', compact('ids', 'requisiciones_solicitante', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
@@ -71,7 +71,16 @@ class RequisicionesController extends Controller
 
     public function getRequisicionIndex(Request $request)
     {
-        $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
+
+        return datatables()->of($requisiciones)->toJson();
+    }
+
+
+    public function getRequisicionIndexSolicitante(Request $request)
+    {
+        $id = Auth::user()->id;
+        $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
         return datatables()->of($requisiciones_solicitante)->toJson();
     }
