@@ -300,7 +300,7 @@ class SolicitudVacacionesController extends Controller
 
         $solicitud->update($request->all());
 
-        Mail::to(removeUnicodeCharacters($solicitante->email))->send(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud));
+        Mail::to(trim(removeUnicodeCharacters($solicitante->email)))->send(new MailRespuestaVacaciones($solicitante, $supervisor, $solicitud));
         Flash::success('Respuesta enviada satisfactoriamente.');
 
         return redirect(route('admin.solicitud-vacaciones.aprobacion'));
