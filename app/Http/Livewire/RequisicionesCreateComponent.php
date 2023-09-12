@@ -18,6 +18,7 @@ use App\Models\Organizacion;
 use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Livewire;
 use Livewire\WithFileUploads;
