@@ -11,7 +11,7 @@
     <div class="create-requisicion">
         <form method="POST" action="{{route('contract_manager.orden-compra.update', ['id' => $requisicion->id])}}">
             @csrf
-            <div class="card card-content caja-blue">
+            <div class="card card-body caja-blue">
 
                 <div>
                     <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 50px; right: 430px;">
@@ -24,7 +24,7 @@
             </div>
 
             <div class="requisicion-info">
-                <div class="card card-content">
+                <div class="card card-body">
                     <div class="row">
                         {{-- <div class="col s12 l12">
                             <h3 class="titulo-form">Orden de Compra</h3>
@@ -130,7 +130,7 @@
             </div>
 
             <div class="proveedores-info">
-                <div class="card card-content">
+                <div class="card card-body">
                     <div class="row">
                         <div class="col s12">
                             <h3 class="sub-titulo-form">Proveedor</h3>
@@ -226,7 +226,7 @@
                     @php
                         $count = $count + 1;
                     @endphp
-                    <div class="card card-content card-product">
+                    <div class="card card-body card-product">
                         <div>
                             <div class="row">
                                 <div class="col s12">
@@ -282,6 +282,10 @@
                                         Proyecto <font class="asterisco">*</font>
                                     </label>
                                     <select  required class="browser-default mod-contrato" name="contrato{{$count}}">
+                                        @isset($contrato)
+                                        <option value="{{$contrato->id}}" >
+                                            {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} - {{ $contrato->nombre_servicio }}
+                                        @endisset
                                         @foreach ($contratos as $contrato)
                                             <option value="{{$contrato->id}}"  data-no="{{ $contrato->no_contrato }}"   data-servicio="{{ $contrato->nombre_servicio }}"  {{$producto->contrato_id == $contrato->id ? 'selected' : ''}} >
                                                 {{ $contrato->no_proyecto }} / {{ $contrato->no_contrato }} - {{ $contrato->nombre_servicio }}
@@ -478,7 +482,9 @@
             if(e.target.parentNode.classList.contains('caja-input-dinero')){
                 let count_serv = e.target.name.split('')[e.target.name.length - 1];
 
-                $('#input-total-serv' + count_serv ).val(parseFloat(document.querySelector('.productos-info .mod-sub_total[data-count="' + count_serv + '"]').value === "" ? 0 : document.querySelector('.productos-info .mod-sub_total[data-count="' + count_serv + '"]').value) - Array.from(document.querySelectorAll('.productos-info .caja-input-dinero input[data-count="' + count_serv + '"]:not(.mod-total, .mod-sub_total)')).reduce((acumulador, elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)), 0) );
+                $('#input-total-serv' + count_serv ).val(
+                    parseFloat(document.querySelector('.productos-info .mod-sub_total[data-count="' + count_serv + '"]').value === "" ? 0 : document.querySelector('.productos-info .mod-sub_total[data-count="' + count_serv + '"]').value) + parseFloat(document.querySelector('.productos-info .mod-iva[data-count="' + count_serv + '"]').value === "" ? 0 : document.querySelector('.productos-info .mod-iva[data-count="' + count_serv + '"]').value) - Array.from(document.querySelectorAll('.productos-info .caja-input-dinero input[data-count="' + count_serv + '"]:not(.mod-total, .mod-sub_total, .mod-iva)')).reduce((acumulador, elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)), 0)
+                );
 
                 $('#sub_total_calculado').val( Array.from(document.querySelectorAll('.mod-sub_total')).reduce((acumulador, elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)), 0) );
                 $('#iva_calculado').val(Array.from(document.querySelectorAll('.mod-iva')).reduce((acumulador, elemento) => acumulador + (elemento.value === "" ? 0 : parseFloat(elemento.value)), 0));
@@ -492,60 +498,79 @@
     </script>
 
     <script>
-        function addCard(tipo_card){
+       function addCard(tipo_card){
+
+        Swal.fire({
+        title: 'Agregar Producto?',
+        text: "Estas seguro de agregar un  nuevo producto, no podras eliminar los campos!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Seguro!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+
             if(tipo_card === 'servicio'){
-                let card = document.querySelector('.card-product');
-                let nueva_card = document.createElement("div");
-                nueva_card.classList.add("card");
-                nueva_card.classList.add("card-content");
-                nueva_card.classList.add("card-product");
-                let cards_count = document.querySelectorAll('.card-product').length + 1;
-                nueva_card.setAttribute("data-count", cards_count);
-                let id_nueva_card = 'product-serv-' + cards_count;
-                nueva_card.setAttribute('id', id_nueva_card);
+            let card = document.querySelector('.card-product');
+            let nueva_card = document.createElement("div");
+            nueva_card.classList.add("card");
+            nueva_card.classList.add("card-body");
+            nueva_card.classList.add("card-product");
+            let cards_count = document.querySelectorAll('.card-product').length + 1;
+            nueva_card.setAttribute("data-count", cards_count);
+            let id_nueva_card = 'product-serv-' + cards_count;
+            nueva_card.setAttribute('id', id_nueva_card);
 
-                let caja_cards = document.querySelector('.caja-card-product');
-                caja_cards.appendChild(nueva_card);
-                document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
+            let caja_cards = document.querySelector('.caja-card-product');
+            caja_cards.appendChild(nueva_card);
+            document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
 
-                document.querySelector('#' + id_nueva_card + ' .mod-cantidad').setAttribute('name', 'cantidad' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-producto').setAttribute('name', 'producto' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-especificaciones').setAttribute('name', 'especificaciones' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-centro_costo').setAttribute('name', 'centro_costo' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-contrato').setAttribute('name', 'contrato' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-no_personas').setAttribute('name', 'no_personas' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-porcentaje_involucramiento').setAttribute('name', 'porcentaje_involucramiento' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-sub_total').setAttribute('name', 'sub_total' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-descuento').setAttribute('name', 'descuento' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-iva').setAttribute('name', 'iva' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-otro_impuesto').setAttribute('name', 'otro_impuesto' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-iva_retenido').setAttribute('name', 'iva_retenido' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-isr_retenido').setAttribute('name', 'isr_retenido' + cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-total').setAttribute('name', 'total' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-cantidad').setAttribute('name', 'cantidad' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-producto').setAttribute('name', 'producto' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-especificaciones').setAttribute('name', 'especificaciones' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-centro_costo').setAttribute('name', 'centro_costo' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-contrato').setAttribute('name', 'contrato' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-no_personas').setAttribute('name', 'no_personas' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-porcentaje_involucramiento').setAttribute('name', 'porcentaje_involucramiento' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-sub_total').setAttribute('name', 'sub_total' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-descuento').setAttribute('name', 'descuento' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-iva').setAttribute('name', 'iva' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-otro_impuesto').setAttribute('name', 'otro_impuesto' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-iva_retenido').setAttribute('name', 'iva_retenido' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-isr_retenido').setAttribute('name', 'isr_retenido' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-total').setAttribute('name', 'total' + cards_count);
 
-                document.querySelector('#' + id_nueva_card + ' .mod-cantidad').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-producto').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-especificaciones').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-centro_costo').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-contrato').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-no_personas').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-porcentaje_involucramiento').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-sub_total').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-descuento').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-iva').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-otro_impuesto').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-iva_retenido').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-isr_retenido').setAttribute('data-count', cards_count);
-                document.querySelector('#' + id_nueva_card + ' .mod-total').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-cantidad').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-producto').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-especificaciones').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-centro_costo').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-contrato').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-no_personas').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-porcentaje_involucramiento').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-sub_total').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-descuento').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-iva').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-otro_impuesto').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-iva_retenido').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-isr_retenido').setAttribute('data-count', cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-total').setAttribute('data-count', cards_count);
 
-                document.querySelector('#' + id_nueva_card + ' .mod-total').setAttribute('id', 'input-total-serv' + cards_count);
+            document.querySelector('#' + id_nueva_card + ' .mod-total').setAttribute('id', 'input-total-serv' + cards_count);
 
-                $('#' + id_nueva_card + ' input').val('');
-                $('#' + id_nueva_card + ' select').innerHTML += '<option value="" selected disabled></option>';
-                $('#' + id_nueva_card + ' textarea').innerText = '';
+            $('#' + id_nueva_card + ' input').val('');
+            $('#' + id_nueva_card + ' select').innerHTML += '<option value="" selected disabled></option>';
+            $('#' + id_nueva_card + ' textarea').innerText = '';
 
-                document.querySelector('#input-count-prod').value = cards_count;
-            }
+            document.querySelector('#input-count-prod').value = cards_count;
+        }
+            Swal.fire(
+            'Agregado!',
+            'Producto agregado.',
+            'success'
+            )
+        }
+        })
         }
     </script>
 @endsection

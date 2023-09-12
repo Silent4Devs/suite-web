@@ -59,7 +59,7 @@
                     </div>
                     <div class="flex-item item-header-doc-info" style="">
                         <h4 style="font-size: 18px; color:#49598A;">REQUISICIÓN DE ADQUISICIONES</h4>
-                        <p>Folio: 00-00{{ $requisicion->id}} </p>
+                        <p>Folio: RQ-00-00{{ $requisicion->id}} </p>
                         <p>Fecha de solicitud: {{ date('d-m-Y', strtotime($requisicion->fecha))  }}</p>
                     </div>
                 </div>

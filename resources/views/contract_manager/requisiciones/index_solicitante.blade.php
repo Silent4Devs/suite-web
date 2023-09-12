@@ -189,7 +189,6 @@
                     }
                     @endcan
                 }
-
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -205,8 +204,10 @@
                 },
                 columns: [
                     {
-                        data: 'id',
-                        name: 'id'
+                    data: 'id',
+                    render: function ( data, type, row ) {
+                    return `<p>RQ-00-00-</p> ${row.id}`;
+                    }
 
                     },
                     {
