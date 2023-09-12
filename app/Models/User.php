@@ -34,7 +34,7 @@ class User extends Authenticatable implements Auditable
         'two_factor_expires_at',
     ];
 
-    // protected $with = ['empleado'];
+    protected $with = ['empleado'];
 
     protected $fillable = [
         'name',
