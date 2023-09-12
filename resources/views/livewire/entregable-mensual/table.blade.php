@@ -194,9 +194,12 @@
             </div>
         @endif
     @endif
-</div>
-{{ $entregamensuales->links() }}
 
+    <div class="col-12 d-flex justify-content-end">
+        {{ $entregamensuales->links('livewire::simple-tailwind') }}
+    </div>
+
+</div>
 
 <script>
     $(document).ready(function() {

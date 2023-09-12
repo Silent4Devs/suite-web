@@ -235,7 +235,10 @@
             </div>
         @endif
     @endif
-    {{ $facturas->links('livewire::simple-tailwind') }}
+
+    <div class="col-12 d-flex justify-content-end">
+        {{ $facturas->links('livewire::simple-tailwind') }}
+    </div>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {

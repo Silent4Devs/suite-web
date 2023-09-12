@@ -192,9 +192,12 @@
         @endif
     @endif
 
+    <div class="col-12 d-flex justify-content-end">
+        {{ $nivelesServicio->links('livewire::simple-tailwind') }}
+    </div>
+
 </div>
 
-{{ $nivelesServicio->links() }}
 <script>
     $(document).ready(function() {
         $('.select_pagination_niveles').change(function(e) {

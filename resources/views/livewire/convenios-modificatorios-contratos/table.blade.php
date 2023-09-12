@@ -117,15 +117,15 @@
         {{ $convenio->links('livewire::simple-tailwind') }}
     </div>
 </div>
-<div class="row">
-    {{-- <div class="col-6 p-0">
+{{-- <div class="row">
+    <div class="col-6 p-0">
         <strong>
             Mostrando {{ $perPage }} de {{ $totalRegistrosMostrando }} resultados @if ($estatus)
                 <span class="badge badge-primary">(filtrando por {{ $estatus }})</span>
             @endif
         </strong>
-    </div> --}}
-</div>
+    </div>
+</div> --}}
 <script>
     $(document).ready(function() {
         $('.select_pagination').change(function(e) {
