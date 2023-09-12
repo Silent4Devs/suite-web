@@ -135,9 +135,11 @@ class SucursalController extends Controller
 
         $file = $request->file('mylogo');
 
+
+
         if ($file != null) {
             $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(base_path('public/razon_social'), $nombre);
+            $img = $file->move(base_path('public/razon_social'), $nombre);
 
             $sucursal->update([
                 'id' => $request->id,
@@ -148,7 +150,7 @@ class SucursalController extends Controller
                 'estado' => $request->estado,
                 'zona' =>  $request->zona,
                 'direccion' =>  $request->direccion,
-                'mylogo' =>   $nombre,
+                'mylogo' =>  $img,
             ]);
         }
 

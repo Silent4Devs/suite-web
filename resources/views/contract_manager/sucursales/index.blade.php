@@ -237,6 +237,7 @@
                     {
                         data: 'mylogo',
                         name: 'mylogo'
+
                     },
                     {
                         data: 'id',
