@@ -382,7 +382,7 @@
                             <input type="hidden" required name="firma" id="firma">
                         </div>
                         <div>
-                            <div class="btn btn-danger" id="clear">Limpiar</div>
+                            <div class="btn" style="color: white; background:  gray !important; transform: translateY(-40px) scale(0.8);" id="clear">Limpiar</div>
                         </div>
                     </div>
                 </div>
