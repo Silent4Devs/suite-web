@@ -69,7 +69,7 @@
                                 Área que solicita <font class="asterisco">*</font>
                             </label>
                             <input id="area_print" name="area"
-                                value="@isset($this->user_actual) {{ $this->user_actual }} @endisset"
+                                value="@isset($this->area) {{ $this->area->area->area }} @endisset"
                                 readonly style="background: #eaf0f1" class="browser-default" type="text">
                         </div>
                     </div>

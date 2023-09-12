@@ -34,8 +34,6 @@ class User extends Authenticatable implements Auditable
         'two_factor_expires_at',
     ];
 
-    protected $with = ['empleado'];
-
     protected $fillable = [
         'name',
         'n_empleado',
@@ -209,7 +207,7 @@ class User extends Authenticatable implements Auditable
         }
     }
 
-        public function reviews()
+    public function reviews()
     {
         return $this->hasMany('App\Models\esculea\Review');
     }
