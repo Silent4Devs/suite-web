@@ -1,6 +1,6 @@
 <div>
     @if ($evaluationUser)
-        <div class="card mt-4">
+        <div class="card shadow-sm mt-4">
             <div class="px-4 py-2">
                 <h5 class="text-sm font-medium leading-6 text-gray-900">
                     Información de la evaluación
@@ -13,11 +13,11 @@
             </div>
             <div class="border-top">
                 <div>
-                    <div class="px-4 py-3 row">
+                    <div class="px-4 py-2 row">
                         <div class="col-3">
                             Lección evaluada
                         </div>
-                        <div class="mt-1 col-3">
+                        <div class="mt-1 col-3 d-flex justify-content-center">
                             {{ $evaluation->section->name }}
 
                         </div>
@@ -26,7 +26,7 @@
                         <div class="col-3">
                             Estatus
                         </div>
-                        <div class="col-3">
+                        <div class="col-3 d-flex justify-content-center">
                             <span
                                 class="bg-success text-white rounded px-2">Terminado</span>
 
@@ -36,7 +36,7 @@
                         <div class="col-3">
                             Total de preguntas
                         </div>
-                        <div class="col-3">
+                        <div class="col-3  d-flex justify-content-center">
                             {{ $totalQuizQuestions }}
                         </div>
                     </div>
@@ -44,8 +44,10 @@
                         <div class="col-3">
                             Porcentaje
                         </div>
-                        <div class="col-9 bg-success text-white rounded">
-                            {{ round($percentageEvaluationUser) }} %
+                        <div class="col-3 d-flex justify-content-center">
+                            <span class="bg-success text-white rounded  px-2">
+                                {{ round($percentageEvaluationUser) }} %
+                            </span>
                         </div>
                     </div>
 
@@ -74,7 +76,7 @@
                 }
             @endphp
             @if (count($userAnswers))
-                <div class="card">
+                <div class="card shadow-sm">
 
                     <div class="px-4 py-5 sm:px-6">
                         <span class="mr-2 font-extrabold"> {{ $loop->iteration }}.-</span><span
@@ -147,7 +149,7 @@
     @if ($user->id == null)
         <div class="flex items-center justify-end mt-4">
             <a type="submit"
-                class="btn btn-primary mb-4" href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}">
+                class="inline-flex items-center px-4 py-2 m-4 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25" href="{{ route('admin.curso.evaluacion', ['course' => $course->id, 'evaluation' => $evaluation->id]) }}">
                 {{ __('Regresar') }}
             </a>
         </div>

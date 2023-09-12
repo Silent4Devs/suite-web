@@ -44,9 +44,9 @@
                         <p class="text-sm text-red-500">{{ $message }}</p>
                     @enderror
 
-                <div class="d-flex justify-content-end mt-2">
+                <div class="d-flex justify-content-end" style="margin-top:30px">
                     @if (!$editar)
-                        <button type="submit" class="btn btn-outline-primary mb-3 ml-4" wire:click.prevent="save">
+                        <button type="submit" class="btn advance mb-3 ml-4" wire:click.prevent="save">
                             {{ __('CREAR EVALUACIÓN') }}
                         </button>
                     @else

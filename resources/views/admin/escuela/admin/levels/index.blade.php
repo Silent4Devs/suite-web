@@ -26,7 +26,7 @@
                                 <form style="display:inline-block" action="{{route('admin.levels.destroy', $level)}}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn" type="submit"><i style="font-size:12pt; color:red" class="fas fa-trash"  data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button>
+                                    <button class="btn" type="submit"><i style="font-size:12pt;" class="fa-regular fa-trash-can"  data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button>
                                 </form>
                             </div>
                         </td>

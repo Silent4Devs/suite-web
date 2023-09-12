@@ -10,6 +10,15 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
+        .circulo{
+            width: 75px;
+            height: 75px;
+        }
+        .circulo img {
+            width: 75px; /* Ajusta la imagen al tamaño del div circular */
+            height: 75px;
+            border-radius: 50%;
+        }
     </style>
     {{-- @include('flash::message')
     @include('partials.flashMessages') --}}
@@ -17,7 +26,7 @@
     <div class="mt-5 card">
         <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
 
-            <div class="p-2">
+            <div class="p-2 m-4">
                 <a href="{{ route('admin.courses.create') }}" class="ml-4 btn text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 cursor-pointer">Crear Curso Nuevo</a>
             </div>
 
@@ -49,9 +58,9 @@
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="d-flex inline">
-                                <div>
+                                <div class="circulo">
                                     @isset($course->image)
-                                    <img style="border-radius: 50%;width:150px;" src="{{ Storage::url($course->image->url) }}"
+                                    <img  src="{{ Storage::url($course->image->url) }}"
                                         alt="{{ $course->title }}">
                                     @else
                                     <img src="{{ asset('img/home/imagen-estudiantes.jpg') }}" id="picture" alt="Curso"
@@ -72,32 +81,34 @@
                             <div class="text-sm text-gray-900">{{ $course->students->count() }}</div>
                             <div class="text-sm text-gray-500">Alumnos matriculados</div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td>
                             <div class="d-flex">
                                 <p>
                                     ({{ $course->rating }})
                                 </p>
-                                <ul class="d-flex ml-2" style="list-style: none;">
-                                    <li class="mr-1">
-                                        <i
-                                            class="fas fa-star" style="color: {{$course->rating >= 1 ? '#E3A008' : 'gray' }}; font-size: 18px;">
-                                        </i>
-                                    </li>
-                                    <li class="mr-1">
-                                        <i class="fas fa-star" style="color: {{$course->rating >= 2 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
-                                    </li>
-                                    <li class="mr-1">
-                                        <i class="fas fa-star" style="color: {{$course->rating >= 3 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
-                                    </li>
-                                    <li class="mr-1">
-                                        <i class="fas fa-star" style="color: {{$course->rating >= 4 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
-                                    </li>
-                                    <li class="mr-1">
-                                        <i class="fas fa-star" style="color: {{$course->rating >= 5 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
-                                    </li>
-                                </ul>
+                                <div>
+                                    <ul class="d-flex px-2" style="list-style: none;">
+                                        <li class="mr-1">
+                                            <i
+                                                class="fas fa-star" style="color: {{$course->rating >= 1 ? '#E3A008' : 'gray' }}; font-size: 18px;">
+                                            </i>
+                                        </li>
+                                        <li class="mr-1">
+                                            <i class="fas fa-star" style="color: {{$course->rating >= 2 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
+                                        </li>
+                                        <li class="mr-1">
+                                            <i class="fas fa-star" style="color: {{$course->rating >= 3 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
+                                        </li>
+                                        <li class="mr-1">
+                                            <i class="fas fa-star" style="color: {{$course->rating >= 4 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
+                                        </li>
+                                        <li class="mr-1">
+                                            <i class="fas fa-star" style="color: {{$course->rating >= 5 ? '#E3A008' : 'gray' }}; font-size: 18px;"></i>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="text-sm text-gray-500">Valoración del curso</div>
+                            <p>Valoración del curso</p>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @switch($course->status)
@@ -123,10 +134,9 @@
                             @endswitch
                         </td>
                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                            <a href="{{ route('admin.courses.edit', $course) }}" class="text-blue-500 fas fa-edit"
-                                title="Editar"></a>
-                            <a href="{{ route('admin.courses-quizdetails', $course) }}" class="mr-2 fas fa-file-alt"
-                                style="color:#60DC8F" title="Consultar Evaluaciones"></a>
+                            <a href="{{ route('admin.courses.edit', $course) }}" class="fas fa-edit mr-2"
+                                title="Editar" style="color:#747474"></a>
+                            <a href="{{ route('admin.courses-quizdetails', $course) }}" class="mr-2 fas fa-file-alt" title="Consultar Evaluaciones" style="color:#747474"></a>
                         </td>
                     </tr>
                     @endforeach

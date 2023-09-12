@@ -17,6 +17,24 @@
             border: 1px solid #D8D8D8;
             margin-bottom: 10px;
         }
+        .advance {
+            background-color: #345183;
+            color:#FFFFFF;
+        }
+
+        .advance:hover{
+            color:#FFFFFF;
+        }
+
+        .cancel{
+            background: #FFFFFF;
+            color: #006DDB;
+            border: 1px solid #006DDB;
+        }
+
+        .cancel:hover{
+            color:#006DDB;
+        }
 
         /* Texto de cada meta  */
     </style>
@@ -133,6 +151,10 @@
     </div>
     <div class="tab-pane mb-4 fade show active" id="nav-leccion-curso" role="tabpanel" aria-labelledby="nav-contorg-tab">
         @livewire('escuela.instructor.courses-curriculum',['course'=>$course])
+        <div class="d-flex justify-content-end">
+            <button class="btn advance" onclick="cambiarPestana('meta-curso-tab')">GUARDAR Y CONTINUAR</button>
+        </div>
+
     </div>
     <div class="tab-pane mb-4 fade" id="nav-meta-curso" role="tabpanel" aria-labelledby="nav-contorg-tab">
         <div>
@@ -146,11 +168,25 @@
         <div>
             @livewire('escuela.instructor.course-audiences',['course'=>$course], key('course-audiences'.$course->id))
         </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn  advance" onclick="cambiarPestana('estudiantes-curso-tab')">GUARDAR Y CONTINUAR</button>
+        </div>
     </div>
     <div class="tab-pane mb-4 fade" id="nav-estudiantes-curso" role="tabpanel" aria-labelledby="nav-contorg-tab">
         @livewire('escuela.instructor.courses-students',['course'=>$course])
+        <div class="d-flex justify-content-end">
+            <button class="btn  advance" onclick="cambiarPestana('evaluaciones-curso-tab')">GUARDAR Y CONTINUAR</button>
+        </div>
     </div>
     <div class="tab-pane mb-4 fade" id="nav-evaluaciones-curso" role="tabpanel" aria-labelledby="nav-contorg-tab">
         @livewire("escuela.instructor.evaluaciones-instructor",['course'=>$course])
+        <div class="d-flex justify-content-end">
+            <a class="btn advance" href="{{ route('admin.courses.index') }}" role="button">GENERAR CURSO Y GUARDAR</a>
+        </div>
     </div>
+    <script>
+        function cambiarPestana(tab) {
+            $('#nav-' + tab).tab('show');
+        }
+    </script>
 </div>

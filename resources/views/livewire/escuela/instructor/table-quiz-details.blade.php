@@ -1,7 +1,7 @@
 <div>
     <h3 class="mt-4 mb-4 ml-5">Evaluaciones</h3>
 
-    <div class="overflow-hidden bg-white sm:rounded-lg">
+    <div class="card shadow-sm">
         <div class="row">
             <div class="col-12">
                 <div class="row  mx-n2">

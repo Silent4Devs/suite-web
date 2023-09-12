@@ -35,12 +35,12 @@
 
                            @livewire('escuela.instructor.questions',['evaluation_id'=>$evaluacion->id],key($evaluacion->id))
 
-                           <a href="{{route('admin.courses.evaluation.questions',['course'=>$course->slug,'evaluation'=>$evaluacion->id])}}"><i style="font-size:10pt; color:#60DC8F" class="ml-1 fas fa-file-alt" title="Ver preguntas" ></i></a>
+                           <a href="{{route('admin.courses.evaluation.questions',['course'=>$course->slug,'evaluation'=>$evaluacion->id])}}"><i style="font-size:10pt; color:#747474;" class="ml-1 fas fa-file-alt" title="Ver preguntas" ></i></a>
 
-                            <i style="font-size:10pt" class="ml-1 text-blue-500 cursor-pointer fas fa-edit"
+                            <i style="font-size:10pt" class="ml-1 cursor-pointer fas fa-edit"
                                 wire:click.prevent="edit({{ $evaluacion->id }})"></i>
 
-                            <i style="font-size:10pt; color:red" class="ml-1 fas fa-trash" data-toggle="tooltip"
+                            <i style="font-size:10pt;" class="ml-1 fa-regular fa-trash-can" data-toggle="tooltip"
                                 data-placement="top" title="Eliminar"
                                 wire:click.prevent="destroy({{ $evaluacion->id }})"></i>
 

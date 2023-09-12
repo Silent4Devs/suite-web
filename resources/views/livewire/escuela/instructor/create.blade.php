@@ -36,8 +36,8 @@
                             </div>
                             <div class="col-9 pl-0">
                                 <input wire:model.defer="answers.{{ $key }}.answer" name="answers[1][answer]"
-                                    value="{{ old('answers.1.answer') }}" type="text" class="form-control bg-gray-200"
-                                    style="border: none" />
+                                    value="{{ old('answers.1.answer') }}" type="text" class="form-control"
+                                    style="border: none; background-color:#CDD7E1;" />
                                 @error('answers.' . $key . '.answer')
                                     <small class="text-xs text-red-700">El campo respuesta es obligatorio</small>
                                 @enderror
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" data-dismiss="modal"
+                <button type="button" class="btn cancel" data-dismiss="modal"
                     wire:click.prevent="cancel()">Cerrar</button>
                 <button wire:click.prevent="save()" class="btn btn-primary close-modal" style="background-color: #345183">
                     Guardar

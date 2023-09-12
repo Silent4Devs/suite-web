@@ -50,17 +50,13 @@
 
                     </td>
 
-                    <td>
+                    <td class="d-flex justify-content-end mr-3">
 
                         <a class="btn" href="{{route('admin.categories.edit', $category)}}"><i style="font-size:12pt; color:#000" class="fas fa-edit" title="Editar"></i></a>
-
                         <form style="display:inline-block" action="{{route('admin.categories.destroy', $category)}}" method="POST">
-
                             @csrf
-
                             @method('delete')
-
-                            <button class="btn" type="submit"><i style="font-size:12pt; color:red" class="fas fa-trash"  data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button>
+                            <button class="btn" type="submit"><i style="font-size:12pt;" class="fa-regular fa-trash-can"  data-toggle="tooltip" data-placement="top" title="Eliminar"></i></button>
 
                         </form>
 

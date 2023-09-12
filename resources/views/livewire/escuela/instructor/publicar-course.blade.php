@@ -7,11 +7,11 @@
     </select>
     <p class="d-inline">
         @if ($course->status == 1)
-            <span class="px-2 py-2 ml-3" style="background-color: #C6FFD0; border-radius:10px">
+            <span class="px-2 py-2 ml-3" style="background-color:#fd7e14; color:#FFFFFF; border-radius:10px;">
                 Borrador
             </span>
         @else
-            <span class="px-2 py-2 ml-3" style="background-color: #C6FFD0; color:#049209; border-radius:10px">
+            <span class="px-2 py-2 ml-3" style="background-color: #C6FFD0; color:#049209; border-radius:10px;">
                 Publicado
             </span>
         @endif
