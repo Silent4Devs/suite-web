@@ -96,24 +96,24 @@
                         @enderror
                     </div> --}}
             <!-- Estatus Field -->
-            <div wire:ignore class="input-field form-group col-md-6">
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>PDF</span>
-                        <input class="input_file_validar" type="file" wire:model.defer="pdf"
-                            accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
-                            id="upload{{ $iteration }}">
-                    </div>
-                    <div class="file-path-wrapper">
+            <div class="input-field form-group col-md-6">
+                <div class="custom-file">
+                    {{-- <div class="btn"> --}}
+                    <span>PDF</span>
+                    <input class="form-control" type="file" wire:model.defer="pdf"
+                        accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                        id="upload{{ $iteration }}" readonly>
+                    {{-- </div> --}}
+                    {{-- <div class="file-path-wrapper">
                         <input class="file-path validate" wire:model.defer="pdf" placeholder="Elegir factura pdf"
                             readonly>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div wire:loading wire:target="pdf" class="s-12">
-                    {{-- <div class="progress">
-                                <div class="indeterminate"></div>
-                            </div> --}}
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
                     <div>Cargando archivo</div>
                 </div>
                 <div class="ml-4 display-flex">
@@ -124,17 +124,17 @@
                 </div>
             </div>
 
-            <div wire:ignore class="input-field form-group col-md-6">
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>XML</span>
-                        <input type="file" wire:model.defer="xml" accept="text/xml"
-                            id="upload{{ $iteration1 }}">
-                    </div>
-                    <div class="file-path-wrapper">
+            <div class="input-field form-group col-md-6">
+                <div class="custom-file">
+                    {{-- <div class="btn"> --}}
+                    <span>XML</span>
+                    <input type="file" class="form-control" wire:model.defer="xml" accept="text/xml"
+                        id="upload{{ $iteration1 }}" readonly>
+                    {{-- </div> --}}
+                    {{-- <div class="file-path-wrapper">
                         <input class="file-path validate" wire:model.defer="xml" placeholder="Elegir factura xml"
                             readonly>
-                    </div>
+                    </div> --}}
                 </div>
                 <div wire:loading wire:target="xml">
                     <div class="progress">

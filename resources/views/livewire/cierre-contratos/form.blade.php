@@ -14,13 +14,18 @@
             <div class="distancia form-group col-md-4">
                 <label for="" class="txt-tamaño">Cumple<font class="asterisco">*</font></label>
                 <br>
-                <div class="switch">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" wire:model="cumple" class="custom-control-input" id="cumple"
+                        name="cumple">
+                    <label class="custom-control-label" for="cumple">No/Sí</label>
+                </div>
+                {{-- <div class="switch">
                     <label>
                         <input type="checkbox" name="cumple" wire:model.debounce.800ms="cumple">
                         <span class="lever"></span>
                         Si
                     </label>
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="row" style="margin-left: 10px;margin-right: 10px;">

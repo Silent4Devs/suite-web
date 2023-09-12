@@ -30,20 +30,20 @@
     </div>
 
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
-        <div class="distancia form-group col-md-6" wire:ignore>
+        <div class="input-field form-group col-md-6">
             @if (is_null($organizacion))
             @else
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>PDF</span>
-                        <input class="input_file_validar" type="file" wire:model.debounce.800ms="convenios_file"
-                            accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
-                            id="upload {{ $iteration }}">
-                    </div>
-                    <div class="file-path-wrapper">
+                <div class="custom-file">
+                    {{-- <div class="btn"> --}}
+                    <span>PDF</span>
+                    <input class="form-control" type="file" wire:model.debounce.800ms="convenios_file"
+                        accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                        id="upload {{ $iteration }}" readonly>
+                    {{-- </div> --}}
+                    {{-- <div class="file-path-wrapper">
                         <input class="file-path validate" wire:model.debounce.800ms="convenios_file"
                             placeholder="Elegir convenio pdf" readonly>
-                    </div>
+                    </div> --}}
                 </div>
             @endif
 
