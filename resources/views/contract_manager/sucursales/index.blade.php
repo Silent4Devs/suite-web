@@ -158,7 +158,7 @@
                 let archivoButton = {
                     @can('katbol_sucursales_archivar')
                     text: 'Archivar Registro',
-                    url: "{{ route('contract_manager.sucursales.archivar', ['id' => $ids]) }}",
+                    url: "{{ route('contract_manager.sucursales.archivar', ['id' => 1]) }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -207,8 +207,8 @@
                 },
                 columns: [
                     {
-                        data: 'clave',
-                        name: 'clave'
+                        data: 'id',
+                        name: 'id'
                     },
                     {
                         data: 'descripcion',
@@ -237,6 +237,7 @@
                     {
                         data: 'mylogo',
                         name: 'mylogo'
+
                     },
                     {
                         data: 'id',

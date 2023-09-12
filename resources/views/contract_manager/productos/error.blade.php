@@ -15,12 +15,11 @@
         </div>
 
         <div>
-            <h3 style="font-size: 22px; font-weight: bolder;">Las causas por las que no puedes acceder a la siguiente orden de compra son las siguientes </h3>
+            <h3 style="font-size: 22px; font-weight: bolder;">Las causas por las que no puedes agregar el siguiente registro  es la siguiente</h3>
             <ul>
-                <li>El registros  ha sido eliminado</li>
-                <li>Tu conexión de internet es inestable</li>
-                <li>Genera tu orde de compra despues intentalo de nuevo</li>
+                <li>La clave de registro  ya esta siendo utilizada  regresa y asignale otra</li>
             </ul>
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" style="color: whitesmoke" class="btn_cancelar">Regresar</a>
         </div>
     </div>
 

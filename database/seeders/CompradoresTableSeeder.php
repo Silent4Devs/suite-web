@@ -17,7 +17,6 @@ class CompradoresTableSeeder extends Seeder
 
         \DB::table('compradores')->insert([
             0 => [
-                'id' => 1,
                 'nombre' => null,
                 'clave' => '1',
                 'estado' => 'AC',
@@ -28,7 +27,6 @@ class CompradoresTableSeeder extends Seeder
                 'id_user' => 133,
             ],
             1 => [
-                'id' => 2,
                 'nombre' => null,
                 'clave' => '2',
                 'estado' => 'AC',

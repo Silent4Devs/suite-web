@@ -6,22 +6,37 @@
         <form method="POST" action="{{ route("contract_manager.compradores.store") }}" enctype="multipart/form-data">
             @csrf
           <div class="row">
-            <div class="form-group col-md-6 col-sm-6">
-                <label class="required" for="clave"><i class="fa-solid fa-key fa-lg"></i>&nbsp;&nbsp;Clave</label>
-                <input class="form-control {{ $errors->has('clave') ? 'is-invalid' : '' }}" type="clave" name="clave" id="clave" value="{{ old('clave') }}" required>
-                @if($errors->has('clave'))
+            <div class="form-group col-md-12 col-sm-12">
+                <label class="required" for="id">&nbsp;&nbsp;Clave</label>
+                <input class="form-control {{ $errors->has('id') ? 'is-invalid' : '' }}" type="number" name="id" id="id" value="{{ old('id') }}" required>
+                @if($errors->has('id'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('clave') }}
+                        {{ $errors->first('id') }}
                     </div>
                 @endif
                 <span class="help-block"></span>
             </div>
-            <div class="form-group col-md-6 col-sm-6">
-                <label class="required" for="nombre"><i class="fa-solid fa-file-lines fa-lg"></i>&nbsp;&nbsp;Descripción</label>
-                <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="nombre" name="nombre" id="nombre" required>
-                @if($errors->has('nombre'))
-                    <div class="invalid-feedback">
+            <div class="form-group col-md-12 col-sm-12">
+                <label for="nombre" class="txt-tamaño">
+                    Nombre<font class="asterisco">*</font></label>
+                    <select class="form-control {{ $errors->has('id') ? 'is-invalid' : '' }}" required name="nombre">
+                        <option value="" selected disabled></option>
+                        @foreach ($users as $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                        @endforeach
+                    </select>
+                @if ($errors->has('nombre'))
+                    <div class="invalid-feedback red-text">
                         {{ $errors->first('nombre') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group col-md-12 col-sm-12">
+                <label class="required" for="estado">&nbsp;&nbsp;Descripción</label>
+                <input class="form-control {{ $errors->has('estado') ? 'is-invalid' : '' }}" type="text" pattern="[A-z]{4,100}" name="estado" id="estado" required>
+                @if($errors->has('estado'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('estado') }}
                     </div>
                 @endif
                 <span class="help-block"></span>

@@ -7,81 +7,69 @@
     <div>
         <!-- No Contrato Field -->
         <input wire:model="contrato_id" type="hidden" value="{{ $contrato_id }}">
-        <div class="mb-4 row">
-            <!-- Area Field -->
-            <div class="row">
-                <div class="input-field col s12 m6">
-                    <small>
-                        <p class="grey-text letra-ngt"><i class="fas fa-paste iconos-crear"></i>Nombre del Convenio<font
-                                class="asterisco">*</font>
-                        </p>
-                    </small>
-                    <input type="text" wire:model.debounce.800ms="no_convenio" class="form-control" >
-                    @error('no_convenio') <span class="red-text">{{ $message }}</span> @enderror
-                </div>
 
-                <div class="col s12 m6">
-                    <div wire:ignore class="input-field col s12">
-                        <small>
-                            <p class="grey-text" style="font-size:17px;font-weight:bold;"><i
-                                    class="fas fa-calendar-alt iconos-crear"></i>Fecha del Convenio:<font
-                                    class="asterisco">*</font>
-                            </p>
-                        </small>
-                        <input type="date" wire:model.debounce.800ms="fecha" min="1945-01-01" class="form-control" required>
-                    </div>
-                    @error('fecha') <span class="red-text"
-                            style="margin-left: 9px">{{ $message }}</span>
-                    @enderror
-                </div>
+        <!-- Area Field -->
+        <div class="row" style="margin-left: 10px;margin-right: 10px;">
+            <div class="distancia form-group col-md-6">
+                Nombre del Convenio<font class="asterisco">*</font>
+                <input type="text" wire:model.debounce.800ms="no_convenio" class="form-control">
+                @error('no_convenio')
+                    <span class="red-text">{{ $message }}</span>
+                @enderror
+            </div>
 
-
+            <div class="distancia form-group col-md-6" wire:ignore>
+                Fecha del Convenio:<font class="asterisco">
+                    *</font>
+                <input type="date" wire:model.debounce.800ms="fecha" min="1945-01-01" class="form-control" required>
+                @error('fecha')
+                    <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
+                @enderror
             </div>
         </div>
+    </div>
 
-        <div class="mb-4 row">
-            <div class="row">
-                <div wire:ignore class="col s12 m6">
-                    @if (is_null($organizacion))
-
-                    @else
-                    <div class="file-field input-field">
-                        <div class="btn">
-                            <span>PDF</span>
-                            <input class="input_file_validar" type="file" wire:model.debounce.800ms="convenios_file" accept="{{$organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt'}}"
-                                id="upload {{ $iteration}}">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" wire:model.debounce.800ms="convenios_file" placeholder="Elegir convenio pdf"
-                                readonly>
-                        </div>
-                    </div>
-                    @endif
-
-
-                    <div wire:loading wire:target="convenios_file" class="s-12">
-                        <div class="progress">
-                            <div class="indeterminate"></div>
-                        </div>
-                        <div>Cargando archivo</div>
-                    </div>
-                    <div class="ml-4 display-flex">
-                        <label class="red-text">{{ $errors->first('Type') }}</label>
-                        @error('convenios_file') <span class="red-text">{{ $message }}</span> @enderror
-                    </div>
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="input-field form-group col-md-6">
+            @if (is_null($organizacion))
+            @else
+                <div class="custom-file">
+                    {{-- <div class="btn"> --}}
+                    <span>PDF</span>
+                    <input class="form-control" type="file" wire:model.debounce.800ms="convenios_file"
+                        accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                        id="upload {{ $iteration }}" readonly>
+                    {{-- </div> --}}
+                    {{-- <div class="file-path-wrapper">
+                        <input class="file-path validate" wire:model.debounce.800ms="convenios_file"
+                            placeholder="Elegir convenio pdf" readonly>
+                    </div> --}}
                 </div>
+            @endif
+
+
+            <div wire:loading wire:target="convenios_file" class="s-12">
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+                <div>Cargando archivo</div>
             </div>
-
-            <div class="input-field col s12">
-                <small>
-                    <p class="grey-text letra-ngt"><i class="fas fa-file-invoice iconos-crear"></i>Descripción
-                    </p>
-                </small>
-                <textarea wire:model.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="text_area"></textarea>
-                @error('descripcion') <span class="red-text">{{ $message }}</span> @enderror
+            <div class="ml-4 display-flex">
+                <label class="red-text">{{ $errors->first('Type') }}</label>
+                @error('convenios_file')
+                    <span class="red-text">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
+    </div>
 
-
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="input-field distancia form-group col-md-12">
+            Descripción
+            <textarea wire:model.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="form-control"></textarea>
+            @error('descripcion')
+                <span class="red-text">{{ $message }}</span>
+            @enderror
         </div>
     </div>
 </section>
@@ -108,7 +96,6 @@
             @this.set('deductiva_penalizacion', e.target.value);
         });
     });
-
 </script>
 <script>
     window.addEventListener('contentChanged', event => {
@@ -136,5 +123,4 @@
         $('select').formSelect();
         //M.AutoInit();
     });
-
 </script>

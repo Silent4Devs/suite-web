@@ -1,4 +1,4 @@
-<div class="eval-nivel">
+<div>
     <div>
         <h5>Información del nivel de servicio</h5>
         <ul class="collection">
@@ -20,8 +20,8 @@
     </div>
     <h5>Evaluaciones <span style="">({{ $total_evaluaciones }})</span></h5>
     @if ($total_evaluaciones > 0)
-        <div>
-            <table class="tabla_responsiva">
+        <div class="table-responsive">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -40,14 +40,14 @@
                                 {{ $EvaluacionServicio->firstItem() + $counter }}
                             </td>
                             <td>
-                                {{ $Es->evaluacion}} {{ $Es->evaluacion_day}}
+                                {{ $Es->evaluacion }} {{ $Es->evaluacion_day }}
                             </td>
                             <td>
                                 @if ($Es->fecha)
-                                <i class="fas fa-calendar-alt"></i>
-                                {{ date('d-m-Y', strtotime($Es->fecha)) }}
+                                    <i class="fas fa-calendar-alt"></i>
+                                    {{ date('d-m-Y', strtotime($Es->fecha)) }}
                                 @else
-                                Sin fecha registrada
+                                    Sin fecha registrada
                                 @endif
                             </td>
                             <td>{{ $Es->promedio }} {{ $Es->promedio != null ? $nivel_servicio->unidad : null }}
@@ -103,7 +103,8 @@
         </div>
     @else
         <br>
-        <div style="background-color: #006847;padding: 15px;
+        <div
+            style="background-color: #006847;padding: 15px;
             margin-bottom: 20px;
             border: 1px solid transparent;
             color: white;
@@ -152,7 +153,6 @@
                 var instances = M.Modal.init(elems, options);
             });
         });
-
     </script>
 
 </div>

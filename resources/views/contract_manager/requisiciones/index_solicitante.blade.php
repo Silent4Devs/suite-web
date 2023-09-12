@@ -7,7 +7,7 @@
 
    th, td {
     border: 1px solid blue;
-    width: 110px;
+    width: 130px;
     word-wrap: break-word
     }
 </style>
@@ -109,8 +109,8 @@
                 }
 
             ];
-            let btnAgregar = {
-                @can("katbol_requisiciones_agregar")
+                let btnAgregar = {
+                    @can("katbol_requisiciones_agregar")
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar requisicion',
                     url: "{{ route('contract_manager.requisiciones.create') }}",
@@ -121,10 +121,9 @@
                         } = config;
                         window.location.href = url;
                     }
-                @endcan
-            };
-
-            let btnAprobacion = {
+                    @endcan
+                };
+               let btnAprobacion = {
                     text: '<i class="fa-solid fa-envelope"></i> Aprobadores',
                     titleAttr: 'Aprobadores requisicion',
                     url: "{{ route('contract_manager.requisiciones.index_aprobadores') }}",
@@ -183,7 +182,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: {
-                    url: "{{ route('contract_manager.requisiciones.getRequisicionIndex') }}",
+                    url: "{{ route('contract_manager.requisiciones.getRequisicionIndexSolicitante') }}",
                     type: 'POST',
                     data: {
                         _token: _token
@@ -191,8 +190,10 @@
                 },
                 columns: [
                     {
-                        data: 'folio',
-                        name: 'folio'
+                    data: 'id',
+                    render: function ( data, type, row ) {
+                    return `<p>RQ-00-00-</p> ${row.id}`;
+                    }
                     },
                     {
                         data: 'fecha',
@@ -236,8 +237,8 @@
                             let requisiciones_solicitante = @json($requisiciones_solicitante);
                             let urlButtonArchivar = `/contract_manager/requisiciones/archivo-estado/${data}`;
                             let urlButtonEliminar = `/contract_manager/requisiciones/destroy/${data}`;
-                            let urlButtonShow = `/contract_manager/requisiciones/show/${data}`;
                             let urlButtonEdit = `/contract_manager/requisiciones/edit/${data}`;
+                            let urlButtonShow = `/contract_manager/requisiciones/show/${data}`;
                             let htmlBotones =
                                 `
                                 <div class="btn-group">
@@ -253,6 +254,8 @@
                                     <a title="Archivar" class="btn btn-sm"  onclick="Archivar('${urlButtonArchivar}','${row.folio}');"> <i class="fa-solid fa-box-archive fa-lg"></i></a>
                                     <a title="Eliminar" class="btn btn-sm text-blue"  onclick="Eliminar('${urlButtonEliminar}','${row.folio}');">  <i class="fa-solid fa-trash fa-lg"></i></a>
                                 </div>
+
+
                             `;
                             return htmlBotones;
                         }
@@ -356,7 +359,6 @@
                     }
                 })
             }
-
 
         });
     </script>

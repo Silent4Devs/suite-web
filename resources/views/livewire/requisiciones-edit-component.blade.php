@@ -1,58 +1,37 @@
 <div class="create-requisicion">
-    <div class="card card-content caja-blue">
+    <div class="card card-body caja-blue">
 
         <div>
-            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width: 150px;">
+            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 100px; right: 430px;">
         </div>
 
-        <div>
+        <div style="position: relative; top:-5rem; left: 80px;">
             <h3 style="font-size: 22px; font-weight: bolder;">Bienvenido </h3>
             <h5 style="font-size: 17px;">En esta sección puedes generar tu requisición</h5>
             <p>
-                Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
+                Aquí podrás crear, revisar y procesar solicitudes de compra de manera rápida y sencilla, <br> optimizando el flujo de trabajo y asegurando un seguimiento transparente de todas las transacciones.
             </p>
         </div>
     </div>
 
-    <div class="card card-content hide" wire:ignore>
-        <ul class="tabs" id="tabs-swipe-demo">
-            <li class="tab">
-                <a href="#paso-servicio" class="active">
-                    <i class="number-icon active-number">1</i> Servicios y Productos
-                </a>
-            </li>
-            <li class="tab">
-                <a href="#paso-proveedores">
-                    <i class="number-icon">2</i> Proveedores
-                </a>
-            </li>
-            <li class="tab">
-                <a href="#paso-firma">
-                    <i class="number-icon">3</i> Firma
-                </a>
-            </li>
-        </ul>
-    </div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item"  role="presentation">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="number-icon active-number">1</i> Servicios y Productos</a>
+        </li>
+        <li class="nav-item" role="presentation">
+        <a class="nav-link"  id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="number-icon">2</i> Proveedores</a>
+        </li>
+        <li class="nav-item" role="presentation">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false"><i class="number-icon">3</i> Firma</a>
+        </li>
+    </ul>
 
-    <div class="card card-content caja-proceso-requi" wire:ignore>
-        <div class="flex" style="gap: 20px;">
-            <div class="paso-tab active" data-id="paso-servicio">
-                <i class="number-icon">1</i> Servicios y Productos
-            </div>
-            <hr>
-            <div class="paso-tab" data-id="paso-proveedores">
-                <i class="number-icon">2</i> Proveedores
-            </div>
-            <hr>
-            <div class="paso-tab" data-id="paso-firma">
-                <i class="number-icon">3</i> Firma
-            </div>
-        </div>
-    </div>
+    <div class="tab-content" id="myTabContent">
 
-    <div id="paso-servicio" class="tab-content" wire:ignore>
+    <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab" >
+    <div id="home" class="tab-content" wire:ignore>
         <form method="PUT" wire:submit.prevent="servicioUpdate(Object.fromEntries(new FormData($event.target)), {{$editrequisicion->id}})" enctype="multipart/form-data">
-            <div class="card card-content">
+            <div class="card card-body">
                 <h3 class="titulo-form">Solicitud de requisición</h3>
                 <hr style="margin: 20px 0px;">
 
@@ -134,7 +113,7 @@
                     @php
                         $count = $count+1;
                     @endphp
-                    <div id="product-serv-{{$count}}" class="card card-content card-inner card-product" data-count="{{$count}}">
+                    <div id="product-serv-{{$count}}" class="card card-body card-inner card-product" data-count="{{$count}}">
                         <div class="row">
                             <div class="col s12">
                                 <div class="flex" style="justify-content: space-between">
@@ -178,18 +157,19 @@
                 <div class="btn btn-add-card" onclick="addCard('servicio')"><i class="fa-regular fa-square-plus"></i> AGREGAR SERVICIOS Y PRODUCTOS</div>
             </div>
 
-            <div class="col s12 right-align ">
-                {{--  <a href="{{ route('proveedores.index') }}" class="btn btn-secundario" style="background: #959595 !important">Cancelar</a>  --}}
+            <div style="position: relative; top: -2rem; left: 55rem;">
                 <button class="btn btn-primary" type="submit">
                     Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                 </button>
             </div>
         </form>
     </div>
+   </div>
 
-    <div id="paso-proveedores" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
+   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div id="profile" class="tab-content" {{ !$habilitar_proveedores ? ' style=display:none; ' : '' }}>
         <form id="form-proveedores" wire:submit.prevent="proveedoresUpdate(Object.fromEntries(new FormData($event.target)), {{$editrequisicion->id}})" action="PUT" enctype="multipart/form-data">
-            <div class="card card-content">
+            <div class="card card-body">
                 <h3 class="titulo-form">Solicitud de requisición</h3>
                 <hr style="margin: 20px 0px;">
                 <p>
@@ -206,7 +186,7 @@
                 @if ($this->proveedores_count)
                 @foreach ($editrequisicion->provedores_requisiciones as $edtprov)
 
-                    <div id="proveedor-card-{{$count}}" class="card card-content card-inner card-proveedor" data-count="{{$count}}">
+                    <div id="proveedor-card-{{$count}}" class="card card-body card-inner card-proveedor" data-count="{{$count}}">
                         <div class="row">
                             <div class="col s12 ">
                                 <div class="flex" style="justify-content: space-between">
@@ -319,7 +299,7 @@
                     @endphp
                 @endforeach
                 @for($i = $count; $i < $proveedores_count; $i++)
-                    <div id="proveedor-card-{{$i}}" class="card card-content card-inner card-proveedor" data-count="{{$i}}">
+                    <div id="proveedor-card-{{$i}}" class="card card-body card-inner card-proveedor" data-count="{{$i}}">
                         <div class="row">
                             <div class="col s12 ">
                                 <div class="flex" style="justify-content: space-between">
@@ -448,7 +428,7 @@
                 @if ($this->proveedores_indistintos_count)
                 @foreach ($editrequisicion->provedores_indistintos_requisiciones as $edtprov)
 
-                    <div id="proveedor-card-{{$count}}" class="card card-content card-inner card-proveedor" data-count="{{$count}}">
+                    <div id="proveedor-card-{{$count}}" class="card card-body card-inner card-proveedor" data-count="{{$count}}">
                         <div class="row">
                             <div class="col s12 ">
                                 <div class="flex" style="justify-content: space-between">
@@ -609,7 +589,7 @@
                     @endphp
                 @endforeach
                 @for($i = $count; $i < $proveedores_indistintos_count; $i++)
-                    <div id="proveedor-card-{{$i}}" class="card card-content card-inner card-proveedor" data-count="{{$i}}">
+                    <div id="proveedor-card-{{$i}}" class="card card-body card-inner card-proveedor" data-count="{{$i}}">
                         <div class="row">
                             <div class="col s12 ">
                                 <div class="flex" style="justify-content: space-between">
@@ -764,7 +744,7 @@
                 @if ($this->proveedores_count_catalogo)
                 @foreach ($editrequisicion->provedores_requisiciones_catalogo as $edtprov)
 
-                    <div wire:ignore id="proveedor-card-{{$count}}" class="card card-content card-inner card-proveedor" data-count="{{$count}}">
+                    <div wire:ignore id="proveedor-card-{{$count}}" class="card card-body card-inner card-proveedor" data-count="{{$count}}">
                         <div class="row">
                             <div class="col s12 ">
                                 <div class="flex" style="justify-content: space-between">
@@ -927,7 +907,7 @@
                     @endphp
                 @endforeach
                 @for($i = $count; $i < $proveedores_count_catalogo; $i++)
-                    <div wire:ignore id="proveedor-card-{{$i}}" class="card card-content card-inner card-proveedor" data-count="{{$i}}">
+                    <div wire:ignore id="proveedor-card-{{$i}}" class="card card-body card-inner card-proveedor" data-count="{{$i}}">
                         <div class="row">
                             <div  class="col s12 ">
                                 <div class="flex" style="justify-content: space-between">
@@ -1084,16 +1064,18 @@
                 <div class="btn btn-add-card" onclick="addCard('proveedor')"><i class="fa-regular fa-square-plus icon-prior"></i> AGREGAR PROVEEDOR</div>
             </div> --}}
 
-            <div class="col s12 right-align">
-                <button class="btn btn-primary" type="submit">
+            <div style="position: relative; top: -1rem; left: 55rem;">
+                <button class="btn btn-primary"  type="submit">
                     Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                 </button>
             </div>
         </form>
     </div>
+   </div>
 
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
     @if($habilitar_firma)
-        <div id="paso-firma" class="tab-content">
+        <div id="contact" class="tab-content">
             <div class="card card-item doc-requisicion">
                 <div class="flex header-doc">
                     <div class="flex-item item-doc-img">
@@ -1369,7 +1351,7 @@
                 </div>
             </div>
             <form method="POST" wire:submit.prevent="Firmar(Object.fromEntries(new FormData($event.target)))" enctype="multipart/form-data">
-                <div class="card card-content">
+                <div class="card card-body">
                     <div class="">
                         <h5><strong>Firma*</strong></h5>
                         <p>
@@ -1389,14 +1371,14 @@
                         </div>
                     </div>
                     <div class="flex" style="justify-content: end; gap:10px;">
-                        <div class="btn btn-secundario" onclick="$('.tabs').tabs('select', 'paso-proveedores'); @this.set('habilitar_firma', false);  @this.set('habilitar_proveedores', true);" style="background: #959595 !important"><i class="fa-solid fa-chevron-left icon-prior"></i> Regresar </div>
                         <button onclick="validar()" class="btn btn-primary" type="submit"  >Firmar</button>
                     </div>
                 </div>
             </form>
         </div>
     @endif
-
+   </div>
+   </div>
     @if ($habilitar_alerta)
     <b>  <H1>LA EXTENCIÓN DE ARCHIVO NO ES VALIDA</H1> </b>
     @endif
@@ -1474,14 +1456,13 @@
             document.addEventListener("DOMContentLoaded", () => {
                 @this.set('products_servs_count', 1);
 
-                // $('.tabs').tabs();
-                // Livewire.on('cambiarTab', (id_tab) => {
-                //     $('.tabs').tabs('select', id_tab);
-                //     $('.paso-tab[data-id="' + id_tab + '"]').addClass('active');
-                // });
+                Livewire.on('cambiarTab', (id_tab) => {
+                    // Activa la pestaña con ID 'profile'
+                    $('#myTab a[href="#' + id_tab + '"]').tab('show');
+                });
 
-                // var fecha = new Date();
-                // document.getElementById("fecha-solicitud-input").value = fecha.toJSON().slice(0, 10);
+                var fecha = new Date();
+                document.getElementById("fecha-solicitud-input").value = fecha.toJSON().slice(0, 10);
             });
 
             function printArea() {
@@ -1494,7 +1475,7 @@
                     let card = document.querySelector('.card-product');
                     let nueva_card = document.createElement("div");
                     nueva_card.classList.add("card");
-                    nueva_card.classList.add("card-content");
+                    nueva_card.classList.add("card-body");
                     nueva_card.classList.add("card-product");
                     let cards_count = document.querySelectorAll('.card-product').length + 1;
                     nueva_card.setAttribute("data-count", cards_count);

@@ -6,7 +6,7 @@
 
 
 @include('layouts.datatables_css')
-<link rel="stylesheet" type="text/css" href="{{asset('css/botones.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/botones.css') }}">
 <style>
     div.dt-button-collection {
         max-height: 60vh;
@@ -25,20 +25,20 @@
     }
 
     .tabs .tab a {
-    background-color: transparent;
-    color: #4c52fd !important;
-    border-bottom:1px solid #ccc;
+        background-color: transparent;
+        color: #4c52fd !important;
+        border-bottom: 1px solid #ccc;
     }
 
-    .tabs .tab a:hover, .tabs .tab a.active {
-    background-color: transparent;
-    color: #4c52fd !important;
+    .tabs .tab a:hover,
+    .tabs .tab a.active {
+        background-color: transparent;
+        color: #4c52fd !important;
     }
 
     .tabs .indicator {
         background-color: blue !important;
     }
-
 </style>
 {{-- {{ Breadcrumbs::render('contratos') }} --}}
 <div class="row">
@@ -48,80 +48,87 @@
                 <section class="content-header">
                     <span class="card-title">
                     </span>
-                    <div class='btn-group'>
-                    <div class="col s8" style="margin-bottom: 30px;">
+                    <div class="col s8" style="margin-top: 30px;">
                         <h3 class="titulo-form">INSTRUCCIONES</h3>
-                        <p class="instrucciones">En esta sección podrá dar de alta los contratos de esta organización.</p>
+                        <p class="instrucciones">En esta sección podrá dar de alta los contratos de esta
+                            organización.</p>
                     </div>
-                      @can ('katbol_contratos_agregar')
-                        @if ($areas->count() > 0)
-                            <a class="btn btn-success" style=" margin: 13px 12px 12px 10px; "href="{{ route('contract_manager.contratos-katbol.create') }}" type="submit" name="action">Agregar Contrato <sup>+</sup></a>
-                        @else
-                            <a class="right btn waves-effect waves-light btn-redondeado" style=" margin: 13px 12px 12px 10px; "href="#" type="submit" name="action"> Antes de crear un contrato se necesita registrar proveedores y áreas <i class="material-icons right">add</i></a>
-                        @endif
-                      @endcan
+                    <div class='btn-group'>
+                        @can('katbol_contratos_agregar')
+                            @if ($areas->count() > 0)
+                                <a class="btn btn-success"
+                                    style=" margin: 13px 12px 12px 10px; "href="{{ route('contract_manager.contratos-katbol.create') }}"
+                                    type="submit" name="action">Agregar Contrato <sup>+</sup></a>
+                            @else
+                                <a class="right btn waves-effect waves-light btn-redondeado"
+                                    style=" margin: 13px 12px 12px 10px; "href="#" type="submit" name="action">
+                                    Antes de crear un contrato se necesita registrar proveedores y áreas <i
+                                        class="material-icons right">add</i></a>
+                            @endif
+                        @endcan
                     </div>
-                </section>
-                <div class="card-body">
-                    <nav>
-                        <div class="nav nav-tabs" id="contratos" role="tablist">
-                                <a class="nav-link active" id="nav-contarea-tab" data-type="contexto" data-toggle="tab"
-                                    href="#nav-contarea" role="tab" aria-controls="nav-contarea" aria-selected="true">
-                                    <i class="fa-regular fa-file-lines"></i>
-                                    Contratos del Área
-                                </a>
-                            @can ('katbol_contratos_agregar')
-                                <a class="nav-link" id="nav-contorg-tab" data-type="liderazgo" data-toggle="tab"
-                                    href="#nav-contorg" role="tab" aria-controls="nav-contorg" aria-selected="false">
-                                    <i class="fa-regular fa-file-lines"></i>
-                                    Contratos de la Organización
-                                </a>
-                            @endcan
-                        </div>
-                    </nav>
+            </div>
+            </section>
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="contratos" role="tablist">
+                        <a class="nav-link active" id="nav-contarea-tab" data-type="contexto" data-toggle="tab"
+                            href="#nav-contarea" role="tab" aria-controls="nav-contarea" aria-selected="true">
+                            <i class="fa-regular fa-file-lines"></i>
+                            Contratos del Área
+                        </a>
+                        @can('katbol_contratos_agregar')
+                            <a class="nav-link" id="nav-contorg-tab" data-type="liderazgo" data-toggle="tab"
+                                href="#nav-contorg" role="tab" aria-controls="nav-contorg" aria-selected="false">
+                                <i class="fa-regular fa-file-lines"></i>
+                                Contratos de la Organización
+                            </a>
+                        @endcan
+                    </div>
+                </nav>
 
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane mb-4 fade show active" id="nav-contarea" role="tabpanel"
-                            aria-labelledby="nav-contarea-tab">
-                            @include('contract_manager.contratos-katbol.table')
-                        </div>
-                        <div class="tab-pane mb-4 fade" id="nav-contorg" role="tabpanel" aria-labelledby="nav-contorg-tab">
-                            @include('contract_manager.contratos-katbol.table_all')
-                        </div>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane mb-4 fade show active" id="nav-contarea" role="tabpanel"
+                        aria-labelledby="nav-contarea-tab">
+                        @include('contract_manager.contratos-katbol.table')
+                    </div>
+                    <div class="tab-pane mb-4 fade" id="nav-contorg" role="tabpanel" aria-labelledby="nav-contorg-tab">
+                        @include('contract_manager.contratos-katbol.table_all')
                     </div>
                 </div>
             </div>
+        </div>
 
-                            <div class="text-center">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
+        <div class="text-center">
 
         </div>
     </div>
+</div>
+</div>
+
+
+</div>
+
+</div>
+</div>
 </div>
 @endsection
 
 
 @section('scripts')
-    @include('layouts.datatables_js')
-    <script>
-        $(document).ready( function () {
+@include('layouts.datatables_js')
+<script>
+    $(document).ready(function() {
         let table = $('#contratos-table').DataTable({
             autoWidth: false,
             "scrollX": true,
-            columnDefs: [
-                { targets: [0, 1], visible: true},
-            ],
+            columnDefs: [{
+                targets: [0, 1],
+                visible: true
+            }, ],
             stateSave: true,
             dom: 'lBfrtip',
-            buttons: [
-                {
+            buttons: [{
                     extend: "copyHtml5",
                     text: "<i class='fa-solid fa-copy' title='Copiar'></i>",
                     titleAttr: "Copiar",
@@ -130,8 +137,8 @@
                     }
                 },
                 {
-                    extend:    'csvHtml5',
-                    title:`Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
+                    extend: 'csvHtml5',
+                    title: `Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
                     text: "<i class='fas fa-file-csv' style='font-size: 1.1rem'></i>",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
@@ -140,7 +147,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title:`Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
+                    title: `Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
                     text: "<i class='fas fa-file-excel' style='font-size: 1.1rem'></i>",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
@@ -150,97 +157,114 @@
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
                         // Loop over the cells in column `C`
-                        $('row c[r^="C"]', sheet).each( function () {
+                        $('row c[r^="C"]', sheet).each(function() {
                             // Get the value
-                            if ( $('is t', this).text() == 'New York' ) {
-                                $(this).attr( 's', '20' );
+                            if ($('is t', this).text() == 'New York') {
+                                $(this).attr('s', '20');
                             }
-                    });
+                        });
                     }
                 },
                 {
-                    extend:    'pdfHtml5',
-                    title:`Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
+                    extend: 'pdfHtml5',
+                    title: `Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
                     text: '<i class="fa fa-file-pdf-o"></i>',
                     titleAttr: 'Exportar PDF',
                     orientation: 'landscape',
                     pageSize: 'LEGAL',
-                    customize: function (doc) {
-						//Remove the title created by datatTables
-						doc.content.splice(0,1);
-						//Create a date string that we use in the footer. Format is dd-mm-yyyy
-						var now = new Date();
-						var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
-						// Logo converted to base64
-						// var logo = getBase64FromImageUrl('https://datatables.net/media/images/logo.png');
-						// The above call should work, but not when called from codepen.io
-						// So we use a online converter and paste the string in.
-						// Done on http://codebeautify.org/image-to-base64-converter
-						// It's a LONG string scroll down to see the rest of the code !!!
+                    customize: function(doc) {
+                        //Remove the title created by datatTables
+                        doc.content.splice(0, 1);
+                        //Create a date string that we use in the footer. Format is dd-mm-yyyy
+                        var now = new Date();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
+                            .getFullYear();
+                        // Logo converted to base64
+                        // var logo = getBase64FromImageUrl('https://datatables.net/media/images/logo.png');
+                        // The above call should work, but not when called from codepen.io
+                        // So we use a online converter and paste the string in.
+                        // Done on http://codebeautify.org/image-to-base64-converter
+                        // It's a LONG string scroll down to see the rest of the code !!!
 
-						// A documentation reference can be found at
-						// https://github.com/bpampuch/pdfmake#getting-started
-						// Set page margins [left,top,right,bottom] or [horizontal,vertical]
-						// or one number for equal spread
-						// It's important to create enough space at the top for a header !!!
-						doc.pageMargins = [10,60,10,30];
-						// Set the font size fot the entire document
-						doc.defaultStyle.fontSize = 6;
-						// Set the fontsize for the table header
-						doc.styles.tableHeader.fontSize = 6;
-						// Create a header object with 3 columns
-						// Left side: Logo
-						// Middle: brandname
-						// Right side: A document title
-						doc['header']=(function() {
-							return {
-								columns: [
-									{
-										alignment: 'left',
-										italics: true,
-										text: 'KATBOL',
-										fontSize: 18,
-										margin: [10,0]
-									},
-									{
-										alignment: 'right',
-										fontSize: 14,
-										text: 'Reporte de contratos'
-									}
-								],
-								margin: 20
-							}
-						});
-						// Create a footer object with 2 columns
-						// Left side: report creation date
-						// Right side: current page and total pages
-						doc['footer']=(function(page, pages) {
-							return {
-								columns: [
-									{
-										alignment: 'left',
-										text: ['Fecha de creación: ', { text: jsDate.toString() }]
-									},
-									{
-										alignment: 'right',
-										text: ['Página ', { text: page.toString() },	' de ',	{ text: pages.toString() }]
-									}
-								],
-								margin: 20
-							}
-						});
-						// Change dataTable layout (Table styling)
-						// To use predefined layouts uncomment the line below and comment the custom lines below
-						// doc.content[0].layout = 'lightHorizontalLines'; // noBorders , headerLineOnly
-						var objLayout = {};
-						objLayout['hLineWidth'] = function(i) { return .5; };
-						objLayout['vLineWidth'] = function(i) { return .5; };
-						objLayout['hLineColor'] = function(i) { return '#aaa'; };
-						objLayout['vLineColor'] = function(i) { return '#aaa'; };
-						objLayout['paddingLeft'] = function(i) { return 4; };
-						objLayout['paddingRight'] = function(i) { return 4; };
-						doc.content[0].layout = objLayout;
-				    },
+                        // A documentation reference can be found at
+                        // https://github.com/bpampuch/pdfmake#getting-started
+                        // Set page margins [left,top,right,bottom] or [horizontal,vertical]
+                        // or one number for equal spread
+                        // It's important to create enough space at the top for a header !!!
+                        doc.pageMargins = [10, 60, 10, 30];
+                        // Set the font size fot the entire document
+                        doc.defaultStyle.fontSize = 6;
+                        // Set the fontsize for the table header
+                        doc.styles.tableHeader.fontSize = 6;
+                        // Create a header object with 3 columns
+                        // Left side: Logo
+                        // Middle: brandname
+                        // Right side: A document title
+                        doc['header'] = (function() {
+                            return {
+                                columns: [{
+                                        alignment: 'left',
+                                        italics: true,
+                                        text: 'KATBOL',
+                                        fontSize: 18,
+                                        margin: [10, 0]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        fontSize: 14,
+                                        text: 'Reporte de contratos'
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+                        // Create a footer object with 2 columns
+                        // Left side: report creation date
+                        // Right side: current page and total pages
+                        doc['footer'] = (function(page, pages) {
+                            return {
+                                columns: [{
+                                        alignment: 'left',
+                                        text: ['Fecha de creación: ', {
+                                            text: jsDate.toString()
+                                        }]
+                                    },
+                                    {
+                                        alignment: 'right',
+                                        text: ['Página ', {
+                                            text: page.toString()
+                                        }, ' de ', {
+                                            text: pages.toString()
+                                        }]
+                                    }
+                                ],
+                                margin: 20
+                            }
+                        });
+                        // Change dataTable layout (Table styling)
+                        // To use predefined layouts uncomment the line below and comment the custom lines below
+                        // doc.content[0].layout = 'lightHorizontalLines'; // noBorders , headerLineOnly
+                        var objLayout = {};
+                        objLayout['hLineWidth'] = function(i) {
+                            return .5;
+                        };
+                        objLayout['vLineWidth'] = function(i) {
+                            return .5;
+                        };
+                        objLayout['hLineColor'] = function(i) {
+                            return '#aaa';
+                        };
+                        objLayout['vLineColor'] = function(i) {
+                            return '#aaa';
+                        };
+                        objLayout['paddingLeft'] = function(i) {
+                            return 4;
+                        };
+                        objLayout['paddingRight'] = function(i) {
+                            return 4;
+                        };
+                        doc.content[0].layout = objLayout;
+                    },
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
                     }
@@ -255,7 +279,7 @@
                 //     customize: function (win) {
                 //         $(win.document.body).find('table').addClass('display').css('font-size', '10px')
                 //         .prepend(
-                //             `<img src="{{asset('img/logo_katbol.png')}}"
+                //             `<img src="{{ asset('img/logo_katbol.png') }}"
                 //                 style="position:absolute; top:0; left: 50%; transform: translate(-50%,0);opacity: 0.07;"/>`
                 //         );
                 //         $(win.document.body).find('tr:nth-child(odd) td').each(function(index){
@@ -291,7 +315,7 @@
                     titleAttr: 'Ver todo',
                 },
                 {
-                    extend:'colvisRestore',
+                    extend: 'colvisRestore',
                     text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
                     titleAttr: 'Restaurar a estado anterior',
                 }
@@ -318,21 +342,21 @@
             },
         });
         //table.columns( [0,1,2] ).visible( false );
-        } );
-    </script>
+    });
+</script>
 
-    <script>
-        $(document).ready( function () {
+<script>
+    $(document).ready(function() {
         let table = $('#contratos-table-all').DataTable({
             autoWidth: false,
             "scrollX": true,
-            columnDefs: [
-                { targets: [0, 1], visible: true},
-            ],
+            columnDefs: [{
+                targets: [0, 1],
+                visible: true
+            }, ],
             stateSave: true,
             dom: 'lBfrtip',
-            buttons: [
-                {
+            buttons: [{
                     extend: "copyHtml5",
                     text: "<i class='fa-solid fa-copy' title='Copiar'></i>",
                     titleAttr: "Copiar",
@@ -341,9 +365,9 @@
                     }
                 },
                 {
-                    extend:    'csvHtml5',
-                    title:`Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
-                    text:      "<i class='fas fa-file-csv' style='font-size: 1.1rem'></i>",
+                    extend: 'csvHtml5',
+                    title: `Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
+                    text: "<i class='fas fa-file-csv' style='font-size: 1.1rem'></i>",
                     titleAttr: 'Exportar CSV',
                     exportOptions: {
                         columns: ['th:not(:last-child):visible']
@@ -351,7 +375,7 @@
                 },
                 {
                     extend: 'excelHtml5',
-                    title:`Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
+                    title: `Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
                     text: "<i class='fas fa-file-excel' style='font-size: 1.1rem'></i>",
                     titleAttr: 'Exportar Excel',
                     exportOptions: {
@@ -361,27 +385,28 @@
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
                         // Loop over the cells in column `C`
-                        $('row c[r^="C"]', sheet).each( function () {
+                        $('row c[r^="C"]', sheet).each(function() {
                             // Get the value
-                            if ( $('is t', this).text() == 'New York' ) {
-                                $(this).attr( 's', '20' );
+                            if ($('is t', this).text() == 'New York') {
+                                $(this).attr('s', '20');
                             }
-                    });
+                        });
                     }
                 },
                 {
-                    extend:    'pdfHtml5',
-                    title:`Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
-                    text:      '<i class="fa fa-file-pdf-o"></i>',
+                    extend: 'pdfHtml5',
+                    title: `Reporte de contratos_${new Date().toLocaleDateString().trim()}`,
+                    text: '<i class="fa fa-file-pdf-o"></i>',
                     titleAttr: 'Exportar PDF',
                     orientation: 'landscape',
                     pageSize: 'LEGAL',
-                    customize: function (doc) {
+                    customize: function(doc) {
                         //Remove the title created by datatTables
-                        doc.content.splice(0,1);
+                        doc.content.splice(0, 1);
                         //Create a date string that we use in the footer. Format is dd-mm-yyyy
                         var now = new Date();
-                        var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+                        var jsDate = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now
+                            .getFullYear();
                         // Logo converted to base64
                         // var logo = getBase64FromImageUrl('https://datatables.net/media/images/logo.png');
                         // The above call should work, but not when called from codepen.io
@@ -394,7 +419,7 @@
                         // Set page margins [left,top,right,bottom] or [horizontal,vertical]
                         // or one number for equal spread
                         // It's important to create enough space at the top for a header !!!
-                        doc.pageMargins = [10,60,10,30];
+                        doc.pageMargins = [10, 60, 10, 30];
                         // Set the font size fot the entire document
                         doc.defaultStyle.fontSize = 6;
                         // Set the fontsize for the table header
@@ -403,15 +428,14 @@
                         // Left side: Logo
                         // Middle: brandname
                         // Right side: A document title
-                        doc['header']=(function() {
+                        doc['header'] = (function() {
                             return {
-                                columns: [
-                                    {
+                                columns: [{
                                         alignment: 'left',
                                         italics: true,
                                         text: 'KATBOL',
                                         fontSize: 18,
-                                        margin: [10,0]
+                                        margin: [10, 0]
                                     },
                                     {
                                         alignment: 'right',
@@ -425,16 +449,21 @@
                         // Create a footer object with 2 columns
                         // Left side: report creation date
                         // Right side: current page and total pages
-                        doc['footer']=(function(page, pages) {
+                        doc['footer'] = (function(page, pages) {
                             return {
-                                columns: [
-                                    {
+                                columns: [{
                                         alignment: 'left',
-                                        text: ['Fecha de creación: ', { text: jsDate.toString() }]
+                                        text: ['Fecha de creación: ', {
+                                            text: jsDate.toString()
+                                        }]
                                     },
                                     {
                                         alignment: 'right',
-                                        text: ['Página ', { text: page.toString() },    ' de ', { text: pages.toString() }]
+                                        text: ['Página ', {
+                                            text: page.toString()
+                                        }, ' de ', {
+                                            text: pages.toString()
+                                        }]
                                     }
                                 ],
                                 margin: 20
@@ -444,12 +473,24 @@
                         // To use predefined layouts uncomment the line below and comment the custom lines below
                         // doc.content[0].layout = 'lightHorizontalLines'; // noBorders , headerLineOnly
                         var objLayout = {};
-                        objLayout['hLineWidth'] = function(i) { return .5; };
-                        objLayout['vLineWidth'] = function(i) { return .5; };
-                        objLayout['hLineColor'] = function(i) { return '#aaa'; };
-                        objLayout['vLineColor'] = function(i) { return '#aaa'; };
-                        objLayout['paddingLeft'] = function(i) { return 4; };
-                        objLayout['paddingRight'] = function(i) { return 4; };
+                        objLayout['hLineWidth'] = function(i) {
+                            return .5;
+                        };
+                        objLayout['vLineWidth'] = function(i) {
+                            return .5;
+                        };
+                        objLayout['hLineColor'] = function(i) {
+                            return '#aaa';
+                        };
+                        objLayout['vLineColor'] = function(i) {
+                            return '#aaa';
+                        };
+                        objLayout['paddingLeft'] = function(i) {
+                            return 4;
+                        };
+                        objLayout['paddingRight'] = function(i) {
+                            return 4;
+                        };
                         doc.content[0].layout = objLayout;
                     },
                     exportOptions: {
@@ -466,7 +507,7 @@
                 //     customize: function (win) {
                 //         $(win.document.body).find('table').addClass('display').css('font-size', '10px')
                 //         .prepend(
-                //             `<img src="{{asset('img/logo_katbol.png')}}"
+                //             `<img src="{{ asset('img/logo_katbol.png') }}"
                 //                 style="position:absolute; top:0; left: 50%; transform: translate(-50%,0);opacity: 0.07;"/>`
                 //         );
                 //         $(win.document.body).find('tr:nth-child(odd) td').each(function(index){
@@ -483,7 +524,7 @@
                 // },
                 {
                     extend: 'colvis',
-                    text:  '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
+                    text: '<i class="fas fa-filter" style="font-size: 1.1rem;"></i>',
                     titleAttr: 'Seleccionar Columnas',
                     // prefixButtons:[
 
@@ -502,8 +543,8 @@
                     titleAttr: 'Ver todo',
                 },
                 {
-                    extend:'colvisRestore',
-                    text:'<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
+                    extend: 'colvisRestore',
+                    text: '<i class="fas fa-undo" style="font-size: 1.1rem;"></i>',
                     titleAttr: 'Restaurar a estado anterior',
                 }
             ],
@@ -529,12 +570,12 @@
             },
         });
         //table.columns( [0,1,2] ).visible( false );
-        } );
-    </script>
+    });
+</script>
 
-    <script>
-        $("#dolares_filtro").select2('destroy');
-    </script>
+<script>
+    $("#dolares_filtro").select2('destroy');
+</script>
 @endsection
 
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
@@ -554,5 +595,3 @@
         $("#contratos-table").tableHTMLExport({ type: "txt", filename: "sample.txt", ignoreColumns:'.botones_accion'});
     });
 </script> --}}
-
-

@@ -1,41 +1,36 @@
 @extends('layouts.admin')
 
-@section('titulo', 'Contratos')
 
 @section('content')
-    {{-- <link rel="stylesheet" type="text/css" href="{{asset('css/botones.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('css/formularios/contratos.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('css/iconos.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('css/letra.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('css/ventana.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('css/titulos.css')}}"> --}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <style>
         /* .asterisco {
-                color: red;
-                margin-left: 5px;
+                                                                                                                                                                                                                                                                                            color: red;
+                                                                                                                                                                                                                                                                                            margin-left: 5px;
 
-            } */
+                                                                                                                                                                                                                                                                                        } */
 
         /*.select-wrapper input{
 
-            direction:rtl;
-            text-align:left;
+                                                                                                                                                                                                                                                                                        direction:rtl;
+                                                                                                                                                                                                                                                                                        text-align:left;
 
-            }*/
+                                                                                                                                                                                                                                                                                        }*/
     </style>
 
     {{-- {{ Breadcrumbs::render('contratos_edit', $contrato) }} --}}
     @include('admin.bitacora.formedit', ['show_contrato' => false])
 
-
-
-    <div class="row">
+    <div class="row" style="margin-left: 10px; margin-right: 10px; margin-top: 30px;">
         <div class="col s12 m12">
             <div class="card">
-                <div class="card-content blue-text" style="overflow-x:auto !important;">
-                    <span class="card-title">Contrato</span>
-                    <table class="refresco" id="tblContrato">
+                <div class="card-body blue-text" style="overflow-x:auto !important;">
+                    <h3>Contrato</h3>
+                    <table class="refresco table" id="tblContrato">
                         <thead style="overflow-x:auto !important;">
                             <tr>
                                 <th>
@@ -49,7 +44,6 @@
                                 </th>
                                 <th>
                                     @if ($contrato->tipo_cambio == 'USD')
-
                                         <p></p>
                                     @else
                                         <p class="grey-text" style="font-size:17px;font-weight:bold;">IVA&nbsp;@for ($i = 0; $i < 20; $i++)
@@ -61,7 +55,6 @@
                                 </th>
                                 <th>
                                     @if ($contrato->tipo_cambio == 'USD')
-
                                         <p></p>
                                     @else
                                         <p class="grey-text" style="font-size:17px;font-weight:bold;">Subtotal&nbsp;
@@ -167,169 +160,128 @@
             </div>
         </div>
     </div>
-    <ul class="collapsible popout">
+    <ul>
         <li>
-            <div class="collapsible-header"><i class="material-icons">insert_drive_file</i>Facturación</div>
-            <div class="collapsible-body">
+            <div><i class="material-icons">insert_drive_file</i>Facturación</div>
+            <div>
+                <div class="col s12 m12">
+                    <div class="card card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <p class="grey-text tablaparra">No. pagos</p>
+                                        </th>
+                                        <th>
+                                            <p class="grey-text tablaparra">Tipo</p>
+                                        </th>
+                                        <th>
+                                            <p class="grey-text tablaparra">Nombre servicio</p>
+                                        </th>
+                                    </tr>
+                                </thead>
 
-                <div class="row">
-                    <div class="col s12 m12">
-                        <div class="card">
-                            <div class="card-content">
-                                <table align="center">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <p class="grey-text tablaparra">No. pagos</p>
-                                            </th>
-                                            <th>
-                                                <p class="grey-text tablaparra">Tipo</p>
-                                            </th>
-                                            <th>
-                                                <p class="grey-text tablaparra">Nombre servicio</p>
-                                            </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr class="black-text">
-                                            <td>
-                                                <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                    data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
-                                                    data-title="Número de contrato" data-value="{{ $contratos->no_pagos }}"
-                                                    class="no_pagos" data-name="no_pagos">
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                    data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
-                                                    data-title="Tipo de contrato"
-                                                    data-value="{{ $contratos->tipo_contrato }}" class="tipo_contrato"
-                                                    data-name="tipo_contrato">
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                    data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
-                                                    data-title="Nombre de servicio"
-                                                    data-value="{{ $contratos->nombre_servicio }}" class="nombre_servicio"
-                                                    data-name="nombre_servicio">
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                <tbody>
+                                    <tr class="black-text">
+                                        <td>
+                                            <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
+                                                data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
+                                                data-title="Número de contrato" data-value="{{ $contratos->no_pagos }}"
+                                                class="no_pagos" data-name="no_pagos">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
+                                                data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
+                                                data-title="Tipo de contrato" data-value="{{ $contratos->tipo_contrato }}"
+                                                class="tipo_contrato" data-name="tipo_contrato">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
+                                                data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
+                                                data-title="Nombre de servicio"
+                                                data-value="{{ $contratos->nombre_servicio }}" class="nombre_servicio"
+                                                data-name="nombre_servicio">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-content">
-
-                        @livewire('factura.factura-component', ['contrato_id' => $contratos->id, 'show_contrato' => false, 'contrato_total' => $contratos->monto_pago])
-                    </div>
+            </div>
+            <div class="col s12 m12">
+                <div class="card card-body">
+                    @livewire('factura.factura-component', ['contrato_id' => $contratos->id, 'show_contrato' => false, 'contrato_total' => $contratos->monto_pago])
                 </div>
             </div>
         </li>
         <li>
             <div class="collapsible-header"><i class="material-icons">multiline_chart</i>Niveles de servicio
             </div>
-            <div class="collapsible-body">
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <div class="card">
-                            <div class="card-content">
-                                @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
-                            </div>
-                        </div>
-                    </div>
+            <div class="col s12 m12">
+                <div class="card card-body">
+                    @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
                 </div>
             </div>
         </li>
         <li>
             <div class="collapsible-header"><i class="material-icons">event</i>Entregables mensuales
             </div>
-            <div class="collapsible-body">
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <div class="card">
-                            <div class="card-content">
-                                @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
-                            </div>
-                        </div>
-                    </div>
+            <div class="col s12 m12">
+                <div class="card card-body">
+                    @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
                 </div>
             </div>
         </li>
         <li>
             <div class="collapsible-header"><i class="material-icons">assignment_turned_in</i>Cierre proyecto
             </div>
-            <div class="collapsible-body">
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <div class="card">
-                            <div class="card-content">
-                                @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
-                            </div>
-                        </div>
-                    </div>
+            <div class="col s12 m12">
+                <div class="card card-body">
+                    @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
                 </div>
             </div>
         </li>
         <li id="ampliacion_contrato_lista" style="display: {{ $contratos->contrato_ampliado ? 'block' : 'none' }}">
             <div class="collapsible-header"><i class="material-icons">add_task</i>Ampliación de contrato
             </div>
-            <div class="collapsible-body">
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <div class="card">
-                            <div class="card-content">
-                                @livewire('ampliacion-contratos.ampliacion-component', [
-                                    'contrato_id' => $contratos->id,
-                                    'show_contrato' => false,
-                                    'fecha_fin_contrato' => $contratos->fecha_fin,
-                                ])
-                            </div>
-                        </div>
-                    </div>
+            <div class="col s12 m12">
+                <div class="card card-body">
+                    @livewire('ampliacion-contratos.ampliacion-component', [
+                        'contrato_id' => $contratos->id,
+                        'show_contrato' => false,
+                        'fecha_fin_contrato' => $contratos->fecha_fin,
+                    ])
                 </div>
             </div>
         </li>
         <li id="convenio_contrato_lista" style="display: {{ $contratos->convenio_modificatorio ? 'block' : 'none' }}">
             <div class="collapsible-header"><i class="fas fa-handshake"></i>Convenios Modificatorios
             </div>
-            <div class="collapsible-body">
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <div class="card">
-                            <div class="card-content">
-                                @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
-                            </div>
-                        </div>
-                    </div>
+            <div class="col s12 m12">
+                <div class="card card-body">
+                    @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
                 </div>
             </div>
         </li>
         <li>
             <div class="collapsible-header"><i class="material-icons">done_all</i> Cédula de cumplimiento
             </div>
-            <div class="collapsible-body">
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <div class="card">
-                            <div class="card-content">
-                                @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
-                            </div>
-                        </div>
-                    </div>
+            <div class="col s12 m12">
+                <div class="card card-body">
+                    @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
                 </div>
             </div>
         </li>
     </ul>
 
-    <div class="row">
-        <div class="col s12 right-align" style="padding-right: 30px !important;">
-            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn-redondeado btn btn-primary">Salir
+    <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
+        <div class="col s12 m12 right-align btn-grd distancia">
+            <a href="{{ route('contract_manager.contratos-katbol.index') }}" class="btn btn-success">Salir
                 sin llenar</a>
         </div>
     </div>

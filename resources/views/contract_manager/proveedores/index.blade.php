@@ -30,21 +30,6 @@
                             RFC
                         </th>
                         <th style="vertical-align: top">
-                            Contacto
-                        </th>
-                        <th style="vertical-align: top">
-                            Facturación
-                        </th>
-                        <th style="vertical-align: top">
-                            Envio
-                        </th>
-                        <th style="vertical-align: top">
-                            Dirección
-                        </th>
-                        <th style="vertical-align: top">
-                            Credito
-                        </th>
-                        <th style="vertical-align: top">
                             Fecha Inicio
                         </th>
                         <th style="vertical-align: top">
@@ -146,7 +131,7 @@
                 };
                 let btnArchivar = {
                     @can('katbol_proveedores_ordenes_compra_archivar')
-                    text: '<i class="fa-solid fa-box-archive"></i>Archivados',
+                    text: '<i class="fa-solid fa-box-archive"></i> Archivados',
                     titleAttr: 'Archivar proveedor',
                     url: "{{ route('contract_manager.proveedores.view_archivados') }}",
                     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
@@ -162,7 +147,7 @@
                 let archivarButton = {
                     @can('katbol_proveedores_ordenes_compra_archivar')
                     text: 'Archivar Registro',
-                    url: "{{ route('contract_manager.proveedores.archivar', ['id' => $ids]) }}",
+                    url: "{{ route('contract_manager.proveedores.archivar', ['id' => 1]) }}",
                     className: 'btn-danger',
                     action: function(e, dt, node, config) {
                         var ids = $.map(dt.rows({
@@ -222,26 +207,6 @@
                     {
                         data: 'rfc',
                         name: 'rfc'
-                    },
-                    {
-                        data: 'contacto',
-                        name: 'contacto'
-                    },
-                    {
-                        data: 'facturacion',
-                        name: 'facturacion'
-                    },
-                    {
-                        data: 'envio',
-                        name: 'envio'
-                    },
-                    {
-                        data: 'direccion',
-                        name: 'direccion'
-                    },
-                    {
-                        data: 'credito',
-                        name: 'credito'
                     },
                     {
                         data: 'fecha_inicio',

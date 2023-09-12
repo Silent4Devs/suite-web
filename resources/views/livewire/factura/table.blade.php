@@ -1,11 +1,11 @@
-<div class="row" style="margin: 0;">
+<div class="row" style="margin-top: 15px; margin-bottom: 20px;">
     <div class="col l6">
-        <label for="search"><i class="fas fa-search"></i> Busca un número de factura</label>
-        <input type="text" wire:model="search" placeholder="Busca un número de factura">
+        <label for="search">Busca un número de factura</label>
+        <input type="text" class="form-control" wire:model="search" placeholder="Busca un número de factura">
         {{-- <span>Usted está buscando: <strong>{{ $search }}</strong></span> --}}
     </div>
 
-    <div wire:ignore class="input-field col l6 row"
+    <div class="input-field col l6 row"
         style="margin-bottom: 0; margin-top: 1.87rem; display: flex; align-items: center; justify-content: center">
         <div class="col l3" style="margin: 0; text-align: end"><span>Mostrar</span></div>
         <div class="col l3" style="margin: 0">
@@ -22,9 +22,9 @@
         </div>
     </div>
 </div>
-<div class="tabla_responsiva_edit_contratos tabla-cierre">
+<div class="table-responsive">
     @if ($facturas->count())
-        <table style="width: 100%;">
+        <table class="table">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('no_factura')">
@@ -236,9 +236,10 @@
         @endif
     @endif
 
+    <div class="col-12 d-flex justify-content-end">
+        {{ $facturas->links('livewire::simple-tailwind') }}
+    </div>
 </div>
-<br>
-{{ $facturas->links() }}
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         $('.select_pagination').change(function(e) {
