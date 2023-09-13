@@ -79,7 +79,7 @@ class SucursalController extends Controller
 
         if ($file != null) {
             $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
-            // $file->move(base_path('public/razon_social'), $nombre);
+            $file->move(base_path('public/razon_social'), $nombre);
             $sucursales->mylogo = $nombre;
             $sucursales->save();
         }
@@ -139,7 +139,7 @@ class SucursalController extends Controller
 
         if ($file != null) {
             $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
-            // $img = $file->move(base_path('public/razon_social'), $nombre);
+            $file->move(base_path('public/razon_social'), $nombre);
 
             $sucursal->update([
                 'id' => $request->id,
