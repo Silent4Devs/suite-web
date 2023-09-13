@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="text-right mt-4">
-                        <a href="" class="btn btn-mas-info-c">MÁS INFORMACIÓN</a>
+                        <a href="{{ route('admin.courses.show', $c) }}" class="btn btn-mas-info-c">MÁS INFORMACIÓN</a>
                     </div>
                 </div>
             </div>

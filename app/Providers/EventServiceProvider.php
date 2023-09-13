@@ -22,6 +22,8 @@ use App\Models\AuditoriaAnual;
 use App\Models\Calendario;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\Denuncias;
+use App\Models\Escuela\Lesson;
+use App\Models\Escuela\Section;
 use App\Models\ExperienciaEmpleados;
 use App\Models\IncidentesDeSeguridad;
 use App\Models\IncidentesSeguridad;
@@ -68,6 +70,7 @@ use App\Observers\EvaluacionObserver;
 use App\Observers\ExperienciaEmpleadosObserver;
 use App\Observers\IncidentesDeSeguridadObserver;
 use App\Observers\IncidentesSeguridadObserver;
+use App\Observers\LessonObserver;
 use App\Observers\MarcasObserver;
 use App\Observers\MatrizRiesgoObserver;
 use App\Observers\MatrizRiesgosSistemaGestionObserver;
@@ -85,6 +88,7 @@ use App\Observers\RecursoObserver;
 use App\Observers\RecursosObserver;
 use App\Observers\RegistroMejoraObserver;
 use App\Observers\RiesgoIdentificadoObserver;
+use App\Observers\SectionObserver;
 use App\Observers\SedesObserver;
 use App\Observers\SubCategoriaActivoObserver;
 use App\Observers\SugerenciasObserver;
@@ -185,5 +189,7 @@ class EventServiceProvider extends ServiceProvider
         PoliticaSgsi::observe(PoliticaSgsiObserver::class);
         MatrizRiesgo::observe(MatrizRiesgoObserver::class);
         TimesheetProyectoEmpleado::observe(TimesheetProyectoEmpleadoObserver::class);
+        Lesson::observe(LessonObserver::class);
+        Section::observe(SectionObserver::class);
     }
 }

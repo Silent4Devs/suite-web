@@ -26,6 +26,7 @@ class QuizDetails extends Component
 
     public function mount(Evaluation $evaluation, Course $course, ?User $user)
     {
+        // dd($course, $evaluation, $user);
         $this->getQuizDetail($evaluation, $course, $user);
     }
 
