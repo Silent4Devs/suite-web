@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('clausulas_auditorias', function (Blueprint $table) {
             $table->id();
             $table->integer('identificador')->nullable();
-            $table->string('nombre');
+            $table->string('nombre_clausulas');
             $table->longText('descripcion')->nullable();
             $table->timestamps();
         });
