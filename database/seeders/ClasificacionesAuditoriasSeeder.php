@@ -18,37 +18,22 @@ class ClasificacionesAuditoriasSeeder extends Seeder
         $clasif = [
             [
                 'identificador' => '1',
-                'nombre' => 'Contexto',
+                'nombre' => 'No conformidad Menor',
                 'descripcion' => '',
             ],
             [
                 'identificador' => '2',
-                'nombre' => 'Liderazgo',
+                'nombre' => 'No conformidad Mayor',
                 'descripcion' => '',
             ],
             [
                 'identificador' => '3',
-                'nombre' => 'Planificación',
+                'nombre' => 'Oportunidad de mejora',
                 'descripcion' => '',
             ],
             [
                 'identificador' => '4',
-                'nombre' => 'Soporte',
-                'descripcion' => '',
-            ],
-            [
-                'identificador' => '5',
-                'nombre' => 'Operación',
-                'descripcion' => '',
-            ],
-            [
-                'identificador' => '6',
-                'nombre' => 'Evaluación',
-                'descripcion' => '',
-            ],
-            [
-                'identificador' => '7',
-                'nombre' => 'Mejora',
+                'nombre' => 'Observación',
                 'descripcion' => '',
             ],
         ];
