@@ -4,9 +4,9 @@ namespace App\Http\Livewire\Escuela;
 
 use Livewire\Component;
 
-use App\Models\escuela\Course;
-use App\Models\escuela\Category;
-use App\Models\escuela\Level;
+use App\Models\Escuela\Course;
+use App\Models\Escuela\Category;
+use App\Models\Escuela\Level;
 
 use Livewire\WithPagination;
 

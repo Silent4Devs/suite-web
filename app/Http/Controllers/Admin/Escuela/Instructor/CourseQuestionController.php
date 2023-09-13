@@ -14,8 +14,8 @@ class CourseQuestionController extends Controller
      */
     public function index(Request $request)
     {
-        $course=$request->course;
-        $evaluation=$request->evaluation;
-        return view('admin.escuela.instructor.test',compact('course', 'evaluation'));
+        $course = $request->course;
+        $evaluation = $request->evaluation;
+        return view('admin.escuela.instructor.indexquestions', compact('course', 'evaluation'));
     }
 }

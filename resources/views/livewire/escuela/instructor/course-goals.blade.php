@@ -1,5 +1,5 @@
 <section>
-    <h1>Metas del curso</h1>
+    <h4>Metas del curso</h4>
     <hr class="mt-2 mb-6 bg-primary">
     @foreach ($course->goals as $item)
                 @if ($goal->id == $item->id)
@@ -28,10 +28,10 @@
     <div class="card shadow-none">
         <div class="card-body">
             <form wire:submit.prevent="store" class="form-group">
-                {!! Form::label('title', 'Agregar el nombre de la meta*',[
-                'class' => 'pl-0']) !!}
-                <div class="grid grid-cols-2 gap-4 mt-2 row justify-content-start">
+                <div class="mt-2 row justify-content-start">
                     <div class="col-9 pl-0">
+                        {!! Form::label('title', 'Agregar el nombre de la meta*',[
+                        'class' => 'pl-0']) !!}
                         <input wire:model="name" class="form-control" placeholder="Agregar el nombre de la meta">
                         @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
