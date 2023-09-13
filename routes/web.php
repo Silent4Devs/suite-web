@@ -1568,7 +1568,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
 
     //requisiciones
     Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
-    Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.index_aprobadores');
+    Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
     Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
     Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
     Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
