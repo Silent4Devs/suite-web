@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Escuela\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\escuela\Level;
+use App\Models\Escuela\Level;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LevelController extends Controller

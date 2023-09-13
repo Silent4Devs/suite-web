@@ -470,6 +470,16 @@
                     </li>
                     @endcan
                 </ul>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('escuela_estudiante')
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('admin.mis-cursos') }}"
+                            class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
+                            <font class="letra_blanca"> Mis cursos </font>
+                        </a>
+                    </li>
+                    @endcan
+                </ul>
             </li>
         @endcan
 

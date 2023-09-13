@@ -1373,6 +1373,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('curso-estudiante/{course}', 'CursoEstudiante@cursoEstudiante')->name('curso-estudiante');
     Route::get('mis-cursos', 'CursoEstudiante@misCursos')->name('mis-cursos');
     Route::get('curso-estudiante/{course}/evaluacion/{evaluation}', 'CursoEstudiante@evaluacionEstudiante')->name('curso.evaluacion');
+    Route::get('courses/{course}', 'CursoEstudiante@show')->name('courses.show');
+    Route::post('course/{course}/enrolled', 'CursoEstudiante@enrolled')->name('courses.enrolled');
+    Route::get('courses/{course}/quizdetail', 'Escuela\Instructor\CourseController@quizDetails')->name('courses-quizdetails');
+    Route::get('courses/{course}/evaluation/{evaluation}/quiz-details', 'Escuela\QuizDetailsController@show')->name('courses.evaluation.quizdetails');
+
+
     // Route::get('courses/{course}/curriculum', '\App\Http\Livewire\Escuela\Instructor\CoursesCurriculum'  )->name('courses.curriculum');
     // Route::get('courses/{course}/curriculum', 'Escuela\Instructor\CourseCurriculumController@show')->name('courses.curriculum');
     // Route::get('courses/{course}/goals', 'Escuela\Instructor\CourseController@goals')->name('courses.goals');
@@ -1562,7 +1568,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
 
     //requisiciones
     Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
-    Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.index_aprobadores');
+    Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
     Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
     Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
     Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');

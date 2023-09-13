@@ -97,6 +97,9 @@
             font-size: 12px;
             padding: 10px 25px;
         }
+        .btn-mas-info-c:hover {
+            color: #fff;
+        }
     </style>
 
     <div class="caja-blue-curso">
@@ -113,94 +116,20 @@
         <div class="caja-cards-mis-cursos">
 
             @foreach ($cursos_usuario as $cu)
-                <p>{{$cu->cursos->image}}</p>
-                <div class="card card-body mi-curso">
-                    <div class="caja-img-mi-curso">
-                        <img src="{{ Storage::url($cu->cursos->image->url) }}" alt="">
+            <div class="card card-body mi-curso">
+                        <a href="{{ route('admin.curso-estudiante', $cu->cursos->id) }}">
+                            <div class="caja-img-mi-curso">
+                                <img src="{{ Storage::url($cu->cursos->image->url) }}" alt="">
+                            </div>
+                        </a>
                     </div>
-                    <div class="caja-info-card-mc">
-                        <p><strong>{{ $cu->cursos->title }}</strong></p>
-                        <p style="margin-top: 13px;">32% Avance general</p>
-                        <div class="curso-progreso-barra">
-                            <div class="indicador-progreso-barra" style="width: 32%;"></div>
-                        </div>
-                    </div>
-                </div>
             @endforeach
 
         </div>
     </div>
 
     @livewire('escuela.course-index')
-    {{-- <div class="mis-c-catalogo-cursos">
-        <h3 class="title-main-cursos" style="margin-top: 40px;">Catálogo de cursos</h3>
-        <div class="caja-selects-catalogo">
-            <select name="" id="">
-                <option value="null">Todos los cursos</option>
-            </select>
-
-            <select name="category" id="categorySelect">
-                <option value="null">Categorias</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-            </select>
-            <button type="submit">Enviar</button>
-
-            <select name="level" id="levelSelect">
-                <option value="null">Niveles</option>
-                @foreach ($levels as $level)
-                    <option value="{{ $level->id }}">{{ $level->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="caja-cards-mis-cursos">
-            @foreach ($cursos as $c)
-                <div class="card card-body mi-curso">
-                    <div class="caja-img-mi-curso" style="margin-top: 15px;">
-                        <img src="{{ asset('img/gap_Ana.jpg') }}" alt="">
-                    </div>
-                    <div class="caja-info-card-mc">
-                        <p style="font-size: 18px;"><strong>{{ $c->title }}</strong></p>
-                        <p style="margin-top: 0px;">Profesor: {{ $c->teacher->name }} </p>
-                        <div class="mt-3 d-flex justify-content-between">
-                            <div style="color: #E3A008; font-size: 18px;">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <div>
-                                <i class="fa-solid fa-users"></i>
-                                (12)
-                            </div>
-                        </div>
-                        <div class="text-right mt-4">
-                            <a href="" class="btn btn-mas-info-c">MÁS INFORMACIÓN</a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-
-        </div>
-    </div> --}}
 @endsection
 
 @section('scripts')
-    {{-- <script>
-    // Escucha el cambio en el select
-    $('#categorySelect').change(function() {
-        let selectedCategory = $(this).val();
-
-        // Realiza una solicitud AJAX para obtener los datos relacionados con la ciudad
-        $.ajax({
-            url: 'mis-cursos/' + selectedCategory,
-            type: 'GET',
-            success: function(data) {
-                // Actualiza el contenido del contenedor con los datos relacionados
-                // $('#cityData').html(data);
-            }
-        });
-    });
-</script> --}}
 @endsection
