@@ -78,25 +78,28 @@ class DatabaseSeeder extends Seeder
                 // PermisosTimesheetAdministrador::class,
 
                 //Katbol
-                CentroCostosTableSeeder::class,
-                CompradoresTableSeeder::class,
-                ProductosTableSeeder::class,
-                ProveedorOCSTableSeeder::class,
-                SucursalesTableSeeder::class,
-                // FacturacionTableSeeder::class,
-                ProveedoresTableSeeder::class,
-                ContratosTableSeeder::class,
-                MonedaSeedder::class,
-                // ConveniosModificatoriosTableSeeder::class,
-                // EntregasMensualesTableSeeder::class,
-                // CierreContratosTableSeeder::class,
-                PermisosKatbol::class,
+                // CentroCostosTableSeeder::class,
+                // CompradoresTableSeeder::class,
+                // ProductosTableSeeder::class,
+                // ProveedorOCSTableSeeder::class,
+                // SucursalesTableSeeder::class,
+                // // FacturacionTableSeeder::class,
+                // ProveedoresTableSeeder::class,
+                // ContratosTableSeeder::class,
+                // MonedaSeedder::class,
+                // // ConveniosModificatoriosTableSeeder::class,
+                // // EntregasMensualesTableSeeder::class,
+                // // CierreContratosTableSeeder::class,
+                // PermisosKatbol::class,
 
-                //kaans
-                PermisosEscuelaInstructorSeeder::class,
-                PlatformSeeder::class,
-                PermisosEscuelaAdminSeeder::class,
-                PermisosEscuelaEstudianteSeeder::class
+                // //kaans
+                // PermisosEscuelaInstructorSeeder::class,
+                // PlatformSeeder::class,
+                // PermisosEscuelaAdminSeeder::class,
+                // PermisosEscuelaEstudianteSeeder::class
+
+                //Clausulas y Clasificacion de auditorias
+                ClasificacionesAuditoriasSeeder::class,
             ]
         );
     }
