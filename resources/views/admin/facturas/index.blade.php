@@ -11,68 +11,65 @@
 
         }
     </style>
-    <div class="row">
-        <div class="col s12 m12">
-            <div class="card">
-                <div class="card-content blue-text">
-                    <span class="card-title">Contrato</span>
-                    <table class="refresco">
-                        <thead>
-                            <tr>
-                                <th>No. contrato</th>
-                                <th>Vigencia</th>
-                                <th>Fase</th>
-                                <th>IVA</th>
-                                <th>Subtotal</th>
-                                <th>Monto de pago total</th>
-                                <th>Estado</th>
-                                <th style="text-align: center">Habilitar ampliación</th>
-                                <th style="text-align: center">Convenios Modificatorios</th>
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <div class="table-responsive">
+                <h4>Contrato</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>No. contrato</th>
+                            <th>Vigencia</th>
+                            <th>Fase</th>
+                            <th>IVA</th>
+                            <th>Subtotal</th>
+                            <th>Monto de pago total</th>
+                            <th>Estado</th>
+                            <th style="text-align: center">Habilitar ampliación</th>
+                            <th style="text-align: center">Convenios Modificatorios</th>
+                        </tr>
+                    </thead>
 
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr class="black-text">
-                                <td>{{ $contratos->no_contrato }}</td>
-                                <td>{{ $contratos->vigencia_contrato }}</td>
-                                <td>{{ $contratos->fase }}</td>
-                                <td>$ {{ number_format(($contratos->monto_pago / 1.16) * 0.16, 2) }}</td>
-                                <td>$ {{ number_format($contratos->monto_pago / 1.16, 2) }}</td>
-                                <td>$ {{ number_format($contratos->monto_pago, 2) }}</td>
-                                <td>{{ $contratos->estatus }}</td>
-                                <td style="text-align: center !important">
-                                    <form id="ampliacion_form"
-                                        action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}"
-                                        method="POST">
-                                        @method('PATCH')
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" class="checkbox"
-                                                    {{ $contratos->contrato_ampliado ? 'checked' : '' }} />
-                                                <span></span>
-                                            </label>
-                                        </p>
-                                    </form>
-                                </td>
-                                <td style="text-align: center !important">
-                                    <form id="convenio_form"
-                                        action="{{ route('contract_manager.contratos-katbol.convenios', ['id' => $contratos->id]) }}"
-                                        method="POST">
-                                        @method('PATCH')
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" class="checkbox_convenio"
-                                                    {{ $contratos->convenio_modificatorio ? 'checked' : '' }} />
-                                                <span></span>
-                                            </label>
-                                        </p>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <tbody>
+                        <tr class="black-text">
+                            <td>{{ $contratos->no_contrato }}</td>
+                            <td>{{ $contratos->vigencia_contrato }}</td>
+                            <td>{{ $contratos->fase }}</td>
+                            <td>$ {{ number_format(($contratos->monto_pago / 1.16) * 0.16, 2) }}</td>
+                            <td>$ {{ number_format($contratos->monto_pago / 1.16, 2) }}</td>
+                            <td>$ {{ number_format($contratos->monto_pago, 2) }}</td>
+                            <td>{{ $contratos->estatus }}</td>
+                            <td style="text-align: center !important">
+                                <form id="ampliacion_form"
+                                    action="{{ route('contract_manager.contratos-katbol.ampliacion', ['id' => $contratos->id]) }}"
+                                    method="POST">
+                                    @method('PATCH')
+                                    <p>
+                                        <label>
+                                            <input type="checkbox" class="checkbox"
+                                                {{ $contratos->contrato_ampliado ? 'checked' : '' }} />
+                                            <span></span>
+                                        </label>
+                                    </p>
+                                </form>
+                            </td>
+                            <td style="text-align: center !important">
+                                <form id="convenio_form"
+                                    action="{{ route('contract_manager.contratos-katbol.convenios', ['id' => $contratos->id]) }}"
+                                    method="POST">
+                                    @method('PATCH')
+                                    <p>
+                                        <label>
+                                            <input type="checkbox" class="checkbox_convenio"
+                                                {{ $contratos->convenio_modificatorio ? 'checked' : '' }} />
+                                            <span></span>
+                                        </label>
+                                    </p>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
