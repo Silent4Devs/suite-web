@@ -2,6 +2,7 @@
 
 
 @section('content')
+    {{ Breadcrumbs::render('contratos-katbol_formulario') }}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
@@ -9,17 +10,17 @@
 
     <style>
         /* .asterisco {
-                                                                                                                                                                                                                                                                                            color: red;
-                                                                                                                                                                                                                                                                                            margin-left: 5px;
+                                                                                                                                                                                                                                                                                                    color: red;
+                                                                                                                                                                                                                                                                                                    margin-left: 5px;
 
-                                                                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                                                                } */
 
         /*.select-wrapper input{
 
-                                                                                                                                                                                                                                                                                        direction:rtl;
-                                                                                                                                                                                                                                                                                        text-align:left;
+                                                                                                                                                                                                                                                                                                direction:rtl;
+                                                                                                                                                                                                                                                                                                text-align:left;
 
-                                                                                                                                                                                                                                                                                        }*/
+                                                                                                                                                                                                                                                                                                }*/
     </style>
 
     {{-- {{ Breadcrumbs::render('contratos_edit', $contrato) }} --}}

@@ -92,7 +92,7 @@ class ContratosController extends AppBaseController
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'no_contrato' => 'required',
+            'no_contrato' => 'required_unless:identificador_privado,1',
             'nombre_servicio' => 'required',
             'tipo_contrato' => 'required',
             'proveedor_id' => 'required',
@@ -117,6 +117,7 @@ class ContratosController extends AppBaseController
             'minimo.regex' => 'El monto total debe ser menor a 99,999,999,999.99',
             'fecha_firma.before_or_equal' => 'La fecha firma no puede ser después de la fecha inicio del contrato',
             'fecha_firma.after_or_equal' => 'La fecha firma no puede ser antes de la fecha inicio del contrato',
+            'no_contrato.required_unless' => 'Solo los Contratos privados no requieren Numero de Contrato',
         ]);
 
         $resultado = null;
