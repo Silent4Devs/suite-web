@@ -256,7 +256,7 @@
                 auth()->user()->can('capital_humano_acceder') ||
                 auth()->user()->can('analisis_de_riesgo_integral_acceder') ||
                 auth()->user()->can('sistema_de_gestion_acceder') ||
-                auth()->user()->can('matriz_bia_menu_acceder')||
+                auth()->user()->can('matriz_bia_menu_acceder') ||
                 auth()->user()->can('mis_cursos_acceder'))
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Tabantaj</font>
@@ -454,7 +454,7 @@
                 </a>
             </li>
         @endcan
-        @can('mis_cursos_acceder')
+        {{-- @can('mis_cursos_acceder')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-folder iconos_menu letra_blanca"></i>
@@ -462,26 +462,26 @@
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('mis_cursos_instructor')
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.courses.index') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
-                            <font class="letra_blanca"> Instructor </font>
-                        </a>
-                    </li>
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.courses.index') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
+                                <font class="letra_blanca"> Instructor </font>
+                            </a>
+                        </li>
                     @endcan
                 </ul>
                 <ul class="c-sidebar-nav-dropdown-items">
                     @can('escuela_estudiante')
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('admin.mis-cursos') }}"
-                            class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
-                            <font class="letra_blanca"> Mis cursos </font>
-                        </a>
-                    </li>
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.mis-cursos') }}"
+                                class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
+                                <font class="letra_blanca"> Mis cursos </font>
+                            </a>
+                        </li>
                     @endcan
                 </ul>
             </li>
-        @endcan
+        @endcan --}}
 
         {{--  <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->is('admin/contratos') ? 'active' : '' }}"
@@ -497,10 +497,10 @@
                 <font class="letra_blanca"> ISO 9001 </font>
             </a>
         </li> --}}
-        @if (auth()->user()->can('sistema_gestion_contratos_acceder') ||
-                auth()->user()->can('administracion_sistema_gestion_contratos_acceder') ||
-                auth()->user()->can('katbol_contratos_acceso') ||
-                auth()->user()->can('katbol_requisiciones_acceso'))
+        {{-- @if (auth()->user()->can('sistema_gestion_contratos_acceder') ||
+    auth()->user()->can('administracion_sistema_gestion_contratos_acceder') ||
+    auth()->user()->can('katbol_contratos_acceso') ||
+    auth()->user()->can('katbol_requisiciones_acceso'))
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Katbol</font>
             </li>
@@ -540,7 +540,7 @@
                 <font class="letra_blanca">Proveedores-Clientes</font>
             </a>
         </li>
-        @endcan
+        @endcan --}}
 
         @can('permisos_de_administracion_acceder')
             <li class="c-sidebar-nav-title">
@@ -1038,17 +1038,16 @@
                     </a>
                     <ul class="c-sidebar-nav-dropdown-items">
                         @can('escuela_admin_dashboar')
-                        <li class="c-sidebar-nav-item">
-                            {{-- <a href="{{ route('admin.courses.index') }}"
+                            <li class="c-sidebar-nav-item">
+                                {{-- <a href="{{ route('admin.courses.index') }}"
                                 class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
                                 <font class="letra_blanca"> Instructor </font>
                             </a> --}}
-                        </li>
+                            </li>
                         @endcan
                         @can('escuela_admin_categorias')
                         @endcan
                         @can('escuela_admin_niveles')
-
                         @endcan
                     </ul>
                 </li>
