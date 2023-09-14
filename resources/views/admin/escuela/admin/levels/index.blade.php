@@ -20,7 +20,7 @@
                     <tr>
                         <td>{{$level->id}}</td>
                         <td>{{$level->name}}</td>
-                        <td>
+                        <td class="d-flex justify-content-end mr-3">
                             <div class="form-group">
                                 <a class="btn" href="{{route('admin.levels.edit', $level)}}"><i style="font-size:12pt; color:#000" class="fas fa-edit" title="Editar"></i></a>
                                 <form style="display:inline-block" action="{{route('admin.levels.destroy', $level)}}" method="POST">

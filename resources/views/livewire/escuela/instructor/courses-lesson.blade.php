@@ -13,13 +13,13 @@
                     </h5>
                     <div class="d-inline">
                         <a wire:click="destroy({{ $item }})" style="cursor: pointer">
-                            <i style="font-size:10pt;" class="m-1 fa-regular fa-trash-can" title="Eliminar" style="color:#747474"></i>
+                            <i style="font-size:10px;" class="m-1 fa-regular fa-trash-can" title="Eliminar" style="color:#747474"></i>
                         </a>
                     </div>
                 </div>
                 <div class="col-2 d-flex align-items-center justify-content-end">
                     <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;">
-                        <i style="font-size:10pt; cursor: pointer;"
+                        <i style="font-size: 2rem; cursor: pointer;"
                             class="d-inline bi bi-caret-down-fill abirCollapse mr-2" data-toggle="collapse"
                             data-target="#miCollapse{{ $item->id }}" aria-expanded="false"></i>
                     </a>
