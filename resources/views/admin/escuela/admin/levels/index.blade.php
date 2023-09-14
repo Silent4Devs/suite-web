@@ -10,9 +10,9 @@
         <table class="table table-bordered w-100 datatable datatable-Role" id="tblLevels">
             <thead>
                 <tr>
-                    <th style="background-color: #345183;">ID</th>
-                    <th style="background-color: #345183;">Nombre</th>
-                    <th style="background-color: #345183;">Opciones</th>
+                    <th >ID</th>
+                    <th >Nombre</th>
+                    <th >Opciones</th>
                 </tr>
             </thead>
             <tbody>
