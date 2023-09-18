@@ -224,12 +224,12 @@
             <div class="distancia form-group col-md-4">
                 <label for="proveedor_id" class="txt-tamaño">&nbsp;Nombre
                     del
-                    proveedor<font class="asterisco">*</font></label>
+                    cliente<font class="asterisco">*</font></label>
                 <select name="proveedor_id" class="form-control required">
                     @if ($proveedores)
                         @foreach ($proveedores as $proveedores)
                             <option value="{{ $proveedores->id }}">
-                                {{ $proveedores->nombre_comercial }}
+                                {{ $proveedores->nombre }}
                             </option>
                         @endforeach
                     @else

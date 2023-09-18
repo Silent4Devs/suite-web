@@ -20,7 +20,7 @@ class ContratosTableSeeder extends Seeder
 
                 'no_contrato' => '679',
                 'tipo_contrato' => 'Fábrica de desarrollo',
-                'proveedor_id' => 1,
+                'proveedor_id' => '80',
                 'nombre_servicio' => 'test',
                 'objetivo' => 'test',
                 'fecha_inicio' => '2022-02-22',

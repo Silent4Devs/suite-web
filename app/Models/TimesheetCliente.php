@@ -31,6 +31,9 @@ class TimesheetCliente extends Model implements Auditable
         'puesto_contacto',
         'correo_contacto',
         'celular_contacto',
+
+        'objeto_descripcion',
+        'cobertura',
     ];
 
     //Redis methods

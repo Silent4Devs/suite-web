@@ -1,33 +1,36 @@
 @extends('layouts.admin')
 @section('content')
-
     <style type="text/css">
-        .btn-transparent{
+        .btn-transparent {
             background-color: rgba(0, 0, 0, 0) !important;
             color: #3490dc !important;
         }
     </style>
 
 
-     {{ Breadcrumbs::render('timesheet-clientes-form') }}
+    {{ Breadcrumbs::render('timesheet-clientes-form') }}
 
-	<h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Cliente</font> </h5>
+    <h5 class="col-12 titulo_general_funcion">TimeSheet: <font style="font-weight:lighter;">Cliente</font>
+    </h5>
 
-	<div class="card card-body">
-		<form action="{{ asset('admin/timesheet/clientes/store') }}" method="POST" class="row">
-			@csrf
+    <div class="card card-body">
+        <form action="{{ asset('admin/timesheet/clientes/store') }}" method="POST" class="row">
+            @csrf
             <div class="form-group col-md-2">
-                <label class="form-label"><i class="fas fa-address-card iconos-crear"></i> ID <sup style="color: red;">*</sup></label>
-                <input type=""  name="identificador" class="form-control" required  value="{{ old('identificador') }}">
+                <label class="form-label"><i class="fas fa-address-card iconos-crear"></i> ID <sup
+                        style="color: red;">*</sup></label>
+                <input type="" name="identificador" class="form-control" required value="{{ old('identificador') }}">
             </div>
 
-	        <div class="form-group col-md-5">
-                <label class="form-label"><i class="far fa-building iconos-crear"></i> Razon Social <sup style="color: red;">*</sup></label>
+            <div class="form-group col-md-5">
+                <label class="form-label"><i class="far fa-building iconos-crear"></i> Razon Social <sup
+                        style="color: red;">*</sup></label>
                 <input type="" name="razon_social" class="form-control" value="{{ old('razon_social') }}" required>
             </div>
 
             <div class="form-group col-md-5">
-                <label class="form-label"><i class="far fa-building iconos-crear"></i> Nombre Comercial del Cliente <sup style="color: red;">*</sup></label>
+                <label class="form-label"><i class="far fa-building iconos-crear"></i> Nombre Comercial del Cliente <sup
+                        style="color: red;">*</sup></label>
                 <input type="" name="nombre" class="form-control" required value="{{ old('nombre') }}">
             </div>
 
@@ -38,8 +41,24 @@
             <div id="registro_completo" class="d-none w-100 row" style="margin:0 !important;">
                 <div class="form-group col-md-6">
                     <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i> RFC</label>
-                    <input  required name="rfc" pattern="^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$" class="form-control" value="{{ old('rfc') }}">
+                    <input name="rfc"
+                        pattern="^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$"
+                        class="form-control" value="{{ old('rfc') }}">
                 </div>
+
+                {{-- <div class="form-group col-md-6">
+                    <label class="form-label"><i class="fas fa-file-alt iconos-crear"></i>Persona Fiscal</label>
+                    <select name="id_fiscale" id="" class="form-control">
+                        @if (!$personas->isEmpty())
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            @foreach ($personas as $persona)
+                                <option value="{{ $persona->id }}">{{ $persona->persona_fiscal }}</option>
+                            @endforeach
+                        @else
+                            <option value="" disabled>No hay proveedores registrados</option>
+                        @endif
+                    </select>
+                </div> --}}
 
                 <div class="col-md-12 col-sm-12 mt-4">
                     <div class="card vrd-agua" style="background-color:#345183;">
@@ -49,22 +68,23 @@
 
                 <div class="form-group col-md-4">
                     <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Calle y Número</label>
-                    <input type="" required name="calle" class="form-control" value="{{ old('calle') }}">
+                    <input type="" name="calle" class="form-control" value="{{ old('calle') }}">
                 </div>
 
                 <div class="form-group col-md-4">
                     <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Colonia</label>
-                    <input type="" required name="colonia" class="form-control" value="{{ old('colonia') }}">
+                    <input type="" name="colonia" class="form-control" value="{{ old('colonia') }}">
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Ciudad o Municipio/ País</label>
-                    <input type="" required name="ciudad" class="form-control" value="{{ old('ciudad') }}">
+                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Ciudad o Municipio/
+                        País</label>
+                    <input type="" name="ciudad" class="form-control" value="{{ old('ciudad') }}">
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i>  Código Postal </label>
-                    <input type="" required name="codigo_postal" class="form-control" value="{{ old('codigo_postal') }}">
+                    <label class="form-label"><i class="fas fa-map-marker-alt iconos-crear"></i> Código Postal </label>
+                    <input type="" name="codigo_postal" class="form-control" value="{{ old('codigo_postal') }}">
                 </div>
 
                 <div class="form-group col-md-4">
@@ -72,11 +92,12 @@
 
                         Teléfono*
                     </label>
-                    <input id="phone" type="text" name="telefono" value="{{ old('telefono') }}" class="form-control" pattern="\x2b[0-9]+" size="20" placeholder="+54976284353" required>
+                    <input id="phone" type="text" name="telefono" value="{{ old('telefono') }}" class="form-control"
+                        pattern="\x2b[0-9]+" size="20" placeholder="+54976284353">
                 </div>
                 <div class="form-group col-md-4">
                     <label class="form-label"><i class="fas fa-laptop iconos-crear"></i> Página Web</label>
-                    <input type="" required name="pagina_web" class="form-control" value="{{ old('pagina_web') }}">
+                    <input type="" name="pagina_web" class="form-control" value="{{ old('pagina_web') }}">
                 </div>
 
                 <div class="col-md-12 col-sm-12 mt-4">
@@ -86,66 +107,85 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label class="form-label"><i class="fas fa-user iconos-crear"></i> Nombre Completo del contacto</label>
-                    <input type="" required name="nombre_contacto" class="form-control" value="{{ old('nombre_contacto') }}">
+                    <label class="form-label"><i class="fas fa-user iconos-crear"></i> Nombre Completo del
+                        contacto</label>
+                    <input type="" name="nombre_contacto" class="form-control"
+                        value="{{ old('nombre_contacto') }}">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="form-label"><i class="fas fa-briefcase iconos-crear"></i> Puesto </label>
-                    <input type=""  name="puesto_contacto" class="form-control"  required value="{{ old('puesto_contacto') }}">
+                    <input type="" name="puesto_contacto" class="form-control"
+                        value="{{ old('puesto_contacto') }}">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="form-label"><i class="fas fa-envelope iconos-crear"></i> Correo Electronico</label>
-                    <input type="email" id="foo" class="form-control"  value="{{ old('correo_contacto') }}"  placeholder="example@example.com" name="correo_contacto"
-                        required>
+                    <input type="email" id="foo" class="form-control" value="{{ old('correo_contacto') }}"
+                        placeholder="example@example.com" name="correo_contacto">
 
                     <h6 id="emailV"></h6>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="form-label"><i class="fas fa-mobile-alt iconos-crear"></i> Celular </label>
-                    <input type="tel" name="celular_contacto" pattern="[0-9]{10}" class="form-control" required value="{{ old('celular_contacto') }}">
+                    <input type="tel" name="celular_contacto" pattern="[0-9]{10}" class="form-control"
+                        value="{{ old('celular_contacto') }}">
+                </div>
+
+                <div class="col-md-12 col-sm-12 mt-4">
+                    <div class="card vrd-agua" style="background-color:#345183;">
+                        <p class="mb-1 text-center text-white">PRODUCTOS Y/O SERVICIOS</p>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="form-label">Objeto social / Descripción
+                        del servicio o producto</label>
+                    <textarea class="form-control" name="objeto_descripcion" id="objeto_descripcion"
+                        value="{{ old('objeto_descripcion', '') }}"></textarea>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="form-label">Cobertura, Rango geográfico
+                        en el cual presta los servicios</label>
+                    <textarea class="form-control" name="cobertura" id="cobertura" value="{{ old('cobertura', '') }}"></textarea>
                 </div>
             </div>
 
             <div class="form-group col-12 text-right mt-4">
                 <a href="{{ route('admin.timesheet-clientes') }}" class="btn btn_cancelar">Cancelar</a>
-                <button  class="btn btn-success">Guardar</button>
+                <button class="btn btn-success">Guardar</button>
             </div>
-		</form>
-	</div>
-
+        </form>
+    </div>
 @endsection
 
 
 @section('scripts')
     @parent
     <script>
+        //funcion que valida correo
+        var emailV = document.getElementById('emailV');
+        $(function() {
+            $(document).on('keyup', '#foo', function() {
+                var val = $(this).val().trim(),
+                    reg =
+                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if (reg.test(val) == false) {
+                    emailV.innerHTML = "correo incorrecto";
+                } else {
+                    emailV.innerHTML = "";
+                }
+            });
+        });
 
-    //funcion que valida correo
-    var emailV = document.getElementById('emailV');
-     $(function(){
-     $(document).on('keyup','#foo',function(){
-    var val = $(this).val().trim(),
-        reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if( reg.test(val) == false ){
-        emailV.innerHTML =  "correo incorrecto";
-    }
-
-    else{
-        emailV.innerHTML =  "";
-     }
-     });
-    });
-
-    function myFunction() {
-    window.alert('Input validado');
-    }
-
+        function myFunction() {
+            window.alert('Input validado');
+        }
     </script>
     <script type="text/javascript">
-        $('#btn_registro_completo').click(function(){
+        $('#btn_registro_completo').click(function() {
             $('#registro_completo').toggleClass('d-none');
             $('#btn_registro_completo').toggleClass('btn-transparent');
         });
