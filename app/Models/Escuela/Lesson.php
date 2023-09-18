@@ -13,7 +13,6 @@ class Lesson extends Model
 
     protected $guarded = ['id'];
 
-
     // Funcion para indicar a que usuario permanece el avance del curso
     public function getCompletedAttribute()
     {

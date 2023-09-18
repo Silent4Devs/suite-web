@@ -155,7 +155,7 @@
                 retrieve: true,
                 aaSorting: [],
                 ajax: {
-                    url: "{{ route('contract_manager.requisiciones.getRequisicionIndex') }}",
+                    url: "{{ route('contract_manager.requisiciones.getRequisicionIndexSolicitante') }}",
                     type: 'POST',
                     data: {
                         _token: _token

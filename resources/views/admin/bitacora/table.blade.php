@@ -142,7 +142,7 @@
                         </font>
                     </label>
                     <input class="form-control" {{ $errors->has('no_contrato') ? 'is-invalid' : '' }} type="text"
-                        name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}" required>
+                        name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}">
                     <span id="existCode"></span>
                     {{-- @if ($errors->has('no_contrato'))
                         <span class="text-danger">{{ $errors->first('no_contrato') }}</span>
@@ -778,9 +778,9 @@
         element = document.getElementById("no_contrato");
         check = document.getElementById("check");
         if (check.checked) {
-            element.style.display = 'none';
+            element.style.visibility = 'hidden';
         } else {
-            element.style.display = 'block';
+            element.style.visibility = 'visible';
         }
     }
 </script>

@@ -1077,3 +1077,14 @@ Breadcrumbs::for('timesheet-reporte-aprobador', function ($trail) {
     $trail->push('Timesheet', route('admin.timesheet-inicio'));
     $trail->push('Reporte Aprobador');
 });
+
+Breadcrumbs::for('contratos-katbol', function ($trail) {
+    $trail->push('Katbol - Sistema de Gestion Contractual', route('contract_manager.katbol'));
+    $trail->push('Contratos', route('contract_manager.contratos-katbol.index'));
+});
+
+Breadcrumbs::for('contratos-katbol_formulario', function ($trail) {
+    $trail->push('Katbol - Sistema de Gestion Contractual', route('contract_manager.katbol'));
+    $trail->push('Contratos', route('contract_manager.contratos-katbol.index'));
+    $trail->push('Formulario', route('contract_manager.contratos-katbol.create'));
+});
