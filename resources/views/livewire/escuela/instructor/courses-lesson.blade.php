@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-2 d-flex align-items-center justify-content-end">
                     <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;">
-                        <i style="font-size: 2rem; cursor: pointer;"
+                        <i style="font-size: 20px; cursor: pointer;"
                             class="d-inline bi bi-caret-down-fill abirCollapse mr-2" data-toggle="collapse"
                             data-target="#miCollapse{{ $item->id }}" aria-expanded="false"></i>
                     </a>
