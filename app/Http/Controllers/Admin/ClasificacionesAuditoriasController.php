@@ -34,14 +34,12 @@ class ClasificacionesAuditoriasController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        dd($request->all());
+        // dd($request->nombre);
         $request->validate([
             "nombre" => "required",
         ]);
         // dd('validacion');
-        $nuevaClasificacion = new ClasificacionesAuditorias;
-        $nuevaClasificacion->create([
+        $nuevaClasificacion = ClasificacionesAuditorias::create([
             'identificador' => $request->identificador,
             'nombre_clasificaciones' => $request->nombre,
             'descripcion' => $request->descripcion,
@@ -61,25 +59,45 @@ class ClasificacionesAuditoriasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ClasificacionesAuditorias $clasificacionesAuditorias)
+    public function edit($id)
     {
         //
+        $clasif = ClasificacionesAuditorias::find($id);
+        // dd($clasif);
+        return view('admin.clasificacionAuditorias.edit', compact('clasif'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ClasificacionesAuditorias $clasificacionesAuditorias)
+    public function update($id, Request $request)
     {
-        //
+        // dd($id, $request->all());
+        $request->validate([
+            "nombre" => "required",
+        ]);
+        // dd('validacion');
+        $editClasificacion = ClasificacionesAuditorias::find($id);
+
+        $editClasificacion->update([
+            'identificador' => $request->identificador,
+            'nombre_clasificaciones' => $request->nombre,
+            'descripcion' => $request->descripcion,
+        ]);
+
+        return redirect(route('admin.auditoria-clasificacion'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ClasificacionesAuditorias $clasificacionesAuditorias)
+    public function destroy($id)
     {
-        //
+        // dd($id);
+        $deleteClasificacion = ClasificacionesAuditorias::find($id);
+        // dd($deleteClasificacion);
+        $deleteClasificacion->delete();
+        return redirect(route('admin.auditoria-clasificacion'));
     }
 
     public function datatable(Request $request)

@@ -8,8 +8,9 @@
                 <div class="row">
                     <div class="distancia form-group col-md-6">
                         <label for="identificador">ID</label>
-                        <input class="form-control {{ $errors->has('identificador') ? 'is-invalid' : '' }}" type="text"
-                            name="identificador" id="identificador" value="{{ old('identificador', '') }}" maxlength="220">
+                        <input class="form-control {{ $errors->has('identificador') ? 'is-invalid' : '' }}" type="number"
+                            name="identificador" id="identificador" value="{{ old('identificador', '') }}" min="0"
+                            max="999999">
                         @if ($errors->has('identificador'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('identificador') }}

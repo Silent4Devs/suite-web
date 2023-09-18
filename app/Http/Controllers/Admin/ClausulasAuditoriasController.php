@@ -39,9 +39,9 @@ class ClausulasAuditoriasController extends Controller
             "nombre" => "required",
         ]);
 
-        dd('validacion');
-        $nuevaClasificacion = new ClausulasAuditorias();
-        $nuevaClasificacion->create([
+        // dd('validacion');
+        $nuevaClausulas = new ClausulasAuditorias();
+        $nuevaClausulas->create([
             'identificador' => $request->identificador,
             'nombre_clausulas' => $request->nombre,
             'descripcion' => $request->descripcion,
@@ -61,25 +61,44 @@ class ClausulasAuditoriasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ClausulasAuditorias $clausulasAuditorias)
+    public function edit($id)
     {
-        //
+        $claus = ClausulasAuditorias::find($id);
+        // dd($clasif);
+        return view('admin.clausulasAuditorias.edit', compact('claus'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ClausulasAuditorias $clausulasAuditorias)
+    public function update($id, Request $request)
     {
         //
+        // dd($id, $request->all());
+        $request->validate([
+            "nombre" => "required",
+        ]);
+        // dd('validacion');
+        $editClausula = ClausulasAuditorias::find($id);
+
+        $editClausula->update([
+            'identificador' => $request->identificador,
+            'nombre_clausulas' => $request->nombre,
+            'descripcion' => $request->descripcion,
+        ]);
+
+        return redirect(route('admin.auditoria-clausula'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ClausulasAuditorias $clausulasAuditorias)
+    public function destroy($id)
     {
-        //
+        $deleteClausula = ClausulasAuditorias::find($id);
+        // dd($deleteClausula);
+        $deleteClausula->delete();
+        return redirect(route('admin.auditoria-clausula'));
     }
 
     public function datatable(Request $request)

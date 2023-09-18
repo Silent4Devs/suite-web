@@ -13,7 +13,7 @@ class ClausulasAuditorias extends Model
 
     protected $fillable = [
         'identificador',
-        'nombre',
+        'nombre_clausulas',
         'descripcion',
     ];
 }

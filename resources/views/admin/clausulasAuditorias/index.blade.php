@@ -192,7 +192,6 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-
                             let html =
                                 `
                                 <div class="dropdown">
@@ -201,9 +200,9 @@
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="{{ url('admin/auditorias/clausulas-auditorias/edit/${data}') }}"> 
                                             <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="{{ url('admin/auditorias/clausulas-auditorias/delete/${data}') }}">
                                             <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
                                     </div>
                                 </div>`;
