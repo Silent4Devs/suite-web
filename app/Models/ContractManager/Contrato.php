@@ -2,6 +2,7 @@
 
 namespace App\Models\ContractManager;
 
+use App\Models\TimesheetCliente;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -235,8 +236,7 @@ class Contrato extends Model implements Auditable
        * 'administrador' => 'none',
        * 'fase' => 'none',
        * 'vigencia_contrato' => 'none',
-       * 'pmp_asignado' => 'none' */
-    ];
+       * 'pmp_asignado' => 'none' */];
 
     protected $appends = [
         'nameproveedor',
@@ -260,7 +260,7 @@ class Contrato extends Model implements Auditable
 
     public function proveedor()
     {
-        return $this->belongsTo(Proveedores::class);
+        return $this->belongsTo(TimesheetCliente::class);
     }
 
     public function area()
@@ -275,7 +275,7 @@ class Contrato extends Model implements Auditable
 
     public function getArchivoAttribute()
     {
-        $archivo = Contratos::where('contrato_id', $this->id)->first();
+        $archivo = Contrato::where('contrato_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
         // dd($archivo);
         $ruta = asset('storage/contratos/');

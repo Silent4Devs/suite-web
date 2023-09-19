@@ -90,13 +90,13 @@ class DatabaseSeeder extends Seeder
                 // ConveniosModificatoriosTableSeeder::class,
                 // EntregasMensualesTableSeeder::class,
                 // CierreContratosTableSeeder::class,
-                PermisosKatbol::class,
+                // PermisosKatbol::class,
 
                 //kaans
-                PermisosEscuelaInstructorSeeder::class,
-                PlatformSeeder::class,
-                PermisosEscuelaAdminSeeder::class,
-                PermisosEscuelaEstudianteSeeder::class
+                // PermisosEscuelaInstructorSeeder::class,
+                // PlatformSeeder::class,
+                // PermisosEscuelaAdminSeeder::class,
+                // PermisosEscuelaEstudianteSeeder::class
             ]
         );
     }

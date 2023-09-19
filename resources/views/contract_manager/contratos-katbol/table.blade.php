@@ -20,7 +20,7 @@
                     @endfor
                 </th>
                 <th>Tipo</th>
-                <th>Proveedor</th>
+                <th>Cliente</th>
                 <th>Número de Proyecto</th>
                 <th>Servicio @for ($i = 0; $i < 80; $i++)
                     @endfor
@@ -36,7 +36,6 @@
                     @endfor
                 </th>
                 <th>Pagos</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table-2">Administrador</th>
                 {{-- <th style="background-color:#787676; color:#ffff;">Descripción Servicios</th> --}}
                 <th>Fecha Firma </th>{{-- Nueva --}}
                 {{-- <th style="background-color:#787676; color:#ffff;">Periodo Pagos</th> --}}
@@ -44,10 +43,11 @@
                 {{-- <th style="background-color:#787676; color:#ffff;">Fecha Inicio del Pago</th> --}}
                 <th style="min-width: 150px;">Mínimo</th>{{-- Nueva --}}
                 <th style="min-width: 150px;">Máximo</th>{{-- Nueva --}}
-                <th style="min-width: 150px;">Área</th>{{-- Nueva --}}
-                <th style="min-width: 150px;">Área Admin.</th>{{-- Nueva --}}
-                <th style="min-width: 150px;">Puesto</th>{{-- Nueva --}}
                 <th style="min-width: 150px;">PMP Asignado</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">Área</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">Puesto</th>{{-- Nueva --}}
+                <th class="estilotd contratos-table-2">Administrador</th>
+                <th style="min-width: 150px;">Área Admin.</th>{{-- Nueva --}}
                 {{-- <th style="background-color:#787676; color:#ffff;">Clasificación</th> --}}
                 <th style="min-width: 150px;">Fase</th>
                 <th>¿Ampliado?</th>{{-- Nueva --}}
@@ -64,9 +64,9 @@
                 @if ($usuario_actual->area_id == $contrato->area_id)
                     <tr>
                         <td>{{ $contrato->no_contrato }}</td>
-                        <td class="espaciotd">{{ $contrato->tipo_contrato }}</td>
-                        <td class="espaciotd">{{ $contrato->nombre_comercial }}</td>
-                        <td class="espaciotd">{{ $contrato->no_proyecto }}</td>
+                        <td>{{ $contrato->tipo_contrato }}</td>
+                        <td>{{ $contrato->nombre }}</td>
+                        <td>{{ $contrato->no_proyecto }}</td>
                         <td>{{ $contrato->nombre_servicio }}</td>
                         <td>{{ $contrato->objetivo }}</td>{{-- nuevo --}}
                         <td>
@@ -85,43 +85,43 @@
                             @endif
                         </td>
                         {{-- nuevo --}}
-                        <td class="espaciotd">
+                        <td>
                             @if ($contrato->cumple != null && $contrato->cumple != '0')
                                 Si
                             @else
                                 No
                             @endif
                         </td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->vigencia_contrato }}</td>
-                        <td class="espaciotd">{{ $contrato->no_pagos }}</td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->administrador_contrato }}</td>
+                        <td>{{ $contrato->vigencia_contrato }}</td>
+                        <td>{{ $contrato->no_pagos }}</td>{{-- nuevo --}}
                         {{-- <td style="text-align: center">{{ $contrato->cargo_administrador }}</td> --}}
                         {{-- <td style="text-align: center">{{ $contrato->servicios_descripcion }}</td> --}}
                         <td style="text-align: center">
                             {{ $contrato->fecha_firma != null ? Carbon\Carbon::createFromFormat('Y-m-d', $contrato->fecha_firma)->format('d-m-Y') : 'Sin fecha de firma' }}
                         </td>{{-- nuevo --}}
                         {{-- <td style="text-align: center">{{ $contrato->periodo_pagos }}</td> --}}
-                        <td class="espaciotd">{{ '$' . number_format($contrato->monto_pago, 2) }}</td>
+                        <td>{{ '$' . number_format($contrato->monto_pago, 2) }}</td>
                         {{-- nuevo --}}
                         {{-- <td style="text-align: center">{{ $contrato->fecha_inicio_pago }}</td> --}}
-                        <td class="espaciotd">{{ '$' . number_format($contrato->minimo, 2) }}</td>
+                        <td>{{ '$' . number_format($contrato->minimo, 2) }}</td>
                         {{-- nuevo --}}
-                        <td class="espaciotd">{{ '$' . number_format($contrato->maximo, 2) }}</td>
+                        <td>{{ '$' . number_format($contrato->maximo, 2) }}</td>
                         {{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->area }}</td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->area_administrador }}</td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->puesto }}</td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->pmp_asignado }}</td>{{-- nuevo --}}
+                        <td>{{ $contrato->pmp_asignado }}</td>{{-- nuevo --}}
+                        <td>{{ $contrato->area }}</td>{{-- nuevo --}}
+                        <td>{{ $contrato->puesto }}</td>{{-- nuevo --}}
+                        <td>{{ $contrato->administrador_contrato }}</td>
+                        <td>{{ $contrato->area_administrador }}</td>{{-- nuevo --}}
                         {{-- <td style="text-align: center">{{ $contrato->clasificacion }}</td> --}}
-                        <td class="espaciotd">{{ $contrato->fase }}</td>
-                        <td class="espaciotd">
+                        <td>{{ $contrato->fase }}</td>
+                        <td>
                             @if ($contrato->contrato_ampliado != null && $contrato->contrato_ampliado != 0)
                                 Si
                             @else
                                 No
                             @endif
                         </td>{{-- nuevo --}}
-                        <td class="espaciotd">
+                        <td>
                             @if ($contrato->convenio_modificatorio != null && $contrato->convenio_modificatorio != 0)
                                 Si
                             @else

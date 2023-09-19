@@ -230,13 +230,13 @@
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
         <div class="distancia form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">Nombre del
-                proveedor<font class="asterisco">*</font></label>
+                Cliente<font class="asterisco">*</font></label>
             <select name="proveedor_id" class="form-control required" {{ $show_contrato ? 'disabled' : '' }} required>
                 @if ($proveedores)
                     @foreach ($proveedores as $proveedoress)
                         <option value="{{ $proveedoress->id }}"
                             {{ $proveedoress->id == $proveedor_id ? 'selected' : '' }}>
-                            {{ $proveedoress->nombre_comercial }}</option>
+                            {{ $proveedoress->nombre }}</option>
                     @endforeach
                 @else
                     <option value="">No hay proveedores registrados</option>

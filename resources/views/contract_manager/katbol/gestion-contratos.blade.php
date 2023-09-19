@@ -32,11 +32,19 @@
                     </div>
                 </a></li>
         @endcan
-        @can('katbol_proveedores_acceso')
-            <li><a href="{{ route('contract_manager.proveedor.index') }}">
+        @can('timesheet_administrador_clientes_access')
+            <li><a href="{{ route('admin.timesheet-clientes') }}">
                     <div>
-                        <i class="fa-solid fa-id-badge"></i><br>
-                        Clientes - Proveedores
+                        <i class="bi bi-bag"></i><br>
+                        Clientes
+                    </div>
+                </a></li>
+        @endcan
+        @can('katbol_reportes_requisicion_acceso')
+            <li><a href="{{ route('contract_manager.reportes.index') }}">
+                    <div>
+                        <i class="fa-solid fa-file-circle-exclamation"></i>
+                        Reportes
                     </div>
                 </a></li>
         @endcan

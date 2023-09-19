@@ -19,6 +19,7 @@ use App\Models\TimesheetProyecto;
 use App\Models\TimesheetProyectoArea;
 use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetTarea;
+use App\Models\ContractManager\Fiscale;
 use App\Services\TimesheetService;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
@@ -880,12 +881,14 @@ class TimesheetController extends Controller
 
     public function clientesCreate()
     {
+        // $personas = Fiscale::get();
         return view('admin.timesheet.clientes.create');
     }
 
     public function clientesEdit($id)
     {
         $cliente = TimesheetCliente::find($id);
+        // $personas = Fiscale::get();
 
         return view('admin.timesheet.clientes.edit', compact('cliente'));
     }
