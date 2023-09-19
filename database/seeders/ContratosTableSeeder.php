@@ -17,10 +17,9 @@ class ContratosTableSeeder extends Seeder
 
         \DB::table('contratos')->insert([
             0 => [
-
                 'no_contrato' => '679',
                 'tipo_contrato' => 'Fábrica de desarrollo',
-                'proveedor_id' => '80',
+                'proveedor_id' => '5',
                 'nombre_servicio' => 'test',
                 'objetivo' => 'test',
                 'fecha_inicio' => '2022-02-22',
@@ -58,7 +57,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             1 => [
-
                 'no_contrato' => 'SE-25-2018',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 2,
@@ -140,7 +138,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             3 => [
-
                 'no_contrato' => 'IFT-LPN-004-21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 4,
