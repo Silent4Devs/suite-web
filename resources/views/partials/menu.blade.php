@@ -1039,10 +1039,10 @@
                     <ul class="c-sidebar-nav-dropdown-items">
                         @can('escuela_admin_dashboar')
                             <li class="c-sidebar-nav-item">
-                                {{-- <a href="{{ route('admin.courses.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
-                                <font class="letra_blanca"> Instructor </font>
-                            </a> --}}
+                                <a href="{{ route('admin.courses.index') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
+                                    <font class="letra_blanca"> Instructor </font>
+                                </a>
                             </li>
                         @endcan
                         @can('escuela_admin_categorias')
