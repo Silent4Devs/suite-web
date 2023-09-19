@@ -155,7 +155,7 @@ class PlanificacionControlController extends Controller
             'id_responsable_aprobar' => $request->id_responsable_aprobar,
         ]);
 
-        Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl));
+        Mail::to(removeUnicodeCharacters($planificacionControl->empleado->email)->send(new SolicitudFirmasControlCambios($planificacionControl)));
 
         // dd($request->all());
         // $planificacionControl = PlanificacionControl::create($request->all());
