@@ -18,6 +18,7 @@ use App\Models\Organizacion;
 use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Livewire;
 use Livewire\WithFileUploads;
@@ -61,6 +62,7 @@ class RequisicionesCreateComponent extends Component
     public $disabled = "";
 
     public $requisicion;
+    public $area;
 
     public $isVisible;
 
@@ -85,6 +87,7 @@ class RequisicionesCreateComponent extends Component
         $this->contratos = KatbolContrato::get();
         $this->productos = KatbolProducto::where('archivo', false)->get();
         $this->user_actual = Auth::user();
+        $this->area = Empleado::where('id', $this->user_actual->empleado_id)->first();
         $this->organizacion = Organizacion::first();
     }
 
@@ -105,7 +108,7 @@ class RequisicionesCreateComponent extends Component
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => $this->user_actual->empleado->area->area,
+                'area' => $this->area->area->area,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
@@ -115,7 +118,7 @@ class RequisicionesCreateComponent extends Component
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => $this->user_actual->empleado->area->area,
+                'area' => $this->area->area->area,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],

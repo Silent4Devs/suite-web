@@ -19,6 +19,7 @@
             <ul>
                 <li>El registros  ha sido eliminado</li>
                 <li>Tu conexión de internet es inestable</li>
+                <li>Genera tu orde de compra despues intentalo de nuevo</li>
             </ul>
         </div>
     </div>

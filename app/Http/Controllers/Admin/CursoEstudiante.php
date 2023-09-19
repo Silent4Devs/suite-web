@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
+use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Level;
 use App\Models\Escuela\UsuariosCursos;
@@ -26,6 +27,7 @@ class CursoEstudiante extends Controller
     public function misCursos()
     {
         $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', auth()->user()->id)->get();
+        // dd($cursos_usuario);
         // $cursos = Course::get();
         // $categories = Category::all();
         // $levels = Level::all();
@@ -40,7 +42,8 @@ class CursoEstudiante extends Controller
 
     public function cursoEstudiante($curso_id)
     {
-        $curso = Course::first($curso_id);
+        $curso = Course::where('id', $curso_id)->first();
+        // dd($curso_id, $curso);
         $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
         return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
     }
@@ -76,9 +79,30 @@ class CursoEstudiante extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(course $course)
     {
-        //
+
+        // $this->authorize('published', $course);
+
+        $similares = Course::where('category_id', $course->category_id)
+            ->where('id', '!=', $course->id)
+            // Devuelva los cursos que esten publicados
+            ->where('status', 3)
+            ->latest('id')
+            ->take(5)
+            ->get();
+
+        $token = CourseUser::where('course_id', $course->id)->where('user_id', auth()->user()->id)->exists();
+
+        return view('admin.escuela.estudiante.show', compact('course', 'similares', 'token'));
+    }
+
+    public function enrolled(Course $course)
+    {
+
+        $course->students()->attach(auth()->user()->id);
+
+        return redirect()->route('admin.curso-estudiante', $course->id);
     }
 
     /**

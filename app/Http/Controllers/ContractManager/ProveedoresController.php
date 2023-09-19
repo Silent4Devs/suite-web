@@ -87,14 +87,13 @@ class ProveedoresController extends Controller
 
         $proveedores->save();
         ($proveedores);
-        // dd($proveedores);
+
 
         return redirect()->route('contract_manager.proveedor.index')->with('success', 'Proveedor Registrado');
     }
 
     public function show($id)
     {
-        // dd($id);
         $proveedor = Proveedores::find($id);
         $personas = Fiscale::get();
         if (empty($proveedor)) {

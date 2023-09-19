@@ -142,7 +142,7 @@
                         </font>
                     </label>
                     <input class="form-control" {{ $errors->has('no_contrato') ? 'is-invalid' : '' }} type="text"
-                        name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}" required>
+                        name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}">
                     <span id="existCode"></span>
                     {{-- @if ($errors->has('no_contrato'))
                         <span class="text-danger">{{ $errors->first('no_contrato') }}</span>
@@ -614,11 +614,16 @@
                 <div class="col s12 m4 distancia">
                     <p style="color:#2395AA">
                         &nbsp;¿Aplica fianza o responsabilidad civil? </p>
-                    <div class="form custom-control custom-switch">
+                    {{-- <div class="form custom-control custom-switch">
                         No
                         <input id="check_aplica_fianza" type="checkbox" name="aplicaFinaza"
                             class="custom-control-input">
                         Si
+                    </div> --}}
+                    <div class="custom-control custom-switch form">
+                        <input type="checkbox" class="custom-control-input" id="check_aplica_fianza"
+                            name="aplicaFinaza">
+                        <label class="custom-control-label" for="check_aplica_fianza">No/Sí</label>
                     </div>
                 </div>
                 <style type="text/css">
@@ -636,16 +641,17 @@
                     <div class="td_fianza">
                         <label class="txt-tamaño ">Documento</label>
                         <div class="file-field input-field">
+                            <span>PDF</span>
                             <div class="btn">
-                                <span>PDF</span>
                                 <input type="hidden" id="" name="" value="">
-                                <input class="input_file_validar" type="file" name="documento"
-                                    accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
+                                <input class="input_file_validar form-control" type="file" name="documento"
+                                    accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                                    readonly>
                             </div>
-                            <div class="file-path-wrapper">
+                            {{-- <div class="file-path-wrapper">
                                 <input class="file-path validate form-control" type="text"
                                     placeholder="Elegir documento pdf" readonly>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="ml-4 display-flex">
@@ -772,9 +778,9 @@
         element = document.getElementById("no_contrato");
         check = document.getElementById("check");
         if (check.checked) {
-            element.style.display = 'none';
+            element.style.visibility = 'hidden';
         } else {
-            element.style.display = 'block';
+            element.style.visibility = 'visible';
         }
     }
 </script>

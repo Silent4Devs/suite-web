@@ -135,6 +135,8 @@ class SucursalController extends Controller
 
         $file = $request->file('mylogo');
 
+
+
         if ($file != null) {
             $nombre = uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move(base_path('public/razon_social'), $nombre);

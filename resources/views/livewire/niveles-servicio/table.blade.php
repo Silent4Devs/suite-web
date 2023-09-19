@@ -22,10 +22,9 @@
         </div>
     </div>
 </div>
-<div class="tabla_responsiva_edit_contratos tabla-cierre"
-    style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
+<div class="table-responsive" style="margin-top: 30px;">
     @if ($nivelesServicio->count())
-        <table class="table table-responsive">
+        <table class="table">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top" wire:click="order('id')">
@@ -193,9 +192,12 @@
         @endif
     @endif
 
+    <div class="col-12 d-flex justify-content-end">
+        {{ $nivelesServicio->links('livewire::simple-tailwind') }}
+    </div>
+
 </div>
 
-{{-- {{ $nivelesServicio->links() }} --}}
 <script>
     $(document).ready(function() {
         $('.select_pagination_niveles').change(function(e) {

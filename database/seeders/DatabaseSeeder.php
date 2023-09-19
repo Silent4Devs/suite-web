@@ -86,15 +86,17 @@ class DatabaseSeeder extends Seeder
                 // FacturacionTableSeeder::class,
                 ProveedoresTableSeeder::class,
                 ContratosTableSeeder::class,
+                MonedaSeedder::class,
                 // ConveniosModificatoriosTableSeeder::class,
                 // EntregasMensualesTableSeeder::class,
                 // CierreContratosTableSeeder::class,
                 PermisosKatbol::class,
 
-                //PermisosEscuelaInstructorSeeder::class,
-                // PlatformSeeder::class,
-                // PermisosEscuelaAdminSeeder::class,
-                //PermisosEscuelaInstructor::class
+                //kaans
+                PermisosEscuelaInstructorSeeder::class,
+                PlatformSeeder::class,
+                PermisosEscuelaAdminSeeder::class,
+                PermisosEscuelaEstudianteSeeder::class
             ]
         );
     }

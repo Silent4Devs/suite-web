@@ -1,5 +1,5 @@
-<div style="margin-top: 30px; margin-left: 50px;">
-    <table class="tabla_responsiva_edit_contratos">
+<div class="table-responsive">
+    <table class="table">
         <thead>
             <tr>
                 <th class="grey-text letra-ngt">No. Proyecto</th>

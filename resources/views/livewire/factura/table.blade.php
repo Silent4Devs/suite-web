@@ -1,4 +1,4 @@
-<div class="row" style="margin-top: 30px; margin-left: 10px;">
+<div class="row" style="margin-top: 15px; margin-bottom: 20px;">
     <div class="col l6">
         <label for="search">Busca un número de factura</label>
         <input type="text" class="form-control" wire:model="search" placeholder="Busca un número de factura">
@@ -22,8 +22,7 @@
         </div>
     </div>
 </div>
-<div class="tabla_responsiva_edit_contratos tabla-cierre"
-    style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
+<div class="table-responsive">
     @if ($facturas->count())
         <table class="table">
             <thead>
@@ -237,9 +236,10 @@
         @endif
     @endif
 
+    <div class="col-12 d-flex justify-content-end">
+        {{ $facturas->links('livewire::simple-tailwind') }}
+    </div>
 </div>
-<br>
-{{ $facturas->links() }}
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         $('.select_pagination').change(function(e) {

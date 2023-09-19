@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Escuela\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\escuela\Category;
+use App\Models\Escuela\Category;
 use RealRashid\SweetAlert\Facades\Alert;
 
 

@@ -21,9 +21,9 @@
         </div>
     </div>
 </div>
-<div class="tabla_responsiva_edit_contratos tabla-cierre">
+<div class="table-responsive">
     @if ($convenio->count())
-        <table class="table" style="margin-top: 30px; margin-left: 20px; margin-right: 20px;">
+        <table class="table" style="margin-top: 30px;">
             <thead>
                 <tr>
                     <th style="cursor: pointer; vertical-align: top; text-align:center" class="letra-ngt grey-text">
@@ -113,19 +113,19 @@
         @endif
     @endif
 
+    <div class="col-6 p-0" style="display: flex;justify-content: end">
+        {{ $convenio->links('livewire::simple-tailwind') }}
+    </div>
 </div>
-<div class="row">
-    {{-- <div class="col-6 p-0">
+{{-- <div class="row">
+    <div class="col-6 p-0">
         <strong>
             Mostrando {{ $perPage }} de {{ $totalRegistrosMostrando }} resultados @if ($estatus)
                 <span class="badge badge-primary">(filtrando por {{ $estatus }})</span>
             @endif
         </strong>
-    </div> --}}
-    <div class="col-6 p-0" style="display: flex;justify-content: end">
-        {{ $convenio->links() }}
     </div>
-</div>
+</div> --}}
 <script>
     $(document).ready(function() {
         $('.select_pagination').change(function(e) {

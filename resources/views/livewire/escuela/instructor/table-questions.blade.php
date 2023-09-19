@@ -8,11 +8,11 @@
     <x-loading-indicator wire:loading />
     <div class="card shadow-none" wire:ignore>
 
-            <h6 class="card-answer mt-4">Nombre Evaluación</h6>
-            <h4 class="card-answer">{{ $evaluation->name }}</h4>
+            <h4 class="card-answer mt-4">Nombre Evaluación</h4>
+            <h6 class="card-answer">{{ $evaluation->name }}</h6>
 
-            <h6 class="card-answer mt-4">Descripción</h6>
-            <p class="card-answer mt-4">{{$evaluation->description}}</p>
+            <h4 class="card-answer mt-4">Descripción</h4>
+            <p class="card-answer mt-2">{{$evaluation->description}}</p>
 
                 <div class="d-flex justify-content-end m-3">
                     @livewire('escuela.instructor.questions', ['evaluation_id' => $evaluation->id,'edit' => false, 'onlyIcon' => false], key($evaluation->id))
@@ -54,7 +54,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @livewire('escuela.instructor.questions', ['evaluation_id' => $evaluation->id, 'questionModel' => $question, 'edit' => true], key($question->id))
-                                    <i style="font-size:10px; color:red" class="ml-2 fas fa-trash" data-toggle="tooltip"
+                                    <i style="font-size:10px;" class="ml-2 fa-regular fa-trash-can" data-toggle="tooltip"
                                     data-placement="top" title="Eliminar"
                                     wire:click.prevent="destroy({{ $question->id }})"></i>
                             </td>

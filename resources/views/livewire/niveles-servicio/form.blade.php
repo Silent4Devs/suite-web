@@ -2,7 +2,7 @@
 
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-8">
-            <label for="no_contrato" class="txt-tamaño">Nombre<font class="asterisco">*</font></label>
+            <label for="nombre" class="txt-tamaño">Nombre<font class="asterisco">*</font></label>
             <input type="text" maxlength="250" wire:model.debounce.800ms="nombre" class="form-control" required>
             @error('nombre')
                 <span class="red-text">{{ $message }}</span>
@@ -19,14 +19,14 @@
 
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-6">
-            <label for="no_contrato" class="txt-tamaño">Unidad<font class="asterisco">*</font></label>
-            <input type="text" maxlength="250" wire:model.debounce.800ms="unidad" class="form-control" required>
+            <label for="unidad" class="txt-tamaño">Unidad<font class="asterisco">*</font></label>
+            <input type="text" maxlength="128" wire:model.debounce.800ms="unidad" class="form-control" required>
             @error('unidad')
                 <span class="red-text">{{ $message }}</span>
             @enderror
         </div>
         <div class="distancia form-group col-md-6">
-            <label for="no_contrato" class="txt-tamaño">Área<font class="asterisco">*</font></label>
+            <label for="area" class="txt-tamaño">Área<font class="asterisco">*</font></label>
             <input type="text" maxlength="250" wire:model.debounce.800ms="area" class="form-control" required>
             @error('area')
                 <span class="red-text">{{ $message }}</span>
