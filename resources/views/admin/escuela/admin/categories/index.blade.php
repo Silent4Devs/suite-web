@@ -16,17 +16,17 @@
 
     <div class="card-body">
 
-        <table class="table table-bordered w-100 datatable datatable-Role" id="tblCategories">
+        <table class="table table-bordered w-100 datatable datatable-User" id="tblCategories">
 
             <thead>
 
-                <tr style="background-color: #345183; color: white;">
+                <tr >
 
-                    <th style="background-color: #345183;">ID</th>
+                    <th >ID</th>
 
-                    <th style="background-color: #345183;">Nombre</th>
+                    <th >Nombre</th>
 
-                    <th style="background-color: #345183;">Opciones</th>
+                    <th >Opciones</th>
 
                 </tr>
 
