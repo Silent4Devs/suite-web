@@ -1502,7 +1502,7 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::view('katbol', 'contract_manager.katbol.index')->name('katbol');
 
     //Proveedores
-    Route::resource('proveedor', 'ProveedoresController');
+    // Route::resource('proveedor', 'ProveedoresController');
 
     //Contratos
     //## API - Revisar en tiempo real si contrato ya existe ###
