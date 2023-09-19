@@ -10,9 +10,9 @@
         <table class="table table-bordered w-100 datatable datatable-Role" id="tblLevels">
             <thead>
                 <tr>
-                    <th style="background-color: #345183;">ID</th>
-                    <th style="background-color: #345183;">Nombre</th>
-                    <th style="background-color: #345183;">Opciones</th>
+                    <th >ID</th>
+                    <th >Nombre</th>
+                    <th >Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,7 +20,7 @@
                     <tr>
                         <td>{{$level->id}}</td>
                         <td>{{$level->name}}</td>
-                        <td>
+                        <td class="d-flex justify-content-end mr-3">
                             <div class="form-group">
                                 <a class="btn" href="{{route('admin.levels.edit', $level)}}"><i style="font-size:12pt; color:#000" class="fas fa-edit" title="Editar"></i></a>
                                 <form style="display:inline-block" action="{{route('admin.levels.destroy', $level)}}" method="POST">
