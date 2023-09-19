@@ -13,7 +13,7 @@ class ClasificacionesAuditorias extends Model
 
     protected $fillable = [
         'identificador',
-        'nombre',
+        'nombre_clasificaciones',
         'descripcion',
     ];
 }

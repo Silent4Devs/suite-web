@@ -18,37 +18,37 @@ class ClausulasAuditoriasSeeder extends Seeder
         $claus = [
             [
                 'identificador' => '1',
-                'nombre' => 'Contexto',
+                'nombre_clausulas' => 'Contexto',
                 'descripcion' => '',
             ],
             [
                 'identificador' => '2',
-                'nombre' => 'Liderazgo',
+                'nombre_clausulas' => 'Liderazgo',
                 'descripcion' => '',
             ],
             [
                 'identificador' => '3',
-                'nombre' => 'Planificación',
+                'nombre_clausulas' => 'Planificación',
                 'descripcion' => '',
             ],
             [
                 'identificador' => '4',
-                'nombre' => 'Soporte',
+                'nombre_clausulas' => 'Soporte',
                 'descripcion' => '',
             ],
             [
                 'identificador' => '5',
-                'nombre' => 'Operación',
+                'nombre_clausulas' => 'Operación',
                 'descripcion' => '',
             ],
             [
                 'identificador' => '6',
-                'nombre' => 'Evaluación',
+                'nombre_clausulas' => 'Evaluación',
                 'descripcion' => '',
             ],
             [
                 'identificador' => '7',
-                'nombre' => 'Mejora',
+                'nombre_clausulas' => 'Mejora',
                 'descripcion' => '',
             ],
         ];

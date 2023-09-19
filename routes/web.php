@@ -1018,6 +1018,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('auditoria-internas/{auditoriaInterna}/edit', 'AuditoriaInternaController@edit')->name('auditoria-internas.edit');
         Route::resource('auditoria-internas', 'AuditoriaInternaController')->except('edit');
 
+        //Clasificacion Auditorias
+        Route::get("auditorias/clasificacion-auditorias", "ClasificacionesAuditoriasController@index")->name("auditoria-clasificacion");
+        Route::get("auditorias/clasificacion-auditorias/create", "ClasificacionesAuditoriasController@create")->name("auditoria-clasificacion.create");
+        Route::post("auditorias/clasificacion-auditorias/store", "ClasificacionesAuditoriasController@store")->name("auditoria-clasificacion.store");
+        Route::get("auditorias/clasificacion-auditorias/edit/{id}", "ClasificacionesAuditoriasController@edit")->name("auditoria-clasificacion.edit");
+        Route::post("auditorias/clasificacion-auditorias/update/{id}", "ClasificacionesAuditoriasController@update")->name("auditoria-clasificacion.update");
+        Route::get("auditorias/clasificacion-auditorias/delete/{id}", "ClasificacionesAuditoriasController@destroy")->name("auditoria-clasificacion.destroy");
+        Route::get("auditorias/clasificacion-auditorias/datatable", "ClasificacionesAuditoriasController@datatable")->name("auditoria-clasificacion.datatable");
+
+        //Clausulas Auditorias
+        Route::get("auditorias/clausulas-auditorias", "ClausulasAuditoriasController@index")->name("auditoria-clausula");
+        Route::get("auditorias/clausulas-auditorias/create", "ClausulasAuditoriasController@create")->name("auditoria-clausula.create");
+        Route::post("auditorias/clausulas-auditorias/store", "ClausulasAuditoriasController@store")->name("auditoria-clausula.store");
+        Route::get("auditorias/clausulas-auditorias/edit/{id}", "ClausulasAuditoriasController@edit")->name("auditoria-clausula.edit");
+        Route::post("auditorias/clausulas-auditorias/update/{id}", "ClausulasAuditoriasController@update")->name("auditoria-clausula.update");
+        Route::get("auditorias/clausulas-auditorias/delete/{id}", "ClausulasAuditoriasController@destroy")->name("auditoria-clausula.destroy");
+        Route::get("auditorias/clausulas-auditorias/datatable", "ClausulasAuditoriasController@datatable")->name("auditoria-clausula.datatable");
+
         // Revision Direccions
         Route::delete('revision-direccions/destroy', 'RevisionDireccionController@massDestroy')->name('revision-direccions.massDestroy');
         Route::resource('revision-direccions', 'RevisionDireccionController');
