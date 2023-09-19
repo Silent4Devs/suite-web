@@ -40,6 +40,14 @@
                     </div>
                 </a></li>
         @endcan
+        @can('katbol_reportes_requisicion_acceso')
+            <li><a href="{{ route('contract_manager.reportes.index') }}">
+                    <div>
+                        <i class="fa-solid fa-file-circle-exclamation"></i>
+                        Reportes
+                    </div>
+                </a></li>
+        @endcan
     </ul>
 @else
     <div class="row" style="margin-left: -10px">
