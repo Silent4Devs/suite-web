@@ -454,7 +454,7 @@
                 </a>
             </li>
         @endcan
-        {{-- @can('mis_cursos_acceder')
+        @can('mis_cursos_acceder')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle btn_bajar_scroll" href="#">
                     <i class="bi bi-folder iconos_menu letra_blanca"></i>
@@ -481,26 +481,26 @@
                     @endcan
                 </ul>
             </li>
-        @endcan --}}
+        @endcan
 
-        {{--  <li class="c-sidebar-nav-item">
+        {{-- <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->is('admin/contratos') ? 'active' : '' }}"
                 href="{{ route('admin.contratos.index') }}#contexto">
                 <i class="bi bi-file-text iconos_menu letra_blanca"></i>
                 <font class="letra_blanca">Sistema de Contratos</font>
             </a>
-        </li>  --}}
-        {{-- <li class="c-sidebar-nav-item">
+        </li>
+        <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link {{ request()->is('admin/iso9001') ? 'active' : '' }}"
                 href="{{ route('admin.iso9001.index') }}#contexto">
                 <i class="bi bi-globe2 iconos_menu letra_blanca"></i>
                 <font class="letra_blanca"> ISO 9001 </font>
             </a>
         </li> --}}
-        {{-- @if (auth()->user()->can('sistema_gestion_contratos_acceder') ||
-    auth()->user()->can('administracion_sistema_gestion_contratos_acceder') ||
-    auth()->user()->can('katbol_contratos_acceso') ||
-    auth()->user()->can('katbol_requisiciones_acceso'))
+        @if (auth()->user()->can('sistema_gestion_contratos_acceder') ||
+                auth()->user()->can('administracion_sistema_gestion_contratos_acceder') ||
+                auth()->user()->can('katbol_contratos_acceso') ||
+                auth()->user()->can('katbol_requisiciones_acceso'))
             <li class="c-sidebar-nav-title">
                 <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Katbol</font>
             </li>
@@ -533,13 +533,13 @@
             </li>
         @endcan
         {{-- @can('katbol_proveedores_acceso')
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route('contract_manager.proveedor.index') }}"
-                class="c-sidebar-nav-link {{ request()->is('contract_manager/proveedor') || request()->is('contract_manager/proveedor/*') ? 'active' : '' }}">
-                <i class="bi bi-person-workspace iconos_menu letra_blanca"></i>
-                <font class="letra_blanca">Proveedores-Clientes</font>
-            </a>
-        </li>
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('contract_manager.proveedor.index') }}"
+                    class="c-sidebar-nav-link {{ request()->is('contract_manager/proveedor') || request()->is('contract_manager/proveedor/*') ? 'active' : '' }}">
+                    <i class="bi bi-person-workspace iconos_menu letra_blanca"></i>
+                    <font class="letra_blanca">Proveedores-Clientes</font>
+                </a>
+            </li>
         @endcan --}}
 
         @can('permisos_de_administracion_acceder')
@@ -1039,10 +1039,10 @@
                     <ul class="c-sidebar-nav-dropdown-items">
                         @can('escuela_admin_dashboar')
                             <li class="c-sidebar-nav-item">
-                                {{-- <a href="{{ route('admin.courses.index') }}"
-                                class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
-                                <font class="letra_blanca"> Instructor </font>
-                            </a> --}}
+                                <a href="{{ route('admin.courses.index') }}"
+                                    class="c-sidebar-nav-link {{ request()->is('admin/courses') || request()->is('admin/courses') ? 'active' : '' }}">
+                                    <font class="letra_blanca"> Instructor </font>
+                                </a>
                             </li>
                         @endcan
                         @can('escuela_admin_categorias')
