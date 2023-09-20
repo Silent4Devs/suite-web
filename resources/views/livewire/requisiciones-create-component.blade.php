@@ -131,7 +131,7 @@
                                 <label for="" class="txt-tamaño">
                                     Cantidad <font class="asterisco">*</font>
                                 </label>
-                                <input type="number" name="cantidad_1" min="1"
+                                <input type="number" name="cantidad_1" min="1" max="9000000000"
                                     class="model-cantidad browser-default" required>
                             </div>
                             <div class="col s12 l8">
