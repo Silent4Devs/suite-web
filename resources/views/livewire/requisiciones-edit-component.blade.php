@@ -127,7 +127,7 @@
                                 <label for="" class="txt-tamaño">
                                     Cantidad <font class="asterisco">*</font>
                                 </label>
-                                <input type="number" name="cantidad_{{$count}}" min="1" class="model-cantidad browser-default" value="{{old('cantidad_'.$count, $edtprod->cantidad) ?:''}}" required>
+                                <input type="number" name="cantidad_{{$count}}" min="1" max="9000000000" class="model-cantidad browser-default" value="{{old('cantidad_'.$count, $edtprod->cantidad) ?:''}}" required>
                             </div>
                             <div class="col s12 l8 ">
                                 <label for="" class="txt-tamaño">
