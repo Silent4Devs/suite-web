@@ -216,7 +216,7 @@
             <label for="nombre_servicio" class="txt-tamaño">
                 Nombre del servicio<font class="asterisco">*</font></label><br>
             <div class="form-floating">
-                <textarea id="textarea1" class="ajustable form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
+                <textarea id="textarea1" class="form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
                     {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif required>{{ $contrato->nombre_servicio }}</textarea>
             </div>
             @if ($errors->has('nombre_servicio'))
@@ -347,8 +347,8 @@
 
                     <div class="file-path-wrapper">
                         <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
-                            type="text" maxlength="250" placeholder="Elegir documento pdf"
-                            {{ $show_contrato ? 'readonly' : '' }} readonly>
+                            type="text" placeholder="Elegir documento pdf" {{ $show_contrato ? 'readonly' : '' }}
+                            readonly>
                     </div>
                     @if (!$show_contrato)
                         <div class="fondo_delete">
@@ -409,6 +409,7 @@
             {!! Form::text('vigencia_contrato', $contrato->vigencia_contrato, [
                 'class' => 'form-control',
                 'required',
+                'maxlength' => '150',
                 $show_contrato ? 'readonly' : '',
             ]) !!}
             @if ($errors->has('vigencia_contrato'))
@@ -733,7 +734,7 @@
                                         accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
                                 </div>
                                 <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" maxlength="250"
+                                    <input class="file-path validate" type="text"
                                         placeholder="Elegir documento pdf" readonly>
                                 </div>
                             </div>
