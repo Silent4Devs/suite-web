@@ -683,7 +683,7 @@
 
         function eliminar() {
             $.ajax({
-                type: "GET",
+                type: "DELETE",
                 url: "eliminar-registro",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

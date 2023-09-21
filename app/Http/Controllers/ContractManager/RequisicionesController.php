@@ -109,9 +109,7 @@ class RequisicionesController extends Controller
      */
     public function eliminarProveedores()
     {
-        KatbolProveedorRequisicion::where('requisiciones_id', 469)->delete();
-        KatbolProvedorRequisicionCatalogo::where('requisicion_id', 469)->delete();
-        KatbolProveedorIndistinto::where('requisicion_id', 469)->delete();
+        //codigo
     }
 
     /**
