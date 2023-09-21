@@ -56,11 +56,11 @@
                         </th>
                         <th>
                             Nombre&nbsp;del&nbsp;rol
-                        </th>                     
+                        </th>
                         <th style="max-width: 100px;">
                             Opciones
                         </th>
-                    </tr>                 
+                    </tr>
                 </thead>
             </table>
         </div>
@@ -166,7 +166,7 @@
                 $('#xlsxImportModal').modal('show');
                 }
                 };
-            
+
                 dtButtons.push(btnAgregar);
                 dtButtons.push(btnExport);
                 dtButtons.push(btnImport);
@@ -181,13 +181,13 @@
                 var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
                 return entry.id
                 });
-            
+
                 if (ids.length === 0) {
                 alert('{{ trans('global.datatables.zero_selected') }}')
-            
+
                 return
                 }
-            
+
                 if (confirm('{{ trans('global.areYouSure') }}')) {
                 $.ajax({
                 headers: {'x-csrf-token': _token},
@@ -215,14 +215,14 @@
                     {
                         data: 'title',
                         name: 'title'
-                    },                  
+                    },
                     {
                         data: 'actions',
                         render: function(data, type, row) {
                             return `
                             <div class="d-flex align-items-center">
                                 @can('roles_copiar')
-                                <i class="fas fa-copy text-dark mr-2" title="Copiar" style="cursor:pointer" data-action="copy" data-id="${row.id}"></i>    
+                                <i class="fas fa-copy text-dark mr-2" title="Copiar" style="cursor:pointer" data-action="copy" data-id="${row.id}"></i>
                                 ${data}
                                 @endcan
                             </div>
