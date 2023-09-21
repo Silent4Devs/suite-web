@@ -46,6 +46,9 @@
                             Equipo&nbsp;auditoría
                         </th>
                         <th>
+                            Reportes
+                        </th>
+                        <th>
                             Opciones
                         </th>
                     </tr>
@@ -201,8 +204,8 @@
                     //         let html = '<ul>';
                     //         data.forEach(clausula => {
                     //             html += `
-                    //                 <li>${clausula.nombre}</li>
-                    //             `;
+                //                 <li>${clausula.nombre}</li>
+                //             `;
                     //         })
                     //         html += '</ul>';
                     //         return html
@@ -214,7 +217,7 @@
                     },
                     {
                         data: 'lider',
-                        name:'lider',
+                        name: 'lider',
                         render: function(data, type, row, meta) {
                             let liderJson = JSON.parse(row.lider ? row.lider : '{}')
                             if (type === "empleadoText") {
@@ -234,8 +237,8 @@
                         data: 'auditor_externo',
                         name: 'auditor_externo',
                         render: function(data, type, row, meta) {
-                                return `${row.auditor_externo?row.auditor_externo :'n/a'}`;
-                            }
+                            return `${row.auditor_externo?row.auditor_externo :'n/a'}`;
+                        }
                     },
                     {
                         data: 'equipo',
@@ -259,6 +262,23 @@
                             })
                             html += '</div>';
                             return html
+                        }
+                    },
+                    {
+                        data: 'id_audit',
+                        render: function(data, type, row, meta) {
+                            let html = '<div class="d-flex" style="flex-wrap:wrap">';
+                            html += `
+                                <a href="{{ route('admin.auditoria-internas.reporteIndividual', ':id_audit') }}">
+                                <i class="fa-solid fa-user-check"></i>
+                                </a>
+                                `;
+                            html += '</div>';
+
+                            // Replace ':id_audit' with the actual value of id_audit
+                            html = html.replace(':id_audit', data);
+
+                            return html;
                         }
                     },
                     {

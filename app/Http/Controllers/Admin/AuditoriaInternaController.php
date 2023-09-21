@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAuditoriaInternaRequest;
 use App\Models\AuditoriaInterna;
+use App\Models\ClasificacionesAuditorias;
 use App\Models\Clausula;
 use App\Models\Controle;
 use App\Models\Empleado;
@@ -73,6 +74,10 @@ class AuditoriaInternaController extends Controller
 
             $table->addColumn('equipo', function ($row) {
                 return $row->equipo ? $row->equipo : '';
+            });
+
+            $table->addColumn('id_audit', function ($row) {
+                return $row->id_auditoria ? $row->id_auditoria : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'cheknoconformidadmenor', 'checknoconformidadmayor', 'checkobservacion', 'checkmejora']);
@@ -191,5 +196,18 @@ class AuditoriaInternaController extends Controller
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function indexReporteIndividual($id)
+    {
+        $clasificaciones = ClasificacionesAuditorias::all();
+        dd($id, $clasificaciones);
+        return view('admin.auditoriaInternas.reporteIndividual');
+    }
+
+    public function createReporte($id)
+    {
+        // dd($id);
+        return view('admin.auditoriaInternas.createReporte');
     }
 }
