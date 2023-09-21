@@ -14,11 +14,14 @@ class TimesheetCliente extends Model implements Auditable
 
     protected $table = 'timesheet_clientes';
 
+    public $incrementing = false;
+
     protected $fillable = [
         'identificador',
         'razon_social',
         'nombre',
         'rfc',
+        'id_old',
 
         'calle',
         'colonia',

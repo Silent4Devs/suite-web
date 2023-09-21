@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TimesheetCliente;
 use Illuminate\Database\Seeder;
 
 class ProveedoresTableSeeder extends Seeder
@@ -15,9 +16,6 @@ class ProveedoresTableSeeder extends Seeder
     public function run()
     {
 
-
-        // \DB::table('proveedores')->delete();
-
         \DB::table('timesheet_clientes')->insert(array(
             0 =>
             array(
@@ -29,7 +27,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Atizapan',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-02-15 15:22:01',
-                'id' => 1,
+                'id_old' => 1,
                 'id_fiscale' => NULL,
                 'nombre' => 'test',
                 'nombre_contacto' => 'Miguel Ángel Gaspar',
@@ -51,8 +49,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Colonia Florida',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-02-17 13:23:39',
-
-                'id' => 2,
+                'id_old' => 2,
                 'id_fiscale' => NULL,
                 'nombre' => 'SENER',
                 'nombre_contacto' => 'Lic. José Isabel Díaz Pérez',
@@ -74,8 +71,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Lomas - Virreyes, Lomas de Chapultepec',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-02-17 13:48:04',
-
-                'id' => 3,
+                'id_old' => 3,
                 'id_fiscale' => NULL,
                 'nombre' => 'Brasken Idesa',
                 'nombre_contacto' => 'Jaime Flores Álvarez / Carlos Ernesto Ángeles Novoa',
@@ -97,8 +93,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Colonia Nochebuena',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-02-17 15:08:38',
-
-                'id' => 4,
+                'id_old' => 4,
                 'id_fiscale' => NULL,
                 'nombre' => 'IFT',
                 'nombre_contacto' => 'Juan Carlos Jiménez Ángeles',
@@ -120,8 +115,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Guadalupe Inn',
                 'correo_contacto' => NULL,
                 'created_at' => NULL,
-
-                'id' => 5,
+                'id_old' => 5,
                 'id_fiscale' => NULL,
                 'nombre' => 'Royal Holiday Vacation Club',
                 'nombre_contacto' => 'Carlos Javier de la Rosa',
@@ -143,8 +137,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Juárez',
                 'correo_contacto' => 'NULL',
                 'created_at' => NULL,
-
-                'id' => 6,
+                'id_old' => 6,
                 'id_fiscale' => NULL,
                 'nombre' => 'Bolsa Mexicana de Valores',
                 'nombre_contacto' => 'Ramón Güemez Sarre ',
@@ -166,8 +159,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Juárez',
                 'correo_contacto' => NULL,
                 'created_at' => NULL,
-
-                'id' => 7,
+                'id_old' => 7,
                 'id_fiscale' => NULL,
                 'nombre' => 'SEMPRA',
                 'nombre_contacto' => 'Carlos Ruiz  Sacristán',
@@ -189,8 +181,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Cuauhtémoc',
                 'correo_contacto' => NULL,
                 'created_at' => NULL,
-
-                'id' => 8,
+                'id_old' => 8,
                 'id_fiscale' => NULL,
                 'nombre' => 'BXM',
                 'nombre_contacto' => 'Humberto Goycoolea Heredía',
@@ -212,8 +203,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Col. Ampliación Fuentes del Pedregal',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-05 13:18:16',
-
-                'id' => 9,
+                'id_old' => 9,
                 'id_fiscale' => NULL,
                 'nombre' => 'ASF',
                 'nombre_contacto' => 'Lic. José Ignacio Silva Maquez',
@@ -235,8 +225,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Peña Blanca Santa Fe',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-11 09:25:54',
-
-                'id' => 10,
+                'id_old' => 10,
                 'id_fiscale' => NULL,
                 'nombre' => 'BIMBO',
                 'nombre_contacto' => 'Luis Miguel Briola Clement',
@@ -258,8 +247,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Tabacalera',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-11 09:35:38',
-
-                'id' => 11,
+                'id_old' => 11,
                 'id_fiscale' => NULL,
                 'nombre' => 'Cámara de Senadores',
                 'nombre_contacto' => 'Lic. Miguel Ángel Dávila Narvaez',
@@ -281,8 +269,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Hipódromo Condesa',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-13 14:26:50',
-
-                'id' => 12,
+                'id_old' => 12,
                 'id_fiscale' => NULL,
                 'nombre' => 'SENASICA',
                 'nombre_contacto' => 'Ing. Francisco Javier Calderón Elizalde',
@@ -304,8 +291,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Guadalupe Inn',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-16 13:57:40',
-
-                'id' => 13,
+                'id_old' => 13,
                 'id_fiscale' => NULL,
                 'nombre' => 'INFONAVIT',
                 'nombre_contacto' => 'Salvador Raúl González Reyna',
@@ -327,8 +313,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Del Valle Sur',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-16 17:06:47',
-
-                'id' => 14,
+                'id_old' => 14,
                 'id_fiscale' => NULL,
                 'nombre' => 'HIXSA',
                 'nombre_contacto' => 'Hugo Huerta Zarate',
@@ -350,8 +335,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Actipan',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-17 13:19:21',
-
-                'id' => 15,
+                'id_old' => 15,
                 'id_fiscale' => NULL,
                 'nombre' => 'DENTEGRA',
                 'nombre_contacto' => 'Alejandro Dominguez',
@@ -373,8 +357,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Bella Vista',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-18 09:24:26',
-
-                'id' => 16,
+                'id_old' => 16,
                 'id_fiscale' => NULL,
                 'nombre' => 'HEINEKEN',
                 'nombre_contacto' => 'Carlos Olivas',
@@ -396,8 +379,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Guadalupe Inn',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-18 12:44:25',
-
-                'id' => 17,
+                'id_old' => 17,
                 'id_fiscale' => NULL,
                 'nombre' => 'INDEP',
                 'nombre_contacto' => 'José Ángel Ansúrez Galicia',
@@ -419,8 +401,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Lomas de Sotelo',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-18 13:38:50',
-
-                'id' => 18,
+                'id_old' => 18,
                 'id_fiscale' => NULL,
                 'nombre' => 'BANJERCITO',
                 'nombre_contacto' => 'MYR I.C.E. Noe Nicolás Miguel',
@@ -442,8 +423,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Col. CTM Culhuacán Sección VII',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-18 14:21:48',
-
-                'id' => 19,
+                'id_old' => 19,
                 'id_fiscale' => NULL,
                 'nombre' => 'TEPJF',
                 'nombre_contacto' => 'Lic. Arturo Camacho Contreras',
@@ -465,8 +445,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Polanco I Sección',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-19 10:21:48',
-
-                'id' => 20,
+                'id_old' => 20,
                 'id_fiscale' => NULL,
                 'nombre' => 'KONFIO',
                 'nombre_contacto' => 'Francisco de Jesús Padilla Sánchez',
@@ -488,8 +467,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Nueva Industrial Vallejo',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-19 12:20:44',
-
-                'id' => 21,
+                'id_old' => 21,
                 'id_fiscale' => NULL,
                 'nombre' => 'COLTOMEX',
                 'nombre_contacto' => 'José Antonio García Solis',
@@ -511,8 +489,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Verónica Anzures',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-19 15:45:36',
-
-                'id' => 22,
+                'id_old' => 22,
                 'id_fiscale' => NULL,
                 'nombre' => 'CINTEGRA',
                 'nombre_contacto' => 'Carlos Cortes Domínguez',
@@ -534,8 +511,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'sssssssssssssssss',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-05-26 15:36:29',
-
-                'id' => 23,
+                'id_old' => 23,
                 'id_fiscale' => NULL,
                 'nombre' => 'Solutec',
                 'nombre_contacto' => 'Juan Mendez',
@@ -557,8 +533,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Guadalupe Inn',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-06-08 17:16:35',
-
-                'id' => 24,
+                'id_old' => 24,
                 'id_fiscale' => NULL,
                 'nombre' => 'CNSF',
                 'nombre_contacto' => 'Jorge González Alvarado',
@@ -580,8 +555,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Insurgentes Mixcoac',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-06-08 17:34:51',
-
-                'id' => 25,
+                'id_old' => 25,
                 'id_fiscale' => NULL,
                 'nombre' => 'STPMEX',
                 'nombre_contacto' => 'José Refugio Gutiérrez Burciaga',
@@ -603,8 +577,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => '10 de abril',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-06-08 17:53:14',
-
-                'id' => 26,
+                'id_old' => 26,
                 'id_fiscale' => NULL,
                 'nombre' => 'VALMEX',
                 'nombre_contacto' => 'Gustavo Raúl Uribe Hernández/ Claudia Álvarez Toledo',
@@ -626,8 +599,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Torreón Residencial',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-06-09 08:37:45',
-
-                'id' => 27,
+                'id_old' => 27,
                 'id_fiscale' => NULL,
                 'nombre' => 'PEÑOLES',
                 'nombre_contacto' => 'Ing. Rafael Rebollar Gónzalez',
@@ -649,8 +621,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Ampliación Valle del Mirador',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-06-09 09:11:21',
-
-                'id' => 28,
+                'id_old' => 28,
                 'id_fiscale' => NULL,
                 'nombre' => 'IKUSI',
                 'nombre_contacto' => 'Karolyn Luciana López Churata',
@@ -672,8 +643,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Nueva Industrial Vallejo',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-06-09 11:07:45',
-
-                'id' => 29,
+                'id_old' => 29,
                 'id_fiscale' => NULL,
                 'nombre' => 'COLTOMONEY',
                 'nombre_contacto' => 'José Antonio García Solis',
@@ -695,8 +665,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Col. Parque Industrial Toluca 2000',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-06-27 09:53:39',
-
-                'id' => 30,
+                'id_old' => 30,
                 'id_fiscale' => NULL,
                 'nombre' => 'ARABELA',
                 'nombre_contacto' => 'Salvador Hernández',
@@ -718,8 +687,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Las Américas',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-06-27 14:03:17',
-
-                'id' => 31,
+                'id_old' => 31,
                 'id_fiscale' => NULL,
                 'nombre' => 'Hospital ABC',
                 'nombre_contacto' => 'Lic. Álvaro López Aldana',
@@ -741,8 +709,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Napoles',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-06-27 16:00:28',
-
-                'id' => 32,
+                'id_old' => 32,
                 'id_fiscale' => NULL,
                 'nombre' => 'Farmacias San Pablo',
                 'nombre_contacto' => 'Por asignar',
@@ -764,8 +731,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Ampliación Jardines de Pedregal',
                 'correo_contacto' => 'jesus.martinez@casaagp.com',
                 'created_at' => '2022-07-08 10:10:25',
-
-                'id' => 33,
+                'id_old' => 33,
                 'id_fiscale' => NULL,
                 'nombre' => 'AGP HOLDING BC',
                 'nombre_contacto' => 'Jesús Martínez Chávez',
@@ -787,8 +753,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Fracc. Jardines del Parque',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-07-08 11:51:53',
-
-                'id' => 34,
+                'id_old' => 34,
                 'id_fiscale' => NULL,
                 'nombre' => 'INEGI',
                 'nombre_contacto' => 'Lic. Víctor Manuel Rodríguez Silva',
@@ -810,8 +775,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Zona Industrial  1ra. Sección',
                 'correo_contacto' => 'rmoran@cmm.gob.mx',
                 'created_at' => '2022-07-08 12:37:44',
-
-                'id' => 35,
+                'id_old' => 35,
                 'id_fiscale' => NULL,
                 'nombre' => 'CASA DE MONEDA DE MEXICO',
                 'nombre_contacto' => 'Felipe Rogelio Morán Izalde',
@@ -833,8 +797,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'San José Insurgentes',
                 'correo_contacto' => 'gebutron@adamantine.com.mx',
                 'created_at' => '2022-07-08 16:52:35',
-
-                'id' => 36,
+                'id_old' => 36,
                 'id_fiscale' => NULL,
                 'nombre' => 'ADAMANTINE',
                 'nombre_contacto' => 'Ing. Gerardo Enrique  Butron Medina',
@@ -856,8 +819,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Jardines del Pedregal',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-07-11 09:13:03',
-
-                'id' => 37,
+                'id_old' => 37,
                 'id_fiscale' => NULL,
                 'nombre' => 'INTERESSE',
                 'nombre_contacto' => 'Carlos Puerto',
@@ -879,8 +841,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Polanco V Sección',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-07-11 16:05:27',
-
-                'id' => 38,
+                'id_old' => 38,
                 'id_fiscale' => NULL,
                 'nombre' => 'SIEMENS',
                 'nombre_contacto' => 'Ing. José Alberto Vélez Cortes',
@@ -902,8 +863,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Reforma Social',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-07-11 16:51:31',
-
-                'id' => 39,
+                'id_old' => 39,
                 'id_fiscale' => NULL,
                 'nombre' => 'GRUPO MODELO',
                 'nombre_contacto' => 'Sergio Javier Apodaca Maldonado',
@@ -925,8 +885,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Tizapán, San Angel',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-08-10 16:38:22',
-
-                'id' => 40,
+                'id_old' => 40,
                 'id_fiscale' => NULL,
                 'nombre' => 'BANCO DEL BIENESTAR (BANSEFI)',
                 'nombre_contacto' => 'Lic. Antonio Ramírez Hernández',
@@ -948,8 +907,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Napoles',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-08-30 09:59:49',
-
-                'id' => 41,
+                'id_old' => 41,
                 'id_fiscale' => NULL,
                 'nombre' => 'QS MEXIKO AG',
                 'nombre_contacto' => 'Ing. Ernesto Fierro Félix',
@@ -971,8 +929,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Merced Gómez',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-08-30 13:02:45',
-
-                'id' => 42,
+                'id_old' => 42,
                 'id_fiscale' => NULL,
                 'nombre' => 'NUBAJ IT & CONSULTING',
                 'nombre_contacto' => 'Enrique Cáliz  Morales',
@@ -994,8 +951,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Del Valle',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-09-22 16:02:26',
-
-                'id' => 43,
+                'id_old' => 43,
                 'id_fiscale' => NULL,
                 'nombre' => 'CONEVAL',
                 'nombre_contacto' => 'Daniel Gutierrez Cruz',
@@ -1017,8 +973,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Balcones del Valle',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-09-22 16:56:56',
-
-                'id' => 44,
+                'id_old' => 44,
                 'id_fiscale' => NULL,
                 'nombre' => 'COEP',
                 'nombre_contacto' => 'Ing. Gerardo Serment Lazcano',
@@ -1040,8 +995,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'El Parque',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-09-23 17:35:52',
-
-                'id' => 45,
+                'id_old' => 45,
                 'id_fiscale' => NULL,
                 'nombre' => 'Cámara de Diputados',
                 'nombre_contacto' => 'Fernando Araiza Castañeda',
@@ -1063,8 +1017,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Tabacalera',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-09-27 11:16:54',
-
-                'id' => 46,
+                'id_old' => 46,
                 'id_fiscale' => NULL,
                 'nombre' => 'SELEG',
                 'nombre_contacto' => 'Nayeli Airaliith Escudero Sanchez',
@@ -1086,8 +1039,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Roma Norte',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-09-27 15:11:38',
-
-                'id' => 47,
+                'id_old' => 47,
                 'id_fiscale' => NULL,
                 'nombre' => 'ANDI',
                 'nombre_contacto' => 'María Cristina Martínez C.',
@@ -1109,8 +1061,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Bosques de las Lomas',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-09-27 15:25:26',
-
-                'id' => 48,
+                'id_old' => 48,
                 'id_fiscale' => NULL,
                 'nombre' => 'ELKAY',
                 'nombre_contacto' => 'Francisco Miranda',
@@ -1132,8 +1083,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Tabacalera',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-09-27 15:54:01',
-
-                'id' => 49,
+                'id_old' => 49,
                 'id_fiscale' => NULL,
                 'nombre' => 'SEDATU',
                 'nombre_contacto' => 'Marco Antonio Luna Robles (Provisional en que designan uno por parte de la SEDATU)',
@@ -1155,8 +1105,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Merced Gomez',
                 'correo_contacto' => 'guillermo.deloiza@neixar.com.mx',
                 'created_at' => '2022-09-30 20:47:00',
-
-                'id' => 50,
+                'id_old' => 50,
                 'id_fiscale' => NULL,
                 'nombre' => 'NEIXAR',
                 'nombre_contacto' => 'Guillermo Deloiza Quintero',
@@ -1178,8 +1127,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Granada',
                 'correo_contacto' => 'irivng.arriaga@ironbit.com.mx',
                 'created_at' => '2022-09-30 20:52:32',
-
-                'id' => 51,
+                'id_old' => 51,
                 'id_fiscale' => NULL,
                 'nombre' => 'IRONBIT',
                 'nombre_contacto' => 'Irving Arriaga',
@@ -1201,8 +1149,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'LOMAS DE SANTA FE',
                 'correo_contacto' => 'p-dagomezm@bestel.com.mx',
                 'created_at' => '2022-12-20 11:03:14',
-
-                'id' => 52,
+                'id_old' => 52,
                 'id_fiscale' => NULL,
                 'nombre' => 'BESTEL',
                 'nombre_contacto' => 'David Adriel Gomez Morales',
@@ -1224,8 +1171,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Juárez',
                 'correo_contacto' => 'aabrego@insignialife.com',
                 'created_at' => '2022-12-20 14:56:42',
-
-                'id' => 53,
+                'id_old' => 53,
                 'id_fiscale' => NULL,
                 'nombre' => 'INSIGNIA LIFE',
                 'nombre_contacto' => 'Angélica Abrego Yañez',
@@ -1247,8 +1193,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Santa Cecilia Acatitlán',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-12-21 14:25:03',
-
-                'id' => 54,
+                'id_old' => 54,
                 'id_fiscale' => NULL,
                 'nombre' => 'SYCOD',
                 'nombre_contacto' => 'Enrique Vargas Santiago',
@@ -1270,8 +1215,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Los Alpes',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-12-22 10:50:08',
-
-                'id' => 55,
+                'id_old' => 55,
                 'id_fiscale' => NULL,
                 'nombre' => 'PENSIONISSSTE',
                 'nombre_contacto' => 'Ing,. Ricardo Constantino López',
@@ -1293,8 +1237,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Actipan',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-12-22 11:58:55',
-
-                'id' => 56,
+                'id_old' => 56,
                 'id_fiscale' => NULL,
                 'nombre' => 'GENTERA',
                 'nombre_contacto' => 'Ivonne Esquivel Rodriguez',
@@ -1316,8 +1259,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'LOMAS DE CHAPULTEPEC III SECCION',
                 'correo_contacto' => 'jmendieta@n.technology',
                 'created_at' => '2022-12-22 12:24:20',
-
-                'id' => 57,
+                'id_old' => 57,
                 'id_fiscale' => NULL,
                 'nombre' => 'NTECH',
                 'nombre_contacto' => 'Julio Mendieta Mariles',
@@ -1339,8 +1281,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Mitras Centro',
                 'correo_contacto' => 'suddireccion@assessorlegal.com',
                 'created_at' => '2022-12-22 13:05:47',
-
-                'id' => 58,
+                'id_old' => 58,
                 'id_fiscale' => NULL,
                 'nombre' => 'ABC ASSESSOR LEGAL CONSULTING',
                 'nombre_contacto' => 'Tomas Orozco',
@@ -1362,8 +1303,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Merced Gómez',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-12-26 14:39:34',
-
-                'id' => 59,
+                'id_old' => 59,
                 'id_fiscale' => NULL,
                 'nombre' => 'CRE',
                 'nombre_contacto' => 'Héctor Gustavo Aguirre Angulo',
@@ -1385,8 +1325,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Anzures',
                 'correo_contacto' => NULL,
                 'created_at' => '2022-12-29 12:23:48',
-
-                'id' => 60,
+                'id_old' => 60,
                 'id_fiscale' => NULL,
                 'nombre' => 'SFH',
                 'nombre_contacto' => 'Default',
@@ -1408,8 +1347,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Verónica Anzures',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-01-06 14:40:39',
-
-                'id' => 61,
+                'id_old' => 61,
                 'id_fiscale' => NULL,
                 'nombre' => 'PEMEX',
                 'nombre_contacto' => 'Default',
@@ -1431,8 +1369,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Arenal Tepepan',
                 'correo_contacto' => 'ariadna.galvan@ine.mx',
                 'created_at' => '2023-01-11 15:15:37',
-
-                'id' => 62,
+                'id_old' => 62,
                 'id_fiscale' => NULL,
                 'nombre' => 'INE',
                 'nombre_contacto' => 'Ariadna Irais Galvan Vargas',
@@ -1454,8 +1391,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'FRACC HORNOS',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-01-19 09:07:04',
-
-                'id' => 63,
+                'id_old' => 63,
                 'id_fiscale' => NULL,
                 'nombre' => 'PAPAGAYO',
                 'nombre_contacto' => 'Default',
@@ -1477,8 +1413,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'SAN JERONIMO LIDICE',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-01-20 14:05:24',
-
-                'id' => 64,
+                'id_old' => 64,
                 'id_fiscale' => NULL,
                 'nombre' => 'K2 SOLUCIONES TECNOLOGICAS',
                 'nombre_contacto' => 'Default',
@@ -1500,8 +1435,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Lomas Altas',
                 'correo_contacto' => 'jesus.navarro@datawarden.com.mx',
                 'created_at' => '2023-01-24 12:00:46',
-
-                'id' => 65,
+                'id_old' => 65,
                 'id_fiscale' => NULL,
                 'nombre' => 'DATA WARDEN',
                 'nombre_contacto' => 'Jesús Navarro',
@@ -1523,8 +1457,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Lomas de Chapultepec',
                 'correo_contacto' => 'gcolina@fifomi.gob.mx',
                 'created_at' => '2023-02-02 13:30:09',
-
-                'id' => 66,
+                'id_old' => 66,
                 'id_fiscale' => NULL,
                 'nombre' => 'FIFOMI',
                 'nombre_contacto' => 'Gustavo de la Colina Flores',
@@ -1546,8 +1479,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Nápoles',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-09 11:50:39',
-
-                'id' => 67,
+                'id_old' => 67,
                 'id_fiscale' => NULL,
                 'nombre' => 'Grupo Adya',
                 'nombre_contacto' => 'Adrián Enrique Sánchez Martínez',
@@ -1569,8 +1501,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Tizapán San Ángel',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-09 12:40:56',
-
-                'id' => 68,
+                'id_old' => 68,
                 'id_fiscale' => NULL,
                 'nombre' => 'Mapfre',
                 'nombre_contacto' => 'Ernesto Bobadilla Hernandez y José Antonio Gutiérrez Pinal',
@@ -1592,8 +1523,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Del Valle',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-09 13:13:12',
-
-                'id' => 69,
+                'id_old' => 69,
                 'id_fiscale' => NULL,
                 'nombre' => 'X Web',
                 'nombre_contacto' => 'Rosina Eliuth Buelna Araujo',
@@ -1615,8 +1545,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'San José Insurgentes Sur',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-13 11:16:38',
-
-                'id' => 70,
+                'id_old' => 70,
                 'id_fiscale' => NULL,
                 'nombre' => 'ARDUUS',
                 'nombre_contacto' => 'Oscar Ramírez Flores',
@@ -1638,8 +1567,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Cuauhtemoc',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-13 12:16:30',
-
-                'id' => 71,
+                'id_old' => 71,
                 'id_fiscale' => NULL,
                 'nombre' => 'Axtel',
                 'nombre_contacto' => 'David Isarel Sánchez',
@@ -1661,8 +1589,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Polanco',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-13 13:41:27',
-
-                'id' => 72,
+                'id_old' => 72,
                 'id_fiscale' => NULL,
                 'nombre' => 'Becarios en Desarrollo, S.C',
                 'nombre_contacto' => 'Miguel Macias Padilla',
@@ -1684,8 +1611,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Nuevo Humboldt',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-13 14:08:29',
-
-                'id' => 73,
+                'id_old' => 73,
                 'id_fiscale' => NULL,
                 'nombre' => 'Colegio Humbolt',
                 'nombre_contacto' => 'Norbert JÜrgen R. Weiss Wulf',
@@ -1707,8 +1633,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Rinconada del bosque',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-13 16:00:17',
-
-                'id' => 74,
+                'id_old' => 74,
                 'id_fiscale' => NULL,
                 'nombre' => 'Compusoluciones y Asociados',
                 'nombre_contacto' => 'Vanessa Gómez Gónzalez',
@@ -1730,8 +1655,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Fraccionamiento jardines de Huayapan',
                 'correo_contacto' => 'escamilla_04@hotmail.com',
                 'created_at' => '2023-02-14 12:46:43',
-
-                'id' => 75,
+                'id_old' => 75,
                 'id_fiscale' => NULL,
                 'nombre' => 'LESLIE AIDE VARGAS PEREZ',
                 'nombre_contacto' => 'Leslie Aide Vargas Pérez',
@@ -1753,8 +1677,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'n/a',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-14 13:00:02',
-
-                'id' => 76,
+                'id_old' => 76,
                 'id_fiscale' => NULL,
                 'nombre' => 'Mavinco',
                 'nombre_contacto' => 'Jesús Alberto Acosta Gónzalez',
@@ -1776,8 +1699,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Polanco III Sección',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-14 13:18:31',
-
-                'id' => 77,
+                'id_old' => 77,
                 'id_fiscale' => NULL,
                 'nombre' => 'Strongbase',
                 'nombre_contacto' => 'Ulises Jorge Alarcón',
@@ -1799,8 +1721,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Del Valle',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-02-14 13:45:30',
-
-                'id' => 78,
+                'id_old' => 78,
                 'id_fiscale' => NULL,
                 'nombre' => 'Wise Soluciones',
                 'nombre_contacto' => 'Jorge Ernesto Cuéllar Martínez',
@@ -1822,8 +1743,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Polanco V Sección',
                 'correo_contacto' => 'martha.olguin@oxity.com',
                 'created_at' => '2023-05-11 11:02:19',
-
-                'id' => 81,
+                'id_old' => 81,
                 'id_fiscale' => NULL,
                 'nombre' => 'Axity',
                 'nombre_contacto' => 'Martha Nohemi Olguín Gómez',
@@ -1845,8 +1765,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Tetela del Monte',
                 'correo_contacto' => 'glo.gb@outlook.com',
                 'created_at' => '2023-05-16 14:56:57',
-
-                'id' => 82,
+                'id_old' => 82,
                 'id_fiscale' => NULL,
                 'nombre' => 'FLOY & LIPSON',
                 'nombre_contacto' => 'Yessica Villeda',
@@ -1868,8 +1787,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'TIZAPAN SAN ÁNGEL',
                 'correo_contacto' => 'lourdes.abadia@silent4business.com',
                 'created_at' => '2023-08-14 16:21:33',
-
-                'id' => 83,
+                'id_old' => 83,
                 'id_fiscale' => NULL,
                 'nombre' => 'Silent4business S.A. de C.V.',
                 'nombre_contacto' => 'Lourdes del Pilar Abadía Velasco',
@@ -1891,8 +1809,7 @@ class ProveedoresTableSeeder extends Seeder
                 'colonia' => 'Tizapán San Ángel',
                 'correo_contacto' => NULL,
                 'created_at' => '2023-08-14 17:12:58',
-
-                'id' => 84,
+                'id_old' => 84,
                 'id_fiscale' => NULL,
                 'nombre' => 'Silent4Business',
                 'nombre_contacto' => 'SILENT4BUSINESS',

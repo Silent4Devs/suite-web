@@ -270,14 +270,14 @@
                                 <label for="" class="txt-tamaño">
                                     Fecha inicio
                                 </label>
-                                <input type="date" class="browser-default modal-start" name="contacto_fecha_inicio_{{$count}}"
+                                <input type="date" id="fechaInicio" class="browser-default modal-start" name="contacto_fecha_inicio_{{$count}}"
                                 value="{{old('contacto_fecha_inicio_'.$count, $edtprov->fecha_inicio)}}" required>
                             </div>
                             <div class="col s12 l3">
                                 <label for="" class="txt-tamaño">
                                     Fecha fin
                                 </label>
-                                <input type="date" class="browser-default modal-end" name="contacto_fecha_fin_{{$count}}"
+                                <input type="date" id="fechaFin" class="browser-default modal-end" name="contacto_fecha_fin_{{$count}}"
                                 value="{{old('contacto_fecha_fin_'.$count, $edtprov->fecha_fin)}}" required>
                             </div>
                         </div>
@@ -398,7 +398,7 @@
 
                                     Fecha inicio*
                                 </label>
-                                <input type="date" class="browser-default modal-start" name="contacto_fecha_inicio_{{$i}}"
+                                <input type="date" id="fechaInicio" class="browser-default modal-start" name="contacto_fecha_inicio_{{$i}}"
                                     required>
                             </div>
                             <div class="col s12 l3">
@@ -406,7 +406,7 @@
 
                                     Fecha fin*
                                 </label>
-                                <input type="date" class="browser-default modal-end" name="contacto_fecha_fin_{{$i}}"
+                                <input type="date" id="fechaFin" class="browser-default modal-end" name="contacto_fecha_fin_{{$i}}"
                                     required>
                             </div>
                         </div>
@@ -456,7 +456,7 @@
 
                                             Fecha inicio*
                                         </label>
-                                        <input type="date" value="{{old('contacto_fecha_inicio_'.$count, $edtprov->fecha_inicio)}}" class="browser-default modal-start" name="contacto_fecha_inicio_{{$count}}"
+                                        <input type="date" id="fechaInicio" value="{{old('contacto_fecha_inicio_'.$count, $edtprov->fecha_inicio)}}" class="browser-default modal-start" name="contacto_fecha_inicio_{{$count}}"
                                             required>
                                     </div>
                                     <div class="col s12 l6">
@@ -464,7 +464,7 @@
 
                                             Fecha fin*
                                         </label>
-                                        <input type="date" value="{{old('contacto_fecha_fin_'.$count, $edtprov->fecha_fin)}}" class="browser-default modal-end" name="contacto_fecha_fin_{{$count}}"
+                                        <input type="date" id="fechaFin" value="{{old('contacto_fecha_fin_'.$count, $edtprov->fecha_fin)}}" class="browser-default modal-end" name="contacto_fecha_fin_{{$count}}"
                                             required>
                                     </div>
                                     </div>
@@ -609,7 +609,7 @@
 
                                             Fecha inicio*
                                         </label>
-                                        <input type="date" value="{{old('contacto_fecha_inicio_'.$count, $edtprov->fecha_inicio)}}" class="browser-default modal-start" name="contacto_fecha_inicio_{{$count}}"
+                                        <input type="date" id="fechaInicio" value="{{old('contacto_fecha_inicio_'.$count, $edtprov->fecha_inicio)}}" class="browser-default modal-start" name="contacto_fecha_inicio_{{$count}}"
                                             required>
                                     </div>
                                     <div class="col s12 l6">
@@ -617,7 +617,7 @@
 
                                             Fecha fin*
                                         </label>
-                                        <input type="date" value="{{old('contacto_fecha_fin_'.$count, $edtprov->fecha_fin)}}" class="browser-default modal-end" name="contacto_fecha_fin_{{$count}}"
+                                        <input type="date" id="fechaFin" value="{{old('contacto_fecha_fin_'.$count, $edtprov->fecha_fin)}}" class="browser-default modal-end" name="contacto_fecha_fin_{{$count}}"
                                             required>
                                     </div>
                                     </div>
@@ -773,7 +773,7 @@
 
                                             Fecha inicio*
                                         </label>
-                                        <input type="date" value="{{ $edtprov->fecha_inicio }}" class="browser-default modal-start" name="contacto_fecha_inicio_{{$count}}"
+                                        <input type="date" id="fechaInicio" value="{{ $edtprov->fecha_inicio }}" class="browser-default modal-start" name="contacto_fecha_inicio_{{$count}}"
                                             required>
                                     </div>
                                     <div class="col s12 l6">
@@ -781,7 +781,7 @@
 
                                             Fecha fin*
                                         </label>
-                                        <input type="date" value="{{ $edtprov->fecha_fin }}" class="browser-default modal-end" name="contacto_fecha_fin_{{$count}}"
+                                        <input type="date" id="fechaFin" value="{{ $edtprov->fecha_fin }}" class="browser-default modal-end" name="contacto_fecha_fin_{{$count}}"
                                             required>
                                     </div>
                                     </div>
@@ -927,7 +927,7 @@
 
                                             Fecha inicio*
                                         </label>
-                                        <input type="date" value="{{old('contacto_fecha_inicio_'.$count, $edtprov->fecha_inicio)}}" class="browser-default modal-start" name="contacto_fecha_inicio_{{$count}}"
+                                        <input type="date" id="fechaInicio" value="{{old('contacto_fecha_inicio_'.$count, $edtprov->fecha_inicio)}}" class="browser-default modal-start" name="contacto_fecha_inicio_{{$count}}"
                                             required>
                                     </div>
                                     <div class="col s12 l6">
@@ -935,7 +935,7 @@
 
                                             Fecha fin*
                                         </label>
-                                        <input type="date" value="{{old('contacto_fecha_fin_'.$count, $edtprov->fecha_fin)}}" class="browser-default modal-end" name="contacto_fecha_fin_{{$count}}"
+                                        <input type="date" id="fechaFin" value="{{old('contacto_fecha_fin_'.$count, $edtprov->fecha_fin)}}" class="browser-default modal-end" name="contacto_fecha_fin_{{$count}}"
                                             required>
                                     </div>
                                     </div>
@@ -1526,11 +1526,27 @@
         </script>
 
         <script>
-            // Livewire.on('select2', () => {
-            //     setTimeout(() => {
-            //         $('.select2').select2();
-            //     }, 1000);
-            // });
+            // Obtén referencias a los elementos de entrada
+            const fechaInicioInput = document.getElementById('fechaInicio');
+            const fechaFinInput = document.getElementById('fechaFin');
+
+            // Agrega un evento de escucha al campo de fecha de inicio
+            fechaInicioInput.addEventListener('change', validarFechas);
+
+            // Agrega un evento de escucha al campo de fecha de finalización
+            fechaFinInput.addEventListener('change', validarFechas);
+
+            function validarFechas() {
+            // Obtén los valores de las fechas de inicio y finalización
+            const fechaInicio = new Date(fechaInicioInput.value);
+            const fechaFin = new Date(fechaFinInput.value);
+
+            // Verifica si la fecha de finalización es mayor que la fecha de inicio
+            if (fechaFin < fechaInicio) {
+                alert('La fecha de finalización no puede ser mayor que la fecha de inicio');
+                fechaFinInput.value = ''; // Limpia el campo de fecha de finalización
+            }
+            }
         </script>
 
     @endsection

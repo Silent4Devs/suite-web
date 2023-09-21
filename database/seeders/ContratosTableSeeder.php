@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Area;
+use App\Models\ContractManager\Contrato;
+use App\Models\Timesheet;
+use App\Models\TimesheetCliente;
 use Illuminate\Database\Seeder;
 
 class ContratosTableSeeder extends Seeder
@@ -16,9 +20,9 @@ class ContratosTableSeeder extends Seeder
     {
 
 
-        \DB::table('contratos')->delete();
+        $clientes = TimesheetCliente::all();
 
-        \DB::table('contratos')->insert(array(
+        $contratos = array(
             0 =>
             array(
                 'administrador_contrato' => 'Karen Rodríguez',
@@ -3998,9 +4002,9 @@ class ContratosTableSeeder extends Seeder
                 'no_pagos' => 1,
                 'no_proyecto' => '233',
                 'nombre_servicio' => 'Arrendamiento Publicación
-de servicio (IP PUBLICA)',
+                 de servicio (IP PUBLICA)',
                 'objetivo' => 'Arrendamiento Publicación
-de servicio (IP PUBLICA)',
+                 de servicio (IP PUBLICA)',
                 'periodo_pagos' => NULL,
                 'pmp_asignado' => NULL,
                 'proveedor_id' => 57,
@@ -4589,7 +4593,7 @@ de servicio (IP PUBLICA)',
                 'no_proyecto' => '213',
                 'nombre_servicio' => 'RENOVACION DE LICENCIAMIENTO TENABLE SC',
                 'objetivo' => 'Renovación de suscripción a la herramienta Tenable.sc
-Continuous View y Tenable Lumin',
+                 Continuous View y Tenable Lumin',
                 'periodo_pagos' => NULL,
                 'pmp_asignado' => 'Ariadna Irais Galvan Vargas',
                 'proveedor_id' => 62,
@@ -5850,7 +5854,7 @@ Continuous View y Tenable Lumin',
                 'no_proyecto' => '164',
                 'nombre_servicio' => 'Servicio para el establecimiento del marco de gobierno de cuentas privilegiadas',
                 'objetivo' => 'Servicio para el establecimiento del marco de gobierno de cuentas
-privilegiadas',
+               privilegiadas',
                 'periodo_pagos' => NULL,
                 'pmp_asignado' => 'Javier Sosa Sánchez',
                 'proveedor_id' => 31,
@@ -7457,6 +7461,60 @@ privilegiadas',
                 'updated_at' => '2023-09-04 12:47:36',
                 'vigencia_contrato' => '1 año',
             ),
-        ));
+        );
+
+
+        \DB::table('contratos')->delete();
+
+        foreach ($contratos as  $contrato) {
+
+            foreach ($clientes as $cliente) {
+                if ($cliente->id_old === $contrato["proveedor_id"]) {
+                    $contratos = new  Contrato();
+                    $contratos->no_contrato = $contrato["no_contrato"];
+                    $contratos->tipo_contrato = $contrato["tipo_contrato"];
+                    $contratos->proveedor_id = $cliente->id;
+                    $contratos->nombre_servicio = $contrato["nombre_servicio"];
+                    $contratos->objetivo = $contrato["objetivo"];
+                    $contratos->fecha_inicio = $contrato["fecha_inicio"];
+                    $contratos->fecha_fin = $contrato["fecha_fin"];
+                    $contratos->vigencia_contrato = $contrato["vigencia_contrato"];
+                    $contratos->no_pagos = $contrato["no_pagos"];
+                    $contratos->administrador_contrato = $contrato["administrador_contrato"];
+                    $contratos->servicios_descripcion = $contrato["servicios_descripcion"];
+                    $contratos->fecha_firma = $contrato["fecha_firma"];
+                    $contratos->periodo_pagos = $contrato["periodo_pagos"];
+                    $contratos->monto_pago = $contrato["monto_pago"];
+                    $contratos->fecha_inicio_pago = $contrato["fecha_inicio_pago"];
+                    $contratos->minimo = $contrato["minimo"];
+                    $contratos->maximo = $contrato["maximo"];
+                    $contratos->area = $contrato["area"];
+                    $contratos->area_administrador = $contrato["area_administrador"];
+                    $contratos->puesto = $contrato["puesto"];
+                    $contratos->cargo_administrador = $contrato["cargo_administrador"];
+                    $contratos->pmp_asignado = $contrato["pmp_asignado"];
+                    $contratos->clasificacion = $contrato["clasificacion"];
+                    $contratos->fase = $contrato["fase"];
+                    $contratos->contrato_ampliado = $contrato["contrato_ampliado"];
+                    $contratos->convenio_modificatorio = $contrato["convenio_modificatorio"];
+                    $contratos->estatus = $contrato["estatus"];
+                    if ($contrato["area_id"] === 1) {
+                        $area = Area::where('area', 'Admin')->first();
+                        $contratos->area_id = $area->id;
+                    } elseif ($contrato["area_id"] === 2) {
+                        $area = Area::where('area', 'Entrega de Servicios')->first();
+                        $contratos->area_id = $area->id;
+                    }
+                    $contratos->file_contrato = $contrato["file_contrato"];
+                    $contratos->no_pagos = $contrato["no_pagos"];
+                    $contratos->folio = $contrato["folio"];
+                    $contratos->documento = $contrato["documento"];
+                    $contratos->tipo_cambio = $contrato["tipo_cambio"];
+                    $contratos->identificador_privado = $contrato["identificador_privado"];
+                    $contratos->firma1 = $contrato["firma1"];
+                    $contratos->save();
+                }
+            }
+        }
     }
 }
