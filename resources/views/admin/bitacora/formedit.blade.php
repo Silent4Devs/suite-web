@@ -781,12 +781,20 @@
     <div class="distancia form-group col-md-4">
         <label class="txt-tamaño">Puesto</label>
         <div>
-            {!! Form::text('puesto', $contratos->puesto, ['class' => 'form-control', $show_contrato ? 'readonly' : '']) !!}
+            {!! Form::text('puesto', $contratos->puesto, [
+                'class' => 'form-control',
+                'maxlength' => '250',
+                $show_contrato ? 'readonly' : '',
+            ]) !!}
         </div>
     </div>
     <div class="distancia form-group col-md-4">
         <label class="txt-tamaño">Área</label>
-        {!! Form::text('area', $contratos->area, ['class' => 'form-control', $show_contrato ? 'readonly' : '']) !!}
+        {!! Form::text('area', $contratos->area, [
+            'class' => 'form-control',
+            'maxlength' => '250',
+            $show_contrato ? 'readonly' : '',
+        ]) !!}
         @if ($errors->has('area'))
             <div class="invalid-feedback red-text">
                 {{ $errors->first('area') }}
@@ -812,6 +820,7 @@
         <label class="txt-tamaño">Puesto</label>
         {!! Form::text('cargo_administrador', $contratos->cargo_administrador, [
             'class' => 'form-control',
+            'maxlength' => '250',
             $show_contrato ? 'readonly' : '',
         ]) !!}
         @if ($errors->has('cargo_administrador'))
@@ -824,6 +833,7 @@
         <label class="txt-tamaño">Área</label>
         {!! Form::text('area_administrador', $contratos->area_administrador, [
             'class' => 'form-control',
+            'maxlength' => '250',
             $show_contrato ? 'readonly' : '',
         ]) !!}
         @if ($errors->has('area_administrador'))

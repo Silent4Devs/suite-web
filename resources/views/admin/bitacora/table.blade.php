@@ -233,7 +233,7 @@
                             </option>
                         @endforeach
                     @else
-                        <option value="">No hay proveedores registrados</option>
+                        <option value="">No hay Clientes registrados</option>
                     @endif
                 </select>
                 @if ($errors->has('proveedor_id'))
@@ -681,13 +681,13 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Puesto</label>
                     <div>
-                        {!! Form::text('puesto', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('puesto', null, ['class' => 'form-control', 'maxlength' => '250']) !!}
                     </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Área</label>
                     <div>
-                        {!! Form::text('area', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('area', null, ['class' => 'form-control', 'maxlength' => '250']) !!}
                         @if ($errors->has('area'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('area') }}
@@ -712,7 +712,7 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Puesto</label>
                     <div>
-                        {!! Form::text('cargo_administrador', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('cargo_administrador', null, ['class' => 'form-control', 'maxlength' => '150']) !!}
                         @if ($errors->has('cargo_administrador'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('cargo_administrador') }}
@@ -723,7 +723,7 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Área</label>
                     <div>
-                        {!! Form::text('area_administrador', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('area_administrador', null, ['class' => 'form-control', 'maxlength' => '150']) !!}
                         @if ($errors->has('area_administrador'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('area_administrador') }}
