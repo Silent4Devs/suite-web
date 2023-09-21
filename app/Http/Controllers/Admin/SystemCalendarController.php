@@ -74,16 +74,27 @@ class SystemCalendarController extends Controller
 
         $eventos = Calendario::getAll();
         $oficiales = CalendarioOficial::get();
-        $contratos = Contrato::select('nombre_servicio', 'fecha_inicio', 'fecha_fin')->get();
+        // $contratos = Contrato::select('nombre_servicio', 'fecha_inicio', 'fecha_fin')->get();
 
-        $facturas = Factura::select('concepto', 'fecha_recepcion', 'fecha_liberacion')->get();
+        // $facturas = Factura::select('concepto', 'fecha_recepcion', 'fecha_liberacion')->get();
 
-        $niveles_servicio = EntregaMensual::select('nombre_entregable', 'plazo_entrega_inicio', 'plazo_entrega_termina')->get();
+        // $niveles_servicio = EntregaMensual::select('nombre_entregable', 'plazo_entrega_inicio', 'plazo_entrega_termina')->get();
 
         $cumples_aniversarios = Empleado::getaltaAll();
         $nombre_organizacion = Organizacion::getFirst();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
 
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas', 'eventos', 'oficiales', 'cumples_aniversarios', 'nombre_organizacion', 'contratos', 'facturas', 'niveles_servicio'));
+        return view('admin.calendar.calendar', compact(
+            'plan_base',
+            'auditorias_anual',
+            'recursos',
+            'actividades',
+            'auditoria_internas',
+            'eventos',
+            'oficiales',
+            'cumples_aniversarios',
+            'nombre_organizacion',
+            // 'contratos', 'facturas', 'niveles_servicio'
+        ));
     }
 }
