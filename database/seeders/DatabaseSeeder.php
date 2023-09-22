@@ -86,13 +86,14 @@ class DatabaseSeeder extends Seeder
                 AreasSeeder::class,
                 PermisosKatbol::class,
                 // FacturacionTableSeeder::class,
-                ProveedoresTableSeeder::class,
-                ContratosTableSeeder::class,
-                MonedaSeedder::class,
+                // ProveedoresTableSeeder::class,
+                // ContratosTableSeeder::class,
+                // MonedaSeedder::class,
                 // ConveniosModificatoriosTableSeeder::class,
                 // EntregasMensualesTableSeeder::class,
                 // CierreContratosTableSeeder::class,
                 // PermisosKatbol::class,
+                DashboardGestionContratosSeeder::class,
 
                 //kaans
                 // PermisosEscuelaInstructorSeeder::class,

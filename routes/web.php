@@ -27,7 +27,7 @@ Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->n
 Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@edit')->name('minutas.revisiones.revisar');
 Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
 
-Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestProveedores')->name('provedor_reporte');
+Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestClientes')->name('provedor_reporte');
 Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
 
 Auth::routes();
@@ -1504,7 +1504,10 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::post('contratos-katbol/archivos', 'ContratosController@obtenerArchivos')->name('contratos-katbol.obtenerArchivos');
     Route::get('contratos-katbol/file/download', 'ContratosController@downloadFile')->name('downloadFile');
     // Route::post('contratos/identificadorExist', 'ContratosController@identificadorExist')->name('contratos-katbol.identificadorExist');
-
+    Route::post('selectProveedor', 'DashboardController@AjaxRequestClientes')->name('selectCliente');
+    Route::post('selectContrato', 'DashboardController@AjaxRequestContratos')->name('selectContrato');
+    Route::post('selectEvaluacionesServicio', 'DashboardController@AjaxRequestEvaluacionesServicio')->name('selectEvaluacionesServicio');
+    Route::get('dashboard-contratos-katbol', 'DashboardController@index')->name('dashboard.katbol');
     Route::post('contratos-katbol/check-code', 'ContratosController@checkCode')->name('contratos-katbol.checkCode');
     Route::resource('contratos-katbol', 'ContratosController');
     Route::get('contratos-katbol/exportar/contratos', 'ContratosController@exportTo')->name('reportecliente.exportar');

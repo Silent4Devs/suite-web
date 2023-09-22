@@ -1,0 +1,329 @@
+
+    .selected{
+        background: #61c7ff63;
+    }
+    table#tbl_niveles_servicio tr:hover{
+        cursor: pointer;
+    }
+
+    /* table.dataTable tbody td {
+    vertical-align: middle;
+    }
+
+    li.page-item a {
+        z-index: 3;
+        border-radius: 5px;
+        margin: 0 0 0 2px;
+        color: #007bff;
+        border: 1px solid #007bff;
+    }
+
+    li.page-item a:hover {
+        z-index: 3;
+        border-radius: 5px;
+        margin: 0 0 0 2px;
+        color: #fff8f8;
+        border: 1px solid #1c60e0;
+        background-color: #1c60e0;
+    }
+
+    .page-item.active .page-link {
+        z-index: 3;
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 5px;
+    }
+
+    li.previous a.page-link,
+    li.next a.page-link {
+        background-color: #fff;
+        position: relative;
+        display: block;
+        line-height: 1.25;
+        color: #007bff;
+        border-radius: 15px !important;
+    }
+
+    li.previous a.page-link:hover,
+    li.next a.page-link:hover {
+        color: #fff8f8;
+        border: 1px solid #1c60e0;
+        background-color: #1c60e0;
+        position: relative;
+        display: block;
+        line-height: 1.25;
+        border-radius: 15px !important;
+    }
+
+    li.previous.disabled a.page-link,
+    li.next.disabled a.page-link {
+        background-color: white;
+        border: 2px solid #007bff;
+        position: relative;
+        display: block;
+        line-height: 1.25;
+        color: black;
+        border-radius: 15px !important;
+    }
+
+    li.next.disabled a.page-link {
+        background-color: white;
+        border: 2px solid #007bff;
+        position: relative;
+        display: block;
+        line-height: 1.25;
+        color: black;
+        border-radius: 15px !important;
+    } */
+
+    .highcharts-figure, .highcharts-data-table table {
+        min-width: 320px !important;
+        max-width: 800px !important;
+        margin: 1em auto !important;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif !important;
+        border-collapse: collapse !important;
+        border: 1px solid #EBEBEB !important;
+        margin: 10px auto !important;
+        text-align: center !important;
+        width: 100% !important;
+        max-width: 500px !important;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0 !important;
+        font-size: 1.2em !important;
+        color: #555 !important;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600 !important;
+        padding: 0.5em !important;
+    }
+
+    .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+        padding: 0.5em !important;
+    }
+
+    .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8 !important;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff !important;
+    }
+
+    input[type="number"] {
+        min-width: 50px !important;
+    }
+
+    /*Estilos de graficas*/
+    .card_dp {
+        padding: 0;
+        position: relative;
+    }
+
+    .card_dp h4 {
+        margin: 0;
+        margin-top: 12px;
+        padding: 0;
+        font-weight: bolder;
+        font-size: 12pt !important;
+    }
+
+    .datos-primeros {
+        min-height: 100%;
+        padding: 0;
+        color: #8D8D8D;
+        position: relative;
+        padding: 13px !important;
+    }
+
+    .text_estadistica label{
+        padding: 6px;
+    }
+
+    .material-icons {
+        font-size: 14pt;
+    }
+
+    .display-b{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .iconos_dp {
+        font-size: 18px;
+    }
+
+    .text_estadistica label{
+        padding: 0px 13px;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 18px;
+    }
+    .dp1 .text_estadistica label{
+        background-color: #706FCC;
+    }
+
+    .dp2 .text_estadistica label{
+        background-color: #FFA5AC;
+    }
+
+    .dp3 .text_estadistica label{
+        background-color: #FFAB80;
+    }
+
+    .dp4 .text_estadistica label{
+        background-color: #62C3D4;
+    }
+
+    .dp5 .text_estadistica label{
+        background-color: #62D4B9;
+    }
+
+    .dp6 .text_estadistica label{
+        background-color: #FF5151;
+    }
+
+    .card-title {
+        font-size: 15pt !important;
+    }
+
+    .dp1 .text_estadistica i{
+        color: #706FCC;
+    }
+    .dp2 .text_estadistica i{
+        color: #FFA5AC;
+    }
+    .dp3 .text_estadistica i{
+        color: #FFAB80;
+    }
+    .dp4 .text_estadistica i{
+        color: #62C3D4;
+    }
+    .dp5 .text_estadistica i{
+        color: #62D4B9;
+    }
+    .dp6 .text_estadistica i{
+        color: #FF5151;
+    }
+
+    .graficas_titulos {
+        width: 100%;
+        margin-top: -10px;
+        min-height: 37px;
+        text-align: center;
+        border-radius: 3px;
+        font-weight: bolder !important;
+        position: relative;
+        padding-left: 40px;
+    }
+    .graficas_titulos::before{
+        content: "";
+        width: 30px;
+        height: 30px;
+        box-shadow: 0px 3px 6px #00000029;
+        border-radius: 4px;
+        position: absolute;
+        left: 0;
+    }
+
+    .graficas_titulo1::before{
+        background: #17c0de;
+    }
+
+    .graficas_titulo2::before{
+        background: #17de8c;
+    }
+
+    .graficas_titulo3::before{
+        background: #C733FF;
+    }
+
+    .graficas_titulo4::before{
+        background: #ef5350 ;
+    }
+
+    .graficas {
+        margin-top: 30px;
+    }
+
+    .highcharts-figure, .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+
+    #container {
+        height: 400px;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #EBEBEB;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+
+
+
+
+
+
+
+    .dato{
+        width: 49%;
+        margin: 5px 0;
+        display: inline-flex;
+        padding: 3px 4px;
+        border-bottom: 1px solid #ccc;
+        box-sizing: border-box;
+        color: #515151;
+    }
+    .dato font{
+        font-weight: bolder;
+    }
+    .caja_scroll{
+        height: 400px;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+
+
+
+
+    table{
+        font-size: 13pt !important;
+    }
+
+
