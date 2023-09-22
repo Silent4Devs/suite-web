@@ -1,27 +1,33 @@
 <div class="px-4 py-3">
     @forelse ($section->lessons as $item)
         <div class="card shadow-none">
-            <div class="card-header" style="border: 1px solid #D8D8D8;">
-                <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;">
-                    <i style="font-size:10pt; cursor: pointer;"
-                        class="d-inline fas fa-play-circle abirCollapse" data-toggle="collapse"
-                        data-target="#miCollapse{{ $item->id }}" aria-expanded="false"></i>
-                </a>
-                <h5 class="d-inline" style="color:#3086AF;">
-                    {{ $item->name }}
-                </h5>
-                <div class="d-inline">
-                    <a wire:click="destroy({{ $item }})" style="cursor: pointer">
-                        <i style="font-size:10pt;" class="m-1 fa-regular fa-trash-can" title="Eliminar" style="color:#747474"></i>
+            <div class="card-header row" style="border: 1px solid #D8D8D8;">
+                <div class="col-10 d-flex align-items-center" style="padding: 0px;">
+                    <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;">
+                        <i style="font-size:10pt; cursor: pointer;"
+                            class="d-inline fas fa-play-circle abirCollapse mr-2" data-toggle="collapse"
+                            data-target="#miCollapse{{ $item->id }}" aria-expanded="false"></i>
+                    </a>
+                    <h5 class="d-inline" style="color:#3086AF; margin:0px">
+                        {{ $item->name }}
+                    </h5>
+                    <div class="d-inline">
+                        <a wire:click="destroy({{ $item }})" style="cursor: pointer">
+                            <i style="font-size:10px;" class="m-1 fa-regular fa-trash-can" title="Eliminar" style="color:#747474"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-2 d-flex align-items-center justify-content-end">
+                    <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;">
+                        <i style="font-size: 20px; cursor: pointer;"
+                            class="d-inline bi bi-caret-down-fill abirCollapse mr-2" data-toggle="collapse"
+                            data-target="#miCollapse{{ $item->id }}" aria-expanded="false"></i>
                     </a>
                 </div>
-                <div class="d-inline">
-                    <div class="d-flex aling-items-end">lll</div>
-                </div>
             </div>
-            <div class="card-body collapse hide" style="border: 1px solid #D8D8D8;" id="miCollapse{{ $item->id }}"
+            <div class="card-body collapse hide row" style="border: 1px solid #D8D8D8;" id="miCollapse{{ $item->id }}"
                 wire:ignore>
-                <form wire:submit.prevent="update" class="px-3 py-2">
+                <form wire:submit.prevent="update" class="px-3 py-2 col-12">
                     <div class="grid mt-2 mb-2 grid-col-1 md:grid-cols-6 md:gap-2">
                         <label for="edit-lesson-name-{{ $section->id }}">Nombre</label>
                         <div class="md:col-span-5">

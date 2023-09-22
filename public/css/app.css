@@ -35077,6 +35077,17 @@ h3 {
   margin-right: 0 !important;
 }
 
+/*Escuela  ***************************/
+.cancel{
+    background: #FFFFFF;
+    color: #006DDB;
+    border: 1px solid #006DDB;
+}
+
+.cancel:hover{
+    color:#006DDB;
+}
+
 /* footer -------------------------- */
 .app-footer{
   background-color: #788BAC;

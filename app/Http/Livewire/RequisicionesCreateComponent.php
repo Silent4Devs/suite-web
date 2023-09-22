@@ -51,8 +51,6 @@ class RequisicionesCreateComponent extends Component
     // tabs
     public $habilitar_firma = false;
 
-    public $user_actual;
-
     public $habilitar_alerta = false;
     public $habilitar_proveedores = false;
 
@@ -86,8 +84,6 @@ class RequisicionesCreateComponent extends Component
         $this->compradores = KatbolComprador::with('user')->where('archivo', false)->get();
         $this->contratos = KatbolContrato::get();
         $this->productos = KatbolProducto::where('archivo', false)->get();
-        $this->user_actual = Auth::user();
-        $this->area = Empleado::where('id', $this->user_actual->empleado_id)->first();
         $this->organizacion = Organizacion::first();
     }
 
@@ -108,7 +104,7 @@ class RequisicionesCreateComponent extends Component
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => $this->area->area->area,
+                'area' => auth()->user()->empleado->area->area,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
@@ -118,7 +114,7 @@ class RequisicionesCreateComponent extends Component
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => $this->area->area->area,
+                'area' => auth()->user()->empleado->area->area,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
@@ -157,38 +153,19 @@ class RequisicionesCreateComponent extends Component
     public function proveedoresStore($data)
     {
         $this->habilitar_firma = false;
-
-        $proveedores_exitentes = KatbolProveedorRequisicion::where('requisiciones_id', $this->requisicion_id)->get();
-        if ($proveedores_exitentes->count() > 0) {
-            foreach ($proveedores_exitentes as $proveedor) {
-                $proveedor->delete();
-            }
-        }
-
-        $provedores_catalogos_existentes = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->requisicion_id)->get();
-        if ($provedores_catalogos_existentes->count() > 0) {
-            foreach ($provedores_catalogos_existentes as $proveedor_catalogo) {
-                $proveedor_catalogo->delete();
-            }
-        }
-
-        $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $this->requisicion_id)->get();
-        if ($proveedor_indistinto->count() > 0) {
-            foreach ($proveedor_indistinto as $proveedor_indistinto) {
-                $proveedor_indistinto->delete();
-            }
-        }
-
         $cotizacion_count = 0;
         $prove_count = 0;
         $this->provedores_colllection = collect();
+
         for ($i = 0; $i <= $this->proveedores_count; $i++) {
             if (isset($data['proveedor_' . $i])) {
                 if ($this->selectedInput[$prove_count] === 'otro') {
+
                     if (!empty($this->selectOption[$prove_count]) && isset($this->selectOption[$prove_count])) {
                     } else {
                         $this->selectOption[$prove_count] = 'indistinto';
                     }
+
 
                     if ($this->selectOption[$prove_count] === 'sugerido') {
                         // nuevo proveedor
@@ -280,6 +257,7 @@ class RequisicionesCreateComponent extends Component
         }
 
         $this->provedores_colllection->push($this->proveedores_catalogo);
+        $this->habilitar_proveedores = true;
     }
 
     public function dataFirma()
@@ -320,11 +298,7 @@ class RequisicionesCreateComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $user = ModelsUser::where('id', $this->nueva_requisicion->id_user)->first();
-
-            $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
-
-            $supervisor = $empleado->supervisor->email;
+            $supervisor = auth()->user()->empleado->supervisor->email;
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 

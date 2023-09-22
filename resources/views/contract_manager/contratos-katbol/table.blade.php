@@ -12,7 +12,7 @@
     <h4>Contratos del Área</h4>
 </div>
 
-<div class="caja_tabla_responsiva col s12 datatable-fix">
+<div>
     <table class="table" id="contratos-table">
         <thead>
             <tr>
@@ -20,12 +20,12 @@
                     @endfor
                 </th>
                 <th>Tipo</th>
-                <th>Proveedor</th>
+                <th>Cliente</th>
                 <th>Número de Proyecto</th>
                 <th>Servicio @for ($i = 0; $i < 80; $i++)
                     @endfor
                 </th>
-                <th>Objetivo @for ($i = 0; $i < 100; $i++)
+                <th style="min-width: 200;">Objetivo @for ($i = 0; $i < 100; $i++)
                     @endfor
                 </th>
                 {{-- Nueva --}}
@@ -36,7 +36,6 @@
                     @endfor
                 </th>
                 <th>Pagos</th>{{-- Nueva --}}
-                <th class="estilotd contratos-table-2">Administrador</th>
                 {{-- <th style="background-color:#787676; color:#ffff;">Descripción Servicios</th> --}}
                 <th>Fecha Firma </th>{{-- Nueva --}}
                 {{-- <th style="background-color:#787676; color:#ffff;">Periodo Pagos</th> --}}
@@ -44,16 +43,17 @@
                 {{-- <th style="background-color:#787676; color:#ffff;">Fecha Inicio del Pago</th> --}}
                 <th style="min-width: 150px;">Mínimo</th>{{-- Nueva --}}
                 <th style="min-width: 150px;">Máximo</th>{{-- Nueva --}}
-                <th style="min-width: 150px;">Área</th>{{-- Nueva --}}
-                <th style="min-width: 150px;">Área Admin.</th>{{-- Nueva --}}
-                <th style="min-width: 150px;">Puesto</th>{{-- Nueva --}}
                 <th style="min-width: 150px;">PMP Asignado</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">Área</th>{{-- Nueva --}}
+                <th style="min-width: 150px;">Puesto</th>{{-- Nueva --}}
+                <th class="estilotd contratos-table-2">Administrador</th>
+                <th style="min-width: 150px;">Área Admin.</th>{{-- Nueva --}}
                 {{-- <th style="background-color:#787676; color:#ffff;">Clasificación</th> --}}
                 <th style="min-width: 150px;">Fase</th>
                 <th>¿Ampliado?</th>{{-- Nueva --}}
                 <th>¿Convenio?</th>{{-- Nueva --}}
                 <th>Estatus</th>
-                <th>Download files</th>
+                <th style="min-width: 130px;">Descarga de Archivo</th>
                 <th class="botones_accion estilotd">Opciones</th>
 
 
@@ -64,9 +64,9 @@
                 @if ($usuario_actual->area_id == $contrato->area_id)
                     <tr>
                         <td>{{ $contrato->no_contrato }}</td>
-                        <td class="espaciotd">{{ $contrato->tipo_contrato }}</td>
-                        <td class="espaciotd">{{ $contrato->nombre_comercial }}</td>
-                        <td class="espaciotd">{{ $contrato->no_proyecto }}</td>
+                        <td>{{ $contrato->tipo_contrato }}</td>
+                        <td>{{ $contrato->nombre }}</td>
+                        <td>{{ $contrato->no_proyecto }}</td>
                         <td>{{ $contrato->nombre_servicio }}</td>
                         <td>{{ $contrato->objetivo }}</td>{{-- nuevo --}}
                         <td>
@@ -85,43 +85,43 @@
                             @endif
                         </td>
                         {{-- nuevo --}}
-                        <td class="espaciotd">
+                        <td>
                             @if ($contrato->cumple != null && $contrato->cumple != '0')
                                 Si
                             @else
                                 No
                             @endif
                         </td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->vigencia_contrato }}</td>
-                        <td class="espaciotd">{{ $contrato->no_pagos }}</td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->administrador_contrato }}</td>
+                        <td>{{ $contrato->vigencia_contrato }}</td>
+                        <td>{{ $contrato->no_pagos }}</td>{{-- nuevo --}}
                         {{-- <td style="text-align: center">{{ $contrato->cargo_administrador }}</td> --}}
                         {{-- <td style="text-align: center">{{ $contrato->servicios_descripcion }}</td> --}}
                         <td style="text-align: center">
                             {{ $contrato->fecha_firma != null ? Carbon\Carbon::createFromFormat('Y-m-d', $contrato->fecha_firma)->format('d-m-Y') : 'Sin fecha de firma' }}
                         </td>{{-- nuevo --}}
                         {{-- <td style="text-align: center">{{ $contrato->periodo_pagos }}</td> --}}
-                        <td class="espaciotd">{{ '$' . number_format($contrato->monto_pago, 2) }}</td>
+                        <td>{{ '$' . number_format($contrato->monto_pago, 2) }}</td>
                         {{-- nuevo --}}
                         {{-- <td style="text-align: center">{{ $contrato->fecha_inicio_pago }}</td> --}}
-                        <td class="espaciotd">{{ '$' . number_format($contrato->minimo, 2) }}</td>
+                        <td>{{ '$' . number_format($contrato->minimo, 2) }}</td>
                         {{-- nuevo --}}
-                        <td class="espaciotd">{{ '$' . number_format($contrato->maximo, 2) }}</td>
+                        <td>{{ '$' . number_format($contrato->maximo, 2) }}</td>
                         {{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->area }}</td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->area_administrador }}</td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->puesto }}</td>{{-- nuevo --}}
-                        <td class="espaciotd">{{ $contrato->pmp_asignado }}</td>{{-- nuevo --}}
+                        <td>{{ $contrato->pmp_asignado }}</td>{{-- nuevo --}}
+                        <td>{{ $contrato->area }}</td>{{-- nuevo --}}
+                        <td>{{ $contrato->puesto }}</td>{{-- nuevo --}}
+                        <td>{{ $contrato->administrador_contrato }}</td>
+                        <td>{{ $contrato->area_administrador }}</td>{{-- nuevo --}}
                         {{-- <td style="text-align: center">{{ $contrato->clasificacion }}</td> --}}
-                        <td class="espaciotd">{{ $contrato->fase }}</td>
-                        <td class="espaciotd">
+                        <td>{{ $contrato->fase }}</td>
+                        <td>
                             @if ($contrato->contrato_ampliado != null && $contrato->contrato_ampliado != 0)
                                 Si
                             @else
                                 No
                             @endif
                         </td>{{-- nuevo --}}
-                        <td class="espaciotd">
+                        <td>
                             @if ($contrato->convenio_modificatorio != null && $contrato->convenio_modificatorio != 0)
                                 Si
                             @else
@@ -147,16 +147,18 @@
                                 <a href="{{ route('contract_manager.contratos-katbol.show', [$contrato->id]) }}"
                                     style="color:#2395AA;"><i class="fa-solid fa-eye" title="Mostrar"> </i>
                                 </a>
+                                &nbsp;&nbsp;&nbsp;
                                 @can('katbol_contratos_modificar')
                                     @if ($areas->count() > 0)
                                         <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}"
                                             style="color:#2395AA;"><i class="fas fa-edit" title="Editar"></i></a>
                                     @endif
                                 @endcan
+                                &nbsp;&nbsp;&nbsp;
                                 @can('katbol_contratos_eliminar')
                                     {!! Form::button('<i class="fas fa-trash text-danger"></i>', [
                                         'type' => 'submit',
-                                        'style' => 'color:#2395AA',
+                                        'style' => 'color:#2395AA; background: none; border: none; padding: 0; font: inherit; cursor: pointer;',
                                         'onclick' => "return confirm('Esta seguro de eliminar el registro?')",
                                     ]) !!}
                                 @endcan

@@ -10,6 +10,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateContratoRequest;
 use App\Http\Requests\UpdateContratoRequest;
 use App\Models\Area;
+use App\Models\TimesheetCliente;
 use App\Models\ContractManager\CedulaCumplimiento;
 use App\Models\ContractManager\CierreContrato;
 use App\Models\ContractManager\Contrato;
@@ -54,8 +55,8 @@ class ContratosController extends AppBaseController
         $usuario_actual = Empleado::find(auth()->user()->empleado->id);
         $areas = Area::get();
 
-        $contratos = Contrato::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'proveedores.nombre_comercial')
-            ->join('proveedores', 'contratos.proveedor_id', '=', 'proveedores.id')
+        $contratos = Contrato::SELECT('contratos.*', 'cedula_cumplimiento.cumple', 'timesheet_clientes.nombre')
+            ->join('timesheet_clientes', 'contratos.proveedor_id', '=', 'timesheet_clientes.id')
             ->leftjoin('cedula_cumplimiento', 'contratos.id', '=', 'cedula_cumplimiento.contrato_id')
             ->get();
 
@@ -78,7 +79,7 @@ class ContratosController extends AppBaseController
         $organizacion = Organizacion::first();
         // $dolares = DolaresContrato::where('contrato_id', $id)->first();
         $dolares = null;
-        $proveedores = Proveedores::select('id', 'razon_social', 'nombre_comercial')->get();
+        $proveedores = TimesheetCliente::select('id', 'razon_social', 'nombre')->get();
 
         return view('contract_manager.contratos-katbol.create', compact('dolares', 'organizacion', 'areas'))->with('proveedores', $proveedores)->with('contratos', $contratos);
     }
@@ -99,12 +100,17 @@ class ContratosController extends AppBaseController
             'area_id' => 'required',
             'objetivo' => 'required',
             'estatus' => 'required',
+            'cargo_administrador' => 'max:250',
+            'area_administrador' => 'max:250',
+            'puesto' => 'max:250',
+            'area' => 'max:250',
             'file_contrato' => 'required',
             'fase' => 'required',
             'vigencia_contrato' => 'required',
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required|after:fecha_inicio',
-            'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',            'no_pagos' => 'required|numeric',
+            'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',
+            'no_pagos' => ['required', "numeric", "lte:500000"],
             'tipo_cambio' => 'required',
             'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/", 'required'],
@@ -372,7 +378,7 @@ class ContratosController extends AppBaseController
         }
         $proveedor_id = $contrato->proveedor_id;
         $contratos = Contrato::with('ampliaciones')->find($id);
-        $proveedores = Proveedores::get();
+        $proveedores = TimesheetCliente::get();
         $contrato->fecha_inicio = $contrato->fecha_inicio;
         $contrato->fecha_fin = $contrato->fecha_fin;
         $contrato->fecha_firma = $contrato->fecha_firma;
@@ -406,7 +412,7 @@ class ContratosController extends AppBaseController
         $proveedor_id = $contrato->proveedor_id;
         $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
         // dd($contratos);
-        $proveedores = Proveedores::get();
+        $proveedores = TimesheetCliente::get();
         if (!is_null($contrato->fecha_inicio)) {
             $contrato->fecha_inicio = $contrato->fecha_inicio;
         }
@@ -448,6 +454,10 @@ class ContratosController extends AppBaseController
             'objetivo' => 'required',
             'estatus' => 'required',
             //  'file_contrato' => 'required',
+            'cargo_administrador' => 'max:250',
+            'area_administrador' => 'max:250',
+            'puesto' => 'max:250',
+            'area' => 'max:250',
             'fase' => 'required',
             'vigencia_contrato' => 'required',
             'fecha_inicio' => 'required',
@@ -455,7 +465,7 @@ class ContratosController extends AppBaseController
             'area_id' => 'required',
             // 'fecha_firma' => 'after:fecha_fin|before:fecha_inicio',
             'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',
-            'no_pagos' => 'required',
+            'no_pagos' => ['required', "numeric", "lte:500000"],
             'tipo_cambio' => 'required',
             'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],

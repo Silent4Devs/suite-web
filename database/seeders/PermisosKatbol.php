@@ -179,6 +179,11 @@ class PermisosKatbol extends Seeder
                 'title' => 'katbol_reportes_requisicion_acceso',
                 'name' => 'Permite Acceder al modulo Reportes Requisicion',
             ],
+            //Dashboard Contratos
+            [
+                'title' => 'dashboard_gestion_contratos_acceder',
+                'name' => 'Permite acceder el dashboard de gestion de contratos',
+            ],
         ];
 
         Permission::insert($permissions);

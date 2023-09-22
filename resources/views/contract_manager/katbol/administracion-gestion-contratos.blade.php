@@ -9,7 +9,7 @@
                 </a></li>
         @endcan
         @can('katbol_proveedores_ordenes_compra_acceso')
-                <li><a href="{{ route('contract_manager.proveedores.index') }}">
+            <li><a href="{{ route('contract_manager.proveedores.index') }}">
                     <div>
                         <i class="fa-solid fa-address-card"></i>
                         Proveedores de Ordenes de Compra
@@ -25,7 +25,7 @@
                 </a></li>
         @endcan
         @can('katbol_compradores_acceso')
-                <li><a href="{{ route('contract_manager.compradores.index') }}">
+            <li><a href="{{ route('contract_manager.compradores.index') }}">
                     <div>
                         <i class="fa-solid fa-user-tie"></i>
                         Compradores
@@ -33,7 +33,7 @@
                 </a></li>
         @endcan
         @can('katbol_centro_costos_acceso')
-                <li><a href="{{ route('contract_manager.centro-costos.index') }}">
+            <li><a href="{{ route('contract_manager.centro-costos.index') }}">
                     <div>
                         <i class="fa-solid fa-landmark"></i>
                         Centro de Costos
@@ -45,14 +45,6 @@
                     <div>
                         <i class="fa-solid fa-building-user"></i>
                         Sucursales
-                    </div>
-                </a></li>
-        @endcan
-        @can('katbol_reportes_requisicion_acceso')
-                <li><a href="{{ route('contract_manager.reportes.index') }}">
-                    <div>
-                        <i class="fa-solid fa-file-circle-exclamation"></i>
-                        Reportes de Requisicion
                     </div>
                 </a></li>
         @endcan
