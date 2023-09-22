@@ -16,14 +16,14 @@
                     </div>
                 </a></li>
         @endcan
-        {{-- @can('partes_interesadas_acceder') --}}
-        {{-- <li><a href="{{ route('contract_manager.dashb') }}">
+        @can('dashboard_gestion_contratos_acceder')
+        <li><a href="{{ route('contract_manager.dashboard.katbol') }}">
                     <div>
-                        <i class="bi bi-layout-wtf"></i><br>
+                        <i class="fa-solid fa-chart-column "></i><br>
                         Dashboard
                     </div>
-                </a></li> --}}
-        {{-- @endcan --}}
+                </a></li>
+        @endcan
         @can('calendario_corporativo_acceder')
             <li><a href="{{ route('admin.systemCalendar') }}">
                     <div>
