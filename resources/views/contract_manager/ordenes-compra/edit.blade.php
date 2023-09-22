@@ -14,7 +14,7 @@
             <div class="card card-body caja-blue">
 
                 <div>
-                    <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 50px; right: 430px;">
+                    <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 50px; right: 410px;">
                 </div>
 
                 <div style="position: relative; top:-5rem; left: 50px;">
@@ -102,7 +102,7 @@
                             <label for="" class="txt-tamaño">
                                 Días de crédito proveedor
                             </label>
-                            <input type="number" required name="dias_credito" class="browser-default" value="{{ $requisicion->dias_credito }}">
+                            <input type="number" required name="dias_credito" min="1"  max="1000000000" class="browser-default" value="{{ $requisicion->dias_credito }}">
                         </div>
                     </div>
                     <div class="row">
@@ -123,7 +123,7 @@
                             <label for="" class="txt-tamaño">
                                 Tipo de cambio: <font class="asterisco">*</font>
                             </label>
-                            <input type="text" required name="cambio" class="browser-default" value="{{ $requisicion->cambio }}">
+                            <input type="number"  min="1"  max="1000000000"  required name="cambio" class="browser-default" value="{{ $requisicion->cambio }}">
                         </div>
                     </div>
                 </div>
@@ -172,13 +172,13 @@
                             <label for="" class="txt-tamaño">
                                 Nombre Comercial
                             </label>
-                            <input type="text"  id="proveedor-nombre" name="nombre" value="" readonly class="browser-default">
+                            <input type="text"  pattern="[A-z]{4,100}" id="proveedor-nombre" name="nombre" value="" readonly class="browser-default">
                         </div>
                         <div class="col s12 l3 ">
                             <label for="" class="txt-tamaño">
                                 RFC
                             </label>
-                            <input type="text" id="proveedor-rfc" name="rfc" value="" readonly class="browser-default">
+                            <input type="text"  id="proveedor-rfc" name="rfc" value="" readonly class="browser-default">
                         </div>
                     </div>
                     <div class="row">
@@ -186,13 +186,13 @@
                             <label for="" class="txt-tamaño">
                                 Nombre del contacto
                             </label>
-                            <input type="text" id="proveedor-contacto" value="" name="contacto" readonly class="browser-default">
+                            <input type="text" id="proveedor-contacto" pattern="[A-z]{4,100}" value="" name="contacto" readonly class="browser-default">
                         </div>
                         <div class="col s12 l9 ">
                             <label for="" class="txt-tamaño">
                                 Dirección
                             </label>
-                            <input type="text" id="proveedor-direccion" value="{{$proveedor->direccion}}" name="direccion"  class="browser-default">
+                            <input type="text" id="proveedor-direccion" pattern="[A-z]{4,100}" value="{{$proveedor->direccion}}" name="direccion"  class="browser-default">
                         </div>
                     </div>
                     <div class="row">
@@ -200,19 +200,19 @@
                             <label for="" class="txt-tamaño">
                                 Envío a
                             </label>
-                            <input type="text" name="direccion_envio" value="{{$proveedor->envio}}" placeholder="Dirección" class="browser-default">
+                            <input type="text" name="direccion_envio" pattern="[A-z]{4,100}" value="{{$proveedor->envio}}" placeholder="Dirección" class="browser-default">
                         </div>
                         <div class="col s12 l3 ">
                             <label for="" class="txt-tamaño">
                                 Facturación a
                             </label>
-                            <input type="text" id="proveedor-razon" value="{{$proveedor->facturacion}}" name="facturacion"  class="browser-default">
+                            <input type="text" id="proveedor-razon" pattern="[A-z]{4,100}" value="{{$proveedor->facturacion}}" name="facturacion"  class="browser-default">
                         </div>
                         <div class="col s12 l3 ">
                             <label for="" class="txt-tamaño">
                                 Crédito disponible
                             </label>
-                            <input type="number" step="any" value="{{$proveedor->credito}}" name="credito_proveedor" class="browser-default">
+                            <input type="number"   min="1"  max="1000000000" step="any" value="{{$proveedor->credito}}" name="credito_proveedor" class="browser-default">
                         </div>
                     </div>
                 </div>
@@ -296,7 +296,7 @@
                                     <label for="" class="txt-tamaño">
                                         No. de Personas
                                     </label>
-                                    <input type="number" name="no_personas{{$count}}" min="1" class="browser-default mod-no_personas" value="{{$producto->no_personas}}">
+                                    <input type="number" name="no_personas{{$count}}" min="1" max="100000000"  class="browser-default mod-no_personas" value="{{$producto->no_personas}}">
                                 </div>
                             </div>
                             <div class="row">
@@ -304,7 +304,7 @@
                                     <label for="" class="txt-tamaño">
                                         Porcentaje de involucramiento
                                     </label>
-                                    <input type="number" name="porcentaje_involucramiento{{$count}}" min="1" class="browser-default mod-porcentaje_involucramiento" value="{{$producto->porcentaje_involucramiento }}">
+                                    <input type="number" name="porcentaje_involucramiento{{$count}}" min="1" max="100000000" class="browser-default mod-porcentaje_involucramiento" value="{{$producto->porcentaje_involucramiento }}">
                                 </div>
                             </div>
 

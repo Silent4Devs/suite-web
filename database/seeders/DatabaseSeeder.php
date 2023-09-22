@@ -78,11 +78,13 @@ class DatabaseSeeder extends Seeder
                 // PermisosTimesheetAdministrador::class,
 
                 //Katbol
-                // CentroCostosTableSeeder::class,
-                // CompradoresTableSeeder::class,
-                // ProductosTableSeeder::class,
-                // ProveedorOCSTableSeeder::class,
-                // SucursalesTableSeeder::class,
+                CentroCostosTableSeeder::class,
+                CompradoresTableSeeder::class,
+                ProductosTableSeeder::class,
+                ProveedorOCSTableSeeder::class,
+                SucursalesTableSeeder::class,
+                AreasSeeder::class,
+                PermisosKatbol::class,
                 // FacturacionTableSeeder::class,
                 // ProveedoresTableSeeder::class,
                 // ContratosTableSeeder::class,
