@@ -17,7 +17,7 @@ class MonedaSeedder extends Seeder
         \DB::table('monedas')->insert([
             0 => [
 
-                'nombre' => 'MXM',
+                'nombre' => 'MXN',
             ],
             1 => [
 

@@ -2,7 +2,7 @@
     <div class="card card-body caja-blue">
 
         <div>
-            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 100px; right: 430px;">
+            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 60px; right: 410px;">
         </div>
 
         <div style="position: relative; top:-5rem; left: 80px;">
@@ -69,7 +69,7 @@
                                 Área que solicita <font class="asterisco">*</font>
                             </label>
                             <input id="area_print" name="area"
-                                value="@isset($this->area) {{ $this->area->area->area }} @endisset"
+                                value="@isset(auth()->user()->empleado->area) {{ auth()->user()->empleado->area->area }} @endisset"
                                 readonly style="background: #eaf0f1" class="browser-default" type="text">
                         </div>
                     </div>

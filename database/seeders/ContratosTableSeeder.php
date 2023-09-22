@@ -19,6 +19,7 @@ class ContratosTableSeeder extends Seeder
     public function run()
     {
 
+        \DB::table('contratos')->delete();
 
         $clientes = TimesheetCliente::all();
 
@@ -7462,9 +7463,6 @@ class ContratosTableSeeder extends Seeder
                 'vigencia_contrato' => '1 año',
             ),
         );
-
-
-        \DB::table('contratos')->delete();
 
         foreach ($contratos as  $contrato) {
 

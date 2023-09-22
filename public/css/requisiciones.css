@@ -12,7 +12,7 @@ display: block !important;
     color: #fff;
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 5px;
 }
 .caja-proceso-requi{
     display: flex;

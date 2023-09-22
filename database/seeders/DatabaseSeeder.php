@@ -83,6 +83,8 @@ class DatabaseSeeder extends Seeder
                 ProductosTableSeeder::class,
                 ProveedorOCSTableSeeder::class,
                 SucursalesTableSeeder::class,
+                AreasSeeder::class,
+                PermisosKatbol::class,
                 // FacturacionTableSeeder::class,
                 ProveedoresTableSeeder::class,
                 ContratosTableSeeder::class,
