@@ -89,11 +89,11 @@ class CedulaCumplimientoComponent extends Component
             'entregas_mensuales.cumplimiento as cumple',
             'contratos.id as contrato_id',
             'contratos.proveedor_id',
-            'proveedores.nombre_comercial',
-            'proveedores.id as proveedor_id'
+            'timesheet_clientes.nombre',
+            'timesheet_clientes.id as proveedor_id'
         )
             ->join('contratos', 'entregas_mensuales.contrato_id', '=', 'contratos.id')
-            ->join('proveedores', 'proveedores.id', '=', 'contratos.proveedor_id')
+            ->join('timesheet_clientes', 'timesheet_clientes.id', '=', 'contratos.proveedor_id')
             ->where('contratos.id', '=', $this->contrato_id)
             ->get();
 

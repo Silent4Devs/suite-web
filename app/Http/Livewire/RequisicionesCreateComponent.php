@@ -157,38 +157,19 @@ class RequisicionesCreateComponent extends Component
     public function proveedoresStore($data)
     {
         $this->habilitar_firma = false;
-
-        $proveedores_exitentes = KatbolProveedorRequisicion::where('requisiciones_id', $this->requisicion_id)->get();
-        if ($proveedores_exitentes->count() > 0) {
-            foreach ($proveedores_exitentes as $proveedor) {
-                $proveedor->delete();
-            }
-        }
-
-        $provedores_catalogos_existentes = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $this->requisicion_id)->get();
-        if ($provedores_catalogos_existentes->count() > 0) {
-            foreach ($provedores_catalogos_existentes as $proveedor_catalogo) {
-                $proveedor_catalogo->delete();
-            }
-        }
-
-        $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $this->requisicion_id)->get();
-        if ($proveedor_indistinto->count() > 0) {
-            foreach ($proveedor_indistinto as $proveedor_indistinto) {
-                $proveedor_indistinto->delete();
-            }
-        }
-
         $cotizacion_count = 0;
         $prove_count = 0;
         $this->provedores_colllection = collect();
+
         for ($i = 0; $i <= $this->proveedores_count; $i++) {
             if (isset($data['proveedor_' . $i])) {
                 if ($this->selectedInput[$prove_count] === 'otro') {
+
                     if (!empty($this->selectOption[$prove_count]) && isset($this->selectOption[$prove_count])) {
                     } else {
                         $this->selectOption[$prove_count] = 'indistinto';
                     }
+
 
                     if ($this->selectOption[$prove_count] === 'sugerido') {
                         // nuevo proveedor
@@ -284,7 +265,7 @@ class RequisicionesCreateComponent extends Component
 
     public function dataFirma()
     {
-        $this->habilitar_proveedores = false;
+        $this->habilitar_proveedores = true;
 
         $this->productos_view = KatbolProductoRequisicion::where('requisiciones_id', $this->requisicion_id)->get();
         $this->proveedores_view = KatbolProveedorRequisicion::where('requisiciones_id', $this->requisicion_id)->get();

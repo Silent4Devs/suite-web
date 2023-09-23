@@ -96,23 +96,23 @@ class Contrato extends Model implements Auditable
     const Otro = 'Otro';
 
     //fases
-    const renovacion = 'renovacion';
+    const renovacion = 'Renovación';
 
-    const solicituCont = 'solicitud de contrato';
+    const solicituCont = 'Solicitud de contrato';
 
-    const autorizacion = 'autorización';
+    const autorizacion = 'Autorización';
 
-    const negociacion = 'negociacion';
+    const negociacion = 'Negociación';
 
-    const aprobacion = 'aprobacion';
+    const aprobacion = 'Aprobacíon';
 
-    const ejecucion = 'ejecucion';
+    const ejecucion = 'Ejecución';
 
-    const gestionOb = 'gestión de obligaciones';
+    const gestionOb = 'Gestión de obligaciónes';
 
-    const modifCont = 'modificación de contrato';
+    const modifCont = 'Modificación de contrato';
 
-    const auditRep = 'auditoria y reportes';
+    const auditRep = 'Auditoría y reportes';
 
     //tipo cambio
     const MXN = 'MXN';

@@ -50,12 +50,12 @@
             </div>
             <div class="form-group col-md-6 col-sm-6">
                 <label for="">Fecha Inicio<span class="text-danger">*</span></label>
-                <input value="{{old("fecha_inicio",  $proveedores->fecha_inicio)}}"  class="form-control" type="date" name="fecha_inicio" required>
+                <input value="{{old("fecha_inicio",  $proveedores->fecha_inicio)}}"  id="fechaInicio"  class="form-control" type="date" name="fecha_inicio" required>
                 <small class="errores error_fecha_inicio text-danger"></small>
             </div>
             <div class="form-group col-md-6 col-sm-6">
                 <label for="">Fecha Fin<span class="text-danger">*</span></label>
-                <input value="{{old("fecha_fin",  $proveedores->fecha_fin)}}" class="form-control" type="date" name="fecha_fin" required>
+                <input value="{{old("fecha_fin",  $proveedores->fecha_fin)}}"  id="fechaFin" class="form-control" type="date" name="fecha_fin" required>
                 <small class="errores error_fecha_inicio text-danger"></small>
             </div>
           </div>
@@ -80,5 +80,28 @@
             theme: "bootstrap4",
         });
     });
+</script>
+<script>
+    // Obtén referencias a los elementos de entrada
+    const fechaInicioInput = document.getElementById('fechaInicio');
+    const fechaFinInput = document.getElementById('fechaFin');
+
+    // Agrega un evento de escucha al campo de fecha de inicio
+    fechaInicioInput.addEventListener('change', validarFechas);
+
+    // Agrega un evento de escucha al campo de fecha de finalización
+    fechaFinInput.addEventListener('change', validarFechas);
+
+    function validarFechas() {
+    // Obtén los valores de las fechas de inicio y finalización
+    const fechaInicio = new Date(fechaInicioInput.value);
+    const fechaFin = new Date(fechaFinInput.value);
+
+    // Verifica si la fecha de finalización es mayor que la fecha de inicio
+    if (fechaFin < fechaInicio) {
+        alert('La fecha de finalización no puede ser mayor que la fecha de inicio');
+        fechaFinInput.value = ''; // Limpia el campo de fecha de finalización
+    }
+    }
 </script>
 @endsection

@@ -19,7 +19,7 @@
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="number-icon active-number">1</i> Servicios y Productos</a>
         </li>
         <li class="nav-item" role="presentation">
-        <a class="nav-link {{$disabled}}"  id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="number-icon">2</i> Proveedores</a>
+        <a class="nav-link eliminar {{$disabled}}"  id="profile-tab" onclick="eliminar();" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="number-icon">2</i> Proveedores</a>
         </li>
         <li class="nav-item" role="presentation">
         <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false"><i class="number-icon">3</i> Firma</a>
@@ -131,7 +131,7 @@
                                 <label for="" class="txt-tamaño">
                                     Cantidad <font class="asterisco">*</font>
                                 </label>
-                                <input type="number" name="cantidad_1" min="1"
+                                <input type="number" name="cantidad_1" min="1" max="9000000000"
                                     class="model-cantidad browser-default" required>
                             </div>
                             <div class="col s12 l8">
@@ -217,7 +217,7 @@
 
                                                 Fecha inicio*
                                             </label>
-                                            <input type="date" class="browser-default modal-start" name="contacto_fecha_inicio_{{$i}}"
+                                            <input type="date" id="fechaInicio" class="browser-default modal-start" name="contacto_fecha_inicio_{{$i}}"
                                                 required>
                                         </div>
                                         <div class="col s12 l6">
@@ -225,7 +225,7 @@
 
                                                 Fecha fin*
                                             </label>
-                                            <input type="date" class="browser-default modal-end" name="contacto_fecha_fin_{{$i}}"
+                                            <input type="date" id="fechaFin" class="browser-default modal-end" name="contacto_fecha_fin_{{$i}}"
                                                 required>
                                         </div>
                                         </div>
@@ -353,7 +353,6 @@
                                     <div class="btn btn-add-card" onclick="addCard('proveedor')"><i class="fa-regular fa-square-plus icon-prior"></i>
                                         AGREGAR PROVEEDOR</div>
                                 </div>
-
                                 <div style="position: relative; top: -2rem; left: 55rem;">
                                     <button class="btn btn-primary"  type="submit">
                                         Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
@@ -681,6 +680,21 @@
                  'error')
             }
         }
+
+        function eliminar() {
+            $.ajax({
+                type: "DELETE",
+                url: "eliminar-registro",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    // Realizar acciones después de eliminar el registro (por ejemplo, actualizar la vista)
+                },
+                error: function(err) {
+                    console.log(err);
+                }});
+        }
     </script>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -807,12 +821,29 @@
         </script>
 
         <script>
-            // Livewire.on('select2', () => {
-            //     setTimeout(() => {
-            //         $('.select2').select2();
-            //     }, 1000);
-            // });
+            // Obtén referencias a los elementos de entrada
+            const fechaInicioInput = document.getElementById('fechaInicio');
+            const fechaFinInput = document.getElementById('fechaFin');
+
+            // Agrega un evento de escucha al campo de fecha de inicio
+            fechaInicioInput.addEventListener('change', validarFechas);
+
+            // Agrega un evento de escucha al campo de fecha de finalización
+            fechaFinInput.addEventListener('change', validarFechas);
+
+            function validarFechas() {
+            // Obtén los valores de las fechas de inicio y finalización
+            const fechaInicio = new Date(fechaInicioInput.value);
+            const fechaFin = new Date(fechaFinInput.value);
+
+            // Verifica si la fecha de finalización es mayor que la fecha de inicio
+            if (fechaFin < fechaInicio) {
+                alert('La fecha de finalización no puede ser mayor que la fecha de inicio');
+                fechaFinInput.value = ''; // Limpia el campo de fecha de finalización
+            }
+            }
         </script>
+
 
     @endsection
 </div>
