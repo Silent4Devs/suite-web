@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyAuditoriaInternaRequest;
 use App\Models\AuditoriaInterna;
 use App\Models\ClasificacionesAuditorias;
 use App\Models\Clausula;
+use App\Models\ClausulasAuditorias;
 use App\Models\Controle;
 use App\Models\Empleado;
 use App\Models\Team;
@@ -201,8 +202,12 @@ class AuditoriaInternaController extends Controller
     public function indexReporteIndividual($id)
     {
         $clasificaciones = ClasificacionesAuditorias::all();
-        dd($id, $clasificaciones);
-        return view('admin.auditoriaInternas.reporteIndividual');
+        $clausulas = ClausulasAuditorias::all();
+        // dd($id, $clasificaciones);
+        return view('admin.auditoriaInternas.reporteIndividual')
+            ->with('clasificaciones', $clasificaciones)
+            ->with('clausulas', $clausulas)
+            ->with('id', $id);
     }
 
     public function createReporte($id)
