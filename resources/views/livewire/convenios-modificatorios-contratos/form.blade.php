@@ -12,7 +12,7 @@
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
             <div class="distancia form-group col-md-6">
                 Nombre del Convenio<font class="asterisco">*</font>
-                <input type="text" wire:model.debounce.800ms="no_convenio" class="form-control">
+                <input type="text" maxlength="250" wire:model.debounce.800ms="no_convenio" class="form-control">
                 @error('no_convenio')
                     <span class="red-text">{{ $message }}</span>
                 @enderror
@@ -36,8 +36,7 @@
                 <div class="custom-file">
                     {{-- <div class="btn"> --}}
                     <span>PDF</span>
-                    <input class="form-control" type="file" wire:model.debounce.800ms="convenios_file"
-                        accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                    <input class="form-control" type="file" wire:model.debounce.800ms="convenios_file" accept=".pdf"
                         id="upload {{ $iteration }}" readonly>
                     {{-- </div> --}}
                     {{-- <div class="file-path-wrapper">

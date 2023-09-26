@@ -116,9 +116,8 @@
                 @else
                     <div class="custom-file">
                         {{-- <div class="btn" style="margin-right: 8px"> --}}
-                        <span>DOCUMENTO</span>
-                        <input class="form-control" type="file" wire:model.defer="pdf"
-                            accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                        <span>PDF</span>
+                        <input class="form-control" type="file" wire:model.defer="pdf" accept=".pdf"
                             id="upload{{ $iteration1 }}" readonly>
                         {{-- </div> --}}
                         {{-- <div class="file-path-wrapper">
@@ -172,8 +171,8 @@
                             <label for="" class="txt-tamaño">¿Por
                                 qué aplica la
                                 Deductiva/Penalización?<font class="asterisco">*</font></label>
-                            <textarea wire:model.debounce.800ms="justificacion_deductiva_penalizacion" style="padding:15px;" class="form-control"
-                                required></textarea>
+                            <textarea wire:model.debounce.800ms="justificacion_deductiva_penalizacion" style="padding:15px;"
+                                class="form-control"></textarea>
                             @error('justificacion_deductiva_penalizacion')
                                 <span class="red-text">{{ $message }}</span>
                             @enderror
@@ -182,7 +181,8 @@
                     <div class="row">
                         <div class="distancia form-group col-md-4">
                             <label for="" class="txt-tamaño">Monto Deductiva/Penalización</label>
-                            <input type="text" maxlength="250" wire:model.debounce.800ms="deductiva_penalizacion"
+                            <input type="number" max="100000000000"
+                                wire:model.debounce.800ms="deductiva_penalizacion"
                                 class="form-control deductiva_penalizacion">
                             @error('deductiva_penalizacion')
                                 <span class="red-text">{{ $message }}</span>

@@ -361,7 +361,7 @@
                     <div class="file-field input-field">
                         <div class="btn">
                             <input type="file" name="file_contrato" class="form-control input_file_validar"
-                                id="file_contrato" placeholder="Elegir documento pdf"
+                                id="file_contrato" placeholder="Elegir documento"
                                 accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" required readonly>
                             {{-- <input type="hidden" id="fileContratoName" name="file_contrato" value="">
                             <input class="input_file_validar form-control" id="adjuntarContrato" type="file"
@@ -646,8 +646,7 @@
                             <div class="btn">
                                 <input type="hidden" id="" name="" value="">
                                 <input class="input_file_validar form-control" type="file" name="documento"
-                                    accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
-                                    readonly>
+                                    accept=".pdf" readonly>
                             </div>
                             {{-- <div class="file-path-wrapper">
                                 <input class="file-path validate form-control" type="text"
