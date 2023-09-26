@@ -505,14 +505,23 @@
                 <font class="letra_blanca" style="color: #345183;">Módulos&nbsp;Katbol</font>
             </li>
         @endif
+        @can('dashboard_gestion_contratos_acceder')
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route('contract_manager.dashboard.katbol')}}"
+                class="c-sidebar-nav-link {{ request()->is('contract_manager/dashboard/katbol') ? 'active' : '' }}">
+                <i class="fas fa-chart-column iconos_menu letra_blanca"></i>
+                <font class="letra_blanca">Dashboard</font>
+            </a>
+        </li>
+        @endcan
         @can('sistema_gestion_contratos_acceder')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ url('contract_manager/katbol') }}"
-                    class="c-sidebar-nav-link {{ request()->is('contract_manager/katbol') ? 'active' : '' }}">
-                    <i class="bi bi-file-text iconos_menu letra_blanca"></i>
-                    <font class="letra_blanca">Sistema de Gestion Contractual</font>
-                </a>
-            </li>
+        <li class="c-sidebar-nav-item">
+            <a href="{{ url('contract_manager/katbol') }}"
+                class="c-sidebar-nav-link {{ request()->is('contract_manager/katbol') ? 'active' : '' }}">
+                <i class="bi bi-file-text iconos_menu letra_blanca"></i>
+                <font class="letra_blanca">Sistema de Gestion Contractual</font>
+            </a>
+        </li>
         @endcan
         @can('katbol_contratos_acceso')
             <li class="c-sidebar-nav-item">

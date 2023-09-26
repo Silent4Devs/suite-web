@@ -7,18 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class TimesheetCliente extends Model implements Auditable
+class TimesheetCliente extends Model
+// implements Auditable
 {
     use HasFactory;
-    use \OwenIt\Auditing\Auditable;
+    // use \OwenIt\Auditing\Auditable;
 
     protected $table = 'timesheet_clientes';
+
+    public $incrementing = false;
 
     protected $fillable = [
         'identificador',
         'razon_social',
         'nombre',
         'rfc',
+        'id_old',
 
         'calle',
         'colonia',
@@ -32,8 +36,8 @@ class TimesheetCliente extends Model implements Auditable
         'correo_contacto',
         'celular_contacto',
 
-        'objeto_descripcion',
-        'cobertura',
+        // 'objeto_descripcion',
+        // 'cobertura',
     ];
 
     //Redis methods

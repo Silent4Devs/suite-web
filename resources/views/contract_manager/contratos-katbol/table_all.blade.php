@@ -5,7 +5,7 @@
     <h4>Contratos de la Organización </h4>
 </div>
 
-<div class="caja_tabla_responsiva col s12 datatable-fix">
+<div>
     <table class="table" id="contratos-table-all">
         <thead>
             <tr>
@@ -18,7 +18,7 @@
                 <th>Servicio @for ($i = 0; $i < 80; $i++)
                     @endfor
                 </th>
-                <th>Objetivo @for ($i = 0; $i < 100; $i++)
+                <th style="min-width: 200px;">Objetivo @for ($i = 0; $i < 100; $i++)
                     @endfor
                 </th>
                 {{-- Nueva --}}
@@ -132,16 +132,18 @@
                             <a href="{{ route('contract_manager.contratos-katbol.show', [$contrato->id]) }}"
                                 style="color:#2395AA;"><i class="fa-solid fa-eye" title="Mostrar"> </i>
                             </a>
+                            &nbsp;&nbsp;&nbsp;
                             @can('katbol_contratos_modificar')
                                 @if ($areas->count() > 0)
                                     <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}"
                                         style="color:#2395AA;"><i class="fas fa-edit" title="Editar"></i></a>
                                 @endif
                             @endcan
+                            &nbsp;&nbsp;&nbsp;
                             @can('katbol_contratos_eliminar')
                                 {!! Form::button('<i class="fas fa-trash text-danger"></i>', [
                                     'type' => 'submit',
-                                    'style' => 'color:#2395AA',
+                                    'style' => 'color:#2395AA; background: none; border: none; padding: 0; font: inherit; cursor: pointer;',
                                     'onclick' => "return confirm('Esta seguro de eliminar el registro?')",
                                 ]) !!}
                             @endcan

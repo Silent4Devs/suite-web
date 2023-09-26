@@ -32,11 +32,7 @@ class RequisicionesEmail extends Mailable
         $this->organizacion = $organizacion;
         $this->tipo_firma = $tipo_firma;
 
-        $user = ModelsUser::where('id', $this->requisicion->id_user)->first();
-
-        $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
-
-        $this->supervisor = $empleado->supervisor->name;
+        $this->supervisor = auth()->user()->empleado->supervisor->name;
 
         // requisiciones
         if ($tipo_firma === 'firma_solicitante') {
@@ -101,18 +97,18 @@ class RequisicionesEmail extends Mailable
     public function build()
     {
         return $this->from('donot-reply@silent4business.com', 'Sender Name')
-                    ->view('emails.requisiciones', [
-                        'supervisor' =>  $this->supervisor,
-                        'requisicion' => $this->requisicion,
-                        'organizacion' => $this->organizacion,
-                        'tipo_firma' => $this->tipo_firma,
-                        'tipo_firma_siguiente' => $this->tipo_firma_siguiente,
+            ->view('emails.requisiciones', [
+                'supervisor' =>  $this->supervisor,
+                'requisicion' => $this->requisicion,
+                'organizacion' => $this->organizacion,
+                'tipo_firma' => $this->tipo_firma,
+                'tipo_firma_siguiente' => $this->tipo_firma_siguiente,
 
-                        'logo' => $this->getBase64($this->organizacion->logotipo),
-                        'img_twitter' => $this->getBase64(asset('img/twitter.png')),
-                        'img_linkedin' => $this->getBase64(asset('img/linkedin.png')),
-                        'img_facebook' => $this->getBase64(asset('img/facebook.png')),
-                        'img_requi' => $this->getBase64(asset('img/img_req.png')),
-                    ]);
+                'logo' => $this->getBase64($this->organizacion->logotipo),
+                'img_twitter' => $this->getBase64(asset('img/twitter.png')),
+                'img_linkedin' => $this->getBase64(asset('img/linkedin.png')),
+                'img_facebook' => $this->getBase64(asset('img/facebook.png')),
+                'img_requi' => $this->getBase64(asset('img/img_req.png')),
+            ]);
     }
 }

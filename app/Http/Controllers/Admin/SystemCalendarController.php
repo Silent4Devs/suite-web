@@ -84,6 +84,19 @@ class SystemCalendarController extends Controller
         $nombre_organizacion = Organizacion::getFirst();
         $nombre_organizacion = $nombre_organizacion ? $nombre_organizacion->empresa : 'la Organización';
 
-        return view('admin.calendar.calendar', compact('plan_base', 'auditorias_anual', 'recursos', 'actividades', 'auditoria_internas', 'eventos', 'oficiales', 'cumples_aniversarios', 'nombre_organizacion', 'contratos', 'facturas', 'niveles_servicio'));
+        return view('admin.calendar.calendar', compact(
+            'plan_base',
+            'auditorias_anual',
+            'recursos',
+            'actividades',
+            'auditoria_internas',
+            'eventos',
+            'oficiales',
+            'cumples_aniversarios',
+            'nombre_organizacion',
+            'contratos',
+            'facturas',
+            'niveles_servicio'
+        ));
     }
 }

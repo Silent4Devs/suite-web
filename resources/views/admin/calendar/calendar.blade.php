@@ -114,7 +114,6 @@
         .i_calendar_cuadro {
             margin: 0px 8px;
         }
-
     </style>
 
 
@@ -228,11 +227,12 @@
         </div>
     </div>
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col s12 m12 l6">
             <div class="card z-depth-3">
                 <div class="card-content black-text">
-                    <span style="font-family: Arial, Helvetica, sans-serif" class="card-title">Entregables mensuales próximos</span>
+                    <span style="font-family: Arial, Helvetica, sans-serif" class="card-title">Entregables mensuales
+                        próximos</span>
                     <table>
                         <thead>
                             <tr>
@@ -261,59 +261,59 @@
                     <a href="#"></a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="col s12 m12 l6">
-            <div class="card z-depth-3">
-                <div class="card-content black-text">
-                    <span style="font-family: Arial, Helvetica, sans-serif" class="card-title">Próximas facturas a liberar</span>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Notificaciones</th>
-                            </tr>
-                        </thead>
+    {{-- <div class="col s12 m12 l6">
+        <div class="card z-depth-3">
+            <div class="card-content black-text">
+                <span style="font-family: Arial, Helvetica, sans-serif" class="card-title">Próximas facturas a
+                    liberar</span>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Notificaciones</th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <ol>
-                                        @foreach ($facturas as $factura)
-                                        {{-- {{$nivel}} --}}
+                    <tbody>
+                        <tr>
+                            <td>
+                                <ol>
+                                    @foreach ($facturas as $factura)
                                         @php
-                                        $evaluacionFechas = \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($factura->fecha_liberacion), false);
-                                        // dd($evaluacionFechas);
-                                        $esHoy = \Carbon\Carbon::now()->format('Y-m-d')==$factura->fecha_liberacion ? true:false;
-                                        // dd($esHoy);
-                                        $evaluacionFechas = $esHoy ? $evaluacionFechas:$evaluacionFechas + 1;
-                                        $avisar = ($evaluacionFechas >=0 && $evaluacionFechas <= 3) ? true:false;
-                                        // dd($esHoy);
+                                            $evaluacionFechas = \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($factura->fecha_liberacion), false);
+                                            // dd($evaluacionFechas);
+                                            $esHoy = \Carbon\Carbon::now()->format('Y-m-d') == $factura->fecha_liberacion ? true : false;
+                                            // dd($esHoy);
+                                            $evaluacionFechas = $esHoy ? $evaluacionFechas : $evaluacionFechas + 1;
+                                            $avisar = $evaluacionFechas >= 0 && $evaluacionFechas <= 3 ? true : false;
+                                            // dd($esHoy);
                                         @endphp
-                                            @if ($avisar)
-                                                @if($esHoy)
-                                                    <li>Hoy es la liberación de la factura {{$factura->no_factura}}</li>
-                                                    @else
-                                                    <li>{{ 'Faltan '.$evaluacionFechas.' días para la liberación de la factura:' . $factura->no_factura }}
-                                                    </li>
-                                                @endif
-                                                <li>{{ 'Con un importe de:' . $factura->monto_factura }}</li>
-                                                <li>{{ 'Fecha de liberación:' . $factura->fecha_liberacion }}</li>
-                                                <hr>
+                                        @if ($avisar)
+                                            @if ($esHoy)
+                                                <li>Hoy es la liberación de la factura {{ $factura->no_factura }}</li>
+                                            @else
+                                                <li>{{ 'Faltan ' . $evaluacionFechas . ' días para la liberación de la factura:' . $factura->no_factura }}
+                                                </li>
                                             @endif
-                                        @endforeach
-                                    </ol>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-action">
-                    <a href="#"></a>
-                    <a href="#"></a>
-                </div>
+                                            <li>{{ 'Con un importe de:' . $factura->monto_factura }}</li>
+                                            <li>{{ 'Fecha de liberación:' . $factura->fecha_liberacion }}</li>
+                                            <hr>
+                                        @endif
+                                    @endforeach
+                                </ol>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-action">
+                <a href="#"></a>
+                <a href="#"></a>
             </div>
         </div>
     </div>
+    </div> --}}
 
 @endsection
 
@@ -418,42 +418,41 @@
                 },
             @endforeach
             @foreach ($contratos as $contrato)
-            {
-                id: 'contrato{{ $contrato->id }}',
-                calendarId: '8',
-                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Contrato: {{ $contrato->nombre_servicio }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::parse($contrato->fecha_inicio)->format('Y-m-d') }}',
-                end: '{{ \Carbon\Carbon::parse($contrato->fecha_fin)->format('Y-m-d') }}',
-                isReadOnly: true,
-            },
-           @endforeach
-           @foreach ($facturas as $facturas_iterado)
-            {
-                id: 'facturas_iterado{{ $facturas_iterado->id }}',
-                calendarId: '9',
-                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Factura: {{ $facturas_iterado->concepto }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::parse($facturas_iterado->fecha_recepcion)->format('Y-m-d') }}',
-                end: '{{ \Carbon\Carbon::parse($facturas_iterado->fecha_liberacion)->format('Y-m-d') }}',
-                isReadOnly: true,
-            },
-           @endforeach
-           @foreach ($niveles_servicio as $revisiones)
-            {
-
-                id: 'revisiones{{ $revisiones->id }}',
-                calendarId: '11',
-                title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revision de entregables: {{ $revisiones->nombre_entregable }}',
-                category: 'allday',
-                dueDateClass: '',
-                start: '{{ \Carbon\Carbon::parse($revisiones->plazo_entrega_inicio)->format('Y-m-d') }}',
-                end: '{{ \Carbon\Carbon::parse($revisiones->plazo_entrega_termina)->format('Y-m-d') }}',
-                isReadOnly: true,
-            },
-           @endforeach
+                {
+                    id: 'contrato{{ $contrato->id }}',
+                    calendarId: '8',
+                    title: '<i class="fas fa-drum i_calendar_cuadro"></i> Contrato: {{ $contrato->nombre_servicio }}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ \Carbon\Carbon::parse($contrato->fecha_inicio)->format('Y-m-d') }}',
+                    end: '{{ \Carbon\Carbon::parse($contrato->fecha_fin)->format('Y-m-d') }}',
+                    isReadOnly: true,
+                },
+            @endforeach
+            @foreach ($facturas as $facturas_iterado)
+                {
+                    id: 'facturas_iterado{{ $facturas_iterado->id }}',
+                    calendarId: '9',
+                    title: '<i class="fas fa-drum i_calendar_cuadro"></i> Factura: {{ $facturas_iterado->concepto }}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ \Carbon\Carbon::parse($facturas_iterado->fecha_recepcion)->format('Y-m-d') }}',
+                    end: '{{ \Carbon\Carbon::parse($facturas_iterado->fecha_liberacion)->format('Y-m-d') }}',
+                    isReadOnly: true,
+                },
+            @endforeach
+            @foreach ($niveles_servicio as $revisiones)
+                {
+                    id: 'revisiones{{ $revisiones->id }}',
+                    calendarId: '11',
+                    title: '<i class="fas fa-drum i_calendar_cuadro"></i> Revision de entregables: {{ $revisiones->nombre_entregable }}',
+                    category: 'allday',
+                    dueDateClass: '',
+                    start: '{{ \Carbon\Carbon::parse($revisiones->plazo_entrega_inicio)->format('Y-m-d') }}',
+                    end: '{{ \Carbon\Carbon::parse($revisiones->plazo_entrega_termina)->format('Y-m-d') }}',
+                    isReadOnly: true,
+                },
+            @endforeach
         ];
     </script>
 

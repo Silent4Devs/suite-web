@@ -57,7 +57,6 @@ class OrdenCompraController extends Controller
                 ])->where('archivo', false)->orderByDesc('id')
                     ->get();
 
-
                 return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
             } elseif ($rol->title === 'Compras') {
                 //compras
@@ -99,7 +98,14 @@ class OrdenCompraController extends Controller
         $roles = User::find($id)->roles()->get();
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
-                $requisiciones = KatbolRequsicion::with('productos_requisiciones.producto', 'contrato')->where('estado', 'firmada')->where('archivo', false)->Orwhere('estado_orden', 'rechazado_oc')->Orwhere('estado_orden', 'curso')->Orwhere('estado_orden', 'fin')->orderByDesc('id')->get();
+                $requisiciones = KatbolRequsicion::where([
+                    ['firma_solicitante', '!=', null],
+                    ['firma_jefe', '!=', null],
+                    ['firma_finanzas', '!=', null],
+                    ['firma_compras', '!=', null],
+                ])->where('archivo', false)->orderByDesc('id')
+                    ->get();
+
                 return datatables()->of($requisiciones)->toJson();
             } elseif ($rol->title === 'Compras') {
                 $user = Auth::user();
@@ -108,11 +114,28 @@ class OrdenCompraController extends Controller
                 if ($comprador) {
                     $id = $comprador->id;
                 }
-                $requisiciones = KatbolRequsicion::with('productos_requisiciones.producto', 'contrato')->where('estado', 'firmada')->where('archivo', false)->where('comprador_id', $id)->Orwhere('estado_orden', 'rechazado_oc')->Orwhere('estado_orden', 'curso')->Orwhere('estado_orden', 'fin')->orderByDesc('id')->get();
+                $requisiciones = KatbolRequsicion::where([
+                    ['firma_solicitante', '!=', null],
+                    ['firma_jefe', '!=', null],
+                    ['firma_finanzas', '!=', null],
+                    ['firma_compras', '!=', null],
+                ])->where('archivo', false)
+                    ->where('comprador_id', $id)
+                    ->orderByDesc('id')
+                    ->get();
+
                 return datatables()->of($requisiciones)->toJson();
             } else {
                 $user = Auth::user();
-                $requisiciones = KatbolRequsicion::with('productos_requisiciones.producto', 'contrato')->where('estado', 'firmada')->where('archivo', false)->where('id_user', $user->id)->Orwhere('estado_orden', 'rechazado_oc')->Orwhere('estado_orden', 'curso')->Orwhere('estado_orden', 'fin')->orderByDesc('id')->get();
+                $requisiciones = KatbolRequsicion::where([
+                    ['firma_solicitante', '!=', null],
+                    ['firma_jefe', '!=', null],
+                    ['firma_finanzas', '!=', null],
+                    ['firma_compras', '!=', null],
+                ])->where('archivo', false)
+                    ->where('id_user', $user->id)
+                    ->orderByDesc('id')
+                    ->get();
                 return datatables()->of($requisiciones)->toJson();
             }
         }

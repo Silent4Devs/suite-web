@@ -9,18 +9,24 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <style>
-        /* .asterisco {
-                                                                                                                                                                                                                                                                                                    color: red;
-                                                                                                                                                                                                                                                                                                    margin-left: 5px;
+        hr.hr-custom-title {
+            width: 100%;
+            margin: 8px 0;
+            border-top: 3px solid #1E94A8;
+        }
 
-                                                                                                                                                                                                                                                                                                } */
+        /* .asterisco {
+                                                                                                                                                                                                                                                                                                                                                                                                                    color: red;
+                                                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                } */
 
         /*.select-wrapper input{
 
-                                                                                                                                                                                                                                                                                                direction:rtl;
-                                                                                                                                                                                                                                                                                                text-align:left;
+                                                                                                                                                                                                                                                                                                                                                                                                                direction:rtl;
+                                                                                                                                                                                                                                                                                                                                                                                                                text-align:left;
 
-                                                                                                                                                                                                                                                                                                }*/
+                                                                                                                                                                                                                                                                                                                                                                                                                }*/
     </style>
 
     {{-- {{ Breadcrumbs::render('contratos_edit', $contrato) }} --}}
@@ -161,124 +167,118 @@
             </div>
         </div>
     </div>
-    <ul>
-        <li>
-            <div><i class="material-icons">insert_drive_file</i>Facturación</div>
-            <div>
-                <div class="col s12 m12">
-                    <div class="card card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <p class="grey-text tablaparra">No. pagos</p>
-                                        </th>
-                                        <th>
-                                            <p class="grey-text tablaparra">Tipo</p>
-                                        </th>
-                                        <th>
-                                            <p class="grey-text tablaparra">Nombre servicio</p>
-                                        </th>
-                                    </tr>
-                                </thead>
 
-                                <tbody>
-                                    <tr class="black-text">
-                                        <td>
-                                            <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
-                                                data-title="Número de contrato" data-value="{{ $contratos->no_pagos }}"
-                                                class="no_pagos" data-name="no_pagos">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
-                                                data-title="Tipo de contrato" data-value="{{ $contratos->tipo_contrato }}"
-                                                class="tipo_contrato" data-name="tipo_contrato">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
-                                                data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
-                                                data-title="Nombre de servicio"
-                                                data-value="{{ $contratos->nombre_servicio }}" class="nombre_servicio"
-                                                data-name="nombre_servicio">
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+    <div>
+        <div class="col s12 m12">
+            <div class="card card-body">
+                <h5 class="mb-0 d-inline-block">Facturación</h5>
+                <hr class="hr-custom-title">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <p class="grey-text tablaparra">No. pagos</p>
+                                </th>
+                                <th>
+                                    <p class="grey-text tablaparra">Tipo</p>
+                                </th>
+                                <th>
+                                    <p class="grey-text tablaparra">Nombre servicio</p>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="black-text">
+                                <td>
+                                    <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
+                                        data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
+                                        data-title="Número de contrato" data-value="{{ $contratos->no_pagos }}"
+                                        class="no_pagos" data-name="no_pagos">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
+                                        data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
+                                        data-title="Tipo de contrato" data-value="{{ $contratos->tipo_contrato }}"
+                                        class="tipo_contrato" data-name="tipo_contrato">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="#" data-type="text" data-pk="{{ $contratos->id }}"
+                                        data-url="{{ route('contract_manager.contratos-katbol.contratopago', $contratos->id) }}"
+                                        data-title="Nombre de servicio" data-value="{{ $contratos->nombre_servicio }}"
+                                        class="nombre_servicio" data-name="nombre_servicio">
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('factura.factura-component', ['contrato_id' => $contratos->id, 'show_contrato' => false, 'contrato_total' => $contratos->monto_pago])
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">multiline_chart</i>Niveles de servicio
-            </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">event</i>Entregables mensuales
-            </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">assignment_turned_in</i>Cierre proyecto
-            </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
-                </div>
-            </div>
-        </li>
-        <li id="ampliacion_contrato_lista" style="display: {{ $contratos->contrato_ampliado ? 'block' : 'none' }}">
-            <div class="collapsible-header"><i class="material-icons">add_task</i>Ampliación de contrato
-            </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('ampliacion-contratos.ampliacion-component', [
-                        'contrato_id' => $contratos->id,
-                        'show_contrato' => false,
-                        'fecha_fin_contrato' => $contratos->fecha_fin,
-                    ])
-                </div>
-            </div>
-        </li>
-        <li id="convenio_contrato_lista" style="display: {{ $contratos->convenio_modificatorio ? 'block' : 'none' }}">
-            <div class="collapsible-header"><i class="fas fa-handshake"></i>Convenios Modificatorios
-            </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">done_all</i> Cédula de cumplimiento
-            </div>
-            <div class="col s12 m12">
-                <div class="card card-body">
-                    @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
-                </div>
-            </div>
-        </li>
-    </ul>
+        </div>
+    </div>
+    <div class="col s12 m12">
+        <div class="card card-body">
+            @livewire('factura.factura-component', ['contrato_id' => $contratos->id, 'show_contrato' => false, 'contrato_total' => $contratos->monto_pago])
+        </div>
+    </div>
+
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Niveles de servicio</h5>
+            <hr class="hr-custom-title">
+            @livewire('niveles-servicio.niveles-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
+        </div>
+    </div>
+
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Entregables mensuales</h5>
+            <hr class="hr-custom-title">
+            @livewire('entregable-mensual.entregablecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
+        </div>
+    </div>
+
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Cierre proyecto</h5>
+            <hr class="hr-custom-title">
+            @livewire('cierre-contratos.cierrecomponent', ['contrato_id' => $contratos->id, 'show_contrato' => false])
+        </div>
+    </div>
+
+    <div class="col s12 m12" id="ampliacion_contrato_lista"
+        style="display: {{ $contratos->contrato_ampliado ? 'block' : 'none' }}">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Ampliación de contrato</h5>
+            <hr class="hr-custom-title">
+            @livewire('ampliacion-contratos.ampliacion-component', [
+                'contrato_id' => $contratos->id,
+                'show_contrato' => false,
+                'fecha_fin_contrato' => $contratos->fecha_fin,
+            ])
+        </div>
+    </div>
+
+    <div class="col s12 m12" id="convenio_contrato_lista"
+        style="display: {{ $contratos->convenio_modificatorio ? 'block' : 'none' }}">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Convenios Modificatorios</h5>
+            <hr class="hr-custom-title">
+            @livewire('convenios-modificatorios-contratos.convenio-modificatorio-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
+        </div>
+    </div>
+
+    <div class="col s12 m12">
+        <div class="card card-body">
+            <h5 class="mb-0 d-inline-block">Cédula de cumplimiento</h5>
+            <hr class="hr-custom-title">
+            @livewire('cedula-cumplimiento.cedula-cumplimiento-component', ['contrato_id' => $contratos->id, 'show_contrato' => false])
+        </div>
+    </div>
+
 
     <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
         <div class="col s12 m12 right-align btn-grd distancia">

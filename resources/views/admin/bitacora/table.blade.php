@@ -142,7 +142,7 @@
                         </font>
                     </label>
                     <input class="form-control" {{ $errors->has('no_contrato') ? 'is-invalid' : '' }} type="text"
-                        name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}">
+                        name="no_contrato" id="no_contrato" value="{{ old('no_contrato', '') }}" maxlength="250">
                     <span id="existCode"></span>
                     {{-- @if ($errors->has('no_contrato'))
                         <span class="text-danger">{{ $errors->first('no_contrato') }}</span>
@@ -209,7 +209,7 @@
                 <label for="nombre_servicio" class="txt-tamaño">
                     Nombre del servicio<font class="asterisco">*</font></label>
                 <div class="form-floating">
-                    <textarea id="textarea1" class="form-control" name="nombre_servicio" maxlength="250" required>{{ old('nombre_servicio') }}</textarea>
+                    <textarea id="textarea1" class="form-control" name="nombre_servicio" required>{{ old('nombre_servicio') }}</textarea>
                 </div>
                 @if ($errors->has('nombre_servicio'))
                     <div class="invalid-feedback red-text">
@@ -233,7 +233,7 @@
                             </option>
                         @endforeach
                     @else
-                        <option value="">No hay proveedores registrados</option>
+                        <option value="">No hay Clientes registrados</option>
                     @endif
                 </select>
                 @if ($errors->has('proveedor_id'))
@@ -246,7 +246,7 @@
                 <label for="no_proyecto" class="txt-tamaño">&nbsp;Número
                     de
                     proyecto</label>
-                <input class="form-control" type="text" name="no_proyecto" id="no_proyecto">
+                <input class="form-control" type="text" name="no_proyecto" id="no_proyecto" maxlength="250">
                 @if ($errors->has('no_proyecto'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('no_proyecto') }}
@@ -362,7 +362,7 @@
                         <div class="btn">
                             <input type="file" name="file_contrato" class="form-control input_file_validar"
                                 id="file_contrato" placeholder="Elegir documento pdf"
-                                accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" required>
+                                accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" required readonly>
                             {{-- <input type="hidden" id="fileContratoName" name="file_contrato" value="">
                             <input class="input_file_validar form-control" id="adjuntarContrato" type="file"
                                 accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"> --}}
@@ -397,7 +397,7 @@
                 <label for="no_contrato" class="txt-tamaño">Vigencia
                     <font class="asterisco">*</font>
                 </label><br>
-                {!! Form::text('vigencia_contrato', null, ['class' => 'form-control', 'required']) !!}
+                {!! Form::text('vigencia_contrato', null, ['class' => 'form-control', 'required', 'maxlength' => '150']) !!}
                 @if ($errors->has('vigencia_contrato'))
                     <div class="invalid-feedback red-text">
                         {{ $errors->first('vigencia_contrato') }}
@@ -452,7 +452,8 @@
             <div class="form-group col-md-4">
                 <label for="no_contrato" class="txt-tamaño">
                     &nbsp;No. Pagos<font class="asterisco">*</font></label><br>
-                <input type="number" name="no_pagos" id="no_pagos" class="form-control required" min="1">
+                <input type="number" name="no_pagos" id="no_pagos" class="form-control required" min="1"
+                    max="500000">
                 {{-- {!! Form::number('no_pagos', null, ['class' => 'form-control', 'required'], ['min' => "1"] ) !!} --}}
                 @if ($errors->has('no_pagos'))
                     <div class="invalid-feedback red-text">
@@ -680,13 +681,13 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Puesto</label>
                     <div>
-                        {!! Form::text('puesto', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('puesto', null, ['class' => 'form-control', 'maxlength' => '250']) !!}
                     </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Área</label>
                     <div>
-                        {!! Form::text('area', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('area', null, ['class' => 'form-control', 'maxlength' => '250']) !!}
                         @if ($errors->has('area'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('area') }}
@@ -711,7 +712,7 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Puesto</label>
                     <div>
-                        {!! Form::text('cargo_administrador', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('cargo_administrador', null, ['class' => 'form-control', 'maxlength' => '150']) !!}
                         @if ($errors->has('cargo_administrador'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('cargo_administrador') }}
@@ -722,7 +723,7 @@
                 <div class="form-group col-md-4">
                     <label class="txt-tamaño">&nbsp;Área</label>
                     <div>
-                        {!! Form::text('area_administrador', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('area_administrador', null, ['class' => 'form-control', 'maxlength' => '150']) !!}
                         @if ($errors->has('area_administrador'))
                             <div class="invalid-feedback red-text">
                                 {{ $errors->first('area_administrador') }}

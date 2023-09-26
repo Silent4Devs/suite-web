@@ -216,7 +216,7 @@
             <label for="nombre_servicio" class="txt-tamaño">
                 Nombre del servicio<font class="asterisco">*</font></label><br>
             <div class="form-floating">
-                <textarea id="textarea1" class="ajustable form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
+                <textarea id="textarea1" class="form-control" value="{{ $contrato->nombre_servicio }}" name="nombre_servicio"
                     {{ $show_contrato ? 'readonly' : '' }} @if ($show_contrato) disabled @endif required>{{ $contrato->nombre_servicio }}</textarea>
             </div>
             @if ($errors->has('nombre_servicio'))
@@ -334,66 +334,20 @@
 
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
         <div class="distancia form-group col-md-6">
-            <label for="estatus" class="txt-tamaño">
+            <label for="" class="txt-tamaño">
                 Adjuntar Contrato
                 <font class="asterisco">*</font>
             </label>
-            <div class="">
-                <div class="file-field input-field">
+            <div class="file-field input-field">
 
-                    <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
-                        <span>Documento Actual:</span>
-                    </div>
-
-                    <div class="file-path-wrapper">
-                        <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
-                            type="text" maxlength="250" placeholder="Elegir documento pdf"
-                            {{ $show_contrato ? 'readonly' : '' }} readonly>
-                    </div>
-                    @if (!$show_contrato)
-                        <div class="fondo_delete">
-                            <div class="delete">
-
-                                <h5 class="titulo-alert">Cambiar el documento:</h5>
-                                <p class="parrafo">Al cambiarlo se eliminara el archivo actual</p>
-                                {{-- <div align="right" class="caja_botones_alert">
-                                    <div class="cancelar btn">Cancelar</div>
-                                </div> --}}
-                            </div>
-                        </div>
-                        @if (is_null($organizacion))
-                        @else
-                            {{-- <div class="btn btn-accion">
-                                <span>OK</span>
-                            </div> --}}
-                            <input class="form-control input_file_validar" type="file" name="file_contrato"
-                                accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" {{ $show_contrato ? 'disabled' : '' }}
-                                readonly>
-                            @if ($errors->has('file_contrato'))
-                                <div class="invalid-feedback red-text">
-                                    {{ $errors->first('file_contrato') }}
-                                </div>
-                            @endif
-                        @endif
-
-                    @endif
-
-                    <small id="file_error" class="errors" style="color:red"></small>
-                    <div id="loaderContractTmpFile" class="alert-contrato-async" style="display:none">
-                        Estámos Guardando su archivo
-                    </div>
-                    <div class="progress" id="progressUploadContractContainer" style="display: none">
-                        <div class="determinate" id="progressUploadContract"></div>
-                    </div>
-                    <div class="alert-contrato-file" id="alertContratoUploadTmp" style="display: none">
-                        Contrato Cargado
-                    </div>
-                    <div class="ml-4 display-flex">
-                        <label class="red-text">{{ $errors->first('Type') }}</label>
-                    </div>
+                <div class="btn" {{ !$show_contrato ? 'onclick=mostrarAlerta()' : '' }}>
+                    <span>Documento Actual:</span>
                 </div>
-                <div class="ml-4 display-flex">
-                    <label class="red-text">{{ $errors->first('Type') }}</label>
+
+                <div class="file-path-wrapper">
+                    <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
+                        type="text" placeholder="Elegir documento pdf" {{ $show_contrato ? 'readonly' : '' }}
+                        readonly>
                 </div>
             </div>
             @if ($contrato->file_contrato != null)
@@ -402,22 +356,53 @@
                     Descargar archivo actual</a>
             @endif
         </div>
-
         <div class="distancia form-group col-md-6">
-            <label for="no_contrato" class="txt-tamaño">Vigencia<font class="asterisco">*
-                </font></label>
-            {!! Form::text('vigencia_contrato', $contrato->vigencia_contrato, [
-                'class' => 'form-control',
-                'required',
-                $show_contrato ? 'readonly' : '',
-            ]) !!}
-            @if ($errors->has('vigencia_contrato'))
-                <div class="invalid-feedback red-text">
-                    {{ $errors->first('vigencia_contrato') }}
+            @if (!$show_contrato)
+                <div class="fondo_delete">
+                    <div class="delete">
+
+                        <h6 class="titulo-alert">Cambiar el documento:</h6>
+                        <p class="parrafo">Al cambiarlo se eliminara el archivo actual</p>
+                        {{-- <div align="right" class="caja_botones_alert">
+                                    <div class="cancelar btn">Cancelar</div>
+                                </div> --}}
+                    </div>
                 </div>
+                @if (is_null($organizacion))
+                @else
+                    {{-- <div class="btn btn-accion">
+                                <span>OK</span>
+                            </div> --}}
+                    <input class="form-control input_file_validar" type="file" name="file_contrato"
+                        accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt" {{ $show_contrato ? 'disabled' : '' }} readonly>
+                    @if ($errors->has('file_contrato'))
+                        <div class="invalid-feedback red-text">
+                            {{ $errors->first('file_contrato') }}
+                        </div>
+                    @endif
+                @endif
+
             @endif
+
+            <small id="file_error" class="errors" style="color:red"></small>
+            <div id="loaderContractTmpFile" class="alert-contrato-async" style="display:none">
+                Estámos Guardando su archivo
+            </div>
+            <div class="progress" id="progressUploadContractContainer" style="display: none">
+                <div class="determinate" id="progressUploadContract"></div>
+            </div>
+            <div class="alert-contrato-file" id="alertContratoUploadTmp" style="display: none">
+                Contrato Cargado
+            </div>
+            <div class="ml-4 display-flex">
+                <label class="red-text">{{ $errors->first('Type') }}</label>
+            </div>
+            <div class="ml-4 display-flex">
+                <label class="red-text">{{ $errors->first('Type') }}</label>
+            </div>
         </div>
     </div>
+
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
         <div class="distancia form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">Fecha
@@ -477,6 +462,21 @@
         </div>
     </div>
     <div class="row" style="margin-left: 10px; margin-right: 10px;">
+        <div class="distancia form-group col-md-4">
+            <label for="no_contrato" class="txt-tamaño">Vigencia<font class="asterisco">*
+                </font></label>
+            {!! Form::text('vigencia_contrato', $contrato->vigencia_contrato, [
+                'class' => 'form-control',
+                'required',
+                'maxlength' => '150',
+                $show_contrato ? 'readonly' : '',
+            ]) !!}
+            @if ($errors->has('vigencia_contrato'))
+                <div class="invalid-feedback red-text">
+                    {{ $errors->first('vigencia_contrato') }}
+                </div>
+            @endif
+        </div>
         <div class="form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">
                 No. Pagos<font class="asterisco">*</font></label>
@@ -536,91 +536,84 @@
     @endif
     <div class="col s12">
         <div class="col l12 m12 s12">
-            <div class="card hoverable">
-                <div class="card-content center-align">
+            <div class="card-body center-align">
+                <table class="table">
+                    <thead style="background-color: transparent !important; color:#3086AF !important;">
+                        <tr>
 
-                    <table>
-                        <thead>
-                            <tr>
+                            <br>
+                            <th>
+                                Valor del Dolar
+                            </th>
+                            <th>
+                                Monto
+                                de
+                                pago
+                            </th>
+                            <th>
+                                Monto
+                                Máximo
 
-                                <br>
-                                <th>
-                                    <p class="grey-text txt-frm">
-                                        Valor del Dolar
-                                    </p>
-                                </th>
-                                <th>
-                                    <p class="grey-text txt-frm">Monto
-                                        de
-                                        pago
-                                    </p>
-                                </th>
-                                <th>
-                                    <p class="grey-text txt-frm">Monto
-                                        Máximo
-                                    </p>
-                                </th>
-                                <th>
-                                    <p class="grey-text txt-frm">Monto
-                                        Mínimo
-                                    </p>
-                                </th>
+                            </th>
+                            <th>
+                                Monto
+                                Mínimo
+                            </th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
 
-                                    {!! Form::text('valor_dolar', !is_null($dolares) ? $dolares->valor_dolar : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'valor_dol',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                        $show_contrato ? 'readonly' : '',
-                                    ]) !!}
+                                {!! Form::text('valor_dolar', !is_null($dolares) ? $dolares->valor_dolar : null, [
+                                    'class' => 'form-control',
+                                    'id' => 'valor_dol',
+                                    'autocomplete' => 'off',
+                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                    $show_contrato ? 'readonly' : '',
+                                ]) !!}
 
-                                </td>
+                            </td>
 
-                                <td>
-                                    {!! Form::text('monto_dolares', !is_null($dolares) ? $dolares->monto_dolares : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'dolar',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                        $show_contrato ? 'readonly' : '',
-                                    ]) !!}
-                                </td>
+                            <td>
+                                {!! Form::text('monto_dolares', !is_null($dolares) ? $dolares->monto_dolares : null, [
+                                    'class' => 'form-control',
+                                    'id' => 'dolar',
+                                    'autocomplete' => 'off',
+                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                    $show_contrato ? 'readonly' : '',
+                                ]) !!}
+                            </td>
 
 
-                                <td>
-                                    {!! Form::text('maximo_dolares', !is_null($dolares) ? $dolares->maximo_dolares : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'dolar_maximo',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                        $show_contrato ? 'readonly' : '',
-                                    ]) !!}
+                            <td>
+                                {!! Form::text('maximo_dolares', !is_null($dolares) ? $dolares->maximo_dolares : null, [
+                                    'class' => 'form-control',
+                                    'id' => 'dolar_maximo',
+                                    'autocomplete' => 'off',
+                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                    $show_contrato ? 'readonly' : '',
+                                ]) !!}
 
-                                </td>
+                            </td>
 
-                                <td>
-                                    {!! Form::text('minimo_dolares', !is_null($dolares) ? $dolares->minimo_dolares : null, [
-                                        'class' => 'form-control',
-                                        'id' => 'dolar_minimo',
-                                        'autocomplete' => 'off',
-                                        'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
-                                        $show_contrato ? 'readonly' : '',
-                                    ]) !!}
+                            <td>
+                                {!! Form::text('minimo_dolares', !is_null($dolares) ? $dolares->minimo_dolares : null, [
+                                    'class' => 'form-control',
+                                    'id' => 'dolar_minimo',
+                                    'autocomplete' => 'off',
+                                    'onkeypress' => "$(this).mask(' #.00', {reverse: true});",
+                                    $show_contrato ? 'readonly' : '',
+                                ]) !!}
 
-                                </td>
+                            </td>
 
 
 
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -665,9 +658,9 @@
 
 <div class="row" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;">
     <div class="col s12 m12">
-        <table>
-            <thead>
-                <th class=" "> <label> ¿Aplica fianza o
+        <table class="table">
+            <thead style="background-color: transparent !important; color:#3086AF !important;">
+                <th class=""> <label> ¿Aplica fianza o
                         responsabilidad civil? </label></th>
                 <th class=" txt-frm">
                     <label>
@@ -727,15 +720,16 @@
                         @else
                             <div class="file-field input-field">
                                 <div class="btn">
-                                    <span>PDF</span>
-                                    <input type="hidden" id="" name="" value="">
+                                    {{-- <label for="documento">PDF</label> --}}
+                                    {{-- <input type="hidden" id="" name="" value=""> --}}
                                     <input class="input_file_validar form-control" type="file" name="documento"
-                                        accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}">
+                                        accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
+                                        readonly>
                                 </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" maxlength="250"
+                                {{-- <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text"
                                         placeholder="Elegir documento pdf" readonly>
-                                </div>
+                                </div> --}}
                             </div>
                         @endif
 
@@ -760,6 +754,11 @@
     </div>
 </div>
 
+<div class="row">
+    <br>
+    <br>
+    <br>
+</div>
 <div class="row" style="margin-left: 10px; margin-right: 10px;">
     <h4 class="sub-titulo-form col s12">RESPONSABLES</h4>
 </div>
@@ -780,12 +779,20 @@
     <div class="distancia form-group col-md-4">
         <label class="txt-tamaño">Puesto</label>
         <div>
-            {!! Form::text('puesto', $contratos->puesto, ['class' => 'form-control', $show_contrato ? 'readonly' : '']) !!}
+            {!! Form::text('puesto', $contratos->puesto, [
+                'class' => 'form-control',
+                'maxlength' => '250',
+                $show_contrato ? 'readonly' : '',
+            ]) !!}
         </div>
     </div>
     <div class="distancia form-group col-md-4">
         <label class="txt-tamaño">Área</label>
-        {!! Form::text('area', $contratos->area, ['class' => 'form-control', $show_contrato ? 'readonly' : '']) !!}
+        {!! Form::text('area', $contratos->area, [
+            'class' => 'form-control',
+            'maxlength' => '250',
+            $show_contrato ? 'readonly' : '',
+        ]) !!}
         @if ($errors->has('area'))
             <div class="invalid-feedback red-text">
                 {{ $errors->first('area') }}
@@ -811,6 +818,7 @@
         <label class="txt-tamaño">Puesto</label>
         {!! Form::text('cargo_administrador', $contratos->cargo_administrador, [
             'class' => 'form-control',
+            'maxlength' => '250',
             $show_contrato ? 'readonly' : '',
         ]) !!}
         @if ($errors->has('cargo_administrador'))
@@ -823,6 +831,7 @@
         <label class="txt-tamaño">Área</label>
         {!! Form::text('area_administrador', $contratos->area_administrador, [
             'class' => 'form-control',
+            'maxlength' => '250',
             $show_contrato ? 'readonly' : '',
         ]) !!}
         @if ($errors->has('area_administrador'))
