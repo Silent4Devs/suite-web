@@ -84,11 +84,11 @@ class NivelesComponent extends Component
         $this->validate([
             'nombre' => 'required|max:255',
             'metrica' => 'required|max:255',
-            'meta' => 'required|max:1000000',
+            'meta' => 'required|max:100000000000',
             'unidad' => 'required|max:255',
             'info_consulta' => 'required',
             'periodo_evaluacion' => 'required',
-            'revisiones' => 'required|numeric|max:1000000',
+            'revisiones' => 'required|numeric|max:100000000000',
             'area' => 'required|max:255',
             'descripcion' => 'required',
         ]);
