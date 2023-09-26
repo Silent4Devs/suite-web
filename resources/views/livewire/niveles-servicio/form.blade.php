@@ -37,7 +37,7 @@
         <div class="distancia form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">SLA comprometido<font class="asterisco">*</font></label>
             <input type="number" wire:model.debounce.800ms="meta" class="form-control" required step="0.1"
-                max="1000000">
+                max="100000000000">
             @error('meta')
                 <span class="red-text">{{ $message }}</span>
             @enderror
@@ -71,7 +71,7 @@
                 <font class="asterisco">*</font>
             </label>
             <input id="revisiones_no" type="number" wire:model.debounce.800ms="revisiones" class="form-control"
-                required max="1000000">
+                required max="100000000000">
             @error('revisiones')
                 <span class="red-text">{{ $message }}</span>
             @enderror
