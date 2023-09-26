@@ -82,14 +82,14 @@ class NivelesComponent extends Component
     public function store()
     {
         $this->validate([
-            'nombre' => 'required',
-            'metrica' => 'required',
-            'meta' => 'required',
-            'unidad' => 'required',
+            'nombre' => 'required|max:255',
+            'metrica' => 'required|max:255',
+            'meta' => 'required|max:1000000',
+            'unidad' => 'required|max:255',
             'info_consulta' => 'required',
             'periodo_evaluacion' => 'required',
-            'revisiones' => 'required',
-            'area' => 'required',
+            'revisiones' => 'required|numeric|max:1000000',
+            'area' => 'required|max:255',
             'descripcion' => 'required',
         ]);
         //dd(request()->all());
