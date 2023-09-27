@@ -127,7 +127,7 @@
                 <div class="custom-file">
                     {{-- <div class="btn"> --}}
                     <span>XML</span>
-                    <input type="file" class="form-control" wire:model.defer="xml" accept="text/xml"
+                    <input type="file" class="form-control" wire:model.defer="xml" accept=".xml, text"
                         id="upload{{ $iteration1 }}" readonly>
                     {{-- </div> --}}
                     {{-- <div class="file-path-wrapper">

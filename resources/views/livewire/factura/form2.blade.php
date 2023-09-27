@@ -102,15 +102,15 @@
                     </font>
                 </p>
             </small>
-            <select name="estatus" id="estatus" class="form-control" wire:model.defer="estatus"
-                style="opacity:1 !important;">
+            <select name="estatus_revision" id="estatus_revision" class="form-control"
+                wire:model.defer="estatus_revision" style="opacity:1 !important;">
                 <option value="" disabled selected>Elige una opción</option>
                 <option value="recibido">Recibido</option>
                 <option value="progreso">Progreso</option>
                 <option value="pagada">Pagada</option>
             </select>
         </div>
-        @error('estatus')
+        @error('estatus_revision')
             <span class="red-text" style="margin-left: 9px">{{ $message }}</span>
         @enderror
     </div>
@@ -141,14 +141,10 @@
             </p>
         </small>
         <br>
-        <div class="switch">
-            <label>
-                No
-                <input type="checkbox" id="cumple" name="cumple" wire:model.defer="cumple">
-
-                <span class="lever"></span>
-                Si
-            </label>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" wire:model="cumple_revision" class="custom-control-input" id="cumple_revision"
+                name="cumple_revision">
+            <label class="custom-control-label" for="cumple_revision">No/Sí</label>
         </div>
     </div>
     <!-- Revisiones -->
