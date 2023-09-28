@@ -67,7 +67,7 @@
                                     <input type="text"
                                         class="form-control {{ $errors->has('incumplimiento_requisito') ? 'is-invalid' : '' }}"
                                         name="incumplimiento_requisito" id="incumplimiento_requisito"
-                                        wire:model.defer="incumplimiento_requisito">{{ old('incumplimiento_requisito') }}</input>
+                                        wire:model.defer="incumplimiento_requisito" required />
                                     @if ($errors->has('incumplimiento_requisito'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('incumplimiento_requisito') }}
@@ -81,7 +81,7 @@
                                     <label class="required" for="descripcion">
                                         Descripción</label>
                                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion"
-                                        wire:model.defer="descripcion">{{ old('descripcion') }}</textarea>
+                                        wire:model.defer="descripcion" required></textarea>
                                     @if ($errors->has('descripcion'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('descripcion') }}
@@ -109,15 +109,14 @@
 
                             <div class="row">
                                 <div class="form-group col-sm-12">
-                                    <label class="required" for="no_tipo">
+                                    <label class="required" for="titulo">
                                         Titulo</label>
                                     <input type="text"
-                                        class="form-control {{ $errors->has('no_tipo') ? 'is-invalid' : '' }}"
-                                        name="no_tipo" id="no_tipo"
-                                        wire:model.defer="no_tipo">{{ old('no_tipo') }}</input>
-                                    @if ($errors->has('no_tipo'))
+                                        class="form-control {{ $errors->has('titulo') ? 'is-invalid' : '' }}"
+                                        name="titulo" id="titulo" wire:model.defer="titulo" />
+                                    @if ($errors->has('titulo'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('no_tipo') }}
+                                            {{ $errors->first('titulo') }}
                                         </div>
                                     @endif
                                 </div>
@@ -125,22 +124,20 @@
 
                             <div class="row">
                                 <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                                    <label class="required" for="clasificacion_hallazgo">Clasificación del
+                                    <label class="required" for="clasificacion_id">Clasificación del
                                         Hallazgo</label>
-                                    <select id="textSelect" class="form-control select">
-                                        @foreach ($clausulas as $claus)
-                                            <option value="{{ $claus->id }}">{{ $claus->nombre_clausulas }}
+                                    <select name="clasificacion_id" id="clasificacion_id"
+                                        class="form-control select {{ $errors->has('clasificacion_id') ? 'is-invalid' : '' }}"
+                                        wire:model.defer="clasificacion_id">
+                                        <option value="">Seleccione una Clasificación</option>
+                                        @foreach ($clasificaciones as $clasif)
+                                            <option value="{{ $clasif->id }}">{{ $clasif->nombre_clasificaciones }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <input
-                                        class="form-control {{ $errors->has('clasificacion_hallazgo') ? 'is-invalid' : '' }}"
-                                        type="text" name="clasificacion_hallazgo" id="clasificacion_hallazgo"
-                                        value="{{ old('clasificacion_hallazgo', '') }}"
-                                        wire:model.defer="clasificacion_hallazgo">
-                                    @if ($errors->has('clasificacion_hallazgo'))
+                                    @if ($errors->has('clasificacion_id'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('clasificacion_hallazgo') }}
+                                            {{ $errors->first('clasificacion_id') }}
                                         </div>
                                     @endif
                                 </div>
@@ -148,15 +145,14 @@
 
                             <div class="row">
                                 <div class="form-group col-sm-12">
-                                    <label for="proceso_id"><i
-                                            class="fas fa-cogs iconos-crear"></i></i>Proceso</label>
+                                    <label for="proceso_id">Proceso</label>
                                     <select class="form-control {{ $errors->has('proceso') ? 'is-invalid' : '' }}"
                                         name="proceso_id" id="proceso_id" wire:model.defer="proceso">
                                         <option value="">Seleccione un proceso</option>
-                                        {{-- @foreach ($procesos as $proceso)
+                                        @foreach ($procesos as $proceso)
                                             <option value="{{ $proceso->id }}">
                                                 {{ $proceso->codigo }}/{{ $proceso->nombre }}</option>
-                                        @endforeach --}}
+                                        @endforeach
                                     </select>
                                     @if ($errors->has('proceso'))
                                         <div class="text-danger">
@@ -167,25 +163,24 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6 col-md-12 col-lg-12">
-                                    <label for="area_id"><i class="fas fa-street-view iconos-crear"></i>Área</label>
-                                    <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}"
+                                    <label for="area">Área</label>
+                                    <div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
+                                    {{-- <input hidden type="text" name="area_id" id="area_id"
+                                        wire:model.defer="area_id" value="{{ auth()->user()->empleado->area_id }}"> --}}
+                                    {{-- <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}"
                                         name="area_id" id="area_id" wire:model.defer="area">
-                                        <option value="">Seleccione un proceso</option>
-                                        {{-- @foreach ($areas as $area)
-                                            <option value="{{ $area->id }}">
-                                                {{ $area->area }}
-                                            </option>
-                                        @endforeach --}}
+                                        <option value="{{ auth()->user()->empleado->area_id }}" readonly>
+                                            {{ auth()->user()->empleado->area->area }}</option>
                                     </select>
                                     @if ($errors->has('area'))
                                         <div class="text-danger">
                                             {{ $errors->first('area') }}
                                         </div>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
-
                         </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="button" class="btn btn-primary"
@@ -214,11 +209,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($datas as $data) --}}
-                    <tr>
-                        {{--     <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
+                    @foreach ($datas as $data)
+                        <tr>
+                            {{--     <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
                         <td style="min-width:100px;">{{ $data->descripcion }}</td>
-                        <td style="min-width:100px;">{{ $data->clasificacion_hallazgo }}</td>
+                        <td style="min-width:100px;">{{ $data->clasificacion_id }}</td>
                         <td style="min-width:100px;">{{ $data->procesos ? $data->procesos->nombre : 'n/a' }}</td>
                         <td style="min-width:100px;">{{ $data->areas ? $data->areas->area : 'n/a' }}</td>
                         <td style="min-width:40px;">
@@ -228,23 +223,58 @@
                             <i class="fas fa-trash-alt text-danger"
                                 wire:click.prevent="$emit('eliminarParteInteresada',{{ $data->id }})"> </i>
                         </td> --}}
-                        <td style="min-width:130px;">Requisitos</td>
-                        <td style="min-width:100px;">Descripción</td>
-                        <td style="min-width:100px;">Subtema</td>
-                        <td style="min-width:40">
-                            opciones
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="min-width:100px;">Proceso relacionado</td>
-                        <td style="min-width:100px;">Área relacionada</td>
-                        <td style="min-width:100px;">Clasificación</td>
-                        <td></td>
-                    </tr>
-                    {{-- @endforeach --}}
+                            <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
+                            <td style="min-width:100px;">{{ $data->descripcion }}</td>
+                            <td style="min-width:100px;">Subtema</td>
+                            <td style="min-width:40">
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-dark dropdown-toggle" type="button"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item"
+                                            href="{{ url('admin/auditorias/clasificacion-auditorias/edit/${data}') }}">
+                                            <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                                        <a class="dropdown-item"
+                                            href="{{ url('admin/auditorias/clasificacion-auditorias/delete/${data}') }}">
+                                            <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="min-width:100px;">{{ $data->procesos ? $data->procesos->nombre : 'n/a' }}</td>
+                            <td style="min-width:100px;">{{ $data->areas ? $data->areas->area : 'n/a' }}</td>
+                            <td style="min-width:100px;">
+                                {{ $data->clasificacion->nombre_clasificaciones ?? $data->clasificacion_hallazgo }}
+                            </td>
+                            <td style="min-width:40px;">
+                            </td>
+                        </tr>
+                    @endforeach
 
                 </tbody>
             </table>
+        </div>
+        <div class="row mb-3">
+            <div class="col s12">
+                <div class="form-group col-sm-12 right " style="margin: 0; text-align: end">
+                    <div><span>Mostrar</span>
+                        <select class="select_pagination" wire:model="pagination">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span>registros</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                {{ $datas->links() }}
+            </div>
         </div>
     </div>
 </div>
