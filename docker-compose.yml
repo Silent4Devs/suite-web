@@ -24,44 +24,44 @@ services:
       - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
-      - postgres-tabantaj
+      # - postgres-tabantaj
       - redis-tabantaj
     networks:
       - tabantajnetwork
 
-  postgres-tabantaj:
-    image: postgres:14-alpine
-    container_name: postgres-tabantaj
-    restart: unless-stopped
-    tty: true
-    volumes:
-      # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
-      - tabantaj-db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=homestead
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=homestead
-    ports:
-      - "5432:5432"
-    networks:
-      - tabantajnetwork
-    mem_limit: 6g
+  # postgres-tabantaj:
+  #   image: postgres:14-alpine
+  #   container_name: postgres-tabantaj #uncomment if will not use swarm mode
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     # - ./infra/postgres/data:/var/lib/postgresql/data #localpath
+  #     - tabantaj-db:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_USER=homestead
+  #     - POSTGRES_PASSWORD=secret
+  #     - POSTGRES_DB=homestead
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - tabantajnetwork
+  #   mem_limit: 6g
 
-  pgadmin-tabantaj:
-    depends_on:
-      - postgres-tabantaj
-    image: dpage/pgadmin4:latest
-    ports:
-      - "5480:80"
-    environment:
-      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
-      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - tabantajnetwork
+  # pgadmin-tabantaj:
+  #   depends_on:
+  #     - postgres-tabantaj
+  #   image: dpage/pgadmin4:latest
+  #   ports:
+  #     - "5480:80"
+  #   environment:
+  #     - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+  #     - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
+  #   networks:
+  #     - tabantajnetwork
 
   php:
     #uncomment this if you will use only docker compose
@@ -275,6 +275,7 @@ services:
   #   networks:
   #     - tabantajnetwork
 
+<<<<<<< HEAD
 volumes:
   tabantaj-db:
     driver: local
@@ -284,6 +285,13 @@ volumes:
     driver: local
   elasticsearch-logs:
     driver: local
+=======
+# volumes:
+#   tabantaj-db:
+#     driver: local
+#   pgadmin-data:
+#     driver: local
+>>>>>>> 702ae06c8a6976b89c7ae6175816af95f3457963
 
 networks:
   tabantajnetwork:
