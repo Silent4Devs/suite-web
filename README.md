@@ -28,8 +28,14 @@ Para usarlo debes tener instalado Docker previamente.
 Corriendo el proyecto:
 
 1. docker-compose build
+
+## Levantamiento en Producción
+
 2. docker-compose up -d
 
+## Levantamiento en Desarrollo
+
+3. docker-compose -f docker-compose.staging.yml up -d
 
 Instalación:
 

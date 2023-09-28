@@ -120,15 +120,17 @@ class Entregablecomponent extends Component
     public function store()
     {
         $this->validate([
-            'nombre_entregable' => 'required',
+            'nombre_entregable' => 'required|max:255',
             'descripcion' => 'required',
-            'plazo_entrega_inicio' => 'required',
-            'plazo_entrega_termina' => 'required',
-            'entrega_real' => 'required',
+            'plazo_entrega_inicio' => 'required|before_or_equal:plazo_entrega_termina',
+            'plazo_entrega_termina' => 'required|after_or_equal:plazo_entrega_inicio',
+            'entrega_real' => 'required|after_or_equal:plazo_entrega_inicio|before_or_equal:plazo_entrega_termina',
             'observaciones' => 'required',
             'entrega_real' => 'required',
-            // 'factura_id'=> 'required',
-            // 'aplica_deductiva' => 'required',
+            'factura_id' => 'required',
+            'aplica_deductiva' => 'required',
+            'deductiva_penalizacion' => 'numeric|max:100000000000',
+            'nota_credito' => 'max:255',
         ]);
 
         $deductiva_penalizacion = preg_replace('([$,])', '', $this->deductiva_penalizacion);

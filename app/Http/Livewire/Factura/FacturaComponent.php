@@ -45,6 +45,8 @@ class FacturaComponent extends Component
 
     public $cumple;
 
+    public $cumple_revision;
+
     public $iteration;
 
     public $iteration1;
@@ -62,6 +64,8 @@ class FacturaComponent extends Component
     public $xml;
 
     public $estatus;
+
+    public $estatus_revision;
 
     public $pdfname;
 
@@ -398,7 +402,7 @@ class FacturaComponent extends Component
             $date = Carbon::now();
             $date = $date->format('d-m-Y');
 
-            $facturaFile = FacturaFile::find($factura->id);
+            $facturaFile = FacturaFile::where('factura_id', $factura->id);
 
             //### Facturas GESTION ARCHIVOS ####
             $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();
@@ -489,8 +493,8 @@ class FacturaComponent extends Component
         $facturaRevision_id = $this->facturaRevision_id;
         $revisiones_create = RevisionesFactura::create([
             'no_revisiones' => $this->no_revision,
-            'cumple' => $this->cumple,
-            'estatus' => $this->estatus,
+            'cumple' => $this->cumple_revision,
+            'estatus' => $this->estatus_revision,
             'observaciones' => $this->hallazgos_comentarios,
             'id_facturacion' => $facturaRevision_id,
             'asignado_id' => $this->asignado_id,
@@ -562,7 +566,7 @@ class FacturaComponent extends Component
         $this->dispatchBrowserEvent('contentChanged');
 
         $this->no_revisiones = '';
-        $this->estatus = '';
+        $this->estatus_revision = '';
         $this->hallazgos_comentarios = '';
 
         $this->view = 'create';
@@ -580,15 +584,17 @@ class FacturaComponent extends Component
     //funcion encargada de actualizar el # de revisiones al eliminar una revision de factura
     public function revisionFacturaDelete($id)
     {
-        $revision = RevisionesFactura::where('id', '=', $id)->get();
-        $facturacion_id = RevisionesFactura::find($revision[0]['id']);
-        $revision_factura = Factura::find($facturacion_id->id_facturacion);
-        $data = RevisionesFactura::where('id_facturacion', '=', $facturacion_id->id_facturacion)->where('id', '!=', $id)->count('no_revisiones');
+        $revision = RevisionesFactura::find($id);
+        // dd($revision);
+        // $facturacion_id = RevisionesFactura::find($revision->id);
+        $revision_factura = Factura::find($revision->id_facturacion);
+        $data = RevisionesFactura::where('id_facturacion', '=', $revision->id_facturacion)->where('id', '!=', $id)->count('no_revisiones');
         if ($data == null) {
             $revision_factura->no_revisiones = 0;
         } else {
             $revision_factura->no_revisiones = $data;
         }
         $revision_factura->save();
+        $this->alert('success', 'Registro Eliminado!');
     }
 }
