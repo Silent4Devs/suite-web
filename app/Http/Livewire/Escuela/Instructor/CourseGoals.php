@@ -2,17 +2,19 @@
 
 namespace App\Http\Livewire\Escuela\Instructor;
 
-use App\Models\Escuela\Goal;
 use App\Models\Escuela\Course;
-use Livewire\Component;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\Escuela\Goal;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
+
 class CourseGoals extends Component
 {
     use LivewireAlert, AuthorizesRequests;
 
     public Goal $goal;
-    public $course, $name;
+    public $course;
+    public $name;
 
     protected $rules = [
         'goal.name' => 'required',
@@ -22,8 +24,6 @@ class CourseGoals extends Component
     {
         $this->course = $course;
         $this->goal = new Goal();
-
-
     }
 
     public function render()

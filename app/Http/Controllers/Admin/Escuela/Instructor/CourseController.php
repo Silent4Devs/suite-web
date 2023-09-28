@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Escuela\Instructor;
 
+use App\Http\Controllers\Controller;
+use App\Models\Escuela\Category;
+use App\Models\Escuela\Course;
 use App\Models\Escuela\Level;
 use App\Models\Escuela\Price;
-use App\Models\Escuela\Course;
-use App\Models\Escuela\Category;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-// use RealRashid\SweetAlert\Facades\Alert;
 
+// use RealRashid\SweetAlert\Facades\Alert;
 
 class CourseController extends Controller
 {
@@ -47,7 +46,6 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate(
             [
                 'title' => 'required',

@@ -242,7 +242,7 @@
                         <label for="fecha_constitucion">Fecha de constitución</label>
                         <input class=" form-control date {{ $errors->has('fecha_constitucion') ? 'is-invalid' : '' }}"
                             type="date" name="fecha_constitucion" id="fecha_constitucion"
-                            value="{{ old('fecha_constitucion', \Carbon\Carbon::parse($organizacion->fecha_constitucion))->format('Y-m-d') }}">
+                            value="{{ old('fecha_constitucion', $organizacion->fecha_constitucion) }}">
                         @if ($errors->has('fecha_constitucion'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('fecha_constitucion') }}

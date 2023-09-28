@@ -56,12 +56,11 @@ class SucursalController extends Controller
      */
     public function store(Request $request)
     {
-
         $ids = Sucursal::pluck('id');
 
         foreach ($ids as $id) {
             $string1 = strval($id);
-            if ($string1  === $request->id) {
+            if ($string1 === $request->id) {
                 return view('contract_manager.proveedores.error');
             }
         }
@@ -134,8 +133,6 @@ class SucursalController extends Controller
         $sucursal = Sucursal::find($id);
 
         $file = $request->file('mylogo');
-
-
 
         if ($file != null) {
             $nombre = uniqid() . '.' . $file->getClientOriginalExtension();

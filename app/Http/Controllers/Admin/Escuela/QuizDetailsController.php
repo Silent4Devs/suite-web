@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin\Escuela;
 
 use App\Http\Controllers\Controller;
-use App\Models\Escuela\Course;
-use App\Models\Escuela\Evaluation;
 use Illuminate\Http\Request;
 
 class QuizDetailsController extends Controller
@@ -39,7 +37,7 @@ class QuizDetailsController extends Controller
     public function show($course, $evaluation)
     {
         // dd($course);
-        return view('admin.escuela.estudiante.evaluacion', compact("course", "evaluation"));
+        return view('admin.escuela.estudiante.evaluacion', compact('course', 'evaluation'));
     }
 
     /**

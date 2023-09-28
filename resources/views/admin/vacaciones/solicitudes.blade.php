@@ -89,9 +89,8 @@
                     @foreach ($solVac as $sol)
                         <tr>
                             <td style="min-width: 200px;">
-                                <img src="{{ asset('storage/empleados/imagenes') }}/{{ $sol->avatar }}"
-                                    title="{{ $sol->empleado->name }}" class="rounded-circle"
-                                    style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                                <img src="{{ $sol->empleado->avatar_ruta }}" title="{{ $sol->empleado->name }}"
+                                    class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
                                 <span>{{ $sol->empleado->name }}</span>
                             </td>
                             <td style="min-width: 110px;">

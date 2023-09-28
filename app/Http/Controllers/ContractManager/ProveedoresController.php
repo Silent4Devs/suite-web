@@ -88,7 +88,6 @@ class ProveedoresController extends Controller
         $proveedores->save();
         ($proveedores);
 
-
         return redirect()->route('contract_manager.proveedor.index')->with('success', 'Proveedor Registrado');
     }
 
