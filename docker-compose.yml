@@ -9,6 +9,26 @@ services:
   #   command: daemon --docker
   #   volumes:
   #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  datadog:
+    image: gcr.io/datadoghq/agent:7
+    container_name: dd-agent
+    restart: unless-stopped
+    environment:
+      - DD_API_KEY=19cf89382919138f361e76781515de53b3ffb0a7
+      - DD_SITE=datadoghq.com
+      - DD_HOSTNAME=tabantaj
+      - DD_APM_ENABLED=true
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+      - DD_CONTAINER_EXCLUDE=image:gcr.io/datadoghq/agent*
+      - DD_CONTAINER_EXCLUDE_METRICS=image:gcr.io/datadoghq/agent*
+      - DD_CONTAINER_EXCLUDE_LOGS=image:gcr.io/datadoghq/agent*
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+        #- /opt/datadog-agent/run:/opt/datadog-agent/run:rw
 
   nginx-tabantaj:
     image: nginx:stable-alpine
@@ -26,6 +46,27 @@ services:
       - php
       - postgres-tabantaj
       - redis-tabantaj
+    labels:
+      #com.datadoghq.ad.check_names: '[""]'
+      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
+      com.datadoghq.ad.logs: '[{"source": "go", "service": "go"}]'
+      com.datadoghq.tags.env: 'stagging'
+      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.version: "1"
+    env_file:
+      - .env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "1"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
     networks:
       - tabantajnetwork
 
