@@ -10,25 +10,25 @@ services:
   #   volumes:
   #     - /var/run/docker.sock:/var/run/docker.sock:ro
   datadog:
-    image: gcr.io/datadoghq/agent:7
+    image: datadog/agent:7
     container_name: dd-agent
     restart: unless-stopped
     environment:
-      - DD_API_KEY=19cf89382919138f361e76781515de53b3ffb0a7
-      - DD_SITE=us5.datadoghq.com/
+      - DD_API_KEY=f792a4cfd07aef36fff5bcca11b68b40
+      - DD_SITE=us5.datadoghq.com
       - DD_HOSTNAME=tabantaj
       - DD_APM_ENABLED=true
       - DD_LOGS_ENABLED=true
       - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
       - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
-      - DD_CONTAINER_EXCLUDE=image:gcr.io/datadoghq/agent*
-      - DD_CONTAINER_EXCLUDE_METRICS=image:gcr.io/datadoghq/agent*
-      - DD_CONTAINER_EXCLUDE_LOGS=image:gcr.io/datadoghq/agent*
+      - DD_CONTAINER_EXCLUDE=image:datadog/agent:7*
+      - DD_CONTAINER_EXCLUDE_METRICS=image:datadog/agent:7*
+      - DD_CONTAINER_EXCLUDE_LOGS=image:datadog/agent:7*
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-        #- /opt/datadog-agent/run:/opt/datadog-agent/run:rw
+      - /opt/datadog-agent/run:/opt/datadog-agent/run:rw
     networks:
       - tabantajnetwork
 
