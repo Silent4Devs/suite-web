@@ -65,7 +65,7 @@ services:
   php:
     #uncomment this if you will use only docker compose
     build:
-      context: "./infra/php/"
+      context: "/var/contenedor/tabantaj/infra/php"
       dockerfile: Dockerfile
     #     # target: php-production  # Specify the target build stage if applicable
     #     # args:
