@@ -36,7 +36,8 @@
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-4">
             <label for="no_contrato" class="txt-tamaño">SLA comprometido<font class="asterisco">*</font></label>
-            <input type="number" wire:model.debounce.800ms="meta" class="form-control" required step="0.1">
+            <input type="number" wire:model.debounce.800ms="meta" class="form-control" required step="0.1"
+                max="100000000000">
             @error('meta')
                 <span class="red-text">{{ $message }}</span>
             @enderror
@@ -70,7 +71,7 @@
                 <font class="asterisco">*</font>
             </label>
             <input id="revisiones_no" type="number" wire:model.debounce.800ms="revisiones" class="form-control"
-                required>
+                required max="100000000000">
             @error('revisiones')
                 <span class="red-text">{{ $message }}</span>
             @enderror
@@ -79,7 +80,7 @@
 
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-12">
-            <label for="no_contrato" class="txt-tamaño">Descripción<font class="asterisco">*</font></label><br>
+            <label for="descripcion" class="txt-tamaño">Descripción<font class="asterisco">*</font></label><br>
             <textarea wire:model.debounce.800ms="descripcion" id="textarea1" style="padding:15px;" class="form-control" required></textarea>
             @error('descripcion')
                 <span class="red-text">{{ $message }}</span>
@@ -88,7 +89,7 @@
     </div>
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-12">
-            <label for="no_contrato" class="txt-tamaño">Información<font class="asterisco">*</font></label><br>
+            <label for="info_consulta" class="txt-tamaño">Información<font class="asterisco">*</font></label><br>
             <textarea wire:model.debounce.800ms="info_consulta" id="textarea2" class="form-control" style="padding:15px;"
                 required>
         </textarea>

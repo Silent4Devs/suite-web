@@ -6,7 +6,8 @@
             <div class="distancia form-group col-md-8">
                 <label for="" class="txt-tamaño">Aspecto validación de cierre<font class="asterisco">*</font>
                 </label>
-                <input type="text" wire:model.debounce.800ms="aspectos" class="form-control" required>
+                <input type="text" maxlength="250" wire:model.debounce.800ms="aspectos" class="form-control"
+                    required>
                 @error('aspectos')
                     <span class="red-text">{{ $message }}</span>
                 @enderror
