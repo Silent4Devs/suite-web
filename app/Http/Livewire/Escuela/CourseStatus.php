@@ -6,18 +6,19 @@ use App\Models\Escuela\Course;
 use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Lesson;
 use App\Models\Escuela\UserEvaluation;
-use Livewire\Component;
-
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Component;
 
 class CourseStatus extends Component
 {
     // use AuthorizesRequests;
     //declaramos la propiedad course y current
-    public $course, $current;
+    public $course;
+    public $current;
     public $evaluacionesGenerales;
     public $evaluacionesLeccion;
     public $evaluationsUser;
+
     //metodo mount se carga una unica vez y esto sucede cuando se carga la página
     public function mount(Course $course, $evaluacionesLeccion)
     {
@@ -35,8 +36,6 @@ class CourseStatus extends Component
             }
         }
 
-
-
         // En caso de que ya hayan sido culminadas todas las lecciones en la propiedas current se le va asignar la ultima lección
         if (!$this->current) {
             $this->current = $course->lessons->last();
@@ -45,6 +44,7 @@ class CourseStatus extends Component
         // dd($this->current->iframe);
         // $this->authorize('enrolled', $course);
     }
+
     public function render()
     {
         return view('livewire.escuela.course-status');
@@ -57,7 +57,6 @@ class CourseStatus extends Component
         $this->current = $lesson;
         // dd($this->current);
     }
-
 
     public function completed()
     {
@@ -82,7 +81,6 @@ class CourseStatus extends Component
         return $this->course->lessons->pluck('id')->search($this->current->id);
     }
 
-
     //calculamos la propiedad previous
     public function getPreviousProperty()
     {
@@ -92,7 +90,6 @@ class CourseStatus extends Component
             return $this->course->lessons[$this->index - 1];
         }
     }
-
 
     //propiedad next
     public function getNextProperty()

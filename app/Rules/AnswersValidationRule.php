@@ -32,6 +32,7 @@ class AnswersValidationRule implements Rule
                 break;
             }
         }
+
         // dd($exist_is_correct_checked);
         return $exist_is_correct_checked;
         // dd($value);

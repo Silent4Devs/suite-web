@@ -10,7 +10,6 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateContratoRequest;
 use App\Http\Requests\UpdateContratoRequest;
 use App\Models\Area;
-use App\Models\TimesheetCliente;
 use App\Models\ContractManager\CedulaCumplimiento;
 use App\Models\ContractManager\CierreContrato;
 use App\Models\ContractManager\Contrato;
@@ -18,9 +17,9 @@ use App\Models\ContractManager\ConveniosModificatorios;
 use App\Models\ContractManager\DolaresContrato;
 use App\Models\ContractManager\EntregaMensual;
 use App\Models\ContractManager\Factura;
-use App\Models\ContractManager\Proveedores;
 use App\Models\Empleado;
 use App\Models\Organizacion;
+use App\Models\TimesheetCliente;
 use App\Models\User;
 use App\Repositories\ContratoRepository;
 use App\Rules\NumeroContrato;
@@ -110,7 +109,7 @@ class ContratosController extends AppBaseController
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required|after:fecha_inicio',
             'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',
-            'no_pagos' => ['required', "numeric", "lte:500000"],
+            'no_pagos' => ['required', 'numeric', 'lte:500000'],
             'tipo_cambio' => 'required',
             'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/", 'required'],
@@ -465,7 +464,7 @@ class ContratosController extends AppBaseController
             'area_id' => 'required',
             // 'fecha_firma' => 'after:fecha_fin|before:fecha_inicio',
             'fecha_firma' => 'required|after_or_equal:fecha_inicio|before_or_equal:fecha_fin',
-            'no_pagos' => ['required', "numeric", "lte:500000"],
+            'no_pagos' => ['required', 'numeric', 'lte:500000'],
             'tipo_cambio' => 'required',
             'monto_pago' => ['required', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],
             'minimo' => ['nullable', "regex:/(^[$](?!0+\\\.00)(?=.{1,14}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d{1,2})?)/"],

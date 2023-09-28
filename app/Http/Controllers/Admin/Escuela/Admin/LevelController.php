@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin\Escuela\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Escuela\Level;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LevelController extends Controller
@@ -40,7 +40,7 @@ class LevelController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:levels'
+            'name' => 'required|unique:levels',
         ]);
 
         $level = Level::create($request->all());
@@ -81,7 +81,7 @@ class LevelController extends Controller
     public function update(Request $request, Level $level)
     {
         $request->validate([
-            'name' => 'required|unique:levels,name,' . $level->id
+            'name' => 'required|unique:levels,name,' . $level->id,
         ]);
 
         $level->update($request->all());

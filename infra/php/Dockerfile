@@ -51,7 +51,8 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     apcu \
     opcache \
     sockets \
-    sodium
+    sodium \
+    excimer
 
 # Copy custom php.ini
 COPY php.ini /usr/local/etc/php/php.ini

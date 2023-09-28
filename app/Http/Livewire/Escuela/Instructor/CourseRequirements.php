@@ -3,16 +3,18 @@
 namespace App\Http\Livewire\Escuela\Instructor;
 
 use App\Models\Escuela\Course;
-use Livewire\Component;
 use App\Models\Escuela\Requirement;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
+
 class CourseRequirements extends Component
 {
     use LivewireAlert, AuthorizesRequests;
 
     public Requirement $requirement;
-    public $course, $name;
+    public $course;
+    public $name;
 
     protected $rules = [
         'requirement.name' => 'required',
@@ -22,7 +24,6 @@ class CourseRequirements extends Component
     {
         $this->course = $course;
         $this->requirement = new Requirement();
-
     }
 
     public function render()

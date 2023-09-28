@@ -16,14 +16,12 @@ class Reaction extends Model
     const LIKE = 1;
     const DISLIKE = 2;
 
-
     //relacion uno a muchos inversa
 
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
-
 
     public function reactionable()
     {

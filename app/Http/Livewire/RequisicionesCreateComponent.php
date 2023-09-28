@@ -13,14 +13,10 @@ use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicion;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\Empleado;
 use App\Models\Organizacion;
-use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Livewire\Livewire;
 use Livewire\WithFileUploads;
 
 class RequisicionesCreateComponent extends Component
@@ -56,8 +52,8 @@ class RequisicionesCreateComponent extends Component
 
     public $habilitar_url = false;
 
-    public $active = "active";
-    public $disabled = "";
+    public $active = 'active';
+    public $disabled = '';
 
     public $requisicion;
     public $area;
@@ -70,7 +66,6 @@ class RequisicionesCreateComponent extends Component
     public $provedores_colllection;
 
     protected $listeners = ['actualizarCountProveedores' => 'actualizarCountProveedores'];
-
 
     public function actualizarCountProveedores()
     {
@@ -147,7 +142,7 @@ class RequisicionesCreateComponent extends Component
 
         $this->habilitar_proveedores = true;
         $this->emit('cambiarTab', 'profile');
-        $this->active = "desActive";
+        $this->active = 'desActive';
     }
 
     public function proveedoresStore($data)
@@ -160,12 +155,10 @@ class RequisicionesCreateComponent extends Component
         for ($i = 0; $i <= $this->proveedores_count; $i++) {
             if (isset($data['proveedor_' . $i])) {
                 if ($this->selectedInput[$prove_count] === 'otro') {
-
                     if (!empty($this->selectOption[$prove_count]) && isset($this->selectOption[$prove_count])) {
                     } else {
                         $this->selectOption[$prove_count] = 'indistinto';
                     }
-
 
                     if ($this->selectOption[$prove_count] === 'sugerido') {
                         // nuevo proveedor
@@ -206,7 +199,7 @@ class RequisicionesCreateComponent extends Component
                         $this->emit('cambiarTab', 'contact');
 
                         $this->dataFirma();
-                        $this->disabled = "disabled";
+                        $this->disabled = 'disabled';
                     } else {
                         $this->provedores_indistinto_catalogo = collect();
                         $this->provedores_indistinto_catalogo = KatbolProveedorIndistinto::create([
@@ -220,7 +213,7 @@ class RequisicionesCreateComponent extends Component
 
                         $this->dataFirma();
 
-                        $this->disabled = "disabled";
+                        $this->disabled = 'disabled';
                     }
                 } else {
                     $this->proveedores_catalogo = KatbolProveedorOC::where('id', $this->selectedInput[$prove_count])->first();
@@ -249,7 +242,7 @@ class RequisicionesCreateComponent extends Component
                     $this->emit('cambiarTab', 'contact');
 
                     $this->dataFirma();
-                    $this->disabled = "disabled";
+                    $this->disabled = 'disabled';
                 }
                 $prove_count = $prove_count + 1;
                 $cotizacion_count = $cotizacion_count + 1;

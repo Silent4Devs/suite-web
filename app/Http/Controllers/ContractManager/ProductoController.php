@@ -56,12 +56,11 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-
         $ids = Producto::pluck('id');
 
         foreach ($ids as $id) {
             $string1 = strval($id);
-            if ($string1  === $request->id) {
+            if ($string1 === $request->id) {
                 return view('contract_manager.proveedores.error');
             }
         }

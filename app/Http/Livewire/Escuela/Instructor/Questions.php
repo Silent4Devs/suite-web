@@ -11,7 +11,6 @@ use Livewire\Component;
 
 class Questions extends Component
 {
-
     // use RenderizarAlerta;
     public $open = false;
     public $explanation;
@@ -43,11 +42,11 @@ class Questions extends Component
             'answers' => collect([[
                 'id' => 0,
                 'is_correct' => false,
-                'answer' => ''
+                'answer' => '',
             ], [
                 'id' => 0,
                 'is_correct' => false,
-                'answer' => ''
+                'answer' => '',
             ]]),
         ]);
         $this->evaluation_id = $evaluation_id;
@@ -84,16 +83,14 @@ class Questions extends Component
         $this->answers->push([
             'id' => 0,
             'is_correct' => false,
-            'answer' => ''
+            'answer' => '',
         ]);
         $this->emit('renderQuestion');
         // dd($this->answers);
     }
 
-
     public function render()
     {
-
         return view('livewire.escuela.instructor.questions');
     }
 
@@ -162,8 +159,6 @@ class Questions extends Component
 
     // }
 
-
-
     public function default($isEdit = false)
     {
         $this->explanation = null;
@@ -171,10 +166,10 @@ class Questions extends Component
         $this->fill([
             'answers' => collect([[
                 'is_correct' => false,
-                'answer' => ''
+                'answer' => '',
             ], [
                 'is_correct' => false,
-                'answer' => ''
+                'answer' => '',
             ]]),
         ]);
         //cerra el modal
