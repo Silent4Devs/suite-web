@@ -1,31 +1,32 @@
 @extends('layouts.admin')
 @section('content')
+    <h5 class="titulo_general_funcion">Catálogo de Clasificación</h5>
+
     <div class="row">
-        <h3 class="col-12 titulo_general_funcion">Catálogo de Clasificación</h3>
-    </div>
-    <div class="row">
-        <a href="{{ route('admin.auditoria-clasificacion.create') }}" class="btn  btn-outline-primary">Nueva Clasificación</a>
+        <div class="col-md-12 text-right">
+            <a href="{{ route('admin.auditoria-clasificacion.create') }}" class="btn  btn-outline-primary">
+                Nueva Clasificación
+            </a>
+        </div>
     </div>
 
-    <div class="card">
+    <div class="card mt-4">
         <div class="card-body">
-
+            <h5 style="font-weight: lighter;"> Clasificaciones </h5>
+            <hr>
             <table class="table table-bordered w-100 datatable-AuditoriaInterna">
                 <thead class="thead-dark">
                     <tr>
-                        <th colspan="4">CLASIICACIONES</th>
-                    </tr>
-                    <tr>
-                        <th style="min-width: 70px;">
+                        <th style="max-width: 70px;">
                             ID
                         </th>
-                        <th style="min-width: 150px;">
+                        <th style="min-width: 200px;">
                             Nombre de la Clasificación
                         </th>
                         <th style="min-width: 700px;">
                             Descripción
                         </th>
-                        <th>
+                        <th style="max-width: 50px;">
 
                         </th>
                     </tr>
@@ -200,7 +201,7 @@
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/edit/${data}') }}"> 
+                                        <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/edit/${data}') }}">
                                             <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
                                         <a class="dropdown-item" href="{{ url('admin/auditorias/clasificacion-auditorias/delete/${data}') }}">
                                             <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>

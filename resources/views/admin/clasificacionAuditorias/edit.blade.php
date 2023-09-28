@@ -1,8 +1,13 @@
 @extends('layouts.admin')
 @section('content')
-    <h5 class="col-12 titulo_general_funcion">Catalogo Clasificación</h5>
+    <h5 class="col-12 titulo_general_funcion">Catálogo Clasificación</h5>
     <div class="mt-4 card">
         <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <p style="font-size: 18px; color: #788BAC;"><strong>Clasificación</strong></p>
+                </div>
+            </div>
             <form method="POST" action="{{ route('admin.auditoria-clasificacion.update', $clasif->id) }}">
                 @csrf
                 <div class="row">

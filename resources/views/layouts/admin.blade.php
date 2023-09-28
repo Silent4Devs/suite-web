@@ -960,6 +960,7 @@
         .titulo_general_funcion {
             color: #788BAC;
             margin-bottom: 65px;
+            font-size: 20px !important;
         }
 
         .form-group label {
