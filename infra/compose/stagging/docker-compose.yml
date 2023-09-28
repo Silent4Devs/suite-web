@@ -20,7 +20,7 @@ services:
       - 8080:8080
     volumes:
       - .:/var/www/html
-      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./var/contenedor/tabantaj/infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
       - postgres-tabantaj
@@ -97,7 +97,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
+      - ./var/contenedor/tabantaj/infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
     networks:
       - tabantajnetwork
     mem_limit: 2g
