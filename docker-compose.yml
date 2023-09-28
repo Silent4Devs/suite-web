@@ -160,6 +160,14 @@ services:
     networks:
       - tabantajnetwork
     mem_limit: 2g
+    labels:
+      com.datadoghq.ad.check_names: '[redisdb]'
+      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "6379"}]'
+      com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis-tabantaj"}]'
+      com.datadoghq.tags.env: 'stagging'
+      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.version: "1"
 
   rdadmin-tabantaj:
     image: erikdubbelboer/phpredisadmin:latest
