@@ -32,7 +32,6 @@ services:
     networks:
       - tabantajnetwork
 
-
   nginx-tabantaj:
     image: nginx:stable-alpine
     container_name: nginx-tabantaj
@@ -51,11 +50,11 @@ services:
       - redis-tabantaj
     labels:
       #com.datadoghq.ad.check_names: '[""]'
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "nginx", "service": "nginx-tabantaj"}]'
-      com.datadoghq.tags.env: 'production'
-      com.datadoghq.tags.service: 'tabantaj-prod'
+      com.datadoghq.tags.env: "production"
+      com.datadoghq.tags.service: "tabantaj-prod"
       com.datadoghq.tags.version: "1"
     env_file:
       - .env
@@ -91,11 +90,11 @@ services:
       - tabantajnetwork
     mem_limit: 6g
     labels:
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres-tabantaj"}]'
-      com.datadoghq.tags.env: 'production'
-      com.datadoghq.tags.service: 'tabantaj-prod'
+      com.datadoghq.tags.env: "production"
+      com.datadoghq.tags.service: "tabantaj-prod"
       com.datadoghq.tags.version: "1"
 
   # pgadmin-tabantaj:
@@ -129,23 +128,23 @@ services:
     restart: unless-stopped
     # labels:
     #   ofelia.enabled: "true"
-      # ofelia.job-exec.schedulecron.schedule: "@hourly"
-      # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
-      # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-      # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
-      # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
-      # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
+    # ofelia.job-exec.schedulecron.schedule: "@hourly"
+    # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
+    # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
+    # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
+    # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
+    # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
     tty: true
     volumes:
       - .:/var/www/html
     ports:
       - 9000:80
     labels:
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "php", "service": "php-tabantaj"}]'
-      com.datadoghq.tags.env: 'production'
-      com.datadoghq.tags.service: 'tabantaj-prod'
+      com.datadoghq.tags.env: "production"
+      com.datadoghq.tags.service: "tabantaj-prod"
       com.datadoghq.tags.version: "1"
     networks:
       - tabantajnetwork
@@ -161,12 +160,12 @@ services:
       - tabantajnetwork
     mem_limit: 2g
     labels:
-      com.datadoghq.ad.check_names: '[redisdb]'
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.check_names: "[redisdb]"
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "6379"}]'
       com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis-tabantaj"}]'
-      com.datadoghq.tags.env: 'production'
-      com.datadoghq.tags.service: 'tabantaj-prod'
+      com.datadoghq.tags.env: "production"
+      com.datadoghq.tags.service: "tabantaj-prod"
       com.datadoghq.tags.version: "1"
 
   rdadmin-tabantaj:
@@ -340,30 +339,15 @@ services:
   #   networks:
   #     - tabantajnetwork
 
-<<<<<<< HEAD
 volumes:
   tabantaj-db:
     driver: local
   pgadmin-data:
     driver: local
-<<<<<<< HEAD
-  elasticsearch:
-    driver: local
-  elasticsearch-logs:
-    driver: local
-=======
-# volumes:
-#   tabantaj-db:
-#     driver: local
-#   pgadmin-data:
-#     driver: local
->>>>>>> 702ae06c8a6976b89c7ae6175816af95f3457963
-=======
-  # elasticsearch:
-  #   driver: local
-  # elasticsearch-logs:
-  #   driver: local
->>>>>>> 8212779f809b5b34f6128655cb7dd1dc371818c7
+# elasticsearch:
+#   driver: local
+# elasticsearch-logs:
+#   driver: local
 
 networks:
   tabantajnetwork:
