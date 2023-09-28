@@ -36,8 +36,8 @@ class TimesheetCliente extends Model
         'correo_contacto',
         'celular_contacto',
 
-        // 'objeto_descripcion',
-        // 'cobertura',
+        'objeto_descripcion',
+        'cobertura',
     ];
 
     //Redis methods
