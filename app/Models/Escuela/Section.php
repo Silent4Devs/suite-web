@@ -20,7 +20,6 @@ class Section extends Model
         return $this->hasMany('App\Models\Escuela\Lesson');
     }
 
-
     //Relacion uno a muchos inversa
     public function course()
     {

@@ -13,8 +13,8 @@ use Illuminate\Http\Request;
 
 class CursoEstudiante extends Controller
 {
-
-    public $category_id, $level_id;
+    public $category_id;
+    public $level_id;
 
     /**
      * Display a listing of the resource.
@@ -45,15 +45,16 @@ class CursoEstudiante extends Controller
         $curso = Course::where('id', $curso_id)->first();
         // dd($curso_id, $curso);
         $evaluacionesLeccion = Evaluation::where('course_id', $curso_id)->get();
+
         return view('admin.escuela.estudiante.curso-estudiante', compact('curso', 'evaluacionesLeccion'));
     }
 
     public function evaluacionEstudiante($curso_id, $evaluacion_id)
     {
-
         // dd("Llega hasta aca", $curso_id, $evaluacion_id);
         return view('admin.escuela.estudiante.curso-evaluacion', compact('curso_id', 'evaluacion_id'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -81,7 +82,6 @@ class CursoEstudiante extends Controller
      */
     public function show(course $course)
     {
-
         // $this->authorize('published', $course);
 
         $similares = Course::where('category_id', $course->category_id)
@@ -99,7 +99,6 @@ class CursoEstudiante extends Controller
 
     public function enrolled(Course $course)
     {
-
         $course->students()->attach(auth()->user()->id);
 
         return redirect()->route('admin.curso-estudiante', $course->id);

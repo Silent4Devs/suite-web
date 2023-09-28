@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Model
 {
-
     use HasFactory;
     use SoftDeletes;
 
@@ -18,7 +17,7 @@ class Question extends Model
         'question',
         'explanation',
         'is_active',
-        'evaluation_id'
+        'evaluation_id',
     ];
 
     public function evaluation()

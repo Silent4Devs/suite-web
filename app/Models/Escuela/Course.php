@@ -46,7 +46,7 @@ class Course extends Model
 
     public function getRouteKeyName()
     {
-        return "slug";
+        return 'slug';
     }
 
     //Relacion uno a muchos

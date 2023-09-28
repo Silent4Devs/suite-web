@@ -8,11 +8,9 @@ use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;
 use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
 use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
-use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicion;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\User as ModelsUser;
 use Gate;
@@ -77,7 +75,6 @@ class RequisicionesController extends Controller
         return datatables()->of($requisiciones)->toJson();
     }
 
-
     public function getRequisicionIndexSolicitante(Request $request)
     {
         $id = Auth::user()->id;
@@ -100,7 +97,6 @@ class RequisicionesController extends Controller
 
         return view('contract_manager.requisiciones.create', compact('sucursales', 'compradores', 'contratos'));
     }
-
 
     /**
      * Show the form for creating a new resource.
