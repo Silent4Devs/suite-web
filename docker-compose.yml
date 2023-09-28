@@ -1,5 +1,14 @@
 version: "3.8"
 services:
+  # ofelia:
+  #   image: mcuadros/ofelia:latest
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - nginx-tabantaj
+  #     - php
+  #   command: daemon --docker
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
   datadog:
     image: datadog/agent:7
     container_name: dd-agent
@@ -7,11 +16,8 @@ services:
     environment:
       - DD_API_KEY=f792a4cfd07aef36fff5bcca11b68b40
       - DD_SITE=us5.datadoghq.com
-      - DD_HOSTNAME=tabantaj-prod
+      - DD_HOSTNAME=tabantaj
       - DD_APM_ENABLED=true
-      - DD_APM_NON_LOCAL_TRAFFIC=true
-      - DD_SYSTEM_PROBE_ENABLED=true
-      - DD_APM_RECEIVER_SOCKET=/opt/datadog/apm/inject/run/apm.socket
       - DD_LOGS_ENABLED=true
       - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
       - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
@@ -19,9 +25,7 @@ services:
       - DD_CONTAINER_EXCLUDE_METRICS=image:datadog/agent:7*
       - DD_CONTAINER_EXCLUDE_LOGS=image:datadog/agent:7*
     volumes:
-      - /opt/datadog/apm:/opt/datadog/apm
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro \
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
       - /opt/datadog-agent/run:/opt/datadog-agent/run:rw
@@ -42,15 +46,15 @@ services:
       - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
-      # - postgres-tabantaj
+      - postgres-tabantaj
       - redis-tabantaj
     labels:
       #com.datadoghq.ad.check_names: '[""]'
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "nginx", "service": "nginx-tabantaj"}]'
-      com.datadoghq.tags.env: "production"
-      com.datadoghq.tags.service: "tabantaj-prod"
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
     env_file:
       - .env
@@ -89,9 +93,25 @@ services:
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres-tabantaj"}]'
-      com.datadoghq.tags.env: "production"
-      com.datadoghq.tags.service: "tabantaj-prod"
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
+
+  pgadmin-tabantaj:
+    depends_on:
+      - postgres-tabantaj
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5480:80"
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - tabantajnetwork
 
   php:
     #uncomment this if you will use only docker compose
@@ -123,8 +143,8 @@ services:
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "php", "service": "php-tabantaj"}]'
-      com.datadoghq.tags.env: "production"
-      com.datadoghq.tags.service: "tabantaj-prod"
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
     networks:
       - tabantajnetwork
@@ -138,14 +158,14 @@ services:
       - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf # Mount the Redis configuration file
     networks:
       - tabantajnetwork
-    mem_limit: 3g
+    mem_limit: 2g
     labels:
       com.datadoghq.ad.check_names: "[redisdb]"
       com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "6379"}]'
       com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis-tabantaj"}]'
-      com.datadoghq.tags.env: "production"
-      com.datadoghq.tags.service: "tabantaj-prod"
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
 
   rdadmin-tabantaj:
@@ -161,61 +181,6 @@ services:
       #- REDIS_1_AUTH=silent11!
     networks:
       - tabantajnetwork
-
-  pgadmin-tabantaj:
-    depends_on:
-      - postgres-tabantaj
-    image: dpage/pgadmin4:latest
-    ports:
-      - "5480:80"
-    environment:
-      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
-      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - tabantajnetwork
-
-volumes:
-  tabantaj-db:
-    driver: local
-  pgadmin-data:
-    driver: local
-# elasticsearch:
-#   driver: local
-# elasticsearch-logs:
-#   driver: local
-
-networks:
-  tabantajnetwork:
-
-  # ofelia:
-  #   image: mcuadros/ofelia:latest
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - nginx-tabantaj
-  #     - php
-  #   command: daemon --docker
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-
-  # pgadmin-tabantaj:
-  #   depends_on:
-  #     - postgres-tabantaj
-  #   image: dpage/pgadmin4:latest
-  #   ports:
-  #     - "5480:80"
-  #   environment:
-  #     - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
-  #     - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
-  #   restart: unless-stopped
-  #   tty: true
-  #   volumes:
-  #     - pgadmin-data:/var/lib/pgadmin
-  #   networks:
-  #     - tabantajnetwork
 
   # prometheus-tabantaj:
   #   image: prom/prometheus
@@ -373,3 +338,16 @@ networks:
   #     - 8081:8080
   #   networks:
   #     - tabantajnetwork
+
+volumes:
+  tabantaj-db:
+    driver: local
+  pgadmin-data:
+    driver: local
+  # elasticsearch:
+  #   driver: local
+  # elasticsearch-logs:
+  #   driver: local
+
+networks:
+  tabantajnetwork:
