@@ -157,6 +157,22 @@ services:
     networks:
       - tabantajnetwork
 
+  pgadmin-tabantaj:
+    depends_on:
+      - postgres-tabantaj
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5480:80"
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - tabantajnetwork
+
 volumes:
   tabantaj-db:
     driver: local
