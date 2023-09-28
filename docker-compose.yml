@@ -1,14 +1,5 @@
 version: "3.8"
 services:
-  # ofelia:
-  #   image: mcuadros/ofelia:latest
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - nginx-tabantaj
-  #     - php
-  #   command: daemon --docker
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
   datadog:
     image: datadog/agent:7
     container_name: dd-agent
@@ -97,22 +88,6 @@ services:
       com.datadoghq.tags.service: "tabantaj-prod"
       com.datadoghq.tags.version: "1"
 
-  # pgadmin-tabantaj:
-  #   depends_on:
-  #     - postgres-tabantaj
-  #   image: dpage/pgadmin4:latest
-  #   ports:
-  #     - "5480:80"
-  #   environment:
-  #     - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
-  #     - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
-  #   restart: unless-stopped
-  #   tty: true
-  #   volumes:
-  #     - pgadmin-data:/var/lib/pgadmin
-  #   networks:
-  #     - tabantajnetwork
-
   php:
     #uncomment this if you will use only docker compose
     build:
@@ -181,6 +156,61 @@ services:
       #- REDIS_1_AUTH=silent11!
     networks:
       - tabantajnetwork
+
+  pgadmin-tabantaj:
+    depends_on:
+      - postgres-tabantaj
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5480:80"
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - tabantajnetwork
+
+volumes:
+  tabantaj-db:
+    driver: local
+  pgadmin-data:
+    driver: local
+# elasticsearch:
+#   driver: local
+# elasticsearch-logs:
+#   driver: local
+
+networks:
+  tabantajnetwork:
+
+  # ofelia:
+  #   image: mcuadros/ofelia:latest
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - nginx-tabantaj
+  #     - php
+  #   command: daemon --docker
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  # pgadmin-tabantaj:
+  #   depends_on:
+  #     - postgres-tabantaj
+  #   image: dpage/pgadmin4:latest
+  #   ports:
+  #     - "5480:80"
+  #   environment:
+  #     - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+  #     - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
+  #   networks:
+  #     - tabantajnetwork
 
   # prometheus-tabantaj:
   #   image: prom/prometheus
@@ -338,16 +368,3 @@ services:
   #     - 8081:8080
   #   networks:
   #     - tabantajnetwork
-
-volumes:
-  tabantaj-db:
-    driver: local
-  pgadmin-data:
-    driver: local
-# elasticsearch:
-#   driver: local
-# elasticsearch-logs:
-#   driver: local
-
-networks:
-  tabantajnetwork:
