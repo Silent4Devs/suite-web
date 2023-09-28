@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
     environment:
       - DD_API_KEY=19cf89382919138f361e76781515de53b3ffb0a7
-      - DD_SITE=datadoghq.com
+      - DD_SITE=us5.datadoghq.com/
       - DD_HOSTNAME=tabantaj
       - DD_APM_ENABLED=true
       - DD_LOGS_ENABLED=true
@@ -29,6 +29,9 @@ services:
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
         #- /opt/datadog-agent/run:/opt/datadog-agent/run:rw
+    networks:
+      - tabantajnetwork
+
 
   nginx-tabantaj:
     image: nginx:stable-alpine
