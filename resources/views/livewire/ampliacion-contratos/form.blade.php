@@ -38,8 +38,8 @@
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="distancia form-group col-md-6">
             Importe<font class="asterisco">*</font>
-            <input type="text" wire:model.debounce.800ms="importe" class="form-control numero-mascara importe"
-                required>
+            <input type="number" wire:model.debounce.800ms="importe" class="form-control numero-mascara importe"
+                required max="100000000000">
             @error('importe')
                 <span class="red-text">{{ $message }}</span>
             @enderror

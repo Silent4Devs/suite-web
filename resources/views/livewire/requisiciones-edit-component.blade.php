@@ -2,7 +2,7 @@
     <div class="card card-body caja-blue">
 
         <div>
-            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 100px; right: 430px;">
+            <img src="{{ asset('img/welcome-blue.svg') }}" alt="" style="width:150px; position: relative; top: 60px; right: 410px;">
         </div>
 
         <div style="position: relative; top:-5rem; left: 80px;">
@@ -1304,7 +1304,7 @@
                         <div class="flex-item">
                             @if ($requisicion->firma_jefe)
                                 <img src="{{$requisicion->firma_jefe}}" class="img-firma">
-                                <p>{{$supervisor}}</p>
+                                {{-- <p>{{$supervisor}}</p> --}}
                                 <p>{{ $requisicion->fecha_firma_jefe_requi }}</p>
                             @else
                                 <div style="height: 137px;"></div>

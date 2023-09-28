@@ -269,6 +269,8 @@ class RequisicionesEditComponent extends Component
                 $this->dataFirma($editrequisicion);
             }
         }
+
+        $this->habilitar_proveedores = true;
     }
 
     public function dataFirma($editrequisicion)
@@ -302,11 +304,7 @@ class RequisicionesEditComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $user = ModelsUser::where('id', $this->editrequisicion->id_user)->first();
-
-            $empleado = Empleado::with('supervisor')->where('id', $user->empleado_id)->first();
-
-            $supervisor = $empleado->supervisor->email;
+            $supervisor =  auth()->user()->empleado->supervisor->email;
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->editrequisicion, $organizacion, $tipo_firma));
 

@@ -346,7 +346,7 @@
 
                 <div class="file-path-wrapper">
                     <input value="{{ $contrato->file_contrato }}" class="file-path validate form-control"
-                        type="text" placeholder="Elegir documento pdf" {{ $show_contrato ? 'readonly' : '' }}
+                        type="text" placeholder="Elegir documento" {{ $show_contrato ? 'readonly' : '' }}
                         readonly>
                 </div>
             </div>
@@ -718,18 +718,19 @@
                     <div class="td_fianza">
                         @if (is_null($organizacion))
                         @else
-                            <div class="file-field input-field">
-                                <div class="btn">
-                                    {{-- <label for="documento">PDF</label> --}}
-                                    {{-- <input type="hidden" id="" name="" value=""> --}}
-                                    <input class="input_file_validar form-control" type="file" name="documento"
-                                        accept="{{ $organizacion ? $organizacion->formatos : '.docx,.pdf,.doc,.xlsx,.pptx,.txt' }}"
-                                        readonly>
-                                </div>
-                                {{-- <div class="file-path-wrapper">
+                            <div class="row">
+                                PDF:
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <input class="input_file_validar form-control" type="file"
+                                            name="documento" accept=".pdf" readonly>
+                                        {{-- <input type="hidden" id="" name="" value=""> --}}
+                                    </div>
+                                    {{-- <div class="file-path-wrapper">
                                     <input class="file-path validate" type="text"
                                         placeholder="Elegir documento pdf" readonly>
                                 </div> --}}
+                                </div>
                             </div>
                         @endif
 

@@ -79,7 +79,7 @@ class ConvenioModificatorioComponent extends Component
     {
         $this->validate([
             'fecha' => 'required',
-            'no_convenio' => 'required',
+            'no_convenio' => 'required|max:255',
         ]);
 
         $contrato = Contrato::find($this->contrato_id);

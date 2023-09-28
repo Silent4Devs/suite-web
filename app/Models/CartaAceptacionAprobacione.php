@@ -23,7 +23,6 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class CartaAceptacionAprobacione extends Model implements Auditable
 {
-{
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
