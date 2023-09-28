@@ -14,7 +14,7 @@ services:
     container_name: dd-agent
     restart: unless-stopped
     environment:
-      - DD_API_KEY=f792a4cfd07aef36fff5bcca11b68b40
+      - DD_API_KEY=19cf89382919138f361e76781515de53b3ffb0a7
       - DD_SITE=us5.datadoghq.com
       - DD_HOSTNAME=tabantaj
       - DD_APM_ENABLED=true
