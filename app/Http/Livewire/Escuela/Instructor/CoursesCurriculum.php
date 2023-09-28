@@ -4,15 +4,16 @@ namespace App\Http\Livewire\Escuela\Instructor;
 
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Section;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-
+use Livewire\Component;
 
 class CoursesCurriculum extends Component
 {
     use LivewireAlert;
 
-    public $course, $section, $name;
+    public $course;
+    public $section;
+    public $name;
 
     protected $rules = [
         'section.name' => 'required',
@@ -74,7 +75,6 @@ class CoursesCurriculum extends Component
 
         $this->course = Course::find($this->course->id);
         // $this->render_alerta('success', 'Registro actualizado exitosamente');
-
     }
 
     public function destroy(Section $section)

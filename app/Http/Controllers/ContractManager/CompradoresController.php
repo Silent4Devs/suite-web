@@ -47,6 +47,7 @@ class CompradoresController extends Controller
         abort_if(Gate::denies('katbol_producto_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $users = Empleado::where('estatus', 'alta')->orderBy('name')->get();
+
         return view('contract_manager.compradores.create', compact('users'));
     }
 
@@ -62,7 +63,7 @@ class CompradoresController extends Controller
 
         foreach ($ids as $id) {
             $string1 = strval($id);
-            if ($string1  === $request->id) {
+            if ($string1 === $request->id) {
                 return view('contract_manager.proveedores.error');
             }
         }

@@ -157,7 +157,7 @@ class OrganizacionController extends Controller
         $countEmpleados = Empleado::alta()->get()->count();
         $organizacion->fecha_constitucion = Carbon::parse($organizacion->fecha_constitucion)->format('Y-m-d');
         // dd($organizacion->fecha_constitucion);
-        
+
         if ($countEmpleados == 0) {
             $tamanoEmpresa = 'debe registrar a los empleados';
         } elseif ($countEmpleados >= 1 && $countEmpleados <= 249) {
