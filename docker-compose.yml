@@ -90,6 +90,13 @@ services:
     networks:
       - tabantajnetwork
     mem_limit: 6g
+    labels:
+      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
+      com.datadoghq.ad.logs: '[{"source": "go", "service": "go"}]'
+      com.datadoghq.tags.env: 'stagging'
+      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.version: "1"
 
   pgadmin-tabantaj:
     depends_on:
@@ -133,6 +140,13 @@ services:
       - .:/var/www/html
     ports:
       - 9000:80
+    labels:
+      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
+      com.datadoghq.ad.logs: '[{"source": "go", "service": "go"}]'
+      com.datadoghq.tags.env: 'stagging'
+      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.version: "1"
     networks:
       - tabantajnetwork
 
