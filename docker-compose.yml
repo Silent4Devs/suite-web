@@ -16,7 +16,7 @@ services:
     environment:
       - DD_API_KEY=f792a4cfd07aef36fff5bcca11b68b40
       - DD_SITE=us5.datadoghq.com
-      - DD_HOSTNAME=tabantaj
+      - DD_HOSTNAME=tabantaj-prod
       - DD_APM_ENABLED=true
       - DD_LOGS_ENABLED=true
       - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
@@ -54,8 +54,8 @@ services:
       com.datadoghq.ad.init_configs: '[{}]'
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "nginx", "service": "nginx-tabantaj"}]'
-      com.datadoghq.tags.env: 'stagging'
-      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.env: 'production'
+      com.datadoghq.tags.service: 'tabantaj-prod'
       com.datadoghq.tags.version: "1"
     env_file:
       - .env
@@ -94,8 +94,8 @@ services:
       com.datadoghq.ad.init_configs: '[{}]'
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres-tabantaj"}]'
-      com.datadoghq.tags.env: 'stagging'
-      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.env: 'production'
+      com.datadoghq.tags.service: 'tabantaj-prod'
       com.datadoghq.tags.version: "1"
 
   pgadmin-tabantaj:
@@ -144,8 +144,8 @@ services:
       com.datadoghq.ad.init_configs: '[{}]'
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "php", "service": "php-tabantaj"}]'
-      com.datadoghq.tags.env: 'stagging'
-      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.env: 'production'
+      com.datadoghq.tags.service: 'tabantaj-prod'
       com.datadoghq.tags.version: "1"
     networks:
       - tabantajnetwork
@@ -165,8 +165,8 @@ services:
       com.datadoghq.ad.init_configs: '[{}]'
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "6379"}]'
       com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis-tabantaj"}]'
-      com.datadoghq.tags.env: 'stagging'
-      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.env: 'production'
+      com.datadoghq.tags.service: 'tabantaj-prod'
       com.datadoghq.tags.version: "1"
 
   rdadmin-tabantaj:
