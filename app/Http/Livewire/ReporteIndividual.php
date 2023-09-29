@@ -7,6 +7,7 @@ use App\Models\AuditoriaInternasHallazgos;
 use App\Models\Proceso;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Illuminate\Support\Facades\DB;
 
 class ReporteIndividual extends Component
 {
@@ -42,7 +43,17 @@ class ReporteIndividual extends Component
         $datas = AuditoriaInternasHallazgos::where('auditoria_internas_id', '=', $this->id_auditoria)
             ->paginate($this->pagination);
 
-        return view('livewire.reporte-individual', compact('procesos', 'datas'))
+        $clasificacionIds = $this->clasificaciones->pluck('id');
+
+        $cuentas = AuditoriaInternasHallazgos::with('clasificacion')->whereIn('clasificacion_id', $clasificacionIds)
+            ->where('auditoria_internas_id', $this->id_auditoria)
+            ->select('clasificacion_id', DB::raw('COUNT(*) as count'))
+            ->groupBy('clasificacion_id')
+            ->get();
+
+        // dd($cuentas);
+
+        return view('livewire.reporte-individual', compact('procesos', 'datas', 'cuentas'))
             ->with('clasificaciones', $this->clasificaciones)
             ->with('clausulas', $this->clausulas)
             ->with('id_auditoria', $this->id_auditoria);
