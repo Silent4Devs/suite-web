@@ -133,7 +133,7 @@
                         value="{{ old('celular_contacto') }}">
                 </div>
 
-                {{-- <div class="col-md-12 col-sm-12 mt-4">
+                <div class="col-md-12 col-sm-12 mt-4">
                     <div class="card vrd-agua" style="background-color:#345183;">
                         <p class="mb-1 text-center text-white">PRODUCTOS Y/O SERVICIOS</p>
                     </div>
@@ -150,7 +150,7 @@
                     <label class="form-label">Cobertura, Rango geográfico
                         en el cual presta los servicios</label>
                     <textarea class="form-control" name="cobertura" id="cobertura" value="{{ old('cobertura', '') }}"></textarea>
-                </div> --}}
+                </div>
             </div>
 
             <div class="form-group col-12 text-right mt-4">
