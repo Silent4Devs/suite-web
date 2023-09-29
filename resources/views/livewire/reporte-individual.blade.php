@@ -3,12 +3,11 @@
 
     <div class="container-fluid mb-4">
         <div class="row justify-content-center row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            @foreach ($clasificaciones as $clasif)
+            @foreach ($cuentas as $cuenta)
                 <div class="col mt-4">
                     <div class="card card-body" style="background-color: #e0f4b8">
-                        <h5>{{ $clasif->nombre_clasificaciones }}</h5><br>
-                        <h6>1</h6>
-
+                        <h5>{{ $cuenta->clasificacion->nombre_clasificaciones }}</h5><br>
+                        <h6>{{ $cuenta->count }}</h6>
                     </div>
                 </div>
             @endforeach
