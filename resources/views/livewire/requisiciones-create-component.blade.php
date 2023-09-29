@@ -162,7 +162,7 @@
                 </div>
 
                 <div >
-                    <div class="btn btn-add-card" onclick="addCard('servicio')"><i class="fa-regular fa-square-plus"></i>
+                    <div class="btn btn-add-card" onclick="addCardProductos('servicio')"><i class="fa-regular fa-square-plus"></i>
                         AGREGAR SERVICIOS Y PRODUCTOS</div>
                 </div>
 
@@ -350,7 +350,7 @@
                                 </div>
 
                                 <div>
-                                    <div class="btn btn-add-card" onclick="addCard('proveedor')"><i class="fa-regular fa-square-plus icon-prior"></i>
+                                    <div class="btn btn-add-card" onclick="addCardProveedores('proveedor')"><i class="fa-regular fa-square-plus icon-prior"></i>
                                         AGREGAR PROVEEDOR</div>
                                 </div>
                                 <div style="position: relative; top: -2rem; left: 55rem;">
@@ -380,7 +380,7 @@
                     </div>
                     <div class="flex-item item-header-doc-info" style="">
                         <h4 style="font-size: 18px; color:#49598A;">REQUISICIÓN DE ADQUISICIONES</h4>
-                        <p>Folio: 00-00{{ $requisicion->id }}</p>
+                        <p>Folio: RQ-00-00{{ $requisicion->id }}</p>
                         <p>Fecha de solicitud:{{ date('d-m-Y', strtotime($requisicion->fecha)) }} </p>
                     </div>
                 </div>
@@ -746,53 +746,101 @@
                 document.querySelector('#area_print').value = area;
             }
 
-            function addCard(tipo_card) {
+            function addCardProductos(tipo_card) {
 
-            Swal.fire({
-                    title: 'Agregar proveedor?',
-                    text: "Estas seguro de agregar un nuevo proveedor, no podras eliminar los campos!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Seguro!'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                if (tipo_card === 'servicio') {
-                    let card = document.querySelector('.card-product');
-                    let nueva_card = document.createElement("div");
-                    nueva_card.classList.add("card");
-                    nueva_card.classList.add("card-body");
-                    nueva_card.classList.add("card-product");
-                    let cards_count = document.querySelectorAll('.card-product').length + 1;
-                    nueva_card.setAttribute("data-count", cards_count);
-                    let id_nueva_card = 'product-serv-' + cards_count;
-                    nueva_card.setAttribute('id', id_nueva_card);
+                Swal.fire({
+                        title: 'Agregar un producto?',
+                        text: "Estas seguro de agregar un nuevo producto, no podras eliminar los campos!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Seguro!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    if (tipo_card === 'servicio') {
+                        let card = document.querySelector('.card-product');
+                        let nueva_card = document.createElement("div");
+                        nueva_card.classList.add("card");
+                        nueva_card.classList.add("card-body");
+                        nueva_card.classList.add("card-product");
+                        let cards_count = document.querySelectorAll('.card-product').length + 1;
+                        nueva_card.setAttribute("data-count", cards_count);
+                        let id_nueva_card = 'product-serv-' + cards_count;
+                        nueva_card.setAttribute('id', id_nueva_card);
 
-                    let caja_cards = document.querySelector('.caja-card-product');
-                    caja_cards.appendChild(nueva_card);
-                    document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
+                        let caja_cards = document.querySelector('.caja-card-product');
+                        caja_cards.appendChild(nueva_card);
+                        document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
 
-                    document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name',
-                        'cantidad_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name',
-                        'producto_' + cards_count);
-                    document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute(
-                        'name', 'especificaciones_' + cards_count);
-                    @this.set('products_servs_count', cards_count);
+                        document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name',
+                            'cantidad_' + cards_count);
+                        document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name',
+                            'producto_' + cards_count);
+                        document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute(
+                            'name', 'especificaciones_' + cards_count);
+                        @this.set('products_servs_count', cards_count);
+                    }
+
+                    if (tipo_card === 'proveedor') {
+                        Livewire.emit('actualizarCountProveedores');
+                    }
+                    Swal.fire(
+                        'Agregado!',
+                        'Tu registro ha sido agregado.',
+                        'success'
+                    )
                 }
-
-                if (tipo_card === 'proveedor') {
-                    Livewire.emit('actualizarCountProveedores');
-                }
-                Swal.fire(
-                    'Agregado!',
-                    'Tu Registro ha sido agregado.',
-                    'success'
-                )
+                })
             }
-            })
-        }
+
+            function addCardProveedores(tipo_card) {
+
+                Swal.fire({
+                        title: 'Agregar un proveedor?',
+                        text: "Estas seguro de agregar un nuevo proveedor, no podras eliminar los campos!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Seguro!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    if (tipo_card === 'servicio') {
+                        let card = document.querySelector('.card-product');
+                        let nueva_card = document.createElement("div");
+                        nueva_card.classList.add("card");
+                        nueva_card.classList.add("card-body");
+                        nueva_card.classList.add("card-product");
+                        let cards_count = document.querySelectorAll('.card-product').length + 1;
+                        nueva_card.setAttribute("data-count", cards_count);
+                        let id_nueva_card = 'product-serv-' + cards_count;
+                        nueva_card.setAttribute('id', id_nueva_card);
+
+                        let caja_cards = document.querySelector('.caja-card-product');
+                        caja_cards.appendChild(nueva_card);
+                        document.querySelector('.card-product:last-child').innerHTML += card.innerHTML;
+
+                        document.querySelector('#' + id_nueva_card + ' .model-cantidad').setAttribute('name',
+                            'cantidad_' + cards_count);
+                        document.querySelector('#' + id_nueva_card + ' .model-producto').setAttribute('name',
+                            'producto_' + cards_count);
+                        document.querySelector('#' + id_nueva_card + ' .model-especificaciones').setAttribute(
+                            'name', 'especificaciones_' + cards_count);
+                        @this.set('products_servs_count', cards_count);
+                    }
+
+                    if (tipo_card === 'proveedor') {
+                        Livewire.emit('actualizarCountProveedores');
+                    }
+                    Swal.fire(
+                        'Agregado!',
+                        'Tu registro ha sido agregado.',
+                        'success'
+                    )
+                }
+                })
+                }
 
 
             function deleteProduct(){

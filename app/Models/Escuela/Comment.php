@@ -18,7 +18,6 @@ class Comment extends Model
         return $this->morphTo();
     }
 
-
     //relacion uno a muchos inversa
 
     public function user()

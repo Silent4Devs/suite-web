@@ -14,7 +14,7 @@ services:
     container_name: dd-agent
     restart: unless-stopped
     environment:
-      - DD_API_KEY=f792a4cfd07aef36fff5bcca11b68b40
+      - DD_API_KEY=495473ba9498ee8902595ee90a4d7a27ad1b5304
       - DD_SITE=us5.datadoghq.com
       - DD_HOSTNAME=tabantaj
       - DD_APM_ENABLED=true
@@ -24,6 +24,11 @@ services:
       - DD_CONTAINER_EXCLUDE=image:datadog/agent:7*
       - DD_CONTAINER_EXCLUDE_METRICS=image:datadog/agent:7*
       - DD_CONTAINER_EXCLUDE_LOGS=image:datadog/agent:7*
+      - DD_PROCESS_AGENT_ENABLED=false
+      - DD_ECS_FARGATE_ENABLED=false
+    ports:
+      - 8125/udp
+      - 8126/tcp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro
@@ -31,7 +36,6 @@ services:
       - /opt/datadog-agent/run:/opt/datadog-agent/run:rw
     networks:
       - tabantajnetwork
-
 
   nginx-tabantaj:
     image: nginx:stable-alpine
@@ -51,11 +55,11 @@ services:
       - redis-tabantaj
     labels:
       #com.datadoghq.ad.check_names: '[""]'
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "nginx", "service": "nginx-tabantaj"}]'
-      com.datadoghq.tags.env: 'stagging'
-      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
     env_file:
       - .env
@@ -91,11 +95,11 @@ services:
       - tabantajnetwork
     mem_limit: 6g
     labels:
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres-tabantaj"}]'
-      com.datadoghq.tags.env: 'stagging'
-      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
 
   pgadmin-tabantaj:
@@ -129,23 +133,23 @@ services:
     restart: unless-stopped
     # labels:
     #   ofelia.enabled: "true"
-      # ofelia.job-exec.schedulecron.schedule: "@hourly"
-      # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
-      # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-      # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
-      # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
-      # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
+    # ofelia.job-exec.schedulecron.schedule: "@hourly"
+    # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
+    # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
+    # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
+    # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
+    # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
     tty: true
     volumes:
       - .:/var/www/html
     ports:
       - 9000:80
     labels:
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "php", "service": "php-tabantaj"}]'
-      com.datadoghq.tags.env: 'stagging'
-      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
     networks:
       - tabantajnetwork
@@ -161,12 +165,12 @@ services:
       - tabantajnetwork
     mem_limit: 2g
     labels:
-      com.datadoghq.ad.check_names: '[redisdb]'
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.check_names: "[redisdb]"
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "6379"}]'
       com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis-tabantaj"}]'
-      com.datadoghq.tags.env: 'stagging'
-      com.datadoghq.tags.service: 'tabantaj'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
 
   rdadmin-tabantaj:

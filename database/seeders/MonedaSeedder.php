@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class MonedaSeedder extends Seeder
@@ -22,7 +21,7 @@ class MonedaSeedder extends Seeder
             1 => [
 
                 'nombre' => 'USD',
-            ]
+            ],
         ]);
     }
 }

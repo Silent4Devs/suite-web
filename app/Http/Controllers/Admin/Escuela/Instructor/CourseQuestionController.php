@@ -16,6 +16,7 @@ class CourseQuestionController extends Controller
     {
         $course = $request->course;
         $evaluation = $request->evaluation;
+
         return view('admin.escuela.instructor.indexquestions', compact('course', 'evaluation'));
     }
 }
