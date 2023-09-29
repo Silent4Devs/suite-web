@@ -1,9 +1,3 @@
-<style>
-    .nav-link {
-        pointer-events: none;
-    }
-</style>
-
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
 
@@ -25,16 +19,20 @@
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                aria-controls="home" aria-selected="true"><i class="number-icon active-number">1</i> Servicios y
+                aria-controls="home" aria-selected="true"><i class="number-icon active-number"
+                    style="pointer-events: none">1</i> Servicios
+                y
                 Productos</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                aria-controls="profile" aria-selected="false"><i class="number-icon">2</i> Proveedores</a>
+                aria-controls="profile" aria-selected="false" style="pointer-events: none"><i class="number-icon">2</i>
+                Proveedores</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                aria-controls="contact" aria-selected="false"><i class="number-icon">3</i> Firma</a>
+                aria-controls="contact" aria-selected="false" style="pointer-events: none"><i class="number-icon">3</i>
+                Firma</a>
         </li>
     </ul>
 
@@ -152,7 +150,8 @@
                                         </label>
                                         <input type="number" name="cantidad_{{ $count }}" min="1"
                                             max="9000000000" class="model-cantidad browser-default"
-                                            value="{{ old('cantidad_' . $count, $edtprod->cantidad) ?: '' }}" required>
+                                            value="{{ old('cantidad_' . $count, $edtprod->cantidad) ?: '' }}"
+                                            required>
                                     </div>
                                     <div class="col s12 l8 ">
                                         <label for="" class="txt-tamaño">

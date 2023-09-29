@@ -1,9 +1,3 @@
-<style>
-    .nav-link {
-        pointer-events: none;
-    }
-</style>
-
 <div class="create-requisicion">
     <div class="card card-body caja-blue">
 
@@ -24,18 +18,20 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist" wire:ignore>
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                aria-controls="home" aria-selected="true"><i class="number-icon active-number">1</i> Servicios y
+            <a class="nav-link active disable" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                aria-controls="home" aria-selected="true" style="pointer-events: none"><i
+                    class="number-icon active-number">1</i> Servicios y
                 Productos</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link eliminar {{ $disabled }}" id="profile-tab" onclick="eliminar();" data-toggle="tab"
-                href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i
-                    class="number-icon">2</i> Proveedores</a>
+            <a class="nav-link disable eliminar {{ $disabled }}" id="profile-tab" onclick="eliminar();"
+                data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"
+                style="pointer-events: none"><i class="number-icon">2</i> Proveedores</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                aria-controls="contact" aria-selected="false"><i class="number-icon">3</i> Firma</a>
+            <a class="nav-link disable" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                aria-controls="contact" aria-selected="false" style="pointer-events: none"><i class="number-icon">3</i>
+                Firma</a>
         </li>
     </ul>
 
