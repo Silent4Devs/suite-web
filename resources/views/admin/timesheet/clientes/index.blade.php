@@ -41,7 +41,7 @@
                             <th rowspan="2">RFC persona moral o persona física</th>
                             <th colspan="6" class="td-cj-1" style="text-align: center;">DOMICILIO FISCAL</th>
                             <th colspan="4" class="td-cj-2" style="text-align: center;">DATOS DEL CONTACTO</th>
-                            {{-- <th colspan="2" class="td-cj-3" style="text-align: center;">PRODUCTOS Y/O SERVICIOS</th> --}}
+                            <th colspan="2" class="td-cj-3" style="text-align: center;">PRODUCTOS Y/O SERVICIOS</th>
                             <th rowspan="2" class="th_opciones">Opciones</th>
                         </tr>
                         <tr>
@@ -58,10 +58,10 @@
                             <th class="td-cj-2">Correo electrónico</th>
                             <th class="td-cj-2">Celular</th>
 
-                            {{-- <th class="td-cj-3">Objeto social / Descripción
+                            <th class="td-cj-3">Objeto social / Descripción
                                 del servicio o producto</th>
                             <th class="td-cj-3">Cobertura, Rango geográfico
-                                en el cual presta los servicios</th> --}}
+                                en el cual presta los servicios</th>
                         </tr>
                     </thead>
 
@@ -82,8 +82,8 @@
                                 <td>{{ $cliente->puesto_contacto }}</td>
                                 <td>{{ $cliente->correo_contacto }}</td>
                                 <td>{{ $cliente->celular_contacto }}</td>
-                                {{-- <td>{{ $cliente->objeto_descripcion }}</td>
-                                <td>{{ $cliente->cobertura }}</td> --}}
+                                <td>{{ $cliente->objeto_descripcion }}</td>
+                                <td>{{ $cliente->cobertura }}</td>
                                 <td class="d-flex">
                                     <a href="{{ asset('admin/timesheet/clientes/edit') }}/{{ $cliente->id }}"
                                         class="btn" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
