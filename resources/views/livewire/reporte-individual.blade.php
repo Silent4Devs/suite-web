@@ -197,21 +197,21 @@
             {{-- <div col-12 offset-10>
                 @livewire('auditoria-interna-hallazgos', ['auditoria_internas_id' => $id_auditoria])
             </div> --}}
-
-            <table class="table">
-                <thead class="head-light">
-                    <tr>
-                        <th scope="col-6">Requisito</th>
-                        <th scope="col-6">Descripción</th>
-                        <th scope="col-6">Subtema</th>
-                        <th scope="col-6">Opciones</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($datas as $data)
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="head-light">
                         <tr>
-                            {{--     <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
+                            <th scope="col-6">Requisito</th>
+                            <th scope="col-6">Descripción</th>
+                            <th scope="col-6">Subtema</th>
+                            <th scope="col-6">Opciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($datas as $data)
+                            <tr>
+                                {{--     <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
                         <td style="min-width:100px;">{{ $data->descripcion }}</td>
                         <td style="min-width:100px;">{{ $data->clasificacion_id }}</td>
                         <td style="min-width:100px;">{{ $data->procesos ? $data->procesos->nombre : 'n/a' }}</td>
@@ -223,39 +223,56 @@
                             <i class="fas fa-trash-alt text-danger"
                                 wire:click.prevent="$emit('eliminarParteInteresada',{{ $data->id }})"> </i>
                         </td> --}}
-                            <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
-                            <td style="min-width:100px;">{{ $data->descripcion }}</td>
-                            <td style="min-width:100px;">Subtema</td>
-                            <td style="min-width:40">
-                                <div class="dropdown">
-                                    <button class="btn btn-outline-dark dropdown-toggle" type="button"
-                                        data-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item"
-                                            href="{{ url('admin/auditorias/clasificacion-auditorias/edit/${data}') }}">
-                                            <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                                        <a class="dropdown-item"
-                                            href="{{ url('admin/auditorias/clasificacion-auditorias/delete/${data}') }}">
-                                            <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                                <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
+                                <td style="min-width:100px;">{{ $data->descripcion }}</td>
+                                <td style="min-width:100px;">
+                                    <div class="row">
+                                        <div class="form-group col-sm-6">
+                                            <label for="no_tipo">
+                                                No. de Tipo</label><br>
+                                            <input id="no_tipo" type="number" value="{{ $data->no_tipo }}"
+                                                disabled>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label for="titulo">
+                                                Titulo</label><br>
+                                            <input id="titulo" type="text" value="{{ $data->titulo }}"
+                                                disabled>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="min-width:100px;">{{ $data->procesos ? $data->procesos->nombre : 'n/a' }}</td>
-                            <td style="min-width:100px;">{{ $data->areas ? $data->areas->area : 'n/a' }}</td>
-                            <td style="min-width:100px;">
-                                {{ $data->clasificacion->nombre_clasificaciones ?? $data->clasificacion_hallazgo }}
-                            </td>
-                            <td style="min-width:40px;">
-                            </td>
-                        </tr>
-                    @endforeach
+                                </td>
+                                <td style="min-width:40">
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-dark dropdown-toggle" type="button"
+                                            data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item"
+                                                href="{{ url('admin/auditorias/clasificacion-auditorias/edit/${data}') }}">
+                                                <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
+                                            <a class="dropdown-item"
+                                                href="{{ url('admin/auditorias/clasificacion-auditorias/delete/${data}') }}">
+                                                <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="min-width:100px;">{{ $data->procesos ? $data->procesos->nombre : 'n/a' }}
+                                </td>
+                                <td style="min-width:100px;">{{ $data->areas ? $data->areas->area : 'n/a' }}</td>
+                                <td style="min-width:100px;">
+                                    {{ $data->clasificacion->nombre_clasificaciones ?? $data->clasificacion_hallazgo }}
+                                </td>
+                                <td style="min-width:40px;">
+                                </td>
+                            </tr>
+                        @endforeach
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="row mb-3">
             <div class="col s12">
