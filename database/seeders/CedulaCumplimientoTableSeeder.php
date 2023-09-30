@@ -13,1868 +13,2209 @@ class CedulaCumplimientoTableSeeder extends Seeder
      */
     public function run()
     {
+        
+
         \DB::table('cedula_cumplimiento')->delete();
-
-        \DB::table('cedula_cumplimiento')->insert([
-            0 => [
-                'autorizo' => '',
+        
+        \DB::table('cedula_cumplimiento')->insert(array (
+            0 => 
+            array (
+                'id' => 1,
                 'contrato_id' => 1,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-02-15 15:23:07',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-02-15 15:23:07',
-            ],
-            1 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            1 => 
+            array (
+                'id' => 2,
                 'contrato_id' => 2,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-02-18 10:38:36',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-02-18 10:38:36',
-            ],
-            2 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            2 => 
+            array (
+                'id' => 3,
                 'contrato_id' => 3,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-02-18 18:17:49',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-02-18 18:17:49',
-            ],
-            3 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            3 => 
+            array (
+                'id' => 4,
                 'contrato_id' => 4,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-02-18 18:53:52',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-02-18 18:53:52',
-            ],
-            4 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            4 => 
+            array (
+                'id' => 5,
                 'contrato_id' => 8,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-03-10 15:46:01',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-03-10 15:46:01',
-            ],
-            5 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            5 => 
+            array (
+                'id' => 6,
                 'contrato_id' => 9,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-03-15 16:10:11',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-03-15 16:10:11',
-            ],
-            6 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            6 => 
+            array (
+                'id' => 7,
                 'contrato_id' => 10,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-04-05 15:23:00',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-04-05 15:23:00',
-            ],
-            7 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            7 => 
+            array (
+                'id' => 8,
                 'contrato_id' => 11,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-04-07 13:08:47',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-04-07 13:08:47',
-            ],
-            8 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            8 => 
+            array (
+                'id' => 9,
                 'contrato_id' => 12,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-04-14 23:17:18',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-04-14 23:17:18',
-            ],
-            9 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            9 => 
+            array (
+                'id' => 10,
                 'contrato_id' => 13,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-04-19 10:49:55',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-04-19 10:49:55',
-            ],
-            10 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            10 => 
+            array (
+                'id' => 11,
                 'contrato_id' => 14,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-04-19 17:23:52',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-04-19 17:23:52',
-            ],
-            11 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            11 => 
+            array (
+                'id' => 12,
                 'contrato_id' => 15,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-04-22 17:27:16',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-04-22 17:27:16',
-            ],
-            12 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            12 => 
+            array (
+                'id' => 13,
                 'contrato_id' => 16,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-04-26 14:57:55',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-04-26 14:57:55',
-            ],
-            13 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            13 => 
+            array (
+                'id' => 14,
                 'contrato_id' => 17,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-05 13:42:48',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-05 13:42:48',
-            ],
-            14 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            14 => 
+            array (
+                'id' => 15,
                 'contrato_id' => 18,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-13 17:43:28',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-13 17:43:28',
-            ],
-            15 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            15 => 
+            array (
+                'id' => 16,
                 'contrato_id' => 19,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-13 17:56:22',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-13 17:56:22',
-            ],
-            16 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            16 => 
+            array (
+                'id' => 17,
                 'contrato_id' => 20,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-13 18:43:29',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-13 18:43:29',
-            ],
-            17 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            17 => 
+            array (
+                'id' => 18,
                 'contrato_id' => 21,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-16 14:40:08',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-16 14:40:08',
-            ],
-            18 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            18 => 
+            array (
+                'id' => 19,
                 'contrato_id' => 23,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-17 14:34:40',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-17 14:34:40',
-            ],
-            19 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            19 => 
+            array (
+                'id' => 20,
                 'contrato_id' => 25,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-17 15:02:24',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-17 15:02:24',
-            ],
-            20 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            20 => 
+            array (
+                'id' => 21,
                 'contrato_id' => 26,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-18 12:52:37',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-18 12:52:37',
-            ],
-            21 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            21 => 
+            array (
+                'id' => 22,
                 'contrato_id' => 27,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-18 12:57:49',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-18 12:57:49',
-            ],
-            22 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            22 => 
+            array (
+                'id' => 23,
                 'contrato_id' => 28,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-18 13:44:28',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-18 13:44:28',
-            ],
-            23 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            23 => 
+            array (
+                'id' => 24,
                 'contrato_id' => 29,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-18 13:48:18',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-18 13:48:18',
-            ],
-            24 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            24 => 
+            array (
+                'id' => 25,
                 'contrato_id' => 30,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-18 14:26:13',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-18 14:26:13',
-            ],
-            25 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            25 => 
+            array (
+                'id' => 26,
                 'contrato_id' => 31,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-19 10:31:27',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-19 10:31:27',
-            ],
-            26 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            26 => 
+            array (
+                'id' => 27,
                 'contrato_id' => 32,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-05-26 15:43:04',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-05-26 15:43:04',
-            ],
-            27 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            27 => 
+            array (
+                'id' => 28,
                 'contrato_id' => 33,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-07 10:29:56',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-07 10:29:56',
-            ],
-            28 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            28 => 
+            array (
+                'id' => 29,
                 'contrato_id' => 34,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-08 17:03:02',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-08 17:03:02',
-            ],
-            29 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            29 => 
+            array (
+                'id' => 30,
                 'contrato_id' => 35,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-08 17:21:59',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-08 17:21:59',
-            ],
-            30 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            30 => 
+            array (
+                'id' => 31,
                 'contrato_id' => 36,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-08 17:40:38',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-08 17:40:38',
-            ],
-            31 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            31 => 
+            array (
+                'id' => 32,
                 'contrato_id' => 37,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-09 08:23:11',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-09 08:23:11',
-            ],
-            32 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            32 => 
+            array (
+                'id' => 33,
                 'contrato_id' => 38,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-09 08:45:53',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-09 08:45:53',
-            ],
-            33 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            33 => 
+            array (
+                'id' => 34,
                 'contrato_id' => 39,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-09 09:00:55',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-09 09:00:55',
-            ],
-            34 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            34 => 
+            array (
+                'id' => 35,
                 'contrato_id' => 40,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-09 09:55:48',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-09 09:55:48',
-            ],
-            35 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            35 => 
+            array (
+                'id' => 36,
                 'contrato_id' => 41,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-10 10:02:09',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-10 10:02:09',
-            ],
-            36 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            36 => 
+            array (
+                'id' => 37,
                 'contrato_id' => 42,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-15 11:01:58',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-15 11:01:58',
-            ],
-            37 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            37 => 
+            array (
+                'id' => 38,
                 'contrato_id' => 43,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-15 12:07:41',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-15 12:07:41',
-            ],
-            38 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            38 => 
+            array (
+                'id' => 39,
                 'contrato_id' => 47,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-27 11:05:27',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-27 11:05:27',
-            ],
-            39 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            39 => 
+            array (
+                'id' => 40,
                 'contrato_id' => 48,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-27 13:52:16',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-27 13:52:16',
-            ],
-            40 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            40 => 
+            array (
+                'id' => 41,
                 'contrato_id' => 49,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-27 15:25:03',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-27 15:25:03',
-            ],
-            41 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            41 => 
+            array (
+                'id' => 42,
                 'contrato_id' => 50,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-27 15:48:38',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-27 15:48:38',
-            ],
-            42 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            42 => 
+            array (
+                'id' => 43,
                 'contrato_id' => 51,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-27 16:10:32',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-27 16:10:32',
-            ],
-            43 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            43 => 
+            array (
+                'id' => 44,
                 'contrato_id' => 52,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-06-27 16:23:57',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-06-27 16:23:57',
-            ],
-            44 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            44 => 
+            array (
+                'id' => 45,
                 'contrato_id' => 53,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-07-11 16:17:08',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-07-11 16:17:08',
-            ],
-            45 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            45 => 
+            array (
+                'id' => 46,
                 'contrato_id' => 54,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-07-11 16:26:34',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-07-11 16:26:34',
-            ],
-            46 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            46 => 
+            array (
+                'id' => 47,
                 'contrato_id' => 55,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-07-11 16:37:53',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-07-11 16:37:53',
-            ],
-            47 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            47 => 
+            array (
+                'id' => 48,
                 'contrato_id' => 56,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-07-11 16:46:33',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-07-11 16:46:33',
-            ],
-            48 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            48 => 
+            array (
+                'id' => 49,
                 'contrato_id' => 57,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-07-11 17:06:42',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-07-11 17:06:42',
-            ],
-            49 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            49 => 
+            array (
+                'id' => 50,
                 'contrato_id' => 58,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-07-11 17:16:03',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-07-11 17:16:03',
-            ],
-            50 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            50 => 
+            array (
+                'id' => 51,
                 'contrato_id' => 59,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-07-12 08:35:42',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-07-12 08:35:42',
-            ],
-            51 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            51 => 
+            array (
+                'id' => 52,
                 'contrato_id' => 60,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-07-12 08:51:20',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-07-12 08:51:20',
-            ],
-            52 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            52 => 
+            array (
+                'id' => 53,
                 'contrato_id' => 61,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-07-12 09:07:32',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-07-12 09:07:32',
-            ],
-            53 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            53 => 
+            array (
+                'id' => 54,
                 'contrato_id' => 62,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-08-02 11:53:13',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-08-02 11:53:13',
-            ],
-            54 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            54 => 
+            array (
+                'id' => 55,
                 'contrato_id' => 63,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-08-09 12:22:53',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-08-09 12:22:53',
-            ],
-            55 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            55 => 
+            array (
+                'id' => 56,
                 'contrato_id' => 64,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-08-10 17:47:01',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-08-10 17:47:01',
-            ],
-            56 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            56 => 
+            array (
+                'id' => 57,
                 'contrato_id' => 65,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-08-15 12:35:42',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-08-15 12:35:42',
-            ],
-            57 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            57 => 
+            array (
+                'id' => 58,
                 'contrato_id' => 66,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-08-16 08:50:03',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-08-16 08:50:03',
-            ],
-            58 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            58 => 
+            array (
+                'id' => 59,
                 'contrato_id' => 67,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-02 15:02:52',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-02 15:02:52',
-            ],
-            59 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            59 => 
+            array (
+                'id' => 60,
                 'contrato_id' => 68,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-02 16:34:24',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-02 16:34:24',
-            ],
-            60 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            60 => 
+            array (
+                'id' => 61,
                 'contrato_id' => 69,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-02 17:41:34',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-02 17:41:34',
-            ],
-            61 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            61 => 
+            array (
+                'id' => 62,
                 'contrato_id' => 70,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-02 17:55:10',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-02 17:55:10',
-            ],
-            62 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            62 => 
+            array (
+                'id' => 63,
                 'contrato_id' => 71,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-02 18:45:02',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-02 18:45:02',
-            ],
-            63 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            63 => 
+            array (
+                'id' => 64,
                 'contrato_id' => 72,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-09 14:03:49',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-09 14:03:49',
-            ],
-            64 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            64 => 
+            array (
+                'id' => 65,
                 'contrato_id' => 73,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-09 14:18:03',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-09 14:18:03',
-            ],
-            65 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            65 => 
+            array (
+                'id' => 66,
                 'contrato_id' => 74,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-09 14:24:01',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-09 14:24:01',
-            ],
-            66 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            66 => 
+            array (
+                'id' => 67,
                 'contrato_id' => 75,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-23 09:08:36',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-23 09:08:36',
-            ],
-            67 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            67 => 
+            array (
+                'id' => 68,
                 'contrato_id' => 76,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-23 09:30:27',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-23 09:30:27',
-            ],
-            68 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            68 => 
+            array (
+                'id' => 69,
                 'contrato_id' => 77,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-23 14:51:16',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-23 14:51:16',
-            ],
-            69 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            69 => 
+            array (
+                'id' => 70,
                 'contrato_id' => 78,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-23 17:47:20',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-23 17:47:20',
-            ],
-            70 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            70 => 
+            array (
+                'id' => 71,
                 'contrato_id' => 79,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-27 11:21:23',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-27 11:21:23',
-            ],
-            71 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            71 => 
+            array (
+                'id' => 72,
                 'contrato_id' => 80,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-27 12:13:55',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-27 12:13:55',
-            ],
-            72 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            72 => 
+            array (
+                'id' => 73,
                 'contrato_id' => 81,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-27 13:07:46',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-27 13:07:46',
-            ],
-            73 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            73 => 
+            array (
+                'id' => 74,
                 'contrato_id' => 82,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-29 10:04:41',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-29 10:04:41',
-            ],
-            74 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            74 => 
+            array (
+                'id' => 75,
                 'contrato_id' => 83,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-29 13:29:27',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-29 13:29:27',
-            ],
-            75 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            75 => 
+            array (
+                'id' => 76,
                 'contrato_id' => 85,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-30 20:43:14',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-30 20:43:14',
-            ],
-            76 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            76 => 
+            array (
+                'id' => 77,
                 'contrato_id' => 84,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-30 20:43:15',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-30 20:43:15',
-            ],
-            77 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            77 => 
+            array (
+                'id' => 78,
                 'contrato_id' => 86,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-30 20:55:33',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-30 20:55:33',
-            ],
-            78 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            78 => 
+            array (
+                'id' => 79,
                 'contrato_id' => 87,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-30 20:59:40',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-30 20:59:40',
-            ],
-            79 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            79 => 
+            array (
+                'id' => 80,
                 'contrato_id' => 88,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-09-30 21:05:42',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-09-30 21:05:42',
-            ],
-            80 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            80 => 
+            array (
+                'id' => 81,
                 'contrato_id' => 89,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-10-03 19:55:09',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-10-03 19:55:09',
-            ],
-            81 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            81 => 
+            array (
+                'id' => 82,
                 'contrato_id' => 90,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-20 14:05:41',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-20 14:05:41',
-            ],
-            82 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            82 => 
+            array (
+                'id' => 83,
                 'contrato_id' => 91,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-20 15:19:26',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-20 15:19:26',
-            ],
-            83 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            83 => 
+            array (
+                'id' => 84,
                 'contrato_id' => 92,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-21 14:42:53',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-21 14:42:53',
-            ],
-            84 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            84 => 
+            array (
+                'id' => 85,
                 'contrato_id' => 93,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-22 11:03:11',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-22 11:03:11',
-            ],
-            85 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            85 => 
+            array (
+                'id' => 86,
                 'contrato_id' => 94,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-22 12:07:44',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-22 12:07:44',
-            ],
-            86 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            86 => 
+            array (
+                'id' => 87,
                 'contrato_id' => 95,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-22 12:43:41',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-22 12:43:41',
-            ],
-            87 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            87 => 
+            array (
+                'id' => 88,
                 'contrato_id' => 96,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-26 13:28:45',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-26 13:28:45',
-            ],
-            88 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            88 => 
+            array (
+                'id' => 89,
                 'contrato_id' => 97,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-26 13:54:54',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-26 13:54:54',
-            ],
-            89 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            89 => 
+            array (
+                'id' => 90,
                 'contrato_id' => 98,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-26 14:13:41',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-26 14:13:41',
-            ],
-            90 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            90 => 
+            array (
+                'id' => 91,
                 'contrato_id' => 99,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-26 14:54:10',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-26 14:54:10',
-            ],
-            91 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            91 => 
+            array (
+                'id' => 92,
                 'contrato_id' => 100,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-27 13:59:14',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-27 13:59:14',
-            ],
-            92 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            92 => 
+            array (
+                'id' => 93,
                 'contrato_id' => 101,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-27 14:18:52',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-27 14:18:52',
-            ],
-            93 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            93 => 
+            array (
+                'id' => 94,
                 'contrato_id' => 102,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-27 14:45:35',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-27 14:45:35',
-            ],
-            94 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            94 => 
+            array (
+                'id' => 95,
                 'contrato_id' => 103,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2022-12-29 12:34:30',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2022-12-29 12:34:30',
-            ],
-            95 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            95 => 
+            array (
+                'id' => 96,
                 'contrato_id' => 104,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-06 14:28:51',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-06 14:28:51',
-            ],
-            96 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            96 => 
+            array (
+                'id' => 97,
                 'contrato_id' => 105,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-06 14:48:59',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-06 14:48:59',
-            ],
-            97 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            97 => 
+            array (
+                'id' => 98,
                 'contrato_id' => 106,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-06 14:57:56',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-06 14:57:56',
-            ],
-            98 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            98 => 
+            array (
+                'id' => 99,
                 'contrato_id' => 107,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-10 10:51:50',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-10 10:51:50',
-            ],
-            99 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            99 => 
+            array (
+                'id' => 100,
                 'contrato_id' => 108,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-11 13:31:42',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-11 13:31:42',
-            ],
-            100 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            100 => 
+            array (
+                'id' => 101,
                 'contrato_id' => 109,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-11 15:25:41',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-11 15:25:41',
-            ],
-            101 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            101 => 
+            array (
+                'id' => 102,
                 'contrato_id' => 110,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-12 11:54:12',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-12 11:54:12',
-            ],
-            102 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            102 => 
+            array (
+                'id' => 103,
                 'contrato_id' => 111,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-12 12:15:54',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-12 12:15:54',
-            ],
-            103 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            103 => 
+            array (
+                'id' => 104,
                 'contrato_id' => 112,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-13 13:37:12',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-13 13:37:12',
-            ],
-            104 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            104 => 
+            array (
+                'id' => 105,
                 'contrato_id' => 113,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-13 13:52:48',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-13 13:52:48',
-            ],
-            105 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            105 => 
+            array (
+                'id' => 106,
                 'contrato_id' => 114,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-17 10:52:17',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-17 10:52:17',
-            ],
-            106 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            106 => 
+            array (
+                'id' => 107,
                 'contrato_id' => 115,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-17 14:35:22',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-17 14:35:22',
-            ],
-            107 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            107 => 
+            array (
+                'id' => 108,
                 'contrato_id' => 116,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-19 09:11:47',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-19 09:11:47',
-            ],
-            108 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            108 => 
+            array (
+                'id' => 109,
                 'contrato_id' => 117,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-19 14:23:47',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-19 14:23:47',
-            ],
-            109 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            109 => 
+            array (
+                'id' => 110,
                 'contrato_id' => 118,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-20 13:18:19',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-20 13:18:19',
-            ],
-            110 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            110 => 
+            array (
+                'id' => 111,
                 'contrato_id' => 119,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-01-24 12:20:38',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-01-24 12:20:38',
-            ],
-            111 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            111 => 
+            array (
+                'id' => 112,
                 'contrato_id' => 120,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-02 13:03:01',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-02 13:03:01',
-            ],
-            112 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            112 => 
+            array (
+                'id' => 113,
                 'contrato_id' => 121,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-02 13:54:51',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-02 13:54:51',
-            ],
-            113 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            113 => 
+            array (
+                'id' => 114,
                 'contrato_id' => 122,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-02 14:20:10',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-02 14:20:10',
-            ],
-            114 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            114 => 
+            array (
+                'id' => 115,
                 'contrato_id' => 123,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-02 14:31:53',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-02 14:31:53',
-            ],
-            115 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            115 => 
+            array (
+                'id' => 116,
                 'contrato_id' => 124,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-02 14:54:38',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-02 14:54:38',
-            ],
-            116 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            116 => 
+            array (
+                'id' => 117,
                 'contrato_id' => 125,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-09 12:07:05',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-09 12:07:05',
-            ],
-            117 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            117 => 
+            array (
+                'id' => 118,
                 'contrato_id' => 126,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-09 12:55:01',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-09 12:55:01',
-            ],
-            118 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            118 => 
+            array (
+                'id' => 119,
                 'contrato_id' => 127,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-09 13:38:49',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-09 13:38:49',
-            ],
-            119 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            119 => 
+            array (
+                'id' => 120,
                 'contrato_id' => 128,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-13 11:37:19',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-13 11:37:19',
-            ],
-            120 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            120 => 
+            array (
+                'id' => 121,
                 'contrato_id' => 129,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-13 12:51:29',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-13 12:51:29',
-            ],
-            121 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            121 => 
+            array (
+                'id' => 122,
                 'contrato_id' => 130,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-13 13:26:25',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-13 13:26:25',
-            ],
-            122 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            122 => 
+            array (
+                'id' => 123,
                 'contrato_id' => 131,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-13 13:50:14',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-13 13:50:14',
-            ],
-            123 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            123 => 
+            array (
+                'id' => 124,
                 'contrato_id' => 132,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-13 15:51:30',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-13 15:51:30',
-            ],
-            124 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            124 => 
+            array (
+                'id' => 125,
                 'contrato_id' => 133,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-13 16:49:18',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-13 16:49:18',
-            ],
-            125 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            125 => 
+            array (
+                'id' => 126,
                 'contrato_id' => 134,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-14 12:51:38',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-14 12:51:38',
-            ],
-            126 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            126 => 
+            array (
+                'id' => 127,
                 'contrato_id' => 135,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-14 13:08:27',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-14 13:08:27',
-            ],
-            127 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            127 => 
+            array (
+                'id' => 128,
                 'contrato_id' => 136,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-14 13:33:02',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-14 13:33:02',
-            ],
-            128 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            128 => 
+            array (
+                'id' => 129,
                 'contrato_id' => 137,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-14 13:55:34',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-14 13:55:34',
-            ],
-            129 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            129 => 
+            array (
+                'id' => 130,
                 'contrato_id' => 138,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-14 17:09:46',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-14 17:09:46',
-            ],
-            130 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            130 => 
+            array (
+                'id' => 131,
                 'contrato_id' => 139,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-15 10:21:59',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-15 10:21:59',
-            ],
-            131 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            131 => 
+            array (
+                'id' => 132,
                 'contrato_id' => 140,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-23 11:20:19',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-23 11:20:19',
-            ],
-            132 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            132 => 
+            array (
+                'id' => 133,
                 'contrato_id' => 141,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-02-23 12:01:06',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-02-23 12:01:06',
-            ],
-            133 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            133 => 
+            array (
+                'id' => 134,
                 'contrato_id' => 142,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-03-03 10:00:36',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-03-03 10:00:36',
-            ],
-            134 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            134 => 
+            array (
+                'id' => 135,
                 'contrato_id' => 143,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-03-07 11:46:56',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-03-07 11:46:56',
-            ],
-            135 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            135 => 
+            array (
+                'id' => 136,
                 'contrato_id' => 144,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-03-07 13:05:23',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-03-07 13:05:23',
-            ],
-            136 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            136 => 
+            array (
+                'id' => 137,
                 'contrato_id' => 145,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-03-07 13:42:06',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-03-07 13:42:06',
-            ],
-            137 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            137 => 
+            array (
+                'id' => 138,
                 'contrato_id' => 146,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-03-07 13:57:46',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-03-07 13:57:46',
-            ],
-            138 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            138 => 
+            array (
+                'id' => 139,
                 'contrato_id' => 147,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-03-08 10:34:08',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-03-08 10:34:08',
-            ],
-            139 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            139 => 
+            array (
+                'id' => 140,
                 'contrato_id' => 148,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-03-15 13:10:51',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-03-15 13:10:51',
-            ],
-            140 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            140 => 
+            array (
+                'id' => 141,
                 'contrato_id' => 149,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-03-15 15:28:34',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-03-15 15:28:34',
-            ],
-            141 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            141 => 
+            array (
+                'id' => 142,
                 'contrato_id' => 150,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-03-15 15:58:51',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-03-15 15:58:51',
-            ],
-            142 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            142 => 
+            array (
+                'id' => 143,
                 'contrato_id' => 151,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-06 11:20:16',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-06 11:20:16',
-            ],
-            143 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            143 => 
+            array (
+                'id' => 144,
                 'contrato_id' => 152,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-10 14:09:20',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-10 14:09:20',
-            ],
-            144 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            144 => 
+            array (
+                'id' => 145,
                 'contrato_id' => 153,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-10 14:24:24',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-10 14:24:24',
-            ],
-            145 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            145 => 
+            array (
+                'id' => 146,
                 'contrato_id' => 154,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-10 15:19:04',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-10 15:19:04',
-            ],
-            146 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            146 => 
+            array (
+                'id' => 147,
                 'contrato_id' => 155,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-11 09:54:01',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-11 09:54:01',
-            ],
-            147 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            147 => 
+            array (
+                'id' => 148,
                 'contrato_id' => 156,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-11 10:17:57',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-11 10:17:57',
-            ],
-            148 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            148 => 
+            array (
+                'id' => 149,
                 'contrato_id' => 157,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-12 14:54:44',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-12 14:54:44',
-            ],
-            149 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            149 => 
+            array (
+                'id' => 150,
                 'contrato_id' => 158,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-13 10:01:59',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-13 10:01:59',
-            ],
-            150 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            150 => 
+            array (
+                'id' => 151,
                 'contrato_id' => 159,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-14 21:07:58',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-14 21:07:58',
-            ],
-            151 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            151 => 
+            array (
+                'id' => 152,
                 'contrato_id' => 160,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-19 14:48:47',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-19 14:48:47',
-            ],
-            152 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            152 => 
+            array (
+                'id' => 153,
                 'contrato_id' => 161,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-24 09:40:32',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-24 09:40:32',
-            ],
-            153 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            153 => 
+            array (
+                'id' => 154,
                 'contrato_id' => 162,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-04-27 14:03:47',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-04-27 14:03:47',
-            ],
-            154 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            154 => 
+            array (
+                'id' => 155,
                 'contrato_id' => 163,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-06-14 09:54:10',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-06-14 09:54:10',
-            ],
-            155 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            155 => 
+            array (
+                'id' => 156,
                 'contrato_id' => 164,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-06-14 10:38:52',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-06-14 10:38:52',
-            ],
-            156 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            156 => 
+            array (
+                'id' => 157,
                 'contrato_id' => 165,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-08-14 16:30:54',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-08-14 16:30:54',
-            ],
-            157 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            157 => 
+            array (
+                'id' => 158,
                 'contrato_id' => 166,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-08-16 14:05:13',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-08-16 14:05:13',
-            ],
-            158 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            158 => 
+            array (
+                'id' => 159,
                 'contrato_id' => 167,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-08-16 18:12:36',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-08-16 18:12:36',
-            ],
-            159 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            159 => 
+            array (
+                'id' => 160,
                 'contrato_id' => 168,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-08-21 14:36:27',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-08-21 14:36:27',
-            ],
-            160 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            160 => 
+            array (
+                'id' => 161,
                 'contrato_id' => 169,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-08-21 14:38:41',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-08-21 14:38:41',
-            ],
-            161 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            161 => 
+            array (
+                'id' => 162,
                 'contrato_id' => 170,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-08-22 16:37:17',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-08-22 16:37:17',
-            ],
-            162 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            162 => 
+            array (
+                'id' => 163,
                 'contrato_id' => 171,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-08-24 13:29:20',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-08-24 13:29:20',
-            ],
-            163 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            163 => 
+            array (
+                'id' => 164,
                 'contrato_id' => 172,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-09-04 10:52:54',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-09-04 10:52:54',
-            ],
-            164 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            164 => 
+            array (
+                'id' => 165,
                 'contrato_id' => 173,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-09-04 11:01:00',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-09-04 11:01:00',
-            ],
-            165 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            165 => 
+            array (
+                'id' => 166,
                 'contrato_id' => 174,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-09-04 11:50:54',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-09-04 11:50:54',
-            ],
-            166 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            166 => 
+            array (
+                'id' => 167,
                 'contrato_id' => 175,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-09-04 12:17:14',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-09-04 12:17:14',
-            ],
-            167 => [
+                'elaboro' => '',
+                'reviso' => '',
                 'autorizo' => '',
+            ),
+            167 => 
+            array (
+                'id' => 168,
                 'contrato_id' => 176,
+                'cumple' => '1',
+                'deleted_at' => NULL,
                 'created_at' => '2023-09-04 12:35:12',
-                'cumple' => '1',
-                'deleted_at' => null,
-                'elaboro' => '',
-
-                'reviso' => '',
                 'updated_at' => '2023-09-04 12:35:12',
-            ],
-            168 => [
-                'autorizo' => '',
-                'contrato_id' => 177,
-                'created_at' => '2023-09-04 12:47:36',
-                'cumple' => '1',
-                'deleted_at' => null,
                 'elaboro' => '',
-
                 'reviso' => '',
+                'autorizo' => '',
+            ),
+            168 => 
+            array (
+                'id' => 169,
+                'contrato_id' => 177,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-04 12:47:36',
                 'updated_at' => '2023-09-04 12:47:36',
-            ],
-        ]);
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            169 => 
+            array (
+                'id' => 170,
+                'contrato_id' => 178,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-04 16:39:00',
+                'updated_at' => '2023-09-04 16:39:00',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            170 => 
+            array (
+                'id' => 171,
+                'contrato_id' => 179,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-04 17:29:48',
+                'updated_at' => '2023-09-04 17:29:48',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            171 => 
+            array (
+                'id' => 172,
+                'contrato_id' => 180,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-06 10:01:42',
+                'updated_at' => '2023-09-06 10:01:42',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            172 => 
+            array (
+                'id' => 173,
+                'contrato_id' => 181,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-06 16:21:53',
+                'updated_at' => '2023-09-06 16:21:53',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            173 => 
+            array (
+                'id' => 174,
+                'contrato_id' => 182,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-06 16:34:26',
+                'updated_at' => '2023-09-06 16:34:26',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            174 => 
+            array (
+                'id' => 175,
+                'contrato_id' => 183,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-11 09:47:47',
+                'updated_at' => '2023-09-11 09:47:47',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            175 => 
+            array (
+                'id' => 176,
+                'contrato_id' => 184,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-11 10:24:40',
+                'updated_at' => '2023-09-11 10:24:40',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            176 => 
+            array (
+                'id' => 177,
+                'contrato_id' => 185,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-11 11:36:39',
+                'updated_at' => '2023-09-11 11:36:39',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            177 => 
+            array (
+                'id' => 178,
+                'contrato_id' => 186,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-11 12:22:25',
+                'updated_at' => '2023-09-11 12:22:25',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            178 => 
+            array (
+                'id' => 179,
+                'contrato_id' => 187,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-11 12:52:33',
+                'updated_at' => '2023-09-11 12:52:33',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            179 => 
+            array (
+                'id' => 180,
+                'contrato_id' => 188,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-11 13:17:39',
+                'updated_at' => '2023-09-11 13:17:39',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            180 => 
+            array (
+                'id' => 181,
+                'contrato_id' => 189,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-11 13:38:58',
+                'updated_at' => '2023-09-11 13:38:58',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            181 => 
+            array (
+                'id' => 182,
+                'contrato_id' => 190,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-12 11:35:53',
+                'updated_at' => '2023-09-12 11:35:53',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+            182 => 
+            array (
+                'id' => 183,
+                'contrato_id' => 191,
+                'cumple' => '1',
+                'deleted_at' => NULL,
+                'created_at' => '2023-09-13 17:23:27',
+                'updated_at' => '2023-09-13 17:23:27',
+                'elaboro' => '',
+                'reviso' => '',
+                'autorizo' => '',
+            ),
+        ));
+        
+        
     }
 }
