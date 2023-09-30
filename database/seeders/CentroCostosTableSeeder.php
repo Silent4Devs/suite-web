@@ -6,226 +6,252 @@ use Illuminate\Database\Seeder;
 
 class CentroCostosTableSeeder extends Seeder
 {
+
     /**
-     * Auto generated seed file.
+     * Auto generated seed file
      *
      * @return void
      */
     public function run()
     {
-        \DB::table('centro_costos')->delete();
+        
 
-        \DB::table('centro_costos')->insert([
-            0 => [
+        \DB::table('centro_costos')->delete();
+        
+        \DB::table('centro_costos')->insert(array (
+            0 => 
+            array (
                 'id' => 1,
                 'clave' => 1,
                 'descripcion' => 'DIRECCIÓN GENERAL',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            1 => [
+            ),
+            1 => 
+            array (
                 'id' => 2,
                 'clave' => 2,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            2 => [
+            ),
+            2 => 
+            array (
                 'id' => 3,
                 'clave' => 3,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/GESTIÓN DE TALENTO',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            3 => [
+            ),
+            3 => 
+            array (
                 'id' => 4,
                 'clave' => 4,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/CONTABILIDAD',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            4 => [
+            ),
+            4 => 
+            array (
                 'id' => 5,
                 'clave' => 5,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/GESTIÓN DE SERVICIOS',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            5 => [
+            ),
+            5 => 
+            array (
                 'id' => 6,
                 'clave' => 6,
                 'descripcion' => 'INNOVACIÓN Y DESARROLLO',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            6 => [
+            ),
+            6 => 
+            array (
                 'id' => 7,
                 'clave' => 7,
                 'descripcion' => 'DIRECCIÓN COMERCIAL',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            7 => [
+            ),
+            7 => 
+            array (
                 'id' => 8,
                 'clave' => 8,
                 'descripcion' => 'AREA DE OPERACIONES NOC/SOC',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            8 => [
+            ),
+            8 => 
+            array (
                 'id' => 9,
                 'clave' => 9,
                 'descripcion' => 'CIBER-INTELIGENCIA',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            9 => [
+            ),
+            9 => 
+            array (
                 'id' => 10,
                 'clave' => 10,
                 'descripcion' => 'CONSULTORIA ESTRATEGICA',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            10 => [
+            ),
+            10 => 
+            array (
                 'id' => 11,
                 'clave' => 11,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/CUMPLIMIENTO Y MEJORA CONTINUA',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            11 => [
+            ),
+            11 => 
+            array (
                 'id' => 12,
                 'clave' => 12,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/DIRECCION',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            12 => [
+            ),
+            12 => 
+            array (
                 'id' => 13,
                 'clave' => 13,
                 'descripcion' => 'DIRECCIÓN GENERAL/DIRECCIÓN GRL',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            13 => [
+            ),
+            13 => 
+            array (
                 'id' => 14,
                 'clave' => 14,
                 'descripcion' => 'DIRECCIÓN GENERAL/ASISTENTES DE DIRECCIÓN GRL',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            14 => [
+            ),
+            14 => 
+            array (
                 'id' => 15,
                 'clave' => 15,
                 'descripcion' => 'ÁREA DE OPERACIONES NOC/SOC/OPERACIONES NOC/SOC',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            15 => [
+            ),
+            15 => 
+            array (
                 'id' => 16,
                 'clave' => 16,
                 'descripcion' => 'ÁREA DE OPERACIONES NOC/SOC/SOPORTE INTERNO',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            16 => [
+            ),
+            16 => 
+            array (
                 'id' => 17,
                 'clave' => 17,
                 'descripcion' => 'ÁREA DE OPERACIONES NOC/SOC/SERVICIOS ADMINISTRADOS',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            17 => [
+            ),
+            17 => 
+            array (
                 'id' => 18,
                 'clave' => 18,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/SERVICIOS GENERALES',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            18 => [
+            ),
+            18 => 
+            array (
                 'id' => 19,
                 'clave' => 19,
                 'descripcion' => 'DIRECCIÓN COMERCIAL/MARKETING',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            19 => [
+            ),
+            19 => 
+            array (
                 'id' => 20,
                 'clave' => 20,
                 'descripcion' => 'DIRECCIÓN COMERCIAL/VENTAS INFRAESTRUCTURA',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-            20 => [
+            ),
+            20 => 
+            array (
                 'id' => 21,
                 'clave' => 21,
                 'descripcion' => 'DIRECCIÓN COMERCIAL/DIRECCIÓN COMERCIAL',
                 'estado' => 'AC',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
-            ],
-        ]);
+            ),
+        ));
+        
+        
     }
 }
