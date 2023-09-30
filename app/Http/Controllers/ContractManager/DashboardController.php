@@ -8,11 +8,10 @@ use App\Models\ContractManager\CierreContrato;
 use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\EntregaMensual;
 use App\Models\ContractManager\Factura;
-use App\Models\ContractManager\NivelesServicio;
-use App\Models\TimesheetCliente;
 use App\Models\ContractManager\Proveedores;
-use Illuminate\Support\Facades\DB;
+use App\Models\TimesheetCliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -38,9 +37,6 @@ class DashboardController extends Controller
             ->limit(10)
             ->offset(0)
             ->get();
-
-
-
 
         $vigente = CedulaCumplimiento::leftjoin('contratos', 'contratos.id', '=', 'cedula_cumplimiento.contrato_id')
             ->whereNull('cedula_cumplimiento.deleted_at')
@@ -192,9 +188,9 @@ class DashboardController extends Controller
         $topnocumpletot = DB::select($suma);
 
         $clientes = TimesheetCliente::get();
+
         return view('contract_manager.dashboard.index', compact('total', 'totalVig', 'totalCer', 'totalRev', 'DashboardTipoContrato', 'DashboardCicloVida', 'nocumple', 'cumple', 'topten', 'topnocumpletot', 'clientes'));
     }
-
 
     // ajax
     public function AjaxRequestClientes(Request $request)

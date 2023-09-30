@@ -6,14 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Level;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-
         $cursoscategorias = array_unique(Course::pluck('category_id')->toArray());
         $categorias = Category::select('id', 'name')->find($cursoscategorias);
         $categoriasLabel = [];
@@ -27,7 +24,6 @@ class HomeController extends Controller
 
         $cursosStatusBorrador = Course::select('id', 'status')->where('status', 1)->count();
         $cursosStatusPublicado = Course::select('id', 'status')->where('status', 3)->count();
-
 
         $cursosniveles = array_unique(Course::pluck('level_id')->toArray());
         $niveles = Level::select('id', 'name')->find($cursosniveles);

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class TimesheetCliente extends Model
-// implements Auditable
+    // implements Auditable
 {
     use HasFactory;
     // use \OwenIt\Auditing\Auditable;
@@ -36,8 +36,8 @@ class TimesheetCliente extends Model
         'correo_contacto',
         'celular_contacto',
 
-        // 'objeto_descripcion',
-        // 'cobertura',
+        'objeto_descripcion',
+        'cobertura',
     ];
 
     //Redis methods

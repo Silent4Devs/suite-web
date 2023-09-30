@@ -14,9 +14,9 @@ services:
     container_name: dd-agent
     restart: unless-stopped
     environment:
-      - DD_API_KEY=f792a4cfd07aef36fff5bcca11b68b40
+      - DD_API_KEY=495473ba9498ee8902595ee90a4d7a27ad1b5304
       - DD_SITE=us5.datadoghq.com
-      - DD_HOSTNAME=tabantaj-prod
+      - DD_HOSTNAME=tabantaj
       - DD_APM_ENABLED=true
       - DD_LOGS_ENABLED=true
       - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
@@ -24,6 +24,11 @@ services:
       - DD_CONTAINER_EXCLUDE=image:datadog/agent:7*
       - DD_CONTAINER_EXCLUDE_METRICS=image:datadog/agent:7*
       - DD_CONTAINER_EXCLUDE_LOGS=image:datadog/agent:7*
+      - DD_PROCESS_AGENT_ENABLED=false
+      - DD_ECS_FARGATE_ENABLED=false
+    ports:
+      - 8125/udp
+      - 8126/tcp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro
@@ -31,7 +36,6 @@ services:
       - /opt/datadog-agent/run:/opt/datadog-agent/run:rw
     networks:
       - tabantajnetwork
-
 
   nginx-tabantaj:
     image: nginx:stable-alpine
@@ -47,15 +51,15 @@ services:
       - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
-      # - postgres-tabantaj
+      - postgres-tabantaj
       - redis-tabantaj
     labels:
       #com.datadoghq.ad.check_names: '[""]'
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "nginx", "service": "nginx-tabantaj"}]'
-      com.datadoghq.tags.env: 'production'
-      com.datadoghq.tags.service: 'tabantaj-prod'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
     env_file:
       - .env
@@ -91,28 +95,28 @@ services:
       - tabantajnetwork
     mem_limit: 6g
     labels:
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres-tabantaj"}]'
-      com.datadoghq.tags.env: 'production'
-      com.datadoghq.tags.service: 'tabantaj-prod'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
 
-  # pgadmin-tabantaj:
-  #   depends_on:
-  #     - postgres-tabantaj
-  #   image: dpage/pgadmin4:latest
-  #   ports:
-  #     - "5480:80"
-  #   environment:
-  #     - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
-  #     - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
-  #   restart: unless-stopped
-  #   tty: true
-  #   volumes:
-  #     - pgadmin-data:/var/lib/pgadmin
-  #   networks:
-  #     - tabantajnetwork
+  pgadmin-tabantaj:
+    depends_on:
+      - postgres-tabantaj
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5480:80"
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=VnRE!Jib7W9@qeBN
+      - PGADMIN_DEFAULT_EMAIL=soporte.desarrollo@silent4business.com
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - tabantajnetwork
 
   php:
     #uncomment this if you will use only docker compose
@@ -129,23 +133,23 @@ services:
     restart: unless-stopped
     # labels:
     #   ofelia.enabled: "true"
-      # ofelia.job-exec.schedulecron.schedule: "@hourly"
-      # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
-      # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-      # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
-      # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
-      # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
+    # ofelia.job-exec.schedulecron.schedule: "@hourly"
+    # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
+    # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
+    # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
+    # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
+    # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
     tty: true
     volumes:
       - .:/var/www/html
     ports:
       - 9000:80
     labels:
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
       com.datadoghq.ad.logs: '[{"source": "php", "service": "php-tabantaj"}]'
-      com.datadoghq.tags.env: 'production'
-      com.datadoghq.tags.service: 'tabantaj-prod'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
     networks:
       - tabantajnetwork
@@ -161,12 +165,12 @@ services:
       - tabantajnetwork
     mem_limit: 2g
     labels:
-      com.datadoghq.ad.check_names: '[redisdb]'
-      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.check_names: "[redisdb]"
+      com.datadoghq.ad.init_configs: "[{}]"
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "6379"}]'
       com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis-tabantaj"}]'
-      com.datadoghq.tags.env: 'production'
-      com.datadoghq.tags.service: 'tabantaj-prod'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
       com.datadoghq.tags.version: "1"
 
   rdadmin-tabantaj:
@@ -340,30 +344,15 @@ services:
   #   networks:
   #     - tabantajnetwork
 
-<<<<<<< HEAD
 volumes:
   tabantaj-db:
     driver: local
   pgadmin-data:
     driver: local
-<<<<<<< HEAD
-  elasticsearch:
-    driver: local
-  elasticsearch-logs:
-    driver: local
-=======
-# volumes:
-#   tabantaj-db:
-#     driver: local
-#   pgadmin-data:
-#     driver: local
->>>>>>> 702ae06c8a6976b89c7ae6175816af95f3457963
-=======
   # elasticsearch:
   #   driver: local
   # elasticsearch-logs:
   #   driver: local
->>>>>>> 8212779f809b5b34f6128655cb7dd1dc371818c7
 
 networks:
   tabantajnetwork:

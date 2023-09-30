@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use notify;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -18,6 +17,7 @@ class RoleController extends Controller
         $this->middleware('can:Editar role')->only('edit', 'update');
         $this->middleware('can:Eliminar role')->only('destroy');
     }
+
     /**
      * Display a listing of the resource.
      *

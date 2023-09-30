@@ -40,8 +40,9 @@ class Kernel extends ConsoleKernel
             ->timezone('America/Mexico_City')
             ->dailyAt('10:00')
             ->withoutOverlapping()
-            ->onOneServer();
-        $schedule->command('backup:run')->dailyAt('02:00')->sendOutputTo(storage_path('logs/scheduled.log'));
+            ->onOneServer()
+            ->sentryMonitor();
+        $schedule->command('backup:run')->dailyAt('02:00')->sendOutputTo(storage_path('logs/scheduled.log'))->sentryMonitor();
     }
 
     /**

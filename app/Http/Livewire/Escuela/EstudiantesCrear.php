@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Escuela;
 
-use App\Models\User;
 use App\Models\Escuela\Course;
-use Livewire\Component;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Escuela\UsuariosCursos;
+use App\Models\User;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class EstudiantesCrear extends Component
 {
@@ -20,8 +20,9 @@ class EstudiantesCrear extends Component
         'user_id' => 'required',
     ];
     protected $messages = [
-        'user_id.required' => 'Debe seleccionar un usuario'
+        'user_id.required' => 'Debe seleccionar un usuario',
     ];
+
     public function mount(Course $course)
     {
         $this->course = $course;
@@ -55,10 +56,9 @@ class EstudiantesCrear extends Component
         $usuariosInscritos = UsuariosCursos::with('usuarios')->where('course_id', $this->course->id)->pluck('user_id')->toArray();
 
         $this->usuarios = User::whereNotIn('id', $usuariosInscritos)->orderBy('name')->get();
+
         return view('livewire.escuela.estudiantes-crear', ['usuarios' => $this->usuarios]);
     }
-
-
 
     public function hydrate()
     {

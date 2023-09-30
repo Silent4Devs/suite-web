@@ -275,7 +275,7 @@ class Contrato extends Model implements Auditable
 
     public function getArchivoAttribute()
     {
-        $archivo = Contrato::where('contrato_id', $this->id)->first();
+        $archivo = self::where('contrato_id', $this->id)->first();
         $archivo = $archivo ? $archivo->pdf : '';
         // dd($archivo);
         $ruta = asset('storage/contratos/');

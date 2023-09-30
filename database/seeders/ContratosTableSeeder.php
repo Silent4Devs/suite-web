@@ -4,21 +4,18 @@ namespace Database\Seeders;
 
 use App\Models\Area;
 use App\Models\ContractManager\Contrato;
-use App\Models\Timesheet;
 use App\Models\TimesheetCliente;
 use Illuminate\Database\Seeder;
 
 class ContratosTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-
         \DB::table('contratos')->delete();
 
         $clientes = TimesheetCliente::all();
@@ -8656,48 +8653,47 @@ class ContratosTableSeeder extends Seeder
 
 
         foreach ($contratos as  $contrato) {
-
             foreach ($clientes as $cliente) {
-                if ($cliente->id_old === $contrato["proveedor_id"]) {
+                if ($cliente->id_old === $contrato['proveedor_id']) {
                     $contratos = new  Contrato();
-                    $contratos->no_contrato = $contrato["no_contrato"];
-                    $contratos->tipo_contrato = $contrato["tipo_contrato"];
+                    $contratos->no_contrato = $contrato['no_contrato'];
+                    $contratos->tipo_contrato = $contrato['tipo_contrato'];
                     $contratos->proveedor_id = $cliente->id;
-                    $contratos->nombre_servicio = $contrato["nombre_servicio"];
-                    $contratos->objetivo = $contrato["objetivo"];
-                    $contratos->fecha_inicio = $contrato["fecha_inicio"];
-                    $contratos->fecha_fin = $contrato["fecha_fin"];
-                    $contratos->vigencia_contrato = $contrato["vigencia_contrato"];
-                    $contratos->no_pagos = $contrato["no_pagos"];
-                    $contratos->administrador_contrato = $contrato["administrador_contrato"];
-                    $contratos->servicios_descripcion = $contrato["servicios_descripcion"];
-                    $contratos->fecha_firma = $contrato["fecha_firma"];
-                    $contratos->periodo_pagos = $contrato["periodo_pagos"];
-                    $contratos->monto_pago = $contrato["monto_pago"];
-                    $contratos->fecha_inicio_pago = $contrato["fecha_inicio_pago"];
-                    $contratos->minimo = $contrato["minimo"];
-                    $contratos->maximo = $contrato["maximo"];
-                    $contratos->area = $contrato["area"];
-                    $contratos->area_administrador = $contrato["area_administrador"];
-                    $contratos->puesto = $contrato["puesto"];
-                    $contratos->cargo_administrador = $contrato["cargo_administrador"];
-                    $contratos->pmp_asignado = $contrato["pmp_asignado"];
-                    $contratos->clasificacion = $contrato["clasificacion"];
-                    $contratos->fase = $contrato["fase"];
-                    $contratos->contrato_ampliado = $contrato["contrato_ampliado"];
-                    $contratos->convenio_modificatorio = $contrato["convenio_modificatorio"];
-                    $contratos->estatus = $contrato["estatus"];
-                    if ($contrato["area_id"] === 1) {
+                    $contratos->nombre_servicio = $contrato['nombre_servicio'];
+                    $contratos->objetivo = $contrato['objetivo'];
+                    $contratos->fecha_inicio = $contrato['fecha_inicio'];
+                    $contratos->fecha_fin = $contrato['fecha_fin'];
+                    $contratos->vigencia_contrato = $contrato['vigencia_contrato'];
+                    $contratos->no_pagos = $contrato['no_pagos'];
+                    $contratos->administrador_contrato = $contrato['administrador_contrato'];
+                    $contratos->servicios_descripcion = $contrato['servicios_descripcion'];
+                    $contratos->fecha_firma = $contrato['fecha_firma'];
+                    $contratos->periodo_pagos = $contrato['periodo_pagos'];
+                    $contratos->monto_pago = $contrato['monto_pago'];
+                    $contratos->fecha_inicio_pago = $contrato['fecha_inicio_pago'];
+                    $contratos->minimo = $contrato['minimo'];
+                    $contratos->maximo = $contrato['maximo'];
+                    $contratos->area = $contrato['area'];
+                    $contratos->area_administrador = $contrato['area_administrador'];
+                    $contratos->puesto = $contrato['puesto'];
+                    $contratos->cargo_administrador = $contrato['cargo_administrador'];
+                    $contratos->pmp_asignado = $contrato['pmp_asignado'];
+                    $contratos->clasificacion = $contrato['clasificacion'];
+                    $contratos->fase = $contrato['fase'];
+                    $contratos->contrato_ampliado = $contrato['contrato_ampliado'];
+                    $contratos->convenio_modificatorio = $contrato['convenio_modificatorio'];
+                    $contratos->estatus = $contrato['estatus'];
+                    if ($contrato['area_id'] === 1) {
                         $area = Area::where('area', 'Admin')->first();
                         $contratos->area_id = $area->id;
                     }
-                    $contratos->file_contrato = $contrato["file_contrato"];
-                    $contratos->no_pagos = $contrato["no_pagos"];
-                    $contratos->folio = $contrato["folio"];
-                    $contratos->documento = $contrato["documento"];
-                    $contratos->tipo_cambio = $contrato["tipo_cambio"];
-                    $contratos->identificador_privado = $contrato["identificador_privado"];
-                    $contratos->firma1 = $contrato["firma1"];
+                    $contratos->file_contrato = $contrato['file_contrato'];
+                    $contratos->no_pagos = $contrato['no_pagos'];
+                    $contratos->folio = $contrato['folio'];
+                    $contratos->documento = $contrato['documento'];
+                    $contratos->tipo_cambio = $contrato['tipo_cambio'];
+                    $contratos->identificador_privado = $contrato['identificador_privado'];
+                    $contratos->firma1 = $contrato['firma1'];
                     $contratos->save();
                 }
             }

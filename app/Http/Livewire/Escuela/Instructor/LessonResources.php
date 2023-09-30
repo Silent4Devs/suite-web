@@ -3,20 +3,19 @@
 namespace App\Http\Livewire\Escuela\Instructor;
 
 use App\Models\Escuela\Lesson;
-use Livewire\Component;
-
 use Illuminate\Support\Facades\Storage;
-
+use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class LessonResources extends Component
 {
     use WithFileUploads;
 
-    public $lesson, $file;
+    public $lesson;
+    public $file;
 
     protected $messages = [
-        'file.required' => "El archivo es obligatorio",
+        'file.required' => 'El archivo es obligatorio',
     ];
 
     public function mount(Lesson $lesson)
@@ -33,13 +32,13 @@ class LessonResources extends Component
     {
         // dd($this->file);
         $this->validate([
-            'file' => 'required'
+            'file' => 'required',
         ]);
 
         $url = $this->file->store('cursos');
 
         $this->lesson->resource()->create([
-            'url' => $url
+            'url' => $url,
         ]);
 
         $this->lesson = Lesson::find($this->lesson->id);

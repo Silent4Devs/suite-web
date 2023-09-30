@@ -19,7 +19,7 @@ class UserAnswer extends Model
         'user_evaluation_id',
         'is_correct',
         'question_id',
-        'evaluation_id'
+        'evaluation_id',
     ];
 
     public function users()
@@ -31,9 +31,9 @@ class UserAnswer extends Model
     {
         return $this->belongsTo(Answer::class, 'answer_id');
     }
+
     public function question()
     {
-
         return $this->belongsTo(Question::class, 'question_id');
     }
 
@@ -47,11 +47,9 @@ class UserAnswer extends Model
         return $this->belongsTo(Evaluation::class, 'evaluation_id');
     }
 
-
     public function scopeQuestions($query, $evaluationId, $user = null)
     {
         if ($user == null) {
-
             return $query->where('user_id', auth()->id())->where('evaluation_id', $evaluationId);
         }
 

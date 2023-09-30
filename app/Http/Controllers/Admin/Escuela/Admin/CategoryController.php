@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin\Escuela\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Escuela\Category;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-
 
 class CategoryController extends Controller
 {
@@ -18,6 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
+
         return view('admin.Escuela.Admin.categories.index', compact('categories'));
     }
 
@@ -40,7 +40,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:categories'
+            'name' => 'required|unique:categories',
         ]);
 
         $category = Category::create($request->all());
@@ -85,7 +85,6 @@ class CategoryController extends Controller
         ]);
 
         $category->update($request->all());
-
 
         //Alert::toast('La categoría se editó con éxito', 'success');
         return redirect()->route('admin.categories.index', $category);
