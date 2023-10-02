@@ -7,6 +7,7 @@ use App\Models\Escuela\Course;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class CourseGoals extends Component
 {
     use LivewireAlert, AuthorizesRequests;
@@ -15,15 +16,18 @@ class CourseGoals extends Component
     public $course, $name;
 
     protected $rules = [
-        'goal.name' => 'required',
+        'goal.name' => 'required|max:255',
+    ];
+
+    protected $messages = [
+        'goal.name.required' => 'El campo nombre es obligatorio',
+        'goal.name.max' => 'El campo nombre es obligatorio'
     ];
 
     public function mount($course)
     {
         $this->course = $course;
         $this->goal = new Goal();
-
-
     }
 
     public function render()
@@ -34,7 +38,10 @@ class CourseGoals extends Component
     public function store()
     {
         $this->validate([
-            'name' => 'required',
+            'name' => 'required|max:255',
+        ], [
+            'name.required' => 'El campo nombre es obligatorio',
+            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres'
         ]);
 
         $this->course->goals()->create([
@@ -53,7 +60,7 @@ class CourseGoals extends Component
 
     public function update()
     {
-        $this->validate();
+        $this->validate($this->rules, $this->messages);
 
         $this->goal->save();
 

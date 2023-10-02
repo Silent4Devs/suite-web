@@ -125,8 +125,8 @@ class AnswerEvaluationUser extends Component
         // Push all the question ids to quiz_header table to retreve them while displaying the quiz details
         $this->questionsTaken = UserAnswer::Questions($this->evaluation->id)->get();
         $choicesCorrect = Answer::where('question_id', $this->currentQuestion->id)->where('is_correct', true)->pluck('id')->toArray();
-
         $isChoiceCorrect = in_array($this->answer, $choicesCorrect);
+        // dd($isChoiceCorrect);
         // Insert the current question_id, answer_id and whether it is correnct or wrong to quiz table.
         UserAnswer::create([
             'user_id' => auth()->id(),

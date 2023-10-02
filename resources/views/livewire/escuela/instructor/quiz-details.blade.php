@@ -99,7 +99,7 @@
                                 @php
                                     $correctAnswer = $question->answers
                                         ->filter(function ($item) {
-                                            return $item->is_correct == 'true';
+                                            return $item->is_correct == '1';
                                         })
                                         ->first();
 
@@ -111,28 +111,30 @@
                                                 class="px-2 mt-1 bg-success text-white rounded">
                                                 <span class="mr-2 font-extrabold">{{ $alphabet[$key] }}</span>
                                                 {{ $answer->answer }}
-
+                                                <span class="p-1 font-extrabold">(Your Answer)</span>
                                             </div>
                                         @else
                                             <div
-                                                class="px-2 mt-1 ">
-                                                <span class="mr-2 font-extrabold">{{ $alphabet[$key] }}</span>
-                                                {{ $correctAnswer->answer }}
-                                                <span class="p-1 font-extrabold">(Correct
-                                                    Answer)</span>
-                                            </div>
-
-                                            <div
-                                                class="px-2 mt-1 text-sm font-extrabold text-white bg-red-600 rounded-lg max-w-auto">
+                                                class="px-2 mt-1 text-white bg-danger">
                                                 <span class="mr-2 font-extrabold">{{ $alphabet[$key] }} </span>
                                                 {{ $answer->answer }}
+                                                <span class="p-1 font-extrabold">(Your Answer)</span>
                                             </div>
                                         @endif
                                     @else
-                                        <div class="px-2 mt-1 text-sm text-black bg-gray-300 rounded-lg max-w-auto">
-                                            <span class="mr-2 font-extrabold">{{ $alphabet[$key] }} </span>
-                                            {{ $answer->answer }}
-                                        </div>
+                                            @if ($answer->is_correct == "1")
+                                                <div class="px-2 mt-1 bg-success text-white rounded">
+                                                    <span class="mr-2">{{ $alphabet[$key] }}</span>
+                                                    {{ $correctAnswer->answer }}
+                                                    <span class="p-1 font-extrabold">(Correct Answer)</span>
+                                                </div>
+                                            @else
+                                                <div class="px-2 mt-1 text-sm text-black bg-gray-300 rounded-lg max-w-auto">
+                                                    <span class="mr-2 font-extrabold">{{ $alphabet[$key] }} </span>
+                                                    {{ $answer->answer }}
+                                                </div>
+                                            @endif
+
                                     @endif
                                 @endisset
                             @endforeach

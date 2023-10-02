@@ -1,12 +1,12 @@
 <div class="px-4 py-3">
     @forelse ($section->lessons as $item)
-        <div class="card shadow-none">
+
+        <div class="card shadow-none" >
             <div class="card-header row" style="border: 1px solid #D8D8D8;">
-                <div class="col-10 d-flex align-items-center" style="padding: 0px;">
-                    <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;">
+                <div class="col-9 d-flex align-items-center" style="padding: 0px;">
+                    <a style="cursor: pointer; color:#3086AF;">
                         <i style="font-size:10pt; cursor: pointer;"
-                            class="d-inline fas fa-play-circle abirCollapse mr-2" data-toggle="collapse"
-                            data-target="#miCollapse{{ $item->id }}" aria-expanded="false"></i>
+                            class="d-inline fas fa-play-circle openCollapse mr-2" id="toggleButton" data-id='#collapse{{$item->id}}'></i>
                     </a>
                     <h5 class="d-inline" style="color:#3086AF; margin:0px">
                         {{ $item->name }}
@@ -17,15 +17,22 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-2 d-flex align-items-center justify-content-end">
+                <div class="col-2">
                     <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;">
                         <i style="font-size: 20px; cursor: pointer;"
                             class="d-inline bi bi-caret-down-fill abirCollapse mr-2" data-toggle="collapse"
                             data-target="#miCollapse{{ $item->id }}" aria-expanded="false"></i>
                     </a>
                 </div>
+                {{-- <div class="col-2 d-flex align-items-center justify-content-end">
+                    <a wire:click="edit({{ $item }})" style="cursor: pointer; color:#3086AF;">
+                        <i style="font-size: 20px; cursor: pointer;"
+                            class="d-inline bi bi-caret-down-fill abirCollapse mr-2" data-toggle="collapse"
+                            data-target="#miCollapse{{ $item->id }}" aria-expanded="false"></i>
+                    </a>
+                </div> --}}
             </div>
-            <div class="card-body collapse hide row" style="border: 1px solid #D8D8D8;" id="miCollapse{{ $item->id }}"
+            <div class="card-body collapse row" style="border: 1px solid #D8D8D8;" id="collapse{{$item->id}}"
                 wire:ignore>
                 <form wire:submit.prevent="update" class="px-3 py-2 col-12">
                     <div class="grid mt-2 mb-2 grid-col-1 md:grid-cols-6 md:gap-2">
@@ -64,9 +71,6 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mt-4">
-                        {{-- <button style="background-color:#333" type="submit"  >
-                                  Actualizar
-                                </button> --}}
                         <button type="submit" class="btn btn-outline-primary"
                             style="min-width:140px;">Actualizar</button>
                     </div>
@@ -81,19 +85,29 @@
 
     @include('livewire.escuela.instructor.add-new-lesson')
     <script>
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     let abrirCollapseButtons = document.querySelectorAll('i.abirCollapse');
+        //     abrirCollapseButtons.forEach(function(button) {
+        //         button.addEventListener('click', function() {
+        //             // Encuentra el collapse asociado al botón actual
+        //             let targetId = this.getAttribute('data-target');
+        //             let collapse = document.querySelector(targetId);
+        //             if (collapse.classList.contains('hide')) {
+        //                 collapse.classList.remove('hide');
+        //             } else {
+        //                 collapse.classList.add('hide');
+        //             }
+        //         });
+        //     });
+        // });
+
         document.addEventListener("DOMContentLoaded", function() {
-            let abrirCollapseButtons = document.querySelectorAll('i.abirCollapse');
-            abrirCollapseButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    // Encuentra el collapse asociado al botón actual
-                    let targetId = this.getAttribute('data-target');
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('openCollapse')) {
+                    let targetId = event.target.getAttribute('data-id');
                     let collapse = document.querySelector(targetId);
-                    if (collapse.classList.contains('hide')) {
-                        collapse.classList.remove('hide');
-                    } else {
-                        collapse.classList.add('hide');
-                    }
-                });
+                    collapse.classList.toggle('collapse');
+                }
             });
         });
     </script>

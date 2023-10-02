@@ -5,6 +5,7 @@
 /storage/app/public/BIA/signatures/
 /storage/app/public/tratamiento/firmas/
 /storage/app/public/FilesRevisionDireccion
+/storage/app/cursos/
 /vendor
 .idea
 # /public/css/app.css
