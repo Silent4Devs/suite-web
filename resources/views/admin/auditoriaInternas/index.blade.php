@@ -62,6 +62,9 @@
                             Equipo&nbsp;auditoría
                         </th>
                         <th>
+                            Reportes
+                        </th>
+                        <th>
                             Opciones
                         </th>
                     </tr>
@@ -275,6 +278,23 @@
                             })
                             html += '</div>';
                             return html
+                        }
+                    },
+                    {
+                        data: 'id_audit',
+                        render: function(data, type, row, meta) {
+                            let html = '<div class="d-flex" style="flex-wrap:wrap">';
+                            html += `
+                                <a href="{{ route('admin.auditoria-internas.reporteIndividual', ':id_audit') }}">
+                                <i class="fa-solid fa-user-check"></i>
+                                </a>
+                                `;
+                            html += '</div>';
+
+                            // Replace ':id_audit' with the actual value of id_audit
+                            html = html.replace(':id_audit', data);
+
+                            return html;
                         }
                     },
                     {
