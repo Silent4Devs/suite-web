@@ -293,6 +293,23 @@
             </div>
         </div>
     </div>
+
+    <div class="card card-body">
+        <div class="row" style="justify-content: center; display: flex;">
+            <h3>Firma de Revisión</h3>
+        </div>
+        <div class="row" style="justify-content: center; display: flex;">
+            <button id="clear" class="btn btn-link">Limpiar Firma</button>
+        </div>
+        <div class="row" style="justify-content: center; display: flex;">
+            <canvas id="signature-pad" class="signature-pad" width="600" height="250"
+                style="border: 1px solid black;"></canvas>
+
+        </div>
+        <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+            <button id="save" class="btn btn-outline-primary">Confirmar</button>
+        </div>
+    </div>
 </div>
 @section('scripts')
     <script>
@@ -413,5 +430,41 @@
 
 
         })
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('signature-pad');
+            var signaturePad = new SignaturePad(canvas);
+
+            document.getElementById('clear').addEventListener('click', function() {
+                signaturePad.clear();
+            });
+
+            document.getElementById('save').addEventListener('click', function() {
+                if (signaturePad.isEmpty()) {
+                    alert('Please provide a signature first.');
+                } else {
+                    var dataURL = signaturePad.toDataURL();
+                    var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                        'content');
+
+                    fetch('/signature/save', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': csrfToken,
+                            },
+                            body: JSON.stringify({
+                                signature: dataURL
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert('Signature saved successfully.');
+                        });
+                }
+            });
+        });
     </script>
 @endsection
