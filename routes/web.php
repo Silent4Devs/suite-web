@@ -27,7 +27,7 @@ Route::post('/minutas/revisiones/reject', 'RevisionMinutasController@reject')->n
 Route::get('/minutas/revisiones/{revisionMinuta}', 'RevisionMinutasController@edit')->name('minutas.revisiones.revisar');
 Route::get('comunicados-tv', 'ComunicadosTVController@index')->name('comunicados-tv');
 
-Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestProveedores')->name('provedor_reporte');
+Route::post('provedor_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestClientes')->name('provedor_reporte');
 Route::post('contrato_reporte', 'ContractManager\ReporteRequisicionController@AjaxRequestContratos')->name('contrato_reporte');
 
 Auth::routes();
@@ -602,7 +602,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('planTrabajoBase/save', 'PlanTrabajoBaseController@saveImplementationProyect')->name('planTrabajoBase.saveProyect');
         Route::post('planTrabajoBase/load', 'PlanTrabajoBaseController@loadProyect')->name('planTrabajoBase.loadProyect');
 
-        // Route::get('/', 'HomeController@index')->name('home');
+        Route::get('/dashboard-contratos-katbol', 'DashboardAuditoriasSGIController@index')->name('home');
         // Permissions
         Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
         Route::resource('permissions', 'PermissionsController');
@@ -1398,23 +1398,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('courses/{course}/quizdetail', 'Escuela\Instructor\CourseController@quizDetails')->name('courses-quizdetails');
     Route::get('courses/{course}/evaluation/{evaluation}/quiz-details', 'Escuela\QuizDetailsController@show')->name('courses.evaluation.quizdetails');
 
-
-    // Route::get('courses/{course}/curriculum', '\App\Http\Livewire\Escuela\Instructor\CoursesCurriculum'  )->name('courses.curriculum');
-    // Route::get('courses/{course}/curriculum', 'Escuela\Instructor\CourseCurriculumController@show')->name('courses.curriculum');
-    // Route::get('courses/{course}/goals', 'Escuela\Instructor\CourseController@goals')->name('courses.goals');
-    // Route::get('courses/{course}/students', 'Escuela\Instructor\CoursesStudents')->name('courses.students');
-    // Route::get('courses/{course}/evaluation', 'Escuela\Instructor\EvaluacionesInstructor')->name('courses.evaluation');
-    // Route::post('courses/{course}/status', 'Escuela\Instructor\CourseController@status')->name('courses.status');
     Route::get('courses/{course}/evaluation/{evaluation}', 'Escuela\Instructor\CourseQuestionController@index')->name('courses.evaluation.questions');
     Route::get('courses/{course}/evaluacion/{evaluation}/quizdetail', 'CursoEstudiante@tableQuizDetails')->name('courses.quizdetails');
     //categorias para el administrador de escuela
     Route::resource('categories', 'Escuela\Admin\CategoryController');
     Route::resource('levels', 'Escuela\Admin\LevelController');
     Route::resource('dashboardescuela', 'Escuela\Admin\HomeController');
-    /*Route::resource('prices', PriceController::class)->names('prices');
-    Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
-    Route::get('courses/{course}', [CourseController::class, 'show'])->name('courses.show');
-    Route::post('courses/{course}/approved', [CourseController::class, 'approved'])->name('courses.approved');*/
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth', '2fa', 'active']], function () {
@@ -1535,7 +1524,10 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
     Route::post('contratos-katbol/archivos', 'ContratosController@obtenerArchivos')->name('contratos-katbol.obtenerArchivos');
     Route::get('contratos-katbol/file/download', 'ContratosController@downloadFile')->name('downloadFile');
     // Route::post('contratos/identificadorExist', 'ContratosController@identificadorExist')->name('contratos-katbol.identificadorExist');
-
+    Route::post('selectProveedor', 'DashboardController@AjaxRequestClientes')->name('selectCliente');
+    Route::post('selectContrato', 'DashboardController@AjaxRequestContratos')->name('selectContrato');
+    Route::post('selectEvaluacionesServicio', 'DashboardController@AjaxRequestEvaluacionesServicio')->name('selectEvaluacionesServicio');
+    Route::get('dashboard-contratos-katbol', 'DashboardController@index')->name('dashboard.katbol');
     Route::post('contratos-katbol/check-code', 'ContratosController@checkCode')->name('contratos-katbol.checkCode');
     Route::resource('contratos-katbol', 'ContratosController');
     Route::get('contratos-katbol/exportar/contratos', 'ContratosController@exportTo')->name('reportecliente.exportar');
@@ -1588,7 +1580,8 @@ Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'name
 
     //requisiciones
     Route::get('requisiciones', 'RequisicionesController@index')->name('requisiciones');
-    Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.index_aprobadores');
+    Route::delete('requisiciones/eliminar-registro', 'RequisicionesController@eliminarProveedores')->name('eliminarProveedores');
+    Route::get('requisiciones/aprobadores', 'RequisicionesController@indexAprobadores')->name('requisiciones.indexAprobadores');
     Route::post('requisiciones/list/get', 'RequisicionesController@getRequisicionIndex')->name('requisiciones.getRequisicionIndex');
     Route::post('requisiciones-archivo/list/get', 'RequisicionesController@getRequisicionIndexArchivo')->name('requisiciones.getRequisicionIndexArchivo');
     Route::post('requisiciones-solicitante/list/get', 'RequisicionesController@getRequisicionIndexSolicitante')->name('requisiciones.getRequisicionIndexSolicitante');
