@@ -96,7 +96,7 @@ class OrdenCompraController extends Controller
         $roles = User::find($id)->roles()->get();
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
-                $requisiciones = KatbolRequsicion::where([
+                $requisiciones = KatbolRequsicion::with('contrato')->where([
                     ['firma_solicitante', '!=', null],
                     ['firma_jefe', '!=', null],
                     ['firma_finanzas', '!=', null],
@@ -112,7 +112,7 @@ class OrdenCompraController extends Controller
                 if ($comprador) {
                     $id = $comprador->id;
                 }
-                $requisiciones = KatbolRequsicion::where([
+                $requisiciones = KatbolRequsicion::with('contrato')->where([
                     ['firma_solicitante', '!=', null],
                     ['firma_jefe', '!=', null],
                     ['firma_finanzas', '!=', null],
@@ -125,7 +125,7 @@ class OrdenCompraController extends Controller
                 return datatables()->of($requisiciones)->toJson();
             } else {
                 $user = Auth::user();
-                $requisiciones = KatbolRequsicion::where([
+                $requisiciones = KatbolRequsicion::with('contrato')->where([
                     ['firma_solicitante', '!=', null],
                     ['firma_jefe', '!=', null],
                     ['firma_finanzas', '!=', null],
