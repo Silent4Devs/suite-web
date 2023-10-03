@@ -7,7 +7,7 @@
                 <div class="registro rounded p-2">
                     <form wire:submit.prevent='update'>
                         <input wire:model="requirement.name" class="form-control">
-                        @error('requirement.name') <span class="text-red-500">{{ $message }}</span> @enderror
+                        @error('requirement.name') <span class="text-danger">{{ $message }}</span> @enderror
                     </form>
                 </div>
                 @else
@@ -35,7 +35,7 @@
                         {!! Form::label('title', 'Agregar el nombre del requisito*',[
                         'class' => 'pl-0']) !!}
                         <input wire:model="name" class="form-control" placeholder="Agregar el nombre del requisito">
-                        @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
+                        @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-3 d-flex justify-content-end">
                         <button type="submit" class="btn btn-light text-primary">Agregar <i class="fa-solid fa-plus"></i></button>

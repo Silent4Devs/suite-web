@@ -21,18 +21,18 @@
 
                 </div>
                 @error('section_id')
-                    <p class="text-sm text-red-500">{{ $message }}</p>
+                    <p class="text-danger">{{ $message }}</p>
                 @enderror
 
 
-                    <P class="text-primary mt-4">Nombre</P>
+                    <p class="text-primary mt-4">Nombre</p>
                     @error('section.name')
                         <span class="content-end float-right text-xs text-red-700">{{ $message }}</span>
                     @enderror
                     <input class="form-control" type="text" value="" id="title"
                         wire:model.defer="name">
                     @error('name')
-                        <p class="text-sm text-red-500">{{ $message }}</p>
+                        <p class="text-danger">{{ $message }}</p>
                     @enderror
 
 
@@ -41,7 +41,7 @@
                     <textarea class="mb-2 form-control" type="text" value="" id="title"
                         wire:model.defer="description"></textarea>
                     @error('description')
-                        <p class="text-sm text-red-500">{{ $message }}</p>
+                        <p class="text-danger">{{ $message }}</p>
                     @enderror
 
                 <div class="d-flex justify-content-end" style="margin-top:30px">

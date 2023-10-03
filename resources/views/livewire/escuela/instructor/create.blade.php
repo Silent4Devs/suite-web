@@ -1,9 +1,9 @@
-<div wire:ignore.self class="modal fade" id="createDataModal" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="createDataModalLabel" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="createDataModal{{$evaluacion_id}}" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="createDataModalLabel{{$evaluacion_id}}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="createDataModalLabel">Agregar preguntas a la evaluación</h4>
+                <h4 class="modal-title" id="createDataModalLabel{{$evaluacion_id}}">Agregar preguntas a la evaluación</h4>
             </div>
             <div class="modal-body">
                 <div>
@@ -60,8 +60,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn cancel" data-dismiss="modal"
-                    wire:click.prevent="cancel()">Cerrar</button>
-                <button wire:click.prevent="save()" class="btn btn-primary close-modal" style="background-color: #345183">
+                    wire:click.prevent="default()">Cerrar</button>
+                <button wire:click.prevent="save({{$evaluation_id}})" class="btn btn-primary close-modal" style="background-color: #345183">
                     Guardar
                 </button>
             </div>

@@ -10,15 +10,6 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
-        .circulo{
-            width: 75px;
-            height: 75px;
-        }
-        .circulo img {
-            width: 75px; /* Ajusta la imagen al tamaño del div circular */
-            height: 75px;
-            border-radius: 50%;
-        }
     </style>
     {{-- @include('flash::message')
     @include('partials.flashMessages') --}}
@@ -58,7 +49,7 @@
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="d-flex inline">
-                                <div class="circulo">
+                                <div class="circulo-kaans">
                                     @isset($course->image)
                                     <img  src="{{ Storage::url($course->image->url) }}"
                                         alt="{{ $course->title }}">

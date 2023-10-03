@@ -17,7 +17,7 @@ class TableQuestions extends Component
 
     public $course;
     public $evaluation;
-    protected $listeners = ['QuestionEvent'=>'render', 'questionStore'=>'render', 'destroyQuestion'=>'destroy'];
+    protected $listeners = ['QuestionEvent' => 'render', 'questionStore' => 'render', 'destroyQuestion' => 'destroy'];
 
     public function mount(Course $course, Evaluation $evaluation)
     {
