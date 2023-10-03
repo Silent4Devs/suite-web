@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
-use App\Mail\SolicitudDayOff as MailSolicitudDayoff;
+use Flash;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\DayOff;
 use App\Models\Empleado;
-use App\Models\IncidentesDayoff;
 use App\Models\Organizacion;
-use App\Models\SolicitudDayOff;
-use App\Traits\ObtenerOrganizacion;
-use Carbon\Carbon;
-use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\SolicitudDayOff;
+use App\Models\IncidentesDayoff;
+use App\Traits\ObtenerOrganizacion;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
+use App\Mail\SolicitudDayOff as MailSolicitudDayoff;
 
 class SolicitudDayOffController extends Controller
 {
@@ -25,7 +26,7 @@ class SolicitudDayOffController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_dayoff_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
             $query = SolicitudDayOff::with('empleado')->where('empleado_id', '=', $data)->orderByDesc('id')->get();
@@ -94,10 +95,10 @@ class SolicitudDayOffController extends Controller
         $año = Carbon::now()->format('Y');
 
         $existe_regla_ingreso = DayOff::where('inicio_conteo', 1)->exists();
-
+        $usuario = User::getCurrentUser();
         if ($existe_regla_ingreso) {
-            $existe_regla_por_area = DayOff::where('inicio_conteo', '=', 1)->where('afectados', 2)->whereHas('areas', function ($q) {
-                $q->where('area_id', auth()->user()->empleado->area_id);
+            $existe_regla_por_area = DayOff::where('inicio_conteo', '=', 1)->where('afectados', 2)->whereHas('areas', function ($q) use ($usuario) {
+                $q->where('area_id', $usuario->empleado->area_id);
             })->select('dias', 'tipo_conteo')->exists();
 
             $existe_regla_toda_empresa = DayOff::where('inicio_conteo', 1)->where('afectados', 1)->select('dias', 'tipo_conteo')->exists();
@@ -105,8 +106,8 @@ class SolicitudDayOffController extends Controller
             if ($existe_regla_toda_empresa) {
                 $regla_aplicada = DayOff::where('inicio_conteo', 1)->where('afectados', 1)->select('dias', 'tipo_conteo')->first();
             } elseif ($existe_regla_por_area) {
-                $regla_aplicada = DayOff::where('inicio_conteo', '=', 1)->whereHas('areas', function ($q) {
-                    $q->where('area_id', auth()->user()->empleado->area_id);
+                $regla_aplicada = DayOff::where('inicio_conteo', '=', 1)->whereHas('areas', function ($q) use ($usuario) {
+                    $q->where('area_id', $usuario->empleado->area_id);
                 })->select('dias', 'tipo_conteo')->first();
             } else {
                 Flash::error('Regla de Day´s Off no asociada');
@@ -120,11 +121,11 @@ class SolicitudDayOffController extends Controller
         }
         $tipo_conteo = $regla_aplicada->tipo_conteo;
 
-        $autoriza = auth()->user()->empleado->supervisor_id;
+        $autoriza = $usuario->empleado->supervisor_id;
         $vacacion = new DayOff();
         $dias_disponibles = $this->diasDisponibles();
         $organizacion = Organizacion::getFirst();
-        $dias_pendientes = SolicitudDayOff::where('empleado_id', '=', auth()->user()->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
+        $dias_pendientes = SolicitudDayOff::where('empleado_id', '=', $usuario->empleado->id)->where('aprobacion', '=', 1)->where('año', '=', $año)->sum('dias_solicitados');
 
         return view('admin.solicitudDayoff.create', compact('vacacion', 'dias_disponibles', 'año', 'autoriza', 'organizacion', 'dias_pendientes', 'tipo_conteo'));
     }
@@ -213,16 +214,17 @@ class SolicitudDayOffController extends Controller
         $año = Carbon::now()->format('Y');
         $existe_regla_ingreso = DayOff::where('inicio_conteo', 1)->exists();
 
+        $usuario = User::getCurrentUser();
         if ($existe_regla_ingreso) {
-            $existe_regla_por_area = DayOff::where('inicio_conteo', '=', 1)->where('afectados', 2)->whereHas('areas', function ($q) {
-                $q->where('area_id', auth()->user()->empleado->area_id);
+            $existe_regla_por_area = DayOff::where('inicio_conteo', '=', 1)->where('afectados', 2)->whereHas('areas', function ($q) use ($usuario) {
+                $q->where('area_id', $usuario->empleado->area_id);
             })->select('dias', 'tipo_conteo')->exists();
             $existe_regla_toda_empresa = DayOff::where('inicio_conteo', 1)->where('afectados', 1)->select('dias', 'tipo_conteo')->exists();
             if ($existe_regla_toda_empresa) {
                 $regla_aplicada = DayOff::where('inicio_conteo', 1)->where('afectados', 1)->pluck('dias')->first();
             } elseif ($existe_regla_por_area) {
-                $regla_aplicada = DayOff::where('inicio_conteo', '=', 1)->whereHas('areas', function ($q) {
-                    $q->where('area_id', auth()->user()->empleado->area_id);
+                $regla_aplicada = DayOff::where('inicio_conteo', '=', 1)->whereHas('areas', function ($q) use ($usuario) {
+                    $q->where('area_id', $usuario->empleado->area_id);
                 })->pluck('dias')->first();
             } else {
                 return 0;
@@ -231,14 +233,14 @@ class SolicitudDayOffController extends Controller
             return 0;
         }
         $dias_otorgados = $regla_aplicada;
-        $dias_extra = IncidentesDayoff::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) {
-            $q->where('empleado_id', auth()->user()->empleado->id);
+        $dias_extra = IncidentesDayoff::where('efecto', 1)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
+            $q->where('empleado_id', $usuario->empleado->id);
         })->pluck('dias_aplicados')->sum();
-        $dias_restados = IncidentesDayoff::where('efecto', 2)->where('aniversario', $año)->whereHas('empleados', function ($q) {
-            $q->where('empleado_id', auth()->user()->empleado->id);
+        $dias_restados = IncidentesDayoff::where('efecto', 2)->where('aniversario', $año)->whereHas('empleados', function ($q) use ($usuario) {
+            $q->where('empleado_id', $usuario->empleado->id);
         })->pluck('dias_aplicados')->sum();
 
-        $dias_gastados = SolicitudDayOff::where('empleado_id', auth()->user()->empleado->id)->where('año', '=', $año)->where(function ($query) {
+        $dias_gastados = SolicitudDayOff::where('empleado_id', $usuario->empleado->id)->where('año', '=', $año)->where(function ($query) {
             $query->where('aprobacion', '=', 1)
                 ->orwhere('aprobacion', '=', 3);
         })->sum('dias_solicitados');
@@ -250,7 +252,7 @@ class SolicitudDayOffController extends Controller
     public function aprobacion(Request $request)
     {
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
             $query = SolicitudDayOff::with('empleado')->where('autoriza', '=', $data)->where('aprobacion', '=', 1)->orderByDesc('id')->get();
@@ -311,7 +313,7 @@ class SolicitudDayOffController extends Controller
     public function archivo(Request $request)
     {
         abort_if(Gate::denies('modulo_aprobacion_ausencia'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
             $query = SolicitudDayOff::with('empleado')->where('autoriza', '=', $data)->where(function ($query) {

@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Mail\ConfirmacionSolicitudAprobacionMail;
-use App\Mail\SolicitudAprobacionMail;
-use App\Models\Documento;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Proceso;
 use App\Models\Empleado;
-use App\Models\HistorialRevisionDocumento;
-use App\Models\HistorialVersionesDocumento;
+use App\Models\Documento;
 use App\Models\Macroproceso;
 use App\Models\Organizacion;
-use App\Models\Proceso;
-use App\Models\RevisionDocumento;
-use App\Models\VistaDocumento;
-use Carbon\Carbon;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\VistaDocumento;
+use App\Models\RevisionDocumento;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\SolicitudAprobacionMail;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
+use App\Models\HistorialRevisionDocumento;
+use App\Models\HistorialVersionesDocumento;
+use App\Mail\ConfirmacionSolicitudAprobacionMail;
 
 class DocumentosController extends Controller
 {
@@ -533,12 +534,11 @@ class DocumentosController extends Controller
     public function renderViewDocument(Documento $documento)
     {
         $path_documento = $this->getPathDocumento($documento, 'storage');
-        // dd($path_documento);
-
-        if (auth()->user()->empleado) {
-            if (!VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', auth()->user()->empleado->id)->exists()) {
+        $usuario = User::getCurrentUser();
+        if ($usuario->empleado) {
+            if (!VistaDocumento::where('documento_id', $documento->id)->where('empleado_id', $usuario->empleado->id)->exists()) {
                 VistaDocumento::create([
-                    'empleado_id' => auth()->user()->empleado->id,
+                    'empleado_id' => $usuario->empleado->id,
                     'documento_id' => $documento->id,
                 ]);
             }

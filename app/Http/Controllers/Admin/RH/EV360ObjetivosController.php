@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\Admin\RH;
 
-use App\Http\Controllers\Controller;
-use App\Mail\SolicitudAprobacionObjetivo;
 use App\Models\Area;
-use App\Models\Empleado;
-use App\Models\PerfilEmpleado;
+use App\Models\User;
 use App\Models\Puesto;
-use App\Models\RH\Evaluacion;
-use App\Models\RH\EvaluacionesEvaluados;
-use App\Models\RH\EvaluadoEvaluador;
+use App\Models\Empleado;
 use App\Models\RH\Objetivo;
-use App\Models\RH\ObjetivoEmpleado;
-use App\Models\RH\ObjetivoRespuesta;
 use Illuminate\Http\Request;
+use App\Models\RH\Evaluacion;
 use Illuminate\Http\Response;
+use App\Models\PerfilEmpleado;
+use App\Models\RH\ObjetivoEmpleado;
+use App\Http\Controllers\Controller;
+use App\Models\RH\EvaluadoEvaluador;
+use App\Models\RH\ObjetivoRespuesta;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use App\Models\RH\EvaluacionesEvaluados;
+use App\Mail\SolicitudAprobacionObjetivo;
 
 class EV360ObjetivosController extends Controller
 {
@@ -28,10 +29,11 @@ class EV360ObjetivosController extends Controller
         abort_if(Gate::denies('objetivos_estrategicos_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
+            $usuario = User::getCurrentUser();
             $empleados = Empleado::alta()->with(['objetivos', 'area', 'perfil'])->get();
-            $isAdmin = in_array('Admin', auth()->user()->roles->pluck('title')->toArray());
-            if (auth()->user()->empleado->children->count() > 0 && !$isAdmin) {
-                return datatables()->of(auth()->user()->empleado->children)->toJson();
+            $isAdmin = in_array('Admin', $usuario->roles->pluck('title')->toArray());
+            if ($usuario->empleado->children->count() > 0 && !$isAdmin) {
+                return datatables()->of($usuario->empleado->children)->toJson();
             } elseif ($isAdmin) {
                 return datatables()->of($empleados)->toJson();
             } else {
@@ -92,14 +94,15 @@ class EV360ObjetivosController extends Controller
         $empleado = Empleado::with('supervisor')->find(intval($empleado));
 
         if ($request->ajax()) {
-            if ($empleado->id == auth()->user()->empleado->id) {
+            $usuario = User::getCurrentUser();
+            if ($empleado->id == $usuario->empleado->id) {
                 //add esta_aprobado in $request
                 $request->merge(['esta_aprobado' => Objetivo::SIN_DEFINIR]);
             }
             $objetivo = Objetivo::create($request->all());
 
             //send email if who add is not supervisor
-            // if ($empleado->id == auth()->user()->empleado->id) {
+            // if ($empleado->id == $usuario->empleado->id) {
             //     if (!is_null($empleado->supervisor)) {
             //         Mail::to(removeUnicodeCharacters($empleado->email))->send(new SolicitudAprobacionObjetivo($objetivo, $empleado));
             //     }

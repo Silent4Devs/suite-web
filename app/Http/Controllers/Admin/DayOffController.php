@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Area;
-use App\Models\DayOff;
-use App\Models\SolicitudDayOff;
-use App\Traits\ObtenerOrganizacion;
 use Flash;
+use App\Models\Area;
+use App\Models\User;
+use App\Models\DayOff;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\SolicitudDayOff;
+use App\Traits\ObtenerOrganizacion;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class DayOffController extends Controller
@@ -170,7 +171,7 @@ class DayOffController extends Controller
     public function vistaGlobal(Request $request)
     {
         abort_if(Gate::denies('reglas_dayoff_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
             $query = SolicitudDayOff::with('empleado')->orderByDesc('id')->get();

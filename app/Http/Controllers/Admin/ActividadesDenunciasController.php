@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\ActividadDenuncia;
-use App\Models\Denuncias;
-use App\Models\PlanImplementacion;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Denuncias;
 use Illuminate\Http\Request;
+use App\Models\ActividadDenuncia;
+use App\Models\PlanImplementacion;
+use App\Http\Controllers\Controller;
 
 class ActividadesDenunciasController extends Controller
 {
@@ -197,7 +198,7 @@ class ActividadesDenunciasController extends Controller
                 $planImplementacion->norma = 'ISO 27001';
                 $planImplementacion->modulo_origen = 'Denuncias';
                 $planImplementacion->objetivo = null;
-                $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+                $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
                 $modelo->planes()->save($planImplementacion);
             }

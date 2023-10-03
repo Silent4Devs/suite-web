@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Recurso;
+use App\Models\Empleado;
+use App\Models\Calendario;
+use App\Models\Organizacion;
+use Illuminate\Http\Response;
 use App\Models\AuditoriaAnual;
 use App\Models\AuditoriaInterna;
-use App\Models\Calendario;
 use App\Models\CalendarioOficial;
-use App\Models\ContractManager\Contrato;
-use App\Models\ContractManager\EntregaMensual;
-use App\Models\ContractManager\Factura;
-use App\Models\Empleado;
-use App\Models\Organizacion;
 use App\Models\PlanBaseActividade;
 use App\Models\PlanImplementacion;
-use App\Models\Recurso;
-use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use App\Models\ContractManager\Factura;
+use App\Models\ContractManager\Contrato;
+use App\Models\ContractManager\EntregaMensual;
 
 class SystemCalendarController extends Controller
 {
@@ -24,8 +25,8 @@ class SystemCalendarController extends Controller
     {
         abort_if(Gate::denies('calendario_corporativo_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleado = auth()->user()->empleado;
-        $usuario = auth()->user();
+        $usuario = User::getCurrentUser();
+        $empleado = $usuario->empleado;
 
         $implementaciones = PlanImplementacion::getAll();
         $actividades = collect();

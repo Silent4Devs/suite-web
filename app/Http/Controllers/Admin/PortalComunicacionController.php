@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Gate;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Empleado;
+use App\Models\Documento;
+use App\Models\PoliticaSgsi;
+use Illuminate\Http\Request;
+use App\Models\Organizacione;
+use Illuminate\Http\Response;
 use App\Models\Comiteseguridad;
 use App\Models\ComunicacionSgi;
-use App\Models\Documento;
-use App\Models\Empleado;
 use App\Models\FelicitarCumpleaños;
-use App\Models\Organizacione;
-use App\Models\PoliticaSgsi;
-use Carbon\Carbon;
-use Gate;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -46,7 +47,7 @@ class PortalComunicacionController extends Controller
 
         $comunicacionSgis_carrusel = ComunicacionSgi::with('imagenes_comunicacion')->where('publicar_en', '=', 'Carrusel')->orWhere('publicar_en', '=', 'Ambos')->where('fecha_programable', '<=', Carbon::now()->format('Y-m-d'))->where('fecha_programable_fin', '>=', Carbon::now()->format('Y-m-d'))->get();
 
-        $empleado_asignado = auth()->user()->n_empleado;
+        $empleado_asignado = User::getCurrentUser()->n_empleado;
 
         $politica_existe = PoliticaSgsi::getAll()->count();
         $comite_existe = Comiteseguridad::getAll()->count();
@@ -130,7 +131,7 @@ class PortalComunicacionController extends Controller
     {
         $felicitar = FelicitarCumpleaños::create([
             'cumpleañero_id' => $cumpleañero_id,
-            'felicitador_id' => auth()->user()->empleado->id,
+            'felicitador_id' => User::getCurrentUser()->empleado->id,
             'like' => true,
         ]);
 
@@ -151,7 +152,7 @@ class PortalComunicacionController extends Controller
     {
         $comentario = FelicitarCumpleaños::create([
             'cumpleañero_id' => $cumpleañero_id,
-            'felicitador_id' => auth()->user()->empleado->id,
+            'felicitador_id' => User::getCurrentUser()->empleado->id,
             'comentarios' => $request->comentarios,
         ]);
 

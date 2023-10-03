@@ -2,42 +2,43 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Mail\AceptacionAccionCorrectivaEmail;
-use App\Mail\AtencionQuejaAtendidaEmail;
-use App\Mail\CierreQuejaAceptadaEmail;
-use App\Mail\NotificacionResponsableQuejaEmail;
-use App\Mail\ResolucionQuejaRechazadaEmail;
-use App\Mail\SeguimientoQuejaClienteEmail;
-use App\Mail\SolicitarCierreQuejaEmail;
-use App\Models\AccionCorrectiva;
-use App\Models\Activo;
-use App\Models\AnalisisQuejasClientes;
-use App\Models\AnalisisSeguridad;
+use Carbon\Carbon;
 use App\Models\Area;
-use App\Models\CategoriaIncidente;
-use App\Models\Denuncias;
-use App\Models\Empleado;
-use App\Models\EvidenciaQuejasClientes;
-use App\Models\EvidenciasQuejasClientesCerrado;
-use App\Models\EvidenciasSeguridad;
-use App\Models\IncidentesSeguridad;
+use App\Models\Sede;
+use App\Models\User;
+use App\Models\Activo;
+use App\Models\Quejas;
 use App\Models\Mejoras;
 use App\Models\Proceso;
-use App\Models\Quejas;
-use App\Models\QuejasCliente;
-use App\Models\RiesgoIdentificado;
-use App\Models\Sede;
-use App\Models\SubcategoriaIncidente;
+use App\Models\Empleado;
+use App\Models\Denuncias;
 use App\Models\Sugerencias;
-use App\Models\TimesheetCliente;
-use App\Models\TimesheetProyecto;
-use App\Traits\ObtenerOrganizacion;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\QuejasCliente;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Gate; //mejora apunta a este modelo
+use App\Models\AccionCorrectiva;
+use App\Models\TimesheetCliente;
+use App\Models\AnalisisSeguridad;
+use App\Models\TimesheetProyecto;
+use App\Models\CategoriaIncidente;
+use App\Models\RiesgoIdentificado;
+use App\Models\EvidenciasSeguridad;
+use App\Models\IncidentesSeguridad;
+use App\Traits\ObtenerOrganizacion;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use App\Models\SubcategoriaIncidente;
+use App\Mail\CierreQuejaAceptadaEmail;
+use App\Models\AnalisisQuejasClientes;
+use App\Mail\SolicitarCierreQuejaEmail;
+use App\Models\EvidenciaQuejasClientes;
+use App\Mail\AtencionQuejaAtendidaEmail;
+use App\Mail\SeguimientoQuejaClienteEmail;
+use App\Mail\ResolucionQuejaRechazadaEmail;
+use App\Mail\AceptacionAccionCorrectivaEmail;
+use App\Mail\NotificacionResponsableQuejaEmail;
+use App\Models\EvidenciasQuejasClientesCerrado;
+use Illuminate\Support\Facades\Gate; //mejora apunta a este modelo
 
 class DeskController extends Controller
 {
@@ -967,7 +968,7 @@ class DeskController extends Controller
             'canal' => $request->canal,
             'otro_canal' => $request->otro_canal,
             'solucion_requerida_cliente' => $request->solucion_requerida_cliente,
-            'empleado_reporto_id' => auth()->user()->empleado->id,
+            'empleado_reporto_id' => User::getCurrentUser()->empleado->id,
             'correo_cliente' => $correo_cliente,
 
         ]);
@@ -1281,7 +1282,7 @@ class DeskController extends Controller
         ]);
 
         $empleado_email = Empleado::select('name', 'email')->find($request->responsable_atencion_queja_id);
-        $empleado_copia = auth()->user()->empleado;
+        $empleado_copia = User::getCurrentUser()->empleado;
 
         if ($quejasClientes->registro != null && $request->responsable_atencion_queja_id != null) {
             Mail::to(removeUnicodeCharacters($empleado_email->email))->cc(removeUnicodeCharacters($empleado_copia->email))->send(new NotificacionResponsableQuejaEmail($quejasClientes, $empleado_email));
@@ -1566,7 +1567,7 @@ class DeskController extends Controller
             return response()->json(['isValid' => true]);
         } elseif ($request->tipo_validacion == 'queja-atencion') {
             if (!is_null($quejasClientes->responsable_atencion_queja_id)) {
-                if ($quejasClientes->responsable_atencion_queja_id != auth()->user()->empleado->id) {
+                if ($quejasClientes->responsable_atencion_queja_id != User::getCurrentUser()->empleado->id) {
                     $this->validateRequestRegistroQuejaCliente($request);
                     $this->validateRequestAnalisisQuejaCliente($request);
                 }

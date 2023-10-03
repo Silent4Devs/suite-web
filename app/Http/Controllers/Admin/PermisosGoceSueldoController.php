@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\PermisosGoceSueldo;
-use App\Models\SolicitudPermisoGoceSueldo;
-use App\Traits\ObtenerOrganizacion;
 use Flash;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\PermisosGoceSueldo;
+use App\Traits\ObtenerOrganizacion;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use App\Models\SolicitudPermisoGoceSueldo;
 
 class PermisosGoceSueldoController extends Controller
 {
@@ -139,7 +140,7 @@ class PermisosGoceSueldoController extends Controller
     public function vistaGlobal(Request $request)
     {
         abort_if(Gate::denies('reglas_goce_sueldo_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
             $query = SolicitudPermisoGoceSueldo::with('empleado')->orderByDesc('id')->get();

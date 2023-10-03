@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\CsvImportTrait;
-use App\Http\Requests\MassDestroyEntendimientoOrganizacionRequest;
-use App\Models\AmenazasEntendimientoOrganizacion;
-use App\Models\DebilidadesEntendimientoOrganizacion;
-use App\Models\Empleado;
-use App\Models\EntendimientoOrganizacion;
-use App\Models\FortalezasEntendimientoOrganizacion;
-use App\Models\OportunidadesEntendimientoOrganizacion;
-use App\Models\Team;
 use Gate;
+use App\Models\Team;
+use App\Models\User;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\EntendimientoOrganizacion;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Models\AmenazasEntendimientoOrganizacion;
+use App\Models\FortalezasEntendimientoOrganizacion;
+use App\Models\DebilidadesEntendimientoOrganizacion;
+use App\Models\OportunidadesEntendimientoOrganizacion;
+use App\Http\Requests\MassDestroyEntendimientoOrganizacionRequest;
 
 class EntendimientoOrganizacionController extends Controller
 {
@@ -91,7 +92,7 @@ class EntendimientoOrganizacionController extends Controller
         $entendimientoOrganizacion = new EntendimientoOrganizacion;
         $empleados = Empleado::getaltaAll();
         $isEdit = false;
-        $esta_vinculado = auth()->user()->empleado ? true : false;
+        $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
 
         return view('admin.entendimientoOrganizacions.create', compact('isEdit', 'entendimientoOrganizacion', 'esta_vinculado', 'empleados'));
     }
@@ -146,7 +147,7 @@ class EntendimientoOrganizacionController extends Controller
 
         $isEdit = true;
 
-        $esta_vinculado = auth()->user()->empleado ? true : false;
+        $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
 
         // $entendimiento->load('participantes');
 

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\ActividadSugerencia;
-use App\Models\PlanImplementacion;
-use App\Models\Sugerencias;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Sugerencias;
 use Illuminate\Http\Request;
+use App\Models\PlanImplementacion;
+use App\Models\ActividadSugerencia;
+use App\Http\Controllers\Controller;
 
 class ActividadesSugerenciasController extends Controller
 {
@@ -196,7 +197,7 @@ class ActividadesSugerenciasController extends Controller
                 $planImplementacion->norma = 'ISO 27001';
                 $planImplementacion->modulo_origen = 'Sugerencias';
                 $planImplementacion->objetivo = null;
-                $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+                $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
                 $modelo->planes()->save($planImplementacion);
             }

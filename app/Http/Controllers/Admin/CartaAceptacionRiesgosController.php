@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Mail\CartaAceptacionEmail;
-use App\Models\ActivosInformacionAprobacione;
-use App\Models\CartaAceptacion;
-use App\Models\CartaAceptacionAprobacione;
-use App\Models\CartaAceptacionPivot;
-use App\Models\DeclaracionAplicabilidad;
-use App\Models\Empleado;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
+use App\Models\CartaAceptacion;
+use App\Mail\CartaAceptacionEmail;
+use App\Http\Controllers\Controller;
+use App\Models\CartaAceptacionPivot;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use App\Models\DeclaracionAplicabilidad;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\CartaAceptacionAprobacione;
+use App\Models\ActivosInformacionAprobacione;
 
 class CartaAceptacionRiesgosController extends Controller
 {
@@ -185,6 +186,7 @@ class CartaAceptacionRiesgosController extends Controller
 
     public function show($cartaAceptacion)
     {
+        $user = User::getCurrentUser();
         // $controles =DeclaracionAplicabilidad::where('carta_id','=',$cartaAceptacion->id)->get();
         $cartaAceptacion = CartaAceptacion::with(['aprobaciones' => function ($query) {
             $query->with('empleado', 'aprobacionesActivo')->orderBy('nivel');
@@ -198,9 +200,9 @@ class CartaAceptacionRiesgosController extends Controller
         // dd($controles);
         $aprobadores = CartaAceptacionAprobacione::where('carta_id', $cartaAceptacion->id)->pluck('aprobador_id')->toArray();
         // dd($aprobadores);
-        $esAprobador = in_array(auth()->user()->empleado->id, $aprobadores);
-        $miAprobacion = $cartaAceptacion->aprobaciones->filter(function ($item) {
-            return $item->aprobador_id == auth()->user()->empleado->id;
+        $esAprobador = in_array($user->empleado->id, $aprobadores);
+        $miAprobacion = $cartaAceptacion->aprobaciones->filter(function ($item) use ($user) {
+            return $item->aprobador_id == $user->empleado->id;
         });
         $route = 'storage/cartasAceptacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->id) . '/';
         // dd($cartaAceptacion->aprobaciones);
@@ -258,8 +260,8 @@ class CartaAceptacionRiesgosController extends Controller
 
     public function aprobacionAutoridad(Request $request)
     {
-        // dd($request->all());
-        $cartaAceptacion = CartaAceptacionAprobacione::where('aprobador_id', auth()->user()->empleado->id)->where('autoridad', $request->autoridad)->first();
+        $usuario = User::getCurrentUser();
+        $cartaAceptacion = CartaAceptacionAprobacione::where('aprobador_id', $usuario->empleado->id)->where('autoridad', $request->autoridad)->first();
         $existsFolderFirmasCartas = Storage::exists('public/cartasAceptacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->carta_id));
         if (!$existsFolderFirmasCartas) {
             Storage::makeDirectory('public/cartasAceptacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->carta_id));
@@ -269,7 +271,7 @@ class CartaAceptacionRiesgosController extends Controller
             if (preg_match('/^data:image\/(\w+);base64,/', $request->firma)) {
                 $value = substr($request->firma, strpos($request->firma, ',') + 1);
                 $value = base64_decode($value);
-                $new_name_image = 'FirmaAutoridad' . $cartaAceptacion->carta_id . auth()->user()->empleado->id . time() . '.png';
+                $new_name_image = 'FirmaAutoridad' . $cartaAceptacion->carta_id . $usuario->empleado->id . time() . '.png';
                 $image = $new_name_image;
                 $route = 'public/cartasAceptacion/firmas/' . preg_replace(['/\s+/i', '/-/i'], '_', $cartaAceptacion->carta_id) . '/' . $new_name_image;
                 Storage::put($route, $value);
@@ -286,7 +288,7 @@ class CartaAceptacionRiesgosController extends Controller
                 $activoId = $activo['id'];
                 ActivosInformacionAprobacione::create([
                     'aceptado' => $aceptado,
-                    'persona_califico_id' => auth()->user()->empleado->id,
+                    'persona_califico_id' => $usuario->empleado->id,
                     'activoInformacion_id' => $activoId,
                     'carta_aceptacion_aprobacion_id' => $cartaAceptacion->id,
                 ]);

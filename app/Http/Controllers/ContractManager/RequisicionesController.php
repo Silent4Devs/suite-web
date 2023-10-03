@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use App\Http\Controllers\Controller;
-use App\Mail\RequisicionesEmail;
-use App\Models\ContractManager\Comprador as KatbolComprador;
-use App\Models\ContractManager\Contrato as KatbolContrato;
-use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
-use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
-use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
-use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\Organizacion;
-use App\Models\User as ModelsUser;
+use PDF;
 use Gate;
+use App\Models\User;
+use App\Models\Organizacion;
 use Illuminate\Http\Request;
+use App\Mail\RequisicionesEmail;
+use App\Models\User as ModelsUser;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use PDF;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\ContractManager\Contrato as KatbolContrato;
+use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\ContractManager\Comprador as KatbolComprador;
+use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
+use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
+use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
 
 class RequisicionesController extends Controller
 {
@@ -120,7 +121,7 @@ class RequisicionesController extends Controller
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
             $organizacion = Organizacion::select('empresa', 'logotipo')->first();
 
-            $supervisor = auth()->user()->empleado->supervisor->name;
+            $supervisor = $usuario = User::getCurrentUser()->empleado->supervisor->name;
             $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
             $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
@@ -206,7 +207,7 @@ class RequisicionesController extends Controller
             $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
 
-            $supervisor = auth()->user()->empleado->supervisor->name;
+            $supervisor = User::getCurrentUser()->empleado->supervisor->name;
 
             $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
@@ -324,7 +325,7 @@ class RequisicionesController extends Controller
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
 
-        $supervisor = auth()->user()->empleado->supervisor->name;
+        $supervisor = User::getCurrentUser()->empleado->supervisor->name;
 
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
@@ -400,7 +401,7 @@ class RequisicionesController extends Controller
 
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-        $supervisor = auth()->user()->empleado->supervisor->name;
+        $supervisor = User::getCurrentUser()->empleado->supervisor->name;
 
         $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisiciones->id)->first();
 
