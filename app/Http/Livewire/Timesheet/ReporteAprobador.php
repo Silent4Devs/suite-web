@@ -2,19 +2,19 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use Carbon\Carbon;
+use App\Mail\TimesheetCorreoRetraso;
 use App\Models\Area;
-use App\Models\User;
-use Livewire\Component;
 use App\Models\Empleado;
-use App\Models\Timesheet;
 use App\Models\Organizacion;
+use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Models\User;
 use App\Traits\getWeeksFromRange;
-use App\Mail\TimesheetCorreoRetraso;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class ReporteAprobador extends Component
 {

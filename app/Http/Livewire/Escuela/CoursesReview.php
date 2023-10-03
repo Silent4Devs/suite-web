@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Escuela;
 
+use App\Models\Escuela\Course;
+use App\Models\Escuela\CourseUser;
+use App\Models\Escuela\Review;
 use App\Models\User;
 use Livewire\Component;
-use App\Models\Escuela\Course;
-use App\Models\Escuela\Review;
-use App\Models\Escuela\CourseUser;
 
 class CoursesReview extends Component
 {

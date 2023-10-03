@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire\Escuela;
 
-use App\Models\User;
-use Livewire\Component;
 use App\Models\Escuela\Course;
-use App\Models\Escuela\Lesson;
 use App\Models\Escuela\Evaluation;
+use App\Models\Escuela\Lesson;
 use App\Models\Escuela\UserEvaluation;
+use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Component;
 
 class CourseStatus extends Component
 {

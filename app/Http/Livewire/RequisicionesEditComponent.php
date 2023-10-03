@@ -2,24 +2,24 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
-use Livewire\Component;
-use App\Models\Empleado;
-use App\Models\Organizacion;
-use Livewire\WithFileUploads;
 use App\Mail\RequisicionesEmail;
-use App\Models\User as ModelsUser;
-use Illuminate\Support\Facades\Mail;
+use App\Models\ContractManager\Comprador as ContractManagerComprador;
 use App\Models\ContractManager\Contrato as ContractManagerContrato;
 use App\Models\ContractManager\Producto as ContractManagerProducto;
-use App\Models\ContractManager\Sucursal as ContractManagerSucursal;
-use App\Models\ContractManager\Comprador as ContractManagerComprador;
-use App\Models\ContractManager\Requsicion as ContractManagerRequsicion;
-use App\Models\ContractManager\ProveedorOC as ContractManagerProveedorOC;
 use App\Models\ContractManager\ProductoRequisicion as ContractManagerProductoRequisicion;
-use App\Models\ContractManager\ProveedorIndistinto as ContractManagerProveedorIndistinto;
-use App\Models\ContractManager\ProveedorRequisicion as ContractManagerProveedorRequisicion;
 use App\Models\ContractManager\ProvedorRequisicionCatalogo as ContractManagerProvedorRequisicionCatalogo;
+use App\Models\ContractManager\ProveedorIndistinto as ContractManagerProveedorIndistinto;
+use App\Models\ContractManager\ProveedorOC as ContractManagerProveedorOC;
+use App\Models\ContractManager\ProveedorRequisicion as ContractManagerProveedorRequisicion;
+use App\Models\ContractManager\Requsicion as ContractManagerRequsicion;
+use App\Models\ContractManager\Sucursal as ContractManagerSucursal;
+use App\Models\Empleado;
+use App\Models\Organizacion;
+use App\Models\User;
+use App\Models\User as ModelsUser;
+use Illuminate\Support\Facades\Mail;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class RequisicionesEditComponent extends Component
 {

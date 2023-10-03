@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\EvaluacionServicio;
 
-use Carbon\Carbon;
+use App\Models\ContractManager\EvaluacionServicio;
+use App\Models\ContractManager\NivelesServicio;
 use App\Models\User;
-use Livewire\Component;
-use Livewire\WithPagination;
-use Livewire\WithFileUploads;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use App\Models\ContractManager\NivelesServicio;
-use App\Models\ContractManager\EvaluacionServicio;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class EvaluacionComponent extends Component
 {

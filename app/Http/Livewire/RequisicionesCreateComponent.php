@@ -2,23 +2,23 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
-use Livewire\Component;
-use App\Models\Organizacion;
-use Livewire\WithFileUploads;
 use App\Mail\RequisicionesEmail;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use App\Models\ContractManager\Comprador as KatbolComprador;
 use App\Models\ContractManager\Contrato as KatbolContrato;
 use App\Models\ContractManager\Producto as KatbolProducto;
-use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\ContractManager\Comprador as KatbolComprador;
-use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\ProductoRequisicion as KatbolProductoRequisicion;
-use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
-use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicion;
 use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
+use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
+use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
+use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicion;
+use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\Organizacion;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class RequisicionesCreateComponent extends Component
 {

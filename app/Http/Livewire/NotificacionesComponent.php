@@ -3,9 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Auth;
 
 class NotificacionesComponent extends Component
 {

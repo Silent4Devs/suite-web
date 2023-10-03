@@ -2,24 +2,24 @@
 
 namespace App\Http\Livewire;
 
-use Carbon\Carbon;
+use App\Mail\RH\Evaluaciones\NotificacionEvaluador;
 use App\Models\Area;
-use App\Models\User;
-use Livewire\Component;
 use App\Models\Empleado;
-use App\Models\RH\Objetivo;
-use Livewire\WithPagination;
-use App\Models\RH\Evaluacion;
 use App\Models\RH\Competencia;
-use App\Models\RH\GruposEvaluado;
-use App\Models\RH\TipoCompetencia;
-use App\Models\RH\EvaluadoEvaluador;
-use App\Models\RH\ObjetivoRespuesta;
-use Illuminate\Support\Facades\Mail;
+use App\Models\RH\Evaluacion;
+use App\Models\RH\EvaluacionCompetencia;
 use App\Models\RH\EvaluacionObjetivo;
 use App\Models\RH\EvaluacionRepuesta;
-use App\Models\RH\EvaluacionCompetencia;
-use App\Mail\RH\Evaluaciones\NotificacionEvaluador;
+use App\Models\RH\EvaluadoEvaluador;
+use App\Models\RH\GruposEvaluado;
+use App\Models\RH\Objetivo;
+use App\Models\RH\ObjetivoRespuesta;
+use App\Models\RH\TipoCompetencia;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class MultiStepForm extends Component
 {

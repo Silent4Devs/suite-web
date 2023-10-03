@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\NivelesServicio;
 
-use App\Models\User;
-use Livewire\Component;
-use Livewire\WithPagination;
-use Livewire\WithFileUploads;
-use App\Functions\FormatearFecha;
 use App\Functions\EvaluacionServiciosData;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use App\Models\ContractManager\NivelesServicio;
+use App\Functions\FormatearFecha;
 use App\Models\ContractManager\EvaluacionServicio;
+use App\Models\ContractManager\NivelesServicio;
+use App\Models\User;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class NivelesComponent extends Component
 {
