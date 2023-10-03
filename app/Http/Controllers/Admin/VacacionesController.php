@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\SolicitudVacaciones;
+use App\Models\User;
 use App\Models\Vacaciones;
 use App\Traits\ObtenerOrganizacion;
 use Flash;
@@ -184,7 +185,7 @@ class VacacionesController extends Controller
     public function vistaGlobal(Request $request)
     {
         abort_if(Gate::denies('reglas_vacaciones_vista_global'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         $solVac = SolicitudVacaciones::with('empleado')->orderByDesc('id')->get();
         // dd($solVac);

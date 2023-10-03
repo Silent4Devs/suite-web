@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Iso9001\PlanImplementacion as PlanItemIplementacion9001;
 use App\Models\PlanImplementacion;
+use App\Models\User;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Database\Eloquent\Collection;
@@ -135,7 +136,7 @@ class PlanesAccionController extends Controller
             'norma' => $request->norma,
             'modulo_origen' => 'Planes de Acción',
             'objetivo' => $request->objetivo,
-            'elaboro_id' => auth()->user()->empleado->id,
+            'elaboro_id' => User::getCurrentUser()->empleado->id,
             'es_plan_trabajo_base' => $request->es_plan_trabajo_base != null ? true : false,
         ]);
 
@@ -207,7 +208,7 @@ class PlanesAccionController extends Controller
             $planImplementacion->norma = 'ISO 27001';
             $planImplementacion->modulo_origen = 'Incidentes';
             $planImplementacion->objetivo = null;
-            $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+            $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
             $modelo->planes()->save($planImplementacion);
         }

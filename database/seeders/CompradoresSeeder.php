@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\ContractManager\Comprador as ContractManagerComprador;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CompradoresSeeder extends Seeder
@@ -26,7 +25,7 @@ class CompradoresSeeder extends Seeder
                 'clave' => 2,
                 'id_user' => 254,
                 'estado' => 'AC',
-            ]
+            ],
         ];
         ContractManagerComprador::insert($comprador);
     }

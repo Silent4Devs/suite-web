@@ -67,6 +67,24 @@ class User extends Authenticatable implements Auditable
         });
     }
 
+    public static function getCurrentUser()
+    {
+        $cacheKey = 'Auth_user:user' . auth()->user()->id;
+
+        return Cache::remember($cacheKey, now()->addMinutes(60), function () {
+            return auth()->user();
+        });
+    }
+
+    public function empleado()
+    {
+        if ($this->empleado_id != null) {
+            return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
+        } else {
+            return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
+        }
+    }
+
     //empleadoId attribute
     public function getEmpleadoIdAttribute($value)
     {
@@ -196,15 +214,6 @@ class User extends Authenticatable implements Auditable
     public function nEmpleado()
     {
         return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
-    }
-
-    public function empleado()
-    {
-        if ($this->empleado_id != null) {
-            return $this->belongsTo(Empleado::class, 'empleado_id', 'id')->alta();
-        } else {
-            return $this->belongsTo(Empleado::class, 'n_empleado', 'n_empleado')->alta();
-        }
     }
 
     public function reviews()

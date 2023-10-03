@@ -7,6 +7,7 @@ use App\Models\ContractManager\Contrato;
 use App\Models\ContractManager\ConveniosModificatorios;
 use App\Models\ContractManager\ConveniosModificatoriosFile;
 use App\Models\Organizacion;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -98,8 +99,8 @@ class ConvenioModificatorioComponent extends Component
             'no_convenio' => $this->no_convenio,
             'fecha' => $fecha_formateada,
             'descripcion' => $this->descripcion,
-            'created_by' => auth()->user()->empleado->id,
-            'updated_by' => auth()->user()->empleado->id,
+            'created_by' => User::getCurrentUser()->empleado->id,
+            'updated_by' => User::getCurrentUser()->empleado->id,
         ]);
 
         $convenioFile = ConveniosModificatoriosFile::create([

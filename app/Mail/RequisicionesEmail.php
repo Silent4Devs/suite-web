@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -30,7 +31,7 @@ class RequisicionesEmail extends Mailable
         $this->organizacion = $organizacion;
         $this->tipo_firma = $tipo_firma;
 
-        $this->supervisor = auth()->user()->empleado->supervisor->name;
+        $this->supervisor = User::getCurrentUser()->empleado->supervisor->name;
 
         // requisiciones
         if ($tipo_firma === 'firma_solicitante') {
@@ -94,7 +95,7 @@ class RequisicionesEmail extends Mailable
      */
     public function build()
     {
-        return $this->from('donot-reply@silent4business.com', 'Sender Name')
+        return $this->from(env('MAIL_QARECEPTOR'), 'Sender Name')
             ->view('emails.requisiciones', [
                 'supervisor' =>  $this->supervisor,
                 'requisicion' => $this->requisicion,

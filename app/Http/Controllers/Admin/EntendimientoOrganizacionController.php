@@ -12,6 +12,7 @@ use App\Models\EntendimientoOrganizacion;
 use App\Models\FortalezasEntendimientoOrganizacion;
 use App\Models\OportunidadesEntendimientoOrganizacion;
 use App\Models\Team;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,7 +92,7 @@ class EntendimientoOrganizacionController extends Controller
         $entendimientoOrganizacion = new EntendimientoOrganizacion;
         $empleados = Empleado::getaltaAll();
         $isEdit = false;
-        $esta_vinculado = auth()->user()->empleado ? true : false;
+        $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
 
         return view('admin.entendimientoOrganizacions.create', compact('isEdit', 'entendimientoOrganizacion', 'esta_vinculado', 'empleados'));
     }
@@ -146,7 +147,7 @@ class EntendimientoOrganizacionController extends Controller
 
         $isEdit = true;
 
-        $esta_vinculado = auth()->user()->empleado ? true : false;
+        $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
 
         // $entendimiento->load('participantes');
 

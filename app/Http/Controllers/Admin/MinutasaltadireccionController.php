@@ -55,7 +55,7 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('revision_por_direccion_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $responsablereunions = Empleado::alta()->select('id', 'name', 'foto')->with('area')->get();
-        $esta_vinculado = auth()->user()->empleado ? true : false;
+        $esta_vinculado = User::getCurrentUser()->empleado ? true : false;
 
         return view('admin.minutasaltadireccions.create', compact('responsablereunions', 'esta_vinculado'));
     }
@@ -263,7 +263,7 @@ class MinutasaltadireccionController extends Controller
                 $planImplementacion->norma = 'ISO 27001';
                 $planImplementacion->modulo_origen = 'Minutas Alta Dirección';
                 $planImplementacion->objetivo = null;
-                $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+                $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
                 $minuta->planes()->save($planImplementacion);
             }
@@ -482,7 +482,7 @@ class MinutasaltadireccionController extends Controller
         $planImplementacion->norma = $request->norma;
         $planImplementacion->modulo_origen = $request->modulo_origen;
         $planImplementacion->objetivo = $request->objetivo;
-        $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+        $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
         $minuta = $id;
         $minuta->planes()->save($planImplementacion);

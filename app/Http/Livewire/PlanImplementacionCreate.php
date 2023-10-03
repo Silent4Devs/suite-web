@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\PlanImplementacion;
+use App\Models\User;
 use Livewire\Component;
 
 class PlanImplementacionCreate extends Component
@@ -65,7 +66,7 @@ class PlanImplementacionCreate extends Component
             'norma' => $this->norma,
             'modulo_origen' => $this->modulo_origen,
             'objetivo' => $this->objetivo,
-            'elaboro_id' => auth()->user()->empleado->id,
+            'elaboro_id' => User::getCurrentUser()->empleado->id,
         ]);
         $this->emit('planStore');
         $this->emit('render-select');

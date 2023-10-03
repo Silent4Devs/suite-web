@@ -14,8 +14,8 @@ class AreasSeeder extends Seeder
     {
         $inputs = [
             [
-                'area' => "Admin",
-                'descripcion' => "Admin",
+                'area' => 'Admin',
+                'descripcion' => 'Admin',
             ],
 
         ];

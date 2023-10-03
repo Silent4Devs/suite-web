@@ -21,6 +21,7 @@ use App\Models\RH\ObjetivoCalificacion;
 use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RH\RangosResultado;
+use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -87,7 +88,7 @@ class EV360EvaluacionesController extends Controller
                 $evaluados = $request->evaluados_manual;
             }
 
-            $evaluacion = Evaluacion::create($request->all() + ['autor_id' => auth()->user()->empleado->id]);
+            $evaluacion = Evaluacion::create($request->all() + ['autor_id' => User::getCurrentUser()->empleado->id]);
             $evaluacion->evaluados()->sync($evaluados);
             foreach ($evaluados as $evaluado) {
                 $this->relacionarEvaluadoConEvaluadores($evaluacion, $evaluado);

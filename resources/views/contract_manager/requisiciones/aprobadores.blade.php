@@ -183,7 +183,16 @@
                     },
                     {
                         data: 'proveedor_catalogo',
-                        name: 'proveedor_catalogo'
+                        render: function(data, type, row) {
+                        // Verifica si 'data' es null
+                        if (data === null) {
+                            return 'Indistinto'; // Puedes personalizar el mensaje
+                        } else {
+                            return data; // Valor no es null
+                        }
+
+                        }
+
                     },
                     {
                         data: 'estado',

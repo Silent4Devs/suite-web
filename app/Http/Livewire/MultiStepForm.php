@@ -15,6 +15,7 @@ use App\Models\RH\GruposEvaluado;
 use App\Models\RH\Objetivo;
 use App\Models\RH\ObjetivoRespuesta;
 use App\Models\RH\TipoCompetencia;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
@@ -469,7 +470,7 @@ class MultiStepForm extends Component
             'descripcion' => $descripcion,
             'estatus' => $estatus,
             'evaluados_objetivo' => $evaluados_objetivo,
-            'autor_id' => auth()->user()->empleado->id,
+            'autor_id' => User::getCurrentUser()->empleado->id,
             'autoevaluacion' => $autoevaluacion,
             'evaluado_por_jefe' => $evaluado_por_jefe,
             'evaluado_por_equipo_a_cargo' => $evaluado_por_equipo_a_cargo,
