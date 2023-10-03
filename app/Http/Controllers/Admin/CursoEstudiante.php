@@ -9,6 +9,7 @@ use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Level;
 use App\Models\Escuela\UsuariosCursos;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CursoEstudiante extends Controller
@@ -26,7 +27,7 @@ class CursoEstudiante extends Controller
 
     public function misCursos()
     {
-        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', auth()->user()->id)->get();
+        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', User::getCurrentUser()->id)->get();
         // dd($cursos_usuario);
         // $cursos = Course::get();
         // $categories = Category::all();
@@ -92,14 +93,14 @@ class CursoEstudiante extends Controller
             ->take(5)
             ->get();
 
-        $token = CourseUser::where('course_id', $course->id)->where('user_id', auth()->user()->id)->exists();
+        $token = CourseUser::where('course_id', $course->id)->where('user_id', User::getCurrentUser()->id)->exists();
 
         return view('admin.escuela.estudiante.show', compact('course', 'similares', 'token'));
     }
 
     public function enrolled(Course $course)
     {
-        $course->students()->attach(auth()->user()->id);
+        $course->students()->attach(User::getCurrentUser()->id);
 
         return redirect()->route('admin.curso-estudiante', $course->id);
     }

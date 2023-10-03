@@ -35,6 +35,7 @@ use App\Models\SubcategoriaActivo;
 use App\Models\Team;
 use App\Models\Tipoactivo;
 use App\Models\TratamientoRiesgo;
+use App\Models\User;
 use App\Models\VersionesIso;
 use App\Models\Vulnerabilidad;
 use App\Traits\ObtenerOrganizacion;
@@ -452,7 +453,7 @@ class MatrizRiesgosController extends Controller
         $planImplementacion->norma = $request->norma;
         $planImplementacion->modulo_origen = $request->modulo_origen;
         $planImplementacion->objetivo = $request->objetivo;
-        $planImplementacion->elaboro_id = auth()->user()->empleado->id;
+        $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
         $matrizRequisitoLegal = $id;
         $matrizRequisitoLegal->planes()->save($planImplementacion);

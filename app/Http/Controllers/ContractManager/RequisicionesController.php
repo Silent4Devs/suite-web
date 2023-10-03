@@ -12,6 +12,7 @@ use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
 use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\Organizacion;
+use App\Models\User;
 use App\Models\User as ModelsUser;
 use Gate;
 use Illuminate\Http\Request;
@@ -120,7 +121,7 @@ class RequisicionesController extends Controller
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
             $organizacion = Organizacion::select('empresa', 'logotipo')->first();
 
-            $supervisor = auth()->user()->empleado->supervisor->name;
+            $supervisor = $usuario = User::getCurrentUser()->empleado->supervisor->name;
             $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
             $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
@@ -206,7 +207,7 @@ class RequisicionesController extends Controller
             $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
             $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
 
-            $supervisor = auth()->user()->empleado->supervisor->name;
+            $supervisor = User::getCurrentUser()->empleado->supervisor->name;
 
             $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
@@ -294,11 +295,9 @@ class RequisicionesController extends Controller
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto'));
     }
 
-
     public function getRequisicionIndexAprobador()
     {
         $requisiciones = KatbolRequsicion::with('contrato')->where('archivo', false)->orderByDesc('id')->get();
-
 
         return datatables()->of($requisiciones)->toJson();
     }
@@ -324,7 +323,7 @@ class RequisicionesController extends Controller
         $contrato = KatbolContrato::where('id', $requisicion->contrato_id)->first();
         $comprador = KatbolComprador::with('user')->where('id', $requisicion->comprador_id)->first();
 
-        $supervisor = auth()->user()->empleado->supervisor->name;
+        $supervisor = User::getCurrentUser()->empleado->supervisor->name;
 
         $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
 
@@ -400,7 +399,7 @@ class RequisicionesController extends Controller
 
         $proveedores_catalogo = KatbolProveedorOC::whereIn('id', $proveedores_show)->get();
 
-        $supervisor = auth()->user()->empleado->supervisor->name;
+        $supervisor = User::getCurrentUser()->empleado->supervisor->name;
 
         $proveedor_indistinto = KatbolProveedorIndistinto::where('requisicion_id', $requisiciones->id)->first();
 
