@@ -202,8 +202,6 @@ services:
     environment:
       - NRIA_LICENSE_KEY=3c4e4e7fc9ad5d03008ec44927a9d4c5FFFFNRAL
     restart: unless-stopped
-    networks:
-      - tabantajnetwork
 
   # prometheus-tabantaj:
   #   image: prom/prometheus
