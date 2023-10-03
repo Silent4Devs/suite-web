@@ -2,10 +2,8 @@
 
 namespace App\Http\Livewire\Escuela\Instructor;
 
-use App\Models\Escuela\Goal;
 use App\Models\Escuela\Course;
-use Livewire\Component;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\Escuela\Goal;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CourseGoals extends Component
@@ -13,7 +11,8 @@ class CourseGoals extends Component
     use LivewireAlert, AuthorizesRequests;
 
     public Goal $goal;
-    public $course, $name;
+    public $course;
+    public $name;
 
     protected $rules = [
         'goal.name' => 'required|max:255',

@@ -3,17 +3,18 @@
 namespace App\Http\Livewire\Escuela\Instructor;
 
 use App\Models\Escuela\Audience;
-use Livewire\Component;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Escuela\Course;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class CourseAudiences extends Component
 {
     use LivewireAlert, AuthorizesRequests;
 
     public Audience $audience;
-    public $course, $name;
+    public $course;
+    public $name;
 
     protected $rules = [
         'audience.name' => 'required|max:255',

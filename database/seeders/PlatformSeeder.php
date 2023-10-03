@@ -15,11 +15,11 @@ class PlatformSeeder extends Seeder
     public function run()
     {
         Platform::create([
-            'name' => 'Youtube'
+            'name' => 'Youtube',
         ]);
 
         Platform::create([
-            'name' => 'Vimeo'
+            'name' => 'Vimeo',
         ]);
     }
 }

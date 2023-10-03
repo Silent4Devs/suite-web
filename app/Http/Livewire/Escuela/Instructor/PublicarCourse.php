@@ -2,18 +2,18 @@
 
 namespace App\Http\Livewire\Escuela\Instructor;
 
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class PublicarCourse extends Component
 {
     use LivewireAlert;
 
-    public $course, $status_id="";
+    public $course;
+    public $status_id = '';
 
     public function mount($course)
     {
-
         $this->course = $course;
     }
 
@@ -26,10 +26,10 @@ class PublicarCourse extends Component
 
     public function render()
     {
-        if($this->course)
-        {
-            $this->status_id=$this->course->status;
+        if ($this->course) {
+            $this->status_id = $this->course->status;
         }
+
         return view('livewire.escuela.instructor.publicar-course');
     }
 

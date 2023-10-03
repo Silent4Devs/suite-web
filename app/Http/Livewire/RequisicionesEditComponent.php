@@ -15,6 +15,7 @@ use App\Models\ContractManager\Requsicion as ContractManagerRequsicion;
 use App\Models\ContractManager\Sucursal as ContractManagerSucursal;
 use App\Models\Empleado;
 use App\Models\Organizacion;
+use App\Models\User;
 use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
@@ -304,7 +305,7 @@ class RequisicionesEditComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $supervisor =  auth()->user()->empleado->supervisor->email;
+            $supervisor = User::getCurrentUser()->empleado->supervisor->email;
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->editrequisicion, $organizacion, $tipo_firma));
 

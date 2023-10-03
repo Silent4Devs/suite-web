@@ -95,7 +95,7 @@ class Cierrecomponent extends Component
     {
         $this->validate([
 
-            'aspectos' => 'required',
+            'aspectos' => 'required|max:255',
             //'observaciones' => 'required'
         ]);
 

@@ -9,6 +9,7 @@ use App\Models\Organizacion;
 use App\Models\Timesheet;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
+use App\Models\User;
 use App\Traits\getWeeksFromRange;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -156,7 +157,7 @@ class ReporteAprobador extends Component
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
 
-        $this->aprobador = Empleado::find(auth()->user()->empleado->id);
+        $this->aprobador = Empleado::find(User::getCurrentUser()->empleado->id);
         $empleados_list = $this->aprobador->children;
         $this->empleados_list_global = $this->aprobador->children;
 

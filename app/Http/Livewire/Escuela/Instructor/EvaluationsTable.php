@@ -21,7 +21,6 @@ class EvaluationsTable extends Component
         $this->course = $course;
     }
 
-
     public function render()
     {
         return view('livewire.escuela.instructor.evaluations-table', [

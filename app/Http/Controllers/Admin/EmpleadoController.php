@@ -1347,7 +1347,7 @@ class EmpleadoController extends Controller
 
     public function updateImageProfile(Request $request)
     {
-        $empleado = auth()->user()->empleado;
+        $empleado = User::getCurrentUser()->empleado;
         if (preg_match('/^data:image\/(\w+);base64,/', $request->image)) {
             $value = substr($request->image, strpos($request->image, ',') + 1);
             $value = base64_decode($value);
@@ -1385,7 +1385,7 @@ class EmpleadoController extends Controller
 
     public function updateInformationProfile(Request $request)
     {
-        $empleadoID = auth()->user()->empleado->id;
+        $empleadoID = User::getCurrentUser()->empleado->id;
         $empleado = Empleado::find($empleadoID);
         $request->validate([
             // 'name' => 'required|string|max:255',
@@ -1406,7 +1406,7 @@ class EmpleadoController extends Controller
 
     public function updateInformacionRelacionadaProfile(Request $request)
     {
-        $empleadoID = auth()->user()->empleado->id;
+        $empleadoID = User::getCurrentUser()->empleado->id;
         $empleado = Empleado::find($empleadoID);
         $this->validateDynamicForms($request);
         $this->assignDependenciesModel($request, $empleado);

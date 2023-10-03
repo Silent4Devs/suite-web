@@ -7,6 +7,7 @@ use App\Mail\SolicitudMensajeria as MailMensajeria;
 use App\Models\Empleado;
 use App\Models\EnvioDocumentos;
 use App\Models\EnvioDocumentosAjustes;
+use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Flash;
@@ -22,7 +23,7 @@ class EnvioDocumentosController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('solicitud_mensajeria_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
             $query = EnvioDocumentos::with(['coordinador', 'mensajero'])->where('id_solicita', '=', $data)->orderByDesc('id')->get();
@@ -82,7 +83,7 @@ class EnvioDocumentosController extends Controller
         abort_if(Gate::denies('solicitud_mensajeria_crear'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $operadores = EnvioDocumentosAjustes::with(['coordinador', 'mensajero'])->first();
         $solicitud = new EnvioDocumentos();
-        $solicita = auth()->user()->empleado->supervisor_id;
+        $solicita = User::getCurrentUser()->empleado->supervisor_id;
         $fecha_solicitud = Carbon::now();
         $fecha_solicitud = $fecha_solicitud->format('d-m-Y');
         // $permisos = PermisosGoceSueldo::get();
@@ -203,7 +204,7 @@ class EnvioDocumentosController extends Controller
     {
         abort_if(Gate::denies('solicitud_mensajeria_atencion'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $data = auth()->user()->empleado->id;
+        $data = User::getCurrentUser()->empleado->id;
 
         if ($request->ajax()) {
             $query = EnvioDocumentos::with(['coordinador', 'mensajero'])->where('id_coordinador', '=', $data)->orderByDesc('id')->get();

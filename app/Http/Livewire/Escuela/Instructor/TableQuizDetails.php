@@ -4,9 +4,7 @@ namespace App\Http\Livewire\Escuela\Instructor;
 
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Evaluation;
-use App\Models\Escuela\UserEvaluation;
 use Livewire\Component;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TableQuizDetails extends Component
 {
@@ -18,6 +16,7 @@ class TableQuizDetails extends Component
     public $user_id;
     public $user;
     protected $listeners = ['render'];
+
     public function mount($course_id)
     {
         // dd($course_id);
@@ -29,7 +28,6 @@ class TableQuizDetails extends Component
     public function render()
     {
         // $students = $this->course->students()->where('name', 'LIKE', "%{$this->search}%")->get();
-
 
         return view('livewire.escuela.instructor.table-quiz-details');
     }

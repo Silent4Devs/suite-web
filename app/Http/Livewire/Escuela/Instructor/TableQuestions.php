@@ -34,9 +34,7 @@ class TableQuestions extends Component
     {
         return view('livewire.escuela.instructor.table-questions')->with('course', $this->course)->with('evaluation', $this->evaluation);
         // return view("admin.escuela.instructor.test");
-
     }
-
 
     public function destroy($question_id)
     {
@@ -51,6 +49,5 @@ class TableQuestions extends Component
 
         $this->emit('QuestionEvent');
         // $this->render_alerta('success','El registro fue eliminado exitosamente');
-
     }
 }

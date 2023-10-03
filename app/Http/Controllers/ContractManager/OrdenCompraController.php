@@ -12,7 +12,6 @@ use App\Models\ContractManager\ProductoRequisicion as KatbolProductoRequisicion;
 use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
 use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
 use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\Empleado;
 use App\Models\Organizacion;
 use App\Models\User;
 use Gate;
@@ -43,7 +42,6 @@ class OrdenCompraController extends Controller
         $logo_actual = $organizacion_actual->logotipo;
         $empresa_actual = $organizacion_actual->empresa;
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
-
 
         $id = Auth::user()->id;
         $roles = User::find($id)->roles()->get();
@@ -98,7 +96,7 @@ class OrdenCompraController extends Controller
         $roles = User::find($id)->roles()->get();
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
-                $requisiciones = KatbolRequsicion::where([
+                $requisiciones = KatbolRequsicion::with('contrato')->where([
                     ['firma_solicitante', '!=', null],
                     ['firma_jefe', '!=', null],
                     ['firma_finanzas', '!=', null],
@@ -114,7 +112,7 @@ class OrdenCompraController extends Controller
                 if ($comprador) {
                     $id = $comprador->id;
                 }
-                $requisiciones = KatbolRequsicion::where([
+                $requisiciones = KatbolRequsicion::with('contrato')->where([
                     ['firma_solicitante', '!=', null],
                     ['firma_jefe', '!=', null],
                     ['firma_finanzas', '!=', null],
@@ -127,7 +125,7 @@ class OrdenCompraController extends Controller
                 return datatables()->of($requisiciones)->toJson();
             } else {
                 $user = Auth::user();
-                $requisiciones = KatbolRequsicion::where([
+                $requisiciones = KatbolRequsicion::with('contrato')->where([
                     ['firma_solicitante', '!=', null],
                     ['firma_jefe', '!=', null],
                     ['firma_finanzas', '!=', null],
@@ -136,6 +134,7 @@ class OrdenCompraController extends Controller
                     ->where('id_user', $user->id)
                     ->orderByDesc('id')
                     ->get();
+
                 return datatables()->of($requisiciones)->toJson();
             }
         }

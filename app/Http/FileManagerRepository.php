@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use Alexusmai\LaravelFileManager\Services\ConfigService\ConfigRepository;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class FileManagerRepository implements ConfigRepository
@@ -23,21 +24,22 @@ class FileManagerRepository implements ConfigRepository
      */
     public function getDiskList(): array
     {
+        $user = User::getCurrentUser();
         $disklist = [];
-        if (auth()->user()->isAdmin) {
+        if ($user->isAdmin) {
             array_push($disklist, 'Administrador');
             array_push($disklist, 'Normas');
         }
-        if (auth()->user()->can('documentos_publicados_respositorio_access')) {
+        if ($user->can('documentos_publicados_respositorio_access')) {
             array_push($disklist, 'Documentos publicados');
         }
-        if (auth()->user()->can('documentos_aprobacion_respositorio_access')) {
+        if ($user->can('documentos_aprobacion_respositorio_access')) {
             array_push($disklist, 'Documentos en aprobacion');
         }
-        if (auth()->user()->can('documentos_obsoletos_respositorio_access')) {
+        if ($user->can('documentos_obsoletos_respositorio_access')) {
             array_push($disklist, 'Documentos obsoletos');
         }
-        if (auth()->user()->can('documentos_versiones_anteriores_respositorio_access')) {
+        if ($user->can('documentos_versiones_anteriores_respositorio_access')) {
             array_push($disklist, 'Documentos versiones anteriores');
         }
 

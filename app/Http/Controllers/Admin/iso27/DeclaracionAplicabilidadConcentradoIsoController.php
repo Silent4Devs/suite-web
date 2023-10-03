@@ -11,6 +11,7 @@ use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
 use App\Models\Iso27\DeclaracionAplicabilidadConcentradoIso;
 use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
 use App\Models\Iso27\GapDosCatalogoIso;
+use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -189,11 +190,12 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
     public function update(Request $request, $id)
     {
         if ($request->ajax()) {
+            $usuario = User::getCurrentUser();
             switch ($request->name) {
                 case 'justificacion':
                     // dd('Si esta llegando aqui al update del controller', $request, $id);
-                    $gapun = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['justificacion' => $request->value]);
-                    $control = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+                    $gapun = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['justificacion' => $request->value]);
+                    $control = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->first();
                     $aplicabilidad = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->find($control->declaracion_id);
                     if ($control->aplica != null) {
                         $aprobadorDeclaracion = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', $id)->orderBy('created_at')->first();
@@ -207,8 +209,8 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
                     break;
                 case 'aplica':
 
-                    $gapun = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
-                    $control = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+                    $gapun = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['aplica' => $request->value]);
+                    $control = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->first();
 
                     $aplicabilidad = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->find($control->declaracion_id);
                     if ($control->justificacion != null) {
@@ -223,7 +225,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
                     break;
                 case 'aplica2':
                     try {
-                        $gapun = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['aplica' => $request->value]);
+                        $gapun = DeclaracionAplicabilidadResponsableIso::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['aplica' => $request->value]);
 
                         // $gapun->aplica = $request->value;
                         return response()->json(['success' => true, 'id' => $id]);
@@ -235,8 +237,8 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
                 case 'estatus':
 
                     $fecha_aprob = Carbon::today();
-                    $gapun = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['estatus' => $request->value, 'fecha_aprobacion' => $fecha_aprob]);
-                    $control = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+                    $gapun = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['estatus' => $request->value, 'fecha_aprobacion' => $fecha_aprob]);
+                    $control = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->first();
 
                     $aplicabilidad = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->find($control->declaracion_id);
 
@@ -252,10 +254,10 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
                     break;
 
                 case 'comentarios':
-                    $gapun = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['comentarios' => $request->value]);
+                    $gapun = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['comentarios' => $request->value]);
 
                     // $gapun->comentarios = $request->value;
-                    $control = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->first();
+                    $control = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->first();
 
                     $aplicabilidad = DeclaracionAplicabilidadConcentradoIso::with('gapdos')->find($control->declaracion_id);
                     if ($control->estatus != null) {
@@ -271,7 +273,7 @@ class DeclaracionAplicabilidadConcentradoIsoController extends Controller
 
                 case 'fecha_aprobacion':
                     try {
-                        $gapun = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', auth()->user()->empleado->id)->update(['fecha_aprobacion' => $request->value]);
+                        $gapun = DeclaracionAplicabilidadAprobarIso::where('declaracion_id', '=', $id)->where('empleado_id', $usuario->empleado->id)->update(['fecha_aprobacion' => $request->value]);
                         $gapun->fecha_aprobacion = $request->value;
 
                         return response()->json(['success' => true, 'id' => $id]);

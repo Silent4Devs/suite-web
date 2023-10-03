@@ -964,8 +964,8 @@ Reporte Ejecutivo en el que se incluye un documento de alto nivel que informa a 
                 'no' => 2,
                 'contrato_id' => 3,
                 'nombre_entregable' => 'Documentación de Implementación',
-                'descripcion' => 'Documentación de implementación: Documento de 
-análisis y diseño, Plan de instalación, Diagrama de 
+                'descripcion' => 'Documentación de implementación: Documento de
+análisis y diseño, Plan de instalación, Diagrama de
 arquitectura, Matriz de pruebas, memoria técnica, Procesos y procedimientos de cada tarea del catálogo del servicio, diagrama de lógico y físico bajo nivel',
                 'plazo_entrega_inicio' => null,
                 'plazo_entrega_termina' => null,
@@ -989,8 +989,8 @@ arquitectura, Matriz de pruebas, memoria técnica, Procesos y procedimientos de 
                 'no' => 3,
                 'contrato_id' => 3,
                 'nombre_entregable' => 'Reporte Detallado',
-                'descripcion' => 'Reporte detallado con la resolución de incidencias. 
-Este tipo de reporte debe contener la descripción 
+                'descripcion' => 'Reporte detallado con la resolución de incidencias.
+Este tipo de reporte debe contener la descripción
 del incidente, el diagnóstico, la resolución inicial o temporal (si aplica), la resolución definitiva. Se debe de llevar una bitácora de actividades realizadas en paralelo.',
                 'plazo_entrega_inicio' => null,
                 'plazo_entrega_termina' => null,
@@ -3458,7 +3458,7 @@ Conclusión',
                         'no' => 4,
                         'contrato_id' => 6,
                     'nombre_entregable' => 'Reporte Detallado (Semanal y Mensual)',
-                        'descripcion' => 'Reporte detallado con la resolución de incidencias. Este tipo de reporte debe contener la descripción del incidente, el diagnóstico, la resolución inicial o 
+                        'descripcion' => 'Reporte detallado con la resolución de incidencias. Este tipo de reporte debe contener la descripción del incidente, el diagnóstico, la resolución inicial o
 temporal (si aplica), la resolución definitiva. Se debe de llevar una bitácora de actividades realizadas en paralelo',
                         'plazo_entrega_inicio' => '2021-08-11',
                         'plazo_entrega_termina' => '2022-08-21',
@@ -3529,7 +3529,7 @@ temporal (si aplica), la resolución definitiva. Se debe de llevar una bitácora
                         'no' => 7,
                         'contrato_id' => 6,
                     'nombre_entregable' => 'Bitácora relacional e incremental (Mensual)',
-                        'descripcion' => 'Bitácora relacional e incremental que establezca todos los cambios, su flujo desde el requerimiento, número de ticket hasta su aplicación, validación y 
+                        'descripcion' => 'Bitácora relacional e incremental que establezca todos los cambios, su flujo desde el requerimiento, número de ticket hasta su aplicación, validación y
 cierre',
                         'plazo_entrega_inicio' => '2021-08-11',
                         'plazo_entrega_termina' => '2022-08-21',
@@ -5515,14 +5515,14 @@ cierre',
                         'no' => 1,
                         'contrato_id' => 155,
                     'nombre_entregable' => 'Reporte interpretado de  vulnerabilidades o configuraciones no  adecuadas detectadas en aplicaciones o portales web. (Enero 2021)',
-                        'descripcion' => 'Reporte interpretado de vulnerabilidades o configuraciones no adecuadas detectadas en aplicaciones o portales web. 
-Debe contener, al menos, lo siguiente: 
--Tipos de dispositivo que contiene las vulnerabilidades; 
-- Configuraciones no recomendadas en los diferentes activos (aplicaciones o portales web); 
+                        'descripcion' => 'Reporte interpretado de vulnerabilidades o configuraciones no adecuadas detectadas en aplicaciones o portales web.
+Debe contener, al menos, lo siguiente:
+-Tipos de dispositivo que contiene las vulnerabilidades;
+- Configuraciones no recomendadas en los diferentes activos (aplicaciones o portales web);
 - Clasificación de las vulnerabilidades, y
 - Propuesta de solución técnica para mitigar las vulnerabilidades detectadas.
 
-El reporte interpretado de vulnerabilidades o configuraciones no adecuadas detectadas en aplicaciones o portales web deberá entregarse en un período máximo de 24 horas naturales contadas a partir de la fecha y hora en que se entregó el reporte de vulnerabilidades detectadas extraído de la solución 
+El reporte interpretado de vulnerabilidades o configuraciones no adecuadas detectadas en aplicaciones o portales web deberá entregarse en un período máximo de 24 horas naturales contadas a partir de la fecha y hora en que se entregó el reporte de vulnerabilidades detectadas extraído de la solución
 propuesta.
 
 
@@ -5549,13 +5549,13 @@ propuesta.
                         'no' => 2,
                         'contrato_id' => 4,
                         'nombre_entregable' => 'Reporte interpretado de vulnerabilidades o configuraciones no adecuadas detectadas en servidores y equipo de consultores',
-                        'descripcion' => 'Reporte interpretado de vulnerabilidades o configuraciones no adecuadas detectadas en servidores y equipo de consultores. Debe contener: 
-- Tipos de dispositivo que contiene las vulnerabilidades; 
-- Configuraciones no recomendadas en los diferentes activos (servidores, equipos de consultores); 
-- Clasificación de las vulnerabilidades, y 
+                        'descripcion' => 'Reporte interpretado de vulnerabilidades o configuraciones no adecuadas detectadas en servidores y equipo de consultores. Debe contener:
+- Tipos de dispositivo que contiene las vulnerabilidades;
+- Configuraciones no recomendadas en los diferentes activos (servidores, equipos de consultores);
+- Clasificación de las vulnerabilidades, y
 - Propuesta de solución técnica para mitigar las vulnerabilidades detectadas
 
-El reporte interpretado de vulnerabilidades o configuraciones no adecuadas detectadas en aplicaciones o portales web deberá entregarse en un período máximo de 24 horas naturales contadas a partir de la fecha y hora en que se entregó el reporte de vulnerabilidades detectadas extraído de la solución 
+El reporte interpretado de vulnerabilidades o configuraciones no adecuadas detectadas en aplicaciones o portales web deberá entregarse en un período máximo de 24 horas naturales contadas a partir de la fecha y hora en que se entregó el reporte de vulnerabilidades detectadas extraído de la solución
 propuesta.',
                         'plazo_entrega_inicio' => '2021-01-01',
                         'plazo_entrega_termina' => '2022-12-31',
@@ -5604,15 +5604,15 @@ propuesta.',
                         'contrato_id' => 4,
                         'nombre_entregable' => 'Informe detallado de incidente de Seguridad',
                         'descripcion' => 'Informe detallado de incidente de Seguridad que deberá contener, al menos lo siguiente:
-- Fecha y hora de emisión del informe; 
-- Objetivo del informe; 
-- Antecedentes y descripción del evento reportado por el Instituto; 
-- Metodología y técnicas utilizadas para la recolección de la evidencia; 
-- Descripción de los hallazgos; 
-- Cronología del incidente; 
-- Recomendaciones; 
-- Conclusiones, y 
-- Firma autógrafa del Líder especialista en gestión de incidentes. 
+- Fecha y hora de emisión del informe;
+- Objetivo del informe;
+- Antecedentes y descripción del evento reportado por el Instituto;
+- Metodología y técnicas utilizadas para la recolección de la evidencia;
+- Descripción de los hallazgos;
+- Cronología del incidente;
+- Recomendaciones;
+- Conclusiones, y
+- Firma autógrafa del Líder especialista en gestión de incidentes.
 
 Por evento y de conformidad con el plan de trabajo autorizado por la Dirección de Seguridad de la Información del Instituto.
 ',
@@ -5638,11 +5638,11 @@ Por evento y de conformidad con el plan de trabajo autorizado por la Dirección 
                         'no' => 5,
                         'contrato_id' => 4,
                         'nombre_entregable' => 'Informe Ejecutivo',
-                        'descripcion' => 'Informe Ejecutivo que considere la inclusión de, al menos, lo siguiente: 
-- Fecha y hora de emisión del informe; 
-- Desarrollo del incidente; 
-- Resultados del análisis; 
-- Recomendaciones; 
+                        'descripcion' => 'Informe Ejecutivo que considere la inclusión de, al menos, lo siguiente:
+- Fecha y hora de emisión del informe;
+- Desarrollo del incidente;
+- Resultados del análisis;
+- Recomendaciones;
 - Duración del evento (se refiere al tiempo en horas dedicadas por parte del Proveedor para la atención del incidente de seguridad), y
 - Firma autógrafa del Líder especialista en gestión de incidentes
 
@@ -5671,17 +5671,17 @@ Por evento y de conformidad con el plan de trabajo autorizado por la Dirección 
                         'contrato_id' => 4,
                         'nombre_entregable' => 'Informe detallado de análisis forense',
                         'descripcion' => 'Informe detallado de análisis forense que deberá contener, al menos, lo siguiente:
-- Fecha y hora de emisión del informe; 
-- Objetivo del informe; 
-- Descripción del evento reportado por el Instituto; 
-- Alcance del análisis forense; 
-- Descripción de la evidencia recolectada; 
-- Metodología y técnicas utilizadas para la recolección de la evidencia; 
-- Descripción de los hallazgos; 
-- Antecedentes del incidente (si aplica); 
-- Cronología del incidente (si aplica); 
-- Recomendaciones específicas (si aplica); 
-- Conclusiones, y 
+- Fecha y hora de emisión del informe;
+- Objetivo del informe;
+- Descripción del evento reportado por el Instituto;
+- Alcance del análisis forense;
+- Descripción de la evidencia recolectada;
+- Metodología y técnicas utilizadas para la recolección de la evidencia;
+- Descripción de los hallazgos;
+- Antecedentes del incidente (si aplica);
+- Cronología del incidente (si aplica);
+- Recomendaciones específicas (si aplica);
+- Conclusiones, y
 - Firma autógrafa del Líder especialista en análisis forense
 
 Por evento y de conformidad con el plan de trabajo autorizado por la Dirección de Seguridad de la Información del Instituto.
@@ -5710,11 +5710,11 @@ Por evento y de conformidad con el plan de trabajo autorizado por la Dirección 
                         'contrato_id' => 4,
                         'nombre_entregable' => 'Propuesta de proceso y políticas relacionadas con gestión ',
                         'descripcion' => 'Propuesta de proceso y políticas relacionadas con gestión de incidentes, que deberá contener, al menos, lo siguiente:
-- Fecha de emisión del documento; 
--  Documentos revisados; 
-- Propuestas de proceso y políticas; 
-- Fuente de la propuesta (especificación de la norma nacional o internacional o marco de referencia en el que se fundamenta la propuesta); 
--  Beneficios; 
+- Fecha de emisión del documento;
+-  Documentos revisados;
+- Propuestas de proceso y políticas;
+- Fuente de la propuesta (especificación de la norma nacional o internacional o marco de referencia en el que se fundamenta la propuesta);
+-  Beneficios;
 -  Conclusiones, y
 - Firma autógrafa del Líder especialista en gestión de incidentes.
 
@@ -5744,14 +5744,14 @@ Por evento y de conformidad con el plan de trabajo autorizado por la Dirección 
                         'nombre_entregable' => 'Reporte de Servicio Ejecutivo',
                         'descripcion' => 'El Reporte de Servicio Ejecutivo deberá contemplar los siguientes reportes:
 1.- Navegación Segura: Filtrado de contenido
-2.- Servicio de Seguridad para el correo electrónico 
+2.- Servicio de Seguridad para el correo electrónico
 3.- Firewall
 4.- Prevención y detección de intrusos
 5.- Correlacionador de eventos
 6.- Prevención de fuga o robo de información
 7.- Navegación Segura: Amenazas persistentes de día zero y antimalware
 8.- Reporte de Monitoreo de servicios
-9.- Reporte de análisis de vulnerabilidades 
+9.- Reporte de análisis de vulnerabilidades
 10.- Análisis forense y pruebas de penetración
 11.- Antivirus
 
@@ -11102,7 +11102,7 @@ Se deberá entregar dentro de los 10 días hábiles posteriores al mes vencido, 
 8.- Diagnóstico
 9.- Actividades realizadas
 10.- Evidencias de la Ejecución
-11.- Resultado de la Aplicación 
+11.- Resultado de la Aplicación
 12.- Actividades post implementación (en caso de que existan)
 13.- Fecha y hora de término de aplicación',
 'plazo_entrega_inicio' => '2022-03-01',
@@ -12415,9 +12415,9 @@ La información se obtendrá de las herramientas y monitoreo y de la herramienta
                 'no' => 2,
                 'contrato_id' => 26,
             'nombre_entregable' => 'Servicio Administrado de monitoreo y correlación de eventos de seguridad (Febrero 2022)',
-                'descripcion' => 'Estadística mensual de eventos de actividad sospechosa, detecciones, identificaciones, bloqueadas y/o contenidas, así como el detalle de las acciones realizadas en el servicio. Deberá contener los siguientes reportes 
-1.- Estadístico mensual de eventos de actividad sospechosa, detecciones, identificaciones, bloqueadas y/o contenidas, así como el detalle de las acciones realizadas en el servicio. 
-2.-Informe Detallado 
+                'descripcion' => 'Estadística mensual de eventos de actividad sospechosa, detecciones, identificaciones, bloqueadas y/o contenidas, así como el detalle de las acciones realizadas en el servicio. Deberá contener los siguientes reportes
+1.- Estadístico mensual de eventos de actividad sospechosa, detecciones, identificaciones, bloqueadas y/o contenidas, así como el detalle de las acciones realizadas en el servicio.
+2.-Informe Detallado
 3.- Informe ejecutivo de Eventos.',
                 'plazo_entrega_inicio' => '2022-03-01',
                 'plazo_entrega_termina' => '2022-03-14',
@@ -12441,9 +12441,9 @@ La información se obtendrá de las herramientas y monitoreo y de la herramienta
                 'no' => 3,
                 'contrato_id' => 26,
             'nombre_entregable' => 'Servicio Administrado de monitoreo y correlación de eventos de seguridad (Diciembre 2021)',
-                'descripcion' => 'Estadística mensual de eventos de actividad sospechosa, detecciones, identificaciones, bloqueadas y/o contenidas, así como el detalle de las acciones realizadas en el servicio. Deberá contener los siguientes reportes 
-1.- Estadístico mensual de eventos de actividad sospechosa, detecciones, identificaciones, bloqueadas y/o contenidas, así como el detalle de las acciones realizadas en el servicio. 
-2.-Informe Detallado 
+                'descripcion' => 'Estadística mensual de eventos de actividad sospechosa, detecciones, identificaciones, bloqueadas y/o contenidas, así como el detalle de las acciones realizadas en el servicio. Deberá contener los siguientes reportes
+1.- Estadístico mensual de eventos de actividad sospechosa, detecciones, identificaciones, bloqueadas y/o contenidas, así como el detalle de las acciones realizadas en el servicio.
+2.-Informe Detallado
 3.- Informe ejecutivo de Eventos.',
                 'plazo_entrega_inicio' => '2022-01-03',
                 'plazo_entrega_termina' => '2022-01-14',
@@ -12609,8 +12609,8 @@ La información se obtendrá de las herramientas y monitoreo y de la herramienta
                 'no' => 10,
                 'contrato_id' => 26,
             'nombre_entregable' => 'Servicios administrado de una solución de seguridad para equipos de cómputo de escritorio. (Febrero 2022)',
-                'descripcion' => 'Se deberá entregar los siguientes reportes: 
-1.- Informe de monitoreo proactivo 
+                'descripcion' => 'Se deberá entregar los siguientes reportes:
+1.- Informe de monitoreo proactivo
 2.- Reporte de escritorio',
                 'plazo_entrega_inicio' => '2022-03-01',
                 'plazo_entrega_termina' => '2022-03-14',
@@ -12703,8 +12703,8 @@ La información se obtendrá de las herramientas y monitoreo y de la herramienta
                 'no' => 14,
                 'contrato_id' => 26,
             'nombre_entregable' => 'Servicios administrado de una solución de seguridad para equipos de cómputo de escritorio. (Diciembre 2021)',
-                'descripcion' => 'Se deberá entregar los siguientes reportes: 
-1.- Informe de monitoreo proactivo 
+                'descripcion' => 'Se deberá entregar los siguientes reportes:
+1.- Informe de monitoreo proactivo
 2.- Reporte de escritorio',
                 'plazo_entrega_inicio' => '2022-01-03',
                 'plazo_entrega_termina' => '2022-01-14',
@@ -12797,18 +12797,18 @@ La información se obtendrá de las herramientas y monitoreo y de la herramienta
                 'no' => 2,
                 'contrato_id' => 21,
             'nombre_entregable' => 'Reporte Mensual de Soporte y Mantenimiento (Marzo 2022)',
-                'descripcion' => 'Se deberá entregar un reporte mensual de las siguientes actividades realizadas de mantenimiento o soporte preventivo y correctivo que incluirá lo siguiente: 
+                'descripcion' => 'Se deberá entregar un reporte mensual de las siguientes actividades realizadas de mantenimiento o soporte preventivo y correctivo que incluirá lo siguiente:
 1.- Fecha y hora de apertura de reporte en el centro de soporte de licitante ganador
 2.- Severidad
-3.- Tipo de asistencia (Telefónica, remota o en sitio) 
-4.- Fecha y hora de comunicación telefónica o asistencia en sitio 
+3.- Tipo de asistencia (Telefónica, remota o en sitio)
+4.- Fecha y hora de comunicación telefónica o asistencia en sitio
 5.- Fecha y hora de inicio de cierre 6.- Número de incidente relacionado en la herramienta Service Desk del Infonavit
-7.- Número de reporte relacionado con el Centro de Soporte del Licitante Ganador 
-8.- Diagnóstico 
-9.- Actividades realizadas 
-10.- Evidencias de la Ejecución 
-11.- Resultado de la Aplicación 
-12.- Actividades post implementación (en caso de que existan) 
+7.- Número de reporte relacionado con el Centro de Soporte del Licitante Ganador
+8.- Diagnóstico
+9.- Actividades realizadas
+10.- Evidencias de la Ejecución
+11.- Resultado de la Aplicación
+12.- Actividades post implementación (en caso de que existan)
 13.- Fecha y hora de término de aplicación',
                 'plazo_entrega_inicio' => '2022-04-01',
                 'plazo_entrega_termina' => '2022-04-14',
@@ -12832,19 +12832,19 @@ La información se obtendrá de las herramientas y monitoreo y de la herramienta
                 'no' => 3,
                 'contrato_id' => 21,
             'nombre_entregable' => 'Reporte Mensual de Soporte y Mantenimiento (Abril 2022)',
-                'descripcion' => 'Se deberá entregar un reporte mensual de las siguientes actividades realizadas de mantenimiento o soporte preventivo y correctivo que incluirá lo siguiente: 
-1.- Fecha y hora de apertura de reporte en el centro de soporte de licitante ganador 
-2.- Severidad 
-3.- Tipo de asistencia (Telefónica, remota o en sitio) 
-4.- Fecha y hora de comunicación telefónica o asistencia en sitio 
-5.- Fecha y hora de inicio de cierre 
-6.- Número de incidente relacionado en la herramienta Service Desk del Infonavit 
-7.- Número de reporte relacionado con el Centro de Soporte del Licitante Ganador 
-8.- Diagnóstico 
-9.- Actividades realizadas 
-10.- Evidencias de la Ejecución 
-11.- Resultado de la Aplicación 
-12.- Actividades post implementación (en caso de que existan) 
+                'descripcion' => 'Se deberá entregar un reporte mensual de las siguientes actividades realizadas de mantenimiento o soporte preventivo y correctivo que incluirá lo siguiente:
+1.- Fecha y hora de apertura de reporte en el centro de soporte de licitante ganador
+2.- Severidad
+3.- Tipo de asistencia (Telefónica, remota o en sitio)
+4.- Fecha y hora de comunicación telefónica o asistencia en sitio
+5.- Fecha y hora de inicio de cierre
+6.- Número de incidente relacionado en la herramienta Service Desk del Infonavit
+7.- Número de reporte relacionado con el Centro de Soporte del Licitante Ganador
+8.- Diagnóstico
+9.- Actividades realizadas
+10.- Evidencias de la Ejecución
+11.- Resultado de la Aplicación
+12.- Actividades post implementación (en caso de que existan)
 13.- Fecha y hora de término de aplicación',
                 'plazo_entrega_inicio' => '2022-05-02',
                 'plazo_entrega_termina' => '2022-05-13',
@@ -14288,7 +14288,7 @@ S4.- Servicio de Seguridad Antivirus',
                 'plazo_entrega_termina' => '2021-11-30',
                 'entrega_real' => '2021-10-01',
                 'cumplimiento' => 1,
-                'observaciones' => 'Cumple con las especificaciones establecidas en la propuesta técnica y económica,  presentando el siguiente reporte "Reporte de Servicio de Pruebas de Penetración" del día 4 de Octubre de 2021. 
+                'observaciones' => 'Cumple con las especificaciones establecidas en la propuesta técnica y económica,  presentando el siguiente reporte "Reporte de Servicio de Pruebas de Penetración" del día 4 de Octubre de 2021.
 Las pruebas  fueron realizadas del 04 al 19 de Octubre de 2021. Su alcance fue de 2 aplicativos (1 Android y 1 IOS).
 La vigencia fue de 26 días entre la realización de las pruebas de penetración y la elaboración del reporte.
 
@@ -14311,7 +14311,7 @@ Orden de servicio número 3 del contrato de prestación de servicios de fecha 28
                 'contrato_id' => 31,
             'nombre_entregable' => 'Reporte Técnico (Reporte de hallazgos y sugerencias de remediación)',
                 'descripcion' => 'Este reporte deberá contener lo siguiente:
-1.- Alcance 
+1.- Alcance
 2.- Metodología
 3.- Limitantes
 4.- Escala de Clasificación de riesgo
@@ -14321,7 +14321,7 @@ Orden de servicio número 3 del contrato de prestación de servicios de fecha 28
                 'plazo_entrega_termina' => '2021-11-30',
                 'entrega_real' => '2021-11-29',
                 'cumplimiento' => 1,
-                'observaciones' => 'Cumple con las especificaciones establecidas en la propuesta técnica y económica, presentando el siguiente reporte "Reporte de Servicio de Pruebas de Penetración" del día 4 de Octubre 2021. 
+                'observaciones' => 'Cumple con las especificaciones establecidas en la propuesta técnica y económica, presentando el siguiente reporte "Reporte de Servicio de Pruebas de Penetración" del día 4 de Octubre 2021.
 
 Las pruebas  fueron realizadas del 04 al 19 de Octubre de 2021. Su alcance fue de 2 aplicativos (1 Android y 1 IOS).
 La vigencia fue de 26 días entre la realización de las pruebas de penetración y la elaboración del reporte.
@@ -15765,7 +15765,7 @@ Se deberá entregar dentro de los 10 días hábiles posteriores al mes vencido. 
 'descripcion' => 'Se proporcionará dentro de los 10 días naturales, posteriores a la notificación del fallo, un documento en el que se indique la siguiente información:
 1.- Nombre y números telefónicos de los contactos (técnicos y administrativos)
 2.- Procedimiento para levantar  reporte
-3.- Matriz de escalación 
+3.- Matriz de escalación
 4.- Lista de equipo bajo contrato
 5.- Memoria Técnica del estados de los equipos donde se refleje (configuración actual, versión, diagrama de red y lo conveniente por el personal de la DGS.
 6.- Póliza de servicio para el mantenimiento para la solución de balanceadores y protección web para sitios institucionales considerando todas las actividades, vigencia y documentación correspondiente.',
@@ -16119,8 +16119,8 @@ Este primer resumen es un informe actualizado de los sistemas previo al inicio d
             'descripcion' => 'Resumen ejecutivo (Presentación ejecutiva) deberá de contener lo siguiente:
 
 o	Contexto general de la prueba
-o	Visión general de riesgo 
-o	Visión general del estado de los controles de seguridad existentes 
+o	Visión general de riesgo
+o	Visión general del estado de los controles de seguridad existentes
 o	Impactos a nivel negocio derivado de los riesgos existentes
 o	Conclusiones y principales hallazgos
 o	Plan de mitigación a corto, mediano y largo plazo
@@ -16153,7 +16153,7 @@ La entrega se hará dentro de los siguientes 10 días después de entregado el s
 
 o	Detalle de pruebas realizadas por fase de metodología
 o	Detalle de evidencia (videos en vulnerabilidades críticas)
-o	Clasificación de riesgos 
+o	Clasificación de riesgos
 o	Recomendaciones puntuales (Mitigación inmediata, Solución de causa raíz, Controles compensatorios)
 o	Matriz de vulnerabilidades
 o	Listado de equipos y cuentas de usuarios comprometidos durante la prueba
@@ -16821,7 +16821,7 @@ La entrega se hará dentro de los siguientes 10 días después de entregado el s
                     'no' => 2,
                     'contrato_id' => 38,
                     'nombre_entregable' => 'Reporte Técnico',
-                    'descripcion' => 'Reporte Técnico 
+                    'descripcion' => 'Reporte Técnico
 - Detalle de pruebas realizadas por fase de metodología
 - Detalle de evidencia
 - Clasificación de riesgo
@@ -16882,15 +16882,15 @@ La entrega se hará dentro de los siguientes 10 días después de entregado el s
                     'no' => 2,
                     'contrato_id' => 38,
                 'nombre_entregable' => 'Reporte Mensual de Servicios Administrados de Monitoreo y Seguridad de la Red (Enero 2021)',
-                'descripcion' => 'Reporte Mensual de Servicios Administrados de Monitoreo y Seguridad de la Red (Enero 2021) (19 de diciembre 2020  al 28 de enero 2021) incluye lo siguiente: 
+                'descripcion' => 'Reporte Mensual de Servicios Administrados de Monitoreo y Seguridad de la Red (Enero 2021) (19 de diciembre 2020  al 28 de enero 2021) incluye lo siguiente:
 
-- Actividad Sospechosa 
-- Reporte de tráfico 
-- Reporte Fine Tuning 
-- Respaldos 
-- Memorias Técnicas 
-- Análisis de Vulnerabilidades 
-- Reporte de Salud de los equipos 
+- Actividad Sospechosa
+- Reporte de tráfico
+- Reporte Fine Tuning
+- Respaldos
+- Memorias Técnicas
+- Análisis de Vulnerabilidades
+- Reporte de Salud de los equipos
 - SOC - Newsletter - Enero 2021',
                     'plazo_entrega_inicio' => '2021-01-01',
                     'plazo_entrega_termina' => '2021-01-28',
@@ -17515,7 +17515,7 @@ La entrega se hará dentro de los siguientes 10 días después de entregado el s
 2.- Detalle de evidencia (videos en vulnerabilidades críticas)
 3.- Clasificación de riesgos
 4.- Recomendaciones puntuales (mitigación inmediata, solución  a causa raíz, controles compensatorios)
-5.- Matriz de vulnerabilidades 
+5.- Matriz de vulnerabilidades
 6.- Listados de equipos y cuentas de usuarios comprometidos durante la prueba.',
                         'plazo_entrega_inicio' => '2022-01-18',
                         'plazo_entrega_termina' => '2022-05-31',
@@ -18453,7 +18453,7 @@ Evaluación de Control en Modelo de Gobierno
 - Postura de Riesgo y SGSI
 - Análisis de Riesgo
 - BIA, BCP, AIA y DRP, evaluación, situación y área de oportunidad
-- Cumplimiento y apego Normativo 
+- Cumplimiento y apego Normativo
 - Cumplimiento y apego a mejores prácticas y/o estándares.',
                         'plazo_entrega_inicio' => '2019-11-09',
                         'plazo_entrega_termina' => '2019-12-31',
@@ -18735,9 +18735,9 @@ El archivo PDF que se tiene bajo resguardo en el repositorio no se puede abrir.'
                             'no' => 2,
                             'contrato_id' => 50,
                             'nombre_entregable' => 'Entregable Fase B "Pruebas de Seguridad Internas"',
-                            'descripcion' => 'El entregable Fase A "Pruebas de Seguridad Interna" deberá contener lo siguiente: 
-- Resumen Ejecutivo/Presentación Ejecutiva (SA-E2,SB-E2) 
-- Reporte Técnico (SA-E1, SB-E1) 
+                            'descripcion' => 'El entregable Fase A "Pruebas de Seguridad Interna" deberá contener lo siguiente:
+- Resumen Ejecutivo/Presentación Ejecutiva (SA-E2,SB-E2)
+- Reporte Técnico (SA-E1, SB-E1)
 - Registro de Bandera (SA-E3, SB-SB3)',
                             'plazo_entrega_inicio' => '2020-11-05',
                             'plazo_entrega_termina' => '2021-01-13',
@@ -18770,7 +18770,7 @@ El archivo PDF que se encuentra bajo resguardo en el repositorio no se pudo abri
                             'plazo_entrega_termina' => '2020-12-31',
                             'entrega_real' => '2021-01-13',
                             'cumplimiento' => 0,
-                            'observaciones' => 'Cumple con las especificaciones establecidas en el anexo técnico del contrato, de acuerdo al acta de aceptación de entregables firmada por las partes. Pero como no se encontró en el repositorio. por lo que no se pudo evaluar. 
+                            'observaciones' => 'Cumple con las especificaciones establecidas en el anexo técnico del contrato, de acuerdo al acta de aceptación de entregables firmada por las partes. Pero como no se encontró en el repositorio. por lo que no se pudo evaluar.
 
 La evidencia física de que fue entregado no se encuentra bajo resguardo en el repositorio.',
                             'aplica_deductiva' => 0,
@@ -19149,14 +19149,14 @@ El archivo que esta en el repositorio no se puede abrir.',
                             'no' => 3,
                             'contrato_id' => 53,
                             'nombre_entregable' => 'FASE 3 Revisión de Compromiso de Seguridad',
-                            'descripcion' => 'Fase 3 Revisión de Compromiso de Seguridad se deberá entregar lo siguiente: 
+                            'descripcion' => 'Fase 3 Revisión de Compromiso de Seguridad se deberá entregar lo siguiente:
 - Resumen Ejecutivo
 - Reporte Técnico',
                             'plazo_entrega_inicio' => '2021-08-05',
                             'plazo_entrega_termina' => '2021-08-05',
                             'entrega_real' => '2021-08-05',
                             'cumplimiento' => 1,
-                            'observaciones' => 'Cumple con las especificaciones establecidas en la propuesta técnica del proyecto. 
+                            'observaciones' => 'Cumple con las especificaciones establecidas en la propuesta técnica del proyecto.
 
 El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
                             'aplica_deductiva' => 0,
@@ -20245,8 +20245,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
                             'contrato_id' => 59,
                         'nombre_entregable' => 'Resumen Ejecutivo (Presentación ejecutivo)',
                             'descripcion' => 'El resumen ejecutivo se  deberá entregar de acuerdo a las especificaciones establecidas en la propuesta técnica del proyecto. El reporte deberá contener lo siguiente:
-1) Visión general de riesgo  
-2) Visión general del estado de los controles de seguridad existentes 
+1) Visión general de riesgo
+2) Visión general del estado de los controles de seguridad existentes
 3) Impactos a nivel negocio derivado de los riesgos existentes
 4) Conclusiones y principales hallazgos
 5) Plan de mitigación a corto, mediano y largo plazo',
@@ -20275,7 +20275,7 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
         'descripcion' => 'El reporte técnico se deberá entregar de acuerdo a las especificaciones establecidas en la propuesta técnica del proyecto. El reporte deberá contener lo siguientes:
 1) Detalle de pruebas realizadas por fase de metodología
 2) Detalle de evidencia (videos en vulnerabilidades críticas)
-3) Clasificación de riesgos 
+3) Clasificación de riesgos
 4) Recomendaciones puntuales (mitigación inmediata, solución de causa raíz y controles compensatorios)
 5) Matriz de vulnerabilidades',
 'plazo_entrega_inicio' => '2021-11-23',
@@ -20302,8 +20302,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'nombre_entregable' => 'Resumen Ejecutivo (Presentación  ejecutiva)',
 'descripcion' => 'Se deberá de entregar de acuerdo a las especificaciones establecidas en la propuesta técnica del proyecto. De deberá contener lo siguiente:
 1) Contexto general de la prueba
-2) Visión general de riesgo 
-3) Visión general del estado de los controles de seguridad existentes 
+2) Visión general de riesgo
+3) Visión general del estado de los controles de seguridad existentes
 4) Impactos a nivel negocio derivado de los riesgos existentes
 5) Conclusiones y principales hallazgos
 6) Plan de mitigación a corto, mediano y largo plazo',
@@ -20333,8 +20333,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 1) Resultados generales de las pruebas
 2) Detalle de pruebas realizadas por fase de metodología
 3) Principales riesgos
-4) Detalle de evidencia 
-5) Clasificación de riesgos 
+4) Detalle de evidencia
+5) Clasificación de riesgos
 6) Recomendaciones puntuales (mitigación inmediata, solución de causa raíz, controles compensatorios)
 7) Recomendaciones listadas por criticidad, prioridad y mitigación
 8) Matriz de vulnerabilidades',
@@ -20362,8 +20362,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'nombre_entregable' => 'Resumen Ejecutivo (Presentación Ejecutivo)',
 'descripcion' => 'Se deberá cargar de acuerdo a la especificaciones establecidas en la propuesta técnica, deberá contener lo siguiente:
 
-1) Visión general de riesgo  
-2) Visión general del estado de los controles de seguridad existentes 
+1) Visión general de riesgo
+2) Visión general del estado de los controles de seguridad existentes
 3) Impactos a nivel negocio derivado de los riesgos existentes',
 'plazo_entrega_inicio' => '2021-01-26',
 'plazo_entrega_termina' => '2021-02-05',
@@ -20387,11 +20387,11 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'no' => 2,
 'contrato_id' => 61,
 'nombre_entregable' => 'Reporte Técnico',
-'descripcion' => 'Se deberá cargar de acuerdo a la especificaciones establecidas en la propuesta técnica, deberá contener lo siguiente: 
+'descripcion' => 'Se deberá cargar de acuerdo a la especificaciones establecidas en la propuesta técnica, deberá contener lo siguiente:
 
 1) Detalle de pruebas realizadas por fase de metodología
 2) Detalle de evidencia (videos en vulnerabilidades críticas)
-3) Clasificación de riesgos 
+3) Clasificación de riesgos
 4) Recomendaciones puntuales (mitigación inmediata, solución de causa raíz, controles compensatorios)
 5) Matriz de vulnerabilidades',
 'plazo_entrega_inicio' => '2021-01-26',
@@ -20462,8 +20462,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'no' => 1,
 'contrato_id' => 62,
 'nombre_entregable' => 'Resumen Ejecutivo (Presentación Ejecutivo)',
-'descripcion' => 'Se deberá cargar de acuerdo con la especificaciones establecidas en la propuesta técnica, deberá contener lo siguiente: 
-1) Visión general de riesgo 
+'descripcion' => 'Se deberá cargar de acuerdo con la especificaciones establecidas en la propuesta técnica, deberá contener lo siguiente:
+1) Visión general de riesgo
 2) Visión general del estado de los controles de seguridad existentes 3) Impactos a nivel negocio derivado de los riesgos existentes
 ',
 'plazo_entrega_inicio' => '2021-07-28',
@@ -20488,11 +20488,11 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'no' => 2,
 'contrato_id' => 62,
 'nombre_entregable' => 'Reporte Técnico',
-'descripcion' => 'Se deberá cargar de acuerdo con la especificaciones establecidas en la propuesta técnica, deberá contener lo siguiente: 
-1) Detalle de pruebas realizadas por fase de metodología 
-2) Detalle de evidencia (videos en vulnerabilidades críticas) 
-3) Clasificación de riesgos 
-4) Recomendaciones puntuales (mitigación inmediata, solución de causa raíz, controles compensatorios) 
+'descripcion' => 'Se deberá cargar de acuerdo con la especificaciones establecidas en la propuesta técnica, deberá contener lo siguiente:
+1) Detalle de pruebas realizadas por fase de metodología
+2) Detalle de evidencia (videos en vulnerabilidades críticas)
+3) Clasificación de riesgos
+4) Recomendaciones puntuales (mitigación inmediata, solución de causa raíz, controles compensatorios)
 5) Matriz de vulnerabilidades
 ',
 'plazo_entrega_inicio' => '2021-07-28',
@@ -20911,7 +20911,7 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'descripcion' => 'Se hace constar la entrega recepción de los siguientes entregables de común acuerdo:
 - Memoria Técnica Fase 6  Implementación del SGSI
 - Material de Capacitación  de formación de Auditores Internos
-- Plan de Continuidad del Negocio (Business Continuity Planning) 
+- Plan de Continuidad del Negocio (Business Continuity Planning)
 - Procedimiento de copias de seguridad
 - Procedimiento de gestión de acceso
 - Procedimiento de borrado seguro
@@ -20975,7 +20975,7 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'descripcion' => 'Se hace constar la entrega recepción de los siguientes entregables de común acuerdo:
 - Memoria Técnica Fase 7 Desempeño y adopción del SGSI
 - Metodología de auditoría del SGSI
-- Programa de concientización 
+- Programa de concientización
 - Registros de transferencias de conocimiento
 - Procedimiento de asignación de usuarios y contraseñas
 ',
@@ -21056,8 +21056,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'no' => 10,
 'contrato_id' => 63,
 'nombre_entregable' => 'Informe Mensual Julio 2018',
-'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente: 
-- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados 
+'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente:
+- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados
 - Informe mensual del soporte de la definición o implementación de la normativa aplicable, controles, políticas y procedimientos',
 'plazo_entrega_inicio' => '2018-07-25',
 'plazo_entrega_termina' => '2018-07-25',
@@ -21081,8 +21081,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'no' => 11,
 'contrato_id' => 63,
 'nombre_entregable' => 'Informe Mensual Agosto 2018',
-'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente: 
-- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados 
+'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente:
+- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados
 - Informe mensual del soporte de la definición o implementación de la normativa aplicable, controles, políticas y procedimientos.',
 'plazo_entrega_inicio' => '2018-08-25',
 'plazo_entrega_termina' => '2018-08-25',
@@ -21106,8 +21106,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'no' => 12,
 'contrato_id' => 63,
 'nombre_entregable' => 'Informe Mensual Septiembre 2018',
-'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente: 
-- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados 
+'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente:
+- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados
 - Informe mensual del soporte de la definición o implementación de la normativa aplicable, controles, políticas y procedimientos.',
 'plazo_entrega_inicio' => '2018-09-25',
 'plazo_entrega_termina' => '2018-09-25',
@@ -21131,8 +21131,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'no' => 13,
 'contrato_id' => 63,
 'nombre_entregable' => 'Informe Mensual Octubre 2018',
-'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente: 
-- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados 
+'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente:
+- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados
 - Informe mensual del soporte de la definición o implementación de la normativa aplicable, controles, políticas y procedimientos.',
 'plazo_entrega_inicio' => '2018-10-25',
 'plazo_entrega_termina' => '2018-10-25',
@@ -21156,8 +21156,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'no' => 14,
 'contrato_id' => 63,
 'nombre_entregable' => 'Informe Mensual Noviembre 2018',
-'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente: 
-- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados 
+'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente:
+- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados
 - Informe mensual del soporte de la definición o implementación de la normativa aplicable, controles, políticas y procedimientos.',
 'plazo_entrega_inicio' => '2018-11-25',
 'plazo_entrega_termina' => '2018-11-25',
@@ -21181,8 +21181,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'no' => 15,
 'contrato_id' => 63,
 'nombre_entregable' => 'Informe Mensual Diciembre 2018',
-'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente: 
-- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados 
+'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente:
+- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados
 - Informe mensual del soporte de la definición o implementación de la normativa aplicable, controles, políticas y procedimientos.',
 'plazo_entrega_inicio' => '2018-12-25',
 'plazo_entrega_termina' => '2018-12-25',
@@ -21206,8 +21206,8 @@ El archivo que esta en el repositorio del proyecto no se puede bajar.  ',
 'no' => 16,
 'contrato_id' => 63,
 'nombre_entregable' => 'Informe Mensual Final',
-'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente: 
-- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados 
+'descripcion' => 'El informe mensual del servicio de implementación de un modelo de gobierno de tecnologías de la información y comunicaciones y de un SGSI para la Dirección General de Informática y Telecomunicaciones deberá incluir lo siguiente:
+- Informe mensual para la verificación de desempeño, cumplimiento normativo y mejoras sobre los procesos implementados
 - Informe mensual del soporte de la definición o implementación de la normativa aplicable, controles, políticas y procedimientos.',
 'plazo_entrega_inicio' => '2018-12-25',
 'plazo_entrega_termina' => '2018-12-25',
@@ -21862,9 +21862,9 @@ Como objetivo principal en lo general y en detalle según corresponda será el i
 'no' => 1,
 'contrato_id' => 66,
 'nombre_entregable' => 'Plan de Trabajo Integral y Detallado',
-'descripcion' => 'SILENT4BUSINESS entregará el plan de trabajo integral y detallado del proyecto, incluyendo las actividades para la mejora del Gobierno de TI, actualización y 
-seguimiento del SGSI, aseguramiento de la calidad y cumplimiento de niveles de  servicio en la entrega de servicios de TI y la definición de los Planes de Continuidad 
-y Recuperación ante Desastres, BIA y AR y pruebas al mismo, el cual deberá contener a los responsables de las actividades, hitos del proyecto y tiempos de ejecución, 
+'descripcion' => 'SILENT4BUSINESS entregará el plan de trabajo integral y detallado del proyecto, incluyendo las actividades para la mejora del Gobierno de TI, actualización y
+seguimiento del SGSI, aseguramiento de la calidad y cumplimiento de niveles de  servicio en la entrega de servicios de TI y la definición de los Planes de Continuidad
+y Recuperación ante Desastres, BIA y AR y pruebas al mismo, el cual deberá contener a los responsables de las actividades, hitos del proyecto y tiempos de ejecución,
 mismo que será aceptado por el responsable del servicio al inicio de este.',
 'plazo_entrega_inicio' => '2020-11-10',
 'plazo_entrega_termina' => '2021-04-30',
@@ -21888,7 +21888,7 @@ mismo que será aceptado por el responsable del servicio al inicio de este.',
 'no' => 2,
 'contrato_id' => 66,
 'nombre_entregable' => 'Metodología  de Análisis de Riesgo',
-'descripcion' => 'SILENT4BUSINESS entregará la metodología de análisis de riesgos con la cual ejecutará las actividades pertinentes para la actualización del ejercicio realizado en 
+'descripcion' => 'SILENT4BUSINESS entregará la metodología de análisis de riesgos con la cual ejecutará las actividades pertinentes para la actualización del ejercicio realizado en
 2019, esta metodología deberá contemplar la incorporación de la evaluación de controles de seguridad implementados como parte del SGSI de la DGIT.
 ',
 'plazo_entrega_inicio' => '2020-11-10',
@@ -21936,8 +21936,8 @@ mismo que será aceptado por el responsable del servicio al inicio de este.',
 'no' => 4,
 'contrato_id' => 66,
 'nombre_entregable' => 'Auditoría al Gobierno de TI y SGSI',
-'descripcion' => 'SILENT4BUSINESS entregará como parte de la auditoria al Gobierno de TI y SGSI el reporte de auditoria de la operación que comprende enero 2020 – septiembre 
-2020, identificando las posibles desviaciones u oportunidades de mejora, así como, la estrategia de remediación para las brechas identificadas, documento que deberá 
+'descripcion' => 'SILENT4BUSINESS entregará como parte de la auditoria al Gobierno de TI y SGSI el reporte de auditoria de la operación que comprende enero 2020 – septiembre
+2020, identificando las posibles desviaciones u oportunidades de mejora, así como, la estrategia de remediación para las brechas identificadas, documento que deberá
 proporcionar trazabilidad en las revisiones (nombre de documentos, evidencia revisada, personal involucrado en la revisión, firma de aceptación de hallazgos).
 ',
 'plazo_entrega_inicio' => '2020-11-10',
@@ -21962,7 +21962,7 @@ proporcionar trazabilidad en las revisiones (nombre de documentos, evidencia rev
 'no' => 5,
 'contrato_id' => 66,
 'nombre_entregable' => 'Tablero de Indicadores del Modelo de Gobierno de TI y Sistemas de Gestión de Seguridad de la Información.',
-'descripcion' => 'SILENT4BUSINESS entregará el tablero de indicadores del Modelo de Gobierno de TI y Sistema de Gestión de Seguridad de la Información actualizado, conforme a los 
+'descripcion' => 'SILENT4BUSINESS entregará el tablero de indicadores del Modelo de Gobierno de TI y Sistema de Gestión de Seguridad de la Información actualizado, conforme a los
 resultados obtenidos del seguimiento y monitoreo de este.
 ',
 'plazo_entrega_inicio' => '2020-11-10',
@@ -22010,7 +22010,7 @@ resultados obtenidos del seguimiento y monitoreo de este.
 'no' => 7,
 'contrato_id' => 66,
 'nombre_entregable' => 'Metodología de Impacto al Negocio, Análisis de Impacto a los Aplicativos y Análisis de Riesgo.',
-'descripcion' => 'SILENT4BUSINESS definirá e implementará la Metodología de Análisis de Impacto al Negocio, Análisis de Impacto a los Aplicativos y Análisis de Riesgos mediante la cual 
+'descripcion' => 'SILENT4BUSINESS definirá e implementará la Metodología de Análisis de Impacto al Negocio, Análisis de Impacto a los Aplicativos y Análisis de Riesgos mediante la cual
 implementará el servicio.',
 'plazo_entrega_inicio' => '2020-11-10',
 'plazo_entrega_termina' => '2021-04-30',
@@ -22034,7 +22034,7 @@ implementará el servicio.',
 'no' => 8,
 'contrato_id' => 66,
 'nombre_entregable' => 'Auditoría programada en el mes de enero',
-'descripcion' => 'SILENT4BUSINESS entregará como parte de las auditorías programadas para los meses de enero y abril, el programa de auditoria, el plan de auditoría, listas de 
+'descripcion' => 'SILENT4BUSINESS entregará como parte de las auditorías programadas para los meses de enero y abril, el programa de auditoria, el plan de auditoría, listas de
 verificación (en caso de utilizarlas) y el reporte de auditoría correspondiente, todo esto alienado a la ISO 19011:2018. ',
 'plazo_entrega_inicio' => '2020-11-10',
 'plazo_entrega_termina' => '2021-04-30',
@@ -22104,14 +22104,14 @@ verificación (en caso de utilizarlas) y el reporte de auditoría correspondient
 'no' => 11,
 'contrato_id' => 66,
 'nombre_entregable' => 'Análisis de los contratos definidos como linea base',
-'descripcion' => 'SILENT4BUSINESS entregará el análisis de los contratos definidos como línea base, con el fin de identificar los datos clave, los cuales serán insumos para sus revisiones, 
+'descripcion' => 'SILENT4BUSINESS entregará el análisis de los contratos definidos como línea base, con el fin de identificar los datos clave, los cuales serán insumos para sus revisiones,
 dichos datos se enlistan de manera enunciativa más no limitativa y de acuerdo con  la herramienta informática:
 
 Generales: N° Contrato, Nombre del proveedor, Nombre del Servicio, Vigencia del contrato, Administrador del Contrato, Puesto, Servicios y descripción de estos.
 
 Facturación: Máximos y mínimos por periodo (Año y/o mes), No. De Factura, Periodo, Fecha de Recepción, Fecha de Liberación, N° Revisiones, Cumple/No Cumple, Monto Factura (Incluye IVA) y Observaciones.
 
-Niveles de servicio: Atención y solución de las incidencias o problemas con base a su complejidad, Concepto, Tiempos de acuerdo con la criticidad Alta Media y Baja, 
+Niveles de servicio: Atención y solución de las incidencias o problemas con base a su complejidad, Concepto, Tiempos de acuerdo con la criticidad Alta Media y Baja,
 Horarios hábiles e inhábiles.
 
 Entregables Mensuales: Se plasmarán los entregables que tienen una periodicidad con los siguientes datos, Nombre del Entregable, Descripción de Entregable, Plazo de entrega, Entrega Real, Cumplimiento, Observaciones, Deductiva/Penalización.
@@ -22147,7 +22147,7 @@ Penas y Deductivas: Todas las actividades no cumplidas y que se plasman dentro d
 'no' => 12,
 'contrato_id' => 66,
 'nombre_entregable' => 'Cédulas de revisión del cumplimiento obtenidas de la herramienta informática, cédulas de aseguramiento de la calidad y niveles de servicio de manera. (Noviembre 2020)',
-'descripcion' => 'SILENT4BUSINESS entregará cédulas de revisión del cumplimiento obtenidas de la herramienta informática, cédulas de aseguramiento de la calidad y niveles de 
+'descripcion' => 'SILENT4BUSINESS entregará cédulas de revisión del cumplimiento obtenidas de la herramienta informática, cédulas de aseguramiento de la calidad y niveles de
 servicio de manera periódica bajo lo establecido de manera contractual con los diferentes prestadores del servicio de la DGIT',
 'plazo_entrega_inicio' => '2020-11-10',
 'plazo_entrega_termina' => '2021-04-30',
@@ -22288,10 +22288,10 @@ servicio de manera periódica bajo lo establecido de manera contractual con los 
 'nombre_entregable' => 'Reportes de conclusión por contrato.',
 'descripcion' => 'SILENT4BUSINESS entregará los reportes de conclusión por contrato, el cual contendrá el estatus de los contratos, todos estos datos obtenidos de la herramienta informática en el momento que el responsable del servicio lo requiera, el cual contendrá los siguientes rubros:
 
-Datos Generales del contrato, 
-Periodos de facturación, 
+Datos Generales del contrato,
+Periodos de facturación,
 Pagos emitidos.
-Niveles de Servicio definidos contractualmente, 
+Niveles de Servicio definidos contractualmente,
 Entregables contractuales,
 Hallazgos identificados dentro de las revisiones.
 Penas y deductivas.
@@ -22321,7 +22321,7 @@ Conclusiones.
 'no' => 19,
 'contrato_id' => 66,
 'nombre_entregable' => 'Análisis de Impacto al Negocio, Análisis de Impacto a los Aplicativos, Análisis de Riesgo.',
-'descripcion' => 'SILENT4BUSINESS entregará el Análisis de Impacto al Negocio, Análisis de Impacto a los Aplicativos, Análisis de Riesgos realizados, así como, su evidencia 
+'descripcion' => 'SILENT4BUSINESS entregará el Análisis de Impacto al Negocio, Análisis de Impacto a los Aplicativos, Análisis de Riesgos realizados, así como, su evidencia
 correspondiente, dichos análisis contendrá:
 
 Análisis de Riesgos:
@@ -22434,7 +22434,7 @@ Condiciones y características del centro de operaciones alterna.
 'no' => 22,
 'contrato_id' => 66,
 'nombre_entregable' => 'Desarrollar Planes de continuidad y recuperación ante desastres conforme a los resultados del BIA, AIA y AR.',
-'descripcion' => 'SILENT4BUSINESS desarrollará y entregará como parte del servicio los Planes de Continuidad y Recuperación ante Desastres conforme a los resultados del BIA, AIA y 
+'descripcion' => 'SILENT4BUSINESS desarrollará y entregará como parte del servicio los Planes de Continuidad y Recuperación ante Desastres conforme a los resultados del BIA, AIA y
 AR:
 
 Directrices BCP
@@ -22567,10 +22567,10 @@ Constancias de participación en la transferencia de conocimientos.',
 'nombre_entregable' => 'Servicio para el mantenimiento del Sistema de Gestión de Seguridad de la Información (SGSI) de NUBAJ (Servicio 1 de 3)',
 'descripcion' => 'Para la entrega de los servicios, se contemplan 3 meses a partir de la firma del contrato.
 
-Fase de Evaluación: 
+Fase de Evaluación:
 Plan de trabajo detallado para la ejecución del proyecto.
 Agenda para el levantamiento de información.
-Reporte de Hallazgos y mejoras. 
+Reporte de Hallazgos y mejoras.
 
 Fase de Definición y Estrategia:
 Manual del SGSI.
@@ -22579,7 +22579,7 @@ Fase Análisis y Evaluación de Riesgos:
 Metodología de análisis y evaluación de riesgos.
 Análisis y evaluación de riesgos
 
-Fase Implementación y Operación del SGSI 
+Fase Implementación y Operación del SGSI
 Documentos actualizados del SGS
 
 Fase Desempeño del SGSI:
@@ -22614,32 +22614,32 @@ Minutas de seguimiento realizado conforme a los requisitos de la norma ISO/IEC 2
 'no' => 2,
 'contrato_id' => 69,
 'nombre_entregable' => 'Servicio para el mantenimiento del Sistema de Gestión de Seguridad de la Información (SGSI) de NUBAJ (Servicio 2 de 3)',
-'descripcion' => 'Para la entrega de los servicios, se contemplan 3 meses a partir de la firma del contrato. 
+'descripcion' => 'Para la entrega de los servicios, se contemplan 3 meses a partir de la firma del contrato.
 
-Fase de Evaluación: 
+Fase de Evaluación:
 Plan de trabajo detallado para la ejecución del proyecto.
-Agenda para el levantamiento de información. 
-Reporte de Hallazgos y mejoras. 
+Agenda para el levantamiento de información.
+Reporte de Hallazgos y mejoras.
 
 Fase de Definición y Estrategia:
-Manual del SGSI. 
+Manual del SGSI.
 
-Fase Análisis y Evaluación de Riesgos: 
-Metodología de análisis y evaluación de riesgos. 
-Análisis y evaluación de riesgos 
+Fase Análisis y Evaluación de Riesgos:
+Metodología de análisis y evaluación de riesgos.
+Análisis y evaluación de riesgos
 
 Fase Implementación y Operación del SGSI:
-Documentos actualizados del SGS 
+Documentos actualizados del SGS
 
 Fase Desempeño del SGSI:
 Monitoreo de los indicadores del SG
 
-Fase Auditoría al SGSI: 
-Plan de Auditorias. 
-Evidencia de Auditorías realizadas. 
-Acciones correctivas y/o de mejora 
+Fase Auditoría al SGSI:
+Plan de Auditorias.
+Evidencia de Auditorías realizadas.
+Acciones correctivas y/o de mejora
 
-Fase Revisión por la Dirección: 
+Fase Revisión por la Dirección:
 Minutas de seguimiento realizado conforme a los requisitos de la norma ISO/IEC 27001:2013',
 'plazo_entrega_inicio' => '2020-10-02',
 'plazo_entrega_termina' => '2020-10-02',
@@ -22663,19 +22663,19 @@ Minutas de seguimiento realizado conforme a los requisitos de la norma ISO/IEC 2
 'no' => 3,
 'contrato_id' => 69,
 'nombre_entregable' => 'Servicio para el mantenimiento del Sistema de Gestión de Seguridad de la Información (SGSI) de NUBAJ (Servicio 3 de 3)',
-'descripcion' => 'Para la entrega de los servicios, se contemplan 3 meses a partir de la firma del contrato. 
+'descripcion' => 'Para la entrega de los servicios, se contemplan 3 meses a partir de la firma del contrato.
 
-Fase de Evaluación: 
-Plan de trabajo detallado para la ejecución del proyecto. 
-Agenda para el levantamiento de información. 
-Reporte de Hallazgos y mejoras. 
+Fase de Evaluación:
+Plan de trabajo detallado para la ejecución del proyecto.
+Agenda para el levantamiento de información.
+Reporte de Hallazgos y mejoras.
 
 Fase de Definición y Estrategia:
-Manual del SGSI. 
+Manual del SGSI.
 
-Fase Análisis y Evaluación de Riesgos: 
-Metodología de análisis y evaluación de riesgos. 
-Análisis y evaluación de riesgos 
+Fase Análisis y Evaluación de Riesgos:
+Metodología de análisis y evaluación de riesgos.
+Análisis y evaluación de riesgos
 
 Fase Implementación y Operación del SGSI;
 Documentos actualizados del SGS
@@ -22683,12 +22683,12 @@ Documentos actualizados del SGS
 Fase Desempeño del SGSI:
 Monitoreo de los indicadores del SGSI.
 
-Fase Auditoría al SGSI: 
-Plan de Auditorias. 
-Evidencia de Auditorías realizadas. 
-Acciones correctivas y/o de mejora 
+Fase Auditoría al SGSI:
+Plan de Auditorias.
+Evidencia de Auditorías realizadas.
+Acciones correctivas y/o de mejora
 
-Fase Revisión por la Dirección: 
+Fase Revisión por la Dirección:
 Minutas de seguimiento realizado conforme a los requisitos de la norma ISO/IEC 27001:2013',
 'plazo_entrega_inicio' => '2020-11-17',
 'plazo_entrega_termina' => '2020-11-17',
@@ -22782,7 +22782,7 @@ Minutas de seguimiento realizado conforme a los requisitos de la norma ISO/IEC 2
 'contrato_id' => 79,
 'nombre_entregable' => 'Fase 1 Evaluación ',
 'descripcion' => 'Se deberá la siguiente documentación de acuerdo a la propuesta tecnica
-Fase de Evaluación: 
+Fase de Evaluación:
 • Plan de trabajo detallado para la ejecución del proyecto.
 • Agenda para el levantamiento de información.
 • Reporte de Hallazgos y mejoras. ',
@@ -22861,7 +22861,7 @@ Fase Análisis y Evaluación de Riesgos:
 'contrato_id' => 79,
 'nombre_entregable' => 'Fase 4 Implementación y Operación del SGSI ',
 'descripcion' => 'Se deberá la siguiente documentación de acuerdo a la propuesta técnica:
-Fase Implementación y Operación del SGSI 
+Fase Implementación y Operación del SGSI
 • Documentos actualizados del SGSI.
 ',
 'plazo_entrega_inicio' => '2021-02-01',
@@ -22965,7 +22965,7 @@ Fase Revisión por la Dirección:
 'no' => 1,
 'contrato_id' => 80,
 'nombre_entregable' => 'Fase 1  Evaluación',
-'descripcion' => 'Fase de Evaluación: 
+'descripcion' => 'Fase de Evaluación:
 • Plan de trabajo detallado para la ejecución del proyecto.
 • Agenda para el levantamiento de información.',
 'plazo_entrega_inicio' => '2021-04-29',
@@ -22990,7 +22990,7 @@ Fase Revisión por la Dirección:
 'no' => 2,
 'contrato_id' => 80,
 'nombre_entregable' => 'Fase 2 Definición y Estrategia',
-'descripcion' => 'Fase de Definición y Estrategia: 
+'descripcion' => 'Fase de Definición y Estrategia:
 • Manual de políticas.
 ',
 'plazo_entrega_inicio' => '2021-04-29',
@@ -23015,7 +23015,7 @@ Fase Revisión por la Dirección:
 'no' => 3,
 'contrato_id' => 80,
 'nombre_entregable' => 'Fase 3 Análisis y Evaluación de Riesgos',
-'descripcion' => 'Fase Análisis y Evaluación de Riesgos: 
+'descripcion' => 'Fase Análisis y Evaluación de Riesgos:
 • Metodología de análisis y evaluación de riesgos.
 • Análisis y evaluación de riesgos',
 'plazo_entrega_inicio' => '2021-04-29',
@@ -23040,7 +23040,7 @@ Fase Revisión por la Dirección:
 'no' => 4,
 'contrato_id' => 80,
 'nombre_entregable' => 'Fase 4 Desempeño',
-'descripcion' => 'Fase Desempeño: 
+'descripcion' => 'Fase Desempeño:
 • Monitoreo de implementación (primera fase de implementación).
 ',
 'plazo_entrega_inicio' => '2021-04-29',
@@ -23299,7 +23299,7 @@ B)HACKEO ÉTICO
 'no' => 50,
 'contrato_id' => 54,
 'nombre_entregable' => 'Servicio de Ciber Inteligencia y Hackeo Ético',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 1)SICNA Producción',
 'plazo_entrega_inicio' => '2023-04-03',
@@ -24923,7 +24923,7 @@ IKTAN WEB_ESEP.',
 'no' => 56,
 'contrato_id' => 54,
 'nombre_entregable' => 'Servicio de Ciber Inteligencia y Hackeo Ético',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 Portal del Sistema Nacional de Información Estadística y Geografía (Beta)',
 'plazo_entrega_inicio' => '2021-09-01',
@@ -24948,7 +24948,7 @@ Portal del Sistema Nacional de Información Estadística y Geografía (Beta)',
 'no' => 57,
 'contrato_id' => 54,
 'nombre_entregable' => 'Servicio de Ciber Inteligencia y Hackeo Ético',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 Aplicaciones del sitio de INEGI en internet (Biblioteca digital de publicaciones-aplicación de consulta y componente)',
 'plazo_entrega_inicio' => '2021-10-01',
@@ -25024,7 +25024,7 @@ B)HACKEO ÉTICO
 'no' => 60,
 'contrato_id' => 54,
 'nombre_entregable' => 'Ciber Inteligencia y Hackeos Éticos',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 Sitio del Catálogo Nacional de Indicadores ',
 'plazo_entrega_inicio' => '2022-01-03',
@@ -25049,8 +25049,8 @@ Sitio del Catálogo Nacional de Indicadores ',
 'no' => 61,
 'contrato_id' => 54,
 'nombre_entregable' => 'Ciber Inteligencia y Hackeos Éticos',
-'descripcion' => 'A)CIBER INTELIGENCIA 
-B)HACKEO ÉTICO 
+'descripcion' => 'A)CIBER INTELIGENCIA
+B)HACKEO ÉTICO
 ) Aplicaciones de consulta de información estadística y geográfica del Sitio del INEGI en Internet (Tabulados interactivos)”
 2)Aplicaciones de consulta de información estadística y geográfica del Sitio del INEGI en Internet (Demografía económica)”.',
 'plazo_entrega_inicio' => '2022-02-01',
@@ -25098,7 +25098,7 @@ B)HACKEO ÉTICO
 'no' => 63,
 'contrato_id' => 54,
 'nombre_entregable' => 'Ciber Inteligencia y Hackeos Éticos',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 SICNA Producción',
 'plazo_entrega_inicio' => '2022-04-01',
@@ -25169,7 +25169,7 @@ SICNA Producción',
 'no' => 66,
 'contrato_id' => 54,
 'nombre_entregable' => 'Ciber Inteligencia y Hackeos Éticos',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 Estado de Ánimo de los Tuiteros',
 'plazo_entrega_inicio' => '2022-07-01',
@@ -25217,7 +25217,7 @@ Estado de Ánimo de los Tuiteros',
 'no' => 68,
 'contrato_id' => 54,
 'nombre_entregable' => 'Ciber Inteligencia y Hackeos Éticos',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 1)Sistema de Gestión de Archivos del Acervo de Registros Administrativos (SIGA-ARA)-Móvil
 2)Sistema de Gestión de Archivos del Acervo de Registros Administrativos (SIGA-ARA)-web',
@@ -25243,7 +25243,7 @@ B)HACKEO ÉTICO
 'no' => 69,
 'contrato_id' => 54,
 'nombre_entregable' => 'Ciber Inteligencia y Hackeos Éticos',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 1)Sistema para la Captación de Información Agropecuaria del Censor - Móvil
 2)Sistema Enlace de Cobertura - Móvil
@@ -25272,7 +25272,7 @@ B)HACKEO ÉTICO
 'no' => 70,
 'contrato_id' => 54,
 'nombre_entregable' => 'Ciber Inteligencia y Hackeos Éticos',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 Sistema de Avance Geográfico',
 'plazo_entrega_inicio' => '2022-11-01',
@@ -25320,7 +25320,7 @@ Sistema de Avance Geográfico',
 'no' => 72,
 'contrato_id' => 54,
 'nombre_entregable' => 'Servicio de Ciber Inteligencia y Hackeo Ético',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 1)SIA Control Inmobiliario
 2)SIA Adquisiciones
@@ -25349,7 +25349,7 @@ B)HACKEO ÉTICO
 'no' => 73,
 'contrato_id' => 54,
 'nombre_entregable' => 'Servicio de Ciber Inteligencia y Hackeo Ético',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 1)SIET (Subsistema de Equipo de Transporte)
 2)Sistema de Solicitudes de Información de Transparencia (SITRA)',
@@ -25375,7 +25375,7 @@ B)HACKEO ÉTICO
 'no' => 74,
 'contrato_id' => 54,
 'nombre_entregable' => 'Ciber Inteligencia y Hackeos Éticos',
-'descripcion' => 'A)CIBER INTELIGENCIA 
+'descripcion' => 'A)CIBER INTELIGENCIA
 B)HACKEO ÉTICO
 SICNA Producción',
 'plazo_entrega_inicio' => '2023-04-03',

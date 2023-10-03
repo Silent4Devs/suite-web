@@ -3,8 +3,8 @@
 namespace App\Http\Livewire\Escuela\Instructor;
 
 use App\Models\Escuela\Course;
-use Livewire\Component;
 use App\Models\Escuela\Requirement;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -13,7 +13,8 @@ class CourseRequirements extends Component
     use LivewireAlert, AuthorizesRequests;
 
     public Requirement $requirement;
-    public $course, $name;
+    public $course;
+    public $name;
 
     protected $rules = [
         'requirement.name' => 'required',

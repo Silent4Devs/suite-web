@@ -4,18 +4,17 @@
 
 El proyecto se tiene que clonar dentro de la carpeta raiz en donde se publiquen las URL
 
-
 # Archivos
 
 Una vez descargado se deben correr los siguientes comandos en este orden:
 
- 1. composer install
- 2. npm install
- 3. npm run dev
+1.  composer install
+2.  npm install
+3.  npm run dev
 
 ## ¡Alerta!
 
-Si vas  a constribuir dentro del proyecto recuerda que cada cambio que se realice debe partir de una branch bifurcada de develop
+Si vas a constribuir dentro del proyecto recuerda que cada cambio que se realice debe partir de una branch bifurcada de develop
 
 ## Si has sido invitado a este proyecto
 
@@ -25,11 +24,19 @@ Si has sido invitado a este repositorio recuerda que no puedes hacer un push o m
 
 Para usarlo debes tener instalado Docker previamente.
 
+### Levantamiento en Local o Dev
+
 Corriendo el proyecto:
 
 1. docker-compose build
+
+## Levantamiento en Producción
+
 2. docker-compose up -d
 
+## Levantamiento en Staging
+
+3. docker-compose -f docker-compose.staging.yml up -d
 
 Instalación:
 
@@ -43,13 +50,14 @@ Instalación:
 Ojo: si te sale algún error es porque no tienes permisos root en las carpetas de tu proyecto o que no existen las carpetas de caché, para esto tengo 2 comandos para ti.
 
 # para obtener permisos dentro del servicio php
- docker-compose exec php chown -R www-data: /var/www/html
+
+docker-compose exec php chown -R www-data: /var/www/html
 
 # para crear las carpetas del proyecto de php desde la carpeta src
- pwd# debe decir que estas enla carpeta src
- <br>
- mkdir storage/framework/{views, testing, sessions, cache/data}
 
+pwd# debe decir que estas enla carpeta src
+<br>
+mkdir storage/framework/{views, testing, sessions, cache/data}
 
 # mysql
 
@@ -68,4 +76,3 @@ docker cp backup.sql <container_id>:/backup.sql
 5.- cd /
 6.- createdb -U postgres <database_name>
 7.- psql -U postgres -d <database_name> -f /backup.sql
-

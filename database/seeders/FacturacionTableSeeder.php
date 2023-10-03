@@ -922,7 +922,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (31 
                                                                                                                                                                                             'id' => 38,
                                                                                                                                                                                             'contrato_id' => 5,
                                                                                                                                                                                             'no_factura' => 'S 581',
-                                                                                                                                                                                            'concepto' => '10 Servicios de Cyber Threat 
+                                                                                                                                                                                            'concepto' => '10 Servicios de Cyber Threat
 10 Servicios de Simulación de Ataques de Seguridad',
                                                                                                                                                                                             'fecha_recepcion' => '2021-06-28',
                                                                                                                                                                                             'fecha_liberacion' => '2021-06-28',
@@ -945,7 +945,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (31 
                                                                                                                                                                                             'id' => 39,
                                                                                                                                                                                             'contrato_id' => 5,
                                                                                                                                                                                             'no_factura' => 'S 732',
-                                                                                                                                                                                            'concepto' => '1 Servicio Cyber Threat 
+                                                                                                                                                                                            'concepto' => '1 Servicio Cyber Threat
 1 Servicio de Simulación de Ataques de Ciberseguridad ',
                                                                                                                                                                                             'fecha_recepcion' => '2022-02-18',
                                                                                                                                                                                             'fecha_liberacion' => '2022-02-18',
@@ -968,7 +968,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (31 
                                                                                                                                                                                             'id' => 40,
                                                                                                                                                                                             'contrato_id' => 5,
                                                                                                                                                                                             'no_factura' => 'S 749',
-                                                                                                                                                                                            'concepto' => '1 Servicio Cyber Threat 
+                                                                                                                                                                                            'concepto' => '1 Servicio Cyber Threat
 1 Servicio de Simulación de Ciberseguridad',
                                                                                                                                                                                             'fecha_recepcion' => '2022-03-11',
                                                                                                                                                                                             'fecha_liberacion' => '2022-03-11',
@@ -1797,7 +1797,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'id' => 73,
                                                                                                                                                                                             'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 532',
-                                                                                                                                                                                            'concepto' => '1 Servicio 
+                                                                                                                                                                                            'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
 Estimación 10
 del 13-02-2021 al 12-03-2021
@@ -2137,7 +2137,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 758',
                                                                                                                                                                                             'concepto' => '1 Servicio
-Soporte a Infraestructura a Sistemas Industriales 
+Soporte a Infraestructura a Sistemas Industriales
 Estimación 18
 del 13-10-2021 al 12-11-2021
 Contrato 4600023294
@@ -2242,7 +2242,7 @@ Servicio de Antivirus a estaciones locales
                                                                                                                                                                                             'no_factura' => 'S 200',
                                                                                                                                                                                             'concepto' => 'Mes: Marzo
 
-Sistema de Gestión de Seguridad de la Información 
+Sistema de Gestión de Seguridad de la Información
 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24
 Servicio de Firewall
 Servicio Navegación Segura
@@ -4456,7 +4456,7 @@ Pedido 5500248874
                                                                                                                                                                                             'contrato_id' => 31,
                                                                                                                                                                                             'no_factura' => 'CPB 276',
                                                                                                                                                                                             'concepto' => '1 Servicio
-Servicio de Pruebas de Penetración 
+Servicio de Pruebas de Penetración
 Orden de Servicio # 03',
                                                                                                                                                                                             'fecha_recepcion' => '2021-11-29',
                                                                                                                                                                                             'fecha_liberacion' => '2021-11-29',
@@ -4543,7 +4543,7 @@ Soporte técnico de la solución en un horario de 24x7x365. Contrato número ASF
 Servicio
 11. Renovación de la licencia Mcaffe Enterprise Threat Protection. Contrato No. ASF-UGA-DAJ-DGS-003/2020
 
-Servicio 
+Servicio
 2. Renovación de la licencia Mcaffe Virus Scan for Storage. Contrato No. ASF-UGA-DAJ-DGS-003/2020',
                                                                                                                                                                                             'fecha_recepcion' => '2020-02-25',
                                                                                                                                                                                             'fecha_liberacion' => '2020-02-25',
@@ -4832,7 +4832,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'no_factura' => 'S 501',
                                                                                                                                                                                             'concepto' => 'Renovación Licencias 2021
 
-11 Renovación de la licencia de Mcaffe Threat Protection 
+11 Renovación de la licencia de Mcaffe Threat Protection
 2 Renovación de la licencia de Mcaffe Virus Scan for Storage',
                                                                                                                                                                                             'fecha_recepcion' => '2021-01-11',
                                                                                                                                                                                             'fecha_liberacion' => '2021-01-11',
@@ -5518,11 +5518,11 @@ Servicio de despliegue y monitoreo de una consola de antivirus de tipo Enterpris
                                                                                                                                                                                             'no_factura' => 'S 801',
                                                                                                                                                                                         'concepto' => 'Póliza de licenciamiento, soporte y mantenimiento que ampara la vigencia del contrato número CT-0758-21 (2).
 
-Partida 2.- Licenciamiento, soporte y mantenimiento para plataforma IMPERVA. 
+Partida 2.- Licenciamiento, soporte y mantenimiento para plataforma IMPERVA.
 Núm.. pago 1 de 1
-Periodo 24-12-2021 al 23-12-2022 
+Periodo 24-12-2021 al 23-12-2022
 
-Entregable: 
+Entregable:
 Póliza que ampara el licenciamiento, soporte y mantenimiento que amparen la vigencia del contrato.
 Plan de trabajo autorizado',
                                                                                                                                                                                             'fecha_recepcion' => '2022-05-16',
@@ -5855,7 +5855,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'no_factura' => 'S 17',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de junio 2018
 
-1 Servicio. Servicio de Gestión de Seguridad de la Información 
+1 Servicio. Servicio de Gestión de Seguridad de la Información
 1 Servicio. Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 durante la vigencia del contrato
 1 Servicio. Servicio de Firewall
 1 Servicio. Servicio de Navegación Segura.
@@ -5913,7 +5913,7 @@ Contrato número SE-25/2018
                                                                                                                                                                                             'no_factura' => 'S 25',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de julio 2018
 
-1 Servicio. Servicio de Gestión de Seguridad de la Información 
+1 Servicio. Servicio de Gestión de Seguridad de la Información
 1 Servicio. Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 durante la vigencia del contrato
 1 Servicio. Servicio de Firewall
 1 Servicio. Servicio de Navegación Segura.
@@ -5946,7 +5946,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'no_factura' => 'S 77',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de septiembre 2018
 
-1 Servicio. Servicio de Gestión de Seguridad de la Información 
+1 Servicio. Servicio de Gestión de Seguridad de la Información
 1 Servicio. Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 durante la vigencia del contrato
 1 Servicio. Servicio de Firewall
 1 Servicio. Servicio de Navegación Segura.
@@ -6785,7 +6785,7 @@ Proveedor 274',
                                                                                                                                                                                             'no_factura' => 'S 796',
                                                                                                                                                                                             'concepto' => 'Servicio 1 de 12
 
-1 Servicio de SOC y NOC 
+1 Servicio de SOC y NOC
 Periodo de 19 al 28 de febrero 2022',
                                                                                                                                                                                             'fecha_recepcion' => '2022-05-10',
                                                                                                                                                                                             'fecha_liberacion' => '2022-05-10',
@@ -6979,7 +6979,7 @@ Administración de Redes y Comunicaciones CC 6058010011009 ',
                                                                                                                                                                                             'id' => 259,
                                                                                                                                                                                             'contrato_id' => 48,
                                                                                                                                                                                             'no_factura' => 'S 467',
-                                                                                                                                                                                            'concepto' => 'Servicio de análisis de vulnerabilidades 
+                                                                                                                                                                                            'concepto' => 'Servicio de análisis de vulnerabilidades
 Gcia Soporte Técnico CC 6058040011002',
                                                                                                                                                                                             'fecha_recepcion' => '2020-11-12',
                                                                                                                                                                                             'fecha_liberacion' => '2020-11-12',
@@ -7060,7 +7060,7 @@ Servicios devengados del 20-10-20 al 18-12-20',
                                                                                                                                                                                             'no_factura' => 'S 496',
                                                                                                                                                                                         'concepto' => 'Servicio Partida 2. Auditoría al Sistema de Pagos Electrónicos Interbancarios (SPEI)
 Servicio Partida 3. Auditoría al Sistema de Pagos Interbancarios en Dólares (SPID)
-Servicio Partida 4. Auditoría las Vulnerabilidades a Cajeros Automáticos 
+Servicio Partida 4. Auditoría las Vulnerabilidades a Cajeros Automáticos
 Servicio Partida 5. Auditoría en Materia de Seguridad de la Información
 Servicio Partida 6. Auditoría en Materia de Administración de Riesgo Tecnológico
 Servicio Partida 7. Auditoría en Apego de la Institución al Manual Administrativo de Aplicación General en Materia de Tecnologías de la Información  y Comunicaciones
@@ -7248,7 +7248,7 @@ Servicio Dentegra',
                                                                                                                                                                                             'id' => 270,
                                                                                                                                                                                             'contrato_id' => 25,
                                                                                                                                                                                             'no_factura' => 'C 92',
-                                                                                                                                                                                            'concepto' => '3 Servicios NOC desde Centro de Operaciones Abril . Junio 2022 
+                                                                                                                                                                                            'concepto' => '3 Servicios NOC desde Centro de Operaciones Abril . Junio 2022
 Order Sycod: HB22-007-2
 ',
                                                                                                                                                                                             'fecha_recepcion' => '2022-06-29',
@@ -7378,7 +7378,7 @@ Monitoreo de 51 equipos en el mes de febrero 2022',
 OC 18643
 EM 20045
 
-51 Servicios Administrados Firewall USG HUAWEI 
+51 Servicios Administrados Firewall USG HUAWEI
 Monitoreo de 51 equipos en el mes de marzo de 2022',
                                                                                                                                                                                             'fecha_recepcion' => '2022-04-12',
                                                                                                                                                                                             'fecha_liberacion' => '2022-04-12',
@@ -7897,7 +7897,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'id' => 296,
                                                                                                                                                                                             'contrato_id' => 56,
                                                                                                                                                                                             'no_factura' => 'C 79 ',
-                                                                                                                                                                                            'concepto' => 'No. de pedido 4100642595 
+                                                                                                                                                                                            'concepto' => 'No. de pedido 4100642595
 
 30 Vulnerabilidades altas-criticas - no autenticado
 64 Vulnerabilidades  medias - no autenticado
@@ -8071,7 +8071,7 @@ Servicio de Ingeniería Social
                                                                                                                                                                                         'no_factura' => 'S 624',
                                                                                                                                                                                         'concepto' => 'Servicios Penetration Test
 
-Servicios de Pruebas de Penetración 
+Servicios de Pruebas de Penetración
 OC 4801001125
 Date 13-07-21
 Vendor:  51004623',
@@ -8120,7 +8120,7 @@ Servicio de implementación de un modulo de Gobierno de Tecnologías de Informac
                                                                                                                                                                                         'id' => 305,
                                                                                                                                                                                         'contrato_id' => 63,
                                                                                                                                                                                         'no_factura' => '1021',
-                                                                                                                                                                                        'concepto' => 'Servicio Junio 
+                                                                                                                                                                                        'concepto' => 'Servicio Junio
 
 Servicio de Implementación de un modulo de Gobierno de Tecnologías de Información de un modulo de Gobierno de Tecnologías de la  Información  y un Sistema de Gestión de Seguridad de la Información .',
                                                                                                                                                                                         'fecha_recepcion' => '2018-07-25',
@@ -8220,7 +8220,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'id' => 309,
                                                                                                                                                                                         'contrato_id' => 17,
                                                                                                                                                                                         'no_factura' => 'S 839',
-                                                                                                                                                                                        'concepto' => '6.3 SOPORTE TÉCNICO DE LA SOLUCIÓN EN UN HORARIO DE 24x27X365 
+                                                                                                                                                                                        'concepto' => '6.3 SOPORTE TÉCNICO DE LA SOLUCIÓN EN UN HORARIO DE 24x27X365
 ',
                                                                                                                                                                                         'fecha_recepcion' => '2022-07-07',
                                                                                                                                                                                         'fecha_liberacion' => '2022-07-07',
@@ -8760,7 +8760,7 @@ Entregables:
 1.-Plan de Trabajo Integral
 2.-Metodología de Análisis de Riesgo
 3.-Metodología de Monitoreo y Seguimiento de Niveles de Servicio
-4.-Metodología de Análisis de Impacto al Negocio, 
+4.-Metodología de Análisis de Impacto al Negocio,
 5.-Análisis de Contrato (Linea base)
 6.-Análisis de Impacto al Negocio, Análisis del Impacto de los Aplicativos, Análisis de Riesgo (Avance)',
                                                                                                                                                                                         'fecha_recepcion' => '2020-12-02',
@@ -8854,7 +8854,7 @@ Entregables:
                                                                                                                                                                                         'no_factura' => 'CPB 10',
                                                                                                                                                                                         'concepto' => 'Entregable 1: Plan de Trabajo y Metodología 20%
 
-Prestación de Servicios Profesiones de Consultoría. 
+Prestación de Servicios Profesiones de Consultoría.
 Actualización del Análisis de Impacto al Negocio (BIA), Análisis de Riesgo (AR) e Informe con transferencia de conocimiento en ISO 22301
 
 ',
@@ -13293,7 +13293,7 @@ Números de serie: 1405201610700052 y 1405201610700058',
                 'concepto' => 'Servicios de consultoria
 SERVICIO DE EVALUACIÓN DE RIESGO TECNOLÓGICO Y VULNERABILIDADES ',
                 'fecha_recepcion' => '2022-12-05',
-                'fecha_liberacion' => '0000-12-05',
+                'fecha_liberacion' => '2022-12-05',
                 'no_revisiones' => 0,
                 'cumple' => 1,
                 'hallazgos_comentarios' => null,
@@ -14566,10 +14566,10 @@ Servicios de Instalación Instalación física de servidores en los 3 sitios (1 
         'id' => 576,
         'contrato_id' => 8,
         'no_factura' => 'S 875',
-        'concepto' => 'Sistema de Gestión de Seguridad de la Información                                                                                                 
-Servicio BIA                                                                                                                                                                 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24                                                            
-Servicio de Correlación de Eventos y Administración de Bitácoras                                                                          Servicios DNS                                                                                                                                                                 Seguro Servicio de Protección Perimetral                                                                                                                  
-Servicio de Navegación Segura                                                                                                                                 
+        'concepto' => 'Sistema de Gestión de Seguridad de la Información
+Servicio BIA                                                                                                                                                                 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24
+Servicio de Correlación de Eventos y Administración de Bitácoras                                                                          Servicios DNS                                                                                                                                                                 Seguro Servicio de Protección Perimetral
+Servicio de Navegación Segura
 Servicio de Antispam para el correo electrónico                                                                                                        Servicio de Antivirus a estaciones locales',
         'fecha_recepcion' => '2022-08-09',
         'fecha_liberacion' => '2022-08-10',
@@ -14592,10 +14592,10 @@ Servicio de Antispam para el correo electrónico                                
         'id' => 577,
         'contrato_id' => 8,
         'no_factura' => 'S - 936',
-        'concepto' => 'Sistema de Gestión de Seguridad de la Información                                                                                                 
-Servicio BIA                                                                                                                                                                 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24                                                            
-Servicio de Correlación de Eventos y Administración de Bitácoras                                                                          Servicios DNS                                                                                                                                                                 Seguro Servicio de Protección Perimetral                                                                                                                  
-Servicio de Navegación Segura                                                                                                                                 
+        'concepto' => 'Sistema de Gestión de Seguridad de la Información
+Servicio BIA                                                                                                                                                                 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24
+Servicio de Correlación de Eventos y Administración de Bitácoras                                                                          Servicios DNS                                                                                                                                                                 Seguro Servicio de Protección Perimetral
+Servicio de Navegación Segura
 Servicio de Antispam para el correo electrónico                                                                                                        Servicio de Antivirus a estaciones locales',
         'fecha_recepcion' => '2022-09-19',
         'fecha_liberacion' => '2022-09-19',
@@ -14618,10 +14618,10 @@ Servicio de Antispam para el correo electrónico                                
         'id' => 578,
         'contrato_id' => 8,
         'no_factura' => 'S 952',
-        'concepto' => 'Sistema de Gestión de Seguridad de la Información                                                                                                 
-Servicio BIA                                                                                                                                                                 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24                                                            
-Servicio de Correlación de Eventos y Administración de Bitácoras                                                                          Servicios DNS                                                                                                                                                                 Seguro Servicio de Protección Perimetral                                                                                                                  
-Servicio de Navegación Segura                                                                                                                                 
+        'concepto' => 'Sistema de Gestión de Seguridad de la Información
+Servicio BIA                                                                                                                                                                 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24
+Servicio de Correlación de Eventos y Administración de Bitácoras                                                                          Servicios DNS                                                                                                                                                                 Seguro Servicio de Protección Perimetral
+Servicio de Navegación Segura
 Servicio de Antispam para el correo electrónico                                                                                                        Servicio de Antivirus a estaciones locales',
         'fecha_recepcion' => '2022-10-10',
         'fecha_liberacion' => '2022-10-10',
@@ -14644,10 +14644,10 @@ Servicio de Antispam para el correo electrónico                                
         'id' => 579,
         'contrato_id' => 8,
         'no_factura' => 'S-981',
-        'concepto' => 'Sistema de Gestión de Seguridad de la Información                                                                                                 
-Servicio BIA                                                                                                                                                                 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24                                                            
-Servicio de Correlación de Eventos y Administración de Bitácoras                                                                          Servicios DNS                                                                                                                                                                 Seguro Servicio de Protección Perimetral                                                                                                                  
-Servicio de Navegación Segura                                                                                                                                 
+        'concepto' => 'Sistema de Gestión de Seguridad de la Información
+Servicio BIA                                                                                                                                                                 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24
+Servicio de Correlación de Eventos y Administración de Bitácoras                                                                          Servicios DNS                                                                                                                                                                 Seguro Servicio de Protección Perimetral
+Servicio de Navegación Segura
 Servicio de Antispam para el correo electrónico                                                                                                        Servicio de Antivirus a estaciones locales',
         'fecha_recepcion' => '2022-11-09',
         'fecha_liberacion' => '2022-11-10',
@@ -14670,10 +14670,10 @@ Servicio de Antispam para el correo electrónico                                
         'id' => 580,
         'contrato_id' => 8,
         'no_factura' => 'S - 1013',
-        'concepto' => 'Sistema de Gestión de Seguridad de la Información                                                                                                 
-Servicio BIA                                                                                                                                                                 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24                                                            
-Servicio de Correlación de Eventos y Administración de Bitácoras                                                                          Servicios DNS                                                                                                                                                                 Seguro Servicio de Protección Perimetral                                                                                                                  
-Servicio de Navegación Segura                                                                                                                                 
+        'concepto' => 'Sistema de Gestión de Seguridad de la Información
+Servicio BIA                                                                                                                                                                 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24
+Servicio de Correlación de Eventos y Administración de Bitácoras                                                                          Servicios DNS                                                                                                                                                                 Seguro Servicio de Protección Perimetral
+Servicio de Navegación Segura
 Servicio de Antispam para el correo electrónico                                                                                                        Servicio de Antivirus a estaciones locales',
         'fecha_recepcion' => '2022-12-05',
         'fecha_liberacion' => '2022-12-06',
@@ -14942,12 +14942,12 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
             'id' => 591,
             'contrato_id' => 20,
             'no_factura' => 'S 1141',
-            'concepto' => '1 Servicio de Gestión de Vulnerabilidades para los Activos de TI 
-2 Servicio de Correlación de Eventos de Seguridad 
-3 Servicio de Ciber Inteligencia de Amenazas Institucionales 
-4 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) y Centro de Operaciones de Red (NOC) 7x24x365. 
-5 Servicio de Filtrado de Contenido 
-6 Servicio de Claves Privilegiadas 
+            'concepto' => '1 Servicio de Gestión de Vulnerabilidades para los Activos de TI
+2 Servicio de Correlación de Eventos de Seguridad
+3 Servicio de Ciber Inteligencia de Amenazas Institucionales
+4 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) y Centro de Operaciones de Red (NOC) 7x24x365.
+5 Servicio de Filtrado de Contenido
+6 Servicio de Claves Privilegiadas
 7 Servicio de Ciber amenazas avanzadas y visibilidad en la red a través del engaño',
             'fecha_recepcion' => '2023-06-08',
             'fecha_liberacion' => '2023-06-08',

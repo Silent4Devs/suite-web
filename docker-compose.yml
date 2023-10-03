@@ -9,6 +9,34 @@ services:
   #   command: daemon --docker
   #   volumes:
   #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  # datadog:
+  #   image: datadog/agent:7
+  #   container_name: dd-agent
+  #   restart: unless-stopped
+  #   environment:
+  #     - DD_API_KEY=495473ba9498ee8902595ee90a4d7a27ad1b5304
+  #     - DD_SITE=us5.datadoghq.com
+  #     - DD_HOSTNAME=tabantaj
+  #     - DD_APM_ENABLED=true
+  #     - DD_LOGS_ENABLED=true
+  #     - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+  #     - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+  #     - DD_CONTAINER_EXCLUDE=image:datadog/agent:7*
+  #     - DD_CONTAINER_EXCLUDE_METRICS=image:datadog/agent:7*
+  #     - DD_CONTAINER_EXCLUDE_LOGS=image:datadog/agent:7*
+  #     - DD_PROCESS_AGENT_ENABLED=false
+  #     - DD_ECS_FARGATE_ENABLED=false
+  #   ports:
+  #     - 8125/udp
+  #     - 8126/tcp
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - /proc/:/host/proc/:ro
+  #     - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+  #     - /opt/datadog-agent/run:/opt/datadog-agent/run:rw
+  #   networks:
+  #     - tabantajnetwork
+  #   command: ["--cgroupns", "host", "--pid", "host"]
 
   nginx-tabantaj:
     image: nginx:stable-alpine
@@ -26,6 +54,27 @@ services:
       - php
       - postgres-tabantaj
       - redis-tabantaj
+    labels:
+      #com.datadoghq.ad.check_names: '[""]'
+      com.datadoghq.ad.init_configs: "[{}]"
+      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
+      com.datadoghq.ad.logs: '[{"source": "nginx", "service": "nginx-tabantaj"}]'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
+      com.datadoghq.tags.version: "1"
+    env_file:
+      - .env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "1"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
     networks:
       - tabantajnetwork
 
@@ -46,6 +95,13 @@ services:
     networks:
       - tabantajnetwork
     mem_limit: 6g
+    labels:
+      com.datadoghq.ad.init_configs: "[{}]"
+      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
+      com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres-tabantaj"}]'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
+      com.datadoghq.tags.version: "1"
 
   pgadmin-tabantaj:
     depends_on:
@@ -78,17 +134,24 @@ services:
     restart: unless-stopped
     # labels:
     #   ofelia.enabled: "true"
-      # ofelia.job-exec.schedulecron.schedule: "@hourly"
-      # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
-      # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
-      # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
-      # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
-      # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
+    # ofelia.job-exec.schedulecron.schedule: "@hourly"
+    # ofelia.job-exec.schedulecron.command: "/infra/ofelia/run_schedules_worker.sh"
+    # ofelia.job-exec.run_queues_worker.schedule: "*/15 * * * *"
+    # ofelia.job-exec.run_queues_worker.command: "php artisan queue:work --daemon --tries=4 --sleep=5"
+    # ofelia.job-exec.run_schedules_worker.schedule: "@hourly"
+    # ofelia.job-exec.run_schedules_worker.command: "php artisan schedule:work"
     tty: true
     volumes:
       - .:/var/www/html
     ports:
       - 9000:80
+    labels:
+      com.datadoghq.ad.init_configs: "[{}]"
+      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
+      com.datadoghq.ad.logs: '[{"source": "php", "service": "php-tabantaj"}]'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
+      com.datadoghq.tags.version: "1"
     networks:
       - tabantajnetwork
 
@@ -102,6 +165,14 @@ services:
     networks:
       - tabantajnetwork
     mem_limit: 2g
+    labels:
+      com.datadoghq.ad.check_names: "[redisdb]"
+      com.datadoghq.ad.init_configs: "[{}]"
+      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "6379"}]'
+      com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis-tabantaj"}]'
+      com.datadoghq.tags.env: "stagging"
+      com.datadoghq.tags.service: "tabantaj"
+      com.datadoghq.tags.version: "1"
 
   rdadmin-tabantaj:
     image: erikdubbelboer/phpredisadmin:latest
@@ -117,147 +188,161 @@ services:
     networks:
       - tabantajnetwork
 
-  prometheus-tabantaj:
-    image: prom/prometheus
-    container_name: prometheus-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 9090:9090
-    volumes:
-      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    networks:
-      - tabantajnetwork
-
-  prometheus-node-exporter-tabantaj:
-    image: prom/node-exporter:latest
-    container_name: prometheus-node-exporter-tabantaj
-    restart: unless-stopped
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - --collector.filesystem.ignored-mount-points
-      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
-    networks:
-      - tabantajnetwork
+  newrelic-infra:
+    container_name: newrelic-infra
+    image: newrelic/infrastructure:latest
+    network_mode: host
+    cap_add:
+      - SYS_PTRACE
     privileged: true
-    depends_on:
-      - prometheus-tabantaj
-    ports:
-      - 9101:9100
-
-  redis-exporter-tabantaj:
-    image: oliver006/redis_exporter:v1.22.0-alpine
-    container_name: redis-exporter-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 9121:9121
-    networks:
-      - tabantajnetwork
-    environment:
-      REDIS_ADDR: "redis-tabantaj:6379"
-      REDIS_USER: null
-      REDIS_PASS: null
-    # command:
-    #   - --redis.addr=redis-tabantaj:6379
-
-  nginx-exporter-tabantaj:
-    image: nginx/nginx-prometheus-exporter:latest
-    container_name: nginx-exporter-tabantaj
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 9113:9113
-    command:
-      - -nginx.scrape-uri=http://nginx-tabantaj:8080/stub_status
-    networks:
-      - tabantajnetwork
-
-  postgres-exporter-tabantaj:
-    image: prometheuscommunity/postgres-exporter
-    ports:
-      - 9187:9187
-    environment:
-      DATA_SOURCE_NAME: "postgresql://homestead:secret@postgres-tabantaj:5432/homestead?sslmode=disable"
-    networks:
-      - tabantajnetwork
-
-  grafana-tabantaj:
-    image: grafana/grafana:8.1.8
-    container_name: grafana-tabantaj
-    restart: unless-stopped
-    tty: true
+    pid: host
     volumes:
-      - /opt/grafana:/etc/grafana/provisioning
-    ports:
-      - 3000:3000
-    networks:
-      - tabantajnetwork
-
-  elastic-search-tabantaj:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
-    container_name: elastic-search-tabantaj
+      - "/:/host:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - NRIA_LICENSE_KEY=3c4e4e7fc9ad5d03008ec44927a9d4c5FFFFNRAL
     restart: unless-stopped
-    tty: true
-    ports:
-      - 9200:9200
-      - 9300:9300
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - elasticsearch:/usr/share/elasticsearch/data
-    environment:
-      - node.name=elasticsearch
-      - cluster.name=docker-cluster
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-    networks:
-      - tabantajnetwork
 
-  elasticsearch-logs-tabantaj:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
-    container_name: elasticsearch-logs-tabantaj
-    environment:
-      - node.name=elasticsearch-logs
-      - cluster.name=docker-cluster
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - elasticsearch-logs:/usr/share/elasticsearch/data
-    ports:
-      - 9201:9200
-      - 9301:9300
-    networks:
-      - tabantajnetwork
+  # prometheus-tabantaj:
+  #   image: prom/prometheus
+  #   container_name: prometheus-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 9090:9090
+  #   volumes:
+  #     - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #   networks:
+  #     - tabantajnetwork
 
-  logstash-tabantaj:
-    image: docker.elastic.co/logstash/logstash:8.8.1
-    container_name: logstash-tabantaj
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - ./infra/logstash:/usr/share/logstash/pipeline
-    environment:
-      ELASTICSEARCH_HOST: "http://192.168.9.78"
-      ELASTICSEARCH_PORT: 9200
-    ports:
-      - 5044:5044
-    depends_on:
-      - elastic-search-tabantaj
-    networks:
-      - tabantajnetwork
+  # prometheus-node-exporter-tabantaj:
+  #   image: prom/node-exporter:latest
+  #   container_name: prometheus-node-exporter-tabantaj
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /proc:/host/proc:ro
+  #     - /sys:/host/sys:ro
+  #     - /:/rootfs:ro
+  #   command:
+  #     - '--path.procfs=/host/proc'
+  #     - '--path.sysfs=/host/sys'
+  #     - --collector.filesystem.ignored-mount-points
+  #     - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+  #   networks:
+  #     - tabantajnetwork
+  #   privileged: true
+  #   depends_on:
+  #     - prometheus-tabantaj
+  #   ports:
+  #     - 9101:9100
 
+  # redis-exporter-tabantaj:
+  #   image: oliver006/redis_exporter:v1.22.0-alpine
+  #   container_name: redis-exporter-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 9121:9121
+  #   networks:
+  #     - tabantajnetwork
+  #   environment:
+  #     REDIS_ADDR: "redis-tabantaj:6379"
+  #     REDIS_USER: null
+  #     REDIS_PASS: null
+  #   # command:
+  #   #   - --redis.addr=redis-tabantaj:6379
+
+  # nginx-exporter-tabantaj:
+  #   image: nginx/nginx-prometheus-exporter:latest
+  #   container_name: nginx-exporter-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 9113:9113
+  #   command:
+  #     - -nginx.scrape-uri=http://nginx-tabantaj:8080/stub_status
+  #   networks:
+  #     - tabantajnetwork
+
+  # postgres-exporter-tabantaj:
+  #   image: prometheuscommunity/postgres-exporter
+  #   ports:
+  #     - 9187:9187
+  #   environment:
+  #     DATA_SOURCE_NAME: "postgresql://homestead:secret@postgres-tabantaj:5432/homestead?sslmode=disable"
+  #   networks:
+  #     - tabantajnetwork
+
+  # grafana-tabantaj:
+  #   image: grafana/grafana:8.1.8
+  #   container_name: grafana-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     - /opt/grafana:/etc/grafana/provisioning
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - tabantajnetwork
+
+  # elastic-search-tabantaj:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
+  #   container_name: elastic-search-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - elasticsearch:/usr/share/elasticsearch/data
+  #   environment:
+  #     - node.name=elasticsearch
+  #     - cluster.name=docker-cluster
+  #     - discovery.type=single-node
+  #     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+  #   networks:
+  #     - tabantajnetwork
+
+  # elasticsearch-logs-tabantaj:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
+  #   container_name: elasticsearch-logs-tabantaj
+  #   environment:
+  #     - node.name=elasticsearch-logs
+  #     - cluster.name=docker-cluster
+  #     - discovery.type=single-node
+  #     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - elasticsearch-logs:/usr/share/elasticsearch/data
+  #   ports:
+  #     - 9201:9200
+  #     - 9301:9300
+  #   networks:
+  #     - tabantajnetwork
+
+  # logstash-tabantaj:
+  #   image: docker.elastic.co/logstash/logstash:8.8.1
+  #   container_name: logstash-tabantaj
+  #   restart: unless-stopped
+  #   tty: true
+  #   volumes:
+  #     - ./infra/logstash:/usr/share/logstash/pipeline
+  #   environment:
+  #     ELASTICSEARCH_HOST: "http://192.168.9.78"
+  #     ELASTICSEARCH_PORT: 9200
+  #   ports:
+  #     - 5044:5044
+  #   depends_on:
+  #     - elastic-search-tabantaj
+  #   networks:
+  #     - tabantajnetwork
 
   # cadvisor-tabantaj:
   #   image: google/cadvisor:latest
@@ -280,10 +365,10 @@ volumes:
     driver: local
   pgadmin-data:
     driver: local
-  elasticsearch:
-    driver: local
-  elasticsearch-logs:
-    driver: local
+  # elasticsearch:
+  #   driver: local
+  # elasticsearch-logs:
+  #   driver: local
 
 networks:
   tabantajnetwork:

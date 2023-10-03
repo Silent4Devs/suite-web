@@ -4,12 +4,13 @@ namespace App\Http\Livewire\EvaluacionServicio;
 
 use App\Models\ContractManager\EvaluacionServicio;
 use App\Models\ContractManager\NivelesServicio;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\DB;
 
 class EvaluacionComponent extends Component
 {
@@ -52,7 +53,7 @@ class EvaluacionComponent extends Component
             ->where('id', '=', $this->nivel_id)
             ->first();
 
-            $promedio_evaluaciones = EvaluacionServicio::where('servicio_id', '=', $this->nivel_id)
+        $promedio_evaluaciones = EvaluacionServicio::where('servicio_id', '=', $this->nivel_id)
             ->sum(DB::raw('CAST(promedio AS DECIMAL)'));
 
         return view('livewire.evaluacion-servicio.evaluacion-component', [
@@ -75,7 +76,7 @@ class EvaluacionComponent extends Component
     {
         $last = EvaluacionServicio::latest('evaluacion_day', 'evaluacion')->where('servicio_id', '=', $this->nivel_id)->latest()->first();
         $date = Carbon::parse($this->fecha)->format('Y-m-d');
-
+        $usuario = User::getCurrentUser();
         if (is_null($last)) {
             $evaluacion = EvaluacionServicio::create([
                 'servicio_id' => $this->nivel_id,
@@ -83,8 +84,8 @@ class EvaluacionComponent extends Component
                 'evaluacion_day' => 1,
                 'fecha' => $date,
                 'promedio' => $this->resultado,
-                'created_by' => auth()->user()->empleado->id,
-                'updated_by' => auth()->user()->empleado->id,
+                'created_by' => $usuario->empleado->id,
+                'updated_by' => $usuario->empleado->id,
             ]);
         } else {
             $evaluacion = EvaluacionServicio::create([
@@ -93,8 +94,8 @@ class EvaluacionComponent extends Component
                 'evaluacion_day' => $last->evaluacion_day + 1,
                 'fecha' => $date,
                 'promedio' => $this->resultado,
-                'created_by' => auth()->user()->empleado->id,
-                'updated_by' => auth()->user()->empleado->id,
+                'created_by' => $usuario->empleado->id,
+                'updated_by' => $usuario->empleado->id,
             ]);
         }
 
@@ -134,7 +135,7 @@ class EvaluacionComponent extends Component
 
         //$this->validate();
 
-        if (! is_null($this->eval_id)) {
+        if (!is_null($this->eval_id)) {
             $evalservicio = EvaluacionServicio::find($this->eval_id);
 
             $evalservicio->update([

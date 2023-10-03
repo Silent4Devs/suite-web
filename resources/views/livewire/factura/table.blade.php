@@ -178,8 +178,8 @@
                                 -
                             @else
                                 <a wire:click="exportXml({{ $factura->id }})"
-                                    class="btn-floating teal waves-effect waves-light red"><i
-                                        class="material-icons">file_download</i></a>
+                                    class="btn btn-floating teal waves-effect waves-light red"><i
+                                        class="material-icons" title="Descargar XML">file_download</i></a>
                             @endif
                         </td>
                         <td style="text-align: center">
@@ -187,8 +187,8 @@
                                 -
                             @else
                                 <a wire:click="exportPdf({{ $factura->id }})"
-                                    class="btn-floating deep-purple waves-effect waves-light red"><i
-                                        class="material-icons">file_download</i></a>
+                                    class="btn btn-floating deep-purple waves-effect waves-light red"><i
+                                        class="material-icons" title="Descargar PDF">file_download</i></a>
                             @endif
                         </td>
                         @if (!$show_contrato)

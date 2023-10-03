@@ -373,7 +373,7 @@ class RecursosController extends Controller
 
     public function guardarEvaluacionCapacitacion(Request $request)
     {
-        $empleado = auth()->user()->empleado->id;
+        $empleado = User::getCurrentUser()->empleado->id;
         $recurso = Recurso::find($request->recurso);
         $request->validate([
             'utilidadTemasVistos' => 'required',
@@ -425,7 +425,7 @@ class RecursosController extends Controller
 
     public function respuestaCapacitacion(Request $request)
     {
-        $empleado = auth()->user()->empleado->id;
+        $empleado = User::getCurrentUser()->empleado->id;
         $recurso = Recurso::find($request->recurso);
 
         if (Carbon::parse($recurso->fecha_limite)->isAfter(Carbon::now())) {
@@ -444,7 +444,7 @@ class RecursosController extends Controller
 
     public function archivarCapacitacion(Request $request)
     {
-        $empleado = auth()->user()->empleado->id;
+        $empleado = User::getCurrentUser()->empleado->id;
         $recurso = Recurso::find($request->recurso);
 
         if (Carbon::parse($recurso->fecha_fin)->isBefore(Carbon::now()) || $request->aceptada == 'false') {
@@ -463,7 +463,7 @@ class RecursosController extends Controller
 
     public function obtenerCapacitacionesPrincipales(Request $request)
     {
-        $empleado = auth()->user()->empleado->id;
+        $empleado = User::getCurrentUser()->empleado->id;
         //Capacitaciones Cards
         // $capacitacionesEnCurso = $this->obtenerCapacitacionesEnCursoDelParticipante($empleado);
         // $capacitacionesProximas = $this->obtenerCapacitacionesProximasDelParticipante($empleado);
@@ -480,7 +480,7 @@ class RecursosController extends Controller
 
     public function obtenerCapacitacionesArchivadas()
     {
-        $empleado = auth()->user()->empleado->id;
+        $empleado = User::getCurrentUser()->empleado->id;
         $capacitacionesCard = $this->obtenerCapacitacionesMezcladas($empleado, 'todo', true);
 
         return response()->json(['capacitaciones' => $capacitacionesCard]);
