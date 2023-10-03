@@ -6,7 +6,7 @@ use App\Models\Escuela\Course;
 use App\Models\Escuela\Requirement;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Component;
 
 class CourseRequirements extends Component
 {
@@ -22,7 +22,7 @@ class CourseRequirements extends Component
 
     protected $messages = [
         'requirement.name.required' => 'El campo nombre es obligatorio',
-        'requirement.name.max' => 'El campo nombre es obligatorio'
+        'requirement.name.max' => 'El campo nombre es obligatorio',
     ];
 
     public function mount($course)
@@ -42,7 +42,7 @@ class CourseRequirements extends Component
             'name' => 'required|max:255',
         ], [
             'name.required' => 'El campo nombre es obligatorio',
-            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres'
+            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres',
         ]);
 
         $this->course->requirements()->create([
