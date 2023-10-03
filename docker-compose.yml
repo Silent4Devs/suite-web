@@ -9,34 +9,34 @@ services:
   #   command: daemon --docker
   #   volumes:
   #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  datadog:
-    image: datadog/agent:7
-    container_name: dd-agent
-    restart: unless-stopped
-    environment:
-      - DD_API_KEY=495473ba9498ee8902595ee90a4d7a27ad1b5304
-      - DD_SITE=us5.datadoghq.com
-      - DD_HOSTNAME=tabantaj
-      - DD_APM_ENABLED=true
-      - DD_LOGS_ENABLED=true
-      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
-      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
-      - DD_CONTAINER_EXCLUDE=image:datadog/agent:7*
-      - DD_CONTAINER_EXCLUDE_METRICS=image:datadog/agent:7*
-      - DD_CONTAINER_EXCLUDE_LOGS=image:datadog/agent:7*
-      - DD_PROCESS_AGENT_ENABLED=false
-      - DD_ECS_FARGATE_ENABLED=false
-    ports:
-      - 8125/udp
-      - 8126/tcp
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /proc/:/host/proc/:ro
-      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-      - /opt/datadog-agent/run:/opt/datadog-agent/run:rw
-    networks:
-      - tabantajnetwork
-    command: ["--cgroupns", "host", "--pid", "host"]
+  # datadog:
+  #   image: datadog/agent:7
+  #   container_name: dd-agent
+  #   restart: unless-stopped
+  #   environment:
+  #     - DD_API_KEY=495473ba9498ee8902595ee90a4d7a27ad1b5304
+  #     - DD_SITE=us5.datadoghq.com
+  #     - DD_HOSTNAME=tabantaj
+  #     - DD_APM_ENABLED=true
+  #     - DD_LOGS_ENABLED=true
+  #     - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+  #     - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+  #     - DD_CONTAINER_EXCLUDE=image:datadog/agent:7*
+  #     - DD_CONTAINER_EXCLUDE_METRICS=image:datadog/agent:7*
+  #     - DD_CONTAINER_EXCLUDE_LOGS=image:datadog/agent:7*
+  #     - DD_PROCESS_AGENT_ENABLED=false
+  #     - DD_ECS_FARGATE_ENABLED=false
+  #   ports:
+  #     - 8125/udp
+  #     - 8126/tcp
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - /proc/:/host/proc/:ro
+  #     - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+  #     - /opt/datadog-agent/run:/opt/datadog-agent/run:rw
+  #   networks:
+  #     - tabantajnetwork
+  #   command: ["--cgroupns", "host", "--pid", "host"]
 
   nginx-tabantaj:
     image: nginx:stable-alpine
