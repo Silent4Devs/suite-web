@@ -6,7 +6,7 @@ use App\Models\Escuela\Course;
 use App\Models\Escuela\Requirement;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Component;
 
 class CourseRequirements extends Component
 {

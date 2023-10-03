@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Escuela\Instructor;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\Goal;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class CourseGoals extends Component
 {
