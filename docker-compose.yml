@@ -191,7 +191,7 @@ services:
   newrelic-infra:
     container_name: newrelic-infra
     image: newrelic/infrastructure:latest
-    network_mode: host
+    network_mode: tabantajnetwork
     cap_add:
       - SYS_PTRACE
     privileged: true
