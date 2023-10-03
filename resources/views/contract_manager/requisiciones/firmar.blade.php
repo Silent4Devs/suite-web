@@ -292,6 +292,7 @@
             </div>
         </div>
     </div>
+    @if ( is_null($requisicion->firma_solicitante) || is_null($requisicion->firma_jefe) || is_null($requisicion->firma_finanzas)  || is_null($requisicion->firma_compras))
     <div class="card card-content" style="margin-bottom: 30px">
         <form method="POST" id="myForm" action="{{ route('contract_manager.requisiciones.firmar-update', ['tipo_firma' => $tipo_firma, 'id' => $requisicion->id]) }}">
             @csrf
@@ -320,10 +321,11 @@
             @csrf
             <div class="flex" style="position: relative; top: -1rem;  justify-content: space-between;">
                 <button class="btn btn-primary" style="background: #454545 !important;">RECHAZAR REQUISICIÓN</button>
-                <div onclick="validar();" style="" class="btn btn-primary">Guardar</div>
+                <div onclick="validar();" style="" class="btn btn-primary">Firmar</div>
             </div>
         </form>
     </div>
+    @endif
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

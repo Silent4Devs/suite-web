@@ -8,6 +8,7 @@ use App\Models\ContractManager\EntregableFile;
 use App\Models\ContractManager\EntregaMensual;
 use App\Models\ContractManager\Factura;
 use App\Models\Organizacion;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -159,8 +160,8 @@ class Entregablecomponent extends Component
             'deductiva_factura_id' => $this->deductiva_factura_id,
             'nota_credito' => $this->nota_credito,
             'justificacion_deductiva_penalizacion' => $this->justificacion_deductiva_penalizacion,
-            'created_by' => auth()->user()->empleado->id,
-            'updated_by' => auth()->user()->empleado->id,
+            'created_by' => User::getCurrentUser()->empleado->id,
+            'updated_by' => User::getCurrentUser()->empleado->id,
         ]);
 
         $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();

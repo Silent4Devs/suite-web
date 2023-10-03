@@ -4,6 +4,7 @@ namespace App\Http\Livewire\EvaluacionServicio;
 
 use App\Models\ContractManager\EvaluacionServicio;
 use App\Models\ContractManager\NivelesServicio;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -53,7 +54,7 @@ class EvaluacionComponent extends Component
             ->first();
 
         $promedio_evaluaciones = EvaluacionServicio::where('servicio_id', '=', $this->nivel_id)
-        ->sum(DB::raw('CAST(promedio AS DECIMAL)'));
+            ->sum(DB::raw('CAST(promedio AS DECIMAL)'));
 
         return view('livewire.evaluacion-servicio.evaluacion-component', [
             'EvaluacionServicio' => $evaluacion_servicio,
@@ -75,7 +76,7 @@ class EvaluacionComponent extends Component
     {
         $last = EvaluacionServicio::latest('evaluacion_day', 'evaluacion')->where('servicio_id', '=', $this->nivel_id)->latest()->first();
         $date = Carbon::parse($this->fecha)->format('Y-m-d');
-
+        $usuario = User::getCurrentUser();
         if (is_null($last)) {
             $evaluacion = EvaluacionServicio::create([
                 'servicio_id' => $this->nivel_id,
@@ -83,8 +84,8 @@ class EvaluacionComponent extends Component
                 'evaluacion_day' => 1,
                 'fecha' => $date,
                 'promedio' => $this->resultado,
-                'created_by' => auth()->user()->empleado->id,
-                'updated_by' => auth()->user()->empleado->id,
+                'created_by' => $usuario->empleado->id,
+                'updated_by' => $usuario->empleado->id,
             ]);
         } else {
             $evaluacion = EvaluacionServicio::create([
@@ -93,8 +94,8 @@ class EvaluacionComponent extends Component
                 'evaluacion_day' => $last->evaluacion_day + 1,
                 'fecha' => $date,
                 'promedio' => $this->resultado,
-                'created_by' => auth()->user()->empleado->id,
-                'updated_by' => auth()->user()->empleado->id,
+                'created_by' => $usuario->empleado->id,
+                'updated_by' => $usuario->empleado->id,
             ]);
         }
 

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Escuela;
 use App\Models\Escuela\Course;
 use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Review;
+use App\Models\User;
 use Livewire\Component;
 
 class CoursesReview extends Component
@@ -21,8 +22,8 @@ class CoursesReview extends Component
     public function render()
     {
         $course = Course::find($this->course_id);
-        $enrolled = CourseUser::where('course_id', $course->id)->where('user_id', auth()->user()->id)->exists();
-        $review = Review::where('course_id', $course->id)->where('user_id', auth()->user()->id)->exists();
+        $enrolled = CourseUser::where('course_id', $course->id)->where('user_id', User::getCurrentUser()->id)->exists();
+        $review = Review::where('course_id', $course->id)->where('user_id', User::getCurrentUser()->id)->exists();
 
         return view('livewire.escuela.courses-review', compact('course', 'enrolled', 'review'));
     }
@@ -33,7 +34,7 @@ class CoursesReview extends Component
         $course->reviews()->create([
             'comment' => $this->comment,
             'rating' => $this->rating,
-            'user_id' => auth()->user()->id,
+            'user_id' => User::getCurrentUser()->id,
         ]);
     }
 }
