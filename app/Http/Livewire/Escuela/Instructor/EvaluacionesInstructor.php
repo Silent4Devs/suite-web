@@ -51,13 +51,14 @@ class EvaluacionesInstructor extends Component
 
     protected $rules = [
         'section_id' => 'required',
-        'name' => 'required',
+        'name' => 'required | max:255',
     ];
 
 
     protected $messages=[
         'name.required'=>"El campo nombre es obligatorio",
-        'section_id.required'=>"El campo sección del curso es obligatorio"
+        'section_id.required'=>"El campo sección del curso es obligatorio",
+        'name.max'=> "El campo nombre no debe de ser mayor a 255 caracteres",
     ];
 
 

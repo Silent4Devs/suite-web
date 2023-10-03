@@ -1,16 +1,15 @@
-<div class="card" x-data="{open: false}">
+<div class="card shadow-none" x-data="{open: false}">
     <div class="card-body">
-        <header>
-            <h1 x-on:click="open = !open" class="cursor-pointer">Recursos de la lección</h1>
-        </header>
 
         <div x-show="open">
             <hr class="my-2">
         </div>
             @if ($lesson->resource)
-                <div class="flex items-center justify-between">
-                    <p><i wire:click="download" class="mr-2 text-blue-500 cursor-pointer fas fa-download"></i>{{$lesson->resource->url}}</p>
-                    <i wire:click="destroy" class="cursor-pointer fas fa-trash" style="color:red; font-size:10.5pt;"></i>
+                <div class="mt-4 pl-4 d-flex justify-content-start align-items-center" style="min-height: 99px; border: 1px dashed #BEBEBE; border-radius: 2px;">
+                    <p><i wire:click="download" class="mr-2 cursor-pointer fas fa-download" title="Descargar"></i>{{$lesson->resource->url}}</p>
+                    <p class="ml-2">
+                        <i wire:click="destroy" class="cursor-pointer fa-regular fa-trash-can" style="font-size:10.5pt;" title="Eliminar"></i>
+                    </p>
                 </div>
             @else
             <form wire:submit.prevent="save">
