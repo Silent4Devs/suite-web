@@ -5,7 +5,7 @@
     <hr class="mt-2">
 
     {{-- add new section --}}
-    <div class="mt-2" x-data="{open: false}">
+    <div class="mt-2">
         <div class="d-flex justify-content-end" style="margin: 30px 0px;">
             <button class="btn advance" wire:click="store" type="button">
                 AGREGAR NUEVA SECCIÓN <i class="fas fa-plus"></i>

@@ -35108,3 +35108,12 @@ h3 {
   }
 } */
 
+.circulo-kaans{
+            width: 75px;
+            height: 75px;
+        }
+        .circulo-kaans img {
+            width: 75px; 
+            height: 75px;
+            border-radius: 50%;
+        }

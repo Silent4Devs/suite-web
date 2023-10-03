@@ -17,13 +17,16 @@ class Questions extends Component
     public $question;
     public $isActive;
     public $evaluation_id;
+    public $test;
     public Collection $answers;
     public $questionModel;
     public $edit = false;
     public $onlyIcon = true;
+    public $answersDelete = [];
     protected $listeners = [
         'renderQuestion' => 'render',
     ];
+
 
     protected function rules()
     {
@@ -75,6 +78,7 @@ class Questions extends Component
 
     public function removeInput($key)
     {
+        $this->answersDelete[] = $this->answers->pull($key);
         $this->answers->pull($key);
     }
 
@@ -97,13 +101,14 @@ class Questions extends Component
     public function update($question_id)
     {
         $this->validate();
+
         $question = Question::find($question_id);
         $question->update([
             'explanation' => $this->explanation,
             'question' => $this->question,
             'evaluation_id' => $this->evaluation_id,
         ]);
-        //    dd($this->answers);
+
         foreach ($this->answers as $answer) {
             $answerExist = Answer::where('id', $answer['id'])->exists();
             if ($answerExist) {
@@ -121,34 +126,15 @@ class Questions extends Component
             }
         }
 
+        foreach ($this->answersDelete as $answerDelete) {
+            $this->Destroy($answerDelete);
+        }
+
         $this->dispatchBrowserEvent('closeModal');
         $this->emit('questionStore');
-        //    $this->render_alerta('success','Actualizado con éxito');
-        //    $this->default(true);
         $this->open = false;
     }
 
-    public function save()
-    {
-        $this->validate();
-        $question = Question::create([
-            'explanation' => $this->explanation,
-            'question' => $this->question,
-            // 'is_active' => $this->isActive,
-            'evaluation_id' => $this->evaluation_id,
-        ]);
-        foreach ($this->answers as $answer) {
-            Answer::create([
-                'answer' => $answer['answer'],
-                'is_correct' => $answer['is_correct'] == false ? '0' : '1',
-                'question_id' => $question->id,
-            ]);
-        }
-        // $this->render_alerta('success', 'El registro se ha agregado exitosamente');
-        $this->dispatchBrowserEvent('closeModal');
-        $this->emit('questionStore');
-        $this->default();
-    }
 
     // public function destroy($question_id){
 
@@ -179,7 +165,51 @@ class Questions extends Component
 
     public function cancel()
     {
+        $this->edit = true;
+        $this->explanation = $this->questionModel->explanation;
+        $this->question = $this->questionModel->question;
+        $answers = $this->questionModel->answers;
+        $answersCollect = collect();
+        foreach ($answers as $answer) {
+            $answersCollect->push([
+                'id' => $answer->id,
+                'is_correct' => $answer->is_correct == '1' ? true : false,
+                'answer' => $answer->answer,
+            ]);
+        }
+        $this->fill([
+            'answers' => $answersCollect,
+        ]);
+        $this->answersDelete = [];
+    }
+
+    public function Destroy($answerDelete)
+    {
+        $answer = Answer::find($answerDelete["id"]);
+        if ($answer) {
+            $answer->delete();
+        }
+    }
+
+    public function save()
+    {
+        $this->validate();
+        $question = Question::create([
+            'explanation' => $this->explanation,
+            'question' => $this->question,
+            // 'is_active' => $this->isActive,
+            'evaluation_id' => $this->evaluation_id,
+        ]);
+        foreach ($this->answers as $answer) {
+            Answer::create([
+                'answer' => $answer['answer'],
+                'is_correct' => $answer['is_correct'] == false ? '0' : '1',
+                'question_id' => $question->id,
+            ]);
+        }
+        // $this->render_alerta('success', 'El registro se ha agregado exitosamente');
+        $this->dispatchBrowserEvent('closeModal');
+        $this->emit('questionStore');
         $this->default();
-        // $this->edit = false;
     }
 }
