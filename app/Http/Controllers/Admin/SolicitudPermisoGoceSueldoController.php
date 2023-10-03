@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\admin;
 
-use Flash;
-use App\Models\User;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Models\PermisosGoceSueldo;
-use App\Traits\ObtenerOrganizacion;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
-use App\Models\SolicitudPermisoGoceSueldo;
 use App\Mail\RespuestaPermisoGoceSueldo as MailRespuestaPermisoGoceSueldo;
 use App\Mail\SolicitudPermisoGoceSueldo as MailSolicitudPermisoGoceSueldo;
+use App\Models\Empleado;
+use App\Models\PermisosGoceSueldo;
+use App\Models\SolicitudPermisoGoceSueldo;
+use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
+use Flash;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class SolicitudPermisoGoceSueldoController extends Controller
 {

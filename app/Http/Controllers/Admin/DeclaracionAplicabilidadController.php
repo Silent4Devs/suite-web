@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Throwable;
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use App\Traits\ObtenerOrganizacion;
-use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
+use App\Mail\DeclaracionAplicabilidadAprobadores as MailDeclaracionAplicabilidadAprobadores;
+use App\Mail\NotificacionDeclaracionAplicabilidadAprobadores;
+use App\Mail\NotificacionDeclaracionAplicabilidadResponsables;
 use App\Models\DeclaracionAplicabilidad;
 use App\Models\DeclaracionAplicabilidadAprobadores;
 use App\Models\DeclaracionAplicabilidadResponsable;
-use App\Mail\NotificacionDeclaracionAplicabilidadAprobadores;
-use App\Mail\NotificacionDeclaracionAplicabilidadResponsables;
-use App\Mail\DeclaracionAplicabilidadAprobadores as MailDeclaracionAplicabilidadAprobadores;
+use App\Models\Empleado;
+use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class DeclaracionAplicabilidadController extends Controller
 {

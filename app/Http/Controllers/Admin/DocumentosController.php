@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Documento;
-use App\Models\Macroproceso;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Models\VistaDocumento;
-use App\Models\RevisionDocumento;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
+use App\Mail\ConfirmacionSolicitudAprobacionMail;
 use App\Mail\SolicitudAprobacionMail;
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Documento;
+use App\Models\Empleado;
 use App\Models\HistorialRevisionDocumento;
 use App\Models\HistorialVersionesDocumento;
-use App\Mail\ConfirmacionSolicitudAprobacionMail;
+use App\Models\Macroproceso;
+use App\Models\Organizacion;
+use App\Models\Proceso;
+use App\Models\RevisionDocumento;
+use App\Models\User;
+use App\Models\VistaDocumento;
+use Carbon\Carbon;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentosController extends Controller
 {

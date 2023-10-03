@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\admin;
 
-use Flash;
+use App\Http\Controllers\Controller;
 use App\Models\Area;
+use App\Models\SolicitudVacaciones;
 use App\Models\User;
 use App\Models\Vacaciones;
+use App\Traits\ObtenerOrganizacion;
+use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\SolicitudVacaciones;
-use App\Traits\ObtenerOrganizacion;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 
 class VacacionesController extends Controller

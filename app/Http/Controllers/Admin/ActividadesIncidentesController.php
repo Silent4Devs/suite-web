@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\User;
-use Illuminate\Http\Request;
-use App\Models\ActividadIncidente;
-use App\Models\PlanImplementacion;
-use App\Models\IncidentesSeguridad;
 use App\Http\Controllers\Controller;
+use App\Models\ActividadIncidente;
+use App\Models\IncidentesSeguridad;
+use App\Models\PlanImplementacion;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ActividadesIncidentesController extends Controller
 {

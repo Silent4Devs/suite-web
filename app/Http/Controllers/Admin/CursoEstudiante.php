@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use App\Models\Escuela\Level;
-use App\Models\Escuela\Course;
+use App\Http\Controllers\Controller;
 use App\Models\Escuela\Category;
+use App\Models\Escuela\Course;
 use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Evaluation;
-use App\Http\Controllers\Controller;
+use App\Models\Escuela\Level;
 use App\Models\Escuela\UsuariosCursos;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class CursoEstudiante extends Controller
 {

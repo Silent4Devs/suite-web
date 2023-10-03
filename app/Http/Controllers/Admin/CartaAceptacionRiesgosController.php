@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\admin;
 
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use App\Models\CartaAceptacion;
-use App\Mail\CartaAceptacionEmail;
 use App\Http\Controllers\Controller;
+use App\Mail\CartaAceptacionEmail;
+use App\Models\ActivosInformacionAprobacione;
+use App\Models\CartaAceptacion;
+use App\Models\CartaAceptacionAprobacione;
 use App\Models\CartaAceptacionPivot;
+use App\Models\DeclaracionAplicabilidad;
+use App\Models\Empleado;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use App\Models\DeclaracionAplicabilidad;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\CartaAceptacionAprobacione;
-use App\Models\ActivosInformacionAprobacione;
 
 class CartaAceptacionRiesgosController extends Controller
 {

@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\ContractManager;
 
-use PDF;
-use Gate;
-use App\Models\User;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use App\Mail\RequisicionesEmail;
-use App\Models\User as ModelsUser;
 use App\Http\Controllers\Controller;
+use App\Mail\RequisicionesEmail;
+use App\Models\ContractManager\Comprador as KatbolComprador;
+use App\Models\ContractManager\Contrato as KatbolContrato;
+use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
+use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
+use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
+use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\Organizacion;
+use App\Models\User;
+use App\Models\User as ModelsUser;
+use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use PDF;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\ContractManager\Contrato as KatbolContrato;
-use App\Models\ContractManager\Sucursal as KatbolSucursal;
-use App\Models\ContractManager\Comprador as KatbolComprador;
-use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
-use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
-use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
 
 class RequisicionesController extends Controller
 {
@@ -295,11 +295,9 @@ class RequisicionesController extends Controller
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto'));
     }
 
-
     public function getRequisicionIndexAprobador()
     {
         $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
-
 
         return datatables()->of($requisiciones)->toJson();
     }

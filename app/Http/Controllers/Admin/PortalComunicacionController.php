@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Empleado;
-use App\Models\Documento;
-use App\Models\PoliticaSgsi;
-use Illuminate\Http\Request;
-use App\Models\Organizacione;
-use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use App\Models\Comiteseguridad;
 use App\Models\ComunicacionSgi;
+use App\Models\Documento;
+use App\Models\Empleado;
 use App\Models\FelicitarCumpleaños;
-use App\Http\Controllers\Controller;
+use App\Models\Organizacione;
+use App\Models\PoliticaSgsi;
+use App\Models\User;
+use Carbon\Carbon;
+use Gate;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 

@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use Carbon\Carbon;
-use App\Models\User;
-use Livewire\Component;
-use App\Models\Empleado;
-use App\Models\PoliticaSgsi;
 use App\Models\Comiteseguridad;
+use App\Models\Empleado;
 use App\Models\FelicitarCumpleaños;
+use App\Models\PoliticaSgsi;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Livewire\Component;
 
 class EventosPortal extends Component
 {

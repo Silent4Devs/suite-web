@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\admin;
 
-use Flash;
-use Carbon\Carbon;
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Mail\SolicitudMensajeria as MailMensajeria;
 use App\Models\Empleado;
+use App\Models\EnvioDocumentos;
+use App\Models\EnvioDocumentosAjustes;
+use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
+use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\EnvioDocumentos;
-use App\Traits\ObtenerOrganizacion;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use App\Models\EnvioDocumentosAjustes;
-use App\Mail\SolicitudMensajeria as MailMensajeria;
 
 class EnvioDocumentosController extends Controller
 {

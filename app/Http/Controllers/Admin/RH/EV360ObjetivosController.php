@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\Admin\RH;
 
-use App\Models\Area;
-use App\Models\User;
-use App\Models\Puesto;
-use App\Models\Empleado;
-use App\Models\RH\Objetivo;
-use Illuminate\Http\Request;
-use App\Models\RH\Evaluacion;
-use Illuminate\Http\Response;
-use App\Models\PerfilEmpleado;
-use App\Models\RH\ObjetivoEmpleado;
 use App\Http\Controllers\Controller;
+use App\Mail\SolicitudAprobacionObjetivo;
+use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\PerfilEmpleado;
+use App\Models\Puesto;
+use App\Models\RH\Evaluacion;
+use App\Models\RH\EvaluacionesEvaluados;
 use App\Models\RH\EvaluadoEvaluador;
+use App\Models\RH\Objetivo;
+use App\Models\RH\ObjetivoEmpleado;
 use App\Models\RH\ObjetivoRespuesta;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-use App\Models\RH\EvaluacionesEvaluados;
-use App\Mail\SolicitudAprobacionObjetivo;
+use Intervention\Image\Facades\Image;
 
 class EV360ObjetivosController extends Controller
 {

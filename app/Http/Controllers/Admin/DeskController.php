@@ -2,43 +2,43 @@
 
 namespace App\Http\Controllers\admin;
 
-use Carbon\Carbon;
-use App\Models\Area;
-use App\Models\Sede;
-use App\Models\User;
-use App\Models\Activo;
-use App\Models\Quejas;
-use App\Models\Mejoras;
-use App\Models\Proceso;
-use App\Models\Empleado;
-use App\Models\Denuncias;
-use App\Models\Sugerencias;
-use Illuminate\Http\Request;
-use App\Models\QuejasCliente;
-use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use App\Mail\AceptacionAccionCorrectivaEmail;
+use App\Mail\AtencionQuejaAtendidaEmail;
+use App\Mail\CierreQuejaAceptadaEmail;
+use App\Mail\NotificacionResponsableQuejaEmail;
+use App\Mail\ResolucionQuejaRechazadaEmail;
+use App\Mail\SeguimientoQuejaClienteEmail;
+use App\Mail\SolicitarCierreQuejaEmail;
 use App\Models\AccionCorrectiva;
-use App\Models\TimesheetCliente;
+use App\Models\Activo;
+use App\Models\AnalisisQuejasClientes;
 use App\Models\AnalisisSeguridad;
-use App\Models\TimesheetProyecto;
+use App\Models\Area;
 use App\Models\CategoriaIncidente;
-use App\Models\RiesgoIdentificado;
+use App\Models\Denuncias;
+use App\Models\Empleado;
+use App\Models\EvidenciaQuejasClientes;
+use App\Models\EvidenciasQuejasClientesCerrado;
 use App\Models\EvidenciasSeguridad;
 use App\Models\IncidentesSeguridad;
-use App\Traits\ObtenerOrganizacion;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Mejoras;
+use App\Models\Proceso;
+use App\Models\Quejas;
+use App\Models\QuejasCliente;
+use App\Models\RiesgoIdentificado;
+use App\Models\Sede;
 use App\Models\SubcategoriaIncidente;
-use App\Mail\CierreQuejaAceptadaEmail;
-use App\Models\AnalisisQuejasClientes;
-use App\Mail\SolicitarCierreQuejaEmail;
-use App\Models\EvidenciaQuejasClientes;
-use App\Mail\AtencionQuejaAtendidaEmail;
-use App\Mail\SeguimientoQuejaClienteEmail;
-use App\Mail\ResolucionQuejaRechazadaEmail;
-use App\Mail\AceptacionAccionCorrectivaEmail;
-use App\Mail\NotificacionResponsableQuejaEmail;
-use App\Models\EvidenciasQuejasClientesCerrado;
-use Illuminate\Support\Facades\Gate; //mejora apunta a este modelo
+use App\Models\Sugerencias;
+use App\Models\TimesheetCliente;
+use App\Models\TimesheetProyecto;
+use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail; //mejora apunta a este modelo
 
 class DeskController extends Controller
 {

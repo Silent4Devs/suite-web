@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Quejas;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\ActividadQueja;
 use App\Models\PlanImplementacion;
-use App\Http\Controllers\Controller;
+use App\Models\Quejas;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ActividadesQuejasController extends Controller
 {

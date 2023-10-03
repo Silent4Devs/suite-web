@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\admin;
 
-use Flash;
+use App\Http\Controllers\Controller;
+use App\Models\PermisosGoceSueldo;
+use App\Models\SolicitudPermisoGoceSueldo;
 use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
+use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\PermisosGoceSueldo;
-use App\Traits\ObtenerOrganizacion;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\Models\SolicitudPermisoGoceSueldo;
 
 class PermisosGoceSueldoController extends Controller
 {

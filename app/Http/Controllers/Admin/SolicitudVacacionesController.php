@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\admin;
 
-use Flash;
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Empleado;
-use App\Models\Vacaciones;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Models\SolicitudDayOff;
-use App\Models\SolicitudVacaciones;
-use App\Traits\ObtenerOrganizacion;
 use App\Http\Controllers\Controller;
-use App\Models\IncidentesVacaciones;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
-use App\Models\SolicitudPermisoGoceSueldo;
 use App\Mail\RespuestaVacaciones as MailRespuestaVacaciones;
 use App\Mail\SolicitudVacaciones as MailSolicitudVacaciones;
+use App\Models\Empleado;
+use App\Models\IncidentesVacaciones;
+use App\Models\Organizacion;
+use App\Models\SolicitudDayOff;
+use App\Models\SolicitudPermisoGoceSueldo;
+use App\Models\SolicitudVacaciones;
+use App\Models\User;
+use App\Models\Vacaciones;
+use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
+use Flash;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class SolicitudVacacionesController extends Controller
 {

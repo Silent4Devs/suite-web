@@ -2,9 +2,9 @@
 
 namespace App\Http;
 
+use Alexusmai\LaravelFileManager\Services\ConfigService\ConfigRepository;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Alexusmai\LaravelFileManager\Services\ConfigService\ConfigRepository;
 
 class FileManagerRepository implements ConfigRepository
 {

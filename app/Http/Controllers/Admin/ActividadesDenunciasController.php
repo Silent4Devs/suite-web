@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Denuncias;
-use Illuminate\Http\Request;
-use App\Models\ActividadDenuncia;
-use App\Models\PlanImplementacion;
 use App\Http\Controllers\Controller;
+use App\Models\ActividadDenuncia;
+use App\Models\Denuncias;
+use App\Models\PlanImplementacion;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ActividadesDenunciasController extends Controller
 {

@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\Admin\iso27;
 
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use App\Traits\ObtenerOrganizacion;
-use Illuminate\Support\Facades\App;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
 use App\Functions\PorcentajeDecApl2022;
-use App\Models\Iso27\GapDosCatalogoIso;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
+use App\Mail\NotificacionDeclaracionAplicabilidadAprobadores2022;
+use App\Mail\NotificacionDeclaracionAplicabilidadResponsables2022;
+use App\Models\Empleado;
 use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
 use App\Models\Iso27\DeclaracionAplicabilidadConcentradoIso;
 use App\Models\Iso27\DeclaracionAplicabilidadResponsableIso;
-use App\Mail\NotificacionDeclaracionAplicabilidadAprobadores2022;
-use App\Mail\NotificacionDeclaracionAplicabilidadResponsables2022;
+use App\Models\Iso27\GapDosCatalogoIso;
+use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class DeclaracionAplicabilidadConcentradoIsoController extends Controller
 {

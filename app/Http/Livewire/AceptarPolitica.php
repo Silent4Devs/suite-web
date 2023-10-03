@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\AceptoPolitica;
 use App\Models\User;
 use Livewire\Component;
-use App\Models\AceptoPolitica;
 
 class AceptarPolitica extends Component
 {

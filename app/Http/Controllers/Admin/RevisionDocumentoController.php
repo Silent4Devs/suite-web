@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use App\Models\Documento;
-use Illuminate\Http\Request;
-use App\Models\RevisionDocumento;
 use App\Http\Controllers\Controller;
+use App\Models\Documento;
+use App\Models\RevisionDocumento;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class RevisionDocumentoController extends Controller
 {

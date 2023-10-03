@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\admin;
 
-use Flash;
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\DayOff;
-use App\Models\Empleado;
-use App\Models\Organizacion;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Models\SolicitudDayOff;
-use App\Models\IncidentesDayoff;
-use App\Traits\ObtenerOrganizacion;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\RespuestaDayOff as MailRespuestaDayoff;
 use App\Mail\SolicitudDayOff as MailSolicitudDayoff;
+use App\Models\DayOff;
+use App\Models\Empleado;
+use App\Models\IncidentesDayoff;
+use App\Models\Organizacion;
+use App\Models\SolicitudDayOff;
+use App\Models\User;
+use App\Traits\ObtenerOrganizacion;
+use Carbon\Carbon;
+use Flash;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class SolicitudDayOffController extends Controller
 {

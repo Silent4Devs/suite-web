@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use Carbon\Carbon;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use App\Models\PlanImplementacion;
 use App\Http\Controllers\Controller;
-use App\Models\MatrizRequisitoLegale;
-use Illuminate\Support\Facades\Storage;
-use App\Models\EvaluacionRequisitoLegal;
-use App\Models\EvidenciaMatrizRequisitoLegale;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
 use App\Http\Requests\StoreMatrizRequisitoLegaleRequest;
 use App\Http\Requests\UpdateMatrizRequisitoLegaleRequest;
-use App\Http\Requests\MassDestroyMatrizRequisitoLegaleRequest;
+use App\Models\Empleado;
+use App\Models\EvaluacionRequisitoLegal;
+use App\Models\EvidenciaMatrizRequisitoLegale;
+use App\Models\MatrizRequisitoLegale;
+use App\Models\PlanImplementacion;
+use App\Models\Team;
+use App\Models\User;
+use Carbon\Carbon;
+use Gate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 class MatrizRequisitoLegalesController extends Controller
 {

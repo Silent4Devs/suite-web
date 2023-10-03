@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Sugerencias;
-use Illuminate\Http\Request;
-use App\Models\PlanImplementacion;
-use App\Models\ActividadSugerencia;
 use App\Http\Controllers\Controller;
+use App\Models\ActividadSugerencia;
+use App\Models\PlanImplementacion;
+use App\Models\Sugerencias;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ActividadesSugerenciasController extends Controller
 {
