@@ -2,22 +2,23 @@
 
 namespace App\Http\Livewire;
 
-use App\Mail\RequisicionesEmail;
-use App\Models\ContractManager\Comprador as KatbolComprador;
-use App\Models\ContractManager\Contrato as KatbolContrato;
-use App\Models\ContractManager\Producto as KatbolProducto;
-use App\Models\ContractManager\ProductoRequisicion as KatbolProductoRequisicion;
-use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
-use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
-use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
-use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicion;
-use App\Models\ContractManager\Requsicion as KatbolRequsicion;
-use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\User;
+use Livewire\Component;
 use App\Models\Organizacion;
+use Livewire\WithFileUploads;
+use App\Mail\RequisicionesEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Livewire\Component;
-use Livewire\WithFileUploads;
+use App\Models\ContractManager\Contrato as KatbolContrato;
+use App\Models\ContractManager\Producto as KatbolProducto;
+use App\Models\ContractManager\Sucursal as KatbolSucursal;
+use App\Models\ContractManager\Comprador as KatbolComprador;
+use App\Models\ContractManager\Requsicion as KatbolRequsicion;
+use App\Models\ContractManager\ProveedorOC as KatbolProveedorOC;
+use App\Models\ContractManager\ProductoRequisicion as KatbolProductoRequisicion;
+use App\Models\ContractManager\ProveedorIndistinto as KatbolProveedorIndistinto;
+use App\Models\ContractManager\ProveedorRequisicion as KatbolProveedorRequisicion;
+use App\Models\ContractManager\ProvedorRequisicionCatalogo as KatbolProvedorRequisicionCatalogo;
 
 class RequisicionesCreateComponent extends Component
 {
@@ -94,12 +95,13 @@ class RequisicionesCreateComponent extends Component
 
     public function servicioStore($data)
     {
+        $usuario = User::getCurrentUser();
         if ($this->nueva_requisicion) {
             $this->nueva_requisicion->update([
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => auth()->user()->empleado->area->area,
+                'area' => $usuario->empleado->area->area,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
@@ -109,7 +111,7 @@ class RequisicionesCreateComponent extends Component
                 'fecha' => $data['fecha'],
                 'referencia' => $data['descripcion'],
                 'user' => $data['user'],
-                'area' => auth()->user()->empleado->area->area,
+                'area' => $usuario->empleado->area->area,
                 'contrato_id' => $data['contrato_id'],
                 'comprador_id' => $data['comprador_id'],
                 'sucursal_id' => $data['sucursal_id'],
@@ -135,7 +137,7 @@ class RequisicionesCreateComponent extends Component
         }
 
         $this->requisicion_id = $this->nueva_requisicion->id;
-        $id = Auth::user()->id;
+        $id = $usuario->id;
         $this->nueva_requisicion->update([
             'id_user' =>  $id,
         ]);
@@ -291,7 +293,7 @@ class RequisicionesCreateComponent extends Component
             $tipo_firma = 'firma_solicitante';
             $organizacion = Organizacion::first();
 
-            $supervisor = auth()->user()->empleado->supervisor->email;
+            $supervisor = User::getCurrentUser()->empleado->supervisor->email;
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->nueva_requisicion, $organizacion, $tipo_firma));
 

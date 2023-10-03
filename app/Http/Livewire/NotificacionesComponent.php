@@ -2,9 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class NotificacionesComponent extends Component
 {
@@ -83,7 +84,7 @@ class NotificacionesComponent extends Component
 
     public function markAsRead(string $notificationId)
     {
-        auth()->user()->unreadNotifications
+        User::getCurrentUser()->unreadNotifications
             ->when($notificationId, function ($query) use ($notificationId) {
                 return $query->where('id', $notificationId)->markAsRead();
             });

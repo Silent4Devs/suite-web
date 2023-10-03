@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class IsActiveUser
@@ -14,7 +15,7 @@ class IsActiveUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->is_active) {
+        if (User::getCurrentUser()->is_active) {
             return redirect()->route('admin.inicio-Usuario.index');
         }
 

@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire\NivelesServicio;
 
-use App\Functions\EvaluacionServiciosData;
-use App\Functions\FormatearFecha;
-use App\Models\ContractManager\EvaluacionServicio;
-use App\Models\ContractManager\NivelesServicio;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\User;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+use App\Functions\FormatearFecha;
+use App\Functions\EvaluacionServiciosData;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\ContractManager\NivelesServicio;
+use App\Models\ContractManager\EvaluacionServicio;
 
 class NivelesComponent extends Component
 {
@@ -97,6 +98,7 @@ class NivelesComponent extends Component
         // $fecha_compromiso_formateada = $formatoFecha->formatearFecha($this->fecha_compromiso, 'd-m-Y', 'Y-m-d');
         // $fecha_real_formateada = $formatoFecha->formatearFecha($this->fecha_real, 'd-m-Y', 'Y-m-d');
 
+        $usuario = User::getCurrentUser();
         $nivelesservicio = NivelesServicio::create([
             'contrato_id' => $this->contrato_id,
             'nombre' => $this->nombre,
@@ -108,8 +110,8 @@ class NivelesComponent extends Component
             'revisiones' => $this->revisiones,
             'area' => $this->area,
             'descripcion' => $this->descripcion,
-            'created_by' => auth()->user()->empleado->id,
-            'updated_by' => auth()->user()->empleado->id,
+            'created_by' => $usuario->empleado->id,
+            'updated_by' => $usuario->empleado->id,
         ]);
 
         $this->evaluacion($nivelesservicio->id, $nivelesservicio->periodo_evaluacion, $nivelesservicio->revisiones, $nivelesservicio->nombre, $nivelesservicio->metrica, $nivelesservicio->unidad);

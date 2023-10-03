@@ -2,18 +2,19 @@
 
 namespace App\Http\Livewire\EntregableMensual;
 
+use Throwable;
+use App\Models\User;
+use Livewire\Component;
+use App\Models\Organizacion;
+use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use App\Functions\FormatearFecha;
+use App\Models\ContractManager\Factura;
+use Illuminate\Support\Facades\Storage;
 use App\Models\ContractManager\Contrato;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\ContractManager\EntregableFile;
 use App\Models\ContractManager\EntregaMensual;
-use App\Models\ContractManager\Factura;
-use App\Models\Organizacion;
-use Illuminate\Support\Facades\Storage;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Component;
-use Livewire\WithFileUploads;
-use Livewire\WithPagination;
-use Throwable;
 
 class Entregablecomponent extends Component
 {
@@ -159,8 +160,8 @@ class Entregablecomponent extends Component
             'deductiva_factura_id' => $this->deductiva_factura_id,
             'nota_credito' => $this->nota_credito,
             'justificacion_deductiva_penalizacion' => $this->justificacion_deductiva_penalizacion,
-            'created_by' => auth()->user()->empleado->id,
-            'updated_by' => auth()->user()->empleado->id,
+            'created_by' => User::getCurrentUser()->empleado->id,
+            'updated_by' => User::getCurrentUser()->empleado->id,
         ]);
 
         $contrato = Contrato::select('id', 'no_contrato')->where('id', '=', $this->contrato_id)->first();

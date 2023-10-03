@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire\Escuela;
 
+use App\Models\User;
+use Livewire\Component;
 use App\Models\Escuela\Course;
-use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Lesson;
+use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\UserEvaluation;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Livewire\Component;
 
 class CourseStatus extends Component
 {
@@ -25,7 +26,7 @@ class CourseStatus extends Component
         $this->course = $course;
         //Evaluaciones para el curso en general
         $this->evaluacionesGenerales = Evaluation::where('course_id', $this->course->id)->get();
-        $this->evaluationsUser = UserEvaluation::where('user_id', auth()->user()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+        $this->evaluationsUser = UserEvaluation::where('user_id', User::getCurrentUser()->id)->where('completed', true)->pluck('evaluation_id')->toArray();
 
         //determinamos cual es la lección actual
         foreach ($course->lessons as $lesson) {
@@ -60,13 +61,14 @@ class CourseStatus extends Component
 
     public function completed()
     {
+        $usuario = User::getCurrentUser();
         if ($this->current->completed) {
             //Eliminar registro
             // Metodo auth me recupera el dato del usuario autentificado
-            $this->current->users()->detach(auth()->user()->id);
+            $this->current->users()->detach($usuario->id);
         } else {
             //Agregar registro
-            $this->current->users()->attach(auth()->user()->id);
+            $this->current->users()->attach($usuario->id);
         }
         $this->current = Lesson::find($this->current->id);
         $this->course = Course::find($this->course->id);

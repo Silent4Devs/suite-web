@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ActiveUser
@@ -14,7 +15,7 @@ class ActiveUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->user()->is_active) {
+        if (!User::getCurrentUser()->is_active) {
             return redirect()->route('users.usuario-bloqueado');
         }
 

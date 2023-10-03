@@ -2,18 +2,19 @@
 
 namespace App\Http\Livewire\Timesheet;
 
-use App\Mail\TimesheetCorreoRetraso;
+use Carbon\Carbon;
 use App\Models\Area;
+use App\Models\User;
+use Livewire\Component;
 use App\Models\Empleado;
-use App\Models\Organizacion;
 use App\Models\Timesheet;
+use App\Models\Organizacion;
 use App\Models\TimesheetHoras;
 use App\Models\TimesheetProyecto;
 use App\Traits\getWeeksFromRange;
-use Carbon\Carbon;
+use App\Mail\TimesheetCorreoRetraso;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Component;
 
 class ReporteAprobador extends Component
 {
@@ -156,7 +157,7 @@ class ReporteAprobador extends Component
         $semanas_del_mes = intval(($this->hoy->format('d') * 4) / 29);
         $this->empleados = collect();
 
-        $this->aprobador = Empleado::find(auth()->user()->empleado->id);
+        $this->aprobador = Empleado::find(User::getCurrentUser()->empleado->id);
         $empleados_list = $this->aprobador->children;
         $this->empleados_list_global = $this->aprobador->children;
 

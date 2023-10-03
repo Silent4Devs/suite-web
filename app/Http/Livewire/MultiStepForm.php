@@ -2,23 +2,24 @@
 
 namespace App\Http\Livewire;
 
-use App\Mail\RH\Evaluaciones\NotificacionEvaluador;
+use Carbon\Carbon;
 use App\Models\Area;
+use App\Models\User;
+use Livewire\Component;
 use App\Models\Empleado;
-use App\Models\RH\Competencia;
+use App\Models\RH\Objetivo;
+use Livewire\WithPagination;
 use App\Models\RH\Evaluacion;
-use App\Models\RH\EvaluacionCompetencia;
+use App\Models\RH\Competencia;
+use App\Models\RH\GruposEvaluado;
+use App\Models\RH\TipoCompetencia;
+use App\Models\RH\EvaluadoEvaluador;
+use App\Models\RH\ObjetivoRespuesta;
+use Illuminate\Support\Facades\Mail;
 use App\Models\RH\EvaluacionObjetivo;
 use App\Models\RH\EvaluacionRepuesta;
-use App\Models\RH\EvaluadoEvaluador;
-use App\Models\RH\GruposEvaluado;
-use App\Models\RH\Objetivo;
-use App\Models\RH\ObjetivoRespuesta;
-use App\Models\RH\TipoCompetencia;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
-use Livewire\Component;
-use Livewire\WithPagination;
+use App\Models\RH\EvaluacionCompetencia;
+use App\Mail\RH\Evaluaciones\NotificacionEvaluador;
 
 class MultiStepForm extends Component
 {
@@ -469,7 +470,7 @@ class MultiStepForm extends Component
             'descripcion' => $descripcion,
             'estatus' => $estatus,
             'evaluados_objetivo' => $evaluados_objetivo,
-            'autor_id' => auth()->user()->empleado->id,
+            'autor_id' => User::getCurrentUser()->empleado->id,
             'autoevaluacion' => $autoevaluacion,
             'evaluado_por_jefe' => $evaluado_por_jefe,
             'evaluado_por_equipo_a_cargo' => $evaluado_por_equipo_a_cargo,

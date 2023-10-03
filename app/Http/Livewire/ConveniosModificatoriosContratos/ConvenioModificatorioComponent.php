@@ -2,17 +2,18 @@
 
 namespace App\Http\Livewire\ConveniosModificatoriosContratos;
 
+use Carbon\Carbon;
+use App\Models\User;
+use Livewire\Component;
+use App\Models\Organizacion;
+use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use App\Functions\FormatearFecha;
+use Illuminate\Support\Facades\Storage;
 use App\Models\ContractManager\Contrato;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\ContractManager\ConveniosModificatorios;
 use App\Models\ContractManager\ConveniosModificatoriosFile;
-use App\Models\Organizacion;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Component;
-use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 
 class ConvenioModificatorioComponent extends Component
 {
@@ -98,8 +99,8 @@ class ConvenioModificatorioComponent extends Component
             'no_convenio' => $this->no_convenio,
             'fecha' => $fecha_formateada,
             'descripcion' => $this->descripcion,
-            'created_by' => auth()->user()->empleado->id,
-            'updated_by' => auth()->user()->empleado->id,
+            'created_by' => User::getCurrentUser()->empleado->id,
+            'updated_by' => User::getCurrentUser()->empleado->id,
         ]);
 
         $convenioFile = ConveniosModificatoriosFile::create([
