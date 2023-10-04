@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->composer('*', function ($view) {
-            $version_historico = VersionesIso::first();
+            $version_historico = VersionesIso::getFirst();
             $version_iso = $version_historico->version_historico;
             $view->with('version_iso', $version_iso);
         });
