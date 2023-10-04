@@ -16,7 +16,7 @@ class VersionIso2022
      */
     public function handle(Request $request, Closure $next)
     {
-        $version_iso = VersionesIso::first();
+        $version_iso = VersionesIso::getFirst();
         $version_iso = $version_iso->version_historico;
 
         if ($version_iso === false) {
