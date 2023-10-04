@@ -17,7 +17,12 @@ class CourseAudiences extends Component
     public $name;
 
     protected $rules = [
-        'audience.name' => 'required',
+        'audience.name' => 'required|max:255',
+    ];
+
+    protected $messages = [
+        'audience.name.required' => 'El campo nombre es obligatorio',
+        'audience.name.max' => 'El campo nombre es obligatorio'
     ];
 
     public function mount($course)
@@ -34,7 +39,10 @@ class CourseAudiences extends Component
     public function store()
     {
         $this->validate([
-            'name' => 'required',
+            'name' => 'required|max:255',
+        ], [
+            'name.required' => 'El campo nombre es obligatorio',
+            'name.max' => 'El campo nombre no debe ser mayor a 255 caracteres'
         ]);
 
         $this->course->audiences()->create([

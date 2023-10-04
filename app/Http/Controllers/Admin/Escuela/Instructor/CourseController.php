@@ -48,9 +48,9 @@ class CourseController extends Controller
     {
         $request->validate(
             [
-                'title' => 'required',
-                'slug' => 'required|unique:courses',
-                'subtitle' => 'required',
+                'title' => 'required|string|max:255',
+                'slug' => 'required|unique:courses|string|max:255',
+                'subtitle' => 'required|string|max:255',
                 'description' => 'required',
                 'category_id' => 'required',
                 'level_id' => 'required',
@@ -124,9 +124,9 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $request->validate([
-            'title' => 'required',
-            'slug' => ['required', "unique:courses,slug,$course->id,id"],
-            'subtitle' => 'required',
+            'title' => 'required|string|max:255',
+            'slug' => ['required', "unique:courses,slug,$course->id,id", "max:255", "string"],
+            'subtitle' => 'required|string|max:255',
             'description' => 'required',
             'category_id' => 'required',
             'level_id' => 'required',
@@ -146,7 +146,7 @@ class CourseController extends Controller
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
-            $url = Storage::put('cursos', $image);
+            $url = Storage::put('public/cursos', $image);
 
             if ($course->image) {
                 Storage::delete($course->image->url);

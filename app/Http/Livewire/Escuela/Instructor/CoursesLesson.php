@@ -27,7 +27,7 @@ class CoursesLesson extends Component
     protected $rules = [
         'lesson.name' => 'required',
         'lesson.platform_id' => 'required',
-        'lesson.url' => ['required', 'regex:%^ (?:https?://)? (?:www\.)? (?: youtu\.be/ | youtube\.com (?: /embed/ | /v/ | /watch\?v= ) ) ([\w-]{10,12}) $%x'],
+        'lesson.url' => ['regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
     ];
 
     public function mount(Section $section)
@@ -47,7 +47,7 @@ class CoursesLesson extends Component
         $rules = [
             'name' => 'required',
             'platform_id' => 'required',
-            'url' => ['required', 'regex:%^ (?:https?://)? (?:www\.)? (?: youtu\.be/ | youtube\.com (?: /embed/ | /v/ | /watch\?v= ) ) ([\w-]{10,12}) $%x'],
+            'url' => ['required', 'regex:%^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/watch\?v=|/embed/|/v/))([\w-]+)(?:\S*)$%x'],
             'file' => 'required',
         ];
 
