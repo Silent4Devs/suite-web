@@ -48,10 +48,10 @@ class AppServiceProvider extends ServiceProvider
             return new CustomSessionHandler($files, $path, $minutes);
         });
 
-        view()->composer('*', function ($view) {
-            $version_historico = VersionesIso::getFirst();
-            $version_iso = $version_historico->version_historico;
-            $view->with('version_iso', $version_iso);
-        });
+        // view()->composer('*', function ($view) {
+        //     $version_historico = VersionesIso::getFirst();
+        //     $version_iso = $version_historico->version_historico;
+        //     $view->with('version_iso', $version_iso);
+        // });
     }
 }
