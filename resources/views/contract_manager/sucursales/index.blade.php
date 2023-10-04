@@ -8,11 +8,10 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
-
     </style>
-     @include('flash::message')
-     @include('partials.flashMessages')
-    <h5 class="col-12 titulo_general_funcion">Razónes Sociales</h5>
+    @include('flash::message')
+    @include('partials.flashMessages')
+    <h5 class="col-12 titulo_general_funcion">Razones Sociales</h5>
     <div class="mt-5 card">
 
         <div class="card-body datatable-fix">
@@ -42,7 +41,7 @@
                             RFC
                         </th>
                         <th style="vertical-align: top">
-                            My Logo
+                            Logotipo
                         </th>
                         <th style="vertical-align: top">
                             Opciones
@@ -124,8 +123,8 @@
                 }
 
             ];
-                let btnAgregar = {
-                    @can('katbol_sucursales_agregar')
+            let btnAgregar = {
+                @can('katbol_sucursales_agregar')
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar razon social',
                     url: "{{ route('contract_manager.sucursales.create') }}",
@@ -136,11 +135,11 @@
                         } = config;
                         window.location.href = url;
                     }
-                    @endcan
-                };
+                @endcan
+            };
 
-                let btnArchivar = {
-                    @can('katbol_sucursales_archivar')
+            let btnArchivar = {
+                @can('katbol_sucursales_archivar')
                     text: '<i class="fa-solid fa-box-archive"></i> Archivados',
                     titleAttr: 'Archivar sucursales',
                     url: "{{ route('contract_manager.sucursales.view_archivados') }}",
@@ -151,12 +150,12 @@
                         } = config;
                         window.location.href = url;
                     },
-                    @endcan
+                @endcan
             };
 
-                dtButtons.push(btnAgregar, btnArchivar);
-                let archivoButton = {
-                    @can('katbol_sucursales_archivar')
+            dtButtons.push(btnAgregar, btnArchivar);
+            let archivoButton = {
+                @can('katbol_sucursales_archivar')
                     text: 'Archivar Registro',
                     url: "{{ route('contract_manager.sucursales.archivar', ['id' => 1]) }}",
                     className: 'btn-danger',
@@ -190,8 +189,8 @@
                                 })
                         }
                     }
-                    @endcan
-                }
+                @endcan
+            }
             let dtOverrideGlobals = {
                 buttons: dtButtons,
                 processing: true,
@@ -205,8 +204,7 @@
                         _token: _token
                     }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'id',
                         name: 'id'
                     },
