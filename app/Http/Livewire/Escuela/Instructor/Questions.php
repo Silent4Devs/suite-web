@@ -27,7 +27,6 @@ class Questions extends Component
         'renderQuestion' => 'render',
     ];
 
-
     protected function rules()
     {
         return [
@@ -135,7 +134,6 @@ class Questions extends Component
         $this->open = false;
     }
 
-
     // public function destroy($question_id){
 
     //     $question=Question::find($question_id);
@@ -185,7 +183,7 @@ class Questions extends Component
 
     public function Destroy($answerDelete)
     {
-        $answer = Answer::find($answerDelete["id"]);
+        $answer = Answer::find($answerDelete['id']);
         if ($answer) {
             $answer->delete();
         }
