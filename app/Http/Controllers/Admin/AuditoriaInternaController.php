@@ -15,6 +15,7 @@ use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -216,9 +217,24 @@ class AuditoriaInternaController extends Controller
         return view('admin.auditoriaInternas.createReporte');
     }
 
-    public function storeReporte($id)
+    public function storeReporte($auditoriaid, Request $request)
     {
-        dd($id);
+        $signature = $request->input('signature');
+
+        $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
+        // dd($auditoriaid, auth()->user()->empleado->id, $image);
+
+        if (!Storage::exists('public/storage/auditorias-internas/auditoria/' . $auditoriaid)) {
+            Storage::makeDirectory('public/storage/auditorias-internas/auditoria/' . $auditoriaid);
+            Storage::copy('public/storage/auditorias-internas/.gitignore', 'public/auditorias-internas/auditoria' . $auditoriaid);
+        }
+
+        $filename = 'audit' . $auditoriaid . 'firmaempleado' . auth()->user()->empleado->id . 'png';
+
+        $path = 'public/storage/auditorias-internas/auditoria/' . $auditoriaid . '/' . $filename;
+        file_put_contents($path, $image);
+        // Now, $path contains the location of the saved signature
+        dd("YA quedo");
         return view('admin.auditoriaInternas.createReporte');
     }
 }

@@ -310,22 +310,23 @@
     </div>
 
     <div class="card card-body">
-        <form method="POST" action="{{ route('admin.auditoria-internas.storeReporteIndividual', $id_auditoria) }}">
-            <div class="row" style="justify-content: center; display: flex;">
-                <h3>Firma de Revisión</h3>
-            </div>
-            <div class="row" style="justify-content: center; display: flex;">
-                <button id="clear" class="btn btn-link">Limpiar Firma</button>
-            </div>
-            <div class="row" style="justify-content: center; display: flex;">
-                <canvas id="signature-pad" class="signature-pad" width="600" height="250"
-                    style="border: 1px solid black;"></canvas>
+        {{-- <form method="POST" action="{{ route('admin.auditoria-internas.storeReporteIndividual', $id_auditoria) }}"> --}}
+        <div class="row" style="justify-content: center; display: flex;">
+            <h3>Firma de Revisión</h3>
+        </div>
+        <div class="row" style="justify-content: center; display: flex;">
+            <button id="clear" class="btn btn-link">Limpiar Firma</button>
+        </div>
+        <div class="row" style="justify-content: center; display: flex;">
+            <canvas id="signature-pad" class="signature-pad" width="600" height="250"
+                style="border: 1px solid black;"></canvas>
 
-            </div>
-            <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-                <button id="save" type="submit" class="btn btn-outline-primary">Confirmar</button>
-            </div>
-        </form>
+        </div>
+        <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+            <button id="save" type="submit" class="btn btn-outline-primary"
+                data-auditoria="{{ $id_auditoria }}">Confirmar</button>
+        </div>
+        {{-- </form> --}}
     </div>
 </div>
 @section('scripts')
@@ -458,30 +459,32 @@
                 signaturePad.clear();
             });
 
-            // document.getElementById('save').addEventListener('click', function() {
-            //     if (signaturePad.isEmpty()) {
-            //         alert('Please provide a signature first.');
-            //     } else {
-            //         var dataURL = signaturePad.toDataURL();
-            //         var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
-            //             'content');
+            document.getElementById('save').addEventListener('click', function() {
+                if (signaturePad.isEmpty()) {
+                    alert('Please provide a signature first.');
+                } else {
+                    var dataURL = signaturePad.toDataURL();
+                    var audId = this.getAttribute('data-auditoria');
 
-            //         fetch('/signature/save', {
-            //                 method: 'POST',
-            //                 headers: {
-            //                     'Content-Type': 'application/json',
-            //                     'X-CSRF-Token': csrfToken,
-            //                 },
-            //                 body: JSON.stringify({
-            //                     signature: dataURL
-            //                 }),
-            //             })
-            //             .then(response => response.json())
-            //             .then(data => {
-            //                 alert('Signature saved successfully.');
-            //             });
-            //     }
-            // });
+                    fetch('{{ route('admin.auditoria-internas.storeReporteIndividual', ['auditoriaInterna' => ':auditoriaInterna']) }}'
+                            .replace(':auditoriaInterna',
+                                audId), {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-Token': '{{ csrf_token() }}',
+                                },
+                                body: JSON.stringify({
+                                    signature: dataURL
+                                }),
+                            })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert('Signature saved successfully.');
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+            });
         });
     </script>
 @endsection
