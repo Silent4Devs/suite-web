@@ -37,18 +37,18 @@ class MinutasaltadireccionController extends Controller
     {
         abort_if(Gate::denies('revision_por_direccion_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
-            $query = Minutasaltadireccion::with(['responsable', 'team', 'participantes', 'planes'])->orderByDesc('id')->get();
+            $query = Minutasaltadireccion::with(['responsable', 'participantes', 'planes'])->orderByDesc('id')->get();
 
             return datatables()->of($query)->toJson();
         }
 
         $users = User::getAll();
-        $teams = Team::get();
+        //$teams = Team::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
-        return view('admin.minutasaltadireccions.index', compact('users', 'teams', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
+        return view('admin.minutasaltadireccions.index', compact('users', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
     public function create()

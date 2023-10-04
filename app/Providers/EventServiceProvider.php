@@ -57,6 +57,7 @@ use App\Models\TimesheetProyectoEmpleado;
 use App\Models\TimesheetTarea;
 use App\Models\Tipoactivo;
 use App\Models\User;
+use App\Models\VersionesIso;
 use App\Observers\AccionCorrectivaObserver;
 use App\Observers\ActivoConfidencialObserver;
 use App\Observers\ActivosObserver;
@@ -101,6 +102,7 @@ use App\Observers\TipoActivoObserver;
 use App\Observers\TipoCompetenciaObserver;
 use App\Observers\tipoObjetivoObserver;
 use App\Observers\UsersObserver;
+use App\Observers\VersionesIsoObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -191,5 +193,6 @@ class EventServiceProvider extends ServiceProvider
         TimesheetProyectoEmpleado::observe(TimesheetProyectoEmpleadoObserver::class);
         Lesson::observe(LessonObserver::class);
         Section::observe(SectionObserver::class);
+        VersionesIso::observe(VersionesIsoObserver::class);
     }
 }
