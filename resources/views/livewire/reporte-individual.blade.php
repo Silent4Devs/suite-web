@@ -3,23 +3,38 @@
 
     <div class="container-fluid mb-4">
         <div class="row justify-content-center row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            @foreach ($cuentas as $cuenta)
-                <div class="col mt-4">
-                    <div class="card card-body" style="background-color: #e0f4b8">
-                        <h5>{{ $cuenta->clasificacion->nombre_clasificaciones }}</h5><br>
-                        <h6>{{ $cuenta->count }}</h6>
+            @if ($cuentas->isEmpty())
+                @foreach ($clasificaciones as $claf)
+                    <div class="col mt-4">
+                        <div class="card card-body" style="background-color: #a8e0fa">
+                            <h5>{{ $claf->nombre_clasificaciones }}</h5><br>
+                            <h6>0</h6>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            @else
+                @foreach ($cuentas as $cuenta)
+                    <div class="col mt-4">
+                        <div class="card card-body" style="background-color: #a8e0fa">
+                            <h5>{{ $cuenta->clasificacion->nombre_clasificaciones }}</h5><br>
+                            <h6>{{ $cuenta->count }}</h6>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
+
     <div class="card mt-4">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-4 col-md-3 col-lg-4">
                     <h6>Datos Generales*</h6>
                     <label class="form-label select-label">Clausulas</label>
-                    <select id="textSelect" class="form-control select">
+                    <select name="c_id" id="c_id"
+                        class="form-control select {{ $errors->has('c_id') ? 'is-invalid' : '' }}"
+                        wire:model.defer="c_id">
+                        <option value="">Seleccione una Clausula</option>
                         @foreach ($clausulas as $claus)
                             <option value="{{ $claus->id }}">{{ $claus->nombre_clausulas }}</option>
                         @endforeach
@@ -29,18 +44,17 @@
         </div>
     </div>
     {{-- Nothing in the world is as soft and yielding as water. --}}
+    {{-- <a class="btn btn-primary"
+    href="{{ route('admin.auditoria-internas.createReporteIndividual', $id_auditoria) }}">Crear Parte
+    Interesada</a> --}}
+    {{-- <button>Documentar Hallazgo</button> --}}
+    <div class="col-12 mt-4 " style="text-align: end">
+        <button type="button" wire:click.prevent="create" class="btn btn-success">Documentar
+            Hallazgo</button>
+    </div>
     <div class="row">
-        {{-- <a class="btn btn-primary"
-            href="{{ route('admin.auditoria-internas.createReporteIndividual', $id_auditoria) }}">Crear Parte
-            Interesada</a> --}}
-        {{-- <button>Documentar Hallazgo</button> --}}
         <div class="form-group col-md-12">
 
-            <div class="row col-12 ml-5">
-                <div class="mb-3 col-12 mt-4 " style="text-align: end">
-                    <button type="button" wire:click.prevent="create" class="btn btn-success">Agregar</button>
-                </div>
-            </div>
 
             <!-- Modal -->
             <div wire:ignore.self class="modal fade" id="exampleModal" tabindex="-1"
@@ -79,8 +93,8 @@
                                 <div class="form-group col-sm-12">
                                     <label class="required" for="descripcion">
                                         Descripción</label>
-                                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion"
-                                        wire:model.defer="descripcion" required></textarea>
+                                    <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion"
+                                        id="descripcion" wire:model.defer="descripcion" required></textarea>
                                     @if ($errors->has('descripcion'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('descripcion') }}
@@ -258,7 +272,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="min-width:100px;">{{ $data->procesos ? $data->procesos->nombre : 'n/a' }}
+                                <td style="min-width:100px;">
+                                    {{ $data->procesos ? $data->procesos->nombre : 'n/a' }}
                                 </td>
                                 <td style="min-width:100px;">{{ $data->areas ? $data->areas->area : 'n/a' }}</td>
                                 <td style="min-width:100px;">
@@ -295,20 +310,22 @@
     </div>
 
     <div class="card card-body">
-        <div class="row" style="justify-content: center; display: flex;">
-            <h3>Firma de Revisión</h3>
-        </div>
-        <div class="row" style="justify-content: center; display: flex;">
-            <button id="clear" class="btn btn-link">Limpiar Firma</button>
-        </div>
-        <div class="row" style="justify-content: center; display: flex;">
-            <canvas id="signature-pad" class="signature-pad" width="600" height="250"
-                style="border: 1px solid black;"></canvas>
+        <form method="POST" action="{{ route('admin.auditoria-internas.storeReporteIndividual', $id_auditoria) }}">
+            <div class="row" style="justify-content: center; display: flex;">
+                <h3>Firma de Revisión</h3>
+            </div>
+            <div class="row" style="justify-content: center; display: flex;">
+                <button id="clear" class="btn btn-link">Limpiar Firma</button>
+            </div>
+            <div class="row" style="justify-content: center; display: flex;">
+                <canvas id="signature-pad" class="signature-pad" width="600" height="250"
+                    style="border: 1px solid black;"></canvas>
 
-        </div>
-        <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-            <button id="save" class="btn btn-outline-primary">Confirmar</button>
-        </div>
+            </div>
+            <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                <button id="save" type="submit" class="btn btn-outline-primary">Confirmar</button>
+            </div>
+        </form>
     </div>
 </div>
 @section('scripts')
@@ -441,30 +458,30 @@
                 signaturePad.clear();
             });
 
-            document.getElementById('save').addEventListener('click', function() {
-                if (signaturePad.isEmpty()) {
-                    alert('Please provide a signature first.');
-                } else {
-                    var dataURL = signaturePad.toDataURL();
-                    var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
-                        'content');
+            // document.getElementById('save').addEventListener('click', function() {
+            //     if (signaturePad.isEmpty()) {
+            //         alert('Please provide a signature first.');
+            //     } else {
+            //         var dataURL = signaturePad.toDataURL();
+            //         var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
+            //             'content');
 
-                    fetch('/signature/save', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-Token': csrfToken,
-                            },
-                            body: JSON.stringify({
-                                signature: dataURL
-                            }),
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            alert('Signature saved successfully.');
-                        });
-                }
-            });
+            //         fetch('/signature/save', {
+            //                 method: 'POST',
+            //                 headers: {
+            //                     'Content-Type': 'application/json',
+            //                     'X-CSRF-Token': csrfToken,
+            //                 },
+            //                 body: JSON.stringify({
+            //                     signature: dataURL
+            //                 }),
+            //             })
+            //             .then(response => response.json())
+            //             .then(data => {
+            //                 alert('Signature saved successfully.');
+            //             });
+            //     }
+            // });
         });
     </script>
 @endsection

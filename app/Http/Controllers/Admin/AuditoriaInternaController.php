@@ -215,4 +215,10 @@ class AuditoriaInternaController extends Controller
         // dd($id);
         return view('admin.auditoriaInternas.createReporte');
     }
+
+    public function storeReporte($id)
+    {
+        dd($id);
+        return view('admin.auditoriaInternas.createReporte');
+    }
 }
