@@ -1283,7 +1283,7 @@ class InicioUsuarioController extends Controller
             }
         }
 
-        $ver = VersionesIso::first();
+        $ver = VersionesIso::getFirst();
         $ver->update([
             'version_historico' => $valor,
         ]);

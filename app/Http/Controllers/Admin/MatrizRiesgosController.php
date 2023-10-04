@@ -115,7 +115,8 @@ class MatrizRiesgosController extends Controller
     {
         abort_if(Gate::denies('iso_27001_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $ver = VersionesIso::select('version_historico')->first();
+        //$ver = VersionesIso::select('version_historico')->first();
+        $ver = VersionesIso::getFirst();
         if ($ver->version_historico === true) {
             $version_historico = 'true';
         } elseif ($ver->version_historico === false) {
@@ -827,7 +828,7 @@ class MatrizRiesgosController extends Controller
         $amenazas = Amenaza::get();
         $vulnerabilidades = Vulnerabilidad::get();
 
-        $ver = VersionesIso::first();
+        $ver = VersionesIso::getFirst();
         if ($ver->version_historico === false) {
             $version_historico = 'false';
         } elseif ($ver->version_historico === true) {
