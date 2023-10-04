@@ -8,6 +8,7 @@ use App\Models\Proceso;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class ReporteIndividual extends Component
 {
@@ -18,6 +19,8 @@ class ReporteIndividual extends Component
     public $clasificaciones;
     public $clausulas;
     public $id_auditoria;
+
+    public $c_id;
 
     public $descripcion;
     public $proceso;
@@ -65,6 +68,7 @@ class ReporteIndividual extends Component
             'incumplimiento_requisito' => 'required',
             'descripcion' => 'required',
             'clasificacion_id' => 'required',
+            'c_id' => 'required',
         ]);
     }
 
@@ -77,7 +81,7 @@ class ReporteIndividual extends Component
     public function save()
     {
 
-        // dd("si llega");
+        // dd($this->c_id);
         $this->validarHallazgos();
         $this->proceso = $this->proceso == '' ? null : $this->proceso;
         // $this->area = $this->area == '' ? null : $this->area;
@@ -87,6 +91,7 @@ class ReporteIndividual extends Component
             'area_id' => auth()->user()->empleado->area_id,
             'incumplimiento_requisito' => $this->incumplimiento_requisito,
             'clasificacion_id' => $this->clasificacion_id,
+            'clausula_id' => $this->c_id,
             'descripcion' => $this->descripcion,
             'auditoria_internas_id' => $this->id_auditoria,
             'no_tipo' => $this->no_tipo,

@@ -52,7 +52,6 @@
                             Opciones
                         </th>
                     </tr>
-
                 </thead>
             </table>
         </div>
