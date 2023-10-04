@@ -13,11 +13,13 @@ class SucursalesTableSeeder extends Seeder
      */
     public function run()
     {
+
+
         \DB::table('sucursales')->delete();
 
-        \DB::table('sucursales')->insert([
-            0 => [
-                'id' => 1,
+        \DB::table('sucursales')->insert(array(
+            0 =>
+            array(
                 'clave' => '1',
                 'descripcion' => 'SILENT4BUSINESS',
                 'empresa' => 'SILENT4BUSINESS, S.A. DE C.V.',
@@ -31,9 +33,9 @@ class SucursalesTableSeeder extends Seeder
                 'direccion' => 'Av. Insurgentes Sur 2453-piso 6, Tizapán San Ángel, Tizapán, Álvaro Obregón, 01090 Ciudad de México, CDMX',
                 'rfc' => 'SIL160727HV7',
                 'mylogo' => '64bab0a1488af.png',
-            ],
-            1 => [
-                'id' => 2,
+            ),
+            1 =>
+            array(
                 'clave' => '3',
                 'descripcion' => 'SILENT4CLOUD',
                 'empresa' => 'SILENT4CLOUD, S.A. DE C.V.',
@@ -47,9 +49,9 @@ class SucursalesTableSeeder extends Seeder
                 'direccion' => 'Av. Insurgentes Sur 2453-piso 6, Tizapán San Ángel, Tizapán, Álvaro Obregón, 01090 Ciudad de México, CDMX',
                 'rfc' => 'SIL171219UW8',
                 'mylogo' => '64bab0877f72d.png',
-            ],
-            2 => [
-                'id' => 3,
+            ),
+            2 =>
+            array(
                 'clave' => '5',
                 'descripcion' => 'INTELEKTICS',
                 'empresa' => 'INTELEKTICS, S.A. DE C.V.',
@@ -63,7 +65,7 @@ class SucursalesTableSeeder extends Seeder
                 'direccion' => 'torre murano',
                 'rfc' => 'INTELEKTICS456789',
                 'mylogo' => '64bab0bc327bd.png',
-            ],
-        ]);
+            ),
+        ));
     }
 }

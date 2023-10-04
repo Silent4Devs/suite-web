@@ -9,6 +9,16 @@
             @csrf
           <div class="row">
             <div class="form-group col-md-6 col-sm-6">
+                <label class="required" for="clave">&nbsp;&nbsp;Clave del Registro</label>
+                <input   class="form-control  {{ $errors->has('clave') ? 'is-invalid' : '' }}" type="number" name="clave" id="clave" value="{{ old('clave', $proveedores->id) }}" required>
+                @if($errors->has('clave'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('clave') }}
+                    </div>
+                @endif
+                <span class="help-block"></span>
+            </div>
+            <div class="form-group col-md-6 col-sm-6">
                 <label class="required" for="nombre">&nbsp;&nbsp;Nombre</label>
                 <input  value="{{ old("nombre", $proveedores->nombre) }}" class="form-control  {{ $errors->has('nombre') ? 'is-invalid' : '' }}" type="text" name="nombre" id="nombre" value="{{ old('nombre') }}" required>
                 @if($errors->has('nombre'))

@@ -9,11 +9,11 @@
             @csrf
             <div class="row">
                 <div class="form-group col-md-12 col-sm-12">
-                    <label class="required" for="id">&nbsp;&nbsp;Clave</label>
-                    <input class="form-control {{ $errors->has('id') ? 'is-invalid' : '' }}" type="number" name="id" id="id" value="{{ old("id", $productos->id) }}"  required>
-                    @if($errors->has('id'))
+                    <label class="required" for="clave">&nbsp;&nbsp;Clave</label>
+                    <input class="form-control {{ $errors->has('clave') ? 'is-invalid' : '' }}" type="number" name="clave" id="clave" value="{{ old("clave", $productos->clave) }}"  required>
+                    @if($errors->has('clave'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('id') }}
+                            {{ $errors->first('clave') }}
                         </div>
                     @endif
                     <span class="help-block"></span>

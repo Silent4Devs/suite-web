@@ -56,17 +56,8 @@ class ProveedoresOController extends Controller
      */
     public function store(Request $request)
     {
-        $ids = ProveedorOC::pluck('id');
-
-        foreach ($ids as $id) {
-            $string1 = strval($id);
-            if ($string1 === $request->id) {
-                return view('contract_manager.proveedores.error');
-            }
-        }
 
         $proveedores = new ProveedorOC();
-        $proveedores->id = $request->id;
         $proveedores->nombre = $request->nombre;
         $proveedores->razon_social = $request->razon_social;
         $proveedores->rfc = $request->rfc;

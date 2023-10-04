@@ -13,11 +13,13 @@ class CedulaCumplimientoTableSeeder extends Seeder
      */
     public function run()
     {
+
+
         \DB::table('cedula_cumplimiento')->delete();
 
-        \DB::table('cedula_cumplimiento')->insert([
-            0 => [
-                'id' => 1,
+        \DB::table('cedula_cumplimiento')->insert(array(
+            0 =>
+            array(
                 'contrato_id' => 1,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -26,9 +28,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            1 => [
-                'id' => 2,
+            ),
+            1 =>
+            array(
                 'contrato_id' => 2,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -37,9 +39,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            2 => [
-                'id' => 3,
+            ),
+            2 =>
+            array(
                 'contrato_id' => 3,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -48,9 +50,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            3 => [
-                'id' => 4,
+            ),
+            3 =>
+            array(
                 'contrato_id' => 4,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -59,9 +61,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            4 => [
-                'id' => 5,
+            ),
+            4 =>
+            array(
                 'contrato_id' => 8,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -70,9 +72,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            5 => [
-                'id' => 6,
+            ),
+            5 =>
+            array(
                 'contrato_id' => 9,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -81,9 +83,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            6 => [
-                'id' => 7,
+            ),
+            6 =>
+            array(
                 'contrato_id' => 10,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -92,9 +94,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            7 => [
-                'id' => 8,
+            ),
+            7 =>
+            array(
                 'contrato_id' => 11,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -103,9 +105,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            8 => [
-                'id' => 9,
+            ),
+            8 =>
+            array(
                 'contrato_id' => 12,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -114,9 +116,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            9 => [
-                'id' => 10,
+            ),
+            9 =>
+            array(
                 'contrato_id' => 13,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -125,9 +127,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            10 => [
-                'id' => 11,
+            ),
+            10 =>
+            array(
                 'contrato_id' => 14,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -136,9 +138,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            11 => [
-                'id' => 12,
+            ),
+            11 =>
+            array(
                 'contrato_id' => 15,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -147,9 +149,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            12 => [
-                'id' => 13,
+            ),
+            12 =>
+            array(
                 'contrato_id' => 16,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -158,9 +160,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            13 => [
-                'id' => 14,
+            ),
+            13 =>
+            array(
                 'contrato_id' => 17,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -169,9 +171,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            14 => [
-                'id' => 15,
+            ),
+            14 =>
+            array(
                 'contrato_id' => 18,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -180,9 +182,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            15 => [
-                'id' => 16,
+            ),
+            15 =>
+            array(
                 'contrato_id' => 19,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -191,9 +193,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            16 => [
-                'id' => 17,
+            ),
+            16 =>
+            array(
                 'contrato_id' => 20,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -202,9 +204,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            17 => [
-                'id' => 18,
+            ),
+            17 =>
+            array(
                 'contrato_id' => 21,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -213,9 +215,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            18 => [
-                'id' => 19,
+            ),
+            18 =>
+            array(
                 'contrato_id' => 23,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -224,9 +226,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            19 => [
-                'id' => 20,
+            ),
+            19 =>
+            array(
                 'contrato_id' => 25,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -235,9 +237,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            20 => [
-                'id' => 21,
+            ),
+            20 =>
+            array(
                 'contrato_id' => 26,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -246,9 +248,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            21 => [
-                'id' => 22,
+            ),
+            21 =>
+            array(
                 'contrato_id' => 27,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -257,9 +259,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            22 => [
-                'id' => 23,
+            ),
+            22 =>
+            array(
                 'contrato_id' => 28,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -268,9 +270,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            23 => [
-                'id' => 24,
+            ),
+            23 =>
+            array(
                 'contrato_id' => 29,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -279,9 +281,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            24 => [
-                'id' => 25,
+            ),
+            24 =>
+            array(
                 'contrato_id' => 30,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -290,9 +292,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            25 => [
-                'id' => 26,
+            ),
+            25 =>
+            array(
                 'contrato_id' => 31,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -301,9 +303,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            26 => [
-                'id' => 27,
+            ),
+            26 =>
+            array(
                 'contrato_id' => 32,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -312,9 +314,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            27 => [
-                'id' => 28,
+            ),
+            27 =>
+            array(
                 'contrato_id' => 33,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -323,9 +325,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            28 => [
-                'id' => 29,
+            ),
+            28 =>
+            array(
                 'contrato_id' => 34,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -334,9 +336,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            29 => [
-                'id' => 30,
+            ),
+            29 =>
+            array(
                 'contrato_id' => 35,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -345,9 +347,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            30 => [
-                'id' => 31,
+            ),
+            30 =>
+            array(
                 'contrato_id' => 36,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -356,9 +358,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            31 => [
-                'id' => 32,
+            ),
+            31 =>
+            array(
                 'contrato_id' => 37,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -367,9 +369,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            32 => [
-                'id' => 33,
+            ),
+            32 =>
+            array(
                 'contrato_id' => 38,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -378,9 +380,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            33 => [
-                'id' => 34,
+            ),
+            33 =>
+            array(
                 'contrato_id' => 39,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -389,9 +391,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            34 => [
-                'id' => 35,
+            ),
+            34 =>
+            array(
                 'contrato_id' => 40,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -400,9 +402,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            35 => [
-                'id' => 36,
+            ),
+            35 =>
+            array(
                 'contrato_id' => 41,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -411,9 +413,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            36 => [
-                'id' => 37,
+            ),
+            36 =>
+            array(
                 'contrato_id' => 42,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -422,9 +424,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            37 => [
-                'id' => 38,
+            ),
+            37 =>
+            array(
                 'contrato_id' => 43,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -433,9 +435,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            38 => [
-                'id' => 39,
+            ),
+            38 =>
+            array(
                 'contrato_id' => 47,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -444,9 +446,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            39 => [
-                'id' => 40,
+            ),
+            39 =>
+            array(
                 'contrato_id' => 48,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -455,9 +457,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            40 => [
-                'id' => 41,
+            ),
+            40 =>
+            array(
                 'contrato_id' => 49,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -466,9 +468,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            41 => [
-                'id' => 42,
+            ),
+            41 =>
+            array(
                 'contrato_id' => 50,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -477,9 +479,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            42 => [
-                'id' => 43,
+            ),
+            42 =>
+            array(
                 'contrato_id' => 51,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -488,9 +490,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            43 => [
-                'id' => 44,
+            ),
+            43 =>
+            array(
                 'contrato_id' => 52,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -499,9 +501,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            44 => [
-                'id' => 45,
+            ),
+            44 =>
+            array(
                 'contrato_id' => 53,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -510,9 +512,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            45 => [
-                'id' => 46,
+            ),
+            45 =>
+            array(
                 'contrato_id' => 54,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -521,9 +523,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            46 => [
-                'id' => 47,
+            ),
+            46 =>
+            array(
                 'contrato_id' => 55,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -532,9 +534,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            47 => [
-                'id' => 48,
+            ),
+            47 =>
+            array(
                 'contrato_id' => 56,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -543,9 +545,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            48 => [
-                'id' => 49,
+            ),
+            48 =>
+            array(
                 'contrato_id' => 57,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -554,9 +556,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            49 => [
-                'id' => 50,
+            ),
+            49 =>
+            array(
                 'contrato_id' => 58,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -565,9 +567,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            50 => [
-                'id' => 51,
+            ),
+            50 =>
+            array(
                 'contrato_id' => 59,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -576,9 +578,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            51 => [
-                'id' => 52,
+            ),
+            51 =>
+            array(
                 'contrato_id' => 60,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -587,9 +589,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            52 => [
-                'id' => 53,
+            ),
+            52 =>
+            array(
                 'contrato_id' => 61,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -598,9 +600,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            53 => [
-                'id' => 54,
+            ),
+            53 =>
+            array(
                 'contrato_id' => 62,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -609,9 +611,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            54 => [
-                'id' => 55,
+            ),
+            54 =>
+            array(
                 'contrato_id' => 63,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -620,9 +622,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            55 => [
-                'id' => 56,
+            ),
+            55 =>
+            array(
                 'contrato_id' => 64,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -631,9 +633,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            56 => [
-                'id' => 57,
+            ),
+            56 =>
+            array(
                 'contrato_id' => 65,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -642,9 +644,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            57 => [
-                'id' => 58,
+            ),
+            57 =>
+            array(
                 'contrato_id' => 66,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -653,9 +655,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            58 => [
-                'id' => 59,
+            ),
+            58 =>
+            array(
                 'contrato_id' => 67,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -664,9 +666,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            59 => [
-                'id' => 60,
+            ),
+            59 =>
+            array(
                 'contrato_id' => 68,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -675,9 +677,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            60 => [
-                'id' => 61,
+            ),
+            60 =>
+            array(
                 'contrato_id' => 69,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -686,9 +688,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            61 => [
-                'id' => 62,
+            ),
+            61 =>
+            array(
                 'contrato_id' => 70,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -697,9 +699,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            62 => [
-                'id' => 63,
+            ),
+            62 =>
+            array(
                 'contrato_id' => 71,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -708,9 +710,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            63 => [
-                'id' => 64,
+            ),
+            63 =>
+            array(
                 'contrato_id' => 72,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -719,9 +721,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            64 => [
-                'id' => 65,
+            ),
+            64 =>
+            array(
                 'contrato_id' => 73,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -730,9 +732,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            65 => [
-                'id' => 66,
+            ),
+            65 =>
+            array(
                 'contrato_id' => 74,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -741,9 +743,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            66 => [
-                'id' => 67,
+            ),
+            66 =>
+            array(
                 'contrato_id' => 75,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -752,9 +754,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            67 => [
-                'id' => 68,
+            ),
+            67 =>
+            array(
                 'contrato_id' => 76,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -763,9 +765,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            68 => [
-                'id' => 69,
+            ),
+            68 =>
+            array(
                 'contrato_id' => 77,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -774,9 +776,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            69 => [
-                'id' => 70,
+            ),
+            69 =>
+            array(
                 'contrato_id' => 78,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -785,9 +787,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            70 => [
-                'id' => 71,
+            ),
+            70 =>
+            array(
                 'contrato_id' => 79,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -796,9 +798,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            71 => [
-                'id' => 72,
+            ),
+            71 =>
+            array(
                 'contrato_id' => 80,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -807,9 +809,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            72 => [
-                'id' => 73,
+            ),
+            72 =>
+            array(
                 'contrato_id' => 81,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -818,9 +820,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            73 => [
-                'id' => 74,
+            ),
+            73 =>
+            array(
                 'contrato_id' => 82,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -829,9 +831,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            74 => [
-                'id' => 75,
+            ),
+            74 =>
+            array(
                 'contrato_id' => 83,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -840,9 +842,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            75 => [
-                'id' => 76,
+            ),
+            75 =>
+            array(
                 'contrato_id' => 85,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -851,9 +853,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            76 => [
-                'id' => 77,
+            ),
+            76 =>
+            array(
                 'contrato_id' => 84,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -862,9 +864,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            77 => [
-                'id' => 78,
+            ),
+            77 =>
+            array(
                 'contrato_id' => 86,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -873,9 +875,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            78 => [
-                'id' => 79,
+            ),
+            78 =>
+            array(
                 'contrato_id' => 87,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -884,9 +886,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            79 => [
-                'id' => 80,
+            ),
+            79 =>
+            array(
                 'contrato_id' => 88,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -895,9 +897,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            80 => [
-                'id' => 81,
+            ),
+            80 =>
+            array(
                 'contrato_id' => 89,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -906,9 +908,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            81 => [
-                'id' => 82,
+            ),
+            81 =>
+            array(
                 'contrato_id' => 90,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -917,9 +919,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            82 => [
-                'id' => 83,
+            ),
+            82 =>
+            array(
                 'contrato_id' => 91,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -928,9 +930,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            83 => [
-                'id' => 84,
+            ),
+            83 =>
+            array(
                 'contrato_id' => 92,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -939,9 +941,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            84 => [
-                'id' => 85,
+            ),
+            84 =>
+            array(
                 'contrato_id' => 93,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -950,9 +952,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            85 => [
-                'id' => 86,
+            ),
+            85 =>
+            array(
                 'contrato_id' => 94,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -961,9 +963,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            86 => [
-                'id' => 87,
+            ),
+            86 =>
+            array(
                 'contrato_id' => 95,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -972,9 +974,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            87 => [
-                'id' => 88,
+            ),
+            87 =>
+            array(
                 'contrato_id' => 96,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -983,9 +985,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            88 => [
-                'id' => 89,
+            ),
+            88 =>
+            array(
                 'contrato_id' => 97,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -994,9 +996,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            89 => [
-                'id' => 90,
+            ),
+            89 =>
+            array(
                 'contrato_id' => 98,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1005,9 +1007,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            90 => [
-                'id' => 91,
+            ),
+            90 =>
+            array(
                 'contrato_id' => 99,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1016,9 +1018,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            91 => [
-                'id' => 92,
+            ),
+            91 =>
+            array(
                 'contrato_id' => 100,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1027,9 +1029,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            92 => [
-                'id' => 93,
+            ),
+            92 =>
+            array(
                 'contrato_id' => 101,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1038,9 +1040,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            93 => [
-                'id' => 94,
+            ),
+            93 =>
+            array(
                 'contrato_id' => 102,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1049,9 +1051,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            94 => [
-                'id' => 95,
+            ),
+            94 =>
+            array(
                 'contrato_id' => 103,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1060,9 +1062,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            95 => [
-                'id' => 96,
+            ),
+            95 =>
+            array(
                 'contrato_id' => 104,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1071,9 +1073,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            96 => [
-                'id' => 97,
+            ),
+            96 =>
+            array(
                 'contrato_id' => 105,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1082,9 +1084,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            97 => [
-                'id' => 98,
+            ),
+            97 =>
+            array(
                 'contrato_id' => 106,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1093,9 +1095,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            98 => [
-                'id' => 99,
+            ),
+            98 =>
+            array(
                 'contrato_id' => 107,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1104,9 +1106,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            99 => [
-                'id' => 100,
+            ),
+            99 =>
+            array(
+
                 'contrato_id' => 108,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1115,9 +1118,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            100 => [
-                'id' => 101,
+            ),
+            100 =>
+            array(
+
                 'contrato_id' => 109,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1126,9 +1130,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            101 => [
-                'id' => 102,
+            ),
+            101 =>
+            array(
+
                 'contrato_id' => 110,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1137,9 +1142,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            102 => [
-                'id' => 103,
+            ),
+            102 =>
+            array(
+
                 'contrato_id' => 111,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1148,9 +1154,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            103 => [
-                'id' => 104,
+            ),
+            103 =>
+            array(
+
                 'contrato_id' => 112,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1159,9 +1166,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            104 => [
-                'id' => 105,
+            ),
+            104 =>
+            array(
+
                 'contrato_id' => 113,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1170,9 +1178,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            105 => [
-                'id' => 106,
+            ),
+            105 =>
+            array(
+
                 'contrato_id' => 114,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1181,9 +1190,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            106 => [
-                'id' => 107,
+            ),
+            106 =>
+            array(
+
                 'contrato_id' => 115,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1192,9 +1202,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            107 => [
-                'id' => 108,
+            ),
+            107 =>
+            array(
+
                 'contrato_id' => 116,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1203,9 +1214,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            108 => [
-                'id' => 109,
+            ),
+            108 =>
+            array(
                 'contrato_id' => 117,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1214,9 +1225,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            109 => [
-                'id' => 110,
+            ),
+            109 =>
+            array(
                 'contrato_id' => 118,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1225,9 +1236,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            110 => [
-                'id' => 111,
+            ),
+            110 =>
+            array(
                 'contrato_id' => 119,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1236,9 +1247,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            111 => [
-                'id' => 112,
+            ),
+            111 =>
+            array(
                 'contrato_id' => 120,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1247,9 +1258,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            112 => [
-                'id' => 113,
+            ),
+            112 =>
+            array(
                 'contrato_id' => 121,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1258,9 +1269,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            113 => [
-                'id' => 114,
+            ),
+            113 =>
+            array(
                 'contrato_id' => 122,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1269,9 +1280,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            114 => [
-                'id' => 115,
+            ),
+            114 =>
+            array(
                 'contrato_id' => 123,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1280,9 +1291,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            115 => [
-                'id' => 116,
+            ),
+            115 =>
+            array(
                 'contrato_id' => 124,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1291,9 +1302,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            116 => [
-                'id' => 117,
+            ),
+            116 =>
+            array(
                 'contrato_id' => 125,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1302,9 +1313,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            117 => [
-                'id' => 118,
+            ),
+            117 =>
+            array(
                 'contrato_id' => 126,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1313,9 +1324,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            118 => [
-                'id' => 119,
+            ),
+            118 =>
+            array(
                 'contrato_id' => 127,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1324,9 +1335,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            119 => [
-                'id' => 120,
+            ),
+            119 =>
+            array(
                 'contrato_id' => 128,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1335,9 +1346,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            120 => [
-                'id' => 121,
+            ),
+            120 =>
+            array(
                 'contrato_id' => 129,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1346,9 +1357,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            121 => [
-                'id' => 122,
+            ),
+            121 =>
+            array(
                 'contrato_id' => 130,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1357,9 +1368,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            122 => [
-                'id' => 123,
+            ),
+            122 =>
+            array(
                 'contrato_id' => 131,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1368,9 +1379,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            123 => [
-                'id' => 124,
+            ),
+            123 =>
+            array(
                 'contrato_id' => 132,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1379,9 +1390,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            124 => [
-                'id' => 125,
+            ),
+            124 =>
+            array(
                 'contrato_id' => 133,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1390,9 +1401,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            125 => [
-                'id' => 126,
+            ),
+            125 =>
+            array(
                 'contrato_id' => 134,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1401,9 +1412,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            126 => [
-                'id' => 127,
+            ),
+            126 =>
+            array(
                 'contrato_id' => 135,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1412,9 +1423,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            127 => [
-                'id' => 128,
+            ),
+            127 =>
+            array(
                 'contrato_id' => 136,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1423,9 +1434,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            128 => [
-                'id' => 129,
+            ),
+            128 =>
+            array(
                 'contrato_id' => 137,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1434,9 +1445,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            129 => [
-                'id' => 130,
+            ),
+            129 =>
+            array(
                 'contrato_id' => 138,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1445,9 +1456,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            130 => [
-                'id' => 131,
+            ),
+            130 =>
+            array(
                 'contrato_id' => 139,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1456,9 +1467,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            131 => [
-                'id' => 132,
+            ),
+            131 =>
+            array(
                 'contrato_id' => 140,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1467,9 +1478,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            132 => [
-                'id' => 133,
+            ),
+            132 =>
+            array(
                 'contrato_id' => 141,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1478,9 +1489,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            133 => [
-                'id' => 134,
+            ),
+            133 =>
+            array(
                 'contrato_id' => 142,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1489,9 +1500,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            134 => [
-                'id' => 135,
+            ),
+            134 =>
+            array(
                 'contrato_id' => 143,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1500,9 +1511,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            135 => [
-                'id' => 136,
+            ),
+            135 =>
+            array(
                 'contrato_id' => 144,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1511,9 +1522,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            136 => [
-                'id' => 137,
+            ),
+            136 =>
+            array(
                 'contrato_id' => 145,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1522,9 +1533,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            137 => [
-                'id' => 138,
+            ),
+            137 =>
+            array(
                 'contrato_id' => 146,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1533,9 +1544,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            138 => [
-                'id' => 139,
+            ),
+            138 =>
+            array(
                 'contrato_id' => 147,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1544,9 +1555,9 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            139 => [
-                'id' => 140,
+            ),
+            139 =>
+            array(
                 'contrato_id' => 148,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1555,9 +1566,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            140 => [
-                'id' => 141,
+            ),
+            140 =>
+            array(
+
                 'contrato_id' => 149,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1566,9 +1578,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            141 => [
-                'id' => 142,
+            ),
+            141 =>
+            array(
+
                 'contrato_id' => 150,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1577,9 +1590,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            142 => [
-                'id' => 143,
+            ),
+            142 =>
+            array(
+
                 'contrato_id' => 151,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1588,9 +1602,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            143 => [
-                'id' => 144,
+            ),
+            143 =>
+            array(
+
                 'contrato_id' => 152,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1599,9 +1614,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            144 => [
-                'id' => 145,
+            ),
+            144 =>
+            array(
+
                 'contrato_id' => 153,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1610,9 +1626,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            145 => [
-                'id' => 146,
+            ),
+            145 =>
+            array(
+
                 'contrato_id' => 154,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1621,9 +1638,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            146 => [
-                'id' => 147,
+            ),
+            146 =>
+            array(
+
                 'contrato_id' => 155,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1632,9 +1650,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            147 => [
-                'id' => 148,
+            ),
+            147 =>
+            array(
+
                 'contrato_id' => 156,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1643,9 +1662,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            148 => [
-                'id' => 149,
+            ),
+            148 =>
+            array(
+
                 'contrato_id' => 157,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1654,9 +1674,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            149 => [
-                'id' => 150,
+            ),
+            149 =>
+            array(
+
                 'contrato_id' => 158,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1665,9 +1686,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            150 => [
-                'id' => 151,
+            ),
+            150 =>
+            array(
+
                 'contrato_id' => 159,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1676,9 +1698,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            151 => [
-                'id' => 152,
+            ),
+            151 =>
+            array(
+
                 'contrato_id' => 160,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1687,9 +1710,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            152 => [
-                'id' => 153,
+            ),
+            152 =>
+            array(
+
                 'contrato_id' => 161,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1698,9 +1722,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            153 => [
-                'id' => 154,
+            ),
+            153 =>
+            array(
+
                 'contrato_id' => 162,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1709,9 +1734,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            154 => [
-                'id' => 155,
+            ),
+            154 =>
+            array(
+
                 'contrato_id' => 163,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1720,9 +1746,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            155 => [
-                'id' => 156,
+            ),
+            155 =>
+            array(
+
                 'contrato_id' => 164,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1731,9 +1758,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            156 => [
-                'id' => 157,
+            ),
+            156 =>
+            array(
+
                 'contrato_id' => 165,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1742,9 +1770,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            157 => [
-                'id' => 158,
+            ),
+            157 =>
+            array(
+
                 'contrato_id' => 166,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1753,9 +1782,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            158 => [
-                'id' => 159,
+            ),
+            158 =>
+            array(
+
                 'contrato_id' => 167,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1764,9 +1794,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            159 => [
-                'id' => 160,
+            ),
+            159 =>
+            array(
+
                 'contrato_id' => 168,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1775,9 +1806,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            160 => [
-                'id' => 161,
+            ),
+            160 =>
+            array(
+
                 'contrato_id' => 169,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1786,9 +1818,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            161 => [
-                'id' => 162,
+            ),
+            161 =>
+            array(
+
                 'contrato_id' => 170,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1797,9 +1830,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            162 => [
-                'id' => 163,
+            ),
+            162 =>
+            array(
+
                 'contrato_id' => 171,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1808,9 +1842,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            163 => [
-                'id' => 164,
+            ),
+            163 =>
+            array(
+
                 'contrato_id' => 172,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1819,9 +1854,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            164 => [
-                'id' => 165,
+            ),
+            164 =>
+            array(
+
                 'contrato_id' => 173,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1830,9 +1866,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            165 => [
-                'id' => 166,
+            ),
+            165 =>
+            array(
+
                 'contrato_id' => 174,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1841,9 +1878,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            166 => [
-                'id' => 167,
+            ),
+            166 =>
+            array(
+
                 'contrato_id' => 175,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1852,9 +1890,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            167 => [
-                'id' => 168,
+            ),
+            167 =>
+            array(
+
                 'contrato_id' => 176,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1863,9 +1902,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            168 => [
-                'id' => 169,
+            ),
+            168 =>
+            array(
+
                 'contrato_id' => 177,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1874,9 +1914,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            169 => [
-                'id' => 170,
+            ),
+            169 =>
+            array(
+
                 'contrato_id' => 178,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1885,9 +1926,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            170 => [
-                'id' => 171,
+            ),
+            170 =>
+            array(
+
                 'contrato_id' => 179,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1896,9 +1938,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            171 => [
-                'id' => 172,
+            ),
+            171 =>
+            array(
+
                 'contrato_id' => 180,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1907,9 +1950,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            172 => [
-                'id' => 173,
+            ),
+            172 =>
+            array(
+
                 'contrato_id' => 181,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1918,9 +1962,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            173 => [
-                'id' => 174,
+            ),
+            173 =>
+            array(
+
                 'contrato_id' => 182,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1929,9 +1974,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            174 => [
-                'id' => 175,
+            ),
+            174 =>
+            array(
+
                 'contrato_id' => 183,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1940,9 +1986,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            175 => [
-                'id' => 176,
+            ),
+            175 =>
+            array(
+
                 'contrato_id' => 184,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1951,9 +1998,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            176 => [
-                'id' => 177,
+            ),
+            176 =>
+            array(
+
                 'contrato_id' => 185,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1962,9 +2010,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            177 => [
-                'id' => 178,
+            ),
+            177 =>
+            array(
+
                 'contrato_id' => 186,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1973,9 +2022,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            178 => [
-                'id' => 179,
+            ),
+            178 =>
+            array(
+
                 'contrato_id' => 187,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1984,9 +2034,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            179 => [
-                'id' => 180,
+            ),
+            179 =>
+            array(
+
                 'contrato_id' => 188,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -1995,9 +2046,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            180 => [
-                'id' => 181,
+            ),
+            180 =>
+            array(
+
                 'contrato_id' => 189,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -2006,9 +2058,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            181 => [
-                'id' => 182,
+            ),
+            181 =>
+            array(
+
                 'contrato_id' => 190,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -2017,9 +2070,10 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-            182 => [
-                'id' => 183,
+            ),
+            182 =>
+            array(
+
                 'contrato_id' => 191,
                 'cumple' => '1',
                 'deleted_at' => null,
@@ -2028,7 +2082,7 @@ class CedulaCumplimientoTableSeeder extends Seeder
                 'elaboro' => '',
                 'reviso' => '',
                 'autorizo' => '',
-            ],
-        ]);
+            ),
+        ));
     }
 }

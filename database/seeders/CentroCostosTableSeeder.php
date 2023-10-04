@@ -13,11 +13,13 @@ class CentroCostosTableSeeder extends Seeder
      */
     public function run()
     {
+
+
         \DB::table('centro_costos')->delete();
 
-        \DB::table('centro_costos')->insert([
-            0 => [
-                'id' => 1,
+        \DB::table('centro_costos')->insert(array(
+            0 =>
+            array(
                 'clave' => 1,
                 'descripcion' => 'DIRECCIÓN GENERAL',
                 'estado' => 'AC',
@@ -25,9 +27,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            1 => [
-                'id' => 2,
+            ),
+            1 =>
+            array(
                 'clave' => 2,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS',
                 'estado' => 'AC',
@@ -35,9 +37,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            2 => [
-                'id' => 3,
+            ),
+            2 =>
+            array(
                 'clave' => 3,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/GESTIÓN DE TALENTO',
                 'estado' => 'AC',
@@ -45,9 +47,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            3 => [
-                'id' => 4,
+            ),
+            3 =>
+            array(
                 'clave' => 4,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/CONTABILIDAD',
                 'estado' => 'AC',
@@ -55,9 +57,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            4 => [
-                'id' => 5,
+            ),
+            4 =>
+            array(
                 'clave' => 5,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/GESTIÓN DE SERVICIOS',
                 'estado' => 'AC',
@@ -65,9 +67,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            5 => [
-                'id' => 6,
+            ),
+            5 =>
+            array(
                 'clave' => 6,
                 'descripcion' => 'INNOVACIÓN Y DESARROLLO',
                 'estado' => 'AC',
@@ -75,9 +77,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            6 => [
-                'id' => 7,
+            ),
+            6 =>
+            array(
                 'clave' => 7,
                 'descripcion' => 'DIRECCIÓN COMERCIAL',
                 'estado' => 'AC',
@@ -85,9 +87,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            7 => [
-                'id' => 8,
+            ),
+            7 =>
+            array(
                 'clave' => 8,
                 'descripcion' => 'AREA DE OPERACIONES NOC/SOC',
                 'estado' => 'AC',
@@ -95,9 +97,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            8 => [
-                'id' => 9,
+            ),
+            8 =>
+            array(
                 'clave' => 9,
                 'descripcion' => 'CIBER-INTELIGENCIA',
                 'estado' => 'AC',
@@ -105,9 +107,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            9 => [
-                'id' => 10,
+            ),
+            9 =>
+            array(
                 'clave' => 10,
                 'descripcion' => 'CONSULTORIA ESTRATEGICA',
                 'estado' => 'AC',
@@ -115,9 +117,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            10 => [
-                'id' => 11,
+            ),
+            10 =>
+            array(
                 'clave' => 11,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/CUMPLIMIENTO Y MEJORA CONTINUA',
                 'estado' => 'AC',
@@ -125,9 +127,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            11 => [
-                'id' => 12,
+            ),
+            11 =>
+            array(
                 'clave' => 12,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/DIRECCION',
                 'estado' => 'AC',
@@ -135,9 +137,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            12 => [
-                'id' => 13,
+            ),
+            12 =>
+            array(
                 'clave' => 13,
                 'descripcion' => 'DIRECCIÓN GENERAL/DIRECCIÓN GRL',
                 'estado' => 'AC',
@@ -145,9 +147,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            13 => [
-                'id' => 14,
+            ),
+            13 =>
+            array(
                 'clave' => 14,
                 'descripcion' => 'DIRECCIÓN GENERAL/ASISTENTES DE DIRECCIÓN GRL',
                 'estado' => 'AC',
@@ -155,9 +157,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            14 => [
-                'id' => 15,
+            ),
+            14 =>
+            array(
                 'clave' => 15,
                 'descripcion' => 'ÁREA DE OPERACIONES NOC/SOC/OPERACIONES NOC/SOC',
                 'estado' => 'AC',
@@ -165,9 +167,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            15 => [
-                'id' => 16,
+            ),
+            15 =>
+            array(
                 'clave' => 16,
                 'descripcion' => 'ÁREA DE OPERACIONES NOC/SOC/SOPORTE INTERNO',
                 'estado' => 'AC',
@@ -175,9 +177,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            16 => [
-                'id' => 17,
+            ),
+            16 =>
+            array(
                 'clave' => 17,
                 'descripcion' => 'ÁREA DE OPERACIONES NOC/SOC/SERVICIOS ADMINISTRADOS',
                 'estado' => 'AC',
@@ -185,9 +187,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            17 => [
-                'id' => 18,
+            ),
+            17 =>
+            array(
                 'clave' => 18,
                 'descripcion' => 'ADMINISTRACIÓN Y FINANZAS/SERVICIOS GENERALES',
                 'estado' => 'AC',
@@ -195,9 +197,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            18 => [
-                'id' => 19,
+            ),
+            18 =>
+            array(
                 'clave' => 19,
                 'descripcion' => 'DIRECCIÓN COMERCIAL/MARKETING',
                 'estado' => 'AC',
@@ -205,9 +207,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            19 => [
-                'id' => 20,
+            ),
+            19 =>
+            array(
                 'clave' => 20,
                 'descripcion' => 'DIRECCIÓN COMERCIAL/VENTAS INFRAESTRUCTURA',
                 'estado' => 'AC',
@@ -215,9 +217,9 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-            20 => [
-                'id' => 21,
+            ),
+            20 =>
+            array(
                 'clave' => 21,
                 'descripcion' => 'DIRECCIÓN COMERCIAL/DIRECCIÓN COMERCIAL',
                 'estado' => 'AC',
@@ -225,7 +227,7 @@ class CentroCostosTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
                 'archivo' => 0,
-            ],
-        ]);
+            ),
+        ));
     }
 }

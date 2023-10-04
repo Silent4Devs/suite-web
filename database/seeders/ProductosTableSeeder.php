@@ -6,304 +6,330 @@ use Illuminate\Database\Seeder;
 
 class ProductosTableSeeder extends Seeder
 {
+
     /**
-     * Auto generated seed file.
+     * Auto generated seed file
      *
      * @return void
      */
     public function run()
     {
+
+
         \DB::table('productos')->delete();
 
-        \DB::table('productos')->insert([
-            0 => [
-                'id' => 1,
-                'descripcion' => 'Servicio de administración telefónica',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+        \DB::table('productos')->insert(array(
+            0 =>
+            array(
+                        'descripcion' => 'Servicio de administración telefónica',
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '1',
-            ],
-            1 => [
-                'id' => 2,
-                'descripcion' => 'Educación y Capacitación',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+            ),
+            1 =>
+            array(
+                        'descripcion' => 'Educación y Capacitación',
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '2',
-            ],
-            2 => [
-                'id' => 3,
-                'descripcion' => 'Gestión de eventos',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+            ),
+            2 =>
+            array(
+                        'descripcion' => 'Gestión de eventos',
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '3',
-            ],
-            3 => [
-                'id' => 4,
-                'descripcion' => 'Papeleria',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+            ),
+            3 =>
+            array(
+                        'descripcion' => 'Papeleria',
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '4',
-            ],
-            4 => [
-                'id' => 5,
-                'descripcion' => 'Servicio de mensajeria y transporte',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+            ),
+            4 =>
+            array(
+                        'descripcion' => 'Servicio de mensajeria y transporte',
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '5',
-            ],
-            5 => [
-                'id' => 6,
-                'descripcion' => 'Servicios de mantenimiento',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+            ),
+            5 =>
+            array(
+                        'descripcion' => 'Servicios de mantenimiento',
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '6',
-            ],
-            6 => [
-                'id' => 7,
-                'descripcion' => 'Membresías',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+            ),
+            6 =>
+            array(
+                        'descripcion' => 'Membresías',
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '7',
-            ],
-            7 => [
-                'id' => 8,
-                'descripcion' => 'Ferias de empleo',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+            ),
+            7 =>
+            array(
+                        'descripcion' => 'Ferias de empleo',
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '8',
-            ],
-            8 => [
-                'id' => 9,
-                'descripcion' => 'Reclutamiento',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+            ),
+            8 =>
+            array(
+                        'descripcion' => 'Reclutamiento',
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '9',
-            ],
-            9 => [
-                'id' => 10,
+            ),
+            9 =>
+            array(
+
                 'descripcion' => 'Licencias Software',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '10',
-            ],
-            10 => [
-                'id' => 11,
+            ),
+            10 =>
+            array(
+
                 'descripcion' => 'Renovación de Licenciamiento',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '11',
-            ],
-            11 => [
-                'id' => 12,
+            ),
+            11 =>
+            array(
+
                 'descripcion' => 'Consultoria',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '12',
-            ],
-            12 => [
-                'id' => 13,
+            ),
+            12 =>
+            array(
+
                 'descripcion' => 'Actividades de Venta y Promoción de Negocios',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '13',
-            ],
-            13 => [
-                'id' => 14,
+            ),
+            13 =>
+            array(
+
                 'descripcion' => 'Arrendamiento de equipos de cómputo',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '14',
-            ],
-            14 => [
-                'id' => 15,
+            ),
+            14 =>
+            array(
+
                 'descripcion' => 'Pago de bases para licitación',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '15',
-            ],
-            15 => [
-                'id' => 16,
+            ),
+            15 =>
+            array(
+
                 'descripcion' => 'Fianzas',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '16',
-            ],
-            16 => [
-                'id' => 17,
+            ),
+            16 =>
+            array(
+
                 'descripcion' => 'Seguros',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '17',
-            ],
-            17 => [
-                'id' => 18,
+            ),
+            17 =>
+            array(
+
                 'descripcion' => 'Diseño para marketing',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '18',
-            ],
-            18 => [
-                'id' => 19,
+            ),
+            18 =>
+            array(
+
                 'descripcion' => 'Servicio de Arrendamiento de Servidores',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '19',
-            ],
-            19 => [
-                'id' => 20,
+            ),
+            19 =>
+            array(
+
                 'descripcion' => 'Servicio de Soporte Tecnico',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '20',
-            ],
-            20 => [
-                'id' => 21,
+            ),
+            20 =>
+            array(
+
                 'descripcion' => 'Renovación de Software',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '21',
-            ],
-            21 => [
-                'id' => 22,
+            ),
+            21 =>
+            array(
+
                 'descripcion' => 'Servicio de soporte telefónico',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '22',
-            ],
-            22 => [
-                'id' => 23,
+            ),
+            22 =>
+            array(
+
                 'descripcion' => 'Servicio de administración del correo de voz',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '23',
-            ],
-            23 => [
-                'id' => 24,
+            ),
+            23 =>
+            array(
+
                 'descripcion' => 'Servicio de Ciberseguridad y Consultoría',
-                'created_at' => null,
-                'updated_at' => null,
-                'deleted_at' => null,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '24',
-            ],
-            24 => [
-                'id' => 25,
+            ),
+            24 =>
+            array(
+
                 'descripcion' => 'Certificaciones',
                 'created_at' => '2023-08-16 18:28:38',
                 'updated_at' => '2023-08-16 18:29:13',
-                'deleted_at' => null,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '25',
-            ],
-            25 => [
-                'id' => 26,
+            ),
+            25 =>
+            array(
+
                 'descripcion' => 'Regalos',
                 'created_at' => '2023-08-24 13:43:14',
                 'updated_at' => '2023-08-24 13:43:14',
-                'deleted_at' => null,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '26',
-            ],
-            26 => [
-                'id' => 27,
+            ),
+            26 =>
+            array(
+
                 'descripcion' => 'Normas',
                 'created_at' => '2023-08-31 12:46:26',
                 'updated_at' => '2023-08-31 12:46:26',
-                'deleted_at' => null,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '27',
-            ],
-            27 => [
-                'id' => 28,
+            ),
+            27 =>
+            array(
+
                 'descripcion' => 'Material promocional',
                 'created_at' => '2023-09-06 16:21:19',
                 'updated_at' => '2023-09-06 16:21:41',
-                'deleted_at' => null,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '28',
-            ],
-            28 => [
-                'id' => 29,
+            ),
+            28 =>
+            array(
+
                 'descripcion' => 'Gestión de eventos',
                 'created_at' => '2023-09-13 13:24:50',
                 'updated_at' => '2023-09-13 13:24:50',
-                'deleted_at' => null,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '29',
-            ],
-            29 => [
-                'id' => 30,
+            ),
+            29 =>
+            array(
+
                 'descripcion' => 'Exámenes de certificación',
                 'created_at' => '2023-09-19 16:18:08',
                 'updated_at' => '2023-09-19 16:18:39',
-                'deleted_at' => null,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '30',
-            ],
-            30 => [
-                'id' => 31,
+            ),
+            30 =>
+            array(
+
                 'descripcion' => 'Discos / Unidad de estado solido externo',
                 'created_at' => '2023-09-19 16:19:30',
                 'updated_at' => '2023-09-19 16:19:30',
-                'deleted_at' => null,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '31',
-            ],
-            31 => [
-                'id' => 32,
+            ),
+            31 =>
+            array(
+
                 'descripcion' => 'Tenable AD',
                 'created_at' => '2023-09-21 18:59:22',
                 'updated_at' => '2023-09-21 18:59:22',
-                'deleted_at' => null,
+                'deleted_at' => NULL,
                 'archivo' => 0,
                 'clave' => '32',
-            ],
-        ]);
+            ),
+        ));
     }
 }

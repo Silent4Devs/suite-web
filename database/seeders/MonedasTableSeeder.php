@@ -13,21 +13,23 @@ class MonedasTableSeeder extends Seeder
      */
     public function run()
     {
+
+
         \DB::table('monedas')->delete();
 
-        \DB::table('monedas')->insert([
-            0 => [
-                'id' => 1,
+        \DB::table('monedas')->insert(array(
+            0 =>
+            array(
                 'nombre' => 'USD',
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-            1 => [
-                'id' => 2,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+            1 =>
+            array(
                 'nombre' => 'MXN',
-                'created_at' => null,
-                'updated_at' => null,
-            ],
-        ]);
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            ),
+        ));
     }
 }
