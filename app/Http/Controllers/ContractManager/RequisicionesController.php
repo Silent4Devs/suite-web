@@ -37,7 +37,7 @@ class RequisicionesController extends Controller
         abort_if(Gate::denies('katbol_requisiciones_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $requisiciones = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato')->orderByDesc('id')->where('archivo', false)->get();
-        dd($requisiciones);
+
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -58,6 +58,7 @@ class RequisicionesController extends Controller
 
         $id = Auth::user()->id;
         $roles = ModelsUser::find($id)->roles()->get();
+        dd($requisiciones, $organizacion_actual, $logo_actual, $empresa_actual, $requisiciones_solicitante, $proveedor_indistinto, $requisicion_id, $ids, $roles);
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
                 return view('contract_manager.requisiciones.index', compact('ids', 'requisiciones', 'proveedor_indistinto', 'empresa_actual', 'logo_actual'));
