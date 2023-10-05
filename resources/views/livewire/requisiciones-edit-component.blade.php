@@ -1623,6 +1623,7 @@
             $(".not-select2").select2('destroy');
         </script>
         <script>
+            //termino
             Livewire.on('render_firma', (id_tab) => {
                 var signaturePad = $('#firma_content').signature({
                     syncField: '#firma',
