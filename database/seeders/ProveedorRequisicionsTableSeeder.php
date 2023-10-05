@@ -14,14 +14,13 @@ class ProveedorRequisicionsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('proveedor_requisicions')->delete();
-        
-        \DB::table('proveedor_requisicions')->insert(array (
-            0 => 
-            array (
-                'id' => 1,
+
+        \DB::table('proveedor_requisicions')->insert(array(
+            0 =>
+            array(
                 'proveedor' => 'otro',
                 'detalles' => 'Certificación GIAC GPEN',
                 'tipo' => 'online',
@@ -39,9 +38,8 @@ class ProveedorRequisicionsTableSeeder extends Seeder
                 'cotizacion' => 'requisicion_9cotizazcion_0_64dfce6e5ab35.pdf',
                 'cel' => '+13016547267',
             ),
-            1 => 
-            array (
-                'id' => 2,
+            1 =>
+            array(
                 'proveedor' => 'otro',
                 'detalles' => 'Certificación GIAC GPEN',
                 'tipo' => 'online',
@@ -60,7 +58,5 @@ class ProveedorRequisicionsTableSeeder extends Seeder
                 'cel' => '+13016547267',
             ),
         ));
-        
-        
     }
 }
