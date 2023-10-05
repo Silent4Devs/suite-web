@@ -36,7 +36,7 @@ class RequisicionesController extends Controller
     {
         abort_if(Gate::denies('katbol_requisiciones_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $requisicionQuery = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato')->get();
+        $requisicionQuery = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato')->orderByDesc('id')->get();
 
         $requisiciones = $requisicionQuery->orderByDesc('id')->where('archivo', false)->get();
 
@@ -47,7 +47,7 @@ class RequisicionesController extends Controller
         $requisiciones_solicitante = null;
         $id = User::getCurrentUser()->id;
 
-        $requisiciones_solicitante = $requisicionQuery->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
+        $requisiciones_solicitante = $requisicionQuery->where('archivo', false)->where('id_user', $id)->get();
 
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
