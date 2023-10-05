@@ -206,7 +206,8 @@
                     {
                         data: 'productos_requisiciones',
                         render: function(data, type, row) {
-                        return data[0].producto.descripcion;
+                            console.log(data);
+                        // return data[0].producto.descripcion;
                         }
 
                     },

@@ -33,7 +33,8 @@ class RequisicionesController extends Controller
     public function index()
     {
         abort_if(Gate::denies('katbol_requisiciones_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $requisiciones = KatbolRequsicion::with('contrato')->orderByDesc('id')->where('archivo', false)->get();
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
+        // dd($requisiciones);
         $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
         if (is_null($organizacion_actual)) {
             $organizacion_actual = new Organizacion();
@@ -47,7 +48,7 @@ class RequisicionesController extends Controller
         $requisiciones_solicitante = null;
         $id = Auth::user()->id;
 
-        $requisiciones_solicitante = KatbolRequsicion::with('contrato')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
+        $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
@@ -71,7 +72,7 @@ class RequisicionesController extends Controller
 
     public function getRequisicionIndex(Request $request)
     {
-        $requisiciones = KatbolRequsicion::with('contrato')->where('archivo', false)->orderByDesc('id')->get();
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
 
         return datatables()->of($requisiciones)->toJson();
     }
@@ -79,7 +80,7 @@ class RequisicionesController extends Controller
     public function getRequisicionIndexSolicitante(Request $request)
     {
         $id = Auth::user()->id;
-        $requisiciones_solicitante = KatbolRequsicion::with('contrato')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
+        $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
         return datatables()->of($requisiciones_solicitante)->toJson();
     }
@@ -281,7 +282,7 @@ class RequisicionesController extends Controller
      */
     public function archivo()
     {
-        $requisiciones = KatbolRequsicion::with('contrato')->where('archivo', true)->get();
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', true)->get();
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
         return view('contract_manager.requisiciones.archivo', compact('requisiciones', 'proveedor_indistinto'));
@@ -289,7 +290,7 @@ class RequisicionesController extends Controller
 
     public function indexAprobadores()
     {
-        $requisiciones = KatbolRequsicion::with('contrato')->where('archivo', false)->orderByDesc('id')->get();
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
         return view('contract_manager.requisiciones.aprobadores', compact('requisiciones', 'proveedor_indistinto'));
@@ -297,7 +298,7 @@ class RequisicionesController extends Controller
 
     public function getRequisicionIndexAprobador()
     {
-        $requisiciones = KatbolRequsicion::with('contrato')->where('archivo', false)->orderByDesc('id')->get();
+        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
 
         return datatables()->of($requisiciones)->toJson();
     }
