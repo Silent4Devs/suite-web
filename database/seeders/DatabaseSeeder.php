@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
                 //Katbol
                 // AreasSeeder::class,
                 // ProveedoresTableSeeder::class,
-                ContratosTableSeeder::class,
+                // ContratosTableSeeder::class,
                 CedulaCumplimientoTableSeeder::class,
                 CierreContratosTableSeeder::class,
                 ConveniosModificatoriosTableSeeder::class,
@@ -92,7 +92,7 @@ class DatabaseSeeder extends Seeder
                 CentroCostosTableSeeder::class,
                 ProductosTableSeeder::class,
                 SucursalesTableSeeder::class,
-                MonedasTableSeeder::class,
+                // MonedasTableSeeder::class,
                 ProveedorOCSTableSeeder::class,
                 CompradoresSeeder::class,
                 RequsicionesTableSeeder::class,
