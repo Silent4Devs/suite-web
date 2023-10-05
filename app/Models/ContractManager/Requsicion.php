@@ -2,8 +2,9 @@
 
 namespace App\Models\ContractManager;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Requsicion extends Model
 {
@@ -71,6 +72,14 @@ class Requsicion extends Model
     public $table = 'requisiciones';
 
     protected $with = ['productos_requisiciones', 'provedores_requisiciones'];
+
+    //Redis methods
+    public static function getAll()
+    {
+        return Cache::remember('organizacion_all', 3600 * 24, function () {
+            return self::get();
+        });
+    }
 
     //relacion-contrato
     public function contrato()
