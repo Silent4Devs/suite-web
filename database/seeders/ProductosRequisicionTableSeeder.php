@@ -17,8 +17,7 @@ class ProductosRequisicionTableSeeder extends Seeder
 
         \DB::table('productos_requisicion')->insert([
             0 => [
-                'id' => 39,
-                'espesificaciones' => 'test',
+                        'espesificaciones' => 'test',
                 'cantidad' => 1,
                 'producto_id' => 16,
                 'requisiciones_id' => 3,
@@ -38,8 +37,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             1 => [
-                'id' => 49,
-            'espesificaciones' => 'Para poder participar en licitaciones, se requieren de 2 certificaciones Tenable Security Center Specialist. Para lo anterior es importante que cada ingeniero tome el curso y además presente los 2 exámenes que competen (escrito y práctico)',
+                        'espesificaciones' => 'Para poder participar en licitaciones, se requieren de 2 certificaciones Tenable Security Center Specialist. Para lo anterior es importante que cada ingeniero tome el curso y además presente los 2 exámenes que competen (escrito y práctico)',
                 'cantidad' => 2,
                 'producto_id' => 2,
                 'requisiciones_id' => 2,
@@ -59,8 +57,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             2 => [
-                'id' => 62,
-                'espesificaciones' => 'Certificación GPEN de GIAC para Iván David Aguirre',
+                        'espesificaciones' => 'Certificación GPEN de GIAC para Iván David Aguirre',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 9,
@@ -80,8 +77,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             3 => [
-                'id' => 63,
-                'espesificaciones' => 'Boucher para examen de certificación GPEN del GIAC para Iván David Aguirre',
+                        'espesificaciones' => 'Boucher para examen de certificación GPEN del GIAC para Iván David Aguirre',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 10,
@@ -101,8 +97,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             4 => [
-                'id' => 71,
-                'espesificaciones' => '-Curso y Examen de Certificación ISO 27001 Auditor Líder.
+                        'espesificaciones' => '-Curso y Examen de Certificación ISO 27001 Auditor Líder.
 -Material digital en español
 -Examen de certificación avalado por CertiProf disponible en español
 -Segundo intento de examen de certificación SIN costo adicional
@@ -126,8 +121,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             5 => [
-                'id' => 72,
-                'espesificaciones' => '-Curso y Examen de Certificación 
+                        'espesificaciones' => '-Curso y Examen de Certificación
 -Material digital en español
 -Examen de certificación avalado por CertiProf disponible en español
 -Segundo intento de examen de certificación SIN costo adicional
@@ -151,8 +145,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             6 => [
-                'id' => 74,
-            'espesificaciones' => 'Envío de documento de alcance y objetivos: DSI-HE23-0008 Auditoria de cumplimiento para Meebox – Sistema de captura para censos en DCM (Móvil).',
+                        'espesificaciones' => 'Envío de documento de alcance y objetivos: DSI-HE23-0008 Auditoria de cumplimiento para Meebox – Sistema de captura para censos en DCM (Móvil).',
                 'cantidad' => 1,
                 'producto_id' => 24,
                 'requisiciones_id' => 15,
@@ -172,8 +165,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             7 => [
-                'id' => 75,
-                'espesificaciones' => 'Para la renovación del licenciamiento del proyecto de CONEVAL, se requiere por parte del fabricante Trellix, lo siguiente:
+                        'espesificaciones' => 'Para la renovación del licenciamiento del proyecto de CONEVAL, se requiere por parte del fabricante Trellix, lo siguiente:
 
 1.- Network Security NX Edition (Enterprise)Subscription LicenseSupport RenewalStart Date 18/07/2023 End date 30/08/2024 (cantidad 250)
 2.- Email Security Cloud AntiVirus/AntiSpam EditionSubscription LicenseSupport RenewalStart Date 01/07/2023 End date 30/08/2024 (cantidad 230)
@@ -201,8 +193,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => '69950.27',
             ],
             8 => [
-                'id' => 77,
-                'espesificaciones' => 'Fianza de Cumplimiento No.162090182231552, que ampara al Anexo B.III.2 del proyecto 224 BESTEL-IMSS SERVICIOS DE SEGURIDAD',
+                        'espesificaciones' => 'Fianza de Cumplimiento No.162090182231552, que ampara al Anexo B.III.2 del proyecto 224 BESTEL-IMSS SERVICIOS DE SEGURIDAD',
                 'cantidad' => 1,
                 'producto_id' => 16,
                 'requisiciones_id' => 4,
@@ -222,8 +213,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => '14714.369999999999',
             ],
             9 => [
-                'id' => 80,
-                'espesificaciones' => 'Fianza de Cumplimiento No. 162090182231551, que ampara al Anexo B.III.1 del proyecto 224. BESTEL-IMSS SERVICIOS DE SEGURIDAD',
+                        'espesificaciones' => 'Fianza de Cumplimiento No. 162090182231551, que ampara al Anexo B.III.1 del proyecto 224. BESTEL-IMSS SERVICIOS DE SEGURIDAD',
                 'cantidad' => 1,
                 'producto_id' => 16,
                 'requisiciones_id' => 1,
@@ -243,8 +233,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => '110367.43',
             ],
             10 => [
-                'id' => 81,
-                'espesificaciones' => '11 Exámenes de inglés 2022-agosto 2023',
+                        'espesificaciones' => '11 Exámenes de inglés 2022-agosto 2023',
                 'cantidad' => 1,
                 'producto_id' => 9,
                 'requisiciones_id' => 5,
@@ -264,8 +253,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => '3190',
             ],
             11 => [
-                'id' => 86,
-                'espesificaciones' => 'Para cumplir con licitaciones, se requiere que mínimo 3 colaboradores obtengan la certificación en materia de Prevención de Operaciones con Recursos de Procedencia Ilícita y Financiamiento al Terrorismo de la CNBV.',
+                        'espesificaciones' => 'Para cumplir con licitaciones, se requiere que mínimo 3 colaboradores obtengan la certificación en materia de Prevención de Operaciones con Recursos de Procedencia Ilícita y Financiamiento al Terrorismo de la CNBV.',
                 'cantidad' => 3,
                 'producto_id' => 25,
                 'requisiciones_id' => 12,
@@ -285,8 +273,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => '55234.56',
             ],
             12 => [
-                'id' => 87,
-                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 17,
@@ -306,8 +293,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             13 => [
-                'id' => 88,
-                'espesificaciones' => '1',
+                        'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 17,
@@ -327,8 +313,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             14 => [
-                'id' => 89,
-                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 18,
@@ -348,8 +333,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             15 => [
-                'id' => 90,
-                'espesificaciones' => '1',
+                        'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 18,
@@ -369,8 +353,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             16 => [
-                'id' => 91,
-                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 19,
@@ -390,8 +373,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             17 => [
-                'id' => 92,
-                'espesificaciones' => '1',
+                        'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 19,
@@ -411,8 +393,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             18 => [
-                'id' => 93,
-                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 20,
@@ -432,8 +413,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             19 => [
-                'id' => 94,
-                'espesificaciones' => '1',
+                        'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 20,
@@ -453,8 +433,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             20 => [
-                'id' => 95,
-                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 21,
@@ -474,8 +453,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             21 => [
-                'id' => 96,
-                'espesificaciones' => '1',
+                        'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 21,
@@ -495,8 +473,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             22 => [
-                'id' => 97,
-                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 22,
@@ -516,8 +493,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             23 => [
-                'id' => 98,
-                'espesificaciones' => '1',
+                        'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
                 'requisiciones_id' => 22,
@@ -537,8 +513,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             24 => [
-                'id' => 99,
-                'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
+                        'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
                 'requisiciones_id' => 23,
@@ -558,7 +533,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             25 => [
-                'id' => 100,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -579,7 +554,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             26 => [
-                'id' => 101,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -600,7 +575,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             27 => [
-                'id' => 102,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -621,7 +596,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             28 => [
-                'id' => 103,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -642,7 +617,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             29 => [
-                'id' => 104,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -663,7 +638,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             30 => [
-                'id' => 105,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -684,7 +659,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             31 => [
-                'id' => 106,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -705,7 +680,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             32 => [
-                'id' => 107,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -726,7 +701,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             33 => [
-                'id' => 108,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -747,7 +722,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             34 => [
-                'id' => 109,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -768,7 +743,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             35 => [
-                'id' => 110,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -789,7 +764,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             36 => [
-                'id' => 111,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -810,7 +785,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             37 => [
-                'id' => 112,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -831,7 +806,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             38 => [
-                'id' => 113,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -852,7 +827,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             39 => [
-                'id' => 114,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -873,7 +848,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             40 => [
-                'id' => 115,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -894,7 +869,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             41 => [
-                'id' => 116,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -915,7 +890,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             42 => [
-                'id' => 117,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -936,7 +911,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             43 => [
-                'id' => 118,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -957,7 +932,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             44 => [
-                'id' => 119,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -978,7 +953,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             45 => [
-                'id' => 120,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -999,7 +974,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             46 => [
-                'id' => 121,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1020,7 +995,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             47 => [
-                'id' => 122,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1041,7 +1016,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             48 => [
-                'id' => 123,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1062,7 +1037,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             49 => [
-                'id' => 124,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1083,7 +1058,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             50 => [
-                'id' => 125,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1104,7 +1079,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             51 => [
-                'id' => 126,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1125,7 +1100,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             52 => [
-                'id' => 127,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1146,7 +1121,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             53 => [
-                'id' => 128,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1167,7 +1142,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             54 => [
-                'id' => 129,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1188,7 +1163,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             55 => [
-                'id' => 130,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1209,7 +1184,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             56 => [
-                'id' => 131,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1230,7 +1205,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             57 => [
-                'id' => 132,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1251,7 +1226,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             58 => [
-                'id' => 133,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1272,7 +1247,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             59 => [
-                'id' => 134,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1293,7 +1268,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             60 => [
-                'id' => 135,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1314,7 +1289,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             61 => [
-                'id' => 136,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1335,7 +1310,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             62 => [
-                'id' => 137,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1356,7 +1331,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             63 => [
-                'id' => 138,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1377,7 +1352,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             64 => [
-                'id' => 139,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1398,7 +1373,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             65 => [
-                'id' => 140,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1419,7 +1394,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             66 => [
-                'id' => 141,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1440,7 +1415,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             67 => [
-                'id' => 142,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1461,7 +1436,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             68 => [
-                'id' => 143,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1482,7 +1457,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             69 => [
-                'id' => 144,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1503,7 +1478,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             70 => [
-                'id' => 145,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1524,7 +1499,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             71 => [
-                'id' => 146,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1545,7 +1520,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             72 => [
-                'id' => 147,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1566,7 +1541,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             73 => [
-                'id' => 148,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1587,7 +1562,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             74 => [
-                'id' => 149,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1608,7 +1583,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             75 => [
-                'id' => 150,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1629,7 +1604,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             76 => [
-                'id' => 151,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1650,7 +1625,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             77 => [
-                'id' => 152,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1671,7 +1646,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             78 => [
-                'id' => 153,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1692,7 +1667,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             79 => [
-                'id' => 154,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1713,7 +1688,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             80 => [
-                'id' => 155,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1734,7 +1709,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             81 => [
-                'id' => 156,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1755,7 +1730,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             82 => [
-                'id' => 157,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1776,7 +1751,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             83 => [
-                'id' => 158,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1797,7 +1772,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             84 => [
-                'id' => 159,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1818,7 +1793,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             85 => [
-                'id' => 160,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1839,7 +1814,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             86 => [
-                'id' => 161,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1860,7 +1835,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             87 => [
-                'id' => 162,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1881,7 +1856,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             88 => [
-                'id' => 163,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1902,7 +1877,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             89 => [
-                'id' => 164,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1923,7 +1898,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             90 => [
-                'id' => 165,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1944,7 +1919,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             91 => [
-                'id' => 166,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -1965,7 +1940,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             92 => [
-                'id' => 167,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -1986,7 +1961,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             93 => [
-                'id' => 168,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2007,7 +1982,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             94 => [
-                'id' => 169,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2028,7 +2003,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             95 => [
-                'id' => 170,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2049,7 +2024,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             96 => [
-                'id' => 171,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2070,7 +2045,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             97 => [
-                'id' => 172,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2091,7 +2066,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             98 => [
-                'id' => 173,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2112,7 +2087,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             99 => [
-                'id' => 174,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2133,7 +2108,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             100 => [
-                'id' => 175,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2154,7 +2129,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             101 => [
-                'id' => 176,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2175,7 +2150,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             102 => [
-                'id' => 177,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2196,7 +2171,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             103 => [
-                'id' => 178,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2217,7 +2192,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             104 => [
-                'id' => 179,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2238,7 +2213,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             105 => [
-                'id' => 180,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2259,7 +2234,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             106 => [
-                'id' => 181,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2280,7 +2255,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             107 => [
-                'id' => 182,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2301,7 +2276,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             108 => [
-                'id' => 183,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2322,7 +2297,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             109 => [
-                'id' => 184,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2343,7 +2318,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             110 => [
-                'id' => 185,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2364,7 +2339,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             111 => [
-                'id' => 186,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2385,7 +2360,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             112 => [
-                'id' => 187,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2406,7 +2381,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             113 => [
-                'id' => 188,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2427,7 +2402,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             114 => [
-                'id' => 189,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2448,7 +2423,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             115 => [
-                'id' => 190,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2469,7 +2444,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             116 => [
-                'id' => 191,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2490,7 +2465,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             117 => [
-                'id' => 192,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2511,7 +2486,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             118 => [
-                'id' => 193,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2532,7 +2507,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             119 => [
-                'id' => 194,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2553,7 +2528,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             120 => [
-                'id' => 195,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2574,7 +2549,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             121 => [
-                'id' => 196,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2595,7 +2570,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             122 => [
-                'id' => 199,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2616,7 +2591,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             123 => [
-                'id' => 200,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2637,7 +2612,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             124 => [
-                'id' => 201,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2658,7 +2633,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             125 => [
-                'id' => 202,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2679,7 +2654,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             126 => [
-                'id' => 203,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2700,7 +2675,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             127 => [
-                'id' => 204,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2721,7 +2696,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             128 => [
-                'id' => 205,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2742,7 +2717,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             129 => [
-                'id' => 206,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2763,7 +2738,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             130 => [
-                'id' => 207,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2784,7 +2759,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             131 => [
-                'id' => 208,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2805,7 +2780,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             132 => [
-                'id' => 209,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2826,7 +2801,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             133 => [
-                'id' => 210,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2847,7 +2822,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             134 => [
-                'id' => 211,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2868,7 +2843,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             135 => [
-                'id' => 212,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2889,7 +2864,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             136 => [
-                'id' => 213,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2910,7 +2885,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             137 => [
-                'id' => 214,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2931,7 +2906,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             138 => [
-                'id' => 215,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2952,7 +2927,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             139 => [
-                'id' => 216,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -2973,7 +2948,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             140 => [
-                'id' => 217,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -2994,7 +2969,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             141 => [
-                'id' => 218,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -3015,7 +2990,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             142 => [
-                'id' => 221,
+
                 'espesificaciones' => '<a href="#"><h1>prueba eliminar</a>',
                 'cantidad' => 3,
                 'producto_id' => 12,
@@ -3036,7 +3011,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             143 => [
-                'id' => 222,
+
                 'espesificaciones' => '1',
                 'cantidad' => 1,
                 'producto_id' => 25,
@@ -3057,7 +3032,7 @@ class ProductosRequisicionTableSeeder extends Seeder
                 'total' => null,
             ],
             144 => [
-                'id' => 225,
+
                 'espesificaciones' => 'Impresión de 300 trípticos sobre servicios de S4B por $4,212 MXN antes de IVA.
 Pago en línea con tarjeta de crédito.',
                 'cantidad' => 300,
@@ -3079,7 +3054,7 @@ Pago en línea con tarjeta de crédito.',
                 'total' => '4885.92',
             ],
             145 => [
-                'id' => 226,
+
                 'espesificaciones' => 'Fianza de Cumplimiento No. 162090182231835 que ampara al Contrato IFT-LPN-033-23 para los Servicios de Mantenimiento del Sistema de Gestión de Seguridad de la Información.',
                 'cantidad' => 1,
                 'producto_id' => 16,
@@ -3100,8 +3075,8 @@ Pago en línea con tarjeta de crédito.',
                 'total' => '9343.439999999999',
             ],
             146 => [
-                'id' => 230,
-                'espesificaciones' => 'FIANZA QUE AMPARA EL ENDOSO DE AUMENTO PARA LA POLIZA No162090182214561 POR MONTO  DEL CONVENIO MODIFICATORIO CNSF-054CM012/2022 
+
+                'espesificaciones' => 'FIANZA QUE AMPARA EL ENDOSO DE AUMENTO PARA LA POLIZA No162090182214561 POR MONTO  DEL CONVENIO MODIFICATORIO CNSF-054CM012/2022
 
 162090182214561',
                 'cantidad' => 1,
@@ -3123,7 +3098,7 @@ Pago en línea con tarjeta de crédito.',
                 'total' => '4373.2',
             ],
             147 => [
-                'id' => 232,
+
                 'espesificaciones' => 'Contenedores para almuerzo, de diferentes colores, para cumpleaños de los colaboradores.',
                 'cantidad' => 50,
                 'producto_id' => 26,
@@ -3144,7 +3119,7 @@ Pago en línea con tarjeta de crédito.',
                 'total' => '5444.5',
             ],
             148 => [
-                'id' => 233,
+
                 'espesificaciones' => 'test',
                 'cantidad' => 1,
                 'producto_id' => 9,
@@ -3165,9 +3140,9 @@ Pago en línea con tarjeta de crédito.',
                 'total' => null,
             ],
             149 => [
-                'id' => 234,
+
                 'espesificaciones' => '-Material digital en español
--Examen de certificación avalado por CertiProf 
+-Examen de certificación avalado por CertiProf
 -Segundo intento de examen de certificación SIN costo adicional
 -Acceso a la plataforma de alumnos
 
@@ -3191,12 +3166,12 @@ El total a pagar se prorrateará entre las diferentes áreas que participan.  ',
                 'total' => null,
             ],
             150 => [
-                'id' => 235,
-            'espesificaciones' => '1. Bewinner Mini USB Hub Kit de Conversión de Adaptador de Divisor de Cargador Doble USB de 2 Puertos Aleación de Aluminio + PC Mini hub Pequeño/Portátil/Resistente/Duradero para Mac, PC(Negro): 
-- Costo por pieza $65 MXN 
+
+                'espesificaciones' => '1. Bewinner Mini USB Hub Kit de Conversión de Adaptador de Divisor de Cargador Doble USB de 2 Puertos Aleación de Aluminio + PC Mini hub Pequeño/Portátil/Resistente/Duradero para Mac, PC(Negro):
+- Costo por pieza $65 MXN
 - Piezas 50
-- Costo total $3,250 MXN 
-- Entrega GRATIS 
+- Costo total $3,250 MXN
+- Entrega GRATIS
 - Pedido a través de Amazon
 - Link: https://www.amazon.com.mx/Bewinner-Conversi%C3%B3n-Adaptador-Cargador-Resistente/dp/B07QFKJ8KB/ref=sr_1_4?__mk_es_MX=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=Z8Q75ZXNBNIJ&keywords=adaptador+de+doble+entrada+usb&qid=1692635144&sprefix=adaptador+de+doble+entrada+usb%2Caps%2C134&sr=8-4',
                 'cantidad' => 50,
@@ -3218,7 +3193,7 @@ El total a pagar se prorrateará entre las diferentes áreas que participan.  ',
                 'total' => '3250',
             ],
             151 => [
-                'id' => 236,
+
                 'espesificaciones' => '2. Llave de seguridad FIDO U2F Plegable Protección Adicional para Windows/Linux/Mac -Negro
 - Costo por pieza: $510.74 MXN
 - Piezas 10
@@ -3245,8 +3220,8 @@ El total a pagar se prorrateará entre las diferentes áreas que participan.  ',
                 'total' => '6075.4',
             ],
             152 => [
-                'id' => 237,
-            'espesificaciones' => '3. Bloqueador de datos de 4ª generación (4 piezas) - Bloqueador de datos USB C y bloqueador de datos USB, para cualquier carga de teléfono móvil USB C, protege contra el zumo de jugo, a prueba de hack, bloqueador de datos
+
+                'espesificaciones' => '3. Bloqueador de datos de 4ª generación (4 piezas) - Bloqueador de datos USB C y bloqueador de datos USB, para cualquier carga de teléfono móvil USB C, protege contra el zumo de jugo, a prueba de hack, bloqueador de datos
 - Costo por pieza: $239 MXN
 - Piezas 10
 - Costo de envío $76.43 MXN
@@ -3272,7 +3247,7 @@ El total a pagar se prorrateará entre las diferentes áreas que participan.  ',
                 'total' => '2844',
             ],
             153 => [
-                'id' => 238,
+
                 'espesificaciones' => 'test',
                 'cantidad' => 1,
                 'producto_id' => 15,
@@ -3293,7 +3268,7 @@ El total a pagar se prorrateará entre las diferentes áreas que participan.  ',
                 'total' => null,
             ],
             154 => [
-                'id' => 244,
+
                 'espesificaciones' => 'Evento: Patrocinio Torneo de golf Stratosphere Cybersecurity 2023',
                 'cantidad' => 1,
                 'producto_id' => 13,
@@ -3314,7 +3289,7 @@ El total a pagar se prorrateará entre las diferentes áreas que participan.  ',
                 'total' => null,
             ],
             155 => [
-                'id' => 246,
+
                 'espesificaciones' => 'Para el proyecto IFT se requieren las 2 siguientes normas ISO 27001:2022 e ISO 27002:2022',
                 'cantidad' => 2,
                 'producto_id' => 27,
@@ -3335,7 +3310,7 @@ El total a pagar se prorrateará entre las diferentes áreas que participan.  ',
                 'total' => '4689.3',
             ],
             156 => [
-                'id' => 247,
+
                 'espesificaciones' => 'Patrocinio Torneo de golf Stratosphere Cybersecurity Oro',
                 'cantidad' => 1,
                 'producto_id' => 3,
@@ -3356,635 +3331,635 @@ El total a pagar se prorrateará entre las diferentes áreas que participan.  ',
                 'total' => null,
             ],
             157 => [
-                'id' => 251,
-                'espesificaciones' => '1.- Trinzic 1415 Software Bundle, DDI and Grid IB-MNT PRM-P Premium SN:1405201610700052, 1405201610700058, 2594275-2, 2594275-3, 
+
+                'espesificaciones' => '1.- Trinzic 1415 Software Bundle, DDI and Grid IB-MNT PRM-P Premium SN:1405201610700052, 1405201610700058, 2594275-2, 2594275-3,
 2594275-1.  CANTIDAD: 2
 
 2.- Trinzic 1405 (Hardware Only) IB-MNT PRM-P Premium SN:1405201610700052, 1405201610700058. CANTIDAD: 2
 
-3.- Trinzic 1415 Software Bundle, DDI and Grid IB-MNT PRM-P Premium SN: 1405201703700122, 1405201807700329, 2623418-3, 2623418-2, 2623418-1. CANTIDAD 2 
+3.- Trinzic 1415 Software Bundle, DDI and Grid IB-MNT PRM-P Premium SN: 1405201703700122, 1405201807700329, 2623418-3, 2623418-2, 2623418-1. CANTIDAD 2
 
-4.- Trinzic 1405 (Hardware Only IB-MNT PRM-P Premium SN:1405201703700122, 1405201807700329 CANTIDAD:2 
+4.- Trinzic 1405 (Hardware Only IB-MNT PRM-P Premium SN:1405201703700122, 1405201807700329 CANTIDAD:2
 
 ',
-                    'cantidad' => 1,
-                    'producto_id' => 11,
-                    'requisiciones_id' => 97,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-04 19:26:37',
-                    'updated_at' => '2023-09-04 19:26:37',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                158 => [
-                    'id' => 252,
-                    'espesificaciones' => 'Central Intercept X Advanced - 50-99
+                'cantidad' => 1,
+                'producto_id' => 11,
+                'requisiciones_id' => 97,
+                'deleted_at' => null,
+                'created_at' => '2023-09-04 19:26:37',
+                'updated_at' => '2023-09-04 19:26:37',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            158 => [
+
+                'espesificaciones' => 'Central Intercept X Advanced - 50-99
 USERS - 12 MOS - RENEWAL',
-                    'cantidad' => 50,
-                    'producto_id' => 27,
-                    'requisiciones_id' => 96,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-05 19:08:39',
-                    'updated_at' => '2023-09-05 19:08:39',
-                    'contrato_id' => 2,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => 21,
-                    'sub_total' => '1213.03',
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => '194.08',
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => '1407.11',
-                ],
-                159 => [
-                    'id' => 254,
-                    'espesificaciones' => 'Fianza de Cumplimiento No. 162090182231903 que ampara el cumplimiento del Contrato CONEVAL No. CGA/DETIC/30/2023 para el Licenciamiento Trellix Fireeye.',
-                    'cantidad' => 1,
-                    'producto_id' => 16,
-                    'requisiciones_id' => 89,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-06 09:49:48',
-                    'updated_at' => '2023-09-06 09:49:48',
-                    'contrato_id' => 167,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => 11,
-                    'sub_total' => '4397.15',
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => '703.54',
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => '5100.69',
-                ],
-                160 => [
-                    'id' => 256,
-                    'espesificaciones' => 'Póliza de Responsabilidad Civil "DATA PROTECT"  No. 111481683 que ampara a SILENT4BUSINESS, S.A DE C.V . Esta póliza cubre la Responsabilidad Civil relacionada con Seguro de Protección de Datos y Seguridad Informática con una vigencia del 18 de agosto de 2023 al 18 de agosto de 2024',
-                    'cantidad' => 1,
-                    'producto_id' => 17,
-                    'requisiciones_id' => 99,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-06 11:03:23',
-                    'updated_at' => '2023-09-06 11:03:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                161 => [
-                    'id' => 258,
-                    'espesificaciones' => 'Cintas portagafetes personalizadas, con logotipo, en técnica de sublimación.',
-                    'cantidad' => 75,
-                    'producto_id' => 28,
-                    'requisiciones_id' => 100,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-07 10:59:43',
-                    'updated_at' => '2023-09-07 10:59:43',
-                    'contrato_id' => 181,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => 3,
-                    'sub_total' => '3375',
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => '540',
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => '3915',
-                ],
-                162 => [
-                    'id' => 259,
-                    'espesificaciones' => 'Cintas portagafetes personalizadas, con logotipo, en técnica de sublimación.',
-                    'cantidad' => 25,
-                    'producto_id' => 28,
-                    'requisiciones_id' => 100,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-07 10:59:43',
-                    'updated_at' => '2023-09-07 10:59:43',
-                    'contrato_id' => 181,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => 19,
-                    'sub_total' => '1125',
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => '180',
-                    'iva_retenido' => '56.25',
-                    'isr_retenido' => null,
-                    'total' => '1248.75',
-                ],
-                163 => [
-                    'id' => 260,
+                'cantidad' => 50,
+                'producto_id' => 27,
+                'requisiciones_id' => 96,
+                'deleted_at' => null,
+                'created_at' => '2023-09-05 19:08:39',
+                'updated_at' => '2023-09-05 19:08:39',
+                'contrato_id' => 2,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 21,
+                'sub_total' => '1213.03',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '194.08',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '1407.11',
+            ],
+            159 => [
+
+                'espesificaciones' => 'Fianza de Cumplimiento No. 162090182231903 que ampara el cumplimiento del Contrato CONEVAL No. CGA/DETIC/30/2023 para el Licenciamiento Trellix Fireeye.',
+                'cantidad' => 1,
+                'producto_id' => 16,
+                'requisiciones_id' => 89,
+                'deleted_at' => null,
+                'created_at' => '2023-09-06 09:49:48',
+                'updated_at' => '2023-09-06 09:49:48',
+                'contrato_id' => 167,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 11,
+                'sub_total' => '4397.15',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '703.54',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '5100.69',
+            ],
+            160 => [
+
+                'espesificaciones' => 'Póliza de Responsabilidad Civil "DATA PROTECT"  No. 111481683 que ampara a SILENT4BUSINESS, S.A DE C.V . Esta póliza cubre la Responsabilidad Civil relacionada con Seguro de Protección de Datos y Seguridad Informática con una vigencia del 18 de agosto de 2023 al 18 de agosto de 2024',
+                'cantidad' => 1,
+                'producto_id' => 17,
+                'requisiciones_id' => 99,
+                'deleted_at' => null,
+                'created_at' => '2023-09-06 11:03:23',
+                'updated_at' => '2023-09-06 11:03:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            161 => [
+
+                'espesificaciones' => 'Cintas portagafetes personalizadas, con logotipo, en técnica de sublimación.',
+                'cantidad' => 75,
+                'producto_id' => 28,
+                'requisiciones_id' => 100,
+                'deleted_at' => null,
+                'created_at' => '2023-09-07 10:59:43',
+                'updated_at' => '2023-09-07 10:59:43',
+                'contrato_id' => 181,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 3,
+                'sub_total' => '3375',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '540',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '3915',
+            ],
+            162 => [
+
+                'espesificaciones' => 'Cintas portagafetes personalizadas, con logotipo, en técnica de sublimación.',
+                'cantidad' => 25,
+                'producto_id' => 28,
+                'requisiciones_id' => 100,
+                'deleted_at' => null,
+                'created_at' => '2023-09-07 10:59:43',
+                'updated_at' => '2023-09-07 10:59:43',
+                'contrato_id' => 181,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 19,
+                'sub_total' => '1125',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '180',
+                'iva_retenido' => '56.25',
+                'isr_retenido' => null,
+                'total' => '1248.75',
+            ],
+            163 => [
+
                 'espesificaciones' => 'Envío por paquetería DHL del NDA Silen4Cloud- Bancrea, cliente de Rosa Isela Hernández (Comercial - Monterrey).',
-                    'cantidad' => 1,
-                    'producto_id' => 5,
-                    'requisiciones_id' => 98,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-07 11:03:41',
-                    'updated_at' => '2023-09-07 11:03:41',
-                    'contrato_id' => 180,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => 11,
-                    'sub_total' => '236.38',
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => '37.83',
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => '274.21',
-                ],
-                164 => [
-                    'id' => 262,
+                'cantidad' => 1,
+                'producto_id' => 5,
+                'requisiciones_id' => 98,
+                'deleted_at' => null,
+                'created_at' => '2023-09-07 11:03:41',
+                'updated_at' => '2023-09-07 11:03:41',
+                'contrato_id' => 180,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 11,
+                'sub_total' => '236.38',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '37.83',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '274.21',
+            ],
+            164 => [
+
                 'espesificaciones' => 'Bases para la Licitación Pública Nacional Mixta No. 40051001-067-23 (CAGEG-067/2023), para la Contratación de Arrendamiento de Activos Intangibles del estado de Guanajuato. ',
-                    'cantidad' => 1,
-                    'producto_id' => 15,
-                    'requisiciones_id' => 102,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-08 13:53:11',
-                    'updated_at' => '2023-09-08 13:53:11',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                165 => [
-                    'id' => 281,
+                'cantidad' => 1,
+                'producto_id' => 15,
+                'requisiciones_id' => 102,
+                'deleted_at' => null,
+                'created_at' => '2023-09-08 13:53:11',
+                'updated_at' => '2023-09-08 13:53:11',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            165 => [
+
                 'espesificaciones' => 'Nitro Bola de Golf de Distancia máxima (Paquete de 12)
 Precio $597.00 MXN
 Captura del producto o servicio
 Compra a través de Amazon
 Link: https://www.amazon.com.mx/Nitro-m%C3%A1xima-distancia-pelota-Paquete/dp/B007MR4DG6/ref=pd_vtp_h_pd_vtp_h_sccl_2/144-4281328-6702554?pd_rd_w=1PrwT&content-id=amzn1.sym.927086b8-524e-47e1-af6d-d38487f46c2c&pf_rd_p=927086b8-524e-47e1-af6d-d38487f46c2c&pf_rd_r=JDMG6KFJRGEM1MRWNVGJ&pd_rd_wg=cNmAh&pd_rd_r=be5bd0dc-9e96-4f22-b756-507dd5896310&pd_rd_i=B007MR4DG6&th=1',
-                    'cantidad' => 3,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 106,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-14 09:39:23',
-                    'updated_at' => '2023-09-14 09:39:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                166 => [
-                    'id' => 282,
-                    'espesificaciones' => 'NDOOL 6 Unidades Toallas Refrescantes para el Cuello, Toallas de Baño de Hielo de Microfibra, Toallitas Suaves y Transpirables para el Sudor para Yoga, Golf, Gimnasio, Camping, Correr, Entrenamiento
+                'cantidad' => 3,
+                'producto_id' => 13,
+                'requisiciones_id' => 106,
+                'deleted_at' => null,
+                'created_at' => '2023-09-14 09:39:23',
+                'updated_at' => '2023-09-14 09:39:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            166 => [
+
+                'espesificaciones' => 'NDOOL 6 Unidades Toallas Refrescantes para el Cuello, Toallas de Baño de Hielo de Microfibra, Toallitas Suaves y Transpirables para el Sudor para Yoga, Golf, Gimnasio, Camping, Correr, Entrenamiento
 Precio $990.00 MXN
 Compra a través de Amazon
 Link: https://www.amazon.com.mx/NDOOL-Refrescantes-Microfibra-Transpirables-Entrenamiento/dp/B0C2TKVCWL/ref=sr_1_15_sspa?adgrpid=135386414813&hvadid=605096045427&hvdev=c&hvlocphy=9138746&hvnetw=g&hvqmt=e&hvrand=11821437348395109692&hvtargid=kwd-359984276349&hydadcr=25180_13508820&keywords=todo+para+golf&qid=1694450460&refinements=p_72%3A7073863011%2Cp_36%3A9841539011&rnid=9754432011&s=sports&sr=1-15-spons&ufe=app_do%3Aamzn1.fos.4e545b5e-1d45-498b-8193-a253464ffa47&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1',
-                    'cantidad' => 5,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 106,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-14 09:39:23',
-                    'updated_at' => '2023-09-14 09:39:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                167 => [
-                    'id' => 283,
+                'cantidad' => 5,
+                'producto_id' => 13,
+                'requisiciones_id' => 106,
+                'deleted_at' => null,
+                'created_at' => '2023-09-14 09:39:23',
+                'updated_at' => '2023-09-14 09:39:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            167 => [
+
                 'espesificaciones' => 'Pride Professional Tee System Tees de Golf de plástico (Paquete de 50)
 Precio $301.00 MXN
 Link: https://www.amazon.com.mx/Pride-Professional-Tee-System-Evolution/dp/B00BIZPXWQ/ref=pd_bxgy_sccl_2/144-4281328-6702554?pd_rd_w=XRunk&content-id=amzn1.sym.073f9082-4467-4f70-939c-f1e02d32ade1&pf_rd_p=073f9082-4467-4f70-939c-f1e02d32ade1&pf_rd_r=6PNJM6W85HD0TY8VGNJ4&pd_rd_wg=DUo8Z&pd_rd_r=cc2e57ea-5e10-4ce7-a68d-e9a828afb6c7&pd_rd_i=B00BIZPXWQ&th=1',
-                    'cantidad' => 1,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 106,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-14 09:39:23',
-                    'updated_at' => '2023-09-14 09:39:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                168 => [
-                    'id' => 284,
-                    'espesificaciones' => 'GoPong 8 Foot Beer Pong Table with Customizable Dry Erase Surface
+                'cantidad' => 1,
+                'producto_id' => 13,
+                'requisiciones_id' => 106,
+                'deleted_at' => null,
+                'created_at' => '2023-09-14 09:39:23',
+                'updated_at' => '2023-09-14 09:39:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            168 => [
+
+                'espesificaciones' => 'GoPong 8 Foot Beer Pong Table with Customizable Dry Erase Surface
 Precio $2,911.84
 Link: https://www.amazon.com.mx/GoPong-Table-Customizable-Erase-Surface/dp/B00TGOKASI/ref=sr_1_3?keywords=beer%2Bpong&qid=1694449264&sr=8-3&ufe=app_do%3Aamzn1.fos.684d7088-05e5-4efe-9a5c-2533b3a603ad&th=1',
-                    'cantidad' => 1,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 106,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-14 09:39:23',
-                    'updated_at' => '2023-09-14 09:39:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                169 => [
-                    'id' => 285,
-                    'espesificaciones' => 'Sombrero con visera para mujer y hombre, visera para mujer, visera de tenis, visera de golf, visera para correr
+                'cantidad' => 1,
+                'producto_id' => 13,
+                'requisiciones_id' => 106,
+                'deleted_at' => null,
+                'created_at' => '2023-09-14 09:39:23',
+                'updated_at' => '2023-09-14 09:39:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            169 => [
+
+                'espesificaciones' => 'Sombrero con visera para mujer y hombre, visera para mujer, visera de tenis, visera de golf, visera para correr
 Precio $5,271.46
 Link: https://www.amazon.com.mx/OutdoorEssentials-Visera-correr-Blanco-Talla/dp/B096WGSBCY/ref=rvi_sccl_2/144-4281328-6702554?pd_rd_w=cKwE5&content-id=amzn1.sym.39b841eb-b9fa-4001-8647-a107484d25b9&pf_rd_p=39b841eb-b9fa-4001-8647-a107484d25b9&pf_rd_r=RV4YDPMPGVPW8Z00W2GJ&pd_rd_wg=n6PdZ&pd_rd_r=b4ac5cd6-7160-4b41-b081-a844bf85ea80&pd_rd_i=B096WGSBCY&th=1&psc=1',
-                    'cantidad' => 15,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 106,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-14 09:39:23',
-                    'updated_at' => '2023-09-14 09:39:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                170 => [
-                    'id' => 287,
-                    'espesificaciones' => 'Membresia de PMI para iniciar tramite de éxamen PMP
+                'cantidad' => 15,
+                'producto_id' => 13,
+                'requisiciones_id' => 106,
+                'deleted_at' => null,
+                'created_at' => '2023-09-14 09:39:23',
+                'updated_at' => '2023-09-14 09:39:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            170 => [
+
+                'espesificaciones' => 'Membresia de PMI para iniciar tramite de éxamen PMP
 129USD',
-                    'cantidad' => 129,
-                    'producto_id' => 7,
-                    'requisiciones_id' => 108,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-14 23:17:00',
-                    'updated_at' => '2023-09-14 23:17:00',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                171 => [
-                    'id' => 288,
-                    'espesificaciones' => 'Se envía documento "Carta para recibir notificaciones" para el Estado de Guanajuato y concluir la actualización del Padrón de Proveedores.',
-                    'cantidad' => 1,
-                    'producto_id' => 5,
-                    'requisiciones_id' => 109,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-18 10:58:10',
-                    'updated_at' => '2023-09-18 10:58:10',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                172 => [
-                    'id' => 290,
-                    'espesificaciones' => 'Certificación Auditor Líder 27001:2022',
-                    'cantidad' => 1,
-                    'producto_id' => 25,
-                    'requisiciones_id' => 110,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-18 15:49:14',
-                    'updated_at' => '2023-09-18 15:49:14',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                173 => [
-                    'id' => 292,
-                    'espesificaciones' => 'Evento cocoyoc Cena y bebidas del 29 de septiembre, desayuno, comida y cena + bebidas no alcohólicas del sábado 30 de septiembre y desayuno y bedidas del domingo 1de octubre.',
-                    'cantidad' => 1,
-                    'producto_id' => 29,
-                    'requisiciones_id' => 112,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-19 13:02:47',
-                    'updated_at' => '2023-09-19 13:02:47',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                174 => [
-                    'id' => 299,
-                    'espesificaciones' => 'Grabado de Tees Profesionales
+                'cantidad' => 129,
+                'producto_id' => 7,
+                'requisiciones_id' => 108,
+                'deleted_at' => null,
+                'created_at' => '2023-09-14 23:17:00',
+                'updated_at' => '2023-09-14 23:17:00',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            171 => [
+
+                'espesificaciones' => 'Se envía documento "Carta para recibir notificaciones" para el Estado de Guanajuato y concluir la actualización del Padrón de Proveedores.',
+                'cantidad' => 1,
+                'producto_id' => 5,
+                'requisiciones_id' => 109,
+                'deleted_at' => null,
+                'created_at' => '2023-09-18 10:58:10',
+                'updated_at' => '2023-09-18 10:58:10',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            172 => [
+
+                'espesificaciones' => 'Certificación Auditor Líder 27001:2022',
+                'cantidad' => 1,
+                'producto_id' => 25,
+                'requisiciones_id' => 110,
+                'deleted_at' => null,
+                'created_at' => '2023-09-18 15:49:14',
+                'updated_at' => '2023-09-18 15:49:14',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            173 => [
+
+                'espesificaciones' => 'Evento cocoyoc Cena y bebidas del 29 de septiembre, desayuno, comida y cena + bebidas no alcohólicas del sábado 30 de septiembre y desayuno y bedidas del domingo 1de octubre.',
+                'cantidad' => 1,
+                'producto_id' => 29,
+                'requisiciones_id' => 112,
+                'deleted_at' => null,
+                'created_at' => '2023-09-19 13:02:47',
+                'updated_at' => '2023-09-19 13:02:47',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            174 => [
+
+                'espesificaciones' => 'Grabado de Tees Profesionales
 Costo total: $500 MXN
 ',
-                    'cantidad' => 50,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 113,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-19 13:43:23',
-                    'updated_at' => '2023-09-19 13:43:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                175 => [
-                    'id' => 300,
-                    'espesificaciones' => 'Grabado Viseras 
+                'cantidad' => 50,
+                'producto_id' => 13,
+                'requisiciones_id' => 113,
+                'deleted_at' => null,
+                'created_at' => '2023-09-19 13:43:23',
+                'updated_at' => '2023-09-19 13:43:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            175 => [
+
+                'espesificaciones' => 'Grabado Viseras
 Costo total: $150 MXN
 ',
-                    'cantidad' => 15,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 113,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-19 13:43:23',
-                    'updated_at' => '2023-09-19 13:43:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                176 => [
-                    'id' => 301,
-                    'espesificaciones' => 'Grabado Toalla Microfibra
+                'cantidad' => 15,
+                'producto_id' => 13,
+                'requisiciones_id' => 113,
+                'deleted_at' => null,
+                'created_at' => '2023-09-19 13:43:23',
+                'updated_at' => '2023-09-19 13:43:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            176 => [
+
+                'espesificaciones' => 'Grabado Toalla Microfibra
 Costo total: $600 MXN',
-                    'cantidad' => 30,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 113,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-19 13:43:23',
-                    'updated_at' => '2023-09-19 13:43:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                177 => [
-                    'id' => 302,
-                    'espesificaciones' => 'Grabado Pelotas de Golf
+                'cantidad' => 30,
+                'producto_id' => 13,
+                'requisiciones_id' => 113,
+                'deleted_at' => null,
+                'created_at' => '2023-09-19 13:43:23',
+                'updated_at' => '2023-09-19 13:43:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            177 => [
+
+                'espesificaciones' => 'Grabado Pelotas de Golf
 Costo total: $720 MXN',
-                    'cantidad' => 36,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 113,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-19 13:43:23',
-                    'updated_at' => '2023-09-19 13:43:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                178 => [
-                    'id' => 303,
-                    'espesificaciones' => 'Grabado Bloqueado de Datos
+                'cantidad' => 36,
+                'producto_id' => 13,
+                'requisiciones_id' => 113,
+                'deleted_at' => null,
+                'created_at' => '2023-09-19 13:43:23',
+                'updated_at' => '2023-09-19 13:43:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            178 => [
+
+                'espesificaciones' => 'Grabado Bloqueado de Datos
 Costo total: $400 MXN',
-                    'cantidad' => 40,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 113,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-19 13:43:23',
-                    'updated_at' => '2023-09-19 13:43:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                179 => [
-                    'id' => 304,
-                    'espesificaciones' => 'Grabado de Adaptador Divisor de Carga Doble USB
+                'cantidad' => 40,
+                'producto_id' => 13,
+                'requisiciones_id' => 113,
+                'deleted_at' => null,
+                'created_at' => '2023-09-19 13:43:23',
+                'updated_at' => '2023-09-19 13:43:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            179 => [
+
+                'espesificaciones' => 'Grabado de Adaptador Divisor de Carga Doble USB
 Costo total: $500 MXN',
-                    'cantidad' => 50,
-                    'producto_id' => 13,
-                    'requisiciones_id' => 113,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-19 13:43:23',
-                    'updated_at' => '2023-09-19 13:43:23',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                180 => [
-                    'id' => 305,
-                    'espesificaciones' => 'EXAMEN DE CERTIFICACIÓN CYBER SECURITY FOUNDATION - CSFPC',
-                    'cantidad' => 10,
-                    'producto_id' => 25,
-                    'requisiciones_id' => 114,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-19 16:24:27',
-                    'updated_at' => '2023-09-19 16:24:27',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                181 => [
-                    'id' => 309,
-                    'espesificaciones' => 'Barra libre para evento de cocoyoc, 10 horas  para 60 personas.
+                'cantidad' => 50,
+                'producto_id' => 13,
+                'requisiciones_id' => 113,
+                'deleted_at' => null,
+                'created_at' => '2023-09-19 13:43:23',
+                'updated_at' => '2023-09-19 13:43:23',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            180 => [
+
+                'espesificaciones' => 'EXAMEN DE CERTIFICACIÓN CYBER SECURITY FOUNDATION - CSFPC',
+                'cantidad' => 10,
+                'producto_id' => 25,
+                'requisiciones_id' => 114,
+                'deleted_at' => null,
+                'created_at' => '2023-09-19 16:24:27',
+                'updated_at' => '2023-09-19 16:24:27',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            181 => [
+
+                'espesificaciones' => 'Barra libre para evento de cocoyoc, 10 horas  para 60 personas.
 Costo unitario de  410 más IVA por persona
 
 Pago de anticipo: $5,000, liquidar 1 semana antes del evento',
-                    'cantidad' => 1,
-                    'producto_id' => 3,
-                    'requisiciones_id' => 107,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-19 16:42:47',
-                    'updated_at' => '2023-09-19 16:42:47',
-                    'contrato_id' => 181,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => 3,
-                    'sub_total' => '24600',
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => '3936',
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => '28536',
-                ],
-                182 => [
-                    'id' => 314,
-                    'espesificaciones' => 'Pago DHL guía para entregar el contrato de C&A - Silent4Cloud Storage objetos- Stratosphere.',
-                    'cantidad' => 1,
-                    'producto_id' => 5,
-                    'requisiciones_id' => 117,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-20 13:05:32',
-                    'updated_at' => '2023-09-20 13:05:32',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                183 => [
-                    'id' => 315,
-                    'espesificaciones' => 'DJ EVENTO COCOYOC: 
+                'cantidad' => 1,
+                'producto_id' => 3,
+                'requisiciones_id' => 107,
+                'deleted_at' => null,
+                'created_at' => '2023-09-19 16:42:47',
+                'updated_at' => '2023-09-19 16:42:47',
+                'contrato_id' => 181,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 3,
+                'sub_total' => '24600',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '3936',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '28536',
+            ],
+            182 => [
+
+                'espesificaciones' => 'Pago DHL guía para entregar el contrato de C&A - Silent4Cloud Storage objetos- Stratosphere.',
+                'cantidad' => 1,
+                'producto_id' => 5,
+                'requisiciones_id' => 117,
+                'deleted_at' => null,
+                'created_at' => '2023-09-20 13:05:32',
+                'updated_at' => '2023-09-20 13:05:32',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            183 => [
+
+                'espesificaciones' => 'DJ EVENTO COCOYOC:
 12 HORAS DE SERVICIO MUSICAL EN FORMATO DE Dj.  Con Horario de 12 PM a 12 AM. (El servicio consta de cabina de Led iluminada, Ingeniero de Audio y controladores operacionales).
 Incluye: Karaoke e Iluminación
 Costo total PRECIO TOTAL: $17,000. oo  (Diecisiete mil pesos 00/100 M/N). + IVA
 Se requiere anticipo del 50% para apartar la fecha ASAP y liquidar antes del evento',
-                    'cantidad' => 1,
-                    'producto_id' => 3,
-                    'requisiciones_id' => 111,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-20 13:13:50',
-                    'updated_at' => '2023-09-20 13:13:50',
-                    'contrato_id' => 181,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => 3,
-                    'sub_total' => '17000',
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => '2720',
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => '19720',
-                ],
-                184 => [
-                    'id' => 317,
-                    'espesificaciones' => 'UNIDAD DE ESTADO SOLIDO EXTERNO SANDISK 2TB USB 3.2 VELOCIDAD DE LECT. 520 MB/S USO RUDO',
-                    'cantidad' => 10,
-                    'producto_id' => 31,
-                    'requisiciones_id' => 115,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-20 14:00:13',
-                    'updated_at' => '2023-09-20 14:00:13',
-                    'contrato_id' => 191,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => 20,
-                    'sub_total' => '1160.80',
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => '185.728',
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => '1346.528',
-                ],
-                185 => [
-                    'id' => 318,
-                    'espesificaciones' => 'SERVICIO DE AFILIACION DE AMEDIRH, incluye:
+                'cantidad' => 1,
+                'producto_id' => 3,
+                'requisiciones_id' => 111,
+                'deleted_at' => null,
+                'created_at' => '2023-09-20 13:13:50',
+                'updated_at' => '2023-09-20 13:13:50',
+                'contrato_id' => 181,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 3,
+                'sub_total' => '17000',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '2720',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '19720',
+            ],
+            184 => [
+
+                'espesificaciones' => 'UNIDAD DE ESTADO SOLIDO EXTERNO SANDISK 2TB USB 3.2 VELOCIDAD DE LECT. 520 MB/S USO RUDO',
+                'cantidad' => 10,
+                'producto_id' => 31,
+                'requisiciones_id' => 115,
+                'deleted_at' => null,
+                'created_at' => '2023-09-20 14:00:13',
+                'updated_at' => '2023-09-20 14:00:13',
+                'contrato_id' => 191,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 20,
+                'sub_total' => '1160.80',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '185.728',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '1346.528',
+            ],
+            185 => [
+
+                'espesificaciones' => 'SERVICIO DE AFILIACION DE AMEDIRH, incluye:
 * REVISTA ELECTRONICA BIMESTRAL "CREANDO VALORH"
 * BOLSA DE TRABAJO
 * BARRA DE CONSULTORIA EN MATERIA LABORAL Y SEGURO SOCIAL.
@@ -3995,27 +3970,27 @@ PERIODO: AGOSTO 2023 A JULIO 2024.
 SERVICIO EXENTO DE I.V.A. Objeto Impuesto02 - Si Objeto de Impuesto
 26,041.00 + IVA
 ',
-                    'cantidad' => 1,
-                    'producto_id' => 7,
-                    'requisiciones_id' => 118,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-20 15:29:49',
-                    'updated_at' => '2023-09-20 15:29:49',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                186 => [
-                    'id' => 321,
-                    'espesificaciones' => '2 esponjas
+                'cantidad' => 1,
+                'producto_id' => 7,
+                'requisiciones_id' => 118,
+                'deleted_at' => null,
+                'created_at' => '2023-09-20 15:29:49',
+                'updated_at' => '2023-09-20 15:29:49',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            186 => [
+
+                'espesificaciones' => '2 esponjas
 70 pompones
 40 pelotas (tipo beerpong) se deberán ver 20 de una forma y otras 20 de otro
 2 pelotas tipo soccer de colores diferentes
@@ -4025,7 +4000,7 @@ SERVICIO EXENTO DE I.V.A. Objeto Impuesto02 - Si Objeto de Impuesto
 50 platos desechables
 
 10 pistolas de agua
-8 estacas 
+8 estacas
 2 cubetas
 70 popotes
 2 porterías o similares
@@ -4034,240 +4009,240 @@ colorante de agua
 8 Banderines de la base
 
 Total cotizado de $6,043.50 con diferentes proveedores: Amazon, Walmart, Sam´s y Parisina',
-                    'cantidad' => 1,
-                    'producto_id' => 29,
-                    'requisiciones_id' => 120,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 12:51:45',
-                    'updated_at' => '2023-09-21 12:51:45',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                187 => [
-                    'id' => 322,
-                    'espesificaciones' => 'Cables HDMI de 3 metros.',
-                    'cantidad' => 5,
-                    'producto_id' => 4,
-                    'requisiciones_id' => 121,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 13:43:53',
-                    'updated_at' => '2023-09-21 13:43:53',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                188 => [
-                    'id' => 323,
-                    'espesificaciones' => 'Memorias usb de 16 GB',
-                    'cantidad' => 2,
-                    'producto_id' => 4,
-                    'requisiciones_id' => 121,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 13:43:53',
-                    'updated_at' => '2023-09-21 13:43:53',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                189 => [
-                    'id' => 324,
-                    'espesificaciones' => 'Bote de toallas limpiadoras ',
-                    'cantidad' => 2,
-                    'producto_id' => 4,
-                    'requisiciones_id' => 121,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 13:43:53',
-                    'updated_at' => '2023-09-21 13:43:53',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                190 => [
-                    'id' => 325,
-                    'espesificaciones' => '3 candados para laptop hp y 3 candados para laptop Dell',
-                    'cantidad' => 6,
-                    'producto_id' => 4,
-                    'requisiciones_id' => 121,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 13:43:53',
-                    'updated_at' => '2023-09-21 13:43:53',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                191 => [
-                    'id' => 326,
-                    'espesificaciones' => 'Franelas de microfibra.',
-                    'cantidad' => 2,
-                    'producto_id' => 4,
-                    'requisiciones_id' => 121,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 13:43:53',
-                    'updated_at' => '2023-09-21 13:43:53',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                192 => [
-                    'id' => 327,
-                    'espesificaciones' => 'Latas de aire comprimido.',
-                    'cantidad' => 5,
-                    'producto_id' => 4,
-                    'requisiciones_id' => 121,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 13:43:53',
-                    'updated_at' => '2023-09-21 13:43:53',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                193 => [
-                    'id' => 328,
+                'cantidad' => 1,
+                'producto_id' => 29,
+                'requisiciones_id' => 120,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 12:51:45',
+                'updated_at' => '2023-09-21 12:51:45',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            187 => [
+
+                'espesificaciones' => 'Cables HDMI de 3 metros.',
+                'cantidad' => 5,
+                'producto_id' => 4,
+                'requisiciones_id' => 121,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 13:43:53',
+                'updated_at' => '2023-09-21 13:43:53',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            188 => [
+
+                'espesificaciones' => 'Memorias usb de 16 GB',
+                'cantidad' => 2,
+                'producto_id' => 4,
+                'requisiciones_id' => 121,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 13:43:53',
+                'updated_at' => '2023-09-21 13:43:53',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            189 => [
+
+                'espesificaciones' => 'Bote de toallas limpiadoras ',
+                'cantidad' => 2,
+                'producto_id' => 4,
+                'requisiciones_id' => 121,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 13:43:53',
+                'updated_at' => '2023-09-21 13:43:53',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            190 => [
+
+                'espesificaciones' => '3 candados para laptop hp y 3 candados para laptop Dell',
+                'cantidad' => 6,
+                'producto_id' => 4,
+                'requisiciones_id' => 121,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 13:43:53',
+                'updated_at' => '2023-09-21 13:43:53',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            191 => [
+
+                'espesificaciones' => 'Franelas de microfibra.',
+                'cantidad' => 2,
+                'producto_id' => 4,
+                'requisiciones_id' => 121,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 13:43:53',
+                'updated_at' => '2023-09-21 13:43:53',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            192 => [
+
+                'espesificaciones' => 'Latas de aire comprimido.',
+                'cantidad' => 5,
+                'producto_id' => 4,
+                'requisiciones_id' => 121,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 13:43:53',
+                'updated_at' => '2023-09-21 13:43:53',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            193 => [
+
                 'espesificaciones' => ' Cables de red  RJ45( 10 cables de 3 M y 5 cables de 10).
 .
 Se realizo préstamo para proyecto del IMSS en San Luis',
-                    'cantidad' => 20,
-                    'producto_id' => 4,
-                    'requisiciones_id' => 121,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 13:43:53',
-                    'updated_at' => '2023-09-21 13:43:53',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                194 => [
-                    'id' => 329,
-                    'espesificaciones' => 'Cables de Poder C13 Coupler Macho - C14 de 3 M 
+                'cantidad' => 20,
+                'producto_id' => 4,
+                'requisiciones_id' => 121,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 13:43:53',
+                'updated_at' => '2023-09-21 13:43:53',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            194 => [
+
+                'espesificaciones' => 'Cables de Poder C13 Coupler Macho - C14 de 3 M
 
 Se realizo préstamo para proyecto del IMSS en San Luis.',
-                    'cantidad' => 10,
-                    'producto_id' => 4,
-                    'requisiciones_id' => 121,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 13:43:53',
-                    'updated_at' => '2023-09-21 13:43:53',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                195 => [
-                    'id' => 330,
-                    'espesificaciones' => 'Paquete de pilas AA ',
-                    'cantidad' => 1,
-                    'producto_id' => 4,
-                    'requisiciones_id' => 121,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 13:43:53',
-                    'updated_at' => '2023-09-21 13:43:53',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                196 => [
-                    'id' => 331,
-                    'espesificaciones' => 'Paquete de pilas AAA',
-                    'cantidad' => 1,
-                    'producto_id' => 4,
-                    'requisiciones_id' => 121,
-                    'deleted_at' => null,
-                    'created_at' => '2023-09-21 13:43:53',
-                    'updated_at' => '2023-09-21 13:43:53',
-                    'contrato_id' => null,
-                    'no_personas' => null,
-                    'porcentaje_involucramiento' => null,
-                    'centro_costo_id' => null,
-                    'sub_total' => null,
-                    'descuento' => null,
-                    'otro_impuesto' => null,
-                    'iva' => null,
-                    'iva_retenido' => null,
-                    'isr_retenido' => null,
-                    'total' => null,
-                ],
-                197 => [
-                    'id' => 335,
+                'cantidad' => 10,
+                'producto_id' => 4,
+                'requisiciones_id' => 121,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 13:43:53',
+                'updated_at' => '2023-09-21 13:43:53',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            195 => [
+
+                'espesificaciones' => 'Paquete de pilas AA ',
+                'cantidad' => 1,
+                'producto_id' => 4,
+                'requisiciones_id' => 121,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 13:43:53',
+                'updated_at' => '2023-09-21 13:43:53',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            196 => [
+
+                'espesificaciones' => 'Paquete de pilas AAA',
+                'cantidad' => 1,
+                'producto_id' => 4,
+                'requisiciones_id' => 121,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 13:43:53',
+                'updated_at' => '2023-09-21 13:43:53',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            197 => [
+
                 'espesificaciones' => '1) TAD-OP	1	Identity Exposure TAD-OP Dates: 8/31/2023 to 8/30/2026 Term: 36 Months Users: 3000 Order Type: New
 2) TAD-OP	1	Identity Exposure TAD-OP Dates: 9/28/2026 to 10/31/2026 Term: 1.129 Months Users: 3000 Order Type: Renewal
 3) SVC-TAD-QS20-RMT 1 Quick Start Deploy Remote Implementation for Tenable Identity ExposureSVC-TAD-QS20-RMT Start Date: 7/31/2023 Order Type: New
@@ -4277,181 +4252,181 @@ Se realizo préstamo para proyecto del IMSS en San Luis.',
 7) TRG-TAD-ESS-SEAT 3 2 Day Seat - Tenable Identity Exposure Specialist Course TRG-TAD-ESS-SEAT Start Date: 9/1/2025 Order Type: New
 8) TRG-TSC-ESS-SEAT 3 2 Day Seat - Tenable.sc Specialist Course TRG-TSC-ESS-SEAT Start Date: 9/1/2024 Order Type: New
 9) TRG-TSC-ESS-SEAT 3 2 Day Seat - Tenable.sc Specialist Course TRG-TSC-ESS-SEAT Start Date: 9/1/2025 Order Type: New',
-'cantidad' => 9,
-'producto_id' => 10,
-'requisiciones_id' => 119,
-'deleted_at' => null,
-'created_at' => '2023-09-21 20:03:36',
-'updated_at' => '2023-09-21 20:03:36',
-'contrato_id' => 191,
-'no_personas' => null,
-'porcentaje_involucramiento' => null,
-'centro_costo_id' => 8,
-'sub_total' => '261796.5',
-'descuento' => null,
-'otro_impuesto' => null,
-'iva' => '41887.44',
-'iva_retenido' => null,
-'isr_retenido' => null,
-'total' => '303683.94',
-],
-198 => [
-'id' => 336,
-'espesificaciones' => 'saliendo viernes y regresando domingo
+                'cantidad' => 9,
+                'producto_id' => 10,
+                'requisiciones_id' => 119,
+                'deleted_at' => null,
+                'created_at' => '2023-09-21 20:03:36',
+                'updated_at' => '2023-09-21 20:03:36',
+                'contrato_id' => 191,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 8,
+                'sub_total' => '261796.5',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '41887.44',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '303683.94',
+            ],
+            198 => [
+
+                'espesificaciones' => 'saliendo viernes y regresando domingo
 13,000 + IVA',
-'cantidad' => 1,
-'producto_id' => 29,
-'requisiciones_id' => 122,
-'deleted_at' => null,
-'created_at' => '2023-09-22 11:56:40',
-'updated_at' => '2023-09-22 11:56:40',
-'contrato_id' => null,
-'no_personas' => null,
-'porcentaje_involucramiento' => null,
-'centro_costo_id' => null,
-'sub_total' => null,
-'descuento' => null,
-'otro_impuesto' => null,
-'iva' => null,
-'iva_retenido' => null,
-'isr_retenido' => null,
-'total' => null,
-],
-199 => [
-'id' => 338,
-'espesificaciones' => 'tarjetas de presentacion',
-'cantidad' => 1,
-'producto_id' => 13,
-'requisiciones_id' => 124,
-'deleted_at' => null,
-'created_at' => '2023-09-22 16:41:04',
-'updated_at' => '2023-09-22 16:41:04',
-'contrato_id' => null,
-'no_personas' => null,
-'porcentaje_involucramiento' => null,
-'centro_costo_id' => null,
-'sub_total' => null,
-'descuento' => null,
-'otro_impuesto' => null,
-'iva' => null,
-'iva_retenido' => null,
-'isr_retenido' => null,
-'total' => null,
-],
-200 => [
-'id' => 339,
-'espesificaciones' => 'Para el proyecto del IMSS requerimos el siguiente licenciamiento: 
+                'cantidad' => 1,
+                'producto_id' => 29,
+                'requisiciones_id' => 122,
+                'deleted_at' => null,
+                'created_at' => '2023-09-22 11:56:40',
+                'updated_at' => '2023-09-22 11:56:40',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            199 => [
+
+                'espesificaciones' => 'tarjetas de presentacion',
+                'cantidad' => 1,
+                'producto_id' => 13,
+                'requisiciones_id' => 124,
+                'deleted_at' => null,
+                'created_at' => '2023-09-22 16:41:04',
+                'updated_at' => '2023-09-22 16:41:04',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            200 => [
+
+                'espesificaciones' => 'Para el proyecto del IMSS requerimos el siguiente licenciamiento:
 
 -Blancco LUN Eraser Volume 6 A 20',
-'cantidad' => 15,
-'producto_id' => 10,
-'requisiciones_id' => 101,
-'deleted_at' => null,
-'created_at' => '2023-09-25 10:56:03',
-'updated_at' => '2023-09-25 10:56:03',
-'contrato_id' => 182,
-'no_personas' => null,
-'porcentaje_involucramiento' => null,
-'centro_costo_id' => 15,
-'sub_total' => '2760.00',
-'descuento' => null,
-'otro_impuesto' => null,
-'iva' => '441.60',
-'iva_retenido' => null,
-'isr_retenido' => null,
-'total' => '3201.6',
-],
-201 => [
-'id' => 369,
-'espesificaciones' => 'Curso y examen de certificación para CISM',
-'cantidad' => 1,
-'producto_id' => 25,
-'requisiciones_id' => 127,
-'deleted_at' => null,
-'created_at' => '2023-09-26 13:52:44',
-'updated_at' => '2023-09-26 13:52:44',
-'contrato_id' => null,
-'no_personas' => null,
-'porcentaje_involucramiento' => null,
-'centro_costo_id' => null,
-'sub_total' => null,
-'descuento' => null,
-'otro_impuesto' => null,
-'iva' => null,
-'iva_retenido' => null,
-'isr_retenido' => null,
-'total' => null,
-],
-202 => [
-'id' => 370,
-'espesificaciones' => '100 playeras polo bordadas con costo unitario de 245 pesos cada uno.',
-'cantidad' => 1,
-'producto_id' => 28,
-'requisiciones_id' => 116,
-'deleted_at' => null,
-'created_at' => '2023-09-27 13:30:55',
-'updated_at' => '2023-09-27 13:30:55',
-'contrato_id' => 181,
-'no_personas' => null,
-'porcentaje_involucramiento' => null,
-'centro_costo_id' => 3,
-'sub_total' => '24500',
-'descuento' => null,
-'otro_impuesto' => null,
-'iva' => '3920',
-'iva_retenido' => '171',
-'isr_retenido' => null,
-'total' => '28249',
-],
-203 => [
-'id' => 371,
-'espesificaciones' => 'Impresión de logotipo S4B en diversos artículos promocionales',
-'cantidad' => 50,
-'producto_id' => 28,
-'requisiciones_id' => 116,
-'deleted_at' => null,
-'created_at' => '2023-09-27 13:30:55',
-'updated_at' => '2023-09-27 13:30:55',
-'contrato_id' => 181,
-'no_personas' => null,
-'porcentaje_involucramiento' => null,
-'centro_costo_id' => 19,
-'sub_total' => '2860',
-'descuento' => null,
-'otro_impuesto' => null,
-'iva' => '457.6',
-'iva_retenido' => '170',
-'isr_retenido' => null,
-'total' => '3146.6',
-],
-204 => [
-'id' => 372,
-'espesificaciones' => 'Carpa para Evento de Cocoyoc: Sábado todo el día. incluye 
+                'cantidad' => 15,
+                'producto_id' => 10,
+                'requisiciones_id' => 101,
+                'deleted_at' => null,
+                'created_at' => '2023-09-25 10:56:03',
+                'updated_at' => '2023-09-25 10:56:03',
+                'contrato_id' => 182,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 15,
+                'sub_total' => '2760.00',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '441.60',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '3201.6',
+            ],
+            201 => [
+
+                'espesificaciones' => 'Curso y examen de certificación para CISM',
+                'cantidad' => 1,
+                'producto_id' => 25,
+                'requisiciones_id' => 127,
+                'deleted_at' => null,
+                'created_at' => '2023-09-26 13:52:44',
+                'updated_at' => '2023-09-26 13:52:44',
+                'contrato_id' => null,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => null,
+                'sub_total' => null,
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => null,
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => null,
+            ],
+            202 => [
+
+                'espesificaciones' => '100 playeras polo bordadas con costo unitario de 245 pesos cada uno.',
+                'cantidad' => 1,
+                'producto_id' => 28,
+                'requisiciones_id' => 116,
+                'deleted_at' => null,
+                'created_at' => '2023-09-27 13:30:55',
+                'updated_at' => '2023-09-27 13:30:55',
+                'contrato_id' => 181,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 3,
+                'sub_total' => '24500',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '3920',
+                'iva_retenido' => '171',
+                'isr_retenido' => null,
+                'total' => '28249',
+            ],
+            203 => [
+
+                'espesificaciones' => 'Impresión de logotipo S4B en diversos artículos promocionales',
+                'cantidad' => 50,
+                'producto_id' => 28,
+                'requisiciones_id' => 116,
+                'deleted_at' => null,
+                'created_at' => '2023-09-27 13:30:55',
+                'updated_at' => '2023-09-27 13:30:55',
+                'contrato_id' => 181,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 19,
+                'sub_total' => '2860',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '457.6',
+                'iva_retenido' => '170',
+                'isr_retenido' => null,
+                'total' => '3146.6',
+            ],
+            204 => [
+
+                'espesificaciones' => 'Carpa para Evento de Cocoyoc: Sábado todo el día. incluye
 Carpa plana 10x 15 mts con iluminación con focos led tipo vintage, altura de 3 mts y 7 mesas redondas con 10 sillas c/u
 12,500 + IVA',
-'cantidad' => 1,
-'producto_id' => 3,
-'requisiciones_id' => 104,
-'deleted_at' => null,
-'created_at' => '2023-09-27 13:33:00',
-'updated_at' => '2023-09-27 13:33:00',
-'contrato_id' => 181,
-'no_personas' => null,
-'porcentaje_involucramiento' => null,
-'centro_costo_id' => 3,
-'sub_total' => '12600',
-'descuento' => null,
-'otro_impuesto' => null,
-'iva' => '2016',
-'iva_retenido' => null,
-'isr_retenido' => null,
-'total' => '14616',
-],
-205 => [
-'id' => 373,
-'espesificaciones' => 'Regalos de antigüedad para evento de cocoyoc que se otorgaran a:
-- Gerardo Garibay Aymes   
-- Alfredo Ramírez Olivera	
+                'cantidad' => 1,
+                'producto_id' => 3,
+                'requisiciones_id' => 104,
+                'deleted_at' => null,
+                'created_at' => '2023-09-27 13:33:00',
+                'updated_at' => '2023-09-27 13:33:00',
+                'contrato_id' => 181,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 3,
+                'sub_total' => '12600',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '2016',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '14616',
+            ],
+            205 => [
+
+                'espesificaciones' => 'Regalos de antigüedad para evento de cocoyoc que se otorgaran a:
+- Gerardo Garibay Aymes
+- Alfredo Ramírez Olivera
 -Miguel Angel Gaspar Galicia
 -María del Rosario Palomero Rivero
 -Marco Antonio Luna Robles
@@ -4459,45 +4434,45 @@ Carpa plana 10x 15 mts con iluminación con focos led tipo vintage, altura de 3 
 -Layla Delgadillo Aguilar
 
 Costo unitario de 1,225.00 + IVA',
-'cantidad' => 7,
-'producto_id' => 32,
-'requisiciones_id' => 103,
-'deleted_at' => null,
-'created_at' => '2023-09-27 13:47:28',
-'updated_at' => '2023-09-27 13:47:28',
-'contrato_id' => 181,
-'no_personas' => null,
-'porcentaje_involucramiento' => null,
-'centro_costo_id' => 3,
-'sub_total' => '11200',
-'descuento' => null,
-'otro_impuesto' => null,
-'iva' => '0',
-'iva_retenido' => null,
-'isr_retenido' => null,
-'total' => '11200',
-],
-206 => [
-'id' => 374,
-'espesificaciones' => 'tarjetas de presentación S4B de : Gerardo Garibay Aymes, Daniela Castro, Brenda Anziby, Rosa Hernández y Alfredo Olivera',
-'cantidad' => 1,
-'producto_id' => 28,
-'requisiciones_id' => 123,
-'deleted_at' => null,
-'created_at' => '2023-09-27 17:27:07',
-'updated_at' => '2023-09-27 17:27:07',
-'contrato_id' => 181,
-'no_personas' => null,
-'porcentaje_involucramiento' => null,
-'centro_costo_id' => 7,
-'sub_total' => '6750.00',
-'descuento' => null,
-'otro_impuesto' => null,
-'iva' => '1080.00',
-'iva_retenido' => '84.38',
-'isr_retenido' => null,
-'total' => '7745.62',
-],
-]);
+                'cantidad' => 7,
+                'producto_id' => 32,
+                'requisiciones_id' => 103,
+                'deleted_at' => null,
+                'created_at' => '2023-09-27 13:47:28',
+                'updated_at' => '2023-09-27 13:47:28',
+                'contrato_id' => 181,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 3,
+                'sub_total' => '11200',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '0',
+                'iva_retenido' => null,
+                'isr_retenido' => null,
+                'total' => '11200',
+            ],
+            206 => [
+
+                'espesificaciones' => 'tarjetas de presentación S4B de : Gerardo Garibay Aymes, Daniela Castro, Brenda Anziby, Rosa Hernández y Alfredo Olivera',
+                'cantidad' => 1,
+                'producto_id' => 28,
+                'requisiciones_id' => 123,
+                'deleted_at' => null,
+                'created_at' => '2023-09-27 17:27:07',
+                'updated_at' => '2023-09-27 17:27:07',
+                'contrato_id' => 181,
+                'no_personas' => null,
+                'porcentaje_involucramiento' => null,
+                'centro_costo_id' => 7,
+                'sub_total' => '6750.00',
+                'descuento' => null,
+                'otro_impuesto' => null,
+                'iva' => '1080.00',
+                'iva_retenido' => '84.38',
+                'isr_retenido' => null,
+                'total' => '7745.62',
+            ],
+        ]);
     }
 }

@@ -17,8 +17,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
 
         \DB::table('proveedores_requisiciones_catalogos')->insert([
             0 => [
-                'id' => 2,
-                'requisicion_id' => 1,
+                            'requisicion_id' => 1,
                 'proveedor_id' => 34,
                 'created_at' => '2023-08-14 10:42:32',
                 'updated_at' => '2023-08-14 10:42:32',
@@ -26,8 +25,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2024-07-07',
             ],
             1 => [
-                'id' => 3,
-                'requisicion_id' => 2,
+                            'requisicion_id' => 2,
                 'proveedor_id' => 21,
                 'created_at' => '2023-08-14 16:55:06',
                 'updated_at' => '2023-08-14 16:55:06',
@@ -35,8 +33,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-15',
             ],
             2 => [
-                'id' => 4,
-                'requisicion_id' => 4,
+                            'requisicion_id' => 4,
                 'proveedor_id' => 34,
                 'created_at' => '2023-08-16 09:23:21',
                 'updated_at' => '2023-08-16 09:23:21',
@@ -44,8 +41,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-07-07',
             ],
             3 => [
-                'id' => 5,
-                'requisicion_id' => 6,
+                            'requisicion_id' => 6,
                 'proveedor_id' => 24,
                 'created_at' => '2023-08-16 19:53:15',
                 'updated_at' => '2023-08-16 19:53:15',
@@ -53,8 +49,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-21',
             ],
             4 => [
-                'id' => 6,
-                'requisicion_id' => 7,
+                            'requisicion_id' => 7,
                 'proveedor_id' => 34,
                 'created_at' => '2023-08-17 14:04:08',
                 'updated_at' => '2023-08-17 14:04:08',
@@ -62,8 +57,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-01-29',
             ],
             5 => [
-                'id' => 8,
-                'requisicion_id' => 8,
+                            'requisicion_id' => 8,
                 'proveedor_id' => 1,
                 'created_at' => '2023-08-17 18:50:37',
                 'updated_at' => '2023-08-17 18:50:37',
@@ -71,8 +65,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-31',
             ],
             6 => [
-                'id' => 9,
-                'requisicion_id' => 12,
+                            'requisicion_id' => 12,
                 'proveedor_id' => 1,
                 'created_at' => '2023-08-21 13:41:02',
                 'updated_at' => '2023-08-21 13:41:02',
@@ -80,7 +73,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-25',
             ],
             7 => [
-                'id' => 10,
+
                 'requisicion_id' => 14,
                 'proveedor_id' => 77,
                 'created_at' => '2023-08-21 16:42:58',
@@ -89,7 +82,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-25',
             ],
             8 => [
-                'id' => 11,
+
                 'requisicion_id' => 15,
                 'proveedor_id' => 61,
                 'created_at' => '2023-08-22 09:42:18',
@@ -98,7 +91,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-25',
             ],
             9 => [
-                'id' => 12,
+
                 'requisicion_id' => 16,
                 'proveedor_id' => 34,
                 'created_at' => '2023-08-22 16:45:19',
@@ -107,7 +100,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2024-12-31',
             ],
             10 => [
-                'id' => 13,
+
                 'requisicion_id' => 17,
                 'proveedor_id' => 14,
                 'created_at' => '2023-08-23 08:22:29',
@@ -116,7 +109,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '3604-08-01',
             ],
             11 => [
-                'id' => 14,
+
                 'requisicion_id' => 85,
                 'proveedor_id' => 1,
                 'created_at' => '2023-08-24 13:49:08',
@@ -125,7 +118,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-24',
             ],
             12 => [
-                'id' => 15,
+
                 'requisicion_id' => 86,
                 'proveedor_id' => 77,
                 'created_at' => '2023-08-24 17:33:42',
@@ -134,7 +127,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-25',
             ],
             13 => [
-                'id' => 16,
+
                 'requisicion_id' => 87,
                 'proveedor_id' => 63,
                 'created_at' => '2023-08-25 12:07:38',
@@ -143,7 +136,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-25',
             ],
             14 => [
-                'id' => 19,
+
                 'requisicion_id' => 88,
                 'proveedor_id' => 8,
                 'created_at' => '2023-08-28 09:25:30',
@@ -152,7 +145,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-31',
             ],
             15 => [
-                'id' => 20,
+
                 'requisicion_id' => 89,
                 'proveedor_id' => 34,
                 'created_at' => '2023-08-29 11:42:59',
@@ -161,7 +154,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-12-31',
             ],
             16 => [
-                'id' => 23,
+
                 'requisicion_id' => 92,
                 'proveedor_id' => 78,
                 'created_at' => '2023-08-30 16:28:44',
@@ -170,7 +163,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-31',
             ],
             17 => [
-                'id' => 24,
+
                 'requisicion_id' => 93,
                 'proveedor_id' => 1,
                 'created_at' => '2023-08-30 16:46:50',
@@ -179,7 +172,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-30',
             ],
             18 => [
-                'id' => 25,
+
                 'requisicion_id' => 94,
                 'proveedor_id' => 79,
                 'created_at' => '2023-08-31 15:06:56',
@@ -188,7 +181,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-08-31',
             ],
             19 => [
-                'id' => 26,
+
                 'requisicion_id' => 96,
                 'proveedor_id' => 81,
                 'created_at' => '2023-09-04 19:16:34',
@@ -197,7 +190,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-05',
             ],
             20 => [
-                'id' => 27,
+
                 'requisicion_id' => 97,
                 'proveedor_id' => 81,
                 'created_at' => '2023-09-04 19:27:02',
@@ -206,7 +199,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-05',
             ],
             21 => [
-                'id' => 28,
+
                 'requisicion_id' => 98,
                 'proveedor_id' => 61,
                 'created_at' => '2023-09-06 10:47:12',
@@ -215,7 +208,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-04',
             ],
             22 => [
-                'id' => 29,
+
                 'requisicion_id' => 99,
                 'proveedor_id' => 14,
                 'created_at' => '2023-09-06 11:03:38',
@@ -224,7 +217,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2024-08-18',
             ],
             23 => [
-                'id' => 30,
+
                 'requisicion_id' => 100,
                 'proveedor_id' => 82,
                 'created_at' => '2023-09-06 16:25:30',
@@ -233,7 +226,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-06',
             ],
             24 => [
-                'id' => 31,
+
                 'requisicion_id' => 101,
                 'proveedor_id' => 81,
                 'created_at' => '2023-09-07 16:00:26',
@@ -242,7 +235,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-11',
             ],
             25 => [
-                'id' => 32,
+
                 'requisicion_id' => 109,
                 'proveedor_id' => 61,
                 'created_at' => '2023-09-18 10:58:24',
@@ -251,7 +244,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-18',
             ],
             26 => [
-                'id' => 34,
+
                 'requisicion_id' => 113,
                 'proveedor_id' => 82,
                 'created_at' => '2023-09-19 13:43:27',
@@ -260,7 +253,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-25',
             ],
             27 => [
-                'id' => 35,
+
                 'requisicion_id' => 114,
                 'proveedor_id' => 1,
                 'created_at' => '2023-09-19 16:27:12',
@@ -269,7 +262,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-19',
             ],
             28 => [
-                'id' => 36,
+
                 'requisicion_id' => 115,
                 'proveedor_id' => 1,
                 'created_at' => '2023-09-19 16:32:34',
@@ -278,7 +271,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-19',
             ],
             29 => [
-                'id' => 37,
+
                 'requisicion_id' => 117,
                 'proveedor_id' => 61,
                 'created_at' => '2023-09-20 13:05:46',
@@ -287,7 +280,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-20',
             ],
             30 => [
-                'id' => 38,
+
                 'requisicion_id' => 119,
                 'proveedor_id' => 81,
                 'created_at' => '2023-09-21 12:51:15',
@@ -296,7 +289,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-21',
             ],
             31 => [
-                'id' => 39,
+
                 'requisicion_id' => 121,
                 'proveedor_id' => 11,
                 'created_at' => '2023-09-21 13:46:23',
@@ -305,7 +298,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-21',
             ],
             32 => [
-                'id' => 40,
+
                 'requisicion_id' => 121,
                 'proveedor_id' => 40,
                 'created_at' => '2023-09-21 13:46:23',
@@ -314,7 +307,7 @@ class ProveedoresRequisicionesCatalogosTableSeeder extends Seeder
                 'fecha_fin' => '2023-09-21',
             ],
             33 => [
-                'id' => 41,
+
                 'requisicion_id' => 123,
                 'proveedor_id' => 82,
                 'created_at' => '2023-09-22 16:42:33',

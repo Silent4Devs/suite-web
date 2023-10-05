@@ -17,7 +17,6 @@ class ProveedorIndistintosTableSeeder extends Seeder
 
         \DB::table('proveedor_indistintos')->insert([
             0 => [
-                'id' => 1,
                 'requisicion_id' => 3,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-08-15',
@@ -27,7 +26,6 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             1 => [
-                'id' => 2,
                 'requisicion_id' => 5,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-08-16',
@@ -37,7 +35,6 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             2 => [
-                'id' => 5,
                 'requisicion_id' => 11,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-08-21',
@@ -47,8 +44,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             3 => [
-                'id' => 6,
-                'requisicion_id' => 102,
+                            'requisicion_id' => 102,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-08',
                 'fecha_fin' => '2023-09-21',
@@ -57,8 +53,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             4 => [
-                'id' => 7,
-                'requisicion_id' => 102,
+                            'requisicion_id' => 102,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-08',
                 'fecha_fin' => '2023-09-21',
@@ -67,8 +62,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             5 => [
-                'id' => 8,
-                'requisicion_id' => 103,
+                            'requisicion_id' => 103,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-18',
                 'fecha_fin' => '2023-09-29',
@@ -77,8 +71,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             6 => [
-                'id' => 9,
-                'requisicion_id' => 103,
+                            'requisicion_id' => 103,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-18',
                 'fecha_fin' => '2023-09-30',
@@ -87,7 +80,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             7 => [
-                'id' => 10,
+
                 'requisicion_id' => 104,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-30',
@@ -97,7 +90,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             8 => [
-                'id' => 24,
+
                 'requisicion_id' => 106,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-14',
@@ -107,7 +100,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             9 => [
-                'id' => 25,
+
                 'requisicion_id' => 107,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-30',
@@ -117,7 +110,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             10 => [
-                'id' => 26,
+
                 'requisicion_id' => 108,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-18',
@@ -127,7 +120,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             11 => [
-                'id' => 27,
+
                 'requisicion_id' => 110,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-18',
@@ -137,7 +130,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             12 => [
-                'id' => 28,
+
                 'requisicion_id' => 111,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-29',
@@ -147,7 +140,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             13 => [
-                'id' => 29,
+
                 'requisicion_id' => 112,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-29',
@@ -157,7 +150,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             14 => [
-                'id' => 30,
+
                 'requisicion_id' => 116,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-30',
@@ -167,7 +160,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             15 => [
-                'id' => 31,
+
                 'requisicion_id' => 118,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-30',
@@ -177,7 +170,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             16 => [
-                'id' => 32,
+
                 'requisicion_id' => 120,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-22',
@@ -187,7 +180,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             17 => [
-                'id' => 33,
+
                 'requisicion_id' => 122,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-29',
@@ -197,7 +190,7 @@ class ProveedorIndistintosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             18 => [
-                'id' => 34,
+
                 'requisicion_id' => 127,
                 'proveedor_indistinto_id' => 0,
                 'fecha_inicio' => '2023-09-26',
