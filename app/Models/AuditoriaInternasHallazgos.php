@@ -27,6 +27,7 @@ class AuditoriaInternasHallazgos extends Model implements Auditable
         'no_tipo',
         'titulo',
         'clasificacion_id',
+        'clausula_id',
     ];
 
     public function auditoriaInterna()
