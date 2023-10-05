@@ -17,13 +17,11 @@ class MonedasTableSeeder extends Seeder
 
         \DB::table('monedas')->insert([
             0 => [
-                'id' => 1,
                 'nombre' => 'USD',
                 'created_at' => null,
                 'updated_at' => null,
             ],
             1 => [
-                'id' => 2,
                 'nombre' => 'MXN',
                 'created_at' => null,
                 'updated_at' => null,

@@ -78,14 +78,14 @@ class DatabaseSeeder extends Seeder
                 // PermisosTimesheetAdministrador::class,
 
                 //Katbol
-                AreasSeeder::class,
-                ProveedoresTableSeeder::class,
-                ContratosTableSeeder::class,
-                CedulaCumplimientoTableSeeder::class,
-                CierreContratosTableSeeder::class,
-                ConveniosModificatoriosTableSeeder::class,
-                ConveniosModificatoriosFilesTableSeeder::class,
-                FacturacionTableSeeder::class,
+                // AreasSeeder::class,
+                // ProveedoresTableSeeder::class,
+                // ContratosTableSeeder::class,
+                // CedulaCumplimientoTableSeeder::class,
+                // CierreContratosTableSeeder::class,
+                // ConveniosModificatoriosTableSeeder::class,
+                // ConveniosModificatoriosFilesTableSeeder::class,
+                // FacturacionTableSeeder::class,
                 EntregasMensualesTableSeeder::class,
                 FacturasFilesTableSeeder::class,
                 NivelesServicioTableSeeder::class,
@@ -99,7 +99,7 @@ class DatabaseSeeder extends Seeder
                 ProductosRequisicionTableSeeder::class,
                 ProveedoresRequisicionesCatalogosTableSeeder::class,
                 ProveedorIndistintosTableSeeder::class,
-                PermisosKatbol::class,
+                // PermisosKatbol::class,
                 DashboardGestionContratosSeeder::class,
 
                 //kaans

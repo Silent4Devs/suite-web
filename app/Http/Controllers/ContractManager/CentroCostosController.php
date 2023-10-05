@@ -56,19 +56,9 @@ class CentroCostosController extends Controller
      */
     public function store(Request $request)
     {
-        $ids = CentroCosto::pluck('id');
-
-        foreach ($ids as $id) {
-            $string1 = strval($id);
-            if ($string1 === $request->id) {
-                return view('contract_manager.proveedores.error');
-            }
-        }
-
         $centro = new CentroCosto();
-        $centro->id = $request->id;
         $centro->descripcion = $request->descripcion;
-        $centro->clave = 0;
+        $centro->clave = $request->clave;
         $centro->save();
 
         return redirect('/contract_manager/centro-costos');

@@ -17,9 +17,8 @@ class NivelesServicioTableSeeder extends Seeder
 
         \DB::table('niveles_servicio')->insert([
             0 => [
-                'id' => 1,
-                'contrato_id' => 2,
-            'nombre' => 'Servicio Administrativo del Centro de Operaciones  de Seguridad (SOC)',
+                            'contrato_id' => 2,
+                'nombre' => 'Servicio Administrativo del Centro de Operaciones  de Seguridad (SOC)',
                 'metrica' => 'Es el tiempo que transcurre desde que se atiende el reporte hasta que se solucionará. El tiempo de respuesta máximo es de 3 hrs a partir que se recibe la primera respuesta.',
                 'meta' => '100',
                 'unidad' => '%',
@@ -27,7 +26,7 @@ class NivelesServicioTableSeeder extends Seeder
                 'periodo_evaluacion' => '2',
                 'revisiones' => 0,
                 'area' => 'Dirección General de Tecnologías de la Información y Comunicaciones',
-            'descripcion' => 'Es el tiempo que transcurre entre que se recibe la solicitud de reporte por alguno de los cuales definidos (correo electrónico, llamada telefónica o web ) y la asignación del número de ticket.
+                'descripcion' => 'Es el tiempo que transcurre entre que se recibe la solicitud de reporte por alguno de los cuales definidos (correo electrónico, llamada telefónica o web ) y la asignación del número de ticket.
 Primera respuesta telefónica: 5 min.
 Primera respuesta vía correo electrónico: 20 min.
 
@@ -39,8 +38,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             1 => [
-                'id' => 2,
-                'contrato_id' => 2,
+                            'contrato_id' => 2,
                 'nombre' => 'Gestión de incidentes de seguridad',
                 'metrica' => 'Es el tiempo que transcurre desde que se atiende el reporte hasta que se solucione.',
                 'meta' => '100',
@@ -58,8 +56,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             2 => [
-                'id' => 3,
-                'contrato_id' => 4,
+                            'contrato_id' => 4,
                 'nombre' => 'Gestión de Cambios',
                 'metrica' => 'Tiempo de aplicación de cambios',
                 'meta' => '100',
@@ -76,8 +73,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             3 => [
-                'id' => 4,
-                'contrato_id' => 4,
+                            'contrato_id' => 4,
                 'nombre' => 'Gestión de Incidentes',
                 'metrica' => 'Envio de notificación si la actividad sospechosa que se haya presentado sobre la infraestructura',
                 'meta' => '100',
@@ -94,8 +90,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             4 => [
-                'id' => 5,
-                'contrato_id' => 4,
+                            'contrato_id' => 4,
                 'nombre' => 'Atención y Solución de las incidencias o problemas con prioridad Alta.',
                 'metrica' => 'No de incidentes solucionados en tiempo/total de incidentes presentados x 100',
                 'meta' => '100',
@@ -104,7 +99,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'periodo_evaluacion' => 'Diario',
                 'revisiones' => 0,
                 'area' => 'NULL',
-            'descripcion' => 'Una de las fases (implementación de procesos básicos, implementación de procesosm complementarios o implementación de Gestión de conocimientos de la mesa de servicios)no funciona en su totalidad',
+                'descripcion' => 'Una de las fases (implementación de procesos básicos, implementación de procesosm complementarios o implementación de Gestión de conocimientos de la mesa de servicios)no funciona en su totalidad',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
@@ -112,8 +107,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             5 => [
-                'id' => 6,
-                'contrato_id' => 4,
+                            'contrato_id' => 4,
                 'nombre' => 'Disponibilidad de la Infraestructura',
                 'metrica' => 'Disponibilidad de los servicios asociados a los componentes habilitadores del servicio',
                 'meta' => '100',
@@ -122,7 +116,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'periodo_evaluacion' => 'Diario',
                 'revisiones' => 0,
                 'area' => 'NULL',
-            'descripcion' => 'Disponibilidad Integral de los servicios de los componentes habilitadores (95%) , disponibilidad del servicio de SIEM (no se incluye dashboard) (99.5%).',
+                'descripcion' => 'Disponibilidad Integral de los servicios de los componentes habilitadores (95%) , disponibilidad del servicio de SIEM (no se incluye dashboard) (99.5%).',
                 'created_at' => null,
                 'updated_at' => null,
                 'deleted_at' => null,
@@ -130,8 +124,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             6 => [
-                'id' => 7,
-                'contrato_id' => 4,
+                            'contrato_id' => 4,
                 'nombre' => 'Entregables',
                 'metrica' => 'Entrega oportuna de los reportes mensuales',
                 'meta' => '100',
@@ -148,8 +141,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             7 => [
-                'id' => 8,
-                'contrato_id' => 8,
+                            'contrato_id' => 8,
                 'nombre' => 'Servicio Administrado de Centro de Operaciones de Seguridad. Tiempo de atención',
                 'metrica' => '1ra. respuesta vía telefónica 5 min y 20 min 1ra. respuesta vía correo electrónico ',
                 'meta' => '100',
@@ -158,7 +150,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'periodo_evaluacion' => '2',
                 'revisiones' => 0,
                 'area' => 'Dirección General de Tecnologías de la Información',
-            'descripcion' => 'Es el tiempo que transcurre entre que se recibe la solicitud de reporte  por alguno de los canales definidos (correo electrónico, llamada telefónica o web) ',
+                'descripcion' => 'Es el tiempo que transcurre entre que se recibe la solicitud de reporte  por alguno de los canales definidos (correo electrónico, llamada telefónica o web) ',
                 'created_at' => '2022-04-27 12:34:15',
                 'updated_at' => '2022-04-27 12:34:15',
                 'deleted_at' => null,
@@ -166,9 +158,8 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             8 => [
-                'id' => 9,
-                'contrato_id' => 8,
-            'nombre' => 'Servicio Administrado de Centro de Operaciones de Seguridad (SOC) Tiempo de solución.',
+                            'contrato_id' => 8,
+                'nombre' => 'Servicio Administrado de Centro de Operaciones de Seguridad (SOC) Tiempo de solución.',
                 'metrica' => 'Tiempo máximo 3hrs a partir de que se recibe la 1ra. respuesta',
                 'meta' => '100',
                 'unidad' => '%',
@@ -184,9 +175,9 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             9 => [
-                'id' => 10,
+
                 'contrato_id' => 8,
-            'nombre' => 'Servicio Administrado de Centro de Operaciones de Seguridad (SOC) Disponibilidad de tiempo',
+                'nombre' => 'Servicio Administrado de Centro de Operaciones de Seguridad (SOC) Disponibilidad de tiempo',
                 'metrica' => 'Se debe observar el 99.5%',
                 'meta' => '100',
                 'unidad' => '%',
@@ -202,7 +193,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             10 => [
-                'id' => 11,
+
                 'contrato_id' => 8,
                 'nombre' => 'Gestión de incidentes de Seguridad. Tiempo de notificación',
                 'metrica' => 'Se realizará la notificación en un máximo de 30 minutos posterior a su confirmación y apertura  de ticket',
@@ -220,7 +211,7 @@ Primera respuesta vía correo electrónico: 20 min.
                 'updated_by' => null,
             ],
             11 => [
-                'id' => 12,
+
                 'contrato_id' => 8,
                 'nombre' => 'Gestión de incidentes de Seguridad. Tiempo de solución.',
                 'metrica' => 'Prioridad Alta el tiempo máximo de solución será de 3 hrs, Prioridad Media el tiempo máximo de solución será de 8 hrs y Pridadad Baja el tiempo máximo de solución será planeado ',
@@ -241,7 +232,7 @@ Prioridad Baja.- Son aquellos incidentes de seguridad que no detienen la operaci
                 'updated_by' => null,
             ],
             12 => [
-                'id' => 13,
+
                 'contrato_id' => 8,
                 'nombre' => 'Gestión de incidentes de Seguridad. Disponibilidad del Servicio.',
                 'metrica' => 'Se deberá observar un 99.5%',
@@ -259,7 +250,7 @@ Prioridad Baja.- Son aquellos incidentes de seguridad que no detienen la operaci
                 'updated_by' => null,
             ],
             13 => [
-                'id' => 14,
+
                 'contrato_id' => 17,
                 'nombre' => 'Certificados de Renovación de licencias ',
                 'metrica' => 'Se aplicará una deductiva del 0.25% por cada día de incumplimiento sobre el importe total de este concepto sin considerar el IVA',
@@ -277,7 +268,7 @@ Prioridad Baja.- Son aquellos incidentes de seguridad que no detienen la operaci
                 'updated_by' => null,
             ],
             14 => [
-                'id' => 15,
+
                 'contrato_id' => 17,
                 'nombre' => 'Memoria Técnicas',
                 'metrica' => 'Se aplicará una deductiva del 0.25% por cada día de incumplimiento sobre el importe mensual del servicio de soporte técnico sin considerar el IVA',
@@ -295,7 +286,7 @@ Prioridad Baja.- Son aquellos incidentes de seguridad que no detienen la operaci
                 'updated_by' => null,
             ],
             15 => [
-                'id' => 16,
+
                 'contrato_id' => 17,
                 'nombre' => 'Relación de Tickets atendidos durante el mes',
                 'metrica' => 'Se aplicará una deductiva del 0.25% por cada día de incumplimiento sobre el importe mensual del servicio de soporte técnico sin considerar el IVA',
@@ -313,7 +304,7 @@ Prioridad Baja.- Son aquellos incidentes de seguridad que no detienen la operaci
                 'updated_by' => null,
             ],
             16 => [
-                'id' => 17,
+
                 'contrato_id' => 17,
                 'nombre' => 'Informe Mensual de Soporte Técnico',
                 'metrica' => 'Se aplicará una deductiva del 0.25% por cada día de incumplimiento sobre el importe mensual del servicio de soporte técnico sin considerar el IVA',
@@ -331,7 +322,7 @@ Prioridad Baja.- Son aquellos incidentes de seguridad que no detienen la operaci
                 'updated_by' => null,
             ],
             17 => [
-                'id' => 18,
+
                 'contrato_id' => 17,
                 'nombre' => 'Reporte de Servicio por Ticket',
                 'metrica' => 'Se aplicará una deductiva del 0.25% por cada día de incumplimiento sobre el importe mensual del servicio de soporte técnico sin considerar el IVA',
@@ -349,7 +340,7 @@ Prioridad Baja.- Son aquellos incidentes de seguridad que no detienen la operaci
                 'updated_by' => null,
             ],
             18 => [
-                'id' => 19,
+
                 'contrato_id' => 17,
                 'nombre' => 'Atención de solicitudes e incidentes',
                 'metrica' => 'Se aplicará una deductiva del 0.5% por cada hora de incumplimiento en la atención de solicitudes e incidentes sobre el importe mensual del servicio de soporte técnico sin considerar IVA',
@@ -367,10 +358,10 @@ Prioridad Baja.- Son aquellos incidentes de seguridad que no detienen la operaci
                 'updated_by' => null,
             ],
             19 => [
-                'id' => 20,
+
                 'contrato_id' => 20,
                 'nombre' => 'Servicios. Atraso en la documentación presentada',
-            'metrica' => '5% sobre el total de la factura mensual (se incluye todos los servicios) y 0.05% por cada día de atraso adicional',
+                'metrica' => '5% sobre el total de la factura mensual (se incluye todos los servicios) y 0.05% por cada día de atraso adicional',
                 'meta' => '100',
                 'unidad' => '%',
                 'info_consulta' => null,
@@ -385,7 +376,7 @@ Prioridad Baja.- Son aquellos incidentes de seguridad que no detienen la operaci
                 'updated_by' => null,
             ],
             20 => [
-                'id' => 21,
+
                 'contrato_id' => 17,
                 'nombre' => 'Soporte Técnico Atención de tiempos',
                 'metrica' => 'No debe pasar más de 30 min para que se asigne el Ticket',
@@ -403,7 +394,7 @@ Prioridad Baja.- Son aquellos incidentes de seguridad que no detienen la operaci
                 'updated_by' => null,
             ],
             21 => [
-                'id' => 22,
+
                 'contrato_id' => 17,
                 'nombre' => 'Soporte Técnico: Tiempos de Solución Crítica',
                 'metrica' => 'Critico <=30 hrs',
@@ -422,7 +413,7 @@ Crítica: Cualquier incidente que degrade o interrumpa la operación de los equi
                 'updated_by' => null,
             ],
             22 => [
-                'id' => 23,
+
                 'contrato_id' => 17,
                 'nombre' => 'Soporte Técnico: Tiempos de solución Media',
                 'metrica' => '<=5 hrs',
@@ -441,7 +432,7 @@ Media: Solicitudes de asistencia de configuración o parametrización de la infr
                 'updated_by' => null,
             ],
             23 => [
-                'id' => 24,
+
                 'contrato_id' => 17,
                 'nombre' => 'Soporte Técnico: Tiempos de solución Baja',
                 'metrica' => '<= 8hrs',
@@ -460,7 +451,7 @@ Baja: Solicitudes de información o reportes asociados a la infraestructura en d
                 'updated_by' => null,
             ],
             24 => [
-                'id' => 25,
+
                 'contrato_id' => 21,
                 'nombre' => 'Vía Telefónica 7x24x365. Nivel Bajo',
                 'metrica' => '90 minutos naturales a partir de que se levante el reporte al centro de soporte',
@@ -482,7 +473,7 @@ La pena convencional.- 0.5% del valor de concepto de servicio mensual de soporte
                 'updated_by' => null,
             ],
             25 => [
-                'id' => 26,
+
                 'contrato_id' => 21,
                 'nombre' => 'En sitio por técnico especializado. 7X24X365. Nivel Medio',
                 'metrica' => '6 hrs naturales a partir de que se levante el reporte al centro de soporte ',
@@ -504,7 +495,7 @@ La pena convencional.- 1% del valor de concepto de servicio mensual de soporte p
                 'updated_by' => null,
             ],
             26 => [
-                'id' => 27,
+
                 'contrato_id' => 21,
                 'nombre' => 'En sitio por técnico especializado. 7X24X365. Nivel Alto',
                 'metrica' => 'El tiempo de respuesta es de 4 horas naturales a partir de que se levante el reporte al centro de soporte',
@@ -525,7 +516,7 @@ Pena convencional.- 1% del valor de concepto de servicio mensual de soporte por 
                 'updated_by' => null,
             ],
             27 => [
-                'id' => 28,
+
                 'contrato_id' => 21,
                 'nombre' => 'Reposición de algún componente de la solución. Nivel Crítico',
                 'metrica' => '2 días a partir de que se levante el reporte al centro de soporte',
@@ -545,7 +536,7 @@ Pena convencional.- 10% del valor de concepto de servicio mensual de soporte cad
                 'updated_by' => null,
             ],
             28 => [
-                'id' => 29,
+
                 'contrato_id' => 19,
                 'nombre' => 'Servicios de Ciberamenazas avanzadas y visibilidad en la red del engaño',
                 'metrica' => '<=99.90%',
@@ -563,7 +554,7 @@ Pena convencional.- 10% del valor de concepto de servicio mensual de soporte cad
                 'updated_by' => null,
             ],
             29 => [
-                'id' => 30,
+
                 'contrato_id' => 19,
                 'nombre' => 'Servicios de Correlación de Eventos de Seguridad',
                 'metrica' => '<=99.90%',
@@ -581,7 +572,7 @@ Pena convencional.- 10% del valor de concepto de servicio mensual de soporte cad
                 'updated_by' => null,
             ],
             30 => [
-                'id' => 31,
+
                 'contrato_id' => 19,
                 'nombre' => 'Servicio de Ciberinteligencia de amenazas',
                 'metrica' => '<=99.90%',
@@ -599,9 +590,9 @@ Pena convencional.- 10% del valor de concepto de servicio mensual de soporte cad
                 'updated_by' => null,
             ],
             31 => [
-                'id' => 32,
+
                 'contrato_id' => 19,
-            'nombre' => 'Servicio Administrado de Centro de Operaciones de Seguridad (SOC) y Centro de Operaciones de Red (NOC) 7x24x365',
+                'nombre' => 'Servicio Administrado de Centro de Operaciones de Seguridad (SOC) y Centro de Operaciones de Red (NOC) 7x24x365',
                 'metrica' => '<=99.90%',
                 'meta' => '100',
                 'unidad' => '%',
@@ -609,7 +600,7 @@ Pena convencional.- 10% del valor de concepto de servicio mensual de soporte cad
                 'periodo_evaluacion' => '5',
                 'revisiones' => 0,
                 'area' => 'Dirección de Infraestructura y de Comunicaciones',
-            'descripcion' => 'Para el Nivel de Servicio del Servicio de Administrado de Centro de Operaciones de Seguridad (SOC) y Centro de Operaciones de Red (NOC) 7X24X365, deberá ser mayor o igual a 99.90%',
+                'descripcion' => 'Para el Nivel de Servicio del Servicio de Administrado de Centro de Operaciones de Seguridad (SOC) y Centro de Operaciones de Red (NOC) 7X24X365, deberá ser mayor o igual a 99.90%',
                 'created_at' => '2022-05-26 09:57:34',
                 'updated_at' => '2022-05-26 09:57:34',
                 'deleted_at' => null,
@@ -617,7 +608,7 @@ Pena convencional.- 10% del valor de concepto de servicio mensual de soporte cad
                 'updated_by' => null,
             ],
             32 => [
-                'id' => 33,
+
                 'contrato_id' => 19,
                 'nombre' => 'El Tiempo de atención de requerimientos',
                 'metrica' => 'es de 30 minutos para cualquier requerimiento',
@@ -635,7 +626,7 @@ Pena convencional.- 10% del valor de concepto de servicio mensual de soporte cad
                 'updated_by' => null,
             ],
             33 => [
-                'id' => 34,
+
                 'contrato_id' => 19,
                 'nombre' => 'Tiempo de Solución de requerimientos',
                 'metrica' => 'El tiempo de solución para prioridad alta es de 90 min, para prioridad media es de 3 hrs y para prioridad baja será programado',
@@ -658,7 +649,7 @@ Baja: Programado
                 'updated_by' => null,
             ],
             34 => [
-                'id' => 35,
+
                 'contrato_id' => 19,
                 'nombre' => 'Control de Cambios',
                 'metrica' => 'El tiempo para realizar el cambio es para prioridad horas, para prioridad media es de 6 horas y para prioridad baja será planeado',
@@ -668,7 +659,7 @@ Baja: Programado
                 'periodo_evaluacion' => '5',
                 'revisiones' => 0,
                 'area' => 'Dirección de Infraestructura y de Comunicaciones',
-            'descripcion' => 'El Control de Cambios es el tiempo que tarda en realizar un cambio de configuración (alta, baja, modificación) sobre  la infraestructura del servicio será acorde a las necesidades de conectividad y flujos de información de las aplicaciones de la Cámara de Senadores.
+                'descripcion' => 'El Control de Cambios es el tiempo que tarda en realizar un cambio de configuración (alta, baja, modificación) sobre  la infraestructura del servicio será acorde a las necesidades de conectividad y flujos de información de las aplicaciones de la Cámara de Senadores.
 Alta: 3 horas;
 Media: 6 horas;
 Baja: Planeado',
@@ -679,7 +670,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             35 => [
-                'id' => 36,
+
                 'contrato_id' => 19,
                 'nombre' => 'Incidentes de Control',
                 'metrica' => 'Cualquier requerimiento el tiempo será de 30 miniutos y el tiempo de contención será de 120 minutos',
@@ -697,7 +688,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             36 => [
-                'id' => 37,
+
                 'contrato_id' => 19,
                 'nombre' => 'Actividad Sospechosa',
                 'metrica' => 'El tiempo de notificación será 30 minutos para cualquiera y el tiempo de contención será de 90 minutos. ',
@@ -715,7 +706,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             37 => [
-                'id' => 38,
+
                 'contrato_id' => 24,
                 'nombre' => 'Niveles de Servicio para incidente. Nivel Bajo',
                 'metrica' => 'El tiempo de configuración es de 8hrs y el tiempo de hardware es de 24 hrs',
@@ -733,7 +724,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             38 => [
-                'id' => 39,
+
                 'contrato_id' => 24,
                 'nombre' => 'Nivel de Servicio para Incidentes. Nivel Medio',
                 'metrica' => 'Tiempo de Configuración 4 horas, Tiempo de hardware 8 horas',
@@ -751,7 +742,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             39 => [
-                'id' => 40,
+
                 'contrato_id' => 32,
                 'nombre' => 'reportes de disponibilidad',
                 'metrica' => 'disponibilidad del servicio mensual',
@@ -769,7 +760,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             40 => [
-                'id' => 41,
+
                 'contrato_id' => 24,
                 'nombre' => 'Niveles de Servicio para incidente. Nivel Alta',
                 'metrica' => 'Tiempo de configuración 1 hrs y tiempo de hardware 4 hrs',
@@ -787,7 +778,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             41 => [
-                'id' => 42,
+
                 'contrato_id' => 24,
                 'nombre' => 'Niveles de Servicio para requerimiento. Nivel Bajo',
                 'metrica' => 'Tiempo de configuración 8hrs y tiempo de hardware 24 hrs',
@@ -805,7 +796,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             42 => [
-                'id' => 43,
+
                 'contrato_id' => 24,
                 'nombre' => 'Niveles de Servicio para requerimiento. Nivel Medio',
                 'metrica' => 'Tiempo de configuración 4hrs y tiempo de hardware 8 hrs',
@@ -823,7 +814,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             43 => [
-                'id' => 44,
+
                 'contrato_id' => 24,
                 'nombre' => 'Niveles de Servicio para requerimiento. Nivel Alta',
                 'metrica' => 'Tiempo de configuración 1 hrs y tiempo de hardware 4hrs',
@@ -841,7 +832,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             44 => [
-                'id' => 45,
+
                 'contrato_id' => 25,
                 'nombre' => 'Niveles de Servicio para incidente. Nivel Bajo',
                 'metrica' => 'El tiempo de configuración es de 8hrs y el tiempo de hardware es de 24 hrs',
@@ -859,7 +850,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             45 => [
-                'id' => 46,
+
                 'contrato_id' => 25,
                 'nombre' => 'Nivel de Servicio para Incidentes. Nivel Medio',
                 'metrica' => 'Tiempo de Configuración 4 horas, Tiempo de hardware 8 horas',
@@ -877,7 +868,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             46 => [
-                'id' => 47,
+
                 'contrato_id' => 25,
                 'nombre' => 'Niveles de Servicio para incidente. Nivel Alta',
                 'metrica' => 'Tiempo de configuración 1 hrs y tiempo de hardware 4 hrs',
@@ -895,7 +886,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             47 => [
-                'id' => 48,
+
                 'contrato_id' => 25,
                 'nombre' => 'Niveles de Servicio para requerimiento. Nivel Bajo',
                 'metrica' => 'Tiempo de configuración 8hrs y tiempo de hardware 24 hrs',
@@ -913,7 +904,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             48 => [
-                'id' => 49,
+
                 'contrato_id' => 25,
                 'nombre' => 'Niveles de Servicio para requerimiento. Nivel Medio',
                 'metrica' => 'Tiempo de configuración 4hrs y tiempo de hardware 8 hrs',
@@ -931,7 +922,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             49 => [
-                'id' => 50,
+
                 'contrato_id' => 25,
                 'nombre' => 'Niveles de Servicio para requerimiento. Nivel Alta',
                 'metrica' => 'Tiempo de configuración 1 hrs y tiempo de hardware 4hrs',
@@ -949,7 +940,7 @@ Baja: Planeado',
                 'updated_by' => null,
             ],
             50 => [
-                'id' => 51,
+
                 'contrato_id' => 26,
                 'nombre' => 'Servicio administrado de monitoreo y correlación de eventos de seguridad',
                 'metrica' => 'Prioridad critica máximo tiempo de respuesta es de 20 min, para prioridad alta es de 40 min, para prioridad media es de 60 min y para la prioridad baja es de 120 minutos',
@@ -974,7 +965,7 @@ Prioridad baja: 120 minutos.
                 'updated_by' => null,
             ],
             51 => [
-                'id' => 52,
+
                 'contrato_id' => 26,
                 'nombre' => 'Equipo de respuesta ante incidentes de seguridad computacional.  Tiempo de reacción del equipo a incidentes',
                 'metrica' => 'El tiempo de reacción máximo para prioridad crítica es de 20 minutos, para prioridad alta es de 40 minutos, para prioridad media es de 60 minutos y baja es de 120 minutos',
@@ -998,9 +989,9 @@ El tiempo de solución de acuerdo con los tiempos determinados en el plan de tra
                 'updated_by' => null,
             ],
             52 => [
-                'id' => 53,
+
                 'contrato_id' => 26,
-            'nombre' => 'Servicio administrado de una solución de seguridad para equipos de cómputo de escritorio (EDR - Endpoint Detection and Response)',
+                'nombre' => 'Servicio administrado de una solución de seguridad para equipos de cómputo de escritorio (EDR - Endpoint Detection and Response)',
                 'metrica' => 'El tiempo de identificación para prioridad crítica es de 30 minutos, para prioridad alta es de 60 minutos, para prioridad media es de 120 minutos y para prioridad baja es de 180 minutos ',
                 'meta' => '99.5',
                 'unidad' => '%',
@@ -1008,7 +999,7 @@ El tiempo de solución de acuerdo con los tiempos determinados en el plan de tra
                 'periodo_evaluacion' => '5',
                 'revisiones' => 0,
                 'area' => 'Coordinación de Operación de Tecnologías de la Información y Comunicaciones',
-                'descripcion' => 'La Disponibilidad mensual de la solución de Endpoint Detection and Response es de 99.5%. 
+                'descripcion' => 'La Disponibilidad mensual de la solución de Endpoint Detection and Response es de 99.5%.
 El tiempo de identificación, notificación , comportamiento anónimo, boletines o notificaciones de seguridad
 Prioridad Crítica: 30 minutos
 Prioridad Alta: 60 minutos
@@ -1021,7 +1012,7 @@ Prioridad Baja : 180 minutos',
                 'updated_by' => null,
             ],
             53 => [
-                'id' => 54,
+
                 'contrato_id' => 26,
                 'nombre' => 'Equipo de respuesta ante incidentes de seguridad computacional: Tiempos de investigación',
                 'metrica' => 'El tiempo máximo para la investigación e investigación causa raíz es para la Prioridad Crítica: 8 hrs. continuas, para prioridad alta es de 12 hrs. continuas, para prioridad media es de 24 hrs. continuas y para prioridad baja es de 48 hrs. continuas',
@@ -1043,9 +1034,9 @@ Prioridad Baja: 48 hrs continuas',
                 'updated_by' => null,
             ],
             54 => [
-                'id' => 55,
+
                 'contrato_id' => 26,
-            'nombre' => 'Servicio administrado de una solución de seguridad para equipos de cómputo de escritorio (EDR - Endpoint Detection and Response). Tiempos de Solución ',
+                'nombre' => 'Servicio administrado de una solución de seguridad para equipos de cómputo de escritorio (EDR - Endpoint Detection and Response). Tiempos de Solución ',
                 'metrica' => 'El tiempo máximo para la solución de incidentes es para: prioridad crítica 4 hrs, para la prioridad alta un día natural, para prioridad media es de 2 días naturales y para prioridad baja es de 4 días naturales ',
                 'meta' => '99.5',
                 'unidad' => '%',
@@ -1053,7 +1044,7 @@ Prioridad Baja: 48 hrs continuas',
                 'periodo_evaluacion' => '5',
                 'revisiones' => 0,
                 'area' => 'Coordinación de Operación de Tecnologías de la Información y Comunicaciones',
-            'descripcion' => 'Los tiempos de solución de incidentes para el servicio administrado de una solución de seguridad para equipo de cómputo de escritorio. (Endpoint Detection and Response)
+                'descripcion' => 'Los tiempos de solución de incidentes para el servicio administrado de una solución de seguridad para equipo de cómputo de escritorio. (Endpoint Detection and Response)
 Tiempos de solución:
 Prioridad Critica: 4 horas
 Prioridad Alta: 1 día natural
@@ -1066,9 +1057,9 @@ Prioridad Baja: 4 días naturales',
                 'updated_by' => null,
             ],
             55 => [
-                'id' => 56,
+
                 'contrato_id' => 26,
-            'nombre' => 'Servicio administrado de una solución de seguridad para equipos de cómputo de escritorio (EDR - Endpoint Detection and Response). Tiempos de investigación ',
+                'nombre' => 'Servicio administrado de una solución de seguridad para equipos de cómputo de escritorio (EDR - Endpoint Detection and Response). Tiempos de investigación ',
                 'metrica' => 'Los tiempos máximos para la investigación son para prioridad crítica 8 hrs continuas, para prioridad alta es de 12 hrs continuas, para prioridad media es de 24 hrs continuas y para prioridad baja es de 48 hrs continuas ',
                 'meta' => '99.5',
                 'unidad' => '%',
@@ -1088,7 +1079,7 @@ Prioridad Baja 48 hrs continuas.',
                 'updated_by' => null,
             ],
             56 => [
-                'id' => 57,
+
                 'contrato_id' => 26,
                 'nombre' => 'Servicio de Ciber inteligencia análisis de vulnerabilidades de suficiencia de controles de seguridad ',
                 'metrica' => 'Análisis de vulnerabilidades , pruebas de penetración  verificación  de suficiencia es de 99.5% su disponibilidad mensual de servicio.',
@@ -1108,7 +1099,7 @@ Análisis de vulnerabilidades, pruebas de penetración verificación  de suficie
                 'updated_by' => null,
             ],
             57 => [
-                'id' => 58,
+
                 'contrato_id' => 26,
                 'nombre' => 'Servicios de despliegue y monitoreo de una consola de antivirus tipo Enterprise',
                 'metrica' => 'La disponibilidad del solución de consola de antivirus tipo Enterprise 99.5%',
@@ -1126,7 +1117,7 @@ Análisis de vulnerabilidades, pruebas de penetración verificación  de suficie
                 'updated_by' => null,
             ],
             58 => [
-                'id' => 59,
+
                 'contrato_id' => 26,
                 'nombre' => 'Servicios de despliegue y monitoreo de una consola de antivirus tipo Enterprise: Tiempo de identificación de incidentes',
                 'metrica' => 'El tiempo máximo para la identificación es para el periodo crítica es de 30 minutos, para la prioridad alta es de 60 minutos, para la prioridad media es de 120 minutos y para prioridad baja es de 180 minutos',
@@ -1149,7 +1140,7 @@ Prioridad Baja: 180 minutos
                 'updated_by' => null,
             ],
             59 => [
-                'id' => 60,
+
                 'contrato_id' => 26,
                 'nombre' => '	Servicios de despliegue y monitoreo de una consola de antivirus tipo Enterprise: Tiempo de solución',
                 'metrica' => 'Los tiempos máximo para la solución de incidentes es para la prioridad crítica 4 hrs, para prioridad alta es de un día natural, para prioridad media es de 2 días naturales y para prioridad baja es de 4 días naturales',
@@ -1172,7 +1163,7 @@ Prioridad Baja: 4 días naturales
                 'updated_by' => null,
             ],
             60 => [
-                'id' => 61,
+
                 'contrato_id' => 26,
                 'nombre' => 'Entregables iniciales ',
                 'metrica' => 'Los entregable iniciales deberán entregarse de acuerdo con los tiempos establecidos dentro del anexo técnico de los contrario se aplicará una pena del 2% sobre le valor del costo mensual de cada uno de los servicios.',
@@ -1190,7 +1181,7 @@ Prioridad Baja: 4 días naturales
                 'updated_by' => null,
             ],
             61 => [
-                'id' => 62,
+
                 'contrato_id' => 26,
                 'nombre' => 'Entregables mensuales',
                 'metrica' => 'Los entregables mensuales deben ser entregados en los tiempos establecidos en el anexo técnico en caso contrario la pena será del 1% del valor del costo mensual de cada uno de los servicios.',
@@ -1208,7 +1199,7 @@ Prioridad Baja: 4 días naturales
                 'updated_by' => null,
             ],
             62 => [
-                'id' => 63,
+
                 'contrato_id' => 26,
                 'nombre' => 'Entregables finales ',
                 'metrica' => 'Los entregables finales deberán de entregarse de acuerdo con lo establecido al anexo técnico en caso contrario se aplicará una pena de 2% sobre el valor del costo mensual de cada unos de los servicios.',
@@ -1226,7 +1217,7 @@ Prioridad Baja: 4 días naturales
                 'updated_by' => null,
             ],
             63 => [
-                'id' => 64,
+
                 'contrato_id' => 36,
                 'nombre' => 'Solicitudes / Cambios Prioridad Alta',
                 'metrica' => 'El tiempo máximo de atención es de 30 minutos y el tiempo máximo de respuesta es de 8 hrs',
@@ -1244,7 +1235,7 @@ Prioridad Baja: 4 días naturales
                 'updated_by' => null,
             ],
             64 => [
-                'id' => 65,
+
                 'contrato_id' => 36,
                 'nombre' => 'Solicitudes / Cambios Prioridad Media',
                 'metrica' => 'El tiempo máximo de atención será de 30 minutos y el tiempo de respuesta máximo será de 12 hrs',
@@ -1262,7 +1253,7 @@ Prioridad Baja: 4 días naturales
                 'updated_by' => null,
             ],
             65 => [
-                'id' => 66,
+
                 'contrato_id' => 36,
                 'nombre' => 'Solicitudes / Cambios Prioridad Baja',
                 'metrica' => 'El tiempo máximo de atención será de 30 min y el tiempo máximo de respuesta será programado',
@@ -1280,7 +1271,7 @@ Prioridad Baja: 4 días naturales
                 'updated_by' => null,
             ],
             66 => [
-                'id' => 67,
+
                 'contrato_id' => 36,
                 'nombre' => 'Incidente Prioridad Alta',
                 'metrica' => 'El tiempo máximo de atención será de 30 minutos y el tiempo máximo de respuesta será de  8 hrs',
@@ -1298,7 +1289,7 @@ Prioridad Baja: 4 días naturales
                 'updated_by' => null,
             ],
             67 => [
-                'id' => 68,
+
                 'contrato_id' => 36,
                 'nombre' => 'Incidente Prioridad Media',
                 'metrica' => 'El tiempo máximo de atención será de 30 min y el tiempo máximo  de respuesta será de 12 hrs.',
@@ -1316,7 +1307,7 @@ Prioridad Baja: 4 días naturales
                 'updated_by' => null,
             ],
             68 => [
-                'id' => 69,
+
                 'contrato_id' => 36,
                 'nombre' => 'Incidente Prioridad Baja',
                 'metrica' => 'El tiempo máximo de atención será de 30 min y el tiempo máximo de respuesta será programado',

@@ -17,6 +17,7 @@ use App\Rules\EmpleadoNoVinculado;
 use Flash;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
@@ -42,9 +43,14 @@ class UsersController extends Controller
 
     public function getUsersIndex(Request $request)
     {
-        $query = User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
-            $q->with('area');
-        }])->get();
+        $key = 'Users:users_index_data';
+
+        // Try to retrieve the data from the cache
+        $query = Cache::remember($key, now()->addMinutes(120), function () {
+            return User::with(['roles', 'organizacion', 'area', 'puesto', 'team', 'empleado' => function ($q) {
+                $q->with('area');
+            }])->get();
+        });
 
         return datatables()->of($query)->toJson();
     }
