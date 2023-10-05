@@ -204,6 +204,7 @@
                         name: 'referencia'
                     },
                     {
+                        //error
                         // data: 'productos_requisiciones',
                         // render: function(data, type, row) {
                         //     console.log(data);
