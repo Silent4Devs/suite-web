@@ -204,11 +204,11 @@
                         name: 'referencia'
                     },
                     {
-                        data: 'productos_requisiciones',
-                        render: function(data, type, row) {
-                            console.log(data);
-                        // return data[0].producto.descripcion;
-                        }
+                        // data: 'productos_requisiciones',
+                        // render: function(data, type, row) {
+                        //     console.log(data);
+                        // // return data[0].producto.descripcion;
+                        // }
 
                     },
                     {
