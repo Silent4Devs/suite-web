@@ -1260,11 +1260,6 @@
                     <div class="card card-item doc-requisicion">
                         <div class="flex header-doc">
                             <div class="flex-item item-doc-img">
-                                {{--  @if (isset($logotipo->logotipo))
-                            <img src="{{ url('images/'.$logotipo->logotipo) }}">
-                        @else
-                            <img src="{{ url('img/Silent4Business-Logo-Color.png') }}">
-                        @endif  --}}
                                 <img class="img-doc" src="{{ $organizacion->logotipo }}">
                             </div>
                             <div class="flex-item info-med-doc-header">
@@ -1615,7 +1610,7 @@
     </script>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/2.3.3/signature_pad.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
 
 
     @section('scripts')
