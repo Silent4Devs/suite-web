@@ -1,14 +1,15 @@
 @extends('layouts.admin')
 <style>
-    table{
-    table-layout: fixed;
-    width: 500px;
-   }
+    table {
+        table-layout: fixed;
+        width: 500px;
+    }
 
-   th, td {
-    border: 1px solid blue;
-    width: 130px;
-    word-wrap: break-word
+    th,
+    td {
+        border: 1px solid blue;
+        width: 130px;
+        word-wrap: break-word
     }
 </style>
 @section('content')
@@ -109,8 +110,8 @@
                 }
 
             ];
-                let btnAgregar = {
-                    @can("katbol_requisiciones_agregar")
+            let btnAgregar = {
+                @can('katbol_requisiciones_agregar')
                     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
                     titleAttr: 'Agregar requisicion',
                     url: "{{ route('contract_manager.requisiciones.create') }}",
@@ -121,24 +122,24 @@
                         } = config;
                         window.location.href = url;
                     }
-                    @endcan
-                };
-               let btnAprobacion = {
-                    text: '<i class="fa-solid fa-envelope"></i> Aprobadores',
-                    titleAttr: 'Aprobadores requisicion',
-                    url: "{{ route('contract_manager.requisiciones.indexAprobadores') }}",
-                    className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                    action: function(e, dt, node, config) {
-                        let {
-                            url
-                        } = config;
-                        window.location.href = url;
-                        console.log(url);
-                    },
-               };
-                dtButtons.push(btnAgregar, btnAprobacion);
-                let archivarButton = {
-                    @can("katbol_requisiciones_archivar")
+                @endcan
+            };
+            let btnAprobacion = {
+                text: '<i class="fa-solid fa-envelope"></i> Aprobadores',
+                titleAttr: 'Aprobadores requisicion',
+                url: "{{ route('contract_manager.requisiciones.indexAprobadores') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                    console.log(url);
+                },
+            };
+            dtButtons.push(btnAgregar, btnAprobacion);
+            let archivarButton = {
+                @can('katbol_requisiciones_archivar')
                     text: 'Archivar Registro',
                     url: "",
                     className: 'btn-danger',
@@ -172,8 +173,8 @@
                                 })
                         }
                     }
-                    @endcan
-                }
+                @endcan
+            }
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -188,12 +189,11 @@
                         _token: _token
                     }
                 },
-                columns: [
-                    {
-                    data: 'id',
-                    render: function ( data, type, row ) {
-                    return `<p>RQ-00-00-</p> ${row.id}`;
-                    }
+                columns: [{
+                        data: 'id',
+                        render: function(data, type, row) {
+                            return `<p>RQ-00-00-</p> ${row.id}`;
+                        }
                     },
                     {
                         data: 'fecha',
@@ -215,12 +215,12 @@
 
                         data: 'proveedor_catalogo',
                         render: function(data, type, row) {
-                        // Verifica si 'data' es null
-                        if (data === null) {
-                            return 'Indistinto'; // Puedes personalizar el mensaje
-                        } else {
-                            return data; // Valor no es null
-                        }
+                            // Verifica si 'data' es null
+                            if (data === null) {
+                                return 'Indistinto'; // Puedes personalizar el mensaje
+                            } else {
+                                return data; // Valor no es null
+                            }
 
                         }
 
@@ -246,7 +246,8 @@
                         name: 'actions',
                         render: function(data, type, row, meta) {
                             let requisiciones = @json($requisiciones);
-                            let urlButtonArchivar = `/contract_manager/requisiciones/archivo-estado/${data}`;
+                            let urlButtonArchivar =
+                                `/contract_manager/requisiciones/archivo-estado/${data}`;
                             let urlButtonEliminar = `/contract_manager/requisiciones/destroy/${data}`;
                             let urlButtonEdit = `/contract_manager/requisiciones/edit/${data}`;
                             let urlButtonShow = `/contract_manager/requisiciones/show/${data}`;

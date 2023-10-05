@@ -14,6 +14,7 @@ use App\Models\ContractManager\Sucursal as KatbolSucursal;
 use App\Models\Organizacion;
 use App\Models\User;
 use App\Models\User as ModelsUser;
+use App\Traits\ObtenerOrganizacion;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RequisicionesController extends Controller
 {
+    use ObtenerOrganizacion;
     public $bandera = true;
 
     /**
@@ -42,11 +44,14 @@ class RequisicionesController extends Controller
             $organizacion_actual->empresa = 'Silent4Business';
         }
 
-        $logo_actual = $organizacion_actual->logotipo;
+        $requisiciones = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
+
+        $organizacion_actual = $this->obtenerOrganizacion();
+        $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
 
         $requisiciones_solicitante = null;
-        $id = Auth::user()->id;
+        $id = User::getCurrentUser()->id;
 
         $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
@@ -61,6 +66,7 @@ class RequisicionesController extends Controller
 
         $id = Auth::user()->id;
         $roles = ModelsUser::find($id)->roles()->get();
+
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
                 return view('contract_manager.requisiciones.index', compact('ids', 'requisiciones', 'proveedor_indistinto', 'empresa_actual', 'logo_actual'));
@@ -120,7 +126,7 @@ class RequisicionesController extends Controller
     {
         try {
             $requisicion = KatbolRequsicion::with('sucursal', 'comprador.user', 'contrato')->find($id);
-            $organizacion = Organizacion::select('empresa', 'logotipo')->first();
+            $organizacion = $this->obtenerOrganizacion();
 
             $supervisor = $usuario = User::getCurrentUser()->empleado->supervisor->name;
             $proveedores_show = KatbolProvedorRequisicionCatalogo::where('requisicion_id', $requisicion->id)->pluck('proveedor_id')->toArray();
@@ -145,7 +151,7 @@ class RequisicionesController extends Controller
     {
         abort_if(Gate::denies('katbol_requisiciones_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $requisiciondata = KatbolRequsicion::with('sucursal', 'comprador', 'contrato')->find($id);
-        $organizacion = Organizacion::select('empresa', 'logotipo')->first();
+        $organizacion = $this->obtenerOrganizacion();
 
         return view('contract_manager.requisiciones.edit', compact('requisiciondata', 'organizacion'));
     }
