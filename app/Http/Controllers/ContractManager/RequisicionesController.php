@@ -38,7 +38,7 @@ class RequisicionesController extends Controller
 
         $requisicionQuery = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato')->orderByDesc('id')->get();
 
-        $requisiciones = $requisicionQuery->orderByDesc('id')->where('archivo', false)->get();
+        $requisiciones = $requisicionQuery->where('archivo', false)->get();
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
