@@ -17,8 +17,7 @@ class FacturacionTableSeeder extends Seeder
 
         \DB::table('facturacion')->insert([
             0 => [
-                'id' => 1,
-                'contrato_id' => 1,
+                           'contrato_id' => 1,
                 'no_factura' => '50',
                 'concepto' => 'test',
                 'fecha_recepcion' => '2022-02-16',
@@ -39,8 +38,7 @@ class FacturacionTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             1 => [
-                'id' => 2,
-                'contrato_id' => 9,
+                           'contrato_id' => 9,
                 'no_factura' => '560',
                 'concepto' => 'concepto',
                 'fecha_recepcion' => '2021-10-14',
@@ -61,8 +59,7 @@ class FacturacionTableSeeder extends Seeder
                 'updated_by' => 1,
             ],
             2 => [
-                'id' => 3,
-                'contrato_id' => 9,
+                           'contrato_id' => 9,
                 'no_factura' => '700',
                 'concepto' => 'concepto',
                 'fecha_recepcion' => '2021-10-14',
@@ -83,8 +80,7 @@ class FacturacionTableSeeder extends Seeder
                 'updated_by' => 1,
             ],
             3 => [
-                'id' => 4,
-                'contrato_id' => 9,
+                           'contrato_id' => 9,
                 'no_factura' => '333',
                 'concepto' => 'sdasdasd',
                 'fecha_recepcion' => '2022-03-01',
@@ -105,8 +101,7 @@ class FacturacionTableSeeder extends Seeder
                 'updated_by' => 1,
             ],
             4 => [
-                'id' => 5,
-                'contrato_id' => 9,
+                           'contrato_id' => 9,
                 'no_factura' => '1211',
                 'concepto' => 'sdfsdfsdfsdf',
                 'fecha_recepcion' => '2021-08-01',
@@ -127,8 +122,7 @@ class FacturacionTableSeeder extends Seeder
                 'updated_by' => 1,
             ],
             5 => [
-                'id' => 6,
-                'contrato_id' => 9,
+                           'contrato_id' => 9,
                 'no_factura' => 'S 224',
                 'concepto' => 'Renovación de Licenciamiento Meraki',
                 'fecha_recepcion' => '2019-05-17',
@@ -149,8 +143,7 @@ class FacturacionTableSeeder extends Seeder
                 'updated_by' => null,
             ],
             6 => [
-                'id' => 7,
-                'contrato_id' => 9,
+                           'contrato_id' => 9,
                 'no_factura' => 'S 397',
             'concepto' => 'Servicio de FW ALTERNO (1 de 41.5 meses de servicio de Agosto 2019)
 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24 (1 de 41.5 meses de servicio de Agosto 2019)
@@ -173,8 +166,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24 (1 de 41.
                 'updated_by' => null,
             ],
             7 => [
-                'id' => 8,
-                'contrato_id' => 9,
+                           'contrato_id' => 9,
                 'no_factura' => 'S 398',
             'concepto' => 'Servicio FW ALTERNO (2 de 41.5 meses de servicio: Septiembre 2019)
 Servicio Administrado de Centro  de Operaciones de Seguridad (SOC) 7X24 (septiembre 2019)',
@@ -196,8 +188,7 @@ Servicio Administrado de Centro  de Operaciones de Seguridad (SOC) 7X24 (septiem
                 'updated_by' => null,
             ],
             8 => [
-                'id' => 9,
-                'contrato_id' => 9,
+                           'contrato_id' => 9,
                 'no_factura' => 'S 399',
             'concepto' => 'Servicio de FW SITIO CENTRAL (1 de 39 meses de servicio. Octubre 2019)
 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24 (3 de 41.5 meses de servicio. Octubre 2019)
@@ -220,8 +211,7 @@ Servicio de FW ALTERNO (3 de 41.5 meses de servicio. Octubre 2019)',
                 'updated_by' => null,
             ],
             9 => [
-                'id' => 10,
-                'contrato_id' => 9,
+                            'contrato_id' => 9,
                 'no_factura' => 'S 400',
             'concepto' => 'Servicio de FW ALTERNO (4 de 41.5 meses de servicio. Noviembre 2019)
 Servicio de FW SITIO CENTRAL (2 de 39 meses de servicio. Noviembre 2019)
@@ -244,8 +234,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24 (4 de 41.
                 'updated_by' => null,
             ],
             10 => [
-                'id' => 11,
-                'contrato_id' => 9,
+                            'contrato_id' => 9,
                 'no_factura' => 'S 401',
             'concepto' => 'Servicio de FW ALTERNO (5 de 41.5 meses de servicio. Diciembre 2019)
 Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24 (5 de 41.5 meses de servicio. Diciembre 2019)
@@ -268,8 +257,7 @@ Servicio FW SITIO CENTRAL (3 de 39 meses de servicio. Diciembre 2019)',
                 'updated_by' => null,
             ],
             11 => [
-                'id' => 12,
-                'contrato_id' => 9,
+                            'contrato_id' => 9,
                 'no_factura' => 'S 402',
                 'concepto' => 'Servicio de FW ALTERNO (6 DE 41.5 meses de servicio: Enero 2020
 Servicio de FW SITIO CENTRAL (4 de 39 meses de servicio: Enero 2020
@@ -294,8 +282,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 (6 de 41.
                         'updated_by' => null,
                     ],
                     12 => [
-                        'id' => 13,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 403',
                     'concepto' => 'Servicio de FW ALTERNO (7 de 41.5 meses de servicio: Febrero 2020)
 Servicio de FW SITIO CENTRAL (5 de 39 meses de servicio: Febrero 2020)
@@ -319,8 +306,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC)7x24 (7 de 41.5
                         'updated_by' => null,
                     ],
                     13 => [
-                        'id' => 14,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 404',
                     'concepto' => 'Servicio de FW ALTERNO (8 de 41.5 meses de servicio: Marzo 2020)
 Servicio de FW SITIO CENTRAL (6 de 39 meses de servicio: Marzo 2020)
@@ -344,8 +330,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 (8 de 41.
                         'updated_by' => null,
                     ],
                     14 => [
-                        'id' => 15,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 405',
                     'concepto' => 'Servicio de FW ALTERNO (9 de 41.5 meses de servicio: Abril 2020)
 Servicio de FW SITIO CENTRAL (7 de 39 meses de servicio: Abril 2020)
@@ -369,8 +354,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 (9 de 41.
                         'updated_by' => null,
                     ],
                     15 => [
-                        'id' => 16,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 411',
                     'concepto' => 'Servicio de FW ALTERNO (10 de 41.5 meses de servicios: Mayo 2020)
 Servicio de FW SITIO CENTRAL (8 de 39 meses de servicios: Mayo 2020)
@@ -394,8 +378,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24 (10 de 41
                         'updated_by' => null,
                     ],
                     16 => [
-                        'id' => 17,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 413',
                     'concepto' => 'Servicio de FW ALTERNO (11 de 41.5 meses de servicio: Junio 2020)
 Servicio de FW SITIO CENTRAL (9 de 39 meses de servicios: Junio 2020)
@@ -419,8 +402,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 (10 de 41
                         'updated_by' => null,
                     ],
                     17 => [
-                        'id' => 18,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 418',
                     'concepto' => 'Servicio FW ALTERNO (12 de 41.5 meses de servicio: Julio 2020)
 Servicio FW SITIO CENTRAL (10 de 39 meses de servicio: Julio 2020)
@@ -444,8 +426,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 (12 de 41
                         'updated_by' => null,
                     ],
                     18 => [
-                        'id' => 19,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 439',
                     'concepto' => 'Servicio FW ALTERNO (13 de 41.5 meses de servicio: Agosto 2020)
 Servicio FW SITIO CENTRAL (11de 39 meses de servicio: Agosto 2020)
@@ -469,8 +450,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 (13 de 41
                         'updated_by' => null,
                     ],
                     19 => [
-                        'id' => 20,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 452',
                     'concepto' => 'Servicio de FW ALTERNO (14 de 41.5 meses de servicio: Septiembre 2020)
 Servicio de FW SITIO CENTRAL ( 12 de 39 meses de servicios: Septiembre 2020)
@@ -494,8 +474,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 (14 de 41
                         'updated_by' => null,
                     ],
                     20 => [
-                        'id' => 21,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 463',
                     'concepto' => 'Servicio FW ALTERNO (15 de 41.5 meses de servicio: Octubre 2020)
 Servicio FW SITIO CENTRAL (13 de 39 meses de servicio: Octubre 2020)
@@ -519,8 +498,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24 (15 de 41
                         'updated_by' => null,
                     ],
                     21 => [
-                        'id' => 22,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 481',
                     'concepto' => 'Servicio FW ALTERNO (16 de 41.5 meses de servicio: Noviembre 2020)
 Servicio FW SITIO CENTRAL ( 14 de 39 meses de servicio: Noviembre 2020)
@@ -544,8 +522,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 ( 16 de 4
                         'updated_by' => null,
                     ],
                     22 => [
-                        'id' => 23,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 500',
                     'concepto' => 'Servicio FW ALTERNO (17 de 41.5 meses de servicio: Diciembre 2020)
 Servicio FW SITIO CENTRAL ( 15 de 39 meses de servicios: Diciembre 2020)
@@ -569,8 +546,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7x24 (17 de 41
                         'updated_by' => null,
                     ],
                     23 => [
-                        'id' => 24,
-                        'contrato_id' => 9,
+                                            'contrato_id' => 9,
                         'no_factura' => 'S 512',
                     'concepto' => 'Servicio FW ALTERNO (18 de 41.5 meses de servicio: Enero 2021)
 Servicio FW SITIO CENTRAL (16 de 39 meses de servicio: Enero 2021
@@ -594,8 +570,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad (SOC) 7X24 (18 de 41
                                 'updated_by' => null,
                             ],
                             24 => [
-                                'id' => 25,
-                                'contrato_id' => 9,
+                                                            'contrato_id' => 9,
                                 'no_factura' => 'S 522',
                                 'concepto' => 'Servicio FW ALTERNO (19 de 41.5 meses de servicio: Febrero 20221
 Servicio FW SITIO CENTRAL (17 de 39 meses de servicios: Febrero 2021
@@ -619,8 +594,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (19 
                                             'updated_by' => null,
                                         ],
                                         25 => [
-                                            'id' => 26,
-                                            'contrato_id' => 9,
+                                                                                    'contrato_id' => 9,
                                             'no_factura' => 'S 541',
                                             'concepto' => 'Servicio FW ALTERNO (20 de 41.5 meses de servicio: Marzo 20221
 Servicio FW SITIO CENTRAL (18 de 39 meses de servicios: Marzo 2021
@@ -644,8 +618,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (20 
                                                         'updated_by' => null,
                                                     ],
                                                     26 => [
-                                                        'id' => 27,
-                                                        'contrato_id' => 9,
+                                                                                                            'contrato_id' => 9,
                                                         'no_factura' => 'S 553',
                                                         'concepto' => 'Servicio FW ALTERNO (21 de 41.5 meses de servicio: Abril 20221
 Servicio FW SITIO CENTRAL (19 de 39 meses de servicios: Abril 2021
@@ -669,8 +642,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (21 
                                                                     'updated_by' => null,
                                                                 ],
                                                                 27 => [
-                                                                    'id' => 28,
-                                                                    'contrato_id' => 9,
+                                                                                                                                    'contrato_id' => 9,
                                                                     'no_factura' => 'S 566',
                                                                     'concepto' => 'Servicio FW ALTERNO (22 de 41.5 meses de servicio: Mayo 20221
 Servicio FW SITIO CENTRAL (20 de 39 meses de servicios: Mayo 2021
@@ -694,8 +666,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (22 
                                                                                 'updated_by' => null,
                                                                             ],
                                                                             28 => [
-                                                                                'id' => 29,
-                                                                                'contrato_id' => 9,
+                                                                                                                                                            'contrato_id' => 9,
                                                                                 'no_factura' => 'S 590',
                                                                                 'concepto' => 'Servicio FW ALTERNO (23 de 41.5 meses de servicio: Junio 20221
 Servicio FW SITIO CENTRAL (21 de 39 meses de servicios: Junio 2021
@@ -719,8 +690,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (23 
                                                                                             'updated_by' => null,
                                                                                         ],
                                                                                         29 => [
-                                                                                            'id' => 30,
-                                                                                            'contrato_id' => 9,
+                                                                                                                                                                                    'contrato_id' => 9,
                                                                                             'no_factura' => 'S 609',
                                                                                             'concepto' => 'Servicio FW ALTERNO (24 de 41.5 meses de servicio:  Julio 2021
 Servicio FW SITIO CENTRAL (22 de 39 meses de servicios: Julio 2021
@@ -744,8 +714,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (24 
                                                                                                         'updated_by' => null,
                                                                                                     ],
                                                                                                     30 => [
-                                                                                                        'id' => 31,
-                                                                                                        'contrato_id' => 9,
+                                                                                                                                                                                                            'contrato_id' => 9,
                                                                                                         'no_factura' => 'S 623',
                                                                                                         'concepto' => 'Servicio FW ALTERNO (25 de 41.5 meses de servicio: Agosto 2021
 Servicio FW SITIO CENTRAL (23 de 39 meses de servicios: Agosto 2021
@@ -769,8 +738,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (25 
                                                                                                                     'updated_by' => null,
                                                                                                                 ],
                                                                                                                 31 => [
-                                                                                                                    'id' => 32,
-                                                                                                                    'contrato_id' => 9,
+                                                                                                                                                                                                                                    'contrato_id' => 9,
                                                                                                                     'no_factura' => 'S 642',
                                                                                                                     'concepto' => 'Servicio FW ALTERNO (26 de 41.5 meses de servicio: Septiembre 20221
 Servicio FW SITIO CENTRAL (24 de 39 meses de servicios: Septiembre 2021
@@ -794,8 +762,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (26 
                                                                                                                                 'updated_by' => null,
                                                                                                                             ],
                                                                                                                             32 => [
-                                                                                                                                'id' => 33,
-                                                                                                                                'contrato_id' => 9,
+                                                                                                                                                                                                                                                            'contrato_id' => 9,
                                                                                                                                 'no_factura' => 'S 660',
                                                                                                                                 'concepto' => 'Servicio FW ALTERNO (27 de 41.5 meses de servicio: Octubre 20221
 Servicio FW SITIO CENTRAL (25 de 39 meses de servicios: Octubre 2021
@@ -819,8 +786,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (27 
                                                                                                                                             'updated_by' => null,
                                                                                                                                         ],
                                                                                                                                         33 => [
-                                                                                                                                            'id' => 34,
-                                                                                                                                            'contrato_id' => 9,
+                                                                                                                                                                                                                                                                                    'contrato_id' => 9,
                                                                                                                                             'no_factura' => 'S 693',
                                                                                                                                             'concepto' => 'Servicio FW ALTERNO (28 de 41.5 meses de servicio: Noviembre 20221
 Servicio FW SITIO CENTRAL (26 de 39 meses de servicios: Noviembre 2021
@@ -844,8 +810,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (28 
                                                                                                                                                         'updated_by' => null,
                                                                                                                                                     ],
                                                                                                                                                     34 => [
-                                                                                                                                                        'id' => 35,
-                                                                                                                                                        'contrato_id' => 9,
+                                                                                                                                                                                                                                                                                                            'contrato_id' => 9,
                                                                                                                                                         'no_factura' => 'S 714',
                                                                                                                                                         'concepto' => 'Servicio FW ALTERNO (29 de 41.5 meses de servicio: Diciembre 2021
 Servicio FW SITIO CENTRAL (27 de 39 meses de servicios: Diciembre 2021
@@ -869,8 +834,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (29 
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 35 => [
-                                                                                                                                                                    'id' => 36,
-                                                                                                                                                                    'contrato_id' => 9,
+                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 9,
                                                                                                                                                                     'no_factura' => 'S 723',
                                                                                                                                                                     'concepto' => 'Servicio FW ALTERNO (30 de 41.5 meses de servicio: Enero 2022
 Servicio FW SITIO CENTRAL (28 de 39 meses de servicios: Enero 2022
@@ -894,8 +858,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (30 
                                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                                             ],
                                                                                                                                                                             36 => [
-                                                                                                                                                                                'id' => 37,
-                                                                                                                                                                                'contrato_id' => 9,
+                                                                                                                                                                                                                                                                                                                                                            'contrato_id' => 9,
                                                                                                                                                                                 'no_factura' => 'S 742',
                                                                                                                                                                                 'concepto' => 'Servicio FW ALTERNO (31 de 41.5 meses de servicio: Febrero 2022
 Servicio FW SITIO CENTRAL (29 de 39 meses de servicios: Febrero 2022
@@ -919,8 +882,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (31 
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         37 => [
-                                                                                                                                                                                            'id' => 38,
-                                                                                                                                                                                            'contrato_id' => 5,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 5,
                                                                                                                                                                                             'no_factura' => 'S 581',
                                                                                                                                                                                             'concepto' => '10 Servicios de Cyber Threat
 10 Servicios de Simulación de Ataques de Seguridad',
@@ -942,8 +904,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (31 
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         38 => [
-                                                                                                                                                                                            'id' => 39,
-                                                                                                                                                                                            'contrato_id' => 5,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 5,
                                                                                                                                                                                             'no_factura' => 'S 732',
                                                                                                                                                                                             'concepto' => '1 Servicio Cyber Threat
 1 Servicio de Simulación de Ataques de Ciberseguridad ',
@@ -965,8 +926,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (31 
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         39 => [
-                                                                                                                                                                                            'id' => 40,
-                                                                                                                                                                                            'contrato_id' => 5,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 5,
                                                                                                                                                                                             'no_factura' => 'S 749',
                                                                                                                                                                                             'concepto' => '1 Servicio Cyber Threat
 1 Servicio de Simulación de Ciberseguridad',
@@ -988,8 +948,7 @@ Servicio Administrado de Centro de Operaciones de Seguridad 2021 (SOC) 7X24 (31 
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         40 => [
-                                                                                                                                                                                            'id' => 41,
-                                                                                                                                                                                            'contrato_id' => 6,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 6,
                                                                                                                                                                                             'no_factura' => 'S 689',
                                                                                                                                                                                             'concepto' => '2 Servicios. Security Operation Center
 Mensualidades 1 y 2
@@ -1013,8 +972,7 @@ Vigencia 11- Agosto-2021 a 11-Agosto-2022',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         41 => [
-                                                                                                                                                                                            'id' => 42,
-                                                                                                                                                                                            'contrato_id' => 6,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 6,
                                                                                                                                                                                             'no_factura' => 'S 717',
                                                                                                                                                                                             'concepto' => '2 Servicios.  Security Operation Center
 Mensualidades 3 y 4
@@ -1039,8 +997,7 @@ Número de recepción de servicios 5000055611',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         42 => [
-                                                                                                                                                                                            'id' => 43,
-                                                                                                                                                                                            'contrato_id' => 6,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 6,
                                                                                                                                                                                             'no_factura' => 'S 719',
                                                                                                                                                                                             'concepto' => '2 Servicios. Security Operation Center
 Mensualidades 3 y 4
@@ -1065,8 +1022,7 @@ Número de recepción de servicios 500055611',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         43 => [
-                                                                                                                                                                                            'id' => 44,
-                                                                                                                                                                                            'contrato_id' => 6,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 6,
                                                                                                                                                                                             'no_factura' => 'S 735',
                                                                                                                                                                                             'concepto' => '1 Hardware
 Marca WD
@@ -1093,8 +1049,7 @@ Especificaciones: SIAM-577 NAS WD MY CLOUD EX2 ULTRA 24TB/ CON 2 DISCOS DE 12 TB
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         44 => [
-                                                                                                                                                                                            'id' => 45,
-                                                                                                                                                                                            'contrato_id' => 6,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 6,
                                                                                                                                                                                             'no_factura' => 'S 738',
                                                                                                                                                                                             'concepto' => '1 Hardware
 Marca WD
@@ -1121,8 +1076,7 @@ Especificaciones: SIAM-577 NAS WD MY CLOUD EX2 ULTRA 24TB/ CON 2 DISCOS DE 12 TB
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         45 => [
-                                                                                                                                                                                            'id' => 46,
-                                                                                                                                                                                            'contrato_id' => 6,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 6,
                                                                                                                                                                                             'no_factura' => 'S 739',
                                                                                                                                                                                             'concepto' => '1 Servicio. Security Operation Center
 Mensualidad 5
@@ -1148,8 +1102,7 @@ Número de recepción: 5000063435 factura al 90%
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         46 => [
-                                                                                                                                                                                            'id' => 47,
-                                                                                                                                                                                            'contrato_id' => 6,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 6,
                                                                                                                                                                                             'no_factura' => 'S 740',
                                                                                                                                                                                             'concepto' => '1 Servicio. Security Operation Center
 Mensualidad 6
@@ -1175,8 +1128,7 @@ Número de recepción de servicios 500063435 factura al 90%
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         47 => [
-                                                                                                                                                                                            'id' => 48,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 585',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicios profesionales para implantación de la solución.
@@ -1199,8 +1151,7 @@ Contrato "Servicio de SOC para el Grupo Financiero Ve por más"',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         48 => [
-                                                                                                                                                                                            'id' => 49,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 586',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1223,8 +1174,7 @@ Mensualidad 1 de 60',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         49 => [
-                                                                                                                                                                                            'id' => 50,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 587',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicios de Ciberseguridad
@@ -1247,8 +1197,7 @@ Análisis de vulnerabilidades, Pen Testing, Cyberdefense, Threat Hunting, Forens
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         50 => [
-                                                                                                                                                                                            'id' => 51,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 636 ',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1271,8 +1220,7 @@ Mensualidad 3 de 60',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         51 => [
-                                                                                                                                                                                            'id' => 52,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 637',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1295,8 +1243,7 @@ Mensualidad 4 de 60',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         52 => [
-                                                                                                                                                                                            'id' => 53,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 638',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1319,8 +1266,7 @@ Mensualidad 2 de 60 ',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         53 => [
-                                                                                                                                                                                            'id' => 54,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 653',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1343,8 +1289,7 @@ Mensualidad 5 de 60',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         54 => [
-                                                                                                                                                                                            'id' => 55,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 669',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1367,8 +1312,7 @@ Mensualidad 6 de 60',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         55 => [
-                                                                                                                                                                                            'id' => 56,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 670',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1391,8 +1335,7 @@ Mensualidad 7 de 60',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         56 => [
-                                                                                                                                                                                            'id' => 57,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 671',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1415,8 +1358,7 @@ Mensualidad 8 de 60',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         57 => [
-                                                                                                                                                                                            'id' => 58,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 672',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1439,8 +1381,7 @@ Complemento único por ajuste de prorrateo de la mensualidad de la 1 a la 5',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         58 => [
-                                                                                                                                                                                            'id' => 59,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 673 ',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de Pentest Spei $70,000
@@ -1465,8 +1406,7 @@ Servicio de Pentest Appi $210,000.00',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         59 => [
-                                                                                                                                                                                            'id' => 60,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 680',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de Auditoría
@@ -1489,8 +1429,7 @@ Auditoría en Materia de Tecnología, Seguridad de la Información y Riesgo de O
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         60 => [
-                                                                                                                                                                                            'id' => 61,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 736',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1513,8 +1452,7 @@ Mensualidad 9 de 60',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         61 => [
-                                                                                                                                                                                            'id' => 62,
-                                                                                                                                                                                            'contrato_id' => 7,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 7,
                                                                                                                                                                                             'no_factura' => 'S 747',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio de SOC para el Grupo Financiero Ve por más
@@ -1537,8 +1475,7 @@ Mensualidad 10 de 60',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         62 => [
-                                                                                                                                                                                            'id' => 63,
-                                                                                                                                                                                            'contrato_id' => 13,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 13,
                                                                                                                                                                                             'no_factura' => '1',
                                                                                                                                                                                             'concepto' => 'test',
                                                                                                                                                                                             'fecha_recepcion' => '2022-04-01',
@@ -1559,8 +1496,7 @@ Mensualidad 10 de 60',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         63 => [
-                                                                                                                                                                                            'id' => 64,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 454',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Servicio a Infraestructura de Sistemas Industriales
@@ -1585,8 +1521,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         64 => [
-                                                                                                                                                                                            'id' => 65,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 455',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
@@ -1611,8 +1546,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         65 => [
-                                                                                                                                                                                            'id' => 66,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 456',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
@@ -1637,8 +1571,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         66 => [
-                                                                                                                                                                                            'id' => 67,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 457',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
@@ -1663,8 +1596,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         67 => [
-                                                                                                                                                                                            'id' => 68,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 460',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
@@ -1689,8 +1621,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         68 => [
-                                                                                                                                                                                            'id' => 69,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 475',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
@@ -1715,8 +1646,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         69 => [
-                                                                                                                                                                                            'id' => 70,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 583',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte Infraestructura de Sistema Industriales
@@ -1742,8 +1672,7 @@ Factura Cancelada',
                                                                                                                                                                                             'updated_by' => 15,
                                                                                                                                                                                         ],
                                                                                                                                                                                         70 => [
-                                                                                                                                                                                            'id' => 71,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 510',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a infraestructura de Sistemas Industriales
@@ -1768,8 +1697,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         71 => [
-                                                                                                                                                                                            'id' => 72,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 518',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
@@ -1794,8 +1722,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         72 => [
-                                                                                                                                                                                            'id' => 73,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 532',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
@@ -1820,8 +1747,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         73 => [
-                                                                                                                                                                                            'id' => 74,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 533',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
@@ -1847,8 +1773,7 @@ Factura Cancelada',
                                                                                                                                                                                             'updated_by' => 15,
                                                                                                                                                                                         ],
                                                                                                                                                                                         74 => [
-                                                                                                                                                                                            'id' => 75,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 547',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
@@ -1873,8 +1798,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         75 => [
-                                                                                                                                                                                            'id' => 76,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 559',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistemas Industriales
@@ -1899,8 +1823,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         76 => [
-                                                                                                                                                                                            'id' => 77,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 578',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistemas Industriales
@@ -1925,8 +1848,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         77 => [
-                                                                                                                                                                                            'id' => 78,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 605',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistemas Industriales
@@ -1951,8 +1873,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         78 => [
-                                                                                                                                                                                            'id' => 79,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 614',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistemas Industriales
@@ -1977,8 +1898,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         79 => [
-                                                                                                                                                                                            'id' => 80,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 631',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistemas Industriales
@@ -2003,8 +1923,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         80 => [
-                                                                                                                                                                                            'id' => 81,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 654',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistemas Industriales
@@ -2029,8 +1948,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         81 => [
-                                                                                                                                                                                            'id' => 82,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 703',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistemas Industriales
@@ -2055,8 +1973,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => 15,
                                                                                                                                                                                         ],
                                                                                                                                                                                         82 => [
-                                                                                                                                                                                            'id' => 83,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 720',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura de Sistemas Industriales
@@ -2081,8 +1998,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => 15,
                                                                                                                                                                                         ],
                                                                                                                                                                                         83 => [
-                                                                                                                                                                                            'id' => 84,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 733',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistemas Industriales
@@ -2107,8 +2023,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => 15,
                                                                                                                                                                                         ],
                                                                                                                                                                                         84 => [
-                                                                                                                                                                                            'id' => 85,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 757',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistemas Industriales
@@ -2133,8 +2048,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         85 => [
-                                                                                                                                                                                            'id' => 86,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 758',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistemas Industriales
@@ -2179,8 +2093,7 @@ Contrato 4600023294
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         86 => [
-                                                                                                                                                                                            'id' => 87,
-                                                                                                                                                                                            'contrato_id' => 3,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 782',
                                                                                                                                                                                             'concepto' => '1 Servicio
 Soporte a Infraestructura a Sistema Industriales
@@ -2205,8 +2118,7 @@ Contrato 4600023294',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         87 => [
-                                                                                                                                                                                            'id' => 88,
-                                                                                                                                                                                            'contrato_id' => 2,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 180',
                                                                                                                                                                                             'concepto' => 'Mes: Febrero 2019
 
@@ -2237,8 +2149,7 @@ Servicio de Antivirus a estaciones locales
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         88 => [
-                                                                                                                                                                                            'id' => 89,
-                                                                                                                                                                                            'contrato_id' => 2,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 200',
                                                                                                                                                                                             'concepto' => 'Mes: Marzo
 
@@ -2268,8 +2179,7 @@ Servicio de Antivirus a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         89 => [
-                                                                                                                                                                                            'id' => 90,
-                                                                                                                                                                                            'contrato_id' => 2,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 258',
                                                                                                                                                                                             'concepto' => 'Mes: Abril 2019
 Fecha de emisión: 15-07-2019
@@ -2301,8 +2211,7 @@ Servicio de Antivirus a estaciones locales
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         90 => [
-                                                                                                                                                                                            'id' => 91,
-                                                                                                                                                                                            'contrato_id' => 2,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 260',
                                                                                                                                                                                             'concepto' => 'Mes: Mayo 2019
 Fecha de emisión: 15-07-2019
@@ -2334,8 +2243,7 @@ Servicio de Antivirus a estaciones locales
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         91 => [
-                                                                                                                                                                                            'id' => 92,
-                                                                                                                                                                                            'contrato_id' => 2,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 259',
                                                                                                                                                                                         'concepto' => 'Mes: Junio 2019 (1-11)
 Fecha de emisión: 15-07-2019
@@ -2367,8 +2275,7 @@ Servicio de Antivirus a estaciones locales
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         92 => [
-                                                                                                                                                                                            'id' => 93,
-                                                                                                                                                                                            'contrato_id' => 2,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 279',
                                                                                                                                                                                         'concepto' => 'Mes: Junio 2019 (12-31)
 Fecha emisión: 19-08-2019
@@ -2400,8 +2307,7 @@ Servicio de Antivirus a estaciones locales
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         93 => [
-                                                                                                                                                                                            'id' => 94,
-                                                                                                                                                                                            'contrato_id' => 2,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 280',
                                                                                                                                                                                             'concepto' => 'Mes: Julio 2019
 Emisión: 19-08-2019
@@ -2433,8 +2339,7 @@ Servicio de Antivirus a estaciones locales
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         94 => [
-                                                                                                                                                                                            'id' => 95,
-                                                                                                                                                                                            'contrato_id' => 2,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 281',
                                                                                                                                                                                         'concepto' => 'Mes: Agosto 2019 (1-11)
 Fecha de emisión: 19-08-2019
@@ -2466,8 +2371,7 @@ Servicio de Antivirus a estaciones locales
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         95 => [
-                                                                                                                                                                                            'id' => 96,
-                                                                                                                                                                                            'contrato_id' => 8,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 295',
                                                                                                                                                                                         'concepto' => 'Mes: Agosto 2019 (12-31)
 
@@ -2497,8 +2401,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         96 => [
-                                                                                                                                                                                            'id' => 97,
-                                                                                                                                                                                            'contrato_id' => 8,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 302',
                                                                                                                                                                                             'concepto' => 'Mes: Septiembre 2019
 
@@ -2528,8 +2431,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         97 => [
-                                                                                                                                                                                            'id' => 98,
-                                                                                                                                                                                            'contrato_id' => 8,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 317',
                                                                                                                                                                                             'concepto' => 'Mes: Octubre 2019
 
@@ -2559,8 +2461,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         98 => [
-                                                                                                                                                                                            'id' => 99,
-                                                                                                                                                                                            'contrato_id' => 8,
+                                                                                                                                                                                                                                                                                                                                                                                    'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 332',
                                                                                                                                                                                             'concepto' => 'Mes: Noviembre 2019
 
@@ -2590,7 +2491,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         99 => [
-                                                                                                                                                                                            'id' => 100,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 333',
                                                                                                                                                                                             'concepto' => 'Mes: Diciembre 2019
@@ -2621,7 +2522,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         100 => [
-                                                                                                                                                                                            'id' => 101,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 359',
                                                                                                                                                                                             'concepto' => 'Mes: Agosto Enero 2020
@@ -2652,7 +2553,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         101 => [
-                                                                                                                                                                                            'id' => 102,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 381',
                                                                                                                                                                                             'concepto' => 'Mes: Febrero 2020
@@ -2683,7 +2584,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         102 => [
-                                                                                                                                                                                            'id' => 103,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 386',
                                                                                                                                                                                             'concepto' => 'Mes: Marzo 2019
@@ -2714,7 +2615,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         103 => [
-                                                                                                                                                                                            'id' => 104,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 391',
                                                                                                                                                                                             'concepto' => 'Mes: Abril 2020
@@ -2745,7 +2646,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         104 => [
-                                                                                                                                                                                            'id' => 105,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 409',
                                                                                                                                                                                             'concepto' => 'Mes: Mayo 2020
@@ -2776,7 +2677,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         105 => [
-                                                                                                                                                                                            'id' => 106,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 414',
                                                                                                                                                                                             'concepto' => 'Mes: Junio 2020
@@ -2807,7 +2708,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         106 => [
-                                                                                                                                                                                            'id' => 107,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 422',
                                                                                                                                                                                             'concepto' => 'Mes: Julio 2020
@@ -2838,7 +2739,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         107 => [
-                                                                                                                                                                                            'id' => 108,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 442',
                                                                                                                                                                                             'concepto' => 'Mes: Agosto 2020
@@ -2869,7 +2770,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         108 => [
-                                                                                                                                                                                            'id' => 109,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 450',
                                                                                                                                                                                             'concepto' => 'Mes: Septiembre 2020
@@ -2900,7 +2801,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         109 => [
-                                                                                                                                                                                            'id' => 110,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 466',
                                                                                                                                                                                             'concepto' => 'Mes: Octubre 2020
@@ -2931,7 +2832,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         110 => [
-                                                                                                                                                                                            'id' => 111,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 473',
                                                                                                                                                                                             'concepto' => 'Mes: Noviembre 2020
@@ -2962,7 +2863,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         111 => [
-                                                                                                                                                                                            'id' => 112,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 479',
                                                                                                                                                                                             'concepto' => 'Mes: Diciembre 2020
@@ -2993,7 +2894,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         112 => [
-                                                                                                                                                                                            'id' => 113,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => ' S 507',
                                                                                                                                                                                             'concepto' => 'Mes: Enero 2021
@@ -3024,7 +2925,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => 10,
                                                                                                                                                                                         ],
                                                                                                                                                                                         113 => [
-                                                                                                                                                                                            'id' => 114,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 507',
                                                                                                                                                                                             'concepto' => 'Mes: Enero 2021
@@ -3055,7 +2956,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         114 => [
-                                                                                                                                                                                            'id' => 115,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 529',
                                                                                                                                                                                             'concepto' => 'Mes: Febrero 2021
@@ -3086,7 +2987,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         115 => [
-                                                                                                                                                                                            'id' => 116,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 544',
                                                                                                                                                                                             'concepto' => 'Mes: Marzo 2021
@@ -3117,7 +3018,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         116 => [
-                                                                                                                                                                                            'id' => 117,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 551',
                                                                                                                                                                                             'concepto' => 'Mes: Abril 2021
@@ -3148,7 +3049,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         117 => [
-                                                                                                                                                                                            'id' => 118,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 567',
                                                                                                                                                                                             'concepto' => 'Mes: Mayo 2021
@@ -3179,7 +3080,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         118 => [
-                                                                                                                                                                                            'id' => 119,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => ' S 593',
                                                                                                                                                                                             'concepto' => 'Mes: Junio 2021
@@ -3210,7 +3111,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => 10,
                                                                                                                                                                                         ],
                                                                                                                                                                                         119 => [
-                                                                                                                                                                                            'id' => 120,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 593',
                                                                                                                                                                                             'concepto' => 'Mes: Junio 2021
@@ -3241,7 +3142,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         120 => [
-                                                                                                                                                                                            'id' => 121,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 607',
                                                                                                                                                                                             'concepto' => 'Mes: Julio 2021
@@ -3272,7 +3173,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         121 => [
-                                                                                                                                                                                            'id' => 122,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 626',
                                                                                                                                                                                             'concepto' => 'Mes: Agosto 2021
@@ -3303,7 +3204,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         122 => [
-                                                                                                                                                                                            'id' => 123,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 644',
                                                                                                                                                                                             'concepto' => 'Mes: Septiembre 2021
@@ -3334,7 +3235,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         123 => [
-                                                                                                                                                                                            'id' => 124,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 666',
                                                                                                                                                                                             'concepto' => 'Mes: Octubre 2021
@@ -3365,7 +3266,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         124 => [
-                                                                                                                                                                                            'id' => 125,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 678',
                                                                                                                                                                                             'concepto' => 'Mes: Noviembre 2021
@@ -3396,7 +3297,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         125 => [
-                                                                                                                                                                                            'id' => 126,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 677',
                                                                                                                                                                                             'concepto' => 'Mes: Diciembre 2021
@@ -3427,7 +3328,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         126 => [
-                                                                                                                                                                                            'id' => 127,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 727',
                                                                                                                                                                                             'concepto' => 'Mes: Enero 2022
@@ -3458,7 +3359,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         127 => [
-                                                                                                                                                                                            'id' => 128,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 748',
                                                                                                                                                                                             'concepto' => 'Mes: Febrero 2022
@@ -3489,7 +3390,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         128 => [
-                                                                                                                                                                                            'id' => 129,
+
                                                                                                                                                                                             'contrato_id' => 8,
                                                                                                                                                                                             'no_factura' => 'S 765',
                                                                                                                                                                                             'concepto' => 'Mes:  Marzo 2022
@@ -3520,7 +3421,7 @@ Servicio de Antispam a estaciones locales',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         129 => [
-                                                                                                                                                                                            'id' => 130,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 511',
                                                                                                                                                                                             'concepto' => 'Servicio A. Pruebas de Seguridad Externa
@@ -3550,7 +3451,7 @@ Servicios devengados del 20 de octubre de 2020 al  18 de diciembre de 2020',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         130 => [
-                                                                                                                                                                                            'id' => 131,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 513',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3579,7 +3480,7 @@ Servicios devengados en el mes de enero de 2021',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         131 => [
-                                                                                                                                                                                            'id' => 132,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 531',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3608,7 +3509,7 @@ Servicio devengado en el mes de febrero 2021',
                                                                                                                                                                                             'updated_by' => 10,
                                                                                                                                                                                         ],
                                                                                                                                                                                         132 => [
-                                                                                                                                                                                            'id' => 133,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => ' S 556',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3638,7 +3539,7 @@ Servicios Devengados en el mes de abril 2021
                                                                                                                                                                                             'updated_by' => 10,
                                                                                                                                                                                         ],
                                                                                                                                                                                         133 => [
-                                                                                                                                                                                            'id' => 134,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 531',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3668,7 +3569,7 @@ Servicio devengado en el mes de febrerp 2021.',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         134 => [
-                                                                                                                                                                                            'id' => 135,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 556',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3697,7 +3598,7 @@ Servicios devengados en el mes de marzo de 2021',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         135 => [
-                                                                                                                                                                                            'id' => 136,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 557',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3726,7 +3627,7 @@ Servicio devengado en el mes de abril de 2021',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         136 => [
-                                                                                                                                                                                            'id' => 137,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 570',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3755,7 +3656,7 @@ Servicios devengados en el mes de mayo 2021',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         137 => [
-                                                                                                                                                                                            'id' => 138,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 598',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3786,7 +3687,7 @@ Servicios devengados del mes de junio 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         138 => [
-                                                                                                                                                                                            'id' => 139,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 613',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3817,7 +3718,7 @@ Servicios devengados del mes de julio 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         139 => [
-                                                                                                                                                                                            'id' => 140,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 630',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3849,7 +3750,7 @@ Servicios devengados del mes de agosto 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         140 => [
-                                                                                                                                                                                            'id' => 141,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 647',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3880,7 +3781,7 @@ Servicios devengados del mes de septiembre 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         141 => [
-                                                                                                                                                                                            'id' => 142,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 667',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3911,7 +3812,7 @@ Servicios devengados del mes de  octubre 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         142 => [
-                                                                                                                                                                                            'id' => 143,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 706',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3942,7 +3843,7 @@ Servicios devengados del mes de  noviembre 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         143 => [
-                                                                                                                                                                                            'id' => 144,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 715',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -3973,7 +3874,7 @@ Servicios devengados del mes de diciembre 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         144 => [
-                                                                                                                                                                                            'id' => 145,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 724',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -4004,7 +3905,7 @@ Servicios devengados del mes de enero 2022
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         145 => [
-                                                                                                                                                                                            'id' => 146,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 746',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -4035,7 +3936,7 @@ Servicios devengados del mes de febrero 2022
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         146 => [
-                                                                                                                                                                                            'id' => 147,
+
                                                                                                                                                                                             'contrato_id' => 4,
                                                                                                                                                                                             'no_factura' => 'S 771',
                                                                                                                                                                                             'concepto' => 'Servicio
@@ -4066,7 +3967,7 @@ Servicios devengados del mes de marzo 2022
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         147 => [
-                                                                                                                                                                                            'id' => 148,
+
                                                                                                                                                                                             'contrato_id' => 28,
                                                                                                                                                                                             'no_factura' => 'S 710',
                                                                                                                                                                                             'concepto' => '1 Servicio
@@ -4095,7 +3996,7 @@ Relativo a los servicios para realizar auditorías normativas especializadas (Pa
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         148 => [
-                                                                                                                                                                                            'id' => 149,
+
                                                                                                                                                                                             'contrato_id' => 29,
                                                                                                                                                                                             'no_factura' => 'S 711',
                                                                                                                                                                                         'concepto' => '1 Servicio (Partida 6)
@@ -4132,7 +4033,7 @@ Servicios para realizar auditorías normativas especializadas (partida 1,6,7 y 8
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         149 => [
-                                                                                                                                                                                            'id' => 150,
+
                                                                                                                                                                                             'contrato_id' => 26,
                                                                                                                                                                                             'no_factura' => '4343',
                                                                                                                                                                                             'concepto' => 'asdasdasd',
@@ -4154,7 +4055,7 @@ Servicios para realizar auditorías normativas especializadas (partida 1,6,7 y 8
                                                                                                                                                                                             'updated_by' => 1,
                                                                                                                                                                                         ],
                                                                                                                                                                                         150 => [
-                                                                                                                                                                                            'id' => 151,
+
                                                                                                                                                                                             'contrato_id' => 18,
                                                                                                                                                                                             'no_factura' => 'CPB 275',
                                                                                                                                                                                             'concepto' => '1 Servicio
@@ -4179,7 +4080,7 @@ Número de PO 21004006314',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         151 => [
-                                                                                                                                                                                            'id' => 152,
+
                                                                                                                                                                                             'contrato_id' => 20,
                                                                                                                                                                                             'no_factura' => 'S 628',
                                                                                                                                                                                             'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -4210,7 +4111,7 @@ Servicio Agosto 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         152 => [
-                                                                                                                                                                                            'id' => 153,
+
                                                                                                                                                                                             'contrato_id' => 20,
                                                                                                                                                                                             'no_factura' => 'S 646',
                                                                                                                                                                                             'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -4241,7 +4142,7 @@ Servicio Septiembre 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         153 => [
-                                                                                                                                                                                            'id' => 154,
+
                                                                                                                                                                                             'contrato_id' => 20,
                                                                                                                                                                                             'no_factura' => 'S 668',
                                                                                                                                                                                             'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -4272,7 +4173,7 @@ Servicio Octubre 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         154 => [
-                                                                                                                                                                                            'id' => 155,
+
                                                                                                                                                                                             'contrato_id' => 20,
                                                                                                                                                                                             'no_factura' => 'S 688',
                                                                                                                                                                                             'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -4303,7 +4204,7 @@ Servicio Diciembre 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         155 => [
-                                                                                                                                                                                            'id' => 156,
+
                                                                                                                                                                                             'contrato_id' => 20,
                                                                                                                                                                                             'no_factura' => 'S 690',
                                                                                                                                                                                             'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -4334,7 +4235,7 @@ Servicio Noviembre 2021
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         156 => [
-                                                                                                                                                                                            'id' => 157,
+
                                                                                                                                                                                             'contrato_id' => 20,
                                                                                                                                                                                             'no_factura' => 'S 729',
                                                                                                                                                                                             'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -4365,7 +4266,7 @@ Servicio Enero 2022
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         157 => [
-                                                                                                                                                                                            'id' => 158,
+
                                                                                                                                                                                             'contrato_id' => 20,
                                                                                                                                                                                             'no_factura' => 'S 745',
                                                                                                                                                                                             'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -4396,7 +4297,7 @@ Servicio Febrero 2022
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         158 => [
-                                                                                                                                                                                            'id' => 159,
+
                                                                                                                                                                                             'contrato_id' => 20,
                                                                                                                                                                                             'no_factura' => 'S 767',
                                                                                                                                                                                             'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -4427,7 +4328,7 @@ Servicio Marzo 2022
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         159 => [
-                                                                                                                                                                                            'id' => 160,
+
                                                                                                                                                                                             'contrato_id' => 27,
                                                                                                                                                                                             'no_factura' => 'C 59',
                                                                                                                                                                                             'concepto' => 'Servicio de Prueba de Penetración a aplicaciones móviles
@@ -4452,7 +4353,7 @@ Pedido 5500248874
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         160 => [
-                                                                                                                                                                                            'id' => 161,
+
                                                                                                                                                                                             'contrato_id' => 31,
                                                                                                                                                                                             'no_factura' => 'CPB 276',
                                                                                                                                                                                             'concepto' => '1 Servicio
@@ -4476,7 +4377,7 @@ Orden de Servicio # 03',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         161 => [
-                                                                                                                                                                                            'id' => 162,
+
                                                                                                                                                                                             'contrato_id' => 9,
                                                                                                                                                                                             'no_factura' => 'S 761',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de Marzo 2022
@@ -4510,7 +4411,7 @@ Servicio de WAF (27 de 36 meses de servicio)',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         162 => [
-                                                                                                                                                                                            'id' => 163,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 374',
                                                                                                                                                                                             'concepto' => 'Mes Enero 2020
@@ -4535,7 +4436,7 @@ Soporte técnico de la solución en un horario de 24x7x365. Contrato número ASF
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         163 => [
-                                                                                                                                                                                            'id' => 164,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 375',
                                                                                                                                                                                             'concepto' => 'Renovación de licencias 2020
@@ -4563,7 +4464,7 @@ Servicio
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         164 => [
-                                                                                                                                                                                            'id' => 165,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 382',
                                                                                                                                                                                             'concepto' => 'Mes Febrero 2020
@@ -4587,7 +4488,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         165 => [
-                                                                                                                                                                                            'id' => 166,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 387',
                                                                                                                                                                                             'concepto' => 'Mes Marzo 020
@@ -4611,7 +4512,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         166 => [
-                                                                                                                                                                                            'id' => 167,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 393',
                                                                                                                                                                                             'concepto' => 'Mes Abril  2020
@@ -4635,7 +4536,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         167 => [
-                                                                                                                                                                                            'id' => 168,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => ' S 406',
                                                                                                                                                                                             'concepto' => 'Mes Mayo 2020
@@ -4659,7 +4560,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         168 => [
-                                                                                                                                                                                            'id' => 169,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 412',
                                                                                                                                                                                             'concepto' => 'Mes Junio 2020
@@ -4683,7 +4584,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         169 => [
-                                                                                                                                                                                            'id' => 170,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 417',
                                                                                                                                                                                             'concepto' => 'Mes Julio 2020
@@ -4707,7 +4608,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         170 => [
-                                                                                                                                                                                            'id' => 171,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 440',
                                                                                                                                                                                             'concepto' => 'Mes Agosto 2020
@@ -4731,7 +4632,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         171 => [
-                                                                                                                                                                                            'id' => 172,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 447',
                                                                                                                                                                                             'concepto' => 'Mes Septiembre 2020
@@ -4755,7 +4656,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         172 => [
-                                                                                                                                                                                            'id' => 173,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 464',
                                                                                                                                                                                             'concepto' => 'Mes Octubre 2020
@@ -4779,7 +4680,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         173 => [
-                                                                                                                                                                                            'id' => 174,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 474',
                                                                                                                                                                                             'concepto' => 'Mes Noviembre 2020
@@ -4803,7 +4704,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         174 => [
-                                                                                                                                                                                            'id' => 175,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 497',
                                                                                                                                                                                             'concepto' => 'Mes Diciembre 2020
@@ -4827,7 +4728,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         175 => [
-                                                                                                                                                                                            'id' => 176,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 501',
                                                                                                                                                                                             'concepto' => 'Renovación Licencias 2021
@@ -4852,7 +4753,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         176 => [
-                                                                                                                                                                                            'id' => 177,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 508',
                                                                                                                                                                                             'concepto' => 'Mes Enero 2021
@@ -4876,7 +4777,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         177 => [
-                                                                                                                                                                                            'id' => 178,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 521',
                                                                                                                                                                                             'concepto' => 'Mes Febrero 2021
@@ -4900,7 +4801,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         178 => [
-                                                                                                                                                                                            'id' => 179,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 539',
                                                                                                                                                                                             'concepto' => 'Mes Marzo 2021
@@ -4924,7 +4825,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         179 => [
-                                                                                                                                                                                            'id' => 180,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 549',
                                                                                                                                                                                             'concepto' => 'Mes Abril 2021
@@ -4948,7 +4849,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         180 => [
-                                                                                                                                                                                            'id' => 181,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 564',
                                                                                                                                                                                             'concepto' => 'Mes Mayo 2021
@@ -4972,7 +4873,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         181 => [
-                                                                                                                                                                                            'id' => 182,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 588',
                                                                                                                                                                                             'concepto' => 'Mes Junio 2021
@@ -4996,7 +4897,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         182 => [
-                                                                                                                                                                                            'id' => 183,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 604',
                                                                                                                                                                                             'concepto' => 'Mes Julio 2021
@@ -5020,7 +4921,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         183 => [
-                                                                                                                                                                                            'id' => 184,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 618',
                                                                                                                                                                                             'concepto' => 'Mes Agosto 2021
@@ -5044,7 +4945,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         184 => [
-                                                                                                                                                                                            'id' => 185,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 640',
                                                                                                                                                                                             'concepto' => 'Mes Septiembre 2021
@@ -5068,7 +4969,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         185 => [
-                                                                                                                                                                                            'id' => 186,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 657',
                                                                                                                                                                                             'concepto' => 'Mes Octubre 2021
@@ -5092,7 +4993,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         186 => [
-                                                                                                                                                                                            'id' => 187,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 687',
                                                                                                                                                                                             'concepto' => 'Mes Noviembre 2021
@@ -5116,7 +5017,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         187 => [
-                                                                                                                                                                                            'id' => 188,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'CPB 329',
                                                                                                                                                                                             'concepto' => 'Mes Diciembre 2021
@@ -5140,7 +5041,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         188 => [
-                                                                                                                                                                                            'id' => 189,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 712',
                                                                                                                                                                                             'concepto' => 'Renovación licencias 2022
@@ -5166,7 +5067,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         189 => [
-                                                                                                                                                                                            'id' => 190,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'CPB 344',
                                                                                                                                                                                             'concepto' => 'Mes Enero 2022
@@ -5190,7 +5091,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         190 => [
-                                                                                                                                                                                            'id' => 191,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 737',
                                                                                                                                                                                             'concepto' => 'Mes Febrero 2022
@@ -5214,7 +5115,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         191 => [
-                                                                                                                                                                                            'id' => 192,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 759',
                                                                                                                                                                                             'concepto' => 'Mes Marzo 2022
@@ -5238,7 +5139,7 @@ Servicio de Soporte Técnico de la solución en un horario de 24x7x365. Contrato
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         192 => [
-                                                                                                                                                                                            'id' => 193,
+
                                                                                                                                                                                             'contrato_id' => 22,
                                                                                                                                                                                             'no_factura' => 'S 655',
                                                                                                                                                                                             'concepto' => 'Julio 2021
@@ -5263,7 +5164,7 @@ Servicio del 7 al 31 de julio de 2021',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         193 => [
-                                                                                                                                                                                            'id' => 194,
+
                                                                                                                                                                                             'contrato_id' => 22,
                                                                                                                                                                                             'no_factura' => 'S 622',
                                                                                                                                                                                             'concepto' => 'Agosto 2021
@@ -5288,7 +5189,7 @@ Servicio Agosto (1 de 6)',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         194 => [
-                                                                                                                                                                                            'id' => 195,
+
                                                                                                                                                                                             'contrato_id' => 22,
                                                                                                                                                                                             'no_factura' => 'S 643',
                                                                                                                                                                                             'concepto' => 'Septiembre 2021
@@ -5313,7 +5214,7 @@ Servicio Septiembre (2-6)',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         195 => [
-                                                                                                                                                                                            'id' => 196,
+
                                                                                                                                                                                             'contrato_id' => 22,
                                                                                                                                                                                             'no_factura' => 'S 662',
                                                                                                                                                                                             'concepto' => 'Octubre 2021
@@ -5339,7 +5240,7 @@ Servicio Octubre (3-6)
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         196 => [
-                                                                                                                                                                                            'id' => 197,
+
                                                                                                                                                                                             'contrato_id' => 26,
                                                                                                                                                                                             'no_factura' => 'S 674',
                                                                                                                                                                                             'concepto' => 'Servicio Noviembre 2021
@@ -5368,7 +5269,7 @@ Servicio de despliegue y monitoreo de una consola de antivirus de tipo Enterpris
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         197 => [
-                                                                                                                                                                                            'id' => 198,
+
                                                                                                                                                                                             'contrato_id' => 26,
                                                                                                                                                                                             'no_factura' => 'S 675',
                                                                                                                                                                                             'concepto' => 'Servicio Diciembre 2021
@@ -5397,7 +5298,7 @@ Servicio de despliegue y monitoreo de una consola de antivirus de tipo Enterpris
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         198 => [
-                                                                                                                                                                                            'id' => 199,
+
                                                                                                                                                                                             'contrato_id' => 26,
                                                                                                                                                                                             'no_factura' => 'S 728',
                                                                                                                                                                                             'concepto' => 'Servicio Enero 2022
@@ -5426,7 +5327,7 @@ Servicio de despliegue y monitoreo de una consola de antivirus de tipo Enterpris
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         199 => [
-                                                                                                                                                                                            'id' => 200,
+
                                                                                                                                                                                             'contrato_id' => 26,
                                                                                                                                                                                             'no_factura' => 'S 750',
                                                                                                                                                                                             'concepto' => 'Servicio Febrero 2022
@@ -5455,7 +5356,7 @@ Servicio de despliegue y monitoreo de una consola de antivirus de tipo Enterpris
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         200 => [
-                                                                                                                                                                                            'id' => 201,
+
                                                                                                                                                                                             'contrato_id' => 26,
                                                                                                                                                                                             'no_factura' => 'S 768',
                                                                                                                                                                                             'concepto' => 'Servicio Marzo 2022
@@ -5484,7 +5385,7 @@ Servicio de despliegue y monitoreo de una consola de antivirus de tipo Enterpris
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         201 => [
-                                                                                                                                                                                            'id' => 202,
+
                                                                                                                                                                                             'contrato_id' => 26,
                                                                                                                                                                                             'no_factura' => 'S 800',
                                                                                                                                                                                             'concepto' => 'Servicio Abril 2022
@@ -5513,7 +5414,7 @@ Servicio de despliegue y monitoreo de una consola de antivirus de tipo Enterpris
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         202 => [
-                                                                                                                                                                                            'id' => 203,
+
                                                                                                                                                                                             'contrato_id' => 21,
                                                                                                                                                                                             'no_factura' => 'S 801',
                                                                                                                                                                                         'concepto' => 'Póliza de licenciamiento, soporte y mantenimiento que ampara la vigencia del contrato número CT-0758-21 (2).
@@ -5543,7 +5444,7 @@ Plan de trabajo autorizado',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         203 => [
-                                                                                                                                                                                            'id' => 204,
+
                                                                                                                                                                                             'contrato_id' => 19,
                                                                                                                                                                                             'no_factura' => 'S 731',
                                                                                                                                                                                             'concepto' => 'Enero 2022
@@ -5572,7 +5473,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         204 => [
-                                                                                                                                                                                            'id' => 205,
+
                                                                                                                                                                                             'contrato_id' => 19,
                                                                                                                                                                                             'no_factura' => 'S 755',
                                                                                                                                                                                             'concepto' => 'Febrero 2022
@@ -5601,7 +5502,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         205 => [
-                                                                                                                                                                                            'id' => 206,
+
                                                                                                                                                                                             'contrato_id' => 19,
                                                                                                                                                                                             'no_factura' => 'S 773',
                                                                                                                                                                                             'concepto' => 'Marzo 2022
@@ -5630,7 +5531,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         206 => [
-                                                                                                                                                                                            'id' => 207,
+
                                                                                                                                                                                             'contrato_id' => 19,
                                                                                                                                                                                             'no_factura' => 'S 803',
                                                                                                                                                                                             'concepto' => 'Abril 2022
@@ -5659,7 +5560,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         207 => [
-                                                                                                                                                                                            'id' => 208,
+
                                                                                                                                                                                             'contrato_id' => 30,
                                                                                                                                                                                             'no_factura' => 'S 722',
                                                                                                                                                                                             'concepto' => 'Enero 2022
@@ -5684,7 +5585,7 @@ Póliza de servicio de mantenimiento para 2 (dos) balanceadores configurados en 
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         208 => [
-                                                                                                                                                                                            'id' => 209,
+
                                                                                                                                                                                             'contrato_id' => 30,
                                                                                                                                                                                             'no_factura' => 'S 751',
                                                                                                                                                                                             'concepto' => 'Febrero  2022
@@ -5709,7 +5610,7 @@ Póliza de servicio de mantenimiento para 2 (dos) balanceadores configurados en 
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         209 => [
-                                                                                                                                                                                            'id' => 210,
+
                                                                                                                                                                                             'contrato_id' => 30,
                                                                                                                                                                                             'no_factura' => 'S 760',
                                                                                                                                                                                             'concepto' => 'Marzo 2022
@@ -5734,7 +5635,7 @@ Póliza de servicio de mantenimiento para 2 (dos) balanceadores configurados en 
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         210 => [
-                                                                                                                                                                                            'id' => 211,
+
                                                                                                                                                                                             'contrato_id' => 20,
                                                                                                                                                                                             'no_factura' => 'S 792',
                                                                                                                                                                                             'concepto' => 'Servicio Abril
@@ -5760,7 +5661,7 @@ Partida 2. Licencias de Antivirus.',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         211 => [
-                                                                                                                                                                                            'id' => 212,
+
                                                                                                                                                                                             'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 12',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de abril 2018
@@ -5792,7 +5693,7 @@ Contrato Número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         212 => [
-                                                                                                                                                                                            'id' => 213,
+
                                                                                                                                                                                             'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 14',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de mayo 2018.
@@ -5825,7 +5726,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         213 => [
-                                                                                                                                                                                            'id' => 214,
+
                                                                                                                                                                                             'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 15',
                                                                                                                                                                                             'concepto' => 'Nota de crédito al contrato SE-25/2018 correspondiente del mes de mayo de 2018 por los siguientes servicios:
@@ -5850,7 +5751,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => 10,
                                                                                                                                                                                         ],
                                                                                                                                                                                         214 => [
-                                                                                                                                                                                            'id' => 215,
+
                                                                                                                                                                                             'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 17',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de junio 2018
@@ -5884,7 +5785,7 @@ Contrato número SE-25/2018
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         215 => [
-                                                                                                                                                                                            'id' => 216,
+
                                                                                                                                                                                             'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 13',
                                                                                                                                                                                             'concepto' => 'Nota de Crédito al contrato número SE-25/2018 correspondiente al mes de abril de 2018, por lo siguientes servicios:
@@ -5908,7 +5809,7 @@ Contrato número SE-25/2018
                                                                                                                                                                                             'updated_by' => 10,
                                                                                                                                                                                         ],
                                                                                                                                                                                         216 => [
-                                                                                                                                                                                            'id' => 217,
+
                                                                                                                                                                                             'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 25',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de julio 2018
@@ -5941,7 +5842,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         217 => [
-                                                                                                                                                                                            'id' => 218,
+
                                                                                                                                                                                             'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 77',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de septiembre 2018
@@ -5974,7 +5875,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         218 => [
-                                                                                                                                                                                            'id' => 219,
+
                                                                                                                                                                                             'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 176',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de enero 2019
@@ -6007,7 +5908,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         219 => [
-                                                                                                                                                                                            'id' => 220,
+
                                                                                                                                                                                             'contrato_id' => 2,
                                                                                                                                                                                             'no_factura' => 'S 32',
                                                                                                                                                                                             'concepto' => 'Servicio correspondiente al mes de agosto 2019
@@ -6040,7 +5941,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         220 => [
-                                                                                                                                                                                            'id' => 221,
+
                                                                                                                                                                                             'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 562',
                                                                                                                                                                                             'concepto' => 'ESTIMACIÓN 7:DEL 13 DE NOVIEMBRE AL 12 DE DICIEMBRE 2020.',
@@ -6062,7 +5963,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         221 => [
-                                                                                                                                                                                            'id' => 222,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 785',
                                                                                                                                                                                             'concepto' => 'Periodo: Abril 2022.',
@@ -6084,7 +5985,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         222 => [
-                                                                                                                                                                                            'id' => 223,
+
                                                                                                                                                                                             'contrato_id' => 17,
                                                                                                                                                                                             'no_factura' => 'S 813',
                                                                                                                                                                                             'concepto' => 'Periodo: Mayo 2022.',
@@ -6106,7 +6007,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         223 => [
-                                                                                                                                                                                            'id' => 224,
+
                                                                                                                                                                                             'contrato_id' => 3,
                                                                                                                                                                                             'no_factura' => 'S 806',
                                                                                                                                                                                             'concepto' => 'Estimación: Del 13 de abril al 12 mayo 2022.',
@@ -6128,7 +6029,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         224 => [
-                                                                                                                                                                                            'id' => 225,
+
                                                                                                                                                                                             'contrato_id' => 5,
                                                                                                                                                                                             'no_factura' => 'S 774',
                                                                                                                                                                                             'concepto' => 'Servicio 3 de 26
@@ -6152,7 +6053,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         225 => [
-                                                                                                                                                                                            'id' => 226,
+
                                                                                                                                                                                             'contrato_id' => 5,
                                                                                                                                                                                             'no_factura' => 'S 812',
                                                                                                                                                                                             'concepto' => 'Servicio 4 de 26
@@ -6176,7 +6077,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         226 => [
-                                                                                                                                                                                            'id' => 227,
+
                                                                                                                                                                                             'contrato_id' => 9,
                                                                                                                                                                                             'no_factura' => 'S 795',
                                                                                                                                                                                             'concepto' => 'Servicio abril 2022.
@@ -6200,7 +6101,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         227 => [
-                                                                                                                                                                                            'id' => 228,
+
                                                                                                                                                                                             'contrato_id' => 9,
                                                                                                                                                                                             'no_factura' => 'S 819',
                                                                                                                                                                                             'concepto' => 'Servicio mayo 2022.
@@ -6224,7 +6125,7 @@ Contrato número SE-25/2018',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         228 => [
-                                                                                                                                                                                            'id' => 229,
+
                                                                                                                                                                                             'contrato_id' => 41,
                                                                                                                                                                                             'no_factura' => 'S 543',
                                                                                                                                                                                             'concepto' => 'Servicio Profesional, Asesoría Técnica Aspel
@@ -6251,7 +6152,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => 10,
                                                                                                                                                                                         ],
                                                                                                                                                                                         229 => [
-                                                                                                                                                                                            'id' => 230,
+
                                                                                                                                                                                             'contrato_id' => 36,
                                                                                                                                                                                             'no_factura' => 'S 524',
                                                                                                                                                                                             'concepto' => 'Servicio 1 de 12
@@ -6277,7 +6178,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => 10,
                                                                                                                                                                                         ],
                                                                                                                                                                                         230 => [
-                                                                                                                                                                                            'id' => 231,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 524',
                                                                                                                                                                                             'concepto' => 'Servicio 1 de 12
@@ -6303,7 +6204,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         231 => [
-                                                                                                                                                                                            'id' => 232,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 525',
                                                                                                                                                                                             'concepto' => 'Servicio 2 de 12
@@ -6329,7 +6230,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         232 => [
-                                                                                                                                                                                            'id' => 233,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 540',
                                                                                                                                                                                             'concepto' => 'Servicio 3 de 12
@@ -6355,7 +6256,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         233 => [
-                                                                                                                                                                                            'id' => 234,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 550',
                                                                                                                                                                                             'concepto' => 'Servicio 4 de 12
@@ -6381,7 +6282,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         234 => [
-                                                                                                                                                                                            'id' => 235,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 565',
                                                                                                                                                                                             'concepto' => 'Servicio 5 de 12
@@ -6407,7 +6308,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         235 => [
-                                                                                                                                                                                            'id' => 236,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 589',
                                                                                                                                                                                             'concepto' => 'Servicio 6 de 12
@@ -6433,7 +6334,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         236 => [
-                                                                                                                                                                                            'id' => 237,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 608',
                                                                                                                                                                                             'concepto' => 'Servicio 7 de 12
@@ -6459,7 +6360,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         237 => [
-                                                                                                                                                                                            'id' => 238,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 621',
                                                                                                                                                                                             'concepto' => 'Servicio 8 de 12
@@ -6485,7 +6386,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         238 => [
-                                                                                                                                                                                            'id' => 239,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 641',
                                                                                                                                                                                             'concepto' => 'Servicio 9 de 12
@@ -6511,7 +6412,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         239 => [
-                                                                                                                                                                                            'id' => 240,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 659',
                                                                                                                                                                                             'concepto' => 'Servicio 10 de 12
@@ -6537,7 +6438,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         240 => [
-                                                                                                                                                                                            'id' => 241,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'CPB 278',
                                                                                                                                                                                             'concepto' => 'Servicio 11 de 12
@@ -6563,7 +6464,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         241 => [
-                                                                                                                                                                                            'id' => 242,
+
                                                                                                                                                                                             'contrato_id' => 33,
                                                                                                                                                                                             'no_factura' => 'S 699',
                                                                                                                                                                                             'concepto' => 'Servicio 12 de 12
@@ -6589,7 +6490,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         242 => [
-                                                                                                                                                                                            'id' => 243,
+
                                                                                                                                                                                             'contrato_id' => 34,
                                                                                                                                                                                             'no_factura' => 'S 526',
                                                                                                                                                                                             'concepto' => 'Servicio  Diciembre 2020, Enero y Febrero 2021
@@ -6615,7 +6516,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         243 => [
-                                                                                                                                                                                            'id' => 244,
+
                                                                                                                                                                                             'contrato_id' => 34,
                                                                                                                                                                                             'no_factura' => 'S 582',
                                                                                                                                                                                             'concepto' => 'Servicio marzo 2021
@@ -6639,7 +6540,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         244 => [
-                                                                                                                                                                                            'id' => 245,
+
                                                                                                                                                                                             'contrato_id' => 34,
                                                                                                                                                                                             'no_factura' => 'S 583',
                                                                                                                                                                                             'concepto' => 'Servicio Abril 2021
@@ -6663,7 +6564,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         245 => [
-                                                                                                                                                                                            'id' => 246,
+
                                                                                                                                                                                             'contrato_id' => 34,
                                                                                                                                                                                             'no_factura' => 'S 584',
                                                                                                                                                                                             'concepto' => 'Servicio Mayo 2021
@@ -6687,7 +6588,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         246 => [
-                                                                                                                                                                                            'id' => 247,
+
                                                                                                                                                                                             'contrato_id' => 34,
                                                                                                                                                                                             'no_factura' => 'S 664',
                                                                                                                                                                                             'concepto' => 'Servicio octubre 2021
@@ -6711,7 +6612,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         247 => [
-                                                                                                                                                                                            'id' => 248,
+
                                                                                                                                                                                             'contrato_id' => 35,
                                                                                                                                                                                             'no_factura' => 'S 697',
                                                                                                                                                                                             'concepto' => 'Servicio para realizar análisis de vulnerabilidades a los sistemas de la Comisión Nacional de Seguros y Fianzas',
@@ -6733,7 +6634,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         248 => [
-                                                                                                                                                                                            'id' => 249,
+
                                                                                                                                                                                             'contrato_id' => 41,
                                                                                                                                                                                             'no_factura' => 'S 543',
                                                                                                                                                                                             'concepto' => 'Servicios profesionales asesoría técnica aspel.
@@ -6758,7 +6659,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         249 => [
-                                                                                                                                                                                            'id' => 250,
+
                                                                                                                                                                                             'contrato_id' => 43,
                                                                                                                                                                                             'no_factura' => 'C 76',
                                                                                                                                                                                             'concepto' => 'Servicio Pentest Anual Coltomex 2022',
@@ -6780,7 +6681,7 @@ Proveedor 274',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         250 => [
-                                                                                                                                                                                            'id' => 251,
+
                                                                                                                                                                                             'contrato_id' => 39,
                                                                                                                                                                                             'no_factura' => 'S 796',
                                                                                                                                                                                             'concepto' => 'Servicio 1 de 12
@@ -6805,7 +6706,7 @@ Periodo de 19 al 28 de febrero 2022',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         251 => [
-                                                                                                                                                                                            'id' => 252,
+
                                                                                                                                                                                             'contrato_id' => 39,
                                                                                                                                                                                             'no_factura' => 'S 797',
                                                                                                                                                                                             'concepto' => 'Servicio 2 de 12
@@ -6830,7 +6731,7 @@ Periodo del 01 al 31 marzo 2022',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         252 => [
-                                                                                                                                                                                            'id' => 253,
+
                                                                                                                                                                                             'contrato_id' => 39,
                                                                                                                                                                                             'no_factura' => 'S 798',
                                                                                                                                                                                             'concepto' => 'Servicio 3- 12
@@ -6855,7 +6756,7 @@ Periodo 01 al 30 de abril 2022',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         253 => [
-                                                                                                                                                                                            'id' => 254,
+
                                                                                                                                                                                             'contrato_id' => 36,
                                                                                                                                                                                             'no_factura' => 'S 488',
                                                                                                                                                                                             'concepto' => 'Licenciamiento por 12 meses
@@ -6881,7 +6782,7 @@ Licenciamiento eDirectory para 150 usuarios',
                                                                                                                                                                                             'updated_by' => 15,
                                                                                                                                                                                         ],
                                                                                                                                                                                         254 => [
-                                                                                                                                                                                            'id' => 255,
+
                                                                                                                                                                                             'contrato_id' => 37,
                                                                                                                                                                                             'no_factura' => 'C 75',
                                                                                                                                                                                             'concepto' => 'Servicio de Pruebas de Penetración',
@@ -6903,7 +6804,7 @@ Licenciamiento eDirectory para 150 usuarios',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         255 => [
-                                                                                                                                                                                            'id' => 256,
+
                                                                                                                                                                                             'contrato_id' => 44,
                                                                                                                                                                                             'no_factura' => 'S 348',
                                                                                                                                                                                             'concepto' => 'Partida 1. Auditoría en continuidad de negocio.
@@ -6929,7 +6830,7 @@ Contrato 148/2019 relativo a la contratación de servicios de auditoría (Partid
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         256 => [
-                                                                                                                                                                                            'id' => 257,
+
                                                                                                                                                                                             'contrato_id' => 46,
                                                                                                                                                                                             'no_factura' => 'S 407',
                                                                                                                                                                                             'concepto' => 'Servicio de Análisis Forense para Base de Datos
@@ -6953,7 +6854,7 @@ Cuenta Contable, Centro de Costo.',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         257 => [
-                                                                                                                                                                                            'id' => 258,
+
                                                                                                                                                                                             'contrato_id' => 47,
                                                                                                                                                                                             'no_factura' => 'S 396',
                                                                                                                                                                                             'concepto' => 'Identificación y Análisis de Mejoras en los servicios de los sistemas
@@ -6976,7 +6877,7 @@ Administración de Redes y Comunicaciones CC 6058010011009 ',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         258 => [
-                                                                                                                                                                                            'id' => 259,
+
                                                                                                                                                                                             'contrato_id' => 48,
                                                                                                                                                                                             'no_factura' => 'S 467',
                                                                                                                                                                                             'concepto' => 'Servicio de análisis de vulnerabilidades
@@ -6999,7 +6900,7 @@ Gcia Soporte Técnico CC 6058040011002',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         259 => [
-                                                                                                                                                                                            'id' => 260,
+
                                                                                                                                                                                             'contrato_id' => 49,
                                                                                                                                                                                             'no_factura' => 'S 704',
                                                                                                                                                                                             'concepto' => 'Servicio Read Team
@@ -7026,7 +6927,7 @@ Sitio Santa Fe',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         260 => [
-                                                                                                                                                                                            'id' => 261,
+
                                                                                                                                                                                             'contrato_id' => 50,
                                                                                                                                                                                             'no_factura' => 'S 511',
                                                                                                                                                                                             'concepto' => 'Servicio A - Pruebas de Seguridad Externa
@@ -7055,7 +6956,7 @@ Servicios devengados del 20-10-20 al 18-12-20',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         261 => [
-                                                                                                                                                                                            'id' => 262,
+
                                                                                                                                                                                             'contrato_id' => 45,
                                                                                                                                                                                             'no_factura' => 'S 496',
                                                                                                                                                                                         'concepto' => 'Servicio Partida 2. Auditoría al Sistema de Pagos Electrónicos Interbancarios (SPEI)
@@ -7083,7 +6984,7 @@ Servicio Partida 8. Auditoría en Materia de Seguridad Informática en Canales E
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         262 => [
-                                                                                                                                                                                            'id' => 263,
+
                                                                                                                                                                                             'contrato_id' => 51,
                                                                                                                                                                                             'no_factura' => 'S 554',
                                                                                                                                                                                             'concepto' => 'Servicio de Revisión de Incidentes de Seguridad.',
@@ -7105,7 +7006,7 @@ Servicio Partida 8. Auditoría en Materia de Seguridad Informática en Canales E
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         263 => [
-                                                                                                                                                                                            'id' => 264,
+
                                                                                                                                                                                             'contrato_id' => 52,
                                                                                                                                                                                             'no_factura' => 'S 484',
                                                                                                                                                                                             'concepto' => 'Servicio de Pruebas de Penetración',
@@ -7127,7 +7028,7 @@ Servicio Partida 8. Auditoría en Materia de Seguridad Informática en Canales E
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         264 => [
-                                                                                                                                                                                            'id' => 265,
+
                                                                                                                                                                                             'contrato_id' => 24,
                                                                                                                                                                                             'no_factura' => 'S 471',
                                                                                                                                                                                             'concepto' => '6 Meses de Servicio SOC
@@ -7151,7 +7052,7 @@ Servicio Partida 8. Auditoría en Materia de Seguridad Informática en Canales E
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         265 => [
-                                                                                                                                                                                            'id' => 266,
+
                                                                                                                                                                                             'contrato_id' => 25,
                                                                                                                                                                                             'no_factura' => ' C 54',
                                                                                                                                                                                             'concepto' => '1 Servicio NOC desde Centro de Operaciones Julio 2021
@@ -7174,7 +7075,7 @@ Folio HB21-179-04 para  el julio de 2021',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         266 => [
-                                                                                                                                                                                            'id' => 267,
+
                                                                                                                                                                                             'contrato_id' => 25,
                                                                                                                                                                                             'no_factura' => 'C 55',
                                                                                                                                                                                             'concepto' => '2 Servicio NOC desde Centro de Operaciones Agosto - Septiembre 21
@@ -7198,7 +7099,7 @@ Folio HB21-179-05 en la factura para SYCOD del mes de Agosto - Septiembre 2021.
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         267 => [
-                                                                                                                                                                                            'id' => 268,
+
                                                                                                                                                                                             'contrato_id' => 25,
                                                                                                                                                                                             'no_factura' => 'C 67',
                                                                                                                                                                                             'concepto' => '3 Servicios NOC desde Centro de Operaciones Octubre - Diciembre.
@@ -7221,7 +7122,7 @@ Folio HB21-179-03 en la factura para SYCOD mes Octubre - Diciembre 2021',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         268 => [
-                                                                                                                                                                                            'id' => 269,
+
                                                                                                                                                                                             'contrato_id' => 25,
                                                                                                                                                                                             'no_factura' => 'C 74',
                                                                                                                                                                                             'concepto' => '3 Servicios NOC desde Centro de Operaciones Enero - Marzo 2022
@@ -7245,7 +7146,7 @@ Servicio Dentegra',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         269 => [
-                                                                                                                                                                                            'id' => 270,
+
                                                                                                                                                                                             'contrato_id' => 25,
                                                                                                                                                                                             'no_factura' => 'C 92',
                                                                                                                                                                                             'concepto' => '3 Servicios NOC desde Centro de Operaciones Abril . Junio 2022
@@ -7269,7 +7170,7 @@ Order Sycod: HB22-007-2
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         270 => [
-                                                                                                                                                                                            'id' => 271,
+
                                                                                                                                                                                             'contrato_id' => 25,
                                                                                                                                                                                             'no_factura' => 'S 516',
                                                                                                                                                                                             'concepto' => '3 Servicios de NOC desde el Centro de Operaciones de S4B
@@ -7293,7 +7194,7 @@ Pedido HB21-001-01 (3 meses)
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         271 => [
-                                                                                                                                                                                            'id' => 272,
+
                                                                                                                                                                                             'contrato_id' => 25,
                                                                                                                                                                                             'no_factura' => 'S 580',
                                                                                                                                                                                             'concepto' => '4.5 Servicios de NOC desde el Centro de Operaciones Q2
@@ -7317,7 +7218,7 @@ OC HB21-091 Servicio por 4.5 meses
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         272 => [
-                                                                                                                                                                                            'id' => 273,
+
                                                                                                                                                                                             'contrato_id' => 34,
                                                                                                                                                                                             'no_factura' => 'S 741',
                                                                                                                                                                                             'concepto' => 'Servicio Enero 2022
@@ -7344,7 +7245,7 @@ Monitoreo de 50 equipos en el mes de enero 2022
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         273 => [
-                                                                                                                                                                                            'id' => 274,
+
                                                                                                                                                                                             'contrato_id' => 34,
                                                                                                                                                                                             'no_factura' => 'S 752',
                                                                                                                                                                                             'concepto' => 'Servicio Febrero 2022
@@ -7371,7 +7272,7 @@ Monitoreo de 51 equipos en el mes de febrero 2022',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         274 => [
-                                                                                                                                                                                            'id' => 275,
+
                                                                                                                                                                                             'contrato_id' => 34,
                                                                                                                                                                                             'no_factura' => 'S 769',
                                                                                                                                                                                             'concepto' => 'Servicio Marzo 2022
@@ -7398,7 +7299,7 @@ Monitoreo de 51 equipos en el mes de marzo de 2022',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         275 => [
-                                                                                                                                                                                            'id' => 276,
+
                                                                                                                                                                                             'contrato_id' => 34,
                                                                                                                                                                                             'no_factura' => 'S 809',
                                                                                                                                                                                             'concepto' => 'Servicio abril 2022
@@ -7425,7 +7326,7 @@ Monitoreo de 51 equipos en el mes abril 2022',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         276 => [
-                                                                                                                                                                                            'id' => 277,
+
                                                                                                                                                                                             'contrato_id' => 53,
                                                                                                                                                                                             'no_factura' => 'S 615',
                                                                                                                                                                                             'concepto' => '1 Servicio de Assessment de Seguridad.',
@@ -7447,7 +7348,7 @@ Monitoreo de 51 equipos en el mes abril 2022',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         277 => [
-                                                                                                                                                                                            'id' => 278,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 571',
                                                                                                                                                                                             'concepto' => 'Servicio mes de mayo 2021
@@ -7472,7 +7373,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         278 => [
-                                                                                                                                                                                            'id' => 279,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 601',
                                                                                                                                                                                             'concepto' => 'Servicio mes de junio 2021
@@ -7497,7 +7398,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         279 => [
-                                                                                                                                                                                            'id' => 280,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 611',
                                                                                                                                                                                             'concepto' => 'Servicio del mes de julio 2021
@@ -7521,7 +7422,7 @@ Servicio de Ciberinteligencia',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         280 => [
-                                                                                                                                                                                            'id' => 281,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 620',
                                                                                                                                                                                             'concepto' => 'Servicio del mes de agosto 2021
@@ -7546,7 +7447,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         281 => [
-                                                                                                                                                                                            'id' => 282,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 658',
                                                                                                                                                                                             'concepto' => 'Servicio del mes de octubre',
@@ -7568,7 +7469,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         282 => [
-                                                                                                                                                                                            'id' => 283,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 684',
                                                                                                                                                                                             'concepto' => 'Servicio del mes de noviembre de 2021
@@ -7593,7 +7494,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         283 => [
-                                                                                                                                                                                            'id' => 284,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 713',
                                                                                                                                                                                             'concepto' => 'Servicio del mes de diciembre 2021
@@ -7618,7 +7519,7 @@ Servicio de Hackeo Ética',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         284 => [
-                                                                                                                                                                                            'id' => 285,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 734',
                                                                                                                                                                                             'concepto' => 'Servicio del mes de enero 2022
@@ -7643,7 +7544,7 @@ Servicio de Hackeo Ética',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         285 => [
-                                                                                                                                                                                            'id' => 286,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 753',
                                                                                                                                                                                             'concepto' => 'Servicio del mes de febrero 2022
@@ -7667,7 +7568,7 @@ Servicio de Ciberinteligencia',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         286 => [
-                                                                                                                                                                                            'id' => 287,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 777',
                                                                                                                                                                                             'concepto' => 'Servicio del mes de marzo de 2022
@@ -7692,7 +7593,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         287 => [
-                                                                                                                                                                                            'id' => 288,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 802',
                                                                                                                                                                                             'concepto' => 'Servicio del mes de abril 2022
@@ -7716,7 +7617,7 @@ Servicio de Ciberinteligencia',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         288 => [
-                                                                                                                                                                                            'id' => 289,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 825',
                                                                                                                                                                                             'concepto' => 'Servicio del mes de mayo 2022
@@ -7740,7 +7641,7 @@ Servicio de Ciberinteligencia',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         289 => [
-                                                                                                                                                                                            'id' => 290,
+
                                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                                             'no_factura' => 'S 856',
                                                                                                                                                                                             'concepto' => 'Servicio de mes de junio de 2022
@@ -7765,7 +7666,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         290 => [
-                                                                                                                                                                                            'id' => 291,
+
                                                                                                                                                                                             'contrato_id' => 55,
                                                                                                                                                                                             'no_factura' => 'S 572',
                                                                                                                                                                                             'concepto' => 'Servicio de Pruebas de Penetración de Seguridad de la Información de CMM',
@@ -7787,7 +7688,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         291 => [
-                                                                                                                                                                                            'id' => 292,
+
                                                                                                                                                                                             'contrato_id' => 56,
                                                                                                                                                                                             'no_factura' => 'C 48',
                                                                                                                                                                                             'concepto' => 'No. de pedido 4100617333
@@ -7814,7 +7715,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         292 => [
-                                                                                                                                                                                            'id' => 293,
+
                                                                                                                                                                                             'contrato_id' => 56,
                                                                                                                                                                                             'no_factura' => 'C 57',
                                                                                                                                                                                             'concepto' => 'No. de pedido 4100640441
@@ -7841,7 +7742,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         293 => [
-                                                                                                                                                                                            'id' => 294,
+
                                                                                                                                                                                             'contrato_id' => 56,
                                                                                                                                                                                             'no_factura' => 'C 66',
                                                                                                                                                                                             'concepto' => 'No. de pedido 4100642595
@@ -7867,7 +7768,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         294 => [
-                                                                                                                                                                                            'id' => 295,
+
                                                                                                                                                                                             'contrato_id' => 56,
                                                                                                                                                                                             'no_factura' => 'C 72',
                                                                                                                                                                                             'concepto' => 'No. de pedido 4100642595
@@ -7894,7 +7795,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         295 => [
-                                                                                                                                                                                            'id' => 296,
+
                                                                                                                                                                                             'contrato_id' => 56,
                                                                                                                                                                                             'no_factura' => 'C 79 ',
                                                                                                                                                                                             'concepto' => 'No. de pedido 4100642595
@@ -7923,7 +7824,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         296 => [
-                                                                                                                                                                                            'id' => 297,
+
                                                                                                                                                                                             'contrato_id' => 56,
                                                                                                                                                                                             'no_factura' => 'C 87',
                                                                                                                                                                                             'concepto' => ' No. de pedido 4100617333
@@ -7949,7 +7850,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         297 => [
-                                                                                                                                                                                            'id' => 298,
+
                                                                                                                                                                                             'contrato_id' => 57,
                                                                                                                                                                                             'no_factura' => 'C 51',
                                                                                                                                                                                             'concepto' => 'Capacitación de Ciberseguridad Ethical Hacking.',
@@ -7971,7 +7872,7 @@ Servicio de Hackeo Ético',
                                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                                         ],
                                                                                                                                                                                         298 => [
-                                                                                                                                                                                            'id' => 299,
+
                                                                                                                                                                                             'contrato_id' => 57,
                                                                                                                                                                                             'no_factura' => 'C 56',
                                                                                                                                                                                         'concepto' => 'Servicio Pruebas Caja Negra (Red Externa)
@@ -8000,7 +7901,7 @@ Servicio de Ingeniería Social
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     299 => [
-                                                                                                                                                                                        'id' => 300,
+
                                                                                                                                                                                         'contrato_id' => 59,
                                                                                                                                                                                         'no_factura' => 'S 692',
                                                                                                                                                                                         'concepto' => 'Servicio de análisis de vulnerabilidades de TI incluir pruebas de penetración.',
@@ -8022,7 +7923,7 @@ Servicio de Ingeniería Social
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     300 => [
-                                                                                                                                                                                        'id' => 301,
+
                                                                                                                                                                                         'contrato_id' => 60,
                                                                                                                                                                                         'no_factura' => 'C 73',
                                                                                                                                                                                         'concepto' => 'Servicio de Análisis de Vulnerabilidades en aplicaciones móviles',
@@ -8044,7 +7945,7 @@ Servicio de Ingeniería Social
                                                                                                                                                                                         'updated_by' => 10,
                                                                                                                                                                                     ],
                                                                                                                                                                                     301 => [
-                                                                                                                                                                                        'id' => 302,
+
                                                                                                                                                                                         'contrato_id' => 60,
                                                                                                                                                                                         'no_factura' => 'C 73',
                                                                                                                                                                                         'concepto' => 'Servicio de análisis de vulnerabilidades en aplicaciones móviles ',
@@ -8066,7 +7967,7 @@ Servicio de Ingeniería Social
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     302 => [
-                                                                                                                                                                                        'id' => 303,
+
                                                                                                                                                                                         'contrato_id' => 62,
                                                                                                                                                                                         'no_factura' => 'S 624',
                                                                                                                                                                                         'concepto' => 'Servicios Penetration Test
@@ -8093,7 +7994,7 @@ Vendor:  51004623',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     303 => [
-                                                                                                                                                                                        'id' => 304,
+
                                                                                                                                                                                         'contrato_id' => 63,
                                                                                                                                                                                         'no_factura' => '987',
                                                                                                                                                                                         'concepto' => 'Servicio Mayo 2018
@@ -8117,7 +8018,7 @@ Servicio de implementación de un modulo de Gobierno de Tecnologías de Informac
                                                                                                                                                                                         'updated_by' => 20,
                                                                                                                                                                                     ],
                                                                                                                                                                                     304 => [
-                                                                                                                                                                                        'id' => 305,
+
                                                                                                                                                                                         'contrato_id' => 63,
                                                                                                                                                                                         'no_factura' => '1021',
                                                                                                                                                                                         'concepto' => 'Servicio Junio
@@ -8141,7 +8042,7 @@ Servicio de Implementación de un modulo de Gobierno de Tecnologías de Informac
                                                                                                                                                                                         'updated_by' => 20,
                                                                                                                                                                                     ],
                                                                                                                                                                                     305 => [
-                                                                                                                                                                                        'id' => 306,
+
                                                                                                                                                                                         'contrato_id' => 63,
                                                                                                                                                                                         'no_factura' => '1073',
                                                                                                                                                                                         'concepto' => 'Servicio Julio
@@ -8165,7 +8066,7 @@ Servicio de Implementación de Modelo de Gobierno de Tecnologías de la Informac
                                                                                                                                                                                         'updated_by' => 20,
                                                                                                                                                                                     ],
                                                                                                                                                                                     306 => [
-                                                                                                                                                                                        'id' => 307,
+
                                                                                                                                                                                         'contrato_id' => 65,
                                                                                                                                                                                         'no_factura' => 'S 290',
                                                                                                                                                                                         'concepto' => 'Servicio Agosto 2019
@@ -8191,7 +8092,7 @@ Sistema de Gestión de Seguridad de la Información  y Niveles de Servicios.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     307 => [
-                                                                                                                                                                                        'id' => 308,
+
                                                                                                                                                                                         'contrato_id' => 65,
                                                                                                                                                                                         'no_factura' => 'S 305',
                                                                                                                                                                                         'concepto' => 'Servicio Septiembre 2019
@@ -8217,7 +8118,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     308 => [
-                                                                                                                                                                                        'id' => 309,
+
                                                                                                                                                                                         'contrato_id' => 17,
                                                                                                                                                                                         'no_factura' => 'S 839',
                                                                                                                                                                                         'concepto' => '6.3 SOPORTE TÉCNICO DE LA SOLUCIÓN EN UN HORARIO DE 24x27X365
@@ -8240,7 +8141,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     309 => [
-                                                                                                                                                                                        'id' => 310,
+
                                                                                                                                                                                         'contrato_id' => 17,
                                                                                                                                                                                         'no_factura' => 'S 862',
                                                                                                                                                                                         'concepto' => '6.3 SOPORTE TÉCNICO DE LA SOLUCIÓN EN UN HORARIO DE 24X7X365.',
@@ -8262,7 +8163,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     310 => [
-                                                                                                                                                                                        'id' => 311,
+
                                                                                                                                                                                         'contrato_id' => 17,
                                                                                                                                                                                         'no_factura' => 'S 897',
                                                                                                                                                                                         'concepto' => '6.3 SOPORTE TÉCNICO DE LA SOLUCIÓN EN HORARIO DE 24X7X365.',
@@ -8284,7 +8185,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     311 => [
-                                                                                                                                                                                        'id' => 312,
+
                                                                                                                                                                                         'contrato_id' => 65,
                                                                                                                                                                                         'no_factura' => 'S 319',
                                                                                                                                                                                         'concepto' => 'Servicio Octubre 2019
@@ -8310,7 +8211,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     312 => [
-                                                                                                                                                                                        'id' => 313,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 594',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO SOC/NOC',
@@ -8332,7 +8233,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     313 => [
-                                                                                                                                                                                        'id' => 314,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 595',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO SOC/NOC',
@@ -8354,7 +8255,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     314 => [
-                                                                                                                                                                                        'id' => 315,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 596',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO SOC/NOC',
@@ -8376,7 +8277,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     315 => [
-                                                                                                                                                                                        'id' => 316,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 597',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO SOC/NOC',
@@ -8398,7 +8299,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     316 => [
-                                                                                                                                                                                        'id' => 317,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 634',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO SCO/NOC',
@@ -8420,7 +8321,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     317 => [
-                                                                                                                                                                                        'id' => 318,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 661',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO SCO/NOC',
@@ -8442,7 +8343,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     318 => [
-                                                                                                                                                                                        'id' => 319,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 694',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO SOC/NOC',
@@ -8464,7 +8365,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     319 => [
-                                                                                                                                                                                        'id' => 320,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 635',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO SOC/NOC',
@@ -8486,7 +8387,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicio.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     320 => [
-                                                                                                                                                                                        'id' => 321,
+
                                                                                                                                                                                         'contrato_id' => 65,
                                                                                                                                                                                         'no_factura' => 'S 336',
                                                                                                                                                                                         'concepto' => 'Servicio Noviembre 2019
@@ -8512,7 +8413,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicios.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     321 => [
-                                                                                                                                                                                        'id' => 322,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 695',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO DE SOC/NOC',
@@ -8534,7 +8435,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicios.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     322 => [
-                                                                                                                                                                                        'id' => 323,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 708',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO SOC/NOC',
@@ -8556,7 +8457,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicios.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     323 => [
-                                                                                                                                                                                        'id' => 324,
+
                                                                                                                                                                                         'contrato_id' => 38,
                                                                                                                                                                                         'no_factura' => 'S 709',
                                                                                                                                                                                         'concepto' => 'SERVICIO DE MONITOREO SOC/NOC',
@@ -8578,7 +8479,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicios.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     324 => [
-                                                                                                                                                                                        'id' => 325,
+
                                                                                                                                                                                         'contrato_id' => 39,
                                                                                                                                                                                         'no_factura' => 'S 826',
                                                                                                                                                                                         'concepto' => 'SERVICIO SOC, NOC Y SIEM.',
@@ -8600,7 +8501,7 @@ Sistema de Gestión de Seguridad de la Información y Niveles de Servicios.',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     325 => [
-                                                                                                                                                                                        'id' => 326,
+
                                                                                                                                                                                         'contrato_id' => 65,
                                                                                                                                                                                         'no_factura' => 'S 338',
                                                                                                                                                                                         'concepto' => 'Servicio Diciembre 2019
@@ -8624,7 +8525,7 @@ Sistemas de Gestión de Seguridad de la Información y Niveles de Servicio',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     326 => [
-                                                                                                                                                                                        'id' => 327,
+
                                                                                                                                                                                         'contrato_id' => 39,
                                                                                                                                                                                         'no_factura' => 'S 848',
                                                                                                                                                                                         'concepto' => 'SERVICIO SOC, NOC Y SIEM',
@@ -8646,7 +8547,7 @@ Sistemas de Gestión de Seguridad de la Información y Niveles de Servicio',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     327 => [
-                                                                                                                                                                                        'id' => 328,
+
                                                                                                                                                                                         'contrato_id' => 39,
                                                                                                                                                                                         'no_factura' => 'S 864',
                                                                                                                                                                                         'concepto' => 'SERVICIO SOC/NOC Y SIEM',
@@ -8668,7 +8569,7 @@ Sistemas de Gestión de Seguridad de la Información y Niveles de Servicio',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     328 => [
-                                                                                                                                                                                        'id' => 329,
+
                                                                                                                                                                                         'contrato_id' => 39,
                                                                                                                                                                                         'no_factura' => 'S 902',
                                                                                                                                                                                         'concepto' => 'SERVICIO SOC/NOC Y SIEM',
@@ -8690,7 +8591,7 @@ Sistemas de Gestión de Seguridad de la Información y Niveles de Servicio',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     329 => [
-                                                                                                                                                                                        'id' => 330,
+
                                                                                                                                                                                         'contrato_id' => 9,
                                                                                                                                                                                         'no_factura' => 'S 846',
                                                                                                                                                                                         'concepto' => 'SERVICIO FW ALTERNO
@@ -8719,7 +8620,7 @@ SERVICIO WAF
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     330 => [
-                                                                                                                                                                                        'id' => 331,
+
                                                                                                                                                                                         'contrato_id' => 9,
                                                                                                                                                                                         'no_factura' => 'S 868',
                                                                                                                                                                                         'concepto' => 'SERVICIO FW ALTERNO
@@ -8749,7 +8650,7 @@ SERVICIO WAF
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     331 => [
-                                                                                                                                                                                        'id' => 332,
+
                                                                                                                                                                                         'contrato_id' => 66,
                                                                                                                                                                                         'no_factura' => 'S 477',
                                                                                                                                                                                         'concepto' => 'Servicio Noviembre 2020
@@ -8781,7 +8682,7 @@ Entregables:
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     332 => [
-                                                                                                                                                                                        'id' => 333,
+
                                                                                                                                                                                         'contrato_id' => 66,
                                                                                                                                                                                         'no_factura' => 'S 489',
                                                                                                                                                                                         'concepto' => 'Servicio Diciembre 2020
@@ -8815,7 +8716,7 @@ Entregables:
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     333 => [
-                                                                                                                                                                                        'id' => 334,
+
                                                                                                                                                                                         'contrato_id' => 66,
                                                                                                                                                                                         'no_factura' => 'S 527',
                                                                                                                                                                                         'concepto' => 'Servicios Enero y Febrero 2021
@@ -8849,7 +8750,7 @@ Entregables:
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     334 => [
-                                                                                                                                                                                        'id' => 335,
+
                                                                                                                                                                                         'contrato_id' => 64,
                                                                                                                                                                                         'no_factura' => 'CPB 10',
                                                                                                                                                                                         'concepto' => 'Entregable 1: Plan de Trabajo y Metodología 20%
@@ -8876,7 +8777,7 @@ Actualización del Análisis de Impacto al Negocio (BIA), Análisis de Riesgo (A
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     335 => [
-                                                                                                                                                                                        'id' => 336,
+
                                                                                                                                                                                         'contrato_id' => 64,
                                                                                                                                                                                         'no_factura' => 'S 308',
                                                                                                                                                                                     'concepto' => 'Entregable 2. Análisis de Riesgo (AR)
@@ -8902,7 +8803,7 @@ Actualización del Análisis de Impacto al Negocio (BIA), Análisis de Riesgo (A
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     336 => [
-                                                                                                                                                                                        'id' => 337,
+
                                                                                                                                                                                         'contrato_id' => 64,
                                                                                                                                                                                         'no_factura' => 'S 324',
                                                                                                                                                                                         'concepto' => 'Entregables 3: Informe BIA, Recomendaciones y Transferencia de Conocimientos 50%
@@ -8926,7 +8827,7 @@ Actualización  del Análisis de Impacto al Negocio (BIA), Análisis de Riesgo (
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     337 => [
-                                                                                                                                                                                        'id' => 338,
+
                                                                                                                                                                                         'contrato_id' => 70,
                                                                                                                                                                                         'no_factura' => 'S 370',
                                                                                                                                                                                         'concepto' => 'Curso ITIL V4 Fundamentos',
@@ -8948,7 +8849,7 @@ Actualización  del Análisis de Impacto al Negocio (BIA), Análisis de Riesgo (
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     338 => [
-                                                                                                                                                                                        'id' => 339,
+
                                                                                                                                                                                         'contrato_id' => 69,
                                                                                                                                                                                         'no_factura' => 'S 448',
                                                                                                                                                                                         'concepto' => 'Servicio 1 de 3
@@ -8972,7 +8873,7 @@ Servicio para mantenimiento del Sistema de Gestión de Seguridad de la Informaci
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     339 => [
-                                                                                                                                                                                        'id' => 340,
+
                                                                                                                                                                                         'contrato_id' => 69,
                                                                                                                                                                                         'no_factura' => 'S 449',
                                                                                                                                                                                         'concepto' => 'Servicio 2 de 3
@@ -8996,7 +8897,7 @@ Servicio para mantenimiento del Sistema de Gestión de Seguridad de la Informaci
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     340 => [
-                                                                                                                                                                                        'id' => 341,
+
                                                                                                                                                                                         'contrato_id' => 69,
                                                                                                                                                                                         'no_factura' => 'S 468',
                                                                                                                                                                                         'concepto' => 'Servicio 3 de 3
@@ -9020,7 +8921,7 @@ Servicio para mantenimiento del Sistema de Gestión de Seguridad de la Informaci
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     341 => [
-                                                                                                                                                                                        'id' => 342,
+
                                                                                                                                                                                         'contrato_id' => 74,
                                                                                                                                                                                         'no_factura' => 'S 498',
                                                                                                                                                                                         'concepto' => 'Auditoría 2020
@@ -9044,7 +8945,7 @@ Servicio de Auditoria de recertificación para MCM Telecom de México S.A. de C.
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     342 => [
-                                                                                                                                                                                        'id' => 343,
+
                                                                                                                                                                                         'contrato_id' => 72,
                                                                                                                                                                                         'no_factura' => 'S 343',
                                                                                                                                                                                         'concepto' => 'Servicio de Auditoría ISO 27001:2013
@@ -9068,7 +8969,7 @@ Servicio de auditoría 27001:2013 MCM Telecom Megacable Comunicaciones por el se
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     343 => [
-                                                                                                                                                                                        'id' => 344,
+
                                                                                                                                                                                         'contrato_id' => 73,
                                                                                                                                                                                         'no_factura' => 'S 344',
                                                                                                                                                                                         'concepto' => 'Servicio de Auditoría ISO 27001:2013
@@ -9092,7 +8993,7 @@ Servicio de Auditoria  ISO 27001:2013 para de la Riva Group con número de servi
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     344 => [
-                                                                                                                                                                                        'id' => 345,
+
                                                                                                                                                                                         'contrato_id' => 5,
                                                                                                                                                                                         'no_factura' => 'S 827',
                                                                                                                                                                                         'concepto' => 'Servicio Cyber Threat
@@ -9115,7 +9016,7 @@ Servicio Simulación de Ataques de Ciberseguridad',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     345 => [
-                                                                                                                                                                                        'id' => 346,
+
                                                                                                                                                                                         'contrato_id' => 5,
                                                                                                                                                                                         'no_factura' => 'S 867',
                                                                                                                                                                                         'concepto' => 'Servicio Cyber Threat
@@ -9139,7 +9040,7 @@ Servicio Simulación de Ataques de Ciberseguridad
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     346 => [
-                                                                                                                                                                                        'id' => 347,
+
                                                                                                                                                                                         'contrato_id' => 5,
                                                                                                                                                                                         'no_factura' => 'S 887',
                                                                                                                                                                                         'concepto' => 'Servicio Cyber Threat
@@ -9163,7 +9064,7 @@ Servicio Simulación de Ataques de Ciberseguridad
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     347 => [
-                                                                                                                                                                                        'id' => 348,
+
                                                                                                                                                                                         'contrato_id' => 26,
                                                                                                                                                                                         'no_factura' => 'S 822',
                                                                                                                                                                                         'concepto' => 'S1.-Servicio administrado de monitoreo y correlación de eventos de seguridad.
@@ -9190,7 +9091,7 @@ S5. Servicio de despliegue y monitoreo de una consola de antivius de tipo Enterp
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     348 => [
-                                                                                                                                                                                        'id' => 349,
+
                                                                                                                                                                                         'contrato_id' => 26,
                                                                                                                                                                                         'no_factura' => 'S 849',
                                                                                                                                                                                         'concepto' => 'S1.-Servicio administrado de monitoreo y correlación de eventos de seguridad.
@@ -9217,7 +9118,7 @@ S5. Servicio de despliegue y monitoreo de una consola de antivius de tipo Enterp
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     349 => [
-                                                                                                                                                                                        'id' => 350,
+
                                                                                                                                                                                         'contrato_id' => 26,
                                                                                                                                                                                         'no_factura' => 'S 878',
                                                                                                                                                                                         'concepto' => 'S1.-Servicio administrado de monitoreo y correlación de eventos de seguridad.
@@ -9244,7 +9145,7 @@ S5. Servicio de despliegue y monitoreo de una consola de antivius de tipo Enterp
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     350 => [
-                                                                                                                                                                                        'id' => 351,
+
                                                                                                                                                                                         'contrato_id' => 3,
                                                                                                                                                                                         'no_factura' => 'S 830',
                                                                                                                                                                                         'concepto' => 'SOPROTE A INFRAESTRUCTURA DE SISEMAS INDUSTRIALES
@@ -9268,7 +9169,7 @@ NÚMERO DE CONTRATO: 4600023294',
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     351 => [
-                                                                                                                                                                                        'id' => 352,
+
                                                                                                                                                                                         'contrato_id' => 3,
                                                                                                                                                                                         'no_factura' => 'S 855',
                                                                                                                                                                                         'concepto' => 'SOPORTE A INFRAESTRUCTURA DE SISTEMAS INDUSTRIALES
@@ -9293,7 +9194,7 @@ NÚMERO DE CONTRATO: 4600023294
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     352 => [
-                                                                                                                                                                                        'id' => 353,
+
                                                                                                                                                                                         'contrato_id' => 3,
                                                                                                                                                                                         'no_factura' => 'S 889',
                                                                                                                                                                                         'concepto' => 'SOPORTE A INFRAESTRUCTURA DE SISTEMAS INDUSTRIALES
@@ -9318,7 +9219,7 @@ NÚMERO DE CONTRATO: 4600023294
                                                                                                                                                                                         'updated_by' => null,
                                                                                                                                                                                     ],
                                                                                                                                                                                     353 => [
-                                                                                                                                                                                        'id' => 354,
+
                                                                                                                                                                                         'contrato_id' => 54,
                                                                                                                                                                                         'no_factura' => 'S 558',
                                                                                                                                                                                     'concepto' => 'A)CIBER INTELIGENCIA',
@@ -9340,7 +9241,7 @@ NÚMERO DE CONTRATO: 4600023294
                                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                                 ],
                                                                                                                                                                                 354 => [
-                                                                                                                                                                                    'id' => 355,
+
                                                                                                                                                                                     'contrato_id' => 54,
                                                                                                                                                                                     'no_factura' => 'S 652',
                                                                                                                                                                                 'concepto' => 'A)CIBER INTELIGENCIA
@@ -9363,7 +9264,7 @@ B)HACKEO ÉTICO',
                                                                                                                                                                             'updated_by' => null,
                                                                                                                                                                         ],
                                                                                                                                                                         355 => [
-                                                                                                                                                                            'id' => 356,
+
                                                                                                                                                                             'contrato_id' => 54,
                                                                                                                                                                             'no_factura' => 'S 684',
                                                                                                                                                                         'concepto' => 'A)CIBER INTELIGENCIA
@@ -9386,7 +9287,7 @@ B)HACKEO ÉTICO',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 356 => [
-                                                                                                                                                                    'id' => 357,
+
                                                                                                                                                                     'contrato_id' => 54,
                                                                                                                                                                     'no_factura' => 'S 883',
                                                                                                                                                                 'concepto' => 'A)CIBER INTELIGENCIA',
@@ -9408,7 +9309,7 @@ B)HACKEO ÉTICO',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             357 => [
-                                                                                                                                                                'id' => 358,
+
                                                                                                                                                                 'contrato_id' => 56,
                                                                                                                                                                 'no_factura' => 'C-1',
                                                                                                                                                                 'concepto' => 'Vulnerabilidades Altas/Críticas
@@ -9433,7 +9334,7 @@ Vulnerabilidades Bajas-No
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             358 => [
-                                                                                                                                                                'id' => 359,
+
                                                                                                                                                                 'contrato_id' => 34,
                                                                                                                                                                 'no_factura' => 'S 649',
                                                                                                                                                                 'concepto' => 'INTEGRA_SERVICIOS ADMINISTRADOS FW HUAWEI',
@@ -9455,7 +9356,7 @@ Vulnerabilidades Bajas-No
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             359 => [
-                                                                                                                                                                'id' => 360,
+
                                                                                                                                                                 'contrato_id' => 34,
                                                                                                                                                                 'no_factura' => 'S 650',
                                                                                                                                                                 'concepto' => 'INTEGRA_SERVICIOS ADMINISTRADOS FW HUAWEI',
@@ -9477,7 +9378,7 @@ Vulnerabilidades Bajas-No
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             360 => [
-                                                                                                                                                                'id' => 361,
+
                                                                                                                                                                 'contrato_id' => 34,
                                                                                                                                                                 'no_factura' => 'S 651',
                                                                                                                                                                 'concepto' => 'INTEGRA_SERVICIOS ADMINISTRADOS FW HUAWEI',
@@ -9499,7 +9400,7 @@ Vulnerabilidades Bajas-No
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             361 => [
-                                                                                                                                                                'id' => 362,
+
                                                                                                                                                                 'contrato_id' => 34,
                                                                                                                                                                 'no_factura' => 'S 663',
                                                                                                                                                                 'concepto' => 'INTEGRA_SERVICIOS ADMINISTRADOS FW HUAWEI',
@@ -9521,7 +9422,7 @@ Vulnerabilidades Bajas-No
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             362 => [
-                                                                                                                                                                'id' => 363,
+
                                                                                                                                                                 'contrato_id' => 34,
                                                                                                                                                                 'no_factura' => 'S 700',
                                                                                                                                                                 'concepto' => 'INTEGRA_SERVICIOS ADMINISTRADOS FW HUAWEI',
@@ -9543,7 +9444,7 @@ Vulnerabilidades Bajas-No
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             363 => [
-                                                                                                                                                                'id' => 364,
+
                                                                                                                                                                 'contrato_id' => 34,
                                                                                                                                                                 'no_factura' => 'S 716',
                                                                                                                                                                 'concepto' => 'INTEGRA_SERVICIOS ADMINISTRADOS FW HUAWI',
@@ -9565,7 +9466,7 @@ Vulnerabilidades Bajas-No
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             364 => [
-                                                                                                                                                                'id' => 365,
+
                                                                                                                                                                 'contrato_id' => 34,
                                                                                                                                                                 'no_factura' => 'S 828',
                                                                                                                                                                 'concepto' => 'INTEGRA_SERVICIOS ADMINISTRADOS FW HUAWEI',
@@ -9587,7 +9488,7 @@ Vulnerabilidades Bajas-No
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             365 => [
-                                                                                                                                                                'id' => 366,
+
                                                                                                                                                                 'contrato_id' => 36,
                                                                                                                                                                 'no_factura' => 'S 491',
                                                                                                                                                                 'concepto' => 'Licenciamiento PAM para 70 Servidores
@@ -9611,7 +9512,7 @@ Licenciamiento eDirectory para 150 usuarios',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             366 => [
-                                                                                                                                                                'id' => 367,
+
                                                                                                                                                                 'contrato_id' => 82,
                                                                                                                                                                 'no_factura' => 'c5',
                                                                                                                                                                 'concepto' => 'Servicios de consultoria
@@ -9634,7 +9535,7 @@ SERVICIOS DE SIBERSEGURIDAD',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             367 => [
-                                                                                                                                                                'id' => 368,
+
                                                                                                                                                                 'contrato_id' => 108,
                                                                                                                                                                 'no_factura' => 'S 863',
                                                                                                                                                                 'concepto' => 'Migración de Equipos Fortinet-Palo Alto
@@ -9658,7 +9559,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             368 => [
-                                                                                                                                                                'id' => 369,
+
                                                                                                                                                                 'contrato_id' => 108,
                                                                                                                                                                 'no_factura' => 'S 884',
                                                                                                                                                                 'concepto' => 'Servicios de Instalación.
@@ -9682,7 +9583,7 @@ Servicio de instalación por parte de S4B.',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             369 => [
-                                                                                                                                                                'id' => 370,
+
                                                                                                                                                                 'contrato_id' => 108,
                                                                                                                                                                 'no_factura' => 'S 885',
                                                                                                                                                                 'concepto' => 'Servicios de Instalación
@@ -9706,7 +9607,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             370 => [
-                                                                                                                                                                'id' => 371,
+
                                                                                                                                                                 'contrato_id' => 108,
                                                                                                                                                                 'no_factura' => 'S 954',
                                                                                                                                                                 'concepto' => 'Servicios de Instalación
@@ -9730,7 +9631,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             371 => [
-                                                                                                                                                                'id' => 372,
+
                                                                                                                                                                 'contrato_id' => 108,
                                                                                                                                                                 'no_factura' => 'S 970',
                                                                                                                                                                 'concepto' => 'Servicios de Instalación
@@ -9754,7 +9655,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => 20,
                                                                                                                                                             ],
                                                                                                                                                             372 => [
-                                                                                                                                                                'id' => 373,
+
                                                                                                                                                                 'contrato_id' => 108,
                                                                                                                                                                 'no_factura' => 'S 1011',
                                                                                                                                                                 'concepto' => 'Servicios de Instalación
@@ -9778,7 +9679,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             373 => [
-                                                                                                                                                                'id' => 374,
+
                                                                                                                                                                 'contrato_id' => 108,
                                                                                                                                                                 'no_factura' => 'S 1055',
                                                                                                                                                                 'concepto' => 'Servicios de Instalación
@@ -9802,7 +9703,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             374 => [
-                                                                                                                                                                'id' => 375,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 345',
                                                                                                                                                                 'concepto' => 'Equipamiento F5 Network
@@ -9826,7 +9727,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => 20,
                                                                                                                                                             ],
                                                                                                                                                             375 => [
-                                                                                                                                                                'id' => 376,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 345',
                                                                                                                                                                 'concepto' => 'Equipamiento de F5 Networks
@@ -9850,7 +9751,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             376 => [
-                                                                                                                                                                'id' => 377,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 384',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -9872,7 +9773,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             377 => [
-                                                                                                                                                                'id' => 378,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 385',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -9894,7 +9795,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             378 => [
-                                                                                                                                                                'id' => 379,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 390',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -9916,7 +9817,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             379 => [
-                                                                                                                                                                'id' => 380,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 395',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -9938,7 +9839,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             380 => [
-                                                                                                                                                                'id' => 381,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 410',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -9960,7 +9861,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             381 => [
-                                                                                                                                                                'id' => 382,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 415',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -9982,7 +9883,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             382 => [
-                                                                                                                                                                'id' => 383,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 421',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10004,7 +9905,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             383 => [
-                                                                                                                                                                'id' => 384,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 451',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10026,7 +9927,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             384 => [
-                                                                                                                                                                'id' => 385,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 465',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10048,7 +9949,7 @@ Adquisición de póliza de soporte del fabricante para los 3 equipos del 2019',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             385 => [
-                                                                                                                                                                'id' => 386,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 503',
                                                                                                                                                                 'concepto' => 'Adquisición de póliza de soporte del fabricante para los 3 equipos del 2020
@@ -10071,7 +9972,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             386 => [
-                                                                                                                                                                'id' => 387,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 514',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10093,7 +9994,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             387 => [
-                                                                                                                                                                'id' => 388,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 542',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10115,7 +10016,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             388 => [
-                                                                                                                                                                'id' => 389,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 610',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10137,7 +10038,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             389 => [
-                                                                                                                                                                'id' => 390,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 645',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10159,7 +10060,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             390 => [
-                                                                                                                                                                'id' => 391,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 665',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10181,7 +10082,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             391 => [
-                                                                                                                                                                'id' => 392,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 676',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10203,7 +10104,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             392 => [
-                                                                                                                                                                'id' => 393,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 696',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10225,7 +10126,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             393 => [
-                                                                                                                                                                'id' => 394,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 701',
                                                                                                                                                                 'concepto' => 'Adquisición de póliza de soporte del fabricante para los 3 equipos del 2021',
@@ -10247,7 +10148,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             394 => [
-                                                                                                                                                                'id' => 395,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 726',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10269,7 +10170,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             395 => [
-                                                                                                                                                                'id' => 396,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 743',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10291,7 +10192,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             396 => [
-                                                                                                                                                                'id' => 397,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 766',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10313,7 +10214,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             397 => [
-                                                                                                                                                                'id' => 398,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 790',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10335,7 +10236,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             398 => [
-                                                                                                                                                                'id' => 399,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 816',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10357,7 +10258,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             399 => [
-                                                                                                                                                                'id' => 400,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 871',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10379,7 +10280,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             400 => [
-                                                                                                                                                                'id' => 401,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 913',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10401,7 +10302,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             401 => [
-                                                                                                                                                                'id' => 402,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 950',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10423,7 +10324,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             402 => [
-                                                                                                                                                                'id' => 403,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 983',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10445,7 +10346,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             403 => [
-                                                                                                                                                                'id' => 404,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 1012',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual para la solución',
@@ -10467,7 +10368,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             404 => [
-                                                                                                                                                                'id' => 405,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 441',
                                                                                                                                                                 'concepto' => 'Servicio de Soporte Técnico mensual de la solución',
@@ -10489,7 +10390,7 @@ Servicio de Soporte Técnico mensual para la solución',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             405 => [
-                                                                                                                                                                'id' => 406,
+
                                                                                                                                                                 'contrato_id' => 108,
                                                                                                                                                                 'no_factura' => 'S 989',
                                                                                                                                                                 'concepto' => 'Servicios de Instalación
@@ -10513,7 +10414,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             406 => [
-                                                                                                                                                                'id' => 407,
+
                                                                                                                                                                 'contrato_id' => 80,
                                                                                                                                                                 'no_factura' => 'S 599',
                                                                                                                                                                 'concepto' => 'Fase de evaluación, definición, análisis e implementación.',
@@ -10535,7 +10436,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             407 => [
-                                                                                                                                                                'id' => 408,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 478',
                                                                                                                                                             'concepto' => 'Servicio de Soporte Técnico mensual para la solución (hardware y software)',
@@ -10557,7 +10458,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             408 => [
-                                                                                                                                                                'id' => 409,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 528',
                                                                                                                                                             'concepto' => 'Servicio de Soporte Técnico mensual para la solución (hardware y software)',
@@ -10579,7 +10480,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             409 => [
-                                                                                                                                                                'id' => 410,
+
                                                                                                                                                                 'contrato_id' => 63,
                                                                                                                                                                 'no_factura' => '6df1d481-f16e-4083-b12f-d62868061944',
                                                                                                                                                                 'concepto' => 'Servicio de Implementación de un Modelo de Gobierno de Tecnologías de la Información y Comunicaciones de un Sistema de Gestión de Seguridad de la Información. SENADO',
@@ -10601,7 +10502,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             410 => [
-                                                                                                                                                                'id' => 411,
+
                                                                                                                                                                 'contrato_id' => 63,
                                                                                                                                                                 'no_factura' => '7e4e9be5-2fc7-45ac-b64b-a8ecb36d3093',
                                                                                                                                                                 'concepto' => 'Servicio de Implementación de un Modelo de Gobierno de Tecnologías de la Información y Comunicaciones de un Sistema de Gestión de Seguridad de la Información. SENADO',
@@ -10623,7 +10524,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             411 => [
-                                                                                                                                                                'id' => 412,
+
                                                                                                                                                                 'contrato_id' => 63,
                                                                                                                                                                 'no_factura' => '9d8481b8-4db4-4470-a94b-14328552cb1f',
                                                                                                                                                                 'concepto' => 'Servicio de Implementación de un Modelo de Gobierno de Tecnologías de la Información y Comunicaciones de un Sistema de Gestión de Seguridad de la Información. SENADO',
@@ -10645,7 +10546,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             412 => [
-                                                                                                                                                                'id' => 413,
+
                                                                                                                                                                 'contrato_id' => 63,
                                                                                                                                                                 'no_factura' => '69b1c7af-10af-4ed5-9f9d-53fa4124fe12',
                                                                                                                                                                 'concepto' => 'Servicio de Implementación de un Modelo de Gobierno de Tecnologías de la Información y Comunicaciones de un Sistema de Gestión de Seguridad de la Información. SENADO',
@@ -10667,7 +10568,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             413 => [
-                                                                                                                                                                'id' => 414,
+
                                                                                                                                                                 'contrato_id' => 63,
                                                                                                                                                                 'no_factura' => '193a43b3-01a0-4f88-aa27-9895719e8f9b',
                                                                                                                                                                 'concepto' => 'Servicio de Implementación de un Modelo de Gobierno de Tecnologías de la Información y Comunicaciones de un Sistema de Gestión de Seguridad de la Información. SENADO',
@@ -10689,7 +10590,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             414 => [
-                                                                                                                                                                'id' => 415,
+
                                                                                                                                                                 'contrato_id' => 63,
                                                                                                                                                                 'no_factura' => '3725590b-9d55-4870-a7aa-47417a663908',
                                                                                                                                                                 'concepto' => 'Servicio de Implementación de un Modelo de Gobierno de Tecnologías de la Información y Comunicaciones de un Sistema de Gestión de Seguridad de la Información. SENADO',
@@ -10711,7 +10612,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             415 => [
-                                                                                                                                                                'id' => 416,
+
                                                                                                                                                                 'contrato_id' => 63,
                                                                                                                                                                 'no_factura' => 'cffd9006-25de-4a5a-836b-53fd7b18a212',
                                                                                                                                                                 'concepto' => 'Servicio de Implementación de un Modelo de Gobierno de Tecnologías de la Información y Comunicaciones de un Sistema de Gestión de Seguridad de la Información. SENADO',
@@ -10733,7 +10634,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             416 => [
-                                                                                                                                                                'id' => 417,
+
                                                                                                                                                                 'contrato_id' => 63,
                                                                                                                                                                 'no_factura' => 'd316481d-816f-4f3c-9bdb-0d1ed5ec7d79',
                                                                                                                                                                 'concepto' => 'Servicio de Implementación de un Modelo de Gobierno de Tecnologías de la Información y Comunicaciones de un Sistema de Gestión de Seguridad de la Información. SENADO',
@@ -10755,7 +10656,7 @@ Servicio de instalación por parte de S4B',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             417 => [
-                                                                                                                                                                'id' => 418,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 552',
                                                                                                                                                             'concepto' => 'Servicio de Soporte Técnico mensual para la solución (hardware y software)
@@ -10778,7 +10679,7 @@ Servicio Abril 2021 (16 de 35)',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             418 => [
-                                                                                                                                                                'id' => 419,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 568',
                                                                                                                                                             'concepto' => 'Servicio de Soporte Técnico mensual para la solución (hardware y software)
@@ -10801,7 +10702,7 @@ Servicio Mayo 2021 (17 de 35)',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             419 => [
-                                                                                                                                                                'id' => 420,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 592',
                                                                                                                                                             'concepto' => 'Servicio de Soporte Técnico mensual para la solución (hardware y software)
@@ -10824,7 +10725,7 @@ Servicio Junio 2021 (18 de 35)',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             420 => [
-                                                                                                                                                                'id' => 421,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 627',
                                                                                                                                                             'concepto' => 'Servicio de Soporte Técnico mensual para la solución (hardware y software)
@@ -10847,7 +10748,7 @@ Servicio Agosto 2021 (20 de 35)',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             421 => [
-                                                                                                                                                                'id' => 422,
+
                                                                                                                                                                 'contrato_id' => 119,
                                                                                                                                                                 'no_factura' => 'S 850',
                                                                                                                                                             'concepto' => 'Servicio de Soporte Técnico mensual para la solución (hardware y software)
@@ -10870,7 +10771,7 @@ Servicio Junio 2022 (30 de 35)',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             422 => [
-                                                                                                                                                                'id' => 423,
+
                                                                                                                                                                 'contrato_id' => 121,
                                                                                                                                                                 'no_factura' => 'S334',
                                                                                                                                                                 'concepto' => 'Módulo DLP
@@ -10895,7 +10796,7 @@ SERVICIO DE SEGURIDAD PERIMETRAL EN LA RED DE DATOS LOCAL - "DLP FORCEPOINT"
                                                                                                                                                                 'updated_by' => 20,
                                                                                                                                                             ],
                                                                                                                                                             423 => [
-                                                                                                                                                                'id' => 424,
+
                                                                                                                                                                 'contrato_id' => 121,
                                                                                                                                                                 'no_factura' => 'S 334',
                                                                                                                                                                 'concepto' => 'Módulo DLP
@@ -10919,7 +10820,7 @@ SERVICIO DE SEGURIDAD PERIMETRAL EN LA RED DE DATOS LOCAL - "DLP FORCEPOINT" 201
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             424 => [
-                                                                                                                                                                'id' => 425,
+
                                                                                                                                                                 'contrato_id' => 122,
                                                                                                                                                                 'no_factura' => 'S 420',
                                                                                                                                                                 'concepto' => 'Servicio de Pruebas de Penetración de Caja Negra
@@ -10942,7 +10843,7 @@ Servicio de Ingeniería Social',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             425 => [
-                                                                                                                                                                'id' => 426,
+
                                                                                                                                                                 'contrato_id' => 124,
                                                                                                                                                                 'no_factura' => 'S 458',
                                                                                                                                                                 'concepto' => 'Servicio de Seguridad Avanzada para Correo Electrónico, Endpoints y Servidores, para la SEDATU',
@@ -10964,7 +10865,7 @@ Servicio de Ingeniería Social',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             426 => [
-                                                                                                                                                                'id' => 427,
+
                                                                                                                                                                 'contrato_id' => 25,
                                                                                                                                                                 'no_factura' => 'C 52',
                                                                                                                                                                 'concepto' => 'Servicio NOC desde Centro de Operaciones Julio 2021
@@ -10987,7 +10888,7 @@ Folio HB21-179-04 para el mes de julio del 2021',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             427 => [
-                                                                                                                                                                'id' => 428,
+
                                                                                                                                                                 'contrato_id' => 25,
                                                                                                                                                                 'no_factura' => 'C 53',
                                                                                                                                                                 'concepto' => 'Servicio NOC desde Centro de Operaciones Ago-Sept
@@ -11010,7 +10911,7 @@ Folio HB21-179-05 en la factura para SYCOD del mes AGOS-SEP del 2021',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             428 => [
-                                                                                                                                                                'id' => 429,
+
                                                                                                                                                                 'contrato_id' => 25,
                                                                                                                                                                 'no_factura' => 'C 7',
                                                                                                                                                                 'concepto' => 'Servicio de monitoreo de red
@@ -11034,7 +10935,7 @@ Servicio DENTEGRA jul‐sep22
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             429 => [
-                                                                                                                                                                'id' => 430,
+
                                                                                                                                                                 'contrato_id' => 25,
                                                                                                                                                                 'no_factura' => 'C 23',
                                                                                                                                                                 'concepto' => 'Servicio de monitoreo de red
@@ -11058,7 +10959,7 @@ OC HB22‐007‐Q4 KIO',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             430 => [
-                                                                                                                                                                'id' => 431,
+
                                                                                                                                                                 'contrato_id' => 139,
                                                                                                                                                                 'no_factura' => 'S 702',
                                                                                                                                                                 'concepto' => 'Servicio para el establecimiento del Marco de Gobierno de cuentas privilegiadas ',
@@ -11080,7 +10981,7 @@ OC HB22‐007‐Q4 KIO',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             431 => [
-                                                                                                                                                                'id' => 432,
+
                                                                                                                                                                 'contrato_id' => 143,
                                                                                                                                                                 'no_factura' => 'S 784',
                                                                                                                                                                 'concepto' => 'Palo Alto Networks PA-220
@@ -11105,7 +11006,7 @@ Premium support year 1, PA-220',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             432 => [
-                                                                                                                                                                'id' => 433,
+
                                                                                                                                                                 'contrato_id' => 144,
                                                                                                                                                                 'no_factura' => 'S 738',
                                                                                                                                                                 'concepto' => 'Pedido de compra: 4110004391
@@ -11132,7 +11033,7 @@ Especificaciones: SAM-577 NAS WD MY CLOUD EX2 ULTRA 24TB/CON 2 DISCOS DE 12 TB
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             433 => [
-                                                                                                                                                                'id' => 434,
+
                                                                                                                                                                 'contrato_id' => 146,
                                                                                                                                                                 'no_factura' => 'C 25',
                                                                                                                                                                 'concepto' => 'Servicios de consultoria
@@ -11156,7 +11057,7 @@ SERVICIOS DE CIBERSEGURIDAD
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             434 => [
-                                                                                                                                                                'id' => 435,
+
                                                                                                                                                                 'contrato_id' => 85,
                                                                                                                                                                 'no_factura' => 'S 959',
                                                                                                                                                                 'concepto' => 'Servicios de consultoría
@@ -11180,7 +11081,7 @@ ORDEN DE COMPRA 01‐ 0000220',
                                                                                                                                                                 'updated_by' => 20,
                                                                                                                                                             ],
                                                                                                                                                             435 => [
-                                                                                                                                                                'id' => 436,
+
                                                                                                                                                                 'contrato_id' => 85,
                                                                                                                                                                 'no_factura' => 'S 959',
                                                                                                                                                                 'concepto' => 'Servicios de consultoria
@@ -11204,7 +11105,7 @@ ORDEN DE COMPRA 01‐ 0000220',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             436 => [
-                                                                                                                                                                'id' => 437,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 775',
                                                                                                                                                                 'concepto' => 'Servicio de Ciberseguridad
@@ -11227,7 +11128,7 @@ Análisis de Vulnerabilidades, Pentesting, Cyberdefense, Threat Hunting, Forense
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             437 => [
-                                                                                                                                                                'id' => 438,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 776',
                                                                                                                                                                 'concepto' => 'LogRhythm DetectX software subscription license
@@ -11251,7 +11152,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             438 => [
-                                                                                                                                                                'id' => 439,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 778',
                                                                                                                                                                 'concepto' => 'Servicio de SOC para el Grupo Financiero VE POR MAS',
@@ -11273,7 +11174,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             439 => [
-                                                                                                                                                                'id' => 440,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 793',
                                                                                                                                                                 'concepto' => 'Servicio de SOC para el Grupo Financiero VE POR MAS',
@@ -11295,7 +11196,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             440 => [
-                                                                                                                                                                'id' => 441,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 794',
                                                                                                                                                                 'concepto' => 'LogRhythm DetectX software subscription license
@@ -11319,7 +11220,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             441 => [
-                                                                                                                                                                'id' => 442,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 814',
                                                                                                                                                                 'concepto' => 'LogRhythm DetectX software subscription license
@@ -11343,7 +11244,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             442 => [
-                                                                                                                                                                'id' => 443,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 815',
                                                                                                                                                                 'concepto' => 'Servicio de SOC para el Grupo Financiero VE POR MAS',
@@ -11365,7 +11266,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             443 => [
-                                                                                                                                                                'id' => 444,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 836',
                                                                                                                                                                 'concepto' => 'LogRhythm DetectX software subscription license
@@ -11389,7 +11290,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             444 => [
-                                                                                                                                                                'id' => 445,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 836',
                                                                                                                                                                 'concepto' => 'Servicio de SOC para el Grupo Financiero VE POR MAS',
@@ -11411,7 +11312,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => 20,
                                                                                                                                                             ],
                                                                                                                                                             445 => [
-                                                                                                                                                                'id' => 446,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 837',
                                                                                                                                                                 'concepto' => 'Servicio de SOC para el Grupo Financiero VE POR MAS',
@@ -11433,7 +11334,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             446 => [
-                                                                                                                                                                'id' => 447,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 870',
                                                                                                                                                                 'concepto' => 'LogRhythm DetectX software subscription license
@@ -11457,7 +11358,7 @@ LogRhythm System Monitor Pro subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             447 => [
-                                                                                                                                                                'id' => 448,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 872',
                                                                                                                                                                 'concepto' => 'Servicio de SOC para el Grupo Financiero VE POR MAS',
@@ -11479,7 +11380,7 @@ LogRhythm System Monitor Pro subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             448 => [
-                                                                                                                                                                'id' => 449,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 933',
                                                                                                                                                                 'concepto' => 'Servicios administrados
@@ -11502,7 +11403,7 @@ Servicio de SOC para el Grupo Financiero VE POR MAS',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             449 => [
-                                                                                                                                                                'id' => 450,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 934',
                                                                                                                                                                 'concepto' => 'LogRhythm DetectX software subscription license
@@ -11526,7 +11427,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivo',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             450 => [
-                                                                                                                                                                'id' => 451,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 943',
                                                                                                                                                                 'concepto' => 'Servicio de SOC para el Grupo Financiero VE POR MAS',
@@ -11548,7 +11449,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivo',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             451 => [
-                                                                                                                                                                'id' => 452,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 944',
                                                                                                                                                                 'concepto' => 'LogRhythm DetectX software subscription license
@@ -11572,7 +11473,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             452 => [
-                                                                                                                                                                'id' => 453,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 974',
                                                                                                                                                                 'concepto' => 'Servicio de SOC para el Grupo Financiero VE POR MAS',
@@ -11594,7 +11495,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             453 => [
-                                                                                                                                                                'id' => 454,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 975',
                                                                                                                                                                 'concepto' => 'Licenciamiento LogRhythm DetectX software subscription license
@@ -11619,7 +11520,7 @@ Licenciamiento LogRhythm System Monitor Pro Subscription para 50 dispositivos
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             454 => [
-                                                                                                                                                                'id' => 455,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 1024',
                                                                                                                                                                 'concepto' => 'Servicio de SOC para el Grupo Financiero VE POR MAS',
@@ -11641,7 +11542,7 @@ Licenciamiento LogRhythm System Monitor Pro Subscription para 50 dispositivos
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             455 => [
-                                                                                                                                                                'id' => 456,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 1025',
                                                                                                                                                                 'concepto' => 'Licencimiento LogRhythm DetectX software subscription license
@@ -11665,7 +11566,7 @@ Licencimiento LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             456 => [
-                                                                                                                                                                'id' => 457,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 1026',
                                                                                                                                                                 'concepto' => 'Licenciamiento LogRhythm DetectX software subscription license
@@ -11689,7 +11590,7 @@ Licenciamiento LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             457 => [
-                                                                                                                                                                'id' => 458,
+
                                                                                                                                                                 'contrato_id' => 7,
                                                                                                                                                                 'no_factura' => 'S 1027',
                                                                                                                                                                 'concepto' => 'Servicio del SOC para el Grupo Financiero VE POR MAS',
@@ -11711,7 +11612,7 @@ Licenciamiento LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             458 => [
-                                                                                                                                                                'id' => 459,
+
                                                                                                                                                                 'contrato_id' => 116,
                                                                                                                                                                 'no_factura' => 'C-26',
                                                                                                                                                                 'concepto' => 'Servicios de Consultoría',
@@ -11733,7 +11634,7 @@ Licenciamiento LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             459 => [
-                                                                                                                                                                'id' => 460,
+
                                                                                                                                                                 'contrato_id' => 118,
                                                                                                                                                                 'no_factura' => 'C-30',
                                                                                                                                                                 'concepto' => 'Servicios de Pruebas de Penetración de Cana Negra a Aplicaciones Web y Aplicaciones Móviles.',
@@ -11755,7 +11656,7 @@ Licenciamiento LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             460 => [
-                                                                                                                                                                'id' => 461,
+
                                                                                                                                                                 'contrato_id' => 105,
                                                                                                                                                                 'no_factura' => 'S 1101',
                                                                                                                                                                 'concepto' => 'Póliza de mantenimiento preventivo, correctivo y soporte técnico para los equipos del Core de la red de datos inalámbrica de PEMEX.',
@@ -11777,7 +11678,7 @@ Licenciamiento LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             461 => [
-                                                                                                                                                                'id' => 462,
+
                                                                                                                                                                 'contrato_id' => 105,
                                                                                                                                                                 'no_factura' => 'S 1102',
                                                                                                                                                                 'concepto' => 'Servicio de soporte técnico Póliza de mantenimiento preventivo, correctivo y soporte técnico para los equipos del Core de la red de datos inalámbrica de PEMEX.',
@@ -11799,7 +11700,7 @@ Licenciamiento LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             462 => [
-                                                                                                                                                                'id' => 463,
+
                                                                                                                                                                 'contrato_id' => 145,
                                                                                                                                                                 'no_factura' => 'S 1061',
                                                                                                                                                                 'concepto' => 'Servicio Evento 1‐E01 Reporte ejecutivo de resultados de pruebas de penetración.
@@ -11822,7 +11723,7 @@ Servicio Evento 1‐E02 Reporte técnico detallado de Pruebas de Penetración (i
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             463 => [
-                                                                                                                                                                'id' => 464,
+
                                                                                                                                                                 'contrato_id' => 145,
                                                                                                                                                                 'no_factura' => 'S 1063',
                                                                                                                                                                 'concepto' => 'Servicio Evento 2‐E01 Reporte ejecutivo de resultados de pruebas de penetración Banca Electrónica
@@ -11845,7 +11746,7 @@ Servicio Evento 2‐E02 Reporte técnico detallado de Pruebas de Penetración (i
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             464 => [
-                                                                                                                                                                'id' => 465,
+
                                                                                                                                                                 'contrato_id' => 145,
                                                                                                                                                                 'no_factura' => 'S 1064',
                                                                                                                                                                 'concepto' => 'Servicio Evento 1‐E03 Reporte ejecutivo de resultados ejecutivo del Análisis de Vulnerabilidades SIA
@@ -11870,7 +11771,7 @@ Servicio Evento 1‐E06 Reporte técnico detallado del incumplimiento de normas,
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             465 => [
-                                                                                                                                                                'id' => 466,
+
                                                                                                                                                                 'contrato_id' => 145,
                                                                                                                                                                 'no_factura' => 'S 1065',
                                                                                                                                                                 'concepto' => 'Servicio Evento 2‐E03 Reporte ejecutivo de resultados ejecutivo del Análisis de Vulnerabilidades Terminal Financiera
@@ -11895,7 +11796,7 @@ Servicio Evento 2‐E06 Reporte técnico detallado del incumplimiento de normas,
                                                                                                                                                                 'updated_by' => null,
                                                                                                                                                             ],
                                                                                                                                                             466 => [
-                                                                                                                                                                'id' => 467,
+
                                                                                                                                                                 'contrato_id' => 145,
                                                                                                                                                                 'no_factura' => 'S 1066',
                                                                                                                                                                 'concepto' => 'Servicio Certificado de borrado seguro (documento generado por la herramienta empleada, incluir al menos fecha y hora de inicio del proceso, dispositivo, producto, información del sistema y hardware, método de borrado ‐patrones empleados‐ verificación y estado
@@ -11918,7 +11819,7 @@ Servicio Acta de cierre del proyecto',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 467 => [
-                                                                                                                                                                    'id' => 468,
+
                                                                                                                                                                     'contrato_id' => 91,
                                                                                                                                                                     'no_factura' => 'C 18',
                                                                                                                                                                     'concepto' => 'Servicio de toma de imágenes forense
@@ -11941,7 +11842,7 @@ Servicio de análisis forense',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 468 => [
-                                                                                                                                                                    'id' => 469,
+
                                                                                                                                                                     'contrato_id' => 97,
                                                                                                                                                                     'no_factura' => 'C-11',
                                                                                                                                                                     'concepto' => 'MADUREZ DE PROCESOS ITIL V4',
@@ -11963,7 +11864,7 @@ Servicio de análisis forense',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 469 => [
-                                                                                                                                                                    'id' => 470,
+
                                                                                                                                                                     'contrato_id' => 98,
                                                                                                                                                                     'no_factura' => 'S 1060',
                                                                                                                                                                     'concepto' => 'Servicios de consultoría Partida 1 Auditoría en materia de Evaluación de Servicios en BANJETEL
@@ -11992,7 +11893,7 @@ Servicios de consultoría. Partida 8 Auditoría al Sistema de Pagos Interbancari
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 470 => [
-                                                                                                                                                                    'id' => 471,
+
                                                                                                                                                                     'contrato_id' => 86,
                                                                                                                                                                     'no_factura' => 'S 1052',
                                                                                                                                                                     'concepto' => 'Servicios de consultoría. SERVICIO DE ANÁLISIS FORENSE
@@ -12015,7 +11916,7 @@ Servicios de consultoría. SERVICIO DE DICTAMEN FORENSE',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 471 => [
-                                                                                                                                                                    'id' => 472,
+
                                                                                                                                                                     'contrato_id' => 103,
                                                                                                                                                                     'no_factura' => 'C-20',
                                                                                                                                                                     'concepto' => 'PT Caja Negra y Concientización en materia de seguridad de la información ',
@@ -12037,7 +11938,7 @@ Servicios de consultoría. SERVICIO DE DICTAMEN FORENSE',
                                                                                                                                                                     'updated_by' => 19,
                                                                                                                                                                 ],
                                                                                                                                                                 472 => [
-                                                                                                                                                                    'id' => 473,
+
                                                                                                                                                                     'contrato_id' => 103,
                                                                                                                                                                     'no_factura' => 'C-24',
                                                                                                                                                                     'concepto' => 'PT Caja negra y concientización en materia de seguridad de la información ',
@@ -12059,7 +11960,7 @@ Servicios de consultoría. SERVICIO DE DICTAMEN FORENSE',
                                                                                                                                                                     'updated_by' => 19,
                                                                                                                                                                 ],
                                                                                                                                                                 473 => [
-                                                                                                                                                                    'id' => 474,
+
                                                                                                                                                                     'contrato_id' => 104,
                                                                                                                                                                     'no_factura' => 'C-20',
                                                                                                                                                                     'concepto' => 'PT Caja Negra y Concientización en materia de seguridad de la información',
@@ -12081,7 +11982,7 @@ Servicios de consultoría. SERVICIO DE DICTAMEN FORENSE',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 474 => [
-                                                                                                                                                                    'id' => 475,
+
                                                                                                                                                                     'contrato_id' => 104,
                                                                                                                                                                     'no_factura' => 'C-24',
                                                                                                                                                                     'concepto' => 'PT Caja Negra y Concientización en materia de seguridad de la información',
@@ -12103,7 +12004,7 @@ Servicios de consultoría. SERVICIO DE DICTAMEN FORENSE',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 475 => [
-                                                                                                                                                                    'id' => 476,
+
                                                                                                                                                                     'contrato_id' => 8,
                                                                                                                                                                     'no_factura' => 'S 817',
                                                                                                                                                                     'concepto' => 'Sistema de Gestión de Seguridad de la Información
@@ -12133,7 +12034,7 @@ Servicio de Antivirus a estaciones locales',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 476 => [
-                                                                                                                                                                    'id' => 477,
+
                                                                                                                                                                     'contrato_id' => 8,
                                                                                                                                                                     'no_factura' => 'CPB 451',
                                                                                                                                                                     'concepto' => 'Sistema de Gestión de Seguridad de la Información
@@ -12164,7 +12065,7 @@ Servicio de Antivirus a estaciones locales.
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 477 => [
-                                                                                                                                                                    'id' => 478,
+
                                                                                                                                                                     'contrato_id' => 8,
                                                                                                                                                                     'no_factura' => 'S 840',
                                                                                                                                                                     'concepto' => 'Sistema de Gestión de Seguridad de la Información
@@ -12194,7 +12095,7 @@ Servicio de Antivirus a estaciones locales.',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 478 => [
-                                                                                                                                                                    'id' => 479,
+
                                                                                                                                                                     'contrato_id' => 155,
                                                                                                                                                                     'no_factura' => 'S 1073',
                                                                                                                                                                     'concepto' => 'Consecutivo 1. Servicio Gestión de Vulnerabilidades para los Activos de TI
@@ -12222,7 +12123,7 @@ Consecutivo 7. Servicio de Ciber Amenazas Avanzadas y Visibilidad en la Red a Tr
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 479 => [
-                                                                                                                                                                    'id' => 480,
+
                                                                                                                                                                     'contrato_id' => 155,
                                                                                                                                                                     'no_factura' => 'S 1093',
                                                                                                                                                                     'concepto' => 'Consecutivo 1. Servicio Gestión de Vulnerabilidades para los Activos de TI
@@ -12250,7 +12151,7 @@ Consecutivo 7. Servicio de Ciber Amenazas Avanzadas y Visibilidad en la Red a Tr
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 480 => [
-                                                                                                                                                                    'id' => 481,
+
                                                                                                                                                                     'contrato_id' => 20,
                                                                                                                                                                     'no_factura' => 'S 820',
                                                                                                                                                                     'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -12279,7 +12180,7 @@ Servicio mayo 2022',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 481 => [
-                                                                                                                                                                    'id' => 482,
+
                                                                                                                                                                     'contrato_id' => 20,
                                                                                                                                                                     'no_factura' => 'S 838',
                                                                                                                                                                     'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -12308,7 +12209,7 @@ Servicio Junio 2022',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 482 => [
-                                                                                                                                                                    'id' => 483,
+
                                                                                                                                                                     'contrato_id' => 20,
                                                                                                                                                                     'no_factura' => 'S 869',
                                                                                                                                                                     'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -12337,7 +12238,7 @@ Servicio Julio 2022',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 483 => [
-                                                                                                                                                                    'id' => 484,
+
                                                                                                                                                                     'contrato_id' => 20,
                                                                                                                                                                     'no_factura' => 'S 927',
                                                                                                                                                                     'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -12366,7 +12267,7 @@ Servicio agosto 2022',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 484 => [
-                                                                                                                                                                    'id' => 485,
+
                                                                                                                                                                     'contrato_id' => 20,
                                                                                                                                                                     'no_factura' => 'S 947',
                                                                                                                                                                     'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -12395,7 +12296,7 @@ Servicio septiembre 2022',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 485 => [
-                                                                                                                                                                    'id' => 486,
+
                                                                                                                                                                     'contrato_id' => 20,
                                                                                                                                                                     'no_factura' => 'S 987',
                                                                                                                                                                     'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -12424,7 +12325,7 @@ Servicio Octubre 2022',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 486 => [
-                                                                                                                                                                    'id' => 487,
+
                                                                                                                                                                     'contrato_id' => 20,
                                                                                                                                                                     'no_factura' => 'A 1014',
                                                                                                                                                                     'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -12453,7 +12354,7 @@ Servicio noviembre 2022',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 487 => [
-                                                                                                                                                                    'id' => 488,
+
                                                                                                                                                                     'contrato_id' => 20,
                                                                                                                                                                     'no_factura' => 'S 1047',
                                                                                                                                                                     'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -12482,7 +12383,7 @@ Servicio diciembre 2022',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 488 => [
-                                                                                                                                                                    'id' => 489,
+
                                                                                                                                                                     'contrato_id' => 20,
                                                                                                                                                                     'no_factura' => 'S 925',
                                                                                                                                                                     'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -12511,7 +12412,7 @@ Servicio enero 2023',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 489 => [
-                                                                                                                                                                    'id' => 490,
+
                                                                                                                                                                     'contrato_id' => 20,
                                                                                                                                                                     'no_factura' => 'S 1079',
                                                                                                                                                                     'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -12540,7 +12441,7 @@ Servicio febrero 2023',
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 490 => [
-                                                                                                                                                                    'id' => 491,
+
                                                                                                                                                                     'contrato_id' => 19,
                                                                                                                                                                     'no_factura' => 'S 821',
                                                                                                                                                                     'concepto' => 'mayo 2022
@@ -12569,7 +12470,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 491 => [
-                                                                                                                                                                    'id' => 492,
+
                                                                                                                                                                     'contrato_id' => 19,
                                                                                                                                                                     'no_factura' => 'S 847',
                                                                                                                                                                     'concepto' => 'junio 2022
@@ -12598,7 +12499,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 492 => [
-                                                                                                                                                                    'id' => 493,
+
                                                                                                                                                                     'contrato_id' => 19,
                                                                                                                                                                     'no_factura' => 'S 874',
                                                                                                                                                                     'concepto' => 'julio 2022
@@ -12627,7 +12528,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 493 => [
-                                                                                                                                                                    'id' => 494,
+
                                                                                                                                                                     'contrato_id' => 19,
                                                                                                                                                                     'no_factura' => 'S 932',
                                                                                                                                                                     'concepto' => 'Agosto 2022
@@ -12656,7 +12557,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 494 => [
-                                                                                                                                                                    'id' => 495,
+
                                                                                                                                                                     'contrato_id' => 19,
                                                                                                                                                                     'no_factura' => 'S 958',
                                                                                                                                                                     'concepto' => 'Septiembre 2022
@@ -12685,7 +12586,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 495 => [
-                                                                                                                                                                    'id' => 496,
+
                                                                                                                                                                     'contrato_id' => 19,
                                                                                                                                                                     'no_factura' => 'S 990',
                                                                                                                                                                     'concepto' => 'Octubre 2022
@@ -12714,7 +12615,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 496 => [
-                                                                                                                                                                    'id' => 497,
+
                                                                                                                                                                     'contrato_id' => 19,
                                                                                                                                                                     'no_factura' => 'S 1029',
                                                                                                                                                                     'concepto' => 'Noviembre 2022
@@ -12743,7 +12644,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 497 => [
-                                                                                                                                                                    'id' => 498,
+
                                                                                                                                                                     'contrato_id' => 19,
                                                                                                                                                                     'no_factura' => 'S 1030',
                                                                                                                                                                     'concepto' => 'Diciembre 2022
@@ -12773,7 +12674,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 498 => [
-                                                                                                                                                                    'id' => 499,
+
                                                                                                                                                                     'contrato_id' => 75,
                                                                                                                                                                     'no_factura' => 'S 854',
                                                                                                                                                                     'concepto' => 'SERVICIO "LICENCIAMIENTO DE LA SOLUCIÓN DE SEGURIDAD FIREEYE"',
@@ -12795,7 +12696,7 @@ Consecutivo 5.- Servicio de análisis de vulnerabilidades y pruebas de penetraci
                                                                                                                                                                     'updated_by' => null,
                                                                                                                                                                 ],
                                                                                                                                                                 499 => [
-                                                                                                                                                                    'id' => 500,
+
                                                                                                                                                                     'contrato_id' => 90,
                                                                                                                                                                     'no_factura' => 'S 1041',
                                                                                                                                                                 'concepto' => 'Venta de Equipo Firewall Especializado en Servicios Web (WAF)
@@ -12831,7 +12732,7 @@ Implementación MCAFEE Modelo ELM‐5775 serie:A0D2238956, Modelo ERC‐1275 ser
                                                                                                                                                             ]);
         \DB::table('facturacion')->insert([
             0 => [
-                'id' => 501,
+
                 'contrato_id' => 90,
                 'no_factura' => 'S 1042',
                 'concepto' => '
@@ -12858,7 +12759,7 @@ Correlación de Eventos',
                 'updated_by' => null,
             ],
             1 => [
-                'id' => 502,
+
                 'contrato_id' => 90,
                 'no_factura' => 'S 1081',
                 'concepto' => 'Servicios de Instalación Borrado Seguro de información
@@ -12882,7 +12783,7 @@ Orden de compra 4500644094 ',
                 'updated_by' => null,
             ],
             2 => [
-                'id' => 503,
+
                 'contrato_id' => 90,
                 'no_factura' => 'S 1106',
                 'concepto' => 'Servicios de Instalación, Servicio de Antivirus, enero 2023
@@ -12905,7 +12806,7 @@ OC 4500670833',
                 'updated_by' => 17,
             ],
             3 => [
-                'id' => 504,
+
                 'contrato_id' => 90,
                 'no_factura' => 'S 1106',
                 'concepto' => 'Servicios de Instalación, Servicio de Antivirus enero 2023
@@ -12928,7 +12829,7 @@ OC 4500670833',
                 'updated_by' => null,
             ],
             4 => [
-                'id' => 505,
+
                 'contrato_id' => 90,
                 'no_factura' => 'S 1107',
                 'concepto' => 'Servicios de Instalación, Servicio de Antivirus febrero 2023
@@ -12951,7 +12852,7 @@ OC 4500670843',
                 'updated_by' => null,
             ],
             5 => [
-                'id' => 506,
+
                 'contrato_id' => 90,
                 'no_factura' => 'S 1108',
                 'concepto' => 'Servicios de Instalación, Servicio de Antivirus marzo 2023
@@ -12974,7 +12875,7 @@ OC 4500670529',
                 'updated_by' => null,
             ],
             6 => [
-                'id' => 507,
+
                 'contrato_id' => 90,
                 'no_factura' => 'S 1110',
                 'concepto' => 'Servicios de Instalación Borrado Seguro de Información
@@ -12998,7 +12899,7 @@ OC 4500670758
                 'updated_by' => null,
             ],
             7 => [
-                'id' => 508,
+
                 'contrato_id' => 89,
                 'no_factura' => 'C 17',
             'concepto' => 'Servicios de consultoría Pruebas Caja Negra (Externo)
@@ -13022,7 +12923,7 @@ Servicios de consultoría Servicio de Ingeniería Social',
                 'updated_by' => null,
             ],
             8 => [
-                'id' => 509,
+
                 'contrato_id' => 99,
                 'no_factura' => 'S 995',
                 'concepto' => 'Servicios administrados Protección de la Navegacion Internet
@@ -13048,7 +12949,7 @@ CRE/39/2022, mensualidad 1/12, enero 2023',
                 'updated_by' => null,
             ],
             9 => [
-                'id' => 510,
+
                 'contrato_id' => 99,
                 'no_factura' => 'S 1091',
                 'concepto' => 'Servicios administrados Protección de la Navegacion Internet
@@ -13074,7 +12975,7 @@ CRE/39/2022, mensualidad 2/12, febrero 2023',
                 'updated_by' => null,
             ],
             10 => [
-                'id' => 511,
+
                 'contrato_id' => 106,
                 'no_factura' => 'S 918',
             'concepto' => 'Servicio de Soporte Técnico mensual para la solución Póliza de Servicio de Mantenimiento para 1 (un) equipo Firewall de Base de Datos Imperva X6510 para Sala Superior
@@ -13099,7 +13000,7 @@ Contrato SS/116‐23. Servicio enero 2023.',
                 'updated_by' => null,
             ],
             11 => [
-                'id' => 512,
+
                 'contrato_id' => 106,
                 'no_factura' => 'S 1078',
             'concepto' => 'Servicio de Soporte Técnico mensual para la solución Póliza de Servicio de Mantenimiento para 1 (un) equipo Firewall de Base de Datos Imperva X6510 para Sala Superior
@@ -13125,7 +13026,7 @@ Contrato SS/116‐23. Servicio febrero 2023.',
                 'updated_by' => null,
             ],
             12 => [
-                'id' => 513,
+
                 'contrato_id' => 106,
                 'no_factura' => 'S 1111',
             'concepto' => 'Servicio de Soporte Técnico mensual para la solución Póliza de Servicio de Mantenimiento para 1 (un) equipo Firewall de Base de Datos Imperva X6510 para Sala Superior
@@ -13151,7 +13052,7 @@ Contrato SS/116‐23. Servicio marzo 2023.',
                 'updated_by' => null,
             ],
             13 => [
-                'id' => 514,
+
                 'contrato_id' => 76,
                 'no_factura' => 'S 835',
                 'concepto' => 'Servicio de Pruebas de Penetración Caja Negra',
@@ -13173,7 +13074,7 @@ Contrato SS/116‐23. Servicio marzo 2023.',
                 'updated_by' => null,
             ],
             14 => [
-                'id' => 515,
+
                 'contrato_id' => 76,
                 'no_factura' => 'S 879',
                 'concepto' => 'Servicio de Pruebas de Penetración de Caja Negra',
@@ -13195,7 +13096,7 @@ Contrato SS/116‐23. Servicio marzo 2023.',
                 'updated_by' => null,
             ],
             15 => [
-                'id' => 516,
+
                 'contrato_id' => 67,
                 'no_factura' => 'S 775',
                 'concepto' => 'Análisis de Vulnerabilidades, Pen Testing, Cyberdefense, Threat Hunting, Forense, Borrado seguro, Phishing, Ciber investigación',
@@ -13217,7 +13118,7 @@ Contrato SS/116‐23. Servicio marzo 2023.',
                 'updated_by' => 18,
             ],
             16 => [
-                'id' => 517,
+
                 'contrato_id' => 157,
                 'no_factura' => 'C 97',
                 'concepto' => 'Servicio de Pruebas de Penetración',
@@ -13239,7 +13140,7 @@ Contrato SS/116‐23. Servicio marzo 2023.',
                 'updated_by' => null,
             ],
             17 => [
-                'id' => 518,
+
                 'contrato_id' => 158,
                 'no_factura' => 'S 505',
                 'concepto' => 'Infoblox Premuim Maintenance - Entreprise for TE-1
@@ -13265,7 +13166,7 @@ Números de serie: 1405201610700052 y 1405201610700058',
                 'updated_by' => null,
             ],
             18 => [
-                'id' => 519,
+
                 'contrato_id' => 103,
                 'no_factura' => 'TEST',
                 'concepto' => 'test',
@@ -13287,7 +13188,7 @@ Números de serie: 1405201610700052 y 1405201610700058',
                 'updated_by' => 1,
             ],
             19 => [
-                'id' => 520,
+
                 'contrato_id' => 93,
                 'no_factura' => '1028',
                 'concepto' => 'Servicios de consultoria
@@ -13310,7 +13211,7 @@ SERVICIO DE EVALUACIÓN DE RIESGO TECNOLÓGICO Y VULNERABILIDADES ',
                 'updated_by' => 19,
             ],
             20 => [
-                'id' => 521,
+
                 'contrato_id' => 93,
                 'no_factura' => 'S 1028',
                 'concepto' => 'Servicios de consultoria
@@ -13333,7 +13234,7 @@ SERVICIO DE EVALUACIÓN DE RIESGO TECNOLÓGICO Y VULNERABILIDADES',
                 'updated_by' => null,
             ],
             21 => [
-                'id' => 522,
+
                 'contrato_id' => 17,
                 'no_factura' => 'S 721',
                 'concepto' => 'Soporte Técnico de la Solución en un horario de 24x7x365 Contrato número ASF-UGA-DAJ-DGS-003/2020 de fecha 17 de enero de 2020 y su Convenio Modificatorio de fecha 11 de marzo de 2021.',
@@ -13355,7 +13256,7 @@ SERVICIO DE EVALUACIÓN DE RIESGO TECNOLÓGICO Y VULNERABILIDADES',
                 'updated_by' => null,
             ],
             22 => [
-                'id' => 523,
+
                 'contrato_id' => 17,
                 'no_factura' => 'S 903',
                 'concepto' => 'Soporte Técnico de la Solución en un horario de 24x7x365 Contrato número ASF-UGA-DAJ-DGS-003/2020 de fecha 17 de enero de 2020 y su Convenio Modificatorio de fecha 11 de marzo de 2021.',
@@ -13377,7 +13278,7 @@ SERVICIO DE EVALUACIÓN DE RIESGO TECNOLÓGICO Y VULNERABILIDADES',
                 'updated_by' => null,
             ],
             23 => [
-                'id' => 524,
+
                 'contrato_id' => 17,
                 'no_factura' => 'S 969',
                 'concepto' => 'Soporte Técnico de la Solución en un horario de 24x7x365 Contrato número ASF-UGA-DAJ-DGS-003/2020 de fecha 17 de enero de 2020 y su Convenio Modificatorio de fecha 11 de marzo de 2021.',
@@ -13399,7 +13300,7 @@ SERVICIO DE EVALUACIÓN DE RIESGO TECNOLÓGICO Y VULNERABILIDADES',
                 'updated_by' => null,
             ],
             24 => [
-                'id' => 525,
+
                 'contrato_id' => 17,
                 'no_factura' => 'S 1031',
                 'concepto' => 'Soporte Técnico de la Solución en un horario de 24x7x365 Contrato número ASF-UGA-DAJ-DGS-003/2020 de fecha 17 de enero de 2020 y su Convenio Modificatorio de fecha 11 de marzo de 2021.',
@@ -13421,7 +13322,7 @@ SERVICIO DE EVALUACIÓN DE RIESGO TECNOLÓGICO Y VULNERABILIDADES',
                 'updated_by' => null,
             ],
             25 => [
-                'id' => 526,
+
                 'contrato_id' => 7,
                 'no_factura' => 'S 920',
                 'concepto' => 'SERVICIO DE SOC PARA EL
@@ -13445,7 +13346,7 @@ MAS',
                 'updated_by' => null,
             ],
             26 => [
-                'id' => 527,
+
                 'contrato_id' => 7,
                 'no_factura' => 'S 919',
                 'concepto' => 'Licenciamiento LogRhythm DetectX software subscription license
@@ -13469,7 +13370,7 @@ Licenciamiento LogRhythm System Monitor Pro Subscription para 50 dispositivos',
                 'updated_by' => null,
             ],
             27 => [
-                'id' => 528,
+
                 'contrato_id' => 7,
                 'no_factura' => 'S 1085',
                 'concepto' => 'Licenciamiento LogRhythm DetectX software subscription license
@@ -13495,7 +13396,7 @@ Extensión Licenciamiento LOGRHYTHM Mensualidad 12',
                 'updated_by' => null,
             ],
             28 => [
-                'id' => 529,
+
                 'contrato_id' => 7,
                 'no_factura' => 'S 1086',
                 'concepto' => 'Servicios administrados SERVICIO DE SOC PARA EL GRUPO FINANCIERO VE POR MAS',
@@ -13517,7 +13418,7 @@ Extensión Licenciamiento LOGRHYTHM Mensualidad 12',
                 'updated_by' => null,
             ],
             29 => [
-                'id' => 530,
+
                 'contrato_id' => 7,
                 'no_factura' => 'S 1103',
                 'concepto' => 'Servicios administrados
@@ -13540,7 +13441,7 @@ SERVICIO DE SOC PARA EL GRUPO FINANCIERO VE POR MAS',
                 'updated_by' => null,
             ],
             30 => [
-                'id' => 531,
+
                 'contrato_id' => 7,
                 'no_factura' => 'S 1104',
                 'concepto' => 'Licenciamiento LogRhythm DetectX software subscription license
@@ -13566,7 +13467,7 @@ Extensión Licenciamiento LOGRHYTHM Mensualidad 13',
                 'updated_by' => null,
             ],
             31 => [
-                'id' => 532,
+
                 'contrato_id' => 140,
                 'no_factura' => '1090',
                 'concepto' => 'Servicio de SOC, NOC y SIEM.
@@ -13591,7 +13492,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             32 => [
-                'id' => 533,
+
                 'contrato_id' => 3,
                 'no_factura' => 'S 906',
                 'concepto' => '13 de agosto al 12 septiembre 2022',
@@ -13613,7 +13514,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             33 => [
-                'id' => 534,
+
                 'contrato_id' => 3,
                 'no_factura' => 'S 962',
                 'concepto' => '13 de septiembre al 12 octubre 2022',
@@ -13635,7 +13536,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             34 => [
-                'id' => 535,
+
                 'contrato_id' => 3,
                 'no_factura' => 'S 980',
                 'concepto' => '13 de octubre al 12 noviembre 2022',
@@ -13657,7 +13558,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             35 => [
-                'id' => 536,
+
                 'contrato_id' => 3,
                 'no_factura' => 'S 1019',
                 'concepto' => '13 de noviembre al 12 diciembre 2022',
@@ -13679,7 +13580,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             36 => [
-                'id' => 537,
+
                 'contrato_id' => 3,
                 'no_factura' => 'S 914',
                 'concepto' => '13 de diciembre al 12 enero 2023',
@@ -13701,7 +13602,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             37 => [
-                'id' => 538,
+
                 'contrato_id' => 3,
                 'no_factura' => 'S 991',
                 'concepto' => '13 de enero al 12 de febrero 2023',
@@ -13723,7 +13624,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             38 => [
-                'id' => 539,
+
                 'contrato_id' => 5,
                 'no_factura' => 'S 891',
                 'concepto' => '8 de 26
@@ -13746,7 +13647,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             39 => [
-                'id' => 540,
+
                 'contrato_id' => 5,
                 'no_factura' => 'S 907',
                 'concepto' => '9 de 26',
@@ -13768,7 +13669,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             40 => [
-                'id' => 541,
+
                 'contrato_id' => 5,
                 'no_factura' => 'S 977',
                 'concepto' => '10 de 26',
@@ -13790,7 +13691,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             41 => [
-                'id' => 542,
+
                 'contrato_id' => 5,
                 'no_factura' => 'S 1020',
                 'concepto' => '11 de 26',
@@ -13812,7 +13713,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             42 => [
-                'id' => 543,
+
                 'contrato_id' => 5,
                 'no_factura' => 'S 1034',
                 'concepto' => '12 de 26',
@@ -13834,7 +13735,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             43 => [
-                'id' => 544,
+
                 'contrato_id' => 5,
                 'no_factura' => 'S 940',
                 'concepto' => '13 de 26',
@@ -13856,7 +13757,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             44 => [
-                'id' => 545,
+
                 'contrato_id' => 5,
                 'no_factura' => 'S 921',
                 'concepto' => '14 de 26',
@@ -13878,7 +13779,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             45 => [
-                'id' => 546,
+
                 'contrato_id' => 54,
                 'no_factura' => 'S 938',
                 'concepto' => 'Agosto 2022',
@@ -13900,7 +13801,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             46 => [
-                'id' => 547,
+
                 'contrato_id' => 54,
                 'no_factura' => 'S 966',
                 'concepto' => 'Septiembre 2022',
@@ -13922,7 +13823,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             47 => [
-                'id' => 548,
+
                 'contrato_id' => 54,
                 'no_factura' => 'S 978',
                 'concepto' => 'Octubre 2022',
@@ -13944,7 +13845,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             48 => [
-                'id' => 549,
+
                 'contrato_id' => 54,
                 'no_factura' => 'S 1021',
                 'concepto' => 'Noviembre 2022',
@@ -13966,7 +13867,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             49 => [
-                'id' => 550,
+
                 'contrato_id' => 54,
                 'no_factura' => 'S 1070',
                 'concepto' => 'Enero 2023',
@@ -13988,7 +13889,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             50 => [
-                'id' => 551,
+
                 'contrato_id' => 54,
                 'no_factura' => 'S 993',
                 'concepto' => 'Enero 2023',
@@ -14010,7 +13911,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             51 => [
-                'id' => 552,
+
                 'contrato_id' => 54,
                 'no_factura' => 'S 1095',
                 'concepto' => 'Febrero 2023',
@@ -14032,7 +13933,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             52 => [
-                'id' => 553,
+
                 'contrato_id' => 54,
                 'no_factura' => 'S 1112',
                 'concepto' => 'Marzo 2023',
@@ -14054,7 +13955,7 @@ Del 01 al 31 de marzo del 2023.',
                 'updated_by' => null,
             ],
             53 => [
-                'id' => 554,
+
                 'contrato_id' => 151,
                 'no_factura' => 'C 31',
             'concepto' => '1)Servicio de renovación SOC, Correlación de Eventos, Monitoreo de desempeño de Infraestructura y de Portales.
@@ -14078,7 +13979,7 @@ Del 01 al 31 de marzo del 2023.',
         'updated_by' => null,
     ],
     54 => [
-        'id' => 555,
+
         'contrato_id' => 151,
         'no_factura' => 'C 34',
         'concepto' => 'Servicio de renovación SOC, Correlación de Eventos, Monitoreo de desempeño de Infraestructura y de Portales.',
@@ -14100,7 +14001,7 @@ Del 01 al 31 de marzo del 2023.',
         'updated_by' => null,
     ],
     55 => [
-        'id' => 556,
+
         'contrato_id' => 151,
         'no_factura' => 'C 41',
         'concepto' => 'Servicio de renovación SOC, Correlación de Eventos, Monitoreo de desempeño de Infraestructura y de Portales.',
@@ -14122,7 +14023,7 @@ Del 01 al 31 de marzo del 2023.',
         'updated_by' => null,
     ],
     56 => [
-        'id' => 557,
+
         'contrato_id' => 56,
         'no_factura' => 'C -09',
         'concepto' => 'Número de pedido:4100617333.RFP VULNERABILIDADES.',
@@ -14144,7 +14045,7 @@ Del 01 al 31 de marzo del 2023.',
         'updated_by' => null,
     ],
     57 => [
-        'id' => 558,
+
         'contrato_id' => 56,
         'no_factura' => 'C-10',
         'concepto' => 'Número de pedido:4100617333.RFP
@@ -14167,7 +14068,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     58 => [
-        'id' => 559,
+
         'contrato_id' => 56,
         'no_factura' => 'C-32',
         'concepto' => 'Número de pedido:4100617333.RFP VULNERABILIDADES.',
@@ -14189,7 +14090,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     59 => [
-        'id' => 560,
+
         'contrato_id' => 56,
         'no_factura' => 'C-39',
         'concepto' => 'Número de pedido:4100617333.RFP VULNERABILIDADES.',
@@ -14211,7 +14112,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     60 => [
-        'id' => 561,
+
         'contrato_id' => 26,
         'no_factura' => 'S 892',
         'concepto' => 'Agosto 2022.',
@@ -14233,7 +14134,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     61 => [
-        'id' => 562,
+
         'contrato_id' => 26,
         'no_factura' => 'S 910',
         'concepto' => 'Octubre 2022.',
@@ -14255,7 +14156,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     62 => [
-        'id' => 563,
+
         'contrato_id' => 26,
         'no_factura' => 'S 979',
         'concepto' => 'Noviembre 2022',
@@ -14277,7 +14178,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     63 => [
-        'id' => 564,
+
         'contrato_id' => 26,
         'no_factura' => 'S 1003',
         'concepto' => 'Noviembre 2022.',
@@ -14299,7 +14200,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     64 => [
-        'id' => 565,
+
         'contrato_id' => 26,
         'no_factura' => 'S 1004',
         'concepto' => 'Diciembre 2022.',
@@ -14321,7 +14222,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     65 => [
-        'id' => 566,
+
         'contrato_id' => 26,
         'no_factura' => 'S 1006',
         'concepto' => 'Enero 2023',
@@ -14343,7 +14244,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     66 => [
-        'id' => 567,
+
         'contrato_id' => 26,
         'no_factura' => 'S 1100',
         'concepto' => 'Febrero 2023',
@@ -14365,7 +14266,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     67 => [
-        'id' => 568,
+
         'contrato_id' => 26,
         'no_factura' => 'S 1117',
         'concepto' => 'Marzo 2023.',
@@ -14387,7 +14288,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     68 => [
-        'id' => 569,
+
         'contrato_id' => 159,
         'no_factura' => '1',
         'concepto' => 'test',
@@ -14409,7 +14310,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     69 => [
-        'id' => 570,
+
         'contrato_id' => 159,
         'no_factura' => '2',
         'concepto' => 'test',
@@ -14431,7 +14332,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     70 => [
-        'id' => 571,
+
         'contrato_id' => 17,
         'no_factura' => 'S 1023',
         'concepto' => 'Servicio diciembre 2022.',
@@ -14453,7 +14354,7 @@ VULNERABILIDADES.',
         'updated_by' => null,
     ],
     71 => [
-        'id' => 572,
+
         'contrato_id' => 20,
         'no_factura' => 'S 1113',
         'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -14481,7 +14382,7 @@ Servicio marzo 2023',
         'updated_by' => null,
     ],
     72 => [
-        'id' => 573,
+
         'contrato_id' => 99,
         'no_factura' => 'S 1114',
         'concepto' => 'Servicios administrados Protección de la Navegacion Internet
@@ -14507,7 +14408,7 @@ CRE/39/2022, mensualidad 3/12, marzo 2023',
         'updated_by' => null,
     ],
     73 => [
-        'id' => 574,
+
         'contrato_id' => 155,
         'no_factura' => 'S 1118',
         'concepto' => 'Consecitivo 1 - Corregido, listo para segunda revisión
@@ -14537,7 +14438,7 @@ Marzo 2023',
         'updated_by' => null,
     ],
     74 => [
-        'id' => 575,
+
         'contrato_id' => 156,
         'no_factura' => 'S 1077',
         'concepto' => 'Licenciamiento TRX DeceptionGrid Sensor Bundle between 10 ‐ 50 sensors 1 Year Suscription
@@ -14563,7 +14464,7 @@ Servicios de Instalación Instalación física de servidores en los 3 sitios (1 
         'updated_by' => null,
     ],
     75 => [
-        'id' => 576,
+
         'contrato_id' => 8,
         'no_factura' => 'S 875',
         'concepto' => 'Sistema de Gestión de Seguridad de la Información
@@ -14589,7 +14490,7 @@ Servicio de Antispam para el correo electrónico                                
         'updated_by' => null,
     ],
     76 => [
-        'id' => 577,
+
         'contrato_id' => 8,
         'no_factura' => 'S - 936',
         'concepto' => 'Sistema de Gestión de Seguridad de la Información
@@ -14615,7 +14516,7 @@ Servicio de Antispam para el correo electrónico                                
         'updated_by' => null,
     ],
     77 => [
-        'id' => 578,
+
         'contrato_id' => 8,
         'no_factura' => 'S 952',
         'concepto' => 'Sistema de Gestión de Seguridad de la Información
@@ -14641,7 +14542,7 @@ Servicio de Antispam para el correo electrónico                                
         'updated_by' => null,
     ],
     78 => [
-        'id' => 579,
+
         'contrato_id' => 8,
         'no_factura' => 'S-981',
         'concepto' => 'Sistema de Gestión de Seguridad de la Información
@@ -14667,7 +14568,7 @@ Servicio de Antispam para el correo electrónico                                
         'updated_by' => null,
     ],
     79 => [
-        'id' => 580,
+
         'contrato_id' => 8,
         'no_factura' => 'S - 1013',
         'concepto' => 'Sistema de Gestión de Seguridad de la Información
@@ -14693,7 +14594,7 @@ Servicio de Antispam para el correo electrónico                                
         'updated_by' => null,
     ],
     80 => [
-        'id' => 581,
+
         'contrato_id' => 156,
         'no_factura' => 'S - 1121',
         'concepto' => 'Servicios de Instalación
@@ -14716,7 +14617,7 @@ Señuelos de Seguridad',
         'updated_by' => null,
     ],
     81 => [
-        'id' => 582,
+
         'contrato_id' => 93,
         'no_factura' => 'S 877',
         'concepto' => 'SERVICIO DE EVALUACIÓN DE RIESGO TECNOLÓGICO Y
@@ -14740,7 +14641,7 @@ Convenio Modificatorio al Contrato PENSIONISSSTE AD‐ 043/2022',
         'updated_by' => null,
     ],
     82 => [
-        'id' => 583,
+
         'contrato_id' => 67,
         'no_factura' => 'S 775',
         'concepto' => 'Análisis de Vulnerabilidades, Pen Testing, Cyberdefense, Threat Hunting, Forense, Borrado seguro, Phishing, Ciber investigación',
@@ -14762,7 +14663,7 @@ Convenio Modificatorio al Contrato PENSIONISSSTE AD‐ 043/2022',
         'updated_by' => null,
     ],
     83 => [
-        'id' => 584,
+
         'contrato_id' => 162,
         'no_factura' => 'S 632',
     'concepto' => 'Orden de Servicio Número 4 (Cuatro) (La orden de servicio) del Contrato de Prestación de Servicios de fecha 28-12-2020 (El Contrato)',
@@ -14784,7 +14685,7 @@ Convenio Modificatorio al Contrato PENSIONISSSTE AD‐ 043/2022',
         'updated_by' => null,
     ],
     84 => [
-        'id' => 585,
+
         'contrato_id' => 103,
         'no_factura' => 'S 1096',
         'concepto' => 'SERVICIO DE EVALUACIÓN DEL  CUMPLIMIENTO DE LOS REQUISITOS ESTABLECIDOS EN LAS REGLAS DEL SISTEMA DE PAGOS ELECTRÓNICOS INTERBANCARIOS (SPEI AMPLIADO, PARTICIPACIÓN INDIRECTA
@@ -14807,7 +14708,7 @@ EN EL SPEI Y TEMAS',
             'updated_by' => null,
         ],
         85 => [
-            'id' => 586,
+
             'contrato_id' => 106,
             'no_factura' => 'S-1126',
         'concepto' => 'Servicio de Soporte Técnico mensual para la solución Póliza de Servicio de Mantenimiento para 1 (un) equipo Firewall de Base de Datos Imperva X6510 para Sala Superior
@@ -14833,7 +14734,7 @@ Contrato SS/116‐23. Servicio abril 2023.',
             'updated_by' => null,
         ],
         86 => [
-            'id' => 587,
+
             'contrato_id' => 99,
             'no_factura' => 'S-1128',
             'concepto' => 'Servicios administrados Protección de la Navegacion Internet
@@ -14859,7 +14760,7 @@ CRE/39/2022, mensualidad 1/12, abril 2023',
             'updated_by' => null,
         ],
         87 => [
-            'id' => 588,
+
             'contrato_id' => 20,
             'no_factura' => 'S 1130',
             'concepto' => '1 Partida 1 Especialista en Seguridad y Continuidad de Riesgo
@@ -14886,7 +14787,7 @@ Servicio abril 2023',
             'updated_by' => null,
         ],
         88 => [
-            'id' => 589,
+
             'contrato_id' => 155,
             'no_factura' => 'S-1131',
             'concepto' => 'Consecutivo 1. Servicio Gestión de Vulnerabilidades para los Activos de TI
@@ -14915,7 +14816,7 @@ Abril 2023',
             'updated_by' => null,
         ],
         89 => [
-            'id' => 590,
+
             'contrato_id' => 67,
             'no_factura' => 'S  776',
             'concepto' => 'LogRhythm DetectX software subscription license
@@ -14939,7 +14840,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
             'updated_by' => null,
         ],
         90 => [
-            'id' => 591,
+
             'contrato_id' => 20,
             'no_factura' => 'S 1141',
             'concepto' => '1 Servicio de Gestión de Vulnerabilidades para los Activos de TI
@@ -14967,7 +14868,7 @@ LogRhythm System Monitor Pro Subscription para 50 dispositivos',
             'updated_by' => null,
         ],
         91 => [
-            'id' => 592,
+
             'contrato_id' => 99,
             'no_factura' => 'S 1140',
             'concepto' => 'Servicios administrados Protección de la Navegacion Internet
@@ -14993,7 +14894,7 @@ CRE/39/2022, mensualidad  4/12, mayo 2023',
             'updated_by' => null,
         ],
         92 => [
-            'id' => 593,
+
             'contrato_id' => 106,
             'no_factura' => 'S 1139',
         'concepto' => 'Servicio de Soporte Técnico mensual para la solución Póliza de Servicio de Mantenimiento para 1 (un) equipo Firewall de Base de Datos Imperva X6510 para Sala Superior
@@ -15019,7 +14920,7 @@ Contrato SS/116‐23. Servicio mayo 2023.',
             'updated_by' => null,
         ],
         93 => [
-            'id' => 594,
+
             'contrato_id' => 105,
             'no_factura' => 'S-1119',
             'concepto' => 'Servicio de soporte técnico Póliza de mantenimiento preventivo, correctivo y soporte técnico para los equipos del Core de la red de datos inalámbrica de PEMEX
@@ -15042,7 +14943,7 @@ Servicio marzo 2023',
             'updated_by' => null,
         ],
         94 => [
-            'id' => 595,
+
             'contrato_id' => 105,
             'no_factura' => 'S-1134',
             'concepto' => 'Servicio de soporte técnico Póliza de mantenimiento preventivo, correctivo y soporte técnico para los equipos del Core de la red de datos inalámbrica de PEMEX.
@@ -15065,7 +14966,7 @@ Servicio abril 2023',
             'updated_by' => null,
         ],
         95 => [
-            'id' => 596,
+
             'contrato_id' => 105,
             'no_factura' => 'S-1147',
             'concepto' => 'Servicio de soporte técnico Póliza de mantenimiento preventivo, correctivo y soporte técnico para los equipos del Core de la red de datos inalámbrica de PEMEX.
@@ -15088,7 +14989,7 @@ mayo 2023',
             'updated_by' => null,
         ],
         96 => [
-            'id' => 597,
+
             'contrato_id' => 7,
             'no_factura' => 'S-1137',
             'concepto' => 'Servicios administrados SERVICIO DE SOC PARA EL GRUPO FINANCIERO VE POR MAS
@@ -15111,7 +15012,7 @@ MAYO 2023',
             'updated_by' => null,
         ],
         97 => [
-            'id' => 598,
+
             'contrato_id' => 7,
             'no_factura' => 'S-1138',
             'concepto' => 'Licenciamiento LogRhythm DetectX software subscription license
@@ -15140,7 +15041,7 @@ mayo 2023
             'updated_by' => null,
         ],
         98 => [
-            'id' => 599,
+
             'contrato_id' => 7,
             'no_factura' => 'S-1154',
             'concepto' => 'Servicios administrados  SERVICIO DE SOC PARA EL GRUPO FINANCIERO VE POR MAS
@@ -15163,7 +15064,7 @@ junio 2023',
             'updated_by' => null,
         ],
         99 => [
-            'id' => 600,
+
             'contrato_id' => 7,
             'no_factura' => 'S-1155',
             'concepto' => 'Licenciamiento LogRhythm  DetectX software subscription license

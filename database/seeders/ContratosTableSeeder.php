@@ -22,7 +22,6 @@ class ContratosTableSeeder extends Seeder
 
         $contratos = [
             0 => [
-                'id' => 1,
                 'no_contrato' => '679',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 1,
@@ -65,7 +64,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             1 => [
-                'id' => 2,
                 'no_contrato' => 'SE-25-2018',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 2,
@@ -108,7 +106,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             2 => [
-                'id' => 3,
                 'no_contrato' => '4600023294',
                 'tipo_contrato' => 'Infraestructura',
                 'proveedor_id' => 3,
@@ -151,7 +148,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             3 => [
-                'id' => 4,
                 'no_contrato' => 'IFT-LPN-004-21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 4,
@@ -194,7 +190,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             4 => [
-                'id' => 5,
                 'no_contrato' => 'CONTRATO_122_BMV_SERVICIOS_DE_CYBER_THREAT_Y_ATAQUES_DE_SEGURIDAD',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 6,
@@ -237,7 +232,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             5 => [
-                'id' => 6,
                 'no_contrato' => 'CTR-IEN-00014-21-157',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 7,
@@ -280,7 +274,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             6 => [
-                'id' => 7,
                 'no_contrato' => 'BXM_001_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 8,
@@ -323,7 +316,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             7 => [
-                'id' => 8,
                 'no_contrato' => 'SE-23-2019',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 2,
@@ -366,7 +358,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             8 => [
-                'id' => 9,
                 'no_contrato' => 'ID-56_ROYAL-HOLIDAY_IMPLEMENTATION_MACFEE_Y_F5',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 5,
@@ -409,7 +400,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             9 => [
-                'id' => 10,
                 'no_contrato' => 'prueba',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 2,
@@ -452,7 +442,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             10 => [
-                'id' => 11,
                 'no_contrato' => '8237487489',
                 'tipo_contrato' => 'Infraestructura',
                 'proveedor_id' => 2,
@@ -495,7 +484,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             11 => [
-                'id' => 12,
                 'no_contrato' => '01',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 2,
@@ -538,7 +526,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             12 => [
-                'id' => 13,
                 'no_contrato' => 'test',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 2,
@@ -581,7 +568,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             13 => [
-                'id' => 14,
                 'no_contrato' => 'test',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 2,
@@ -624,7 +610,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             14 => [
-                'id' => 15,
                 'no_contrato' => '1',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 2,
@@ -667,7 +652,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             15 => [
-                'id' => 16,
                 'no_contrato' => 'test',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 2,
@@ -710,7 +694,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             16 => [
-                'id' => 17,
                 'no_contrato' => 'ASF-UGA-DAJ-DGS-003-2020',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 9,
@@ -753,7 +736,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             17 => [
-                'id' => 18,
                 'no_contrato' => 'LR0026991',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 10,
@@ -796,7 +778,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             18 => [
-                'id' => 19,
                 'no_contrato' => 'SERV-DGRMSG-020-01-22',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 11,
@@ -839,7 +820,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             19 => [
-                'id' => 20,
                 'no_contrato' => 'S-079-2021',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 12,
@@ -882,7 +862,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             20 => [
-                'id' => 21,
                 'no_contrato' => 'CT-0758-21',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 13,
@@ -925,7 +904,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             21 => [
-                'id' => 22,
                 'no_contrato' => 'HIXSA_SOC',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 14,
@@ -968,7 +946,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             22 => [
-                'id' => 23,
                 'no_contrato' => 'HIXSA_IMPLEMENTACION_TENABLE',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 14,
@@ -1011,7 +988,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             23 => [
-                'id' => 24,
                 'no_contrato' => 'DENTEGRA_6MESES',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 15,
@@ -1054,7 +1030,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             24 => [
-                'id' => 25,
                 'no_contrato' => 'DENTEGRA_30MESES',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 15,
@@ -1097,7 +1072,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             25 => [
-                'id' => 26,
                 'no_contrato' => '2021-A-L-NAC-C-06-HKA-00004061',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 17,
@@ -1140,7 +1114,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             26 => [
-                'id' => 27,
                 'no_contrato' => 'P_5500248874',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 16,
@@ -1183,7 +1156,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             27 => [
-                'id' => 28,
                 'no_contrato' => 'DABS-SRM-GA-DPC-115-2021',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 18,
@@ -1226,7 +1198,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             28 => [
-                'id' => 29,
                 'no_contrato' => 'DABS-SRM-GA-DPC-116-2021',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 18,
@@ -1269,7 +1240,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             29 => [
-                'id' => 30,
                 'no_contrato' => 'SS-48-22',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 19,
@@ -1312,7 +1282,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             30 => [
-                'id' => 31,
                 'no_contrato' => 'KONFIO_PENTEST_001_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 20,
@@ -1355,7 +1324,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             31 => [
-                'id' => 32,
                 'no_contrato' => '00001',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 23,
@@ -1398,7 +1366,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             32 => [
-                'id' => 33,
                 'no_contrato' => 'SS-161-21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 19,
@@ -1441,7 +1408,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             33 => [
-                'id' => 34,
                 'no_contrato' => 'TOTALPLAY_INTEGRA_001_20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 22,
@@ -1484,7 +1450,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             34 => [
-                'id' => 35,
                 'no_contrato' => 'CNSF-054-2021',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 24,
@@ -1527,7 +1492,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             35 => [
-                'id' => 36,
                 'no_contrato' => 'STPM-001-20',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 25,
@@ -1570,7 +1534,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             36 => [
-                'id' => 37,
                 'no_contrato' => 'VALMEX_PT_001_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 26,
@@ -1613,7 +1576,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             37 => [
-                'id' => 38,
                 'no_contrato' => 'PEÑOLES_SOC_NOC_21_22',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 27,
@@ -1656,7 +1618,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             38 => [
-                'id' => 39,
                 'no_contrato' => 'PEÑOLES_SOC_NOC_22_23',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 27,
@@ -1699,7 +1660,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             39 => [
-                'id' => 40,
                 'no_contrato' => 'IKUSI_ACT_SENTINEL',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 28,
@@ -1742,7 +1702,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             40 => [
-                'id' => 41,
                 'no_contrato' => 'COLTOMEX_HACKEO_ETICO_VULNERABILIDADES_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 21,
@@ -1785,7 +1744,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             41 => [
-                'id' => 42,
                 'no_contrato' => 'VALMEX_001_22_PRUEBAS_DE_PENETRACIÓN',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 2,
@@ -1828,7 +1786,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             42 => [
-                'id' => 43,
                 'no_contrato' => 'COLTOMONEY_001_22_PRUEBAS_DE_PENETRACIÓN',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 29,
@@ -1871,7 +1828,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             43 => [
-                'id' => 44,
                 'no_contrato' => '148-2019',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 18,
@@ -1914,7 +1870,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             44 => [
-                'id' => 45,
                 'no_contrato' => 'BANJERCITO-DABS-SRM-GA-DPC-114-2020',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 18,
@@ -1957,7 +1912,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             45 => [
-                'id' => 46,
                 'no_contrato' => 'OC314061-1',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 30,
@@ -2000,7 +1954,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             46 => [
-                'id' => 47,
                 'no_contrato' => 'ARABELA_ANALISIS_DE_MEJORAS_20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 30,
@@ -2043,7 +1996,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             47 => [
-                'id' => 48,
                 'no_contrato' => 'ARABELA_ANALISIS_VULNERABILIDADES_20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 30,
@@ -2086,7 +2038,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             48 => [
-                'id' => 49,
                 'no_contrato' => 'KMA334-20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 31,
@@ -2129,7 +2080,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             49 => [
-                'id' => 50,
                 'no_contrato' => 'IFT-LPN-025-20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 4,
@@ -2172,7 +2122,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             50 => [
-                'id' => 51,
                 'no_contrato' => 'FARMSAN_PABLO_REVISION_DE_INCIDENTES_20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 32,
@@ -2215,7 +2164,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             51 => [
-                'id' => 52,
                 'no_contrato' => 'VF-KL-161220',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 20,
@@ -2258,7 +2206,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             52 => [
-                'id' => 53,
                 'no_contrato' => 'AGPHOLDING_ASSESSMENT_001_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 33,
@@ -2301,7 +2248,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             53 => [
-                'id' => 54,
                 'no_contrato' => 'CS-03-CGI-2021',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 34,
@@ -2344,7 +2290,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             54 => [
-                'id' => 55,
                 'no_contrato' => 'CMM-001-21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 35,
@@ -2387,7 +2332,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             55 => [
-                'id' => 56,
                 'no_contrato' => 'GM_001_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 39,
@@ -2430,7 +2374,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             56 => [
-                'id' => 57,
                 'no_contrato' => 'ADAMANTINE_001-21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 36,
@@ -2473,7 +2416,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             57 => [
-                'id' => 58,
                 'no_contrato' => 'ADAMANTINE_001-20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 36,
@@ -2516,7 +2458,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             58 => [
-                'id' => 59,
                 'no_contrato' => 'ARABELA_ANALISIS_VULNERABILIDADES_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 30,
@@ -2559,7 +2500,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             59 => [
-                'id' => 60,
                 'no_contrato' => 'INTERESSE_VULNERABILIDADES_22',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 37,
@@ -2602,7 +2542,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             60 => [
-                'id' => 61,
                 'no_contrato' => 'SIEMENS_PENTEST_001_20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 38,
@@ -2645,7 +2584,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             61 => [
-                'id' => 62,
                 'no_contrato' => 'SIEMENS_PENTEST_001_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 38,
@@ -2688,7 +2626,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             62 => [
-                'id' => 63,
                 'no_contrato' => 'SERV-DGRMSG-097-05-18',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 11,
@@ -2731,7 +2668,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             63 => [
-                'id' => 64,
                 'no_contrato' => 'DJN-SCOF-1C.10-06-2019-101',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 40,
@@ -2774,7 +2710,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             64 => [
-                'id' => 65,
                 'no_contrato' => 'SERV-DGRMSG-115-08-19',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 11,
@@ -2817,7 +2752,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             65 => [
-                'id' => 66,
                 'no_contrato' => 'SERV-DGRMSG-149-11-20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 11,
@@ -2860,7 +2794,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             66 => [
-                'id' => 67,
                 'no_contrato' => 'BXM_002_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 8,
@@ -2903,7 +2836,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             67 => [
-                'id' => 68,
                 'no_contrato' => '4110005960',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 7,
@@ -2946,7 +2878,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             68 => [
-                'id' => 69,
                 'no_contrato' => 'NUBAJ_001_20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 42,
@@ -2989,7 +2920,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             69 => [
-                'id' => 70,
                 'no_contrato' => 'PEÑOLES_CURSO_ITIL_4_FUNDAMENTOS_20',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 27,
@@ -3032,7 +2962,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             70 => [
-                'id' => 71,
                 'no_contrato' => 'PEÑOLES_001_21',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 27,
@@ -3075,7 +3004,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             71 => [
-                'id' => 72,
                 'no_contrato' => 'QSMEXIKO_001_2019',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 41,
@@ -3118,7 +3046,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             72 => [
-                'id' => 73,
                 'no_contrato' => 'QSMEXIKO_002 _2019',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 41,
@@ -3161,7 +3088,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             73 => [
-                'id' => 74,
                 'no_contrato' => 'QSMEXIKO_001 _2020',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 41,
@@ -3204,7 +3130,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             74 => [
-                'id' => 75,
                 'no_contrato' => 'CGA-DETIC-22-2022',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 43,
@@ -3247,7 +3172,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             75 => [
-                'id' => 76,
                 'no_contrato' => 'COEP_001_22',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 44,
@@ -3290,7 +3214,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             76 => [
-                'id' => 77,
                 'no_contrato' => 'BXM_003_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 8,
@@ -3333,7 +3256,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             77 => [
-                'id' => 78,
                 'no_contrato' => 'CAMARA_DIPUTADOS_001_22',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 45,
@@ -3376,7 +3298,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             78 => [
-                'id' => 79,
                 'no_contrato' => 'SELEG_001_21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 46,
@@ -3419,7 +3340,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             79 => [
-                'id' => 80,
                 'no_contrato' => 'HOSPITAL_ABC_001_21',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 31,
@@ -3462,7 +3382,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             80 => [
-                'id' => 81,
                 'no_contrato' => 'COLTOMONEY_001_21',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 29,
@@ -3505,7 +3424,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             81 => [
-                'id' => 82,
                 'no_contrato' => 'heineken-2022',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 16,
@@ -3548,7 +3466,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             82 => [
-                'id' => 83,
                 'no_contrato' => 'SELEG_001_20',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 46,
@@ -3591,7 +3508,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             83 => [
-                'id' => 84,
                 'no_contrato' => 'privado-84-01102022',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 2,
@@ -3634,7 +3550,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             84 => [
-                'id' => 85,
                 'no_contrato' => '01-0000220',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 11,
@@ -3677,7 +3592,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             85 => [
-                'id' => 86,
                 'no_contrato' => 'privado-86-01102022',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 51,
@@ -3720,7 +3634,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             86 => [
-                'id' => 87,
                 'no_contrato' => 'SERV-DGRMSG-136-09-22',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 11,
@@ -3763,7 +3676,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             87 => [
-                'id' => 88,
                 'no_contrato' => '01-0000482',
                 'tipo_contrato' => 'Infraestructura',
                 'proveedor_id' => 25,
@@ -3806,7 +3718,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             88 => [
-                'id' => 89,
                 'no_contrato' => 'privado-89-04102022',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 36,
@@ -3849,7 +3760,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             89 => [
-                'id' => 90,
                 'no_contrato' => 'LA-050GYR019-E182-2022',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 52,
@@ -3892,7 +3802,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             90 => [
-                'id' => 91,
                 'no_contrato' => 'INSIGNIA_LIFE_SERVICIOS_FORENSE_22',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 53,
@@ -3935,7 +3844,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             91 => [
-                'id' => 92,
                 'no_contrato' => 'RL22-155-02',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 54,
@@ -3978,7 +3886,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             92 => [
-                'id' => 93,
                 'no_contrato' => 'AD-043-2022',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 55,
@@ -4021,7 +3928,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             93 => [
-                'id' => 94,
                 'no_contrato' => 'MEJS-L0003097',
                 'tipo_contrato' => 'Servicios de Consultoría',
                 'proveedor_id' => 56,
@@ -4064,7 +3970,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             94 => [
-                'id' => 95,
                 'no_contrato' => 'OC_01-012',
                 'tipo_contrato' => 'Arrendamiento de Equipos',
                 'proveedor_id' => 57,
@@ -4109,7 +4014,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             95 => [
-                'id' => 96,
                 'no_contrato' => 'FARMSAN PABLO_LicenciamientoTRAPX_22',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 32,
@@ -4152,7 +4056,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             96 => [
-                'id' => 97,
                 'no_contrato' => '4100699528',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 39,
@@ -4195,7 +4098,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             97 => [
-                'id' => 98,
                 'no_contrato' => 'DABS-SRM-GA-DPC-083-2022',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 18,
@@ -4238,7 +4140,6 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             98 => [
-                'id' => 99,
                 'no_contrato' => 'CRE-39-2022',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 59,
@@ -4281,7 +4182,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             99 => [
-                'id' => 100,
+
                 'no_contrato' => 'BABIEN-DGAA-ITP-002-2022',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 40,
@@ -4324,7 +4225,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             100 => [
-                'id' => 101,
+
                 'no_contrato' => 'OC405622',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 30,
@@ -4367,7 +4268,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             101 => [
-                'id' => 102,
+
                 'no_contrato' => 'ROYALHOLIDAY_SERVICIO_SAST_DAST_23',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 5,
@@ -4410,7 +4311,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             102 => [
-                'id' => 103,
+
                 'no_contrato' => 'DARM-LICA-001-2023',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 60,
@@ -4453,7 +4354,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             103 => [
-                'id' => 104,
+
                 'no_contrato' => 'ASSESSOR LEGAL_PT_CONCIENTIZACIÓN_22',
                 'tipo_contrato' => 'Servicios de Consultoría',
                 'proveedor_id' => 58,
@@ -4496,7 +4397,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             104 => [
-                'id' => 105,
+
                 'no_contrato' => 'PMX-2022-314-226',
                 'tipo_contrato' => 'Infraestructura',
                 'proveedor_id' => 61,
@@ -4539,7 +4440,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             105 => [
-                'id' => 106,
+
                 'no_contrato' => 'SS-116-23',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 19,
@@ -4582,7 +4483,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             106 => [
-                'id' => 107,
+
                 'no_contrato' => 'S4B_TENABLEPEÑOLES_RNWL_221122',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 27,
@@ -4625,7 +4526,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             107 => [
-                'id' => 108,
+
                 'no_contrato' => '208_ELKAY-MIGRACION_EQUIPOS_FORTINET_PALO_ALTO_22',
                 'tipo_contrato' => 'Infraestructura',
                 'proveedor_id' => 48,
@@ -4668,7 +4569,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             108 => [
-                'id' => 109,
+
                 'no_contrato' => '213_INE_RENOVACION_LICENCIAMIENTO_23',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 62,
@@ -4712,7 +4613,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             109 => [
-                'id' => 110,
+
                 'no_contrato' => 'SEDATU-CS-008-411-2022',
                 'tipo_contrato' => 'Servicios de Consultoría',
                 'proveedor_id' => 49,
@@ -4755,7 +4656,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             110 => [
-                'id' => 111,
+
                 'no_contrato' => 'ANDI20220117_18472812',
                 'tipo_contrato' => 'Servicios de Consultoría',
                 'proveedor_id' => 47,
@@ -4798,7 +4699,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             111 => [
-                'id' => 112,
+
                 'no_contrato' => '',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 20,
@@ -4841,7 +4742,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             112 => [
-                'id' => 113,
+
                 'no_contrato' => '',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 39,
@@ -4884,7 +4785,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             113 => [
-                'id' => 114,
+
                 'no_contrato' => '20220107_18195437',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 47,
@@ -4927,7 +4828,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             114 => [
-                'id' => 115,
+
                 'no_contrato' => 'DGAA-DRM-06-11-05-2020',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 40,
@@ -4970,7 +4871,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             115 => [
-                'id' => 116,
+
                 'no_contrato' => 'papagayo_ServicioRespaldo_23',
                 'tipo_contrato' => 'Infraestructura',
                 'proveedor_id' => 63,
@@ -5013,7 +4914,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             116 => [
-                'id' => 117,
+
                 'no_contrato' => '4110005960',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 7,
@@ -5056,7 +4957,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             117 => [
-                'id' => 118,
+
                 'no_contrato' => 'K2I-01-2023',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 37,
@@ -5099,7 +5000,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             118 => [
-                'id' => 119,
+
                 'no_contrato' => 'DW-OC-2020-0008',
                 'tipo_contrato' => 'Infraestructura',
                 'proveedor_id' => 65,
@@ -5142,7 +5043,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             119 => [
-                'id' => 120,
+
                 'no_contrato' => 'ASF-UGA-DAJ-009-2019',
                 'tipo_contrato' => 'Infraestructura',
                 'proveedor_id' => 9,
@@ -5185,7 +5086,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             120 => [
-                'id' => 121,
+
                 'no_contrato' => 'FFM-053-19',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 66,
@@ -5228,7 +5129,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             121 => [
-                'id' => 122,
+
                 'no_contrato' => 'OrdenCompra_Pruebas_2020-05-26',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 36,
@@ -5271,7 +5172,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             122 => [
-                'id' => 123,
+
                 'no_contrato' => 'INE-032-2020',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 62,
@@ -5314,7 +5215,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             123 => [
-                'id' => 124,
+
                 'no_contrato' => 'SEDATU-768-411-2020',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 49,
@@ -5357,7 +5258,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             124 => [
-                'id' => 125,
+
                 'no_contrato' => 'privado-125-09022023',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 67,
@@ -5400,7 +5301,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             125 => [
-                'id' => 126,
+
                 'no_contrato' => 'privado-126-09022023',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 68,
@@ -5443,7 +5344,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             126 => [
-                'id' => 127,
+
                 'no_contrato' => 'X WEB E-S-20-12-2017',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 69,
@@ -5486,7 +5387,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             127 => [
-                'id' => 128,
+
                 'no_contrato' => 'privado-128-13022023',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 70,
@@ -5529,7 +5430,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             128 => [
-                'id' => 129,
+
                 'no_contrato' => '4500472460',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 71,
@@ -5572,7 +5473,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             129 => [
-                'id' => 130,
+
                 'no_contrato' => '4500474291',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 71,
@@ -5615,7 +5516,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             130 => [
-                'id' => 131,
+
                 'no_contrato' => 'privado-131-13022023',
                 'tipo_contrato' => 'Educación Continua',
                 'proveedor_id' => 72,
@@ -5658,7 +5559,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             131 => [
-                'id' => 132,
+
                 'no_contrato' => 'privado-132-13022023',
                 'tipo_contrato' => 'Seguridad y Vigilancia',
                 'proveedor_id' => 73,
@@ -5701,7 +5602,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             132 => [
-                'id' => 133,
+
                 'no_contrato' => 'C2018SEG1CS-2361',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 74,
@@ -5744,7 +5645,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             133 => [
-                'id' => 134,
+
                 'no_contrato' => 'privado-134-14022023',
                 'tipo_contrato' => 'Administrativo',
                 'proveedor_id' => 75,
@@ -5787,7 +5688,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             134 => [
-                'id' => 135,
+
                 'no_contrato' => 'privado-135-14022023',
                 'tipo_contrato' => 'Fábrica de pruebas',
                 'proveedor_id' => 76,
@@ -5830,7 +5731,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             135 => [
-                'id' => 136,
+
                 'no_contrato' => 'privado-136-14022023',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 77,
@@ -5873,7 +5774,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             136 => [
-                'id' => 137,
+
                 'no_contrato' => 'privado-137-14022023',
                 'tipo_contrato' => 'Servicios de Consultoría',
                 'proveedor_id' => 78,
@@ -5916,7 +5817,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             137 => [
-                'id' => 138,
+
                 'no_contrato' => 'X WEB E-S-08-02-2018',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 69,
@@ -5959,7 +5860,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             138 => [
-                'id' => 139,
+
                 'no_contrato' => '20220117_19014635',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 31,
@@ -6003,7 +5904,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             139 => [
-                'id' => 140,
+
                 'no_contrato' => 'penoles_01_2023',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 27,
@@ -6046,7 +5947,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             140 => [
-                'id' => 141,
+
                 'no_contrato' => 'GM_245_2023',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 39,
@@ -6089,7 +5990,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             141 => [
-                'id' => 142,
+
                 'no_contrato' => 'OCB00020',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 8,
@@ -6132,7 +6033,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             142 => [
-                'id' => 143,
+
                 'no_contrato' => 'RL21-272-02',
                 'tipo_contrato' => 'Infraestructura',
                 'proveedor_id' => 54,
@@ -6175,7 +6076,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             143 => [
-                'id' => 144,
+
                 'no_contrato' => '4110004391',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 7,
@@ -6218,7 +6119,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             144 => [
-                'id' => 145,
+
                 'no_contrato' => 'BABIEN-DGAA-ITP-002-2022',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 40,
@@ -6261,7 +6162,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             145 => [
-                'id' => 146,
+
                 'no_contrato' => 'OC4056221',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 30,
@@ -6304,7 +6205,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             146 => [
-                'id' => 147,
+
                 'no_contrato' => '',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 11,
@@ -6347,7 +6248,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             147 => [
-                'id' => 148,
+
                 'no_contrato' => '5228071',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 28,
@@ -6390,7 +6291,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             148 => [
-                'id' => 149,
+
                 'no_contrato' => '2021-A-L-NAC-P-A-06-G1H-00004691',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 18,
@@ -6433,7 +6334,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             149 => [
-                'id' => 150,
+
                 'no_contrato' => 'RL21-242-03',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 54,
@@ -6476,7 +6377,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             150 => [
-                'id' => 151,
+
                 'no_contrato' => 'royal_01_2023',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 5,
@@ -6519,7 +6420,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             151 => [
-                'id' => 152,
+
                 'no_contrato' => 'SEMPRA_01_2023',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 7,
@@ -6562,7 +6463,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             152 => [
-                'id' => 153,
+
                 'no_contrato' => 'CT-0472-21',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 13,
@@ -6605,7 +6506,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             153 => [
-                'id' => 154,
+
                 'no_contrato' => 'SENADO_01_2021',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 2,
@@ -6648,7 +6549,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             154 => [
-                'id' => 155,
+
                 'no_contrato' => 'SERV-DGRMSG-021-01-2023',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 11,
@@ -6691,7 +6592,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             155 => [
-                'id' => 156,
+
                 'no_contrato' => '4749',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 32,
@@ -6734,7 +6635,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             156 => [
-                'id' => 157,
+
                 'no_contrato' => '03-0000309',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 20,
@@ -6777,7 +6678,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             157 => [
-                'id' => 158,
+
                 'no_contrato' => 'RL20-210-3',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 54,
@@ -6820,7 +6721,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             158 => [
-                'id' => 159,
+
                 'no_contrato' => 'test',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 2,
@@ -6863,7 +6764,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             159 => [
-                'id' => 160,
+
                 'no_contrato' => 'PO-SILE-20230225-01',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 27,
@@ -6906,7 +6807,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             160 => [
-                'id' => 161,
+
                 'no_contrato' => 'hospitalABC-01-2023',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 31,
@@ -6949,7 +6850,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             161 => [
-                'id' => 162,
+
                 'no_contrato' => 'OC_4_KONFIO_2020',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 20,
@@ -6992,7 +6893,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             162 => [
-                'id' => 163,
+
                 'no_contrato' => 'CPS_AX_SILENT4BUSINESS _141220',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 81,
@@ -7035,7 +6936,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             163 => [
-                'id' => 164,
+
                 'no_contrato' => 'penoles_02_2023',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 27,
@@ -7078,7 +6979,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             164 => [
-                'id' => 165,
+
                 'no_contrato' => '001-INT',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 83,
@@ -7121,7 +7022,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             165 => [
-                'id' => 166,
+
                 'no_contrato' => '002-INT',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 83,
@@ -7164,7 +7065,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             166 => [
-                'id' => 167,
+
                 'no_contrato' => 'DA-069-2023',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 43,
@@ -7207,7 +7108,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             167 => [
-                'id' => 168,
+
                 'no_contrato' => '003 - INT',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 83,
@@ -7250,7 +7151,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             168 => [
-                'id' => 169,
+
                 'no_contrato' => '004 - INT',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 83,
@@ -7293,7 +7194,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             169 => [
-                'id' => 170,
+
                 'no_contrato' => 'IFT-LPN-033-23',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 4,
@@ -7336,7 +7237,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             170 => [
-                'id' => 171,
+
                 'no_contrato' => '005 - INT',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 83,
@@ -7379,7 +7280,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             171 => [
-                'id' => 172,
+
                 'no_contrato' => 'SERV-DGRMSG-069-07-2023',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 11,
@@ -7422,7 +7323,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             172 => [
-                'id' => 173,
+
                 'no_contrato' => 'SERV-DGRMSG-021-01-2023',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 11,
@@ -7465,7 +7366,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             173 => [
-                'id' => 174,
+
                 'no_contrato' => 'IFT-LPN-033-23',
                 'tipo_contrato' => 'Servicios de Consultoría',
                 'proveedor_id' => 4,
@@ -7508,7 +7409,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             174 => [
-                'id' => 175,
+
                 'no_contrato' => 'CGA-DETIC-30-2023',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 43,
@@ -7551,7 +7452,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             175 => [
-                'id' => 176,
+
                 'no_contrato' => 'SS-48-22',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 2,
@@ -7594,7 +7495,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             176 => [
-                'id' => 177,
+
                 'no_contrato' => 'SERV-DGRMSG-020-01-22',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 2,
@@ -7637,7 +7538,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             177 => [
-                'id' => 178,
+
                 'no_contrato' => 'OC-6186',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 85,
@@ -7680,7 +7581,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             178 => [
-                'id' => 179,
+
                 'no_contrato' => 'INE-052-2022',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 62,
@@ -7723,7 +7624,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             179 => [
-                'id' => 180,
+
                 'no_contrato' => '006 - INT',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 83,
@@ -7766,7 +7667,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             180 => [
-                'id' => 181,
+
                 'no_contrato' => '007 - INT',
                 'tipo_contrato' => 'Otro',
                 'proveedor_id' => 83,
@@ -7809,7 +7710,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             181 => [
-                'id' => 182,
+
                 'no_contrato' => '019E18222-001',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 86,
@@ -7852,7 +7753,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             182 => [
-                'id' => 183,
+
                 'no_contrato' => 'abc trámite',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 31,
@@ -7895,7 +7796,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             183 => [
-                'id' => 184,
+
                 'no_contrato' => '2021-A-L-NAC-A-C-06-G1H-00004193',
                 'tipo_contrato' => 'Servicios de Consultoría',
                 'proveedor_id' => 18,
@@ -7938,7 +7839,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             184 => [
-                'id' => 185,
+
                 'no_contrato' => '21S0163',
                 'tipo_contrato' => 'Fábrica de pruebas',
                 'proveedor_id' => 35,
@@ -7981,7 +7882,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             185 => [
-                'id' => 186,
+
                 'no_contrato' => 'SE-22-2019',
                 'tipo_contrato' => 'Seguridad de la información',
                 'proveedor_id' => 2,
@@ -8024,7 +7925,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             186 => [
-                'id' => 187,
+
                 'no_contrato' => '15-2018',
                 'tipo_contrato' => 'Servicios de consultoría Normativa',
                 'proveedor_id' => 87,
@@ -8067,7 +7968,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             187 => [
-                'id' => 188,
+
                 'no_contrato' => 'BUZONE-2016',
                 'tipo_contrato' => 'Telecomunicaciones',
                 'proveedor_id' => 88,
@@ -8110,7 +8011,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             188 => [
-                'id' => 189,
+
                 'no_contrato' => 'Arduus TI -2017',
                 'tipo_contrato' => 'Fábrica de desarrollo',
                 'proveedor_id' => 70,
@@ -8153,7 +8054,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             189 => [
-                'id' => 190,
+
                 'no_contrato' => 'prueba 1',
                 'tipo_contrato' => 'Fábrica de pruebas',
                 'proveedor_id' => 2,
@@ -8196,7 +8097,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             190 => [
-                'id' => 191,
+
                 'no_contrato' => 'BANJERCITO TENABLE - NESSUS',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 18,
@@ -8239,7 +8140,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             191 => [
-                'id' => 192,
+
                 'no_contrato' => 'BANJERCITO TENABLE - NESSUS',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 18,
@@ -8282,7 +8183,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             192 => [
-                'id' => 193,
+
                 'no_contrato' => 'BANJERCITO TENABLE - NESSUS',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 18,
@@ -8325,7 +8226,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             194 => [
-                'id' => 195,
+
                 'no_contrato' => 'BANJERCITO TENABLE - NESSUS',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 18,
@@ -8368,7 +8269,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             195 => [
-                'id' => 196,
+
                 'no_contrato' => 'BANJERCITO TENABLE - NESSUS',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 18,
@@ -8411,7 +8312,7 @@ class ContratosTableSeeder extends Seeder
                 'firma1' => null,
             ],
             197 => [
-                'id' => 198,
+
                 'no_contrato' => 'BANJERCITO TENABLE - NESSUS',
                 'tipo_contrato' => 'Licenciamiento',
                 'proveedor_id' => 18,

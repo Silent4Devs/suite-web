@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use Flash;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyUserRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Area;
+use App\Models\Empleado;
+use App\Models\Organizacione;
+use App\Models\Puesto;
 use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
-use App\Models\Puesto;
-use App\Models\Empleado;
-use Illuminate\Http\Request;
-use App\Models\Organizacione;
 use App\Rules\EmpleadoNoVinculado;
-use App\Http\Controllers\Controller;
+use Flash;
+use Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
-use App\Http\Requests\MassDestroyUserRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller

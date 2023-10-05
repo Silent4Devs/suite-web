@@ -7,16 +7,6 @@
             @csrf
           <div class="row">
             <div class="form-group col-md-12 col-sm-12">
-                <label class="required" for="id">&nbsp;&nbsp;Clave</label>
-                <input class="form-control {{ $errors->has('id') ? 'is-invalid' : '' }}" type="number" name="id" id="id" value="{{ old('id') }}" required>
-                @if($errors->has('id'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('id') }}
-                    </div>
-                @endif
-                <span class="help-block"></span>
-            </div>
-            <div class="form-group col-md-12 col-sm-12">
                 <label for="nombre" class="txt-tamaño">
                     Nombre<font class="asterisco">*</font></label>
                     <select class="form-control {{ $errors->has('id') ? 'is-invalid' : '' }}" required name="nombre">
