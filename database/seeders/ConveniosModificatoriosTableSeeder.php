@@ -17,7 +17,6 @@ class ConveniosModificatoriosTableSeeder extends Seeder
 
         \DB::table('convenios_modificatorios')->insert([
             0 => [
-                'id' => 1,
                 'contrato_id' => 2,
                 'no_convenio' => 'Convenio modificatorio al contrato abierto plurianual para la prestación del Servicio Administrado de Seguridad de la Información (SASI) número SE-25-2018',
                 'fecha' => '2030-11-01',
@@ -27,7 +26,6 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => '2022-04-06 08:27:19',
             ],
             1 => [
-                'id' => 2,
                 'contrato_id' => 2,
                 'no_convenio' => 'CM09/2019',
                 'fecha' => '2019-04-01',
@@ -37,7 +35,6 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             2 => [
-                'id' => 3,
                 'contrato_id' => 10,
                 'no_convenio' => 'con1',
                 'fecha' => '2030-11-01',
@@ -47,7 +44,6 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             3 => [
-                'id' => 4,
                 'contrato_id' => 10,
                 'no_convenio' => 'conv2',
                 'fecha' => '2022-04-05',
@@ -57,7 +53,6 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             4 => [
-                'id' => 5,
                 'contrato_id' => 10,
                 'no_convenio' => 'conv3',
                 'fecha' => '2022-04-05',
@@ -67,7 +62,6 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             5 => [
-                'id' => 6,
                 'contrato_id' => 9,
                 'no_convenio' => 'Ejemplo',
                 'fecha' => '2022-06-17',
@@ -77,7 +71,6 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => '2022-04-06 10:04:04',
             ],
             6 => [
-                'id' => 7,
                 'contrato_id' => 9,
                 'no_convenio' => 'prueba',
                 'fecha' => '2021-04-29',
@@ -87,7 +80,6 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => '2022-04-07 13:03:38',
             ],
             7 => [
-                'id' => 8,
                 'contrato_id' => 16,
                 'no_convenio' => 'conv',
                 'fecha' => '2022-04-26',
@@ -97,7 +89,6 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             8 => [
-                'id' => 9,
                 'contrato_id' => 17,
                 'no_convenio' => 'Convenio modificatorio al contrato plurianual para la prestación de servicios de renovación  de 11 licencias Mcaffe Enterprise Threat Protection y 2 licencias  Mcaffe Virus Scan for Storage, así como soporte técnico de la solución',
                 'fecha' => '2021-03-11',
@@ -107,7 +98,7 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             9 => [
-                'id' => 10,
+
                 'contrato_id' => 8,
                 'no_convenio' => 'CM-03/2022',
                 'fecha' => '2022-05-31',
@@ -117,7 +108,7 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             10 => [
-                'id' => 11,
+
                 'contrato_id' => 8,
                 'no_convenio' => 'CM-09/2022',
                 'fecha' => '2022-07-29',
@@ -127,7 +118,7 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             11 => [
-                'id' => 12,
+
                 'contrato_id' => 19,
                 'no_convenio' => 'SERV/DGRMSG/020-I/01/22',
                 'fecha' => '2022-12-29',
@@ -137,7 +128,7 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             12 => [
-                'id' => 13,
+
                 'contrato_id' => 93,
                 'no_convenio' => 'Servicio de Evaluación de Riesgos PENSIONISSSTE-AD-043/2022',
                 'fecha' => '0022-12-01',
@@ -147,7 +138,7 @@ class ConveniosModificatoriosTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             13 => [
-                'id' => 14,
+
                 'contrato_id' => 177,
                 'no_convenio' => 'SERV/DGRMSG/020-I/01/22',
                 'fecha' => '2022-12-29',

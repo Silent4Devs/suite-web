@@ -59,15 +59,6 @@ class CompradoresController extends Controller
      */
     public function store(Request $request)
     {
-        $ids = Comprador::pluck('id');
-
-        foreach ($ids as $id) {
-            $string1 = strval($id);
-            if ($string1 === $request->id) {
-                return view('contract_manager.proveedores.error');
-            }
-        }
-
         $empledo = Empleado::where('id', $request->nombre)->first();
         $compradores = new Comprador();
         $compradores->clave = $request->clave;
