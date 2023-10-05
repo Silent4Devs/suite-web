@@ -13,24 +13,20 @@ class FacturasFilesTableSeeder extends Seeder
      */
     public function run()
     {
-
-
         \DB::table('facturas_files')->delete();
 
-        \DB::table('facturas_files')->insert(array(
-            0 =>
-            array(
-                       'pdf' => NULL,
-                'xml' => NULL,
+        \DB::table('facturas_files')->insert([
+            0 => [
+                       'pdf' => null,
+                'xml' => null,
                 'factura_id' => 1,
                 'created_at' => '2022-02-15 15:23:32',
                 'updated_at' => '2022-02-15 15:23:32',
                 'deleted_at' => null,
                 'created_by' => 1,
-                'updated_by' => NULL,
-            ),
-            1 =>
-            array(
+                'updated_by' => null,
+            ],
+            1 => [
                        'pdf' => '01-04-20222',
                 'xml' => '01-04-20222',
                 'factura_id' => 2,
@@ -38,10 +34,9 @@ class FacturasFilesTableSeeder extends Seeder
                 'updated_at' => '2022-03-31 18:12:58',
                 'deleted_at' => null,
                 'created_by' => 1,
-                'updated_by' => NULL,
-            ),
-            2 =>
-            array(
+                'updated_by' => null,
+            ],
+            2 => [
                        'pdf' => '01-04-20223',
                 'xml' => '01-04-20223',
                 'factura_id' => 3,
@@ -49,10 +44,9 @@ class FacturasFilesTableSeeder extends Seeder
                 'updated_at' => '2022-03-31 18:21:11',
                 'deleted_at' => null,
                 'created_by' => 1,
-                'updated_by' => NULL,
-            ),
-            3 =>
-            array(
+                'updated_by' => null,
+            ],
+            3 => [
                        'pdf' => '01-04-20224',
                 'xml' => '01-04-20224',
                 'factura_id' => 4,
@@ -60,10 +54,9 @@ class FacturasFilesTableSeeder extends Seeder
                 'updated_at' => '2022-03-31 18:30:36',
                 'deleted_at' => null,
                 'created_by' => 1,
-                'updated_by' => NULL,
-            ),
-            4 =>
-            array(
+                'updated_by' => null,
+            ],
+            4 => [
                        'pdf' => '01-04-20225',
                 'xml' => '01-04-20225',
                 'factura_id' => 5,
@@ -71,10 +64,9 @@ class FacturasFilesTableSeeder extends Seeder
                 'updated_at' => '2022-03-31 18:32:18',
                 'deleted_at' => null,
                 'created_by' => 1,
-                'updated_by' => NULL,
-            ),
-            5 =>
-            array(
+                'updated_by' => null,
+            ],
+            5 => [
                        'pdf' => '08-04-20226CFDI_S000000224.pdf',
                 'xml' => '08-04-20226CFDI_S000000224.xml',
                 'factura_id' => 6,
@@ -83,9 +75,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            6 =>
-            array(
+            ],
+            6 => [
                        'pdf' => '08-04-20227CFDI_S000000397.pdf',
                 'xml' => '08-04-20227CFDI_S000000397.xml',
                 'factura_id' => 7,
@@ -94,9 +85,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            7 =>
-            array(
+            ],
+            7 => [
                        'pdf' => '08-04-20228CFDI_S000000398.pdf',
                 'xml' => '08-04-20228CFDI_S000000398.xml',
                 'factura_id' => 8,
@@ -105,9 +95,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            8 =>
-            array(
+            ],
+            8 => [
                        'pdf' => '08-04-20229CFDI_S000000399.pdf',
                 'xml' => '08-04-20229CFDI_S000000399.xml',
                 'factura_id' => 9,
@@ -116,9 +105,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            9 =>
-            array(
+            ],
+            9 => [
                         'pdf' => '08-04-202210CFDI_S000000400.pdf',
                 'xml' => '08-04-202210CFDI_S000000400.xml',
                 'factura_id' => 10,
@@ -127,9 +115,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            10 =>
-            array(
+            ],
+            10 => [
                         'pdf' => '08-04-202211CFDI_S000000401.pdf',
                 'xml' => '08-04-202211CFDI_S000000401.xml',
                 'factura_id' => 11,
@@ -138,9 +125,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            11 =>
-            array(
+            ],
+            11 => [
                         'pdf' => '08-04-202212CFDI_S000000402.pdf',
                 'xml' => '08-04-202212CFDI_S000000402.xml',
                 'factura_id' => 12,
@@ -149,9 +135,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            12 =>
-            array(
+            ],
+            12 => [
                         'pdf' => '08-04-202213CFDI_S000000403.pdf',
                 'xml' => '08-04-202213CFDI_S000000403.xml',
                 'factura_id' => 13,
@@ -160,9 +145,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            13 =>
-            array(
+            ],
+            13 => [
                         'pdf' => '08-04-202214CFDI_S000000404.pdf',
                 'xml' => '08-04-202214CFDI_S000000404.xml',
                 'factura_id' => 14,
@@ -171,9 +155,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            14 =>
-            array(
+            ],
+            14 => [
                         'pdf' => '08-04-202215CFDI_S000000405.pdf',
                 'xml' => '08-04-202215CFDI_S000000405.xml',
                 'factura_id' => 15,
@@ -182,9 +165,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            15 =>
-            array(
+            ],
+            15 => [
                         'pdf' => '08-04-202216CFDI_S000000411.pdf',
                 'xml' => '08-04-202216CFDI_S000000411.xml',
                 'factura_id' => 16,
@@ -193,9 +175,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            16 =>
-            array(
+            ],
+            16 => [
                         'pdf' => '08-04-202217CFDI_S000000413.pdf',
                 'xml' => '08-04-202217CFDI_S000000413.xml',
                 'factura_id' => 17,
@@ -204,9 +185,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            17 =>
-            array(
+            ],
+            17 => [
                         'pdf' => '08-04-202218CFDI_S000000418.pdf',
                 'xml' => '08-04-202218CFDI_S000000418.xml',
                 'factura_id' => 18,
@@ -215,9 +195,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            18 =>
-            array(
+            ],
+            18 => [
                         'pdf' => '08-04-202219CFDI_S000000439.pdf',
                 'xml' => '08-04-202219CFDI_S000000439.xml',
                 'factura_id' => 19,
@@ -226,9 +205,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            19 =>
-            array(
+            ],
+            19 => [
                         'pdf' => '08-04-202220CFDI_S000000452.pdf',
                 'xml' => '08-04-202220CFDI_S000000452.xml',
                 'factura_id' => 20,
@@ -237,9 +215,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            20 =>
-            array(
+            ],
+            20 => [
                         'pdf' => '08-04-202221CFDI_S000000463.pdf',
                 'xml' => '08-04-202221CFDI_S000000463.xml',
                 'factura_id' => 21,
@@ -248,9 +225,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            21 =>
-            array(
+            ],
+            21 => [
                         'pdf' => '09-04-202222CFDI_S000000481.pdf',
                 'xml' => '09-04-202222CFDI_S000000481.xml',
                 'factura_id' => 22,
@@ -259,9 +235,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            22 =>
-            array(
+            ],
+            22 => [
                         'pdf' => '09-04-202223CFDI_S000000500.pdf',
                 'xml' => '09-04-202223CFDI_S000000500.xml',
                 'factura_id' => 23,
@@ -270,9 +245,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            23 =>
-            array(
+            ],
+            23 => [
                         'pdf' => '11-04-202224CFDI_S000000512.pdf',
                 'xml' => '11-04-202224CFDI_S000000512.xml',
                 'factura_id' => 24,
@@ -281,9 +255,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            24 =>
-            array(
+            ],
+            24 => [
                         'pdf' => '11-04-202225CFDI_S000000522.pdf',
                 'xml' => '11-04-202225CFDI_S000000522.xml',
                 'factura_id' => 25,
@@ -292,9 +265,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            25 =>
-            array(
+            ],
+            25 => [
                         'pdf' => '11-04-202226CFDI_S000000541.pdf',
                 'xml' => '11-04-202226CFDI_S000000541.xml',
                 'factura_id' => 26,
@@ -303,9 +275,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            26 =>
-            array(
+            ],
+            26 => [
                         'pdf' => '11-04-202227CFDI_S000000553.pdf',
                 'xml' => '11-04-202227CFDI_S000000553.xml',
                 'factura_id' => 27,
@@ -314,9 +285,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            27 =>
-            array(
+            ],
+            27 => [
                         'pdf' => '11-04-202228CFDI_S000000566.pdf',
                 'xml' => '11-04-202228CFDI_S000000566.xml',
                 'factura_id' => 28,
@@ -325,9 +295,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            28 =>
-            array(
+            ],
+            28 => [
                         'pdf' => '11-04-202229CFDI_S000000590.pdf',
                 'xml' => '11-04-202229CFDI_S000000590.xml',
                 'factura_id' => 29,
@@ -336,9 +305,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            29 =>
-            array(
+            ],
+            29 => [
                         'pdf' => '11-04-202230CFDI_S000000609.pdf',
                 'xml' => '11-04-202230CFDI_S000000609.xml',
                 'factura_id' => 30,
@@ -347,9 +315,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            30 =>
-            array(
+            ],
+            30 => [
                         'pdf' => '11-04-202231CFDI_S000000623.pdf',
                 'xml' => '11-04-202231CFDI_S000000623.xml',
                 'factura_id' => 31,
@@ -358,9 +325,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            31 =>
-            array(
+            ],
+            31 => [
                         'pdf' => '12-04-202232CFDI_S000000642.pdf',
                 'xml' => '12-04-202232CFDI_S000000642.xml',
                 'factura_id' => 32,
@@ -369,9 +335,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            32 =>
-            array(
+            ],
+            32 => [
                         'pdf' => '12-04-202233CFDI_S000000660.pdf',
                 'xml' => '12-04-202233CFDI_S000000660.xml',
                 'factura_id' => 33,
@@ -380,9 +345,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            33 =>
-            array(
+            ],
+            33 => [
                         'pdf' => '12-04-202234CFDI_S000000693.pdf',
                 'xml' => '12-04-202234CFDI_S000000693.xml',
                 'factura_id' => 34,
@@ -391,9 +355,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            34 =>
-            array(
+            ],
+            34 => [
                         'pdf' => '12-04-202235CFDI_S000000714.pdf',
                 'xml' => '12-04-202235CFDI_S000000714.xml',
                 'factura_id' => 35,
@@ -402,9 +365,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            35 =>
-            array(
+            ],
+            35 => [
                         'pdf' => '12-04-202236CFDI_S000000723.pdf',
                 'xml' => '12-04-202236CFDI_S000000723.xml',
                 'factura_id' => 36,
@@ -413,9 +375,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            36 =>
-            array(
+            ],
+            36 => [
                         'pdf' => '12-04-202237CFDI_S000000742.pdf',
                 'xml' => '12-04-202237CFDI_S000000742.xml',
                 'factura_id' => 37,
@@ -424,9 +385,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            37 =>
-            array(
+            ],
+            37 => [
                         'pdf' => '12-04-202238CFDI_S000000581.pdf',
                 'xml' => '12-04-202238CFDI_S000000581.xml',
                 'factura_id' => 38,
@@ -435,9 +395,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            38 =>
-            array(
+            ],
+            38 => [
                         'pdf' => '12-04-202239CFDI_S000000732.pdf',
                 'xml' => '12-04-202239CFDI_S000000732.xml',
                 'factura_id' => 39,
@@ -446,9 +405,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            39 =>
-            array(
+            ],
+            39 => [
                         'pdf' => '12-04-202240CFDI_S000000749.pdf',
                 'xml' => '12-04-202240CFDI_S000000749.xml',
                 'factura_id' => 40,
@@ -457,9 +415,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            40 =>
-            array(
+            ],
+            40 => [
                         'pdf' => '12-04-202241CFDI_S000000689.pdf',
                 'xml' => '12-04-202241CFDI_S000000689.xml',
                 'factura_id' => 41,
@@ -468,9 +425,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            41 =>
-            array(
+            ],
+            41 => [
                         'pdf' => '12-04-202242CFDI_S000000717.pdf',
                 'xml' => '12-04-202242CFDI_S000000717.xml',
                 'factura_id' => 42,
@@ -479,9 +435,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            42 =>
-            array(
+            ],
+            42 => [
                         'pdf' => '12-04-202243CFDI_S000000719.pdf',
                 'xml' => '12-04-202243CFDI_S000000719.xml',
                 'factura_id' => 43,
@@ -490,9 +445,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            43 =>
-            array(
+            ],
+            43 => [
                         'pdf' => '12-04-202244CFDI_S000000735.pdf',
                 'xml' => '12-04-202244CFDI_S000000735.xml',
                 'factura_id' => 44,
@@ -501,9 +455,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            44 =>
-            array(
+            ],
+            44 => [
                         'pdf' => '12-04-202245CFDI_S000000738.pdf',
                 'xml' => '12-04-202245CFDI_S000000738.xml',
                 'factura_id' => 45,
@@ -512,9 +465,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            45 =>
-            array(
+            ],
+            45 => [
                         'pdf' => '12-04-202246CFDI_S000000739.pdf',
                 'xml' => '12-04-202246CFDI_S000000739.xml',
                 'factura_id' => 46,
@@ -523,9 +475,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            46 =>
-            array(
+            ],
+            46 => [
                         'pdf' => '12-04-202247CFDI_S000000740.pdf',
                 'xml' => '12-04-202247CFDI_S000000740.xml',
                 'factura_id' => 47,
@@ -534,9 +485,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            47 =>
-            array(
+            ],
+            47 => [
                         'pdf' => '13-04-202248CFDI_S000000585.pdf',
                 'xml' => '13-04-202248CFDI_S000000585.xml',
                 'factura_id' => 48,
@@ -545,9 +495,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            48 =>
-            array(
+            ],
+            48 => [
                         'pdf' => '13-04-202249CFDI_S000000586.pdf',
                 'xml' => '13-04-202249CFDI_S000000586.xml',
                 'factura_id' => 49,
@@ -556,9 +505,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            49 =>
-            array(
+            ],
+            49 => [
                         'pdf' => '13-04-202250CFDI_S000000587.pdf',
                 'xml' => '13-04-202250CFDI_S000000587.xml',
                 'factura_id' => 50,
@@ -567,9 +515,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            50 =>
-            array(
+            ],
+            50 => [
                         'pdf' => '13-04-202251CFDI_S000000636.pdf',
                 'xml' => '13-04-202251CFDI_S000000636.xml',
                 'factura_id' => 51,
@@ -578,9 +525,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            51 =>
-            array(
+            ],
+            51 => [
                         'pdf' => '13-04-202252CFDI_S000000637.pdf',
                 'xml' => '13-04-202252CFDI_S000000637.xml',
                 'factura_id' => 52,
@@ -589,9 +535,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            52 =>
-            array(
+            ],
+            52 => [
                         'pdf' => '13-04-202253CFDI_S000000638.pdf',
                 'xml' => '13-04-202253CFDI_S000000638.xml',
                 'factura_id' => 53,
@@ -600,9 +545,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            53 =>
-            array(
+            ],
+            53 => [
                         'pdf' => '13-04-202254CFDI_S000000653.pdf',
                 'xml' => '13-04-202254CFDI_S000000653.xml',
                 'factura_id' => 54,
@@ -611,9 +555,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            54 =>
-            array(
+            ],
+            54 => [
                         'pdf' => '13-04-202255CFDI_S000000669.pdf',
                 'xml' => '13-04-202255CFDI_S000000669.xml',
                 'factura_id' => 55,
@@ -622,9 +565,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            55 =>
-            array(
+            ],
+            55 => [
                         'pdf' => '13-04-202256CFDI_S000000670.pdf',
                 'xml' => '13-04-202256CFDI_S000000670.xml',
                 'factura_id' => 56,
@@ -633,9 +575,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            56 =>
-            array(
+            ],
+            56 => [
                         'pdf' => '13-04-202257CFDI_S000000671.pdf',
                 'xml' => '13-04-202257CFDI_S000000671.xml',
                 'factura_id' => 57,
@@ -644,9 +585,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            57 =>
-            array(
+            ],
+            57 => [
                         'pdf' => '13-04-202258CFDI_S000000672.pdf',
                 'xml' => '13-04-202258CFDI_S000000672.xml',
                 'factura_id' => 58,
@@ -655,9 +595,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            58 =>
-            array(
+            ],
+            58 => [
                         'pdf' => '13-04-202259CFDI_S000000673.pdf',
                 'xml' => '13-04-202259CFDI_S000000673.xml',
                 'factura_id' => 59,
@@ -666,9 +605,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            59 =>
-            array(
+            ],
+            59 => [
                         'pdf' => '13-04-202260CFDI_S000000680.pdf',
                 'xml' => '13-04-202260CFDI_S000000680.xml',
                 'factura_id' => 60,
@@ -677,9 +615,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            60 =>
-            array(
+            ],
+            60 => [
                         'pdf' => '13-04-202261CFDI_S000000736.pdf',
                 'xml' => '13-04-202261CFDI_S000000736.xml',
                 'factura_id' => 61,
@@ -688,9 +625,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            61 =>
-            array(
+            ],
+            61 => [
                         'pdf' => '13-04-202262CFDI_S000000747.pdf',
                 'xml' => '13-04-202262CFDI_S000000747.xml',
                 'factura_id' => 62,
@@ -699,20 +635,18 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            62 =>
-            array(
-                        'pdf' => NULL,
-                'xml' => NULL,
+            ],
+            62 => [
+                        'pdf' => null,
+                'xml' => null,
                 'factura_id' => 63,
                 'created_at' => '2022-04-19 12:24:25',
                 'updated_at' => '2022-04-19 12:24:25',
                 'deleted_at' => null,
                 'created_by' => 1,
-                'updated_by' => NULL,
-            ),
-            63 =>
-            array(
+                'updated_by' => null,
+            ],
+            63 => [
                         'pdf' => '26-04-202264CFDI_S000000454.pdf',
                 'xml' => '26-04-202264CFDI_S000000454.xml',
                 'factura_id' => 64,
@@ -721,9 +655,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            64 =>
-            array(
+            ],
+            64 => [
                         'pdf' => '26-04-202265CFDI_S000000455.pdf',
                 'xml' => '26-04-202265CFDI_S000000455.xml',
                 'factura_id' => 65,
@@ -732,9 +665,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            65 =>
-            array(
+            ],
+            65 => [
                         'pdf' => '26-04-202266CFDI_S000000456.pdf',
                 'xml' => '26-04-202266CFDI_S000000456.xml',
                 'factura_id' => 66,
@@ -743,9 +675,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            66 =>
-            array(
+            ],
+            66 => [
                         'pdf' => '26-04-202267CFDI_S000000457.pdf',
                 'xml' => '26-04-202267CFDI_S000000457.xml',
                 'factura_id' => 67,
@@ -754,9 +685,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            67 =>
-            array(
+            ],
+            67 => [
                         'pdf' => '26-04-202268CFDI_S000000460.pdf',
                 'xml' => '26-04-202268CFDI_S000000460.xml',
                 'factura_id' => 68,
@@ -765,9 +695,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            68 =>
-            array(
+            ],
+            68 => [
                         'pdf' => '26-04-202269CFDI_S000000475.pdf',
                 'xml' => '26-04-202269CFDI_S000000475.xml',
                 'factura_id' => 69,
@@ -776,9 +705,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            69 =>
-            array(
+            ],
+            69 => [
                         'pdf' => '26-04-202270CFDI_S000000483Cancelada.pdf',
                 'xml' => '26-04-202270CFDI_S000000483.xml',
                 'factura_id' => 70,
@@ -787,9 +715,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            70 =>
-            array(
+            ],
+            70 => [
                         'pdf' => '26-04-202271CFDI_S000000510.pdf',
                 'xml' => '26-04-202271CFDI_S000000510.xml',
                 'factura_id' => 71,
@@ -798,9 +725,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            71 =>
-            array(
+            ],
+            71 => [
                         'pdf' => '26-04-202272CFDI_S000000518.pdf',
                 'xml' => '26-04-202272CFDI_S000000518.xml',
                 'factura_id' => 72,
@@ -809,9 +735,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            72 =>
-            array(
+            ],
+            72 => [
                         'pdf' => '26-04-202273CFDI_S000000532.pdf',
                 'xml' => '26-04-202273CFDI_S000000532.xml',
                 'factura_id' => 73,
@@ -820,9 +745,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            73 =>
-            array(
+            ],
+            73 => [
                         'pdf' => '26-04-202274CFDI_S000000533Cancelada.pdf',
                 'xml' => '26-04-202274CFDI_S000000533.xml',
                 'factura_id' => 74,
@@ -831,9 +755,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            74 =>
-            array(
+            ],
+            74 => [
                         'pdf' => '26-04-202275CFDI_S000000547.pdf',
                 'xml' => '26-04-202275CFDI_S000000547.xml',
                 'factura_id' => 75,
@@ -842,9 +765,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            75 =>
-            array(
+            ],
+            75 => [
                         'pdf' => '26-04-202276CFDI_S000000559.pdf',
                 'xml' => '26-04-202276CFDI_S000000559.xml',
                 'factura_id' => 76,
@@ -853,9 +775,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            76 =>
-            array(
+            ],
+            76 => [
                         'pdf' => '26-04-202277CFDI_S000000578.pdf',
                 'xml' => '26-04-202277CFDI_S000000578.xml',
                 'factura_id' => 77,
@@ -864,9 +785,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            77 =>
-            array(
+            ],
+            77 => [
                         'pdf' => '26-04-202278CFDI_S000000605.pdf',
                 'xml' => '26-04-202278CFDI_S000000605.xml',
                 'factura_id' => 78,
@@ -875,9 +795,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            78 =>
-            array(
+            ],
+            78 => [
                         'pdf' => '26-04-202279CFDI_S000000614.pdf',
                 'xml' => '26-04-202279CFDI_S000000614.xml',
                 'factura_id' => 79,
@@ -886,9 +805,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            79 =>
-            array(
+            ],
+            79 => [
                         'pdf' => '26-04-202280CFDI_S000000631.pdf',
                 'xml' => '26-04-202280CFDI_S000000631.xml',
                 'factura_id' => 80,
@@ -897,9 +815,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            80 =>
-            array(
+            ],
+            80 => [
                         'pdf' => '26-04-202281CFDI_S000000654.pdf',
                 'xml' => '26-04-202281CFDI_S000000654.xml',
                 'factura_id' => 81,
@@ -908,9 +825,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            81 =>
-            array(
+            ],
+            81 => [
                         'pdf' => '26-04-202282CFDI_S000000703.pdf',
                 'xml' => '26-04-202282CFDI_S000000703.xml',
                 'factura_id' => 82,
@@ -919,9 +835,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            82 =>
-            array(
+            ],
+            82 => [
                         'pdf' => '26-04-202283CFDI_S000000720.pdf',
                 'xml' => '26-04-202283CFDI_S000000720.xml',
                 'factura_id' => 83,
@@ -930,9 +845,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            83 =>
-            array(
+            ],
+            83 => [
                         'pdf' => '26-04-202284CFDI_S000000733.pdf',
                 'xml' => '26-04-202284CFDI_S000000733.xml',
                 'factura_id' => 84,
@@ -941,9 +855,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            84 =>
-            array(
+            ],
+            84 => [
                         'pdf' => '26-04-202285CFDI_S000000757.pdf',
                 'xml' => '26-04-202285CFDI_S000000757.xml',
                 'factura_id' => 85,
@@ -952,9 +865,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            85 =>
-            array(
+            ],
+            85 => [
                         'pdf' => '26-04-202286CFDI_S000000758.pdf',
                 'xml' => '26-04-202286CFDI_S000000758.xml',
                 'factura_id' => 86,
@@ -963,9 +875,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            86 =>
-            array(
+            ],
+            86 => [
                         'pdf' => '26-04-202287CFDI_S000000782.pdf',
                 'xml' => '26-04-202287CFDI_S000000782.xml',
                 'factura_id' => 87,
@@ -974,9 +885,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            87 =>
-            array(
+            ],
+            87 => [
                         'pdf' => '29-04-202288CFDI_S000000180.pdf',
                 'xml' => '29-04-202288CFDI_S000000180.xml',
                 'factura_id' => 88,
@@ -985,9 +895,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            88 =>
-            array(
+            ],
+            88 => [
                         'pdf' => '29-04-202289CFDI_S000000200.pdf',
                 'xml' => '29-04-202289CFDI_S000000200.xml',
                 'factura_id' => 89,
@@ -996,9 +905,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            89 =>
-            array(
+            ],
+            89 => [
                         'pdf' => '29-04-202290CFDI_S000000258.pdf',
                 'xml' => '29-04-202290CFDI_S000000258.xml',
                 'factura_id' => 90,
@@ -1007,9 +915,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            90 =>
-            array(
+            ],
+            90 => [
                         'pdf' => '29-04-202291CFDI_S000000259.pdf',
                 'xml' => '29-04-202291CFDI_S000000259.xml',
                 'factura_id' => 91,
@@ -1018,9 +925,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            91 =>
-            array(
+            ],
+            91 => [
                         'pdf' => '29-04-202292CFDI_S000000259.pdf',
                 'xml' => '29-04-202292CFDI_S000000259.xml',
                 'factura_id' => 92,
@@ -1029,9 +935,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            92 =>
-            array(
+            ],
+            92 => [
                         'pdf' => '29-04-202293CFDI_S000000279.pdf',
                 'xml' => '29-04-202293CFDI_S000000279.xml',
                 'factura_id' => 93,
@@ -1040,9 +945,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            93 =>
-            array(
+            ],
+            93 => [
                         'pdf' => '29-04-202294CFDI_S000000280.pdf',
                 'xml' => '29-04-202294CFDI_S000000280.xml',
                 'factura_id' => 94,
@@ -1051,9 +955,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            94 =>
-            array(
+            ],
+            94 => [
                         'pdf' => '29-04-202295CFDI_S000000281.pdf',
                 'xml' => '29-04-202295CFDI_S000000281.xml',
                 'factura_id' => 95,
@@ -1062,9 +965,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            95 =>
-            array(
+            ],
+            95 => [
                         'pdf' => '29-04-202296CFDI_S000000295.pdf',
                 'xml' => '29-04-202296CFDI_S000000295.xml',
                 'factura_id' => 96,
@@ -1073,9 +975,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            96 =>
-            array(
+            ],
+            96 => [
                         'pdf' => '29-04-202297CFDI_S000000302.pdf',
                 'xml' => '29-04-202297CFDI_S000000302.xml',
                 'factura_id' => 97,
@@ -1084,9 +985,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            97 =>
-            array(
+            ],
+            97 => [
                         'pdf' => '29-04-202298CFDI_S000000317.pdf',
                 'xml' => '29-04-202298CFDI_S000000317.xml',
                 'factura_id' => 98,
@@ -1095,9 +995,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            98 =>
-            array(
+            ],
+            98 => [
                         'pdf' => '29-04-202299CFDI_S000000332.pdf',
                 'xml' => '29-04-202299CFDI_S000000332.xml',
                 'factura_id' => 99,
@@ -1106,9 +1005,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            99 =>
-            array(
+            ],
+            99 => [
 
                 'pdf' => '29-04-2022100CFDI_S000000333.pdf',
                 'xml' => '29-04-2022100CFDI_S000000333.xml',
@@ -1118,9 +1016,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            100 =>
-            array(
+            ],
+            100 => [
 
                 'pdf' => '29-04-2022101CFDI_S000000359.pdf',
                 'xml' => '29-04-2022101CFDI_S000000359.xml',
@@ -1130,9 +1027,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            101 =>
-            array(
+            ],
+            101 => [
 
                 'pdf' => '29-04-2022102CFDI_S000000381.pdf',
                 'xml' => '29-04-2022102CFDI_S000000381.xml',
@@ -1142,9 +1038,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            102 =>
-            array(
+            ],
+            102 => [
 
                 'pdf' => '29-04-2022103CFDI_S000000386.pdf',
                 'xml' => '29-04-2022103CFDI_S000000386.xml',
@@ -1154,9 +1049,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            103 =>
-            array(
+            ],
+            103 => [
 
                 'pdf' => '29-04-2022104CFDI_S000000391.pdf',
                 'xml' => '29-04-2022104CFDI_S000000391.xml',
@@ -1166,9 +1060,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            104 =>
-            array(
+            ],
+            104 => [
 
                 'pdf' => '29-04-2022105CFDI_S000000409.pdf',
                 'xml' => '29-04-2022105CFDI_S000000409.xml',
@@ -1178,9 +1071,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            105 =>
-            array(
+            ],
+            105 => [
 
                 'pdf' => '29-04-2022106CFDI_S000000414.pdf',
                 'xml' => '29-04-2022106CFDI_S000000414.xml',
@@ -1190,9 +1082,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            106 =>
-            array(
+            ],
+            106 => [
 
                 'pdf' => '29-04-2022107CFDI_S000000422.pdf',
                 'xml' => '29-04-2022107CFDI_S000000422.xml',
@@ -1202,9 +1093,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            107 =>
-            array(
+            ],
+            107 => [
 
                 'pdf' => '29-04-2022108CFDI_S000000442.pdf',
                 'xml' => '29-04-2022108CFDI_S000000442.xml',
@@ -1214,9 +1104,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            108 =>
-            array(
+            ],
+            108 => [
 
                 'pdf' => '29-04-2022109CFDI_S000000450.pdf',
                 'xml' => '29-04-2022109CFDI_S000000450.xml',
@@ -1226,9 +1115,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            109 =>
-            array(
+            ],
+            109 => [
 
                 'pdf' => '29-04-2022110CFDI_S000000466.pdf',
                 'xml' => '29-04-2022110CFDI_S000000466.xml',
@@ -1238,9 +1126,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            110 =>
-            array(
+            ],
+            110 => [
 
                 'pdf' => '29-04-2022111CFDI_S000000473.pdf',
                 'xml' => '29-04-2022111CFDI_S000000473.xml',
@@ -1250,9 +1137,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            111 =>
-            array(
+            ],
+            111 => [
 
                 'pdf' => '29-04-2022112CFDI_S000000479.pdf',
                 'xml' => '29-04-2022112CFDI_S000000479.xml',
@@ -1262,9 +1148,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            112 =>
-            array(
+            ],
+            112 => [
 
                 'pdf' => '29-04-2022113CFDI_S000000507.pdf',
                 'xml' => '29-04-2022113CFDI_S000000507.xml',
@@ -1274,9 +1159,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            113 =>
-            array(
+            ],
+            113 => [
 
                 'pdf' => '29-04-2022114CFDI_S000000507.pdf',
                 'xml' => '29-04-2022114CFDI_S000000507.xml',
@@ -1286,9 +1170,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            114 =>
-            array(
+            ],
+            114 => [
 
                 'pdf' => '29-04-2022115CFDI_S000000529.pdf',
                 'xml' => '29-04-2022115CFDI_S000000529.xml',
@@ -1298,9 +1181,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            115 =>
-            array(
+            ],
+            115 => [
 
                 'pdf' => '29-04-2022116CFDI_S000000544.pdf',
                 'xml' => '29-04-2022116CFDI_S000000544.xml',
@@ -1310,9 +1192,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            116 =>
-            array(
+            ],
+            116 => [
 
                 'pdf' => '29-04-2022117CFDI_S000000551.pdf',
                 'xml' => '29-04-2022117CFDI_S000000551.xml',
@@ -1322,9 +1203,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            117 =>
-            array(
+            ],
+            117 => [
 
                 'pdf' => '29-04-2022118CFDI_S000000567.pdf',
                 'xml' => '29-04-2022118CFDI_S000000567.xml',
@@ -1334,9 +1214,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            118 =>
-            array(
+            ],
+            118 => [
 
                 'pdf' => '29-04-2022119CFDI_S000000593.pdf',
                 'xml' => '29-04-2022119CFDI_S000000593.xml',
@@ -1346,9 +1225,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            119 =>
-            array(
+            ],
+            119 => [
 
                 'pdf' => '29-04-2022120CFDI_S000000593.pdf',
                 'xml' => '29-04-2022120CFDI_S000000593.xml',
@@ -1358,9 +1236,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            120 =>
-            array(
+            ],
+            120 => [
 
                 'pdf' => '29-04-2022121CFDI_S000000607.pdf',
                 'xml' => '29-04-2022121CFDI_S000000607.xml',
@@ -1370,9 +1247,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            121 =>
-            array(
+            ],
+            121 => [
 
                 'pdf' => '29-04-2022122CFDI_S000000626.pdf',
                 'xml' => '29-04-2022122CFDI_S000000626.xml',
@@ -1382,9 +1258,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            122 =>
-            array(
+            ],
+            122 => [
 
                 'pdf' => '29-04-2022123CFDI_S000000644.pdf',
                 'xml' => '29-04-2022123CFDI_S000000644.xml',
@@ -1394,9 +1269,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            123 =>
-            array(
+            ],
+            123 => [
 
                 'pdf' => '29-04-2022124CFDI_S000000666.pdf',
                 'xml' => '29-04-2022124CFDI_S000000666.xml',
@@ -1406,9 +1280,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            124 =>
-            array(
+            ],
+            124 => [
 
                 'pdf' => '29-04-2022125CFDI_S000000678.pdf',
                 'xml' => '29-04-2022125CFDI_S000000678.xml',
@@ -1418,9 +1291,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            125 =>
-            array(
+            ],
+            125 => [
 
                 'pdf' => '29-04-2022126CFDI_S000000677.pdf',
                 'xml' => '29-04-2022126CFDI_S000000677.xml',
@@ -1430,9 +1302,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            126 =>
-            array(
+            ],
+            126 => [
 
                 'pdf' => '29-04-2022127CFDI_S000000727.pdf',
                 'xml' => '29-04-2022127CFDI_S000000727.xml',
@@ -1442,9 +1313,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            127 =>
-            array(
+            ],
+            127 => [
 
                 'pdf' => '29-04-2022128CFDI_S000000748.pdf',
                 'xml' => '29-04-2022128CFDI_S000000748.xml',
@@ -1454,9 +1324,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            128 =>
-            array(
+            ],
+            128 => [
 
                 'pdf' => '29-04-2022129CFDI_S000000765.pdf',
                 'xml' => '29-04-2022129CFDI_S000000765.xml',
@@ -1466,9 +1335,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            129 =>
-            array(
+            ],
+            129 => [
 
                 'pdf' => '02-05-2022130CFDI_S000000511.pdf',
                 'xml' => '02-05-2022130CFDI_S000000511.xml',
@@ -1478,9 +1346,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            130 =>
-            array(
+            ],
+            130 => [
 
                 'pdf' => '02-05-2022131CFDI_S000000513.pdf',
                 'xml' => '02-05-2022131CFDI_S000000513.xml',
@@ -1490,9 +1357,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            131 =>
-            array(
+            ],
+            131 => [
 
                 'pdf' => '02-05-2022132CFDI_S000000531.pdf',
                 'xml' => '02-05-2022132CFDI_S000000531.xml',
@@ -1502,9 +1368,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            132 =>
-            array(
+            ],
+            132 => [
 
                 'pdf' => '02-05-2022133CFDI_S000000556.pdf',
                 'xml' => '02-05-2022133CFDI_S000000556.xml',
@@ -1514,9 +1379,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            133 =>
-            array(
+            ],
+            133 => [
 
                 'pdf' => '02-05-2022134CFDI_S000000531.pdf',
                 'xml' => '02-05-2022134CFDI_S000000531.xml',
@@ -1526,9 +1390,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            134 =>
-            array(
+            ],
+            134 => [
 
                 'pdf' => '02-05-2022135CFDI_S000000556.pdf',
                 'xml' => '02-05-2022135CFDI_S000000556.xml',
@@ -1538,9 +1401,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            135 =>
-            array(
+            ],
+            135 => [
 
                 'pdf' => '02-05-2022136CFDI_S000000557.pdf',
                 'xml' => '02-05-2022136CFDI_S000000557.xml',
@@ -1550,9 +1412,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            136 =>
-            array(
+            ],
+            136 => [
 
                 'pdf' => '02-05-2022137CFDI_S000000570.pdf',
                 'xml' => '02-05-2022137CFDI_S000000570.xml',
@@ -1562,9 +1423,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            137 =>
-            array(
+            ],
+            137 => [
 
                 'pdf' => '02-05-2022138CFDI_S000000598.pdf',
                 'xml' => '02-05-2022138CFDI_S000000598.xml',
@@ -1574,9 +1434,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            138 =>
-            array(
+            ],
+            138 => [
 
                 'pdf' => '02-05-2022139CFDI_S000000613.pdf',
                 'xml' => '02-05-2022139CFDI_S000000613.xml',
@@ -1586,9 +1445,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            139 =>
-            array(
+            ],
+            139 => [
 
                 'pdf' => '02-05-2022140CFDI_S000000630.pdf',
                 'xml' => '02-05-2022140CFDI_S000000630.xml',
@@ -1598,9 +1456,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            140 =>
-            array(
+            ],
+            140 => [
 
                 'pdf' => '02-05-2022141CFDI_S000000647.pdf',
                 'xml' => '02-05-2022141CFDI_S000000647.xml',
@@ -1610,9 +1467,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            141 =>
-            array(
+            ],
+            141 => [
 
                 'pdf' => '02-05-2022142CFDI_S000000667.pdf',
                 'xml' => '02-05-2022142CFDI_S000000667.xml',
@@ -1622,9 +1478,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            142 =>
-            array(
+            ],
+            142 => [
 
                 'pdf' => '02-05-2022143CFDI_S000000706.pdf',
                 'xml' => '02-05-2022143CFDI_S000000706.xml',
@@ -1634,9 +1489,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            143 =>
-            array(
+            ],
+            143 => [
 
                 'pdf' => '02-05-2022144CFDI_S000000715.pdf',
                 'xml' => '02-05-2022144CFDI_S000000715.xml',
@@ -1646,9 +1500,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            144 =>
-            array(
+            ],
+            144 => [
 
                 'pdf' => '02-05-2022145CFDI_S000000724.pdf',
                 'xml' => '02-05-2022145CFDI_S000000724.xml',
@@ -1658,9 +1511,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            145 =>
-            array(
+            ],
+            145 => [
 
                 'pdf' => '02-05-2022146CFDI_S000000746.pdf',
                 'xml' => '02-05-2022146CFDI_S000000746.xml',
@@ -1670,9 +1522,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            146 =>
-            array(
+            ],
+            146 => [
 
                 'pdf' => '02-05-2022147CFDI_S000000771.pdf',
                 'xml' => '02-05-2022147CFDI_S000000771.xml',
@@ -1682,9 +1533,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            147 =>
-            array(
+            ],
+            147 => [
 
                 'pdf' => '19-05-2022148CFDI_S000000710.pdf',
                 'xml' => '19-05-2022148CFDI_S000000710.xml',
@@ -1694,9 +1544,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            148 =>
-            array(
+            ],
+            148 => [
 
                 'pdf' => '20-05-2022149CFDI_S000000711.pdf',
                 'xml' => '20-05-2022149CFDI_S000000711.xml',
@@ -1706,9 +1555,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            149 =>
-            array(
+            ],
+            149 => [
 
                 'pdf' => '20-05-20221508B40A39F-35AB-4639-BEE5-B2679F24AA87.pdf',
                 'xml' => '20-05-202215002-04-20225301-04-20224810-03-20222d37ffbb8-e279-405d-adb1-3dea961e2506 (2) (1).xml',
@@ -1718,9 +1566,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 1,
                 'updated_by' => 1,
-            ),
-            150 =>
-            array(
+            ],
+            150 => [
 
                 'pdf' => '20-05-2022151CFDI_CPB0000275.pdf',
                 'xml' => '20-05-2022151CFDI_CPB0000275.xml',
@@ -1730,9 +1577,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            151 =>
-            array(
+            ],
+            151 => [
 
                 'pdf' => '20-05-2022152CFDI_S000000628.pdf',
                 'xml' => '20-05-2022152CFDI_S000000628.xml',
@@ -1742,9 +1588,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            152 =>
-            array(
+            ],
+            152 => [
 
                 'pdf' => '20-05-2022153CFDI_S000000646.pdf',
                 'xml' => '20-05-2022153CFDI_S000000646.xml',
@@ -1754,9 +1599,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            153 =>
-            array(
+            ],
+            153 => [
 
                 'pdf' => '20-05-2022154CFDI_S000000668.pdf',
                 'xml' => '20-05-2022154CFDI_S000000668.xml',
@@ -1766,9 +1610,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            154 =>
-            array(
+            ],
+            154 => [
 
                 'pdf' => '20-05-2022155CFDI_S000000688.pdf',
                 'xml' => '20-05-2022155CFDI_S000000688.xml',
@@ -1778,9 +1621,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            155 =>
-            array(
+            ],
+            155 => [
 
                 'pdf' => '20-05-2022156CFDI_S000000690.pdf',
                 'xml' => '20-05-2022156CFDI_S000000690.xml',
@@ -1790,9 +1632,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            156 =>
-            array(
+            ],
+            156 => [
 
                 'pdf' => '20-05-2022157CFDI_S000000729.pdf',
                 'xml' => '20-05-2022157CFDI_S000000729.xml',
@@ -1802,9 +1643,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            157 =>
-            array(
+            ],
+            157 => [
 
                 'pdf' => '20-05-2022158CFDI_S000000745.pdf',
                 'xml' => '20-05-2022158CFDI_S000000745.xml',
@@ -1814,9 +1654,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            158 =>
-            array(
+            ],
+            158 => [
 
                 'pdf' => '20-05-2022159CFDI_S000000767.pdf',
                 'xml' => '20-05-2022159CFDI_S000000767.xml',
@@ -1826,9 +1665,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            159 =>
-            array(
+            ],
+            159 => [
 
                 'pdf' => '20-05-2022160CFDI_C000000059.pdf',
                 'xml' => '20-05-2022160CFDI_C000000059.xml',
@@ -1838,9 +1676,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            160 =>
-            array(
+            ],
+            160 => [
 
                 'pdf' => '25-05-2022161CFDI_CPB0000276.pdf',
                 'xml' => '25-05-2022161CFDI_CPB0000276.xml',
@@ -1850,9 +1687,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            161 =>
-            array(
+            ],
+            161 => [
 
                 'pdf' => '27-05-2022162CFDI_S000000761.pdf',
                 'xml' => '27-05-2022162CFDI_S000000761.xml',
@@ -1862,9 +1698,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            162 =>
-            array(
+            ],
+            162 => [
 
                 'pdf' => '31-05-2022163CFDI_S000000374.pdf',
                 'xml' => '31-05-2022163CFDI_S000000374.xml',
@@ -1874,9 +1709,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            163 =>
-            array(
+            ],
+            163 => [
 
                 'pdf' => '31-05-2022164CFDI_S000000375.pdf',
                 'xml' => '31-05-2022164CFDI_S000000375.xml',
@@ -1886,9 +1720,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            164 =>
-            array(
+            ],
+            164 => [
 
                 'pdf' => '31-05-2022165CFDI_S000000382.pdf',
                 'xml' => '31-05-2022165CFDI_S000000382.xml',
@@ -1898,9 +1731,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            165 =>
-            array(
+            ],
+            165 => [
 
                 'pdf' => '31-05-2022166CFDI_S000000387.pdf',
                 'xml' => '31-05-2022166CFDI_S000000387.xml',
@@ -1910,9 +1742,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            166 =>
-            array(
+            ],
+            166 => [
 
                 'pdf' => '31-05-2022167CFDI_S000000393.pdf',
                 'xml' => '31-05-2022167CFDI_S000000393.xml',
@@ -1922,9 +1753,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            167 =>
-            array(
+            ],
+            167 => [
 
                 'pdf' => '31-05-2022168CFDI_S000000406.pdf',
                 'xml' => '31-05-2022168CFDI_S000000406.xml',
@@ -1934,9 +1764,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            168 =>
-            array(
+            ],
+            168 => [
 
                 'pdf' => '31-05-2022169CFDI_S000000412.pdf',
                 'xml' => '31-05-2022169CFDI_S000000412.xml',
@@ -1946,9 +1775,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            169 =>
-            array(
+            ],
+            169 => [
 
                 'pdf' => '31-05-2022170CFDI_S000000417.pdf',
                 'xml' => '31-05-2022170CFDI_S000000417.xml',
@@ -1958,9 +1786,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            170 =>
-            array(
+            ],
+            170 => [
 
                 'pdf' => '31-05-2022171CFDI_S000000440.pdf',
                 'xml' => '31-05-2022171CFDI_S000000440.xml',
@@ -1970,9 +1797,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            171 =>
-            array(
+            ],
+            171 => [
 
                 'pdf' => '31-05-2022172CFDI_S000000447.pdf',
                 'xml' => '31-05-2022172CFDI_S000000447.xml',
@@ -1982,9 +1808,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            172 =>
-            array(
+            ],
+            172 => [
 
                 'pdf' => '31-05-2022173CFDI_S000000464.pdf',
                 'xml' => '31-05-2022173CFDI_S000000464.xml',
@@ -1994,9 +1819,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            173 =>
-            array(
+            ],
+            173 => [
 
                 'pdf' => '31-05-2022174CFDI_S000000474.pdf',
                 'xml' => '31-05-2022174CFDI_S000000474.xml',
@@ -2006,9 +1830,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            174 =>
-            array(
+            ],
+            174 => [
 
                 'pdf' => '31-05-2022175CFDI_S000000497.pdf',
                 'xml' => '31-05-2022175CFDI_S000000497.xml',
@@ -2018,9 +1841,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            175 =>
-            array(
+            ],
+            175 => [
 
                 'pdf' => '31-05-2022176CFDI_S000000501.pdf',
                 'xml' => '31-05-2022176CFDI_S000000501.xml',
@@ -2030,9 +1852,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            176 =>
-            array(
+            ],
+            176 => [
 
                 'pdf' => '31-05-2022177CFDI_S000000508.pdf',
                 'xml' => '31-05-2022177CFDI_S000000508.xml',
@@ -2042,9 +1863,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            177 =>
-            array(
+            ],
+            177 => [
 
                 'pdf' => '31-05-2022178CFDI_S000000521.pdf',
                 'xml' => '31-05-2022178CFDI_S000000521.xml',
@@ -2054,9 +1874,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            178 =>
-            array(
+            ],
+            178 => [
 
                 'pdf' => '31-05-2022179CFDI_S000000539.pdf',
                 'xml' => '31-05-2022179CFDI_S000000539.xml',
@@ -2066,9 +1885,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            179 =>
-            array(
+            ],
+            179 => [
 
                 'pdf' => '31-05-2022180CFDI_S000000549.pdf',
                 'xml' => '31-05-2022180CFDI_S000000549.xml',
@@ -2078,9 +1896,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            180 =>
-            array(
+            ],
+            180 => [
 
                 'pdf' => '31-05-2022181CFDI_S000000564.pdf',
                 'xml' => '31-05-2022181CFDI_S000000564.xml',
@@ -2090,9 +1907,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            181 =>
-            array(
+            ],
+            181 => [
 
                 'pdf' => '31-05-2022182CFDI_S000000588.pdf',
                 'xml' => '31-05-2022182CFDI_S000000588.xml',
@@ -2102,9 +1918,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            182 =>
-            array(
+            ],
+            182 => [
 
                 'pdf' => '31-05-2022183CFDI_S000000604.pdf',
                 'xml' => '31-05-2022183CFDI_S000000604.xml',
@@ -2114,9 +1929,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            183 =>
-            array(
+            ],
+            183 => [
 
                 'pdf' => '31-05-2022184CFDI_S000000618.pdf',
                 'xml' => '31-05-2022184CFDI_S000000618.xml',
@@ -2126,9 +1940,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            184 =>
-            array(
+            ],
+            184 => [
 
                 'pdf' => '31-05-2022185CFDI_S000000640.pdf',
                 'xml' => '31-05-2022185CFDI_S000000640.xml',
@@ -2138,9 +1951,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            185 =>
-            array(
+            ],
+            185 => [
 
                 'pdf' => '31-05-2022186CFDI_S000000657.pdf',
                 'xml' => '31-05-2022186CFDI_S000000657.xml',
@@ -2150,9 +1962,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            186 =>
-            array(
+            ],
+            186 => [
 
                 'pdf' => '31-05-2022187CFDI_S000000687.pdf',
                 'xml' => '31-05-2022187CFDI_S000000687.xml',
@@ -2162,9 +1973,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            187 =>
-            array(
+            ],
+            187 => [
 
                 'pdf' => '31-05-2022188CFDI CPB329 ASF.pdf',
                 'xml' => '31-05-2022188CFDI CPB329 ASF.xml',
@@ -2174,9 +1984,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            188 =>
-            array(
+            ],
+            188 => [
 
                 'pdf' => '31-05-2022189CFDI F S712 ASF .pdf',
                 'xml' => '31-05-2022189CFDI F S712 ASF .xml',
@@ -2186,9 +1995,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            189 =>
-            array(
+            ],
+            189 => [
 
                 'pdf' => '31-05-2022190CFDI_S000000721.pdf',
                 'xml' => '31-05-2022190CFDI_S000000721.xml',
@@ -2198,9 +2006,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            190 =>
-            array(
+            ],
+            190 => [
 
                 'pdf' => '31-05-2022191CFDI_S000000737.pdf',
                 'xml' => '31-05-2022191CFDI_S000000737.xml',
@@ -2210,9 +2017,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            191 =>
-            array(
+            ],
+            191 => [
 
                 'pdf' => '31-05-2022192CFDI_S000000759.pdf',
                 'xml' => '31-05-2022192CFDI_S000000759.xml',
@@ -2222,9 +2028,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            192 =>
-            array(
+            ],
+            192 => [
 
                 'pdf' => '31-05-2022193CFDI_S000000655.pdf',
                 'xml' => '31-05-2022193CFDI_S000000655.xml',
@@ -2234,9 +2039,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            193 =>
-            array(
+            ],
+            193 => [
 
                 'pdf' => '31-05-2022194CFDI_S000000622.pdf',
                 'xml' => '31-05-2022194CFDI_S000000622.xml',
@@ -2246,9 +2050,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            194 =>
-            array(
+            ],
+            194 => [
 
                 'pdf' => '31-05-2022195CFDI_S000000643.pdf',
                 'xml' => '31-05-2022195CFDI_S000000643.xml',
@@ -2258,9 +2061,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            195 =>
-            array(
+            ],
+            195 => [
 
                 'pdf' => '31-05-2022196CFDI_S000000662.pdf',
                 'xml' => '31-05-2022196CFDI_S000000662.xml',
@@ -2270,9 +2072,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            196 =>
-            array(
+            ],
+            196 => [
 
                 'pdf' => '31-05-2022197CFDI_S000000674.pdf',
                 'xml' => '31-05-2022197CFDI_S000000674.xml',
@@ -2282,9 +2083,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            197 =>
-            array(
+            ],
+            197 => [
 
                 'pdf' => '31-05-2022198CFDI_S000000675.pdf',
                 'xml' => '31-05-2022198CFDI_S000000675.xml',
@@ -2294,9 +2094,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            198 =>
-            array(
+            ],
+            198 => [
 
                 'pdf' => '31-05-2022199CFDI_S000000728.pdf',
                 'xml' => '31-05-2022199CFDI_S000000728.xml',
@@ -2306,9 +2105,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            199 =>
-            array(
+            ],
+            199 => [
 
                 'pdf' => '31-05-2022200CFDI_S000000750.pdf',
                 'xml' => '31-05-2022200CFDI_S000000750.xml',
@@ -2318,9 +2116,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            200 =>
-            array(
+            ],
+            200 => [
 
                 'pdf' => '31-05-2022201CFDI_S000000768.pdf',
                 'xml' => '31-05-2022201CFDI_S000000768.xml',
@@ -2330,9 +2127,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            201 =>
-            array(
+            ],
+            201 => [
 
                 'pdf' => '31-05-2022202CFDI_S000000800.pdf',
                 'xml' => '31-05-2022202CFDI_S000000800.xml',
@@ -2342,9 +2138,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            202 =>
-            array(
+            ],
+            202 => [
 
                 'pdf' => '31-05-2022203CFDI_S000000801.pdf',
                 'xml' => '31-05-2022203CFDI_S000000801.xml',
@@ -2354,9 +2149,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            203 =>
-            array(
+            ],
+            203 => [
 
                 'pdf' => '31-05-2022204CFDI_S000000731.pdf',
                 'xml' => '31-05-2022204CFDI_S000000731.xml',
@@ -2366,9 +2160,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            204 =>
-            array(
+            ],
+            204 => [
 
                 'pdf' => '31-05-2022205CFDI_S000000755.pdf',
                 'xml' => '31-05-2022205CFDI_S000000755.xml',
@@ -2378,9 +2171,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            205 =>
-            array(
+            ],
+            205 => [
 
                 'pdf' => '31-05-2022206CFDI_S000000773.pdf',
                 'xml' => '31-05-2022206CFDI_S000000773.xml',
@@ -2390,9 +2182,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            206 =>
-            array(
+            ],
+            206 => [
 
                 'pdf' => '31-05-2022207CFDI_S000000803.pdf',
                 'xml' => '31-05-2022207CFDI_S000000803.xml',
@@ -2402,9 +2193,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            207 =>
-            array(
+            ],
+            207 => [
 
                 'pdf' => '31-05-2022208CFDI_S000000722.pdf',
                 'xml' => '31-05-2022208CFDI_S000000722.xml',
@@ -2414,9 +2204,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            208 =>
-            array(
+            ],
+            208 => [
 
                 'pdf' => '31-05-2022209CFDI_S000000751.pdf',
                 'xml' => '31-05-2022209CFDI_S000000751.xml',
@@ -2426,9 +2215,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            209 =>
-            array(
+            ],
+            209 => [
 
                 'pdf' => '01-06-2022210CFDI_S000000760.pdf',
                 'xml' => '01-06-2022210CFDI_S000000760.xml',
@@ -2438,9 +2226,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            210 =>
-            array(
+            ],
+            210 => [
 
                 'pdf' => '03-06-2022211CFDI_S000000792.pdf',
                 'xml' => '03-06-2022211CFDI_S000000792.xml',
@@ -2450,9 +2237,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            211 =>
-            array(
+            ],
+            211 => [
 
                 'pdf' => '06-06-2022212S  12 ABRIL CFDI.pdf',
                 'xml' => '06-06-2022212S  12 ABRIL XML.xml',
@@ -2462,9 +2248,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            212 =>
-            array(
+            ],
+            212 => [
 
                 'pdf' => '06-06-2022213S  14 MAYO CFDI.pdf',
                 'xml' => '06-06-2022213S  14 MAYO XML.xml',
@@ -2474,9 +2259,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            213 =>
-            array(
+            ],
+            213 => [
 
                 'pdf' => '06-06-2022214S  15 NC MAYO CFDI.pdf',
                 'xml' => '06-06-2022214S  15 NC MAYO XML.xml',
@@ -2486,9 +2270,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            214 =>
-            array(
+            ],
+            214 => [
 
                 'pdf' => '06-06-2022215S  17  JUNIO CFDI.pdf',
                 'xml' => '06-06-2022215S  17  JUNIO XML.xml',
@@ -2498,9 +2281,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            215 =>
-            array(
+            ],
+            215 => [
 
                 'pdf' => '06-06-2022216S 13 NC ABRIL CFDI.pdf',
                 'xml' => '06-06-2022216S 13 NC ABRIL XML.xml',
@@ -2510,9 +2292,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            216 =>
-            array(
+            ],
+            216 => [
 
                 'pdf' => '06-06-2022217SIL160727HV7-S25-7B355116-EB2A-4217-92F0-1C0821C9EB30.pdf',
                 'xml' => '06-06-2022217SIL160727HV7-S25-7B355116-EB2A-4217-92F0-1C0821C9EB30.xml',
@@ -2522,9 +2303,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            217 =>
-            array(
+            ],
+            217 => [
 
                 'pdf' => '06-06-2022218SILENT4BUSINESS -S77.pdf',
                 'xml' => '06-06-2022218SILENT4BUSINESS -S77.xml',
@@ -2534,9 +2314,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            218 =>
-            array(
+            ],
+            218 => [
 
                 'pdf' => '06-06-2022219SIL160727HV7-S176-40F98528-4396-4221-97F7-D25A97828017.pdf',
                 'xml' => '06-06-2022219SIL160727HV7-S176-40F98528-4396-4221-97F7-D25A97828017.XML',
@@ -2546,9 +2325,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            219 =>
-            array(
+            ],
+            219 => [
 
                 'pdf' => '06-06-2022220SILENT4BUSINESS -S32.pdf',
                 'xml' => '06-06-2022220SILENT4BUSINESS -S32.xml',
@@ -2558,9 +2336,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            220 =>
-            array(
+            ],
+            220 => [
 
                 'pdf' => '07-06-2022221CFDI_S000000562.pdf',
                 'xml' => '07-06-2022221CFDI_S000000562.xml',
@@ -2570,9 +2347,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            221 =>
-            array(
+            ],
+            221 => [
 
                 'pdf' => '07-06-2022222CFDI_S000000785.pdf',
                 'xml' => '07-06-2022222CFDI_S000000785.xml',
@@ -2582,9 +2358,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            222 =>
-            array(
+            ],
+            222 => [
 
                 'pdf' => '07-06-2022223CFDI_S000000813.pdf',
                 'xml' => '07-06-2022223CFDI_S000000813.xml',
@@ -2594,9 +2369,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            223 =>
-            array(
+            ],
+            223 => [
 
                 'pdf' => '07-06-2022224CFDI_S000000806.pdf',
                 'xml' => '07-06-2022224CFDI_S000000806.xml',
@@ -2606,9 +2380,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            224 =>
-            array(
+            ],
+            224 => [
 
                 'pdf' => '07-06-2022225CFDI_S000000774.pdf',
                 'xml' => '07-06-2022225CFDI_S000000774.xml',
@@ -2618,9 +2391,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            225 =>
-            array(
+            ],
+            225 => [
 
                 'pdf' => '07-06-2022226CFDI_S000000812.pdf',
                 'xml' => '07-06-2022226CFDI_S000000812.xml',
@@ -2630,9 +2402,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            226 =>
-            array(
+            ],
+            226 => [
 
                 'pdf' => '07-06-2022227CFDI_S000000795.pdf',
                 'xml' => '07-06-2022227CFDI_S000000795.xml',
@@ -2642,9 +2413,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            227 =>
-            array(
+            ],
+            227 => [
 
                 'pdf' => '07-06-2022228CFDI_S000000819.pdf',
                 'xml' => '07-06-2022228CFDI_S000000819.xml',
@@ -2654,9 +2424,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            228 =>
-            array(
+            ],
+            228 => [
 
                 'pdf' => '10-06-2022229CFDI_S000000543.pdf',
                 'xml' => '10-06-2022229CFDI_S000000543.xml',
@@ -2666,9 +2435,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            229 =>
-            array(
+            ],
+            229 => [
 
                 'pdf' => '16-06-2022230CFDI_S000000524.pdf',
                 'xml' => '16-06-2022230CFDI_S000000524.xml',
@@ -2678,9 +2446,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            230 =>
-            array(
+            ],
+            230 => [
 
                 'pdf' => '16-06-2022231CFDI_S000000524.pdf',
                 'xml' => '16-06-2022231CFDI_S000000524.xml',
@@ -2690,9 +2457,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            231 =>
-            array(
+            ],
+            231 => [
 
                 'pdf' => '16-06-2022232CFDI_S000000525.pdf',
                 'xml' => '16-06-2022232CFDI_S000000525.xml',
@@ -2702,9 +2468,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            232 =>
-            array(
+            ],
+            232 => [
 
                 'pdf' => '16-06-2022233CFDI_S000000540.pdf',
                 'xml' => '16-06-2022233CFDI_S000000540.xml',
@@ -2714,9 +2479,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            233 =>
-            array(
+            ],
+            233 => [
 
                 'pdf' => '16-06-2022234CFDI_S000000550.pdf',
                 'xml' => '16-06-2022234CFDI_S000000550.xml',
@@ -2726,9 +2490,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            234 =>
-            array(
+            ],
+            234 => [
 
                 'pdf' => '16-06-2022235CFDI_S000000565.pdf',
                 'xml' => '16-06-2022235CFDI_S000000565.xml',
@@ -2738,9 +2501,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            235 =>
-            array(
+            ],
+            235 => [
 
                 'pdf' => '16-06-2022236CFDI_S000000589.pdf',
                 'xml' => '16-06-2022236CFDI_S000000589.xml',
@@ -2750,9 +2512,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            236 =>
-            array(
+            ],
+            236 => [
 
                 'pdf' => '16-06-2022237CFDI_S000000608.pdf',
                 'xml' => '16-06-2022237CFDI_S000000608.xml',
@@ -2762,9 +2523,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            237 =>
-            array(
+            ],
+            237 => [
 
                 'pdf' => '16-06-2022238CFDI_S000000621.pdf',
                 'xml' => '16-06-2022238CFDI_S000000621.xml',
@@ -2774,9 +2534,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            238 =>
-            array(
+            ],
+            238 => [
 
                 'pdf' => '16-06-2022239CFDI_S000000641.pdf',
                 'xml' => '16-06-2022239CFDI_S000000641.xml',
@@ -2786,9 +2545,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            239 =>
-            array(
+            ],
+            239 => [
 
                 'pdf' => '16-06-2022240CFDI_S000000659.pdf',
                 'xml' => '16-06-2022240CFDI_S000000659.xml',
@@ -2798,9 +2556,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            240 =>
-            array(
+            ],
+            240 => [
 
                 'pdf' => '16-06-2022241CFDI_CPB0000278.pdf',
                 'xml' => '16-06-2022241CFDI_CPB0000278.xml',
@@ -2810,9 +2567,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            241 =>
-            array(
+            ],
+            241 => [
 
                 'pdf' => '16-06-2022242CFDI_S000000699.pdf',
                 'xml' => '16-06-2022242CFDI_S000000699.xml',
@@ -2822,9 +2578,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            242 =>
-            array(
+            ],
+            242 => [
 
                 'pdf' => '16-06-2022243CFDI_S000000526.pdf',
                 'xml' => '16-06-2022243CFDI_S000000526.xml',
@@ -2834,9 +2589,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            243 =>
-            array(
+            ],
+            243 => [
 
                 'pdf' => '16-06-2022244CFDI_S000000582.pdf',
                 'xml' => '16-06-2022244CFDI_S000000582.xml',
@@ -2846,9 +2600,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            244 =>
-            array(
+            ],
+            244 => [
 
                 'pdf' => '16-06-2022245CFDI_S000000583.pdf',
                 'xml' => '16-06-2022245CFDI_S000000583.xml',
@@ -2858,9 +2611,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            245 =>
-            array(
+            ],
+            245 => [
 
                 'pdf' => '16-06-2022246CFDI_S000000584.pdf',
                 'xml' => '16-06-2022246CFDI_S000000584.xml',
@@ -2870,9 +2622,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            246 =>
-            array(
+            ],
+            246 => [
 
                 'pdf' => '16-06-2022247CFDI_S000000664.pdf',
                 'xml' => '16-06-2022247CFDI_S000000664.xml',
@@ -2882,9 +2633,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            247 =>
-            array(
+            ],
+            247 => [
 
                 'pdf' => '16-06-2022248CFDI_S000000697.pdf',
                 'xml' => null,
@@ -2894,9 +2644,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            248 =>
-            array(
+            ],
+            248 => [
 
                 'pdf' => '16-06-2022249CFDI_S000000543.pdf',
                 'xml' => '16-06-2022249CFDI_S000000543.xml',
@@ -2906,9 +2655,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            249 =>
-            array(
+            ],
+            249 => [
 
                 'pdf' => '16-06-2022250CFDI_C000000076.pdf',
                 'xml' => '16-06-2022250CFDI_C000000076.xml',
@@ -2918,9 +2666,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            250 =>
-            array(
+            ],
+            250 => [
 
                 'pdf' => '16-06-2022251CFDI_S000000796.pdf',
                 'xml' => '16-06-2022251CFDI_S000000796.xml',
@@ -2930,9 +2677,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            251 =>
-            array(
+            ],
+            251 => [
 
                 'pdf' => '16-06-2022252Peñoles 02 de 12_soc y noc.pdf',
                 'xml' => '16-06-2022252CFDI_S000000797.xml',
@@ -2942,9 +2688,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            252 =>
-            array(
+            ],
+            252 => [
 
                 'pdf' => '16-06-2022253CFDI_S000000798.pdf',
                 'xml' => '16-06-2022253CFDI_S000000798.xml',
@@ -2954,9 +2699,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            253 =>
-            array(
+            ],
+            253 => [
 
                 'pdf' => '16-06-2022254CFDI_S000000488.pdf',
                 'xml' => '16-06-2022254CFDI_S000000488.xml',
@@ -2966,9 +2710,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            254 =>
-            array(
+            ],
+            254 => [
 
                 'pdf' => '16-06-2022255CFDI_C000000075.pdf',
                 'xml' => '16-06-2022255CFDI_C000000075.xml',
@@ -2978,9 +2721,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            255 =>
-            array(
+            ],
+            255 => [
 
                 'pdf' => '29-06-2022256CFDI_S000000348.pdf',
                 'xml' => '29-06-2022256CFDI_S000000348.xml',
@@ -2990,9 +2732,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            256 =>
-            array(
+            ],
+            256 => [
 
                 'pdf' => '29-06-2022257CFDI_S000000407.pdf',
                 'xml' => '29-06-2022257CFDI_S000000407.xml',
@@ -3002,9 +2743,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            257 =>
-            array(
+            ],
+            257 => [
 
                 'pdf' => '29-06-2022258CFDI_S000000396.pdf',
                 'xml' => '29-06-2022258CFDI_S000000396.xml',
@@ -3014,9 +2754,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            258 =>
-            array(
+            ],
+            258 => [
 
                 'pdf' => '29-06-2022259CFDI_S000000467.pdf',
                 'xml' => '29-06-2022259CFDI_S000000467.xml',
@@ -3026,9 +2765,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            259 =>
-            array(
+            ],
+            259 => [
 
                 'pdf' => '29-06-2022260CFDI_S000000704.pdf',
                 'xml' => '29-06-2022260CFDI_S000000704.xml',
@@ -3038,9 +2776,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            260 =>
-            array(
+            ],
+            260 => [
 
                 'pdf' => '30-06-2022261CFDI_S000000511.pdf',
                 'xml' => '30-06-2022261CFDI_S000000511.xml',
@@ -3050,9 +2787,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            261 =>
-            array(
+            ],
+            261 => [
 
                 'pdf' => '30-06-2022262CFDI_S000000496.pdf',
                 'xml' => '30-06-2022262CFDI_S000000496.xml',
@@ -3062,9 +2798,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            262 =>
-            array(
+            ],
+            262 => [
 
                 'pdf' => '30-06-2022263CFDI_S000000554.pdf',
                 'xml' => '30-06-2022263CFDI_S000000554.xml',
@@ -3074,9 +2809,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            263 =>
-            array(
+            ],
+            263 => [
 
                 'pdf' => '30-06-2022264CFDI_S000000484.pdf',
                 'xml' => '30-06-2022264CFDI_S000000484.xml',
@@ -3086,9 +2820,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            264 =>
-            array(
+            ],
+            264 => [
 
                 'pdf' => '01-07-2022265CFDI_S000000471.pdf',
                 'xml' => '01-07-2022265CFDI_S000000471.xml',
@@ -3098,9 +2831,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            265 =>
-            array(
+            ],
+            265 => [
 
                 'pdf' => '01-07-2022266CFDI_C000000054.pdf',
                 'xml' => '01-07-2022266CFDI_C000000054.xml',
@@ -3110,9 +2842,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            266 =>
-            array(
+            ],
+            266 => [
 
                 'pdf' => '01-07-2022267CFDI_C000000055.pdf',
                 'xml' => '01-07-2022267CFDI_C000000055.xml',
@@ -3122,9 +2853,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            267 =>
-            array(
+            ],
+            267 => [
 
                 'pdf' => '01-07-2022268CFDI_C000000067.pdf',
                 'xml' => '01-07-2022268CFDI_C000000067.xml',
@@ -3134,9 +2864,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            268 =>
-            array(
+            ],
+            268 => [
 
                 'pdf' => '01-07-2022269CFDI_C000000074.pdf',
                 'xml' => '01-07-2022269CFDI_C000000074.xml',
@@ -3146,9 +2875,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            269 =>
-            array(
+            ],
+            269 => [
 
                 'pdf' => '01-07-2022270CFDI_C000000092.pdf',
                 'xml' => '01-07-2022270CFDI_C000000092.xml',
@@ -3158,9 +2886,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            270 =>
-            array(
+            ],
+            270 => [
 
                 'pdf' => '01-07-2022271CFDI_S000000516.pdf',
                 'xml' => '01-07-2022271CFDI_S000000516.xml',
@@ -3170,9 +2897,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            271 =>
-            array(
+            ],
+            271 => [
 
                 'pdf' => '01-07-2022272CFDI_S000000580.pdf',
                 'xml' => '01-07-2022272CFDI_S000000580.xml',
@@ -3182,9 +2908,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            272 =>
-            array(
+            ],
+            272 => [
 
                 'pdf' => '01-08-2022273CFDI_S000000741.pdf',
                 'xml' => '01-08-2022273CFDI_S000000741.xml',
@@ -3194,9 +2919,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            273 =>
-            array(
+            ],
+            273 => [
 
                 'pdf' => '01-08-2022274CFDI_S000000752.pdf',
                 'xml' => '01-08-2022274CFDI_S000000752.xml',
@@ -3206,9 +2930,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            274 =>
-            array(
+            ],
+            274 => [
 
                 'pdf' => '01-08-2022275CFDI_S000000769.pdf',
                 'xml' => '01-08-2022275CFDI_S000000769.xml',
@@ -3218,9 +2941,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            275 =>
-            array(
+            ],
+            275 => [
 
                 'pdf' => '01-08-2022276CFDI_S000000809.pdf',
                 'xml' => '01-08-2022276CFDI_S000000809.xml',
@@ -3230,9 +2952,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            276 =>
-            array(
+            ],
+            276 => [
 
                 'pdf' => '01-08-2022277CFDI_S000000615.pdf',
                 'xml' => '01-08-2022277CFDI_S000000615.xml',
@@ -3242,9 +2963,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            277 =>
-            array(
+            ],
+            277 => [
 
                 'pdf' => '01-08-2022278CFDI_S000000571.pdf',
                 'xml' => '01-08-2022278CFDI_S000000571.xml',
@@ -3254,9 +2974,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            278 =>
-            array(
+            ],
+            278 => [
 
                 'pdf' => '01-08-2022279CFDI_S000000601.pdf',
                 'xml' => '01-08-2022279CFDI_S000000601.xml',
@@ -3266,9 +2985,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            279 =>
-            array(
+            ],
+            279 => [
 
                 'pdf' => '01-08-2022280CFDI_S000000611.pdf',
                 'xml' => '01-08-2022280CFDI_S000000611.xml',
@@ -3278,9 +2996,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            280 =>
-            array(
+            ],
+            280 => [
 
                 'pdf' => '01-08-2022281CFDI_S000000620.pdf',
                 'xml' => '01-08-2022281CFDI_S000000620.xml',
@@ -3290,9 +3007,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            281 =>
-            array(
+            ],
+            281 => [
 
                 'pdf' => '01-08-2022282CFDI_S000000658.pdf',
                 'xml' => '01-08-2022282CFDI_S000000658.xml',
@@ -3302,9 +3018,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            282 =>
-            array(
+            ],
+            282 => [
 
                 'pdf' => '01-08-2022283CFDI_S000000684.pdf',
                 'xml' => '01-08-2022283CFDI_S000000684.xml',
@@ -3314,9 +3029,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            283 =>
-            array(
+            ],
+            283 => [
 
                 'pdf' => '01-08-2022284CFDI_S000000713.pdf',
                 'xml' => '01-08-2022284CFDI_S000000713.xml',
@@ -3326,9 +3040,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            284 =>
-            array(
+            ],
+            284 => [
 
                 'pdf' => '01-08-2022285CFDI_S000000734.pdf',
                 'xml' => '01-08-2022285CFDI_S000000734.xml',
@@ -3338,9 +3051,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            285 =>
-            array(
+            ],
+            285 => [
 
                 'pdf' => '01-08-2022286CFDI_S000000753.pdf',
                 'xml' => '01-08-2022286CFDI_S000000753.xml',
@@ -3350,9 +3062,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            286 =>
-            array(
+            ],
+            286 => [
 
                 'pdf' => '01-08-2022287CFDI_S000000777.pdf',
                 'xml' => '01-08-2022287CFDI_S000000777.xml',
@@ -3362,9 +3073,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            287 =>
-            array(
+            ],
+            287 => [
 
                 'pdf' => '01-08-2022288CFDI_S000000802.pdf',
                 'xml' => '01-08-2022288CFDI_S000000802.xml',
@@ -3374,9 +3084,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            288 =>
-            array(
+            ],
+            288 => [
 
                 'pdf' => '01-08-2022289CFDI_S000000825.pdf',
                 'xml' => '01-08-2022289CFDI_S000000825.xml',
@@ -3386,9 +3095,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            289 =>
-            array(
+            ],
+            289 => [
 
                 'pdf' => '01-08-2022290CFDI_S000000856.pdf',
                 'xml' => '01-08-2022290CFDI_S000000856.xml',
@@ -3398,9 +3106,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            290 =>
-            array(
+            ],
+            290 => [
 
                 'pdf' => '01-08-2022291CFDI_S000000572.pdf',
                 'xml' => '01-08-2022291CFDI_S000000572.xml',
@@ -3410,9 +3117,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            291 =>
-            array(
+            ],
+            291 => [
 
                 'pdf' => '01-08-2022292CFDI_C000000048.pdf',
                 'xml' => '01-08-2022292CFDI_C000000048.xml',
@@ -3422,9 +3128,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            292 =>
-            array(
+            ],
+            292 => [
 
                 'pdf' => '01-08-2022293CFDI_C000000057.pdf',
                 'xml' => '01-08-2022293CFDI_C000000057.xml',
@@ -3434,9 +3139,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            293 =>
-            array(
+            ],
+            293 => [
 
                 'pdf' => '02-08-2022294CFDI_C000000066.pdf',
                 'xml' => '02-08-2022294CFDI_C000000066.xml',
@@ -3446,9 +3150,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            294 =>
-            array(
+            ],
+            294 => [
 
                 'pdf' => '02-08-2022295CFDI_C000000072.pdf',
                 'xml' => '02-08-2022295CFDI_C000000072.xml',
@@ -3458,9 +3161,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            295 =>
-            array(
+            ],
+            295 => [
 
                 'pdf' => '02-08-2022296CFDI_C000000079.pdf',
                 'xml' => '02-08-2022296CFDI_C000000079.xml',
@@ -3470,9 +3172,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            296 =>
-            array(
+            ],
+            296 => [
 
                 'pdf' => '02-08-2022297CFDI_C000000087.pdf',
                 'xml' => '02-08-2022297CFDI_C000000087.xml',
@@ -3482,9 +3183,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            297 =>
-            array(
+            ],
+            297 => [
 
                 'pdf' => '02-08-2022298CFDI_C000000051.pdf',
                 'xml' => '02-08-2022298CFDI_C000000051.xml',
@@ -3494,9 +3194,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            298 =>
-            array(
+            ],
+            298 => [
 
                 'pdf' => '02-08-2022299CFDI_C000000056.pdf',
                 'xml' => '02-08-2022299CFDI_C000000056.xml',
@@ -3506,9 +3205,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            299 =>
-            array(
+            ],
+            299 => [
 
                 'pdf' => '02-08-2022300CFDI_S000000692.pdf',
                 'xml' => '02-08-2022300CFDI_S000000692.xml',
@@ -3518,9 +3216,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            300 =>
-            array(
+            ],
+            300 => [
 
                 'pdf' => '02-08-2022301CFDI_S000000692.pdf',
                 'xml' => '02-08-2022301CFDI_S000000692.xml',
@@ -3530,9 +3227,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            301 =>
-            array(
+            ],
+            301 => [
 
                 'pdf' => '02-08-2022302CFDI_C000000073.pdf',
                 'xml' => '02-08-2022302CFDI_C000000073.xml',
@@ -3542,9 +3238,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            302 =>
-            array(
+            ],
+            302 => [
 
                 'pdf' => '02-08-2022303CFDI_S000000624.pdf',
                 'xml' => '02-08-2022303CFDI_S000000624.xml',
@@ -3554,9 +3249,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            303 =>
-            array(
+            ],
+            303 => [
 
                 'pdf' => '09-09-2022304CFDI_C000000987.pdf',
                 'xml' => '09-09-2022304CFDI_C000000987.xml',
@@ -3566,9 +3260,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            304 =>
-            array(
+            ],
+            304 => [
 
                 'pdf' => '09-09-2022305factura Junio.pdf',
                 'xml' => null,
@@ -3578,9 +3271,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            305 =>
-            array(
+            ],
+            305 => [
 
                 'pdf' => '09-09-2022306factura_julio.pdf',
                 'xml' => '09-09-2022306CFDI_C000001073.xml',
@@ -3590,9 +3282,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            306 =>
-            array(
+            ],
+            306 => [
 
                 'pdf' => '09-09-2022307CFDI_S000000290.pdf',
                 'xml' => '09-09-2022307CFDI_S000000290.xml',
@@ -3602,9 +3293,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            307 =>
-            array(
+            ],
+            307 => [
 
                 'pdf' => '09-09-2022308CFDI_S000000305.pdf',
                 'xml' => '09-09-2022308CFDI_S000000305.xml',
@@ -3614,9 +3304,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            308 =>
-            array(
+            ],
+            308 => [
 
                 'pdf' => '09-09-2022309CFDI_S000000839.pdf',
                 'xml' => '09-09-2022309CFDI_S000000839.xml',
@@ -3626,9 +3315,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            309 =>
-            array(
+            ],
+            309 => [
 
                 'pdf' => '09-09-2022310CFDI_S000000862.pdf',
                 'xml' => '09-09-2022310CFDI_S000000862.xml',
@@ -3638,9 +3326,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            310 =>
-            array(
+            ],
+            310 => [
 
                 'pdf' => '09-09-2022311ASF001230TS2SS0000000897.pdf',
                 'xml' => null,
@@ -3650,9 +3337,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            311 =>
-            array(
+            ],
+            311 => [
 
                 'pdf' => '09-09-2022312CFDI_S000000319.pdf',
                 'xml' => '09-09-2022312CFDI_S000000319.xml',
@@ -3662,9 +3348,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            312 =>
-            array(
+            ],
+            312 => [
 
                 'pdf' => '09-09-2022313CFDI_S000000594.pdf',
                 'xml' => '09-09-2022313CFDI_S000000594.xml',
@@ -3674,9 +3359,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            313 =>
-            array(
+            ],
+            313 => [
 
                 'pdf' => '09-09-2022314CFDI_S000000594.pdf',
                 'xml' => '09-09-2022314CFDI_S000000594.xml',
@@ -3686,9 +3370,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            314 =>
-            array(
+            ],
+            314 => [
 
                 'pdf' => '09-09-2022315CFDI_S000000596.pdf',
                 'xml' => '09-09-2022315CFDI_S000000596.xml',
@@ -3698,9 +3381,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            315 =>
-            array(
+            ],
+            315 => [
 
                 'pdf' => '09-09-2022316CFDI_S000000597.pdf',
                 'xml' => '09-09-2022316CFDI_S000000597.xml',
@@ -3710,9 +3392,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            316 =>
-            array(
+            ],
+            316 => [
 
                 'pdf' => '09-09-2022317CFDI_S000000634.pdf',
                 'xml' => '09-09-2022317CFDI_S000000634.xml',
@@ -3722,9 +3403,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            317 =>
-            array(
+            ],
+            317 => [
 
                 'pdf' => '09-09-2022318CFDI_S000000661.pdf',
                 'xml' => '09-09-2022318CFDI_S000000661.xml',
@@ -3734,9 +3414,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            318 =>
-            array(
+            ],
+            318 => [
 
                 'pdf' => '09-09-2022319CFDI_S000000694.pdf',
                 'xml' => '09-09-2022319CFDI_S000000694.xml',
@@ -3746,9 +3425,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            319 =>
-            array(
+            ],
+            319 => [
 
                 'pdf' => '09-09-2022320CFDI_S000000635.pdf',
                 'xml' => '09-09-2022320CFDI_S000000635.xml',
@@ -3758,9 +3436,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            320 =>
-            array(
+            ],
+            320 => [
 
                 'pdf' => '09-09-2022321CFDI_S000000336.pdf',
                 'xml' => '09-09-2022321CFDI_S000000336.xml',
@@ -3770,9 +3447,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            321 =>
-            array(
+            ],
+            321 => [
 
                 'pdf' => '09-09-2022322CFDI_S000000695.pdf',
                 'xml' => '09-09-2022322CFDI_S000000695.xml',
@@ -3782,9 +3458,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            322 =>
-            array(
+            ],
+            322 => [
 
                 'pdf' => '09-09-2022323CFDI_S000000708.pdf',
                 'xml' => '09-09-2022323CFDI_S000000708.xml',
@@ -3794,9 +3469,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            323 =>
-            array(
+            ],
+            323 => [
 
                 'pdf' => '09-09-2022324CFDI_S000000709.pdf',
                 'xml' => '09-09-2022324CFDI_S000000709.xml',
@@ -3806,9 +3480,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            324 =>
-            array(
+            ],
+            324 => [
 
                 'pdf' => '09-09-2022325CFDI_S000000826.pdf',
                 'xml' => '09-09-2022325CFDI_S000000826.xml',
@@ -3818,9 +3491,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            325 =>
-            array(
+            ],
+            325 => [
 
                 'pdf' => '09-09-2022326CFDI_S000000338.pdf',
                 'xml' => '09-09-2022326CFDI_S000000338.xml',
@@ -3830,9 +3502,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            326 =>
-            array(
+            ],
+            326 => [
 
                 'pdf' => '09-09-2022327CFDI_S000000848.pdf',
                 'xml' => '09-09-2022327CFDI_S000000848.xml',
@@ -3842,9 +3513,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            327 =>
-            array(
+            ],
+            327 => [
 
                 'pdf' => '09-09-2022328CFDI_S000000864.pdf',
                 'xml' => '09-09-2022328CFDI_S000000864.xml',
@@ -3854,9 +3524,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            328 =>
-            array(
+            ],
+            328 => [
 
                 'pdf' => '09-09-2022329SEP1312171X9SS0000000902.pdf',
                 'xml' => '09-09-2022329SEP1312171X9SS0000000902.xml',
@@ -3866,9 +3535,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            329 =>
-            array(
+            ],
+            329 => [
 
                 'pdf' => '09-09-2022330CFDI_S000000846.pdf',
                 'xml' => '09-09-2022330CFDI_S000000846.xml',
@@ -3878,9 +3546,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            330 =>
-            array(
+            ],
+            330 => [
 
                 'pdf' => '09-09-2022331CFDI_S000000868.pdf',
                 'xml' => '09-09-2022331CFDI_S000000868.xml',
@@ -3890,9 +3557,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            331 =>
-            array(
+            ],
+            331 => [
 
                 'pdf' => '09-09-2022332121_SENADO_FACTURA S 477.pdf',
                 'xml' => null,
@@ -3902,9 +3568,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            332 =>
-            array(
+            ],
+            332 => [
 
                 'pdf' => '09-09-2022333121_SENADO_FACTURA S 489.pdf',
                 'xml' => null,
@@ -3914,9 +3579,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            333 =>
-            array(
+            ],
+            333 => [
 
                 'pdf' => '09-09-2022334121_SENADO_Factura S 527.pdf',
                 'xml' => null,
@@ -3926,9 +3590,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            334 =>
-            array(
+            ],
+            334 => [
 
                 'pdf' => '09-09-2022335CFDI_CPB0000010.pdf',
                 'xml' => '09-09-2022335CFDI_CPB0000010.xml',
@@ -3938,9 +3601,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            335 =>
-            array(
+            ],
+            335 => [
 
                 'pdf' => '10-09-2022336CFDI_S000000308.pdf',
                 'xml' => '10-09-2022336CFDI_S000000308.xml',
@@ -3950,9 +3612,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            336 =>
-            array(
+            ],
+            336 => [
 
                 'pdf' => '10-09-2022337CFDI_S000000324.pdf',
                 'xml' => '10-09-2022337CFDI_S000000324.xml',
@@ -3962,9 +3623,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            337 =>
-            array(
+            ],
+            337 => [
 
                 'pdf' => '10-09-202233892_PÑLS_CFDI_S000000370.pdf',
                 'xml' => null,
@@ -3974,9 +3634,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            338 =>
-            array(
+            ],
+            338 => [
 
                 'pdf' => '10-09-2022339CFDI_S000000448.pdf',
                 'xml' => '10-09-2022339CFDI_S000000448.xml',
@@ -3986,9 +3645,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            339 =>
-            array(
+            ],
+            339 => [
 
                 'pdf' => '10-09-2022340CFDI_S000000449.pdf',
                 'xml' => '10-09-2022340CFDI_S000000449.xml',
@@ -3998,9 +3656,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            340 =>
-            array(
+            ],
+            340 => [
 
                 'pdf' => '10-09-2022341CFDI_S000000468.pdf',
                 'xml' => '10-09-2022341CFDI_S000000468.xml',
@@ -4010,9 +3667,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            341 =>
-            array(
+            ],
+            341 => [
 
                 'pdf' => '10-09-2022342CFDI_S000000498.pdf',
                 'xml' => '10-09-2022342CFDI_S000000498.xml',
@@ -4022,9 +3678,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            342 =>
-            array(
+            ],
+            342 => [
 
                 'pdf' => '10-09-2022343CFDI_S000000343.pdf',
                 'xml' => '10-09-2022343CFDI_S000000343.xml',
@@ -4034,9 +3689,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            343 =>
-            array(
+            ],
+            343 => [
 
                 'pdf' => '10-09-2022344CFDI_S000000344.pdf',
                 'xml' => '10-09-2022344CFDI_S000000344.xml',
@@ -4046,9 +3700,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 10,
                 'updated_by' => 10,
-            ),
-            344 =>
-            array(
+            ],
+            344 => [
 
                 'pdf' => '12-09-2022345CFDI_S000000827.pdf',
                 'xml' => '12-09-2022345CFDI_S000000827.xml',
@@ -4058,9 +3711,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            345 =>
-            array(
+            ],
+            345 => [
 
                 'pdf' => '12-09-2022346CFDI_S000000867.pdf',
                 'xml' => '12-09-2022346CFDI_S000000867.xml',
@@ -4070,9 +3722,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            346 =>
-            array(
+            ],
+            346 => [
 
                 'pdf' => '12-09-2022347BMV760203JD4SS0000000887.pdf',
                 'xml' => '12-09-2022347BMV760203JD4SS0000000887.xml',
@@ -4082,9 +3733,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            347 =>
-            array(
+            ],
+            347 => [
 
                 'pdf' => '12-09-2022348CFDI_S000000822.pdf',
                 'xml' => '12-09-2022348CFDI_S000000822.xml',
@@ -4094,9 +3744,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            348 =>
-            array(
+            ],
+            348 => [
 
                 'pdf' => '12-09-2022349CFDI_S000000849.pdf',
                 'xml' => '12-09-2022349CFDI_S000000849.xml',
@@ -4106,9 +3755,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            349 =>
-            array(
+            ],
+            349 => [
 
                 'pdf' => '12-09-2022350CFDI_S000000878.pdf',
                 'xml' => '12-09-2022350CFDI_S000000878.xml',
@@ -4118,9 +3766,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            350 =>
-            array(
+            ],
+            350 => [
 
                 'pdf' => '12-09-2022351CFDI_S000000830.pdf',
                 'xml' => '12-09-2022351CFDI_S000000830.xml',
@@ -4130,9 +3777,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            351 =>
-            array(
+            ],
+            351 => [
 
                 'pdf' => '12-09-2022352CFDI_S000000855.pdf',
                 'xml' => '12-09-2022352CFDI_S000000855.xml',
@@ -4142,9 +3788,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            352 =>
-            array(
+            ],
+            352 => [
 
                 'pdf' => '12-09-2022353BID100428IX6SS0000000889.pdf',
                 'xml' => '12-09-2022353BID100428IX6SS0000000889.xml',
@@ -4154,9 +3799,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            353 =>
-            array(
+            ],
+            353 => [
 
                 'pdf' => '12-09-2022354CFDI_S000000558.pdf',
                 'xml' => '12-09-2022354CFDI_S000000558.xml',
@@ -4166,9 +3810,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            354 =>
-            array(
+            ],
+            354 => [
 
                 'pdf' => '12-09-2022355CFDI_S000000652.pdf',
                 'xml' => '12-09-2022355CFDI_S000000652.xml',
@@ -4178,9 +3821,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            355 =>
-            array(
+            ],
+            355 => [
 
                 'pdf' => '12-09-2022356CFDI_S000000684.pdf',
                 'xml' => '12-09-2022356CFDI_S000000684.xml',
@@ -4190,9 +3832,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            356 =>
-            array(
+            ],
+            356 => [
 
                 'pdf' => '12-09-2022357CFDI_S000000883.pdf',
                 'xml' => '12-09-2022357CFDI_S000000883.xml',
@@ -4202,9 +3843,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            357 =>
-            array(
+            ],
+            357 => [
 
                 'pdf' => '12-09-2022358DCO8009185Y9FC0000000001.pdf',
                 'xml' => '12-09-2022358DCO8009185Y9FC0000000001.xml',
@@ -4214,9 +3854,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            358 =>
-            array(
+            ],
+            358 => [
 
                 'pdf' => '12-09-2022359CFDI_S000000649.pdf',
                 'xml' => '12-09-2022359CFDI_S000000649.xml',
@@ -4226,9 +3865,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            359 =>
-            array(
+            ],
+            359 => [
 
                 'pdf' => '12-09-2022360CFDI_S000000650.pdf',
                 'xml' => '12-09-2022360CFDI_S000000650.xml',
@@ -4238,9 +3876,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            360 =>
-            array(
+            ],
+            360 => [
 
                 'pdf' => '12-09-2022361CFDI_S000000651.pdf',
                 'xml' => '12-09-2022361CFDI_S000000651.xml',
@@ -4250,9 +3887,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            361 =>
-            array(
+            ],
+            361 => [
 
                 'pdf' => '12-09-2022362CFDI_S000000663.pdf',
                 'xml' => '12-09-2022362CFDI_S000000663.xml',
@@ -4262,9 +3898,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            362 =>
-            array(
+            ],
+            362 => [
 
                 'pdf' => '12-09-2022363CFDI_S000000700.pdf',
                 'xml' => '12-09-2022363CFDI_S000000700.xml',
@@ -4274,9 +3909,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            363 =>
-            array(
+            ],
+            363 => [
 
                 'pdf' => '12-09-2022364CFDI F S716 CINTEGRA .pdf',
                 'xml' => '12-09-2022364CFDI F S716 CINTEGRA .xml',
@@ -4286,9 +3920,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            364 =>
-            array(
+            ],
+            364 => [
 
                 'pdf' => '12-09-2022365CFDI_S000000828.pdf',
                 'xml' => '12-09-2022365CFDI_S000000828.xml',
@@ -4298,9 +3931,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            365 =>
-            array(
+            ],
+            365 => [
 
                 'pdf' => '12-09-2022366CFDI_S000000491.pdf',
                 'xml' => '12-09-2022366CFDI_S000000491.xml',
@@ -4310,9 +3942,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            366 =>
-            array(
+            ],
+            366 => [
 
                 'pdf' => '29-09-2022367GCM960301469FC0000000005.pdf',
                 'xml' => '29-09-2022367GCM960301469FC0000000005.xml',
@@ -4322,9 +3953,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 13,
                 'updated_by' => 13,
-            ),
-            367 =>
-            array(
+            ],
+            367 => [
 
                 'pdf' => '23-01-2023368CFDI_S000000863.pdf',
                 'xml' => '23-01-2023368CFDI_S000000863.xml',
@@ -4334,9 +3964,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            368 =>
-            array(
+            ],
+            368 => [
 
                 'pdf' => '23-01-2023369CFDI_S000000884.pdf',
                 'xml' => '23-01-2023369CFDI_S000000884.xml',
@@ -4346,9 +3975,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            369 =>
-            array(
+            ],
+            369 => [
 
                 'pdf' => '23-01-2023370IQU8402147S9SS0000000885.pdf',
                 'xml' => '23-01-2023370IQU8402147S9SS0000000885.xml',
@@ -4358,9 +3986,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            370 =>
-            array(
+            ],
+            370 => [
 
                 'pdf' => '23-01-2023371IQU8402147S9SS0000000954.pdf',
                 'xml' => '23-01-2023371IQU8402147S9SS0000000954.xml',
@@ -4370,9 +3997,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            371 =>
-            array(
+            ],
+            371 => [
 
                 'pdf' => '23-01-2023372IQU8402147S9SS0000000970.pdf',
                 'xml' => '23-01-2023372IQU8402147S9SS0000000970.xml',
@@ -4382,9 +4008,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            372 =>
-            array(
+            ],
+            372 => [
 
                 'pdf' => '23-01-2023373IQU8402147S9SS0000001011.pdf',
                 'xml' => '23-01-2023373IQU8402147S9SS0000001011.xml',
@@ -4394,9 +4019,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            373 =>
-            array(
+            ],
+            373 => [
 
                 'pdf' => '23-01-2023374IQU8402147S9SS0000001055.pdf',
                 'xml' => '23-01-2023374IQU8402147S9SS0000001055.xml',
@@ -4406,9 +4030,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            374 =>
-            array(
+            ],
+            374 => [
 
                 'pdf' => '24-01-2023375CFDI_S000000345.pdf',
                 'xml' => null,
@@ -4418,9 +4041,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            375 =>
-            array(
+            ],
+            375 => [
 
                 'pdf' => '24-01-2023376CFDI_S000000345.pdf',
                 'xml' => '24-01-2023376CFDI_S000000345.xml',
@@ -4430,9 +4052,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            376 =>
-            array(
+            ],
+            376 => [
 
                 'pdf' => '24-01-2023377CFDI_S000000384.pdf',
                 'xml' => '24-01-2023377CFDI_S000000384.xml',
@@ -4442,9 +4063,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            377 =>
-            array(
+            ],
+            377 => [
 
                 'pdf' => '24-01-2023378CFDI_S000000385.pdf',
                 'xml' => '24-01-2023378CFDI_S000000385.xml',
@@ -4454,9 +4074,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            378 =>
-            array(
+            ],
+            378 => [
 
                 'pdf' => '24-01-2023379CFDI_S000000390.pdf',
                 'xml' => '24-01-2023379CFDI_S000000390.xml',
@@ -4466,9 +4085,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            379 =>
-            array(
+            ],
+            379 => [
 
                 'pdf' => '24-01-2023380CFDI_S000000395.pdf',
                 'xml' => '24-01-2023380CFDI_S000000395.xml',
@@ -4478,9 +4096,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            380 =>
-            array(
+            ],
+            380 => [
 
                 'pdf' => '24-01-2023381CFDI_S000000410.pdf',
                 'xml' => '24-01-2023381CFDI_S000000410.xml',
@@ -4490,9 +4107,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            381 =>
-            array(
+            ],
+            381 => [
 
                 'pdf' => '24-01-2023382CFDI_S000000415.pdf',
                 'xml' => '24-01-2023382CFDI_S000000415.xml',
@@ -4502,9 +4118,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            382 =>
-            array(
+            ],
+            382 => [
 
                 'pdf' => '24-01-2023383CFDI_S000000421.pdf',
                 'xml' => '24-01-2023383CFDI_S000000421.xml',
@@ -4514,9 +4129,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            383 =>
-            array(
+            ],
+            383 => [
 
                 'pdf' => '24-01-2023384CFDI_S000000451.pdf',
                 'xml' => '24-01-2023384CFDI_S000000451.xml',
@@ -4526,9 +4140,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            384 =>
-            array(
+            ],
+            384 => [
 
                 'pdf' => '24-01-2023385CFDI_S000000645.pdf',
                 'xml' => '24-01-2023385CFDI_S000000645.xml',
@@ -4538,9 +4151,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            385 =>
-            array(
+            ],
+            385 => [
 
                 'pdf' => '24-01-2023386CFDI_S000000503.pdf',
                 'xml' => '24-01-2023386CFDI_S000000503.xml',
@@ -4550,9 +4162,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            386 =>
-            array(
+            ],
+            386 => [
 
                 'pdf' => '24-01-2023387CFDI_S000000514.pdf',
                 'xml' => '24-01-2023387CFDI_S000000514.xml',
@@ -4562,9 +4173,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            387 =>
-            array(
+            ],
+            387 => [
 
                 'pdf' => '24-01-2023388CFDI_S000000542.pdf',
                 'xml' => '24-01-2023388CFDI_S000000542.xml',
@@ -4574,9 +4184,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            388 =>
-            array(
+            ],
+            388 => [
 
                 'pdf' => '24-01-2023389CFDI_S000000610.pdf',
                 'xml' => '24-01-2023389CFDI_S000000610.xml',
@@ -4586,9 +4195,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            389 =>
-            array(
+            ],
+            389 => [
 
                 'pdf' => '24-01-2023390CFDI_S000000645.pdf',
                 'xml' => '24-01-2023390CFDI_S000000645.xml',
@@ -4598,9 +4206,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            390 =>
-            array(
+            ],
+            390 => [
 
                 'pdf' => '24-01-2023391CFDI_S000000665.pdf',
                 'xml' => '24-01-2023391CFDI_S000000665.xml',
@@ -4610,9 +4217,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            391 =>
-            array(
+            ],
+            391 => [
 
                 'pdf' => '24-01-2023392CFDI_S000000676.pdf',
                 'xml' => '24-01-2023392CFDI_S000000676.xml',
@@ -4622,9 +4228,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            392 =>
-            array(
+            ],
+            392 => [
 
                 'pdf' => '24-01-2023393CFDI_S000000696.pdf',
                 'xml' => '24-01-2023393CFDI_S000000696.xml',
@@ -4634,9 +4239,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            393 =>
-            array(
+            ],
+            393 => [
 
                 'pdf' => '24-01-2023394CFDI_S000000701.pdf',
                 'xml' => '24-01-2023394CFDI_S000000701.xml',
@@ -4646,9 +4250,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            394 =>
-            array(
+            ],
+            394 => [
 
                 'pdf' => '24-01-2023395CFDI_S000000726.pdf',
                 'xml' => '24-01-2023395CFDI_S000000726.xml',
@@ -4658,9 +4261,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            395 =>
-            array(
+            ],
+            395 => [
 
                 'pdf' => '24-01-2023396CFDI_S000000743.pdf',
                 'xml' => '24-01-2023396CFDI_S000000743.xml',
@@ -4670,9 +4272,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            396 =>
-            array(
+            ],
+            396 => [
 
                 'pdf' => '24-01-2023397CFDI_S000000766.pdf',
                 'xml' => '24-01-2023397CFDI_S000000766.xml',
@@ -4682,9 +4283,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            397 =>
-            array(
+            ],
+            397 => [
 
                 'pdf' => '24-01-2023398CFDI_S000000790.pdf',
                 'xml' => '24-01-2023398CFDI_S000000790.xml',
@@ -4694,9 +4294,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            398 =>
-            array(
+            ],
+            398 => [
 
                 'pdf' => '24-01-2023399CFDI_S000000816.pdf',
                 'xml' => '24-01-2023399CFDI_S000000816.xml',
@@ -4706,9 +4305,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            399 =>
-            array(
+            ],
+            399 => [
 
                 'pdf' => '24-01-2023400CFDI_S000000871.pdf',
                 'xml' => '24-01-2023400CFDI_S000000871.xml',
@@ -4718,9 +4316,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            400 =>
-            array(
+            ],
+            400 => [
 
                 'pdf' => '24-01-2023401DWA041125U40SS0000000913.pdf',
                 'xml' => '24-01-2023401DWA041125U40SS0000000913.xml',
@@ -4730,9 +4327,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            401 =>
-            array(
+            ],
+            401 => [
 
                 'pdf' => '24-01-2023402DWA041125U40SS0000000950.pdf',
                 'xml' => '24-01-2023402DWA041125U40SS0000000950.xml',
@@ -4742,9 +4338,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            402 =>
-            array(
+            ],
+            402 => [
 
                 'pdf' => '24-01-2023403DWA041125U40SS0000000983.pdf',
                 'xml' => '24-01-2023403DWA041125U40SS0000000983.xml',
@@ -4754,9 +4349,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            403 =>
-            array(
+            ],
+            403 => [
 
                 'pdf' => '24-01-2023404DWA041125U40SS0000001012.pdf',
                 'xml' => '24-01-2023404DWA041125U40SS0000001012.xml',
@@ -4766,9 +4360,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            404 =>
-            array(
+            ],
+            404 => [
 
                 'pdf' => '26-01-2023405CFDI_S000000441.pdf',
                 'xml' => '26-01-2023405CFDI_S000000441.xml',
@@ -4778,9 +4371,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            405 =>
-            array(
+            ],
+            405 => [
 
                 'pdf' => '26-01-2023406IQU8402147S9SS0000000989.pdf',
                 'xml' => '26-01-2023406IQU8402147S9SS0000000989.xml',
@@ -4790,9 +4382,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            406 =>
-            array(
+            ],
+            406 => [
 
                 'pdf' => '26-01-2023407CFDI_S000000599.pdf',
                 'xml' => '26-01-2023407CFDI_S000000599.xml',
@@ -4802,9 +4393,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            407 =>
-            array(
+            ],
+            407 => [
 
                 'pdf' => '26-01-2023408CFDI_S000000478.pdf',
                 'xml' => '26-01-2023408CFDI_S000000478.xml',
@@ -4814,9 +4404,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            408 =>
-            array(
+            ],
+            408 => [
 
                 'pdf' => '26-01-2023409CFDI_S000000528.pdf',
                 'xml' => '26-01-2023409CFDI_S000000528.xml',
@@ -4826,9 +4415,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            409 =>
-            array(
+            ],
+            409 => [
 
                 'pdf' => '30-01-20234106DF1D481-F16E-4083-B12F-D62868061944.pdf',
                 'xml' => null,
@@ -4838,9 +4426,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            410 =>
-            array(
+            ],
+            410 => [
 
                 'pdf' => '30-01-20234117E4E9BE5-2FC7-45AC-B64B-A8ECB36D3093.pdf',
                 'xml' => null,
@@ -4850,9 +4437,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            411 =>
-            array(
+            ],
+            411 => [
 
                 'pdf' => '30-01-20234129D8481B8-4DB4-4470-A94B-14328552CB1F.pdf',
                 'xml' => null,
@@ -4862,9 +4448,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            412 =>
-            array(
+            ],
+            412 => [
 
                 'pdf' => '30-01-202341369B1C7AF-10AF-4ED5-9F9D-53FA4124FE12.pdf',
                 'xml' => null,
@@ -4874,9 +4459,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            413 =>
-            array(
+            ],
+            413 => [
 
                 'pdf' => '30-01-2023414193A43B3-01A0-4F88-AA27-9895719E8F9B.pdf',
                 'xml' => null,
@@ -4886,9 +4470,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            414 =>
-            array(
+            ],
+            414 => [
 
                 'pdf' => '30-01-20234153725590B-9D55-4870-A7AA-47417A663908.pdf',
                 'xml' => null,
@@ -4898,9 +4481,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            415 =>
-            array(
+            ],
+            415 => [
 
                 'pdf' => '30-01-2023416CFFD9006-25DE-4A5A-836B-53FD7B18A212.pdf',
                 'xml' => null,
@@ -4910,9 +4492,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            416 =>
-            array(
+            ],
+            416 => [
 
                 'pdf' => '30-01-2023417D316481D-816F-4F3C-9BDB-0D1ED5EC7D79.pdf',
                 'xml' => null,
@@ -4922,9 +4503,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            417 =>
-            array(
+            ],
+            417 => [
 
                 'pdf' => '30-01-2023418CFDI_S000000552.pdf',
                 'xml' => '30-01-2023418CFDI_S000000552.xml',
@@ -4934,9 +4514,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            418 =>
-            array(
+            ],
+            418 => [
 
                 'pdf' => '30-01-2023419CFDI_S000000568.pdf',
                 'xml' => '30-01-2023419CFDI_S000000568.xml',
@@ -4946,9 +4525,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            419 =>
-            array(
+            ],
+            419 => [
 
                 'pdf' => '30-01-2023420CFDI_S000000592.pdf',
                 'xml' => '30-01-2023420CFDI_S000000592.xml',
@@ -4958,9 +4536,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            420 =>
-            array(
+            ],
+            420 => [
 
                 'pdf' => '30-01-2023421CFDI_S000000627.pdf',
                 'xml' => '30-01-2023421CFDI_S000000627.xml',
@@ -4970,9 +4547,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            421 =>
-            array(
+            ],
+            421 => [
 
                 'pdf' => '30-01-2023422CFDI_S000000850.pdf',
                 'xml' => '30-01-2023422CFDI_S000000850.xml',
@@ -4982,9 +4558,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            422 =>
-            array(
+            ],
+            422 => [
 
                 'pdf' => '02-02-2023423CFDI_S000000334.pdf',
                 'xml' => null,
@@ -4994,9 +4569,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            423 =>
-            array(
+            ],
+            423 => [
 
                 'pdf' => '02-02-2023424CFDI_S000000334.pdf',
                 'xml' => null,
@@ -5006,9 +4580,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            424 =>
-            array(
+            ],
+            424 => [
 
                 'pdf' => '02-02-2023425CFDI_S000000420.pdf',
                 'xml' => '02-02-2023425CFDI_S000000420.xml',
@@ -5018,9 +4591,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            425 =>
-            array(
+            ],
+            425 => [
 
                 'pdf' => '02-02-2023426CFDI_S000000458.pdf',
                 'xml' => '02-02-2023426CFDI_S000000458.xml',
@@ -5030,9 +4602,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            426 =>
-            array(
+            ],
+            426 => [
 
                 'pdf' => '07-02-2023427CFDI_C000000052.pdf',
                 'xml' => '07-02-2023427CFDI_C000000052.xml',
@@ -5042,9 +4613,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            427 =>
-            array(
+            ],
+            427 => [
 
                 'pdf' => '07-02-2023428CFDI_C000000053.pdf',
                 'xml' => '07-02-2023428CFDI_C000000053.xml',
@@ -5054,9 +4624,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            428 =>
-            array(
+            ],
+            428 => [
 
                 'pdf' => '07-02-2023429SCD9402285U7FC0000000007.pdf',
                 'xml' => '07-02-2023429SCD9402285U7FC0000000007.xml',
@@ -5066,9 +4635,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            429 =>
-            array(
+            ],
+            429 => [
 
                 'pdf' => '07-02-2023430SCD9402285U7FC0000000023.pdf',
                 'xml' => '07-02-2023430SCD9402285U7FC0000000023.xml',
@@ -5078,9 +4646,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            430 =>
-            array(
+            ],
+            430 => [
 
                 'pdf' => '15-02-2023431CFDI_S000000702.pdf',
                 'xml' => '15-02-2023431CFDI_S000000702.xml',
@@ -5090,9 +4657,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            431 =>
-            array(
+            ],
+            431 => [
 
                 'pdf' => '07-03-2023432CFDI_S000000784.pdf',
                 'xml' => '07-03-2023432CFDI_S000000784.xml',
@@ -5102,9 +4668,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            432 =>
-            array(
+            ],
+            432 => [
 
                 'pdf' => '07-03-2023433CFDI_S000000738.pdf',
                 'xml' => '07-03-2023433CFDI_S000000738.xml',
@@ -5114,9 +4679,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            433 =>
-            array(
+            ],
+            433 => [
 
                 'pdf' => '07-03-2023434ARA900710AX8FC0000000025.pdf',
                 'xml' => '07-03-2023434ARA900710AX8FC0000000025.xml',
@@ -5126,33 +4690,30 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            434 =>
-            array(
+            ],
+            434 => [
 
-                'pdf' => NULL,
-                'xml' => NULL,
+                'pdf' => null,
+                'xml' => null,
                 'factura_id' => 435,
                 'created_at' => '2023-03-15 13:20:16',
                 'updated_at' => '2023-03-15 13:20:16',
                 'deleted_at' => null,
                 'created_by' => 20,
-                'updated_by' => NULL,
-            ),
-            435 =>
-            array(
+                'updated_by' => null,
+            ],
+            435 => [
 
-                'pdf' => NULL,
-                'xml' => NULL,
+                'pdf' => null,
+                'xml' => null,
                 'factura_id' => 436,
                 'created_at' => '2023-03-15 13:23:02',
                 'updated_at' => '2023-03-15 13:23:02',
                 'deleted_at' => null,
                 'created_by' => 20,
-                'updated_by' => NULL,
-            ),
-            436 =>
-            array(
+                'updated_by' => null,
+            ],
+            436 => [
 
                 'pdf' => '05-04-2023437CFDI_S000000775.pdf',
                 'xml' => '05-04-2023437CFDI_S000000775.xml',
@@ -5162,9 +4723,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            437 =>
-            array(
+            ],
+            437 => [
 
                 'pdf' => '05-04-2023438CFDI_S000000776.pdf',
                 'xml' => '05-04-2023438CFDI_S000000776.xml',
@@ -5174,9 +4734,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            438 =>
-            array(
+            ],
+            438 => [
 
                 'pdf' => '05-04-2023439CFDI_S000000778.pdf',
                 'xml' => '05-04-2023439CFDI_S000000778.xml',
@@ -5186,9 +4745,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            439 =>
-            array(
+            ],
+            439 => [
 
                 'pdf' => '05-04-2023440CFDI_S000000793.pdf',
                 'xml' => '05-04-2023440CFDI_S000000793.xml',
@@ -5198,9 +4756,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            440 =>
-            array(
+            ],
+            440 => [
 
                 'pdf' => '06-04-2023441CFDI_S000000794.pdf',
                 'xml' => '06-04-2023441CFDI_S000000794.xml',
@@ -5210,9 +4767,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            441 =>
-            array(
+            ],
+            441 => [
 
                 'pdf' => '06-04-2023442CFDI_S000000814.pdf',
                 'xml' => '06-04-2023442CFDI_S000000814.xml',
@@ -5222,9 +4778,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            442 =>
-            array(
+            ],
+            442 => [
 
                 'pdf' => '06-04-2023443CFDI_S000000815.pdf',
                 'xml' => '06-04-2023443CFDI_S000000815.xml',
@@ -5234,9 +4789,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            443 =>
-            array(
+            ],
+            443 => [
 
                 'pdf' => '06-04-2023444CFDI_S000000836.pdf',
                 'xml' => '06-04-2023444CFDI_S000000836.xml',
@@ -5246,9 +4800,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            444 =>
-            array(
+            ],
+            444 => [
 
                 'pdf' => '06-04-2023445CFDI_S000000836.pdf',
                 'xml' => '06-04-2023445CFDI_S000000836.xml',
@@ -5258,9 +4811,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            445 =>
-            array(
+            ],
+            445 => [
 
                 'pdf' => '06-04-2023446CFDI_S000000837.pdf',
                 'xml' => '06-04-2023446CFDI_S000000837.xml',
@@ -5270,9 +4822,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            446 =>
-            array(
+            ],
+            446 => [
 
                 'pdf' => '06-04-2023447CFDI_S000000870.pdf',
                 'xml' => '06-04-2023447CFDI_S000000870.xml',
@@ -5282,9 +4833,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            447 =>
-            array(
+            ],
+            447 => [
 
                 'pdf' => '06-04-2023448CFDI_S000000872.pdf',
                 'xml' => '06-04-2023448CFDI_S000000872.xml',
@@ -5294,9 +4844,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            448 =>
-            array(
+            ],
+            448 => [
 
                 'pdf' => '06-04-2023449BVM951002LX0SS0000000933.pdf',
                 'xml' => '06-04-2023449BVM951002LX0SS0000000933.xml',
@@ -5306,9 +4855,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            449 =>
-            array(
+            ],
+            449 => [
 
                 'pdf' => '06-04-2023450BVM951002LX0SS0000000934.pdf',
                 'xml' => '06-04-2023450BVM951002LX0SS0000000943.xml',
@@ -5318,9 +4866,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            450 =>
-            array(
+            ],
+            450 => [
 
                 'pdf' => '06-04-2023451BVM951002LX0SS0000000934.pdf',
                 'xml' => '06-04-2023451BVM951002LX0SS0000000943.xml',
@@ -5330,9 +4877,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            451 =>
-            array(
+            ],
+            451 => [
 
                 'pdf' => '06-04-2023452BVM951002LX0SS0000000944.pdf',
                 'xml' => '06-04-2023452BVM951002LX0SS0000000944.xml',
@@ -5342,9 +4888,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            452 =>
-            array(
+            ],
+            452 => [
 
                 'pdf' => '06-04-2023453BVM951002LX0SS0000000974.pdf',
                 'xml' => '06-04-2023453BVM951002LX0SS0000000974.xml',
@@ -5354,9 +4899,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            453 =>
-            array(
+            ],
+            453 => [
 
                 'pdf' => '06-04-2023454BVM951002LX0SS0000000975.pdf',
                 'xml' => '06-04-2023454BVM951002LX0SS0000000975.xml',
@@ -5366,9 +4910,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            454 =>
-            array(
+            ],
+            454 => [
 
                 'pdf' => '06-04-2023455BVM951002LX0SS0000001024.pdf',
                 'xml' => '06-04-2023455BVM951002LX0SS0000001024.xml',
@@ -5378,9 +4921,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            455 =>
-            array(
+            ],
+            455 => [
 
                 'pdf' => '06-04-2023456BVM951002LX0SS0000001025.pdf',
                 'xml' => '06-04-2023456BVM951002LX0SS0000001025.xml',
@@ -5390,9 +4932,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            456 =>
-            array(
+            ],
+            456 => [
 
                 'pdf' => '06-04-2023457BVM951002LX0SS0000001026.pdf',
                 'xml' => '06-04-2023457BVM951002LX0SS0000001026.xml',
@@ -5402,9 +4943,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            457 =>
-            array(
+            ],
+            457 => [
 
                 'pdf' => '06-04-2023458BVM951002LX0SS0000001027.pdf',
                 'xml' => '06-04-2023458BVM951002LX0SS0000001027.xml',
@@ -5414,9 +4954,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            458 =>
-            array(
+            ],
+            458 => [
 
                 'pdf' => '06-04-2023459HPA0308089D4FC0000000026.pdf',
                 'xml' => '06-04-2023459HPA0308089D4FC0000000026.xml',
@@ -5426,9 +4965,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            459 =>
-            array(
+            ],
+            459 => [
 
                 'pdf' => '06-04-2023460KST211015QL8FC0000000030.pdf',
                 'xml' => '06-04-2023460KST211015QL8FC0000000030.xml',
@@ -5438,9 +4976,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            460 =>
-            array(
+            ],
+            460 => [
 
                 'pdf' => '06-04-2023461PME380607P35SS0000001101.pdf',
                 'xml' => '06-04-2023461PME380607P35SS0000001101.xml',
@@ -5450,9 +4987,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            461 =>
-            array(
+            ],
+            461 => [
 
                 'pdf' => '06-04-2023462PME380607P35SS0000001102.pdf',
                 'xml' => '06-04-2023462PME380607P35SS0000001102.xml',
@@ -5462,9 +4998,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            462 =>
-            array(
+            ],
+            462 => [
 
                 'pdf' => '06-04-2023463BAN500901167SS0000001061.pdf',
                 'xml' => null,
@@ -5474,9 +5009,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            463 =>
-            array(
+            ],
+            463 => [
 
                 'pdf' => '06-04-2023464BAN500901167SS0000001063.pdf',
                 'xml' => null,
@@ -5486,9 +5020,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            464 =>
-            array(
+            ],
+            464 => [
 
                 'pdf' => '06-04-2023465BAN500901167SS0000001064.pdf',
                 'xml' => null,
@@ -5498,9 +5031,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            465 =>
-            array(
+            ],
+            465 => [
 
                 'pdf' => '06-04-2023466BAN500901167SS0000001065.pdf',
                 'xml' => null,
@@ -5510,9 +5042,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            466 =>
-            array(
+            ],
+            466 => [
 
                 'pdf' => '06-04-2023467BAN500901167SS0000001066.pdf',
                 'xml' => null,
@@ -5522,9 +5053,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            467 =>
-            array(
+            ],
+            467 => [
 
                 'pdf' => '06-04-2023468ILI0805169R6FC0000000018.pdf',
                 'xml' => '06-04-2023468ILI0805169R6FC0000000018.xml',
@@ -5534,9 +5064,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            468 =>
-            array(
+            ],
+            468 => [
 
                 'pdf' => '06-04-2023469DCO8009185Y9FC0000000011.pdf',
                 'xml' => '06-04-2023469DCO8009185Y9FC0000000011.xml',
@@ -5546,9 +5075,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            469 =>
-            array(
+            ],
+            469 => [
 
                 'pdf' => '06-04-2023470BNE820901682SS0000001060.pdf',
                 'xml' => '06-04-2023470BNE820901682SS0000001060.xml',
@@ -5558,9 +5086,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            470 =>
-            array(
+            ],
+            470 => [
 
                 'pdf' => '06-04-2023471DEX140206K32SS0000001052.pdf',
                 'xml' => '06-04-2023471DEX140206K32SS0000001052.xml',
@@ -5570,9 +5097,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            471 =>
-            array(
+            ],
+            471 => [
 
                 'pdf' => '11-04-2023472236. ASSESSOR prefactura 1 de 2.pdf',
                 'xml' => '11-04-2023472AAL090122S23FC0000000020.xml',
@@ -5582,9 +5108,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            472 =>
-            array(
+            ],
+            472 => [
 
                 'pdf' => '11-04-2023473236. ASSESSOR prefactura 1 de 2.pdf',
                 'xml' => '11-04-2023473AAL090122S23FC0000000020.xml',
@@ -5594,9 +5119,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            473 =>
-            array(
+            ],
+            473 => [
 
                 'pdf' => '11-04-2023474236. ASSESSOR prefactura 1 de 2.pdf',
                 'xml' => '11-04-2023474AAL090122S23FC0000000020.xml',
@@ -5606,9 +5130,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            474 =>
-            array(
+            ],
+            474 => [
 
                 'pdf' => '11-04-2023475236. ASSESSOR prefactura 2 de 2.pdf',
                 'xml' => '11-04-2023475AAL090122S23FC0000000024.xml',
@@ -5618,9 +5141,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            475 =>
-            array(
+            ],
+            475 => [
 
                 'pdf' => '11-04-2023476CFDI_S000000817.pdf',
                 'xml' => '11-04-2023476CFDI_S000000817.xml',
@@ -5630,9 +5152,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            476 =>
-            array(
+            ],
+            476 => [
 
                 'pdf' => '11-04-2023477CFDI_CPB0000451.pdf',
                 'xml' => '11-04-2023477CFDI_CPB0000451.xml',
@@ -5642,9 +5163,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            477 =>
-            array(
+            ],
+            477 => [
 
                 'pdf' => '11-04-2023478CFDI_S000000840.pdf',
                 'xml' => '11-04-2023478CFDI_S000000840.xml',
@@ -5654,9 +5174,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            478 =>
-            array(
+            ],
+            478 => [
 
                 'pdf' => '11-04-2023479CSE750917BG3SS0000001073.pdf',
                 'xml' => '11-04-2023479CSE750917BG3SS0000001073.xml',
@@ -5666,9 +5185,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            479 =>
-            array(
+            ],
+            479 => [
 
                 'pdf' => '11-04-2023480CSE750917BG3SS0000001093.pdf',
                 'xml' => '11-04-2023480CSE750917BG3SS0000001093.xml',
@@ -5678,9 +5196,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            480 =>
-            array(
+            ],
+            480 => [
 
                 'pdf' => '11-04-2023481CFDI_S000000820.pdf',
                 'xml' => '11-04-2023481CFDI_S000000820.xml',
@@ -5690,9 +5207,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            481 =>
-            array(
+            ],
+            481 => [
 
                 'pdf' => '11-04-2023482CFDI_S000000838.pdf',
                 'xml' => '11-04-2023482CFDI_S000000838.xml',
@@ -5702,9 +5218,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            482 =>
-            array(
+            ],
+            482 => [
 
                 'pdf' => '11-04-2023483CFDI_S000000869.pdf',
                 'xml' => '11-04-2023483CFDI_S000000869.xml',
@@ -5714,9 +5229,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            483 =>
-            array(
+            ],
+            483 => [
 
                 'pdf' => '11-04-2023484SNS960412AH4SS0000000927.pdf',
                 'xml' => '11-04-2023484SNS960412AH4SS0000000927.xml',
@@ -5726,9 +5240,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            484 =>
-            array(
+            ],
+            484 => [
 
                 'pdf' => '11-04-2023485SNS960412AH4SS0000000947.pdf',
                 'xml' => '11-04-2023485SNS960412AH4SS0000000947.xml',
@@ -5738,9 +5251,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            485 =>
-            array(
+            ],
+            485 => [
 
                 'pdf' => '11-04-2023486SNS960412AH4SS0000000987.pdf',
                 'xml' => '11-04-2023486SNS960412AH4SS0000000987.xml',
@@ -5750,9 +5262,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            486 =>
-            array(
+            ],
+            486 => [
 
                 'pdf' => '11-04-2023487SNS960412AH4SS0000001014.pdf',
                 'xml' => '11-04-2023487SNS960412AH4SS0000001014.xml',
@@ -5762,9 +5273,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            487 =>
-            array(
+            ],
+            487 => [
 
                 'pdf' => '11-04-2023488SNS960412AH4SS0000001047.pdf',
                 'xml' => '11-04-2023488SNS960412AH4SS0000001047.xml',
@@ -5774,9 +5284,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            488 =>
-            array(
+            ],
+            488 => [
 
                 'pdf' => '11-04-2023489SNS960412AH4SS0000000925.pdf',
                 'xml' => '11-04-2023489SNS960412AH4SS0000000925.xml',
@@ -5786,9 +5295,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            489 =>
-            array(
+            ],
+            489 => [
 
                 'pdf' => '11-04-2023490SNS960412AH4SS0000001079.pdf',
                 'xml' => '11-04-2023490SNS960412AH4SS0000001079.xml',
@@ -5798,9 +5306,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            490 =>
-            array(
+            ],
+            490 => [
 
                 'pdf' => '11-04-2023491CFDI_S000000821.pdf',
                 'xml' => '11-04-2023491CFDI_S000000821.xml',
@@ -5810,9 +5317,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            491 =>
-            array(
+            ],
+            491 => [
 
                 'pdf' => '11-04-2023492CFDI_S000000847.pdf',
                 'xml' => '11-04-2023492CFDI_S000000847.xml',
@@ -5822,9 +5328,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            492 =>
-            array(
+            ],
+            492 => [
 
                 'pdf' => '11-04-2023493CFDI_S000000874.pdf',
                 'xml' => '11-04-2023493CFDI_S000000874.xml',
@@ -5834,9 +5339,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            493 =>
-            array(
+            ],
+            493 => [
 
                 'pdf' => '11-04-2023494CSE750917BG3SS0000000932.pdf',
                 'xml' => '11-04-2023494CSE750917BG3SS0000000932.xml',
@@ -5846,9 +5350,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            494 =>
-            array(
+            ],
+            494 => [
 
                 'pdf' => '11-04-2023495CSE750917BG3SS0000000958.pdf',
                 'xml' => '11-04-2023495CSE750917BG3SS0000000958.xml',
@@ -5858,9 +5361,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            495 =>
-            array(
+            ],
+            495 => [
 
                 'pdf' => '11-04-2023496CSE750917BG3SS0000000990.pdf',
                 'xml' => '11-04-2023496CSE750917BG3SS0000000990.xml',
@@ -5870,9 +5372,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            496 =>
-            array(
+            ],
+            496 => [
 
                 'pdf' => '11-04-2023497CSE750917BG3SS0000001029.pdf',
                 'xml' => '11-04-2023497CSE750917BG3SS0000001029.xml',
@@ -5882,9 +5383,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            497 =>
-            array(
+            ],
+            497 => [
 
                 'pdf' => '11-04-2023498CSE750917BG3SS0000001030.pdf',
                 'xml' => '11-04-2023498CSE750917BG3SS0000001030.xml',
@@ -5894,9 +5394,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            498 =>
-            array(
+            ],
+            498 => [
 
                 'pdf' => '11-04-2023499CFDI_S000000854.pdf',
                 'xml' => '11-04-2023499CFDI_S000000854.xml',
@@ -5906,9 +5405,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            499 =>
-            array(
+            ],
+            499 => [
 
                 'pdf' => '11-04-2023500OPE070326DNASS0000001041.pdf',
                 'xml' => '11-04-2023500OPE070326DNASS0000001041.xml',
@@ -5918,11 +5416,10 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-        ));
-        \DB::table('facturas_files')->insert(array(
-            0 =>
-            array(
+            ],
+        ]);
+        \DB::table('facturas_files')->insert([
+            0 => [
 
                 'pdf' => '11-04-2023501OPE070326DNASS0000001042.pdf',
                 'xml' => '11-04-2023501OPE070326DNASS0000001042.xml',
@@ -5932,9 +5429,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            1 =>
-            array(
+            ],
+            1 => [
 
                 'pdf' => '16-05-2023502OPE070326DNASS0000001081.pdf',
                 'xml' => '16-05-2023502OPE070326DNASS0000001081.xml',
@@ -5944,9 +5440,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            2 =>
-            array(
+            ],
+            2 => [
 
                 'pdf' => '11-04-2023503OPE070326DNASS0000001106.pdf',
                 'xml' => '11-04-2023503OPE070326DNASS0000001106.xml',
@@ -5956,9 +5451,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            3 =>
-            array(
+            ],
+            3 => [
 
                 'pdf' => '11-04-2023504OPE070326DNASS0000001106.pdf',
                 'xml' => '11-04-2023504OPE070326DNASS0000001106.xml',
@@ -5968,9 +5462,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            4 =>
-            array(
+            ],
+            4 => [
 
                 'pdf' => '11-04-2023505OPE070326DNASS0000001107.pdf',
                 'xml' => '11-04-2023505OPE070326DNASS0000001107.xml',
@@ -5980,9 +5473,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            5 =>
-            array(
+            ],
+            5 => [
 
                 'pdf' => '11-04-2023506OPE070326DNASS0000001108.pdf',
                 'xml' => '11-04-2023506OPE070326DNASS0000001108.xml',
@@ -5992,9 +5484,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            6 =>
-            array(
+            ],
+            6 => [
 
                 'pdf' => '11-04-2023507OPE070326DNASS0000001110.pdf',
                 'xml' => '11-04-2023507OPE070326DNASS0000001110.xml',
@@ -6004,9 +5495,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            7 =>
-            array(
+            ],
+            7 => [
 
                 'pdf' => '11-04-2023508ASE120613F72FC0000000017.pdf',
                 'xml' => '11-04-2023508ASE120613F72FC0000000017.xml',
@@ -6016,9 +5506,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            8 =>
-            array(
+            ],
+            8 => [
 
                 'pdf' => '11-04-2023509CRE9510319D3SS0000000995.pdf',
                 'xml' => '11-04-2023509CRE9510319D3SS0000000995.xml',
@@ -6028,9 +5517,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            9 =>
-            array(
+            ],
+            9 => [
 
                 'pdf' => '11-04-2023510CRE9510319D3SS0000001091.pdf',
                 'xml' => '11-04-2023510CRE9510319D3SS0000001091.xml',
@@ -6040,9 +5528,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            10 =>
-            array(
+            ],
+            10 => [
 
                 'pdf' => '11-04-2023511TEP961122B8ASS0000000918.pdf',
                 'xml' => '11-04-2023511TEP961122B8ASS0000000918.xml',
@@ -6052,9 +5539,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            11 =>
-            array(
+            ],
+            11 => [
 
                 'pdf' => '11-04-2023512TEP961122B8ASS0000001078.pdf',
                 'xml' => '11-04-2023512TEP961122B8ASS0000001078.xml',
@@ -6064,9 +5550,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            12 =>
-            array(
+            ],
+            12 => [
 
                 'pdf' => '11-04-2023513TEP961122B8ASS0000001111.pdf',
                 'xml' => '11-04-2023513TEP961122B8ASS0000001111.xml',
@@ -6076,9 +5561,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            13 =>
-            array(
+            ],
+            13 => [
 
                 'pdf' => '12-04-2023514CFDI_S000000835.pdf',
                 'xml' => '12-04-2023514CFDI_S000000835.xml',
@@ -6088,9 +5572,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            14 =>
-            array(
+            ],
+            14 => [
 
                 'pdf' => '12-04-2023515CFDI_S000000879.pdf',
                 'xml' => '12-04-2023515CFDI_S000000879.xml',
@@ -6100,9 +5583,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            15 =>
-            array(
+            ],
+            15 => [
 
                 'pdf' => '12-04-2023516CFDI_S000000775.pdf',
                 'xml' => '12-04-2023516CFDI_S000000775.xml',
@@ -6112,9 +5594,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            16 =>
-            array(
+            ],
+            16 => [
 
                 'pdf' => '12-04-2023517CFDI_C000000097.pdf',
                 'xml' => '12-04-2023517CFDI_C000000097.xml',
@@ -6124,9 +5605,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            17 =>
-            array(
+            ],
+            17 => [
 
                 'pdf' => '13-04-2023518CFDI_S000000505.pdf',
                 'xml' => '13-04-2023518CFDI_S000000505.xml',
@@ -6136,9 +5616,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            18 =>
-            array(
+            ],
+            18 => [
 
                 'pdf' => '13-04-2023519Silentbusiness.pdf',
                 'xml' => '13-04-2023519655B9492-E9E4-4C93-B4F5-A523CD74E81F.xml',
@@ -6148,9 +5627,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 1,
                 'updated_by' => 1,
-            ),
-            19 =>
-            array(
+            ],
+            19 => [
 
                 'pdf' => '14-04-2023520FNP070401RN9SS0000001028.pdf',
                 'xml' => '14-04-2023520FNP070401RN9SS0000001028.xml',
@@ -6160,9 +5638,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            20 =>
-            array(
+            ],
+            20 => [
 
                 'pdf' => '26-04-2023521FNP070401RN9SS0000001028.pdf',
                 'xml' => '26-04-2023521FNP070401RN9SS0000001028.xml',
@@ -6172,9 +5649,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 20,
-            ),
-            21 =>
-            array(
+            ],
+            21 => [
 
                 'pdf' => '14-04-2023522CFDI_S000000721.pdf',
                 'xml' => '14-04-2023522CFDI_S000000721.xml',
@@ -6184,9 +5660,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            22 =>
-            array(
+            ],
+            22 => [
 
                 'pdf' => '14-04-2023523ASF001230TS2SS0000000903.pdf',
                 'xml' => '14-04-2023523ASF001230TS2SS0000000903.xml',
@@ -6196,9 +5671,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            23 =>
-            array(
+            ],
+            23 => [
 
                 'pdf' => '14-04-2023524ASF001230TS2SS0000000969.pdf',
                 'xml' => '14-04-2023524ASF001230TS2SS0000000969.xml',
@@ -6208,9 +5682,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            24 =>
-            array(
+            ],
+            24 => [
 
                 'pdf' => '14-04-2023525ASF001230TS2SS0000001031.pdf',
                 'xml' => '14-04-2023525ASF001230TS2SS0000001031.xml',
@@ -6220,9 +5693,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            25 =>
-            array(
+            ],
+            25 => [
 
                 'pdf' => '14-04-2023526BVM951002LX0SS0000000920.pdf',
                 'xml' => '14-04-2023526BVM951002LX0SS0000000920.xml',
@@ -6232,11 +5704,10 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            26 =>
-            array(
+            ],
+            26 => [
 
-                'pdf' => NULL,
+                'pdf' => null,
                 'xml' => '14-04-2023527BVM951002LX0SS0000000919.xml',
                 'factura_id' => 527,
                 'created_at' => '2023-04-14 15:53:41',
@@ -6244,9 +5715,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            27 =>
-            array(
+            ],
+            27 => [
 
                 'pdf' => '14-04-2023528BVM951002LX0SS0000001085.pdf',
                 'xml' => '14-04-2023528BVM951002LX0SS0000001085.xml',
@@ -6256,9 +5726,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            28 =>
-            array(
+            ],
+            28 => [
 
                 'pdf' => '14-04-2023529BVM951002LX0SS0000001086.pdf',
                 'xml' => '14-04-2023529BVM951002LX0SS0000001086.xml',
@@ -6268,21 +5737,19 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            29 =>
-            array(
+            ],
+            29 => [
 
-                'pdf' => NULL,
-                'xml' => NULL,
+                'pdf' => null,
+                'xml' => null,
                 'factura_id' => 530,
                 'created_at' => '2023-04-14 15:58:28',
                 'updated_at' => '2023-04-14 15:58:28',
                 'deleted_at' => null,
                 'created_by' => 19,
-                'updated_by' => NULL,
-            ),
-            30 =>
-            array(
+                'updated_by' => null,
+            ],
+            30 => [
 
                 'pdf' => '14-04-2023531BVM951002LX0SS0000001104.pdf',
                 'xml' => '14-04-2023531BVM951002LX0SS0000001103.xml',
@@ -6292,9 +5759,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            31 =>
-            array(
+            ],
+            31 => [
 
                 'pdf' => '17-04-2023532SEP1312171X9SS0000001090.pdf',
                 'xml' => '17-04-2023532SEP1312171X9SS0000001090.xml',
@@ -6304,9 +5770,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            32 =>
-            array(
+            ],
+            32 => [
 
                 'pdf' => '17-04-2023533BID100428IX6SS0000000906.pdf',
                 'xml' => '17-04-2023533BID100428IX6SS0000000906.xml',
@@ -6316,9 +5781,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            33 =>
-            array(
+            ],
+            33 => [
 
                 'pdf' => '17-04-2023534BID100428IX6SS0000000962.pdf',
                 'xml' => '17-04-2023534BID100428IX6SS0000000962.xml',
@@ -6328,9 +5792,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            34 =>
-            array(
+            ],
+            34 => [
 
                 'pdf' => '17-04-2023535BID100428IX6SS0000000980.pdf',
                 'xml' => '17-04-2023535BID100428IX6SS0000000980.xml',
@@ -6340,9 +5803,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            35 =>
-            array(
+            ],
+            35 => [
 
                 'pdf' => '17-04-2023536BID100428IX6SS0000001019.pdf',
                 'xml' => '17-04-2023536BID100428IX6SS0000001019.xml',
@@ -6352,9 +5814,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            36 =>
-            array(
+            ],
+            36 => [
 
                 'pdf' => '17-04-2023537BID100428IX6SS0000000914.pdf',
                 'xml' => '17-04-2023537BID100428IX6SS0000000914.xml',
@@ -6364,9 +5825,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            37 =>
-            array(
+            ],
+            37 => [
 
                 'pdf' => '17-04-2023538BID100428IX6SS0000000991.pdf',
                 'xml' => '17-04-2023538BID100428IX6SS0000000991.xml',
@@ -6376,9 +5836,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            38 =>
-            array(
+            ],
+            38 => [
 
                 'pdf' => '17-04-2023539BMV760203JD4SS0000000891.pdf',
                 'xml' => '17-04-2023539BMV760203JD4SS0000000891.xml',
@@ -6388,9 +5847,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            39 =>
-            array(
+            ],
+            39 => [
 
                 'pdf' => '17-04-2023540BMV760203JD4SS0000000907.pdf',
                 'xml' => '17-04-2023540BMV760203JD4SS0000000907.xml',
@@ -6400,9 +5858,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            40 =>
-            array(
+            ],
+            40 => [
 
                 'pdf' => '17-04-2023541BMV760203JD4SS0000000977.pdf',
                 'xml' => '17-04-2023541BMV760203JD4SS0000000977.xml',
@@ -6412,9 +5869,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            41 =>
-            array(
+            ],
+            41 => [
 
                 'pdf' => '17-04-2023542BMV760203JD4SS0000001020.pdf',
                 'xml' => '17-04-2023542BMV760203JD4SS0000001020.xml',
@@ -6424,9 +5880,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            42 =>
-            array(
+            ],
+            42 => [
 
                 'pdf' => '17-04-2023543BMV760203JD4SS0000001034.pdf',
                 'xml' => '17-04-2023543BMV760203JD4SS0000001034.xml',
@@ -6436,9 +5891,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            43 =>
-            array(
+            ],
+            43 => [
 
                 'pdf' => '17-04-2023544BMV760203JD4SS0000000940.pdf',
                 'xml' => '17-04-2023544BMV760203JD4SS0000000940.xml',
@@ -6448,9 +5902,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            44 =>
-            array(
+            ],
+            44 => [
 
                 'pdf' => '17-04-2023545BMV760203JD4SS0000000921.pdf',
                 'xml' => '17-04-2023545BMV760203JD4SS0000000921.xml',
@@ -6460,9 +5913,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            45 =>
-            array(
+            ],
+            45 => [
 
                 'pdf' => '17-04-2023546INE0804164Z7SS0000000938.pdf',
                 'xml' => '17-04-2023546INE0804164Z7SS0000000938.xml',
@@ -6472,9 +5924,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            46 =>
-            array(
+            ],
+            46 => [
 
                 'pdf' => '17-04-2023547INE0804164Z7SS0000000966.pdf',
                 'xml' => '17-04-2023547INE0804164Z7SS0000000966.xml',
@@ -6484,9 +5935,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            47 =>
-            array(
+            ],
+            47 => [
 
                 'pdf' => '17-04-2023548INE0804164Z7SS0000000978.pdf',
                 'xml' => '17-04-2023548INE0804164Z7SS0000000978.xml',
@@ -6496,9 +5946,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            48 =>
-            array(
+            ],
+            48 => [
 
                 'pdf' => '17-04-2023549INE0804164Z7SS0000001021.pdf',
                 'xml' => '17-04-2023549INE0804164Z7SS0000001021.xml',
@@ -6508,9 +5957,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            49 =>
-            array(
+            ],
+            49 => [
 
                 'pdf' => '17-04-2023550INE0804164Z7SS0000000993.pdf',
                 'xml' => '17-04-2023550INE0804164Z7SS0000000993.xml',
@@ -6520,9 +5968,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            50 =>
-            array(
+            ],
+            50 => [
 
                 'pdf' => '17-04-2023551INE0804164Z7SS0000000993.pdf',
                 'xml' => '17-04-2023551INE0804164Z7SS0000000993.xml',
@@ -6532,9 +5979,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            51 =>
-            array(
+            ],
+            51 => [
 
                 'pdf' => '17-04-2023552INE0804164Z7SS0000001095.pdf',
                 'xml' => '17-04-2023552INE0804164Z7SS0000001095.xml',
@@ -6544,9 +5990,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            52 =>
-            array(
+            ],
+            52 => [
 
                 'pdf' => '17-04-2023553INE0804164Z7SS0000001112.pdf',
                 'xml' => '17-04-2023553INE0804164Z7SS0000001112.xml',
@@ -6556,9 +6001,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            53 =>
-            array(
+            ],
+            53 => [
 
                 'pdf' => '17-04-2023554VTA140911DP6FC0000000031.pdf',
                 'xml' => '17-04-2023554VTA140911DP6FC0000000031.xml',
@@ -6568,9 +6012,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            54 =>
-            array(
+            ],
+            54 => [
 
                 'pdf' => '17-04-2023555VTA140911DP6FC0000000034.pdf',
                 'xml' => '17-04-2023555VTA140911DP6FC0000000034.xml',
@@ -6580,9 +6023,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            55 =>
-            array(
+            ],
+            55 => [
 
                 'pdf' => '17-04-2023556VTA140911DP6FC0000000041.pdf',
                 'xml' => '17-04-2023556VTA140911DP6FC0000000041.xml',
@@ -6592,9 +6034,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            56 =>
-            array(
+            ],
+            56 => [
 
                 'pdf' => '17-04-2023557DCO8009185Y9FC0000000009.pdf',
                 'xml' => '17-04-2023557DCO8009185Y9FC0000000009.xml',
@@ -6604,9 +6045,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            57 =>
-            array(
+            ],
+            57 => [
 
                 'pdf' => '17-04-2023558DCO8009185Y9FC0000000010.pdf',
                 'xml' => '17-04-2023558DCO8009185Y9FC0000000010.xml',
@@ -6616,9 +6056,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            58 =>
-            array(
+            ],
+            58 => [
 
                 'pdf' => '17-04-2023559DCO8009185Y9FC0000000032.pdf',
                 'xml' => '17-04-2023559DCO8009185Y9FC0000000032.xml',
@@ -6628,9 +6067,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            59 =>
-            array(
+            ],
+            59 => [
 
                 'pdf' => '17-04-2023560DCO8009185Y9FC0000000039.pdf',
                 'xml' => '17-04-2023560DCO8009185Y9FC0000000039.xml',
@@ -6640,9 +6078,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            60 =>
-            array(
+            ],
+            60 => [
 
                 'pdf' => '18-04-2023561SAE030617SV8SS0000000892.pdf',
                 'xml' => '18-04-2023561SAE030617SV8SS0000000892.xml',
@@ -6652,9 +6089,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            61 =>
-            array(
+            ],
+            61 => [
 
                 'pdf' => '18-04-2023562SAE030617SV8SS0000000910.pdf',
                 'xml' => '18-04-2023562SAE030617SV8SS0000000910.xml',
@@ -6664,9 +6100,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            62 =>
-            array(
+            ],
+            62 => [
 
                 'pdf' => '18-04-2023563SAE030617SV8SS0000000979.pdf',
                 'xml' => '18-04-2023563SAE030617SV8SS0000000979.xml',
@@ -6676,9 +6111,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            63 =>
-            array(
+            ],
+            63 => [
 
                 'pdf' => '18-04-2023564SAE030617SV8SS0000001003.pdf',
                 'xml' => '18-04-2023564SAE030617SV8SS0000001003.xml',
@@ -6688,9 +6122,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            64 =>
-            array(
+            ],
+            64 => [
 
                 'pdf' => '18-04-2023565SAE030617SV8SS0000001004.pdf',
                 'xml' => '18-04-2023565SAE030617SV8SS0000001004.xml',
@@ -6700,9 +6133,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            65 =>
-            array(
+            ],
+            65 => [
 
                 'pdf' => '18-04-2023566SAE030617SV8SS0000001006.pdf',
                 'xml' => '18-04-2023566SAE030617SV8SS0000001006.xml',
@@ -6712,9 +6144,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            66 =>
-            array(
+            ],
+            66 => [
 
                 'pdf' => '18-04-2023567SAE030617SV8SS0000001100.pdf',
                 'xml' => '18-04-2023567SAE030617SV8SS0000001100.xml',
@@ -6724,9 +6155,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            67 =>
-            array(
+            ],
+            67 => [
 
                 'pdf' => '18-04-2023568SAE030617SV8SS0000001117.pdf',
                 'xml' => '18-04-2023568SAE030617SV8SS0000001117.xml',
@@ -6736,21 +6166,19 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            68 =>
-            array(
+            ],
+            68 => [
 
-                'pdf' => NULL,
-                'xml' => NULL,
+                'pdf' => null,
+                'xml' => null,
                 'factura_id' => 569,
                 'created_at' => '2023-04-18 10:40:10',
                 'updated_at' => '2023-04-18 10:40:10',
                 'deleted_at' => null,
                 'created_by' => 2,
-                'updated_by' => NULL,
-            ),
-            69 =>
-            array(
+                'updated_by' => null,
+            ],
+            69 => [
 
                 'pdf' => '05-05-2023570Diagrama de Proceso de Atención Interno de Desarrollo_v1.0.pdf',
                 'xml' => null,
@@ -6760,9 +6188,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 2,
                 'updated_by' => 2,
-            ),
-            70 =>
-            array(
+            ],
+            70 => [
 
                 'pdf' => '18-04-2023571ASF001230TS2SS0000001023.pdf',
                 'xml' => '18-04-2023571ASF001230TS2SS0000001023.xml',
@@ -6772,9 +6199,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 15,
                 'updated_by' => 15,
-            ),
-            71 =>
-            array(
+            ],
+            71 => [
 
                 'pdf' => '18-04-2023572SNS960412AH4SS0000001113.pdf',
                 'xml' => '18-04-2023572SNS960412AH4SS0000001113.xml',
@@ -6784,9 +6210,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            72 =>
-            array(
+            ],
+            72 => [
 
                 'pdf' => '18-04-2023573CRE9510319D3SS0000001114.pdf',
                 'xml' => '18-04-2023573CRE9510319D3SS0000001114.xml',
@@ -6796,9 +6221,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            73 =>
-            array(
+            ],
+            73 => [
 
                 'pdf' => '18-04-2023574CSE750917BG3SS0000001118.pdf',
                 'xml' => '18-04-2023574CSE750917BG3SS0000001118.xml',
@@ -6808,9 +6232,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            74 =>
-            array(
+            ],
+            74 => [
 
                 'pdf' => '20-04-2023575PPL961114GZ1SS0000001077.pdf',
                 'xml' => '20-04-2023575PPL961114GZ1SS0000001077.xml',
@@ -6820,9 +6243,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            75 =>
-            array(
+            ],
+            75 => [
 
                 'pdf' => '24-04-2023576CFDI_S000000875.pdf',
                 'xml' => '24-04-2023576CFDI_S000000875.xml',
@@ -6832,9 +6254,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            76 =>
-            array(
+            ],
+            76 => [
 
                 'pdf' => '24-04-2023577SEN9412287J6SS0000000936.pdf',
                 'xml' => '24-04-2023577SEN9412287J6SS0000000936.xml',
@@ -6844,9 +6265,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            77 =>
-            array(
+            ],
+            77 => [
 
                 'pdf' => '24-04-2023578SEN9412287J6SS0000000952.pdf',
                 'xml' => '24-04-2023578SEN9412287J6SS0000000952.xml',
@@ -6856,9 +6276,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            78 =>
-            array(
+            ],
+            78 => [
 
                 'pdf' => '24-04-2023579SEN9412287J6SS0000000981.pdf',
                 'xml' => '24-04-2023579SEN9412287J6SS0000000981.xml',
@@ -6868,9 +6287,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            79 =>
-            array(
+            ],
+            79 => [
 
                 'pdf' => '24-04-2023580SEN9412287J6SS0000001013.pdf',
                 'xml' => '24-04-2023580SEN9412287J6SS0000001013.xml',
@@ -6880,9 +6298,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            80 =>
-            array(
+            ],
+            80 => [
 
                 'pdf' => '24-04-2023581PPL961114GZ1SS0000001121.pdf',
                 'xml' => '24-04-2023581PPL961114GZ1SS0000001121.xml',
@@ -6892,9 +6309,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            81 =>
-            array(
+            ],
+            81 => [
 
                 'pdf' => '24-04-2023582FNP070401RN9SS0000000877 Ampliación.pdf',
                 'xml' => '24-04-2023582FNP070401RN9SS0000000877.xml',
@@ -6904,9 +6320,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            82 =>
-            array(
+            ],
+            82 => [
 
                 'pdf' => '26-04-2023583CFDI_S000000775.pdf',
                 'xml' => '26-04-2023583CFDI_S000000775.xml',
@@ -6916,9 +6331,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            83 =>
-            array(
+            ],
+            83 => [
 
                 'pdf' => '27-04-2023584CFDI_S000000632.pdf',
                 'xml' => '27-04-2023584CFDI_S000000632.xml',
@@ -6928,9 +6342,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 20,
                 'updated_by' => 20,
-            ),
-            84 =>
-            array(
+            ],
+            84 => [
 
                 'pdf' => '09-05-2023585HFE011011HH1SS0000001096.pdf',
                 'xml' => '09-05-2023585HFE011011HH1SS0000001096.xml',
@@ -6940,9 +6353,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            85 =>
-            array(
+            ],
+            85 => [
 
                 'pdf' => '16-05-2023586TEP961122B8ASS0000001126.pdf',
                 'xml' => '16-05-2023586TEP961122B8ASS0000001126.xml',
@@ -6952,9 +6364,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            86 =>
-            array(
+            ],
+            86 => [
 
                 'pdf' => '16-05-2023587CRE9510319D3SS0000001128.pdf',
                 'xml' => '16-05-2023587CRE9510319D3SS0000001128.xml',
@@ -6964,9 +6375,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            87 =>
-            array(
+            ],
+            87 => [
 
                 'pdf' => '16-05-2023588SNS960412AH4SS0000001130.pdf',
                 'xml' => '16-05-2023588SNS960412AH4SS0000001130.xml',
@@ -6976,9 +6386,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            88 =>
-            array(
+            ],
+            88 => [
 
                 'pdf' => '16-05-2023589CSE750917BG3SS0000001131.pdf',
                 'xml' => '16-05-2023589CSE750917BG3SS0000001131.xml',
@@ -6988,9 +6397,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            89 =>
-            array(
+            ],
+            89 => [
 
                 'pdf' => '31-05-2023590CFDI_S000000776.pdf',
                 'xml' => '31-05-2023590CFDI_S000000776.xml',
@@ -7000,9 +6408,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 18,
                 'updated_by' => 18,
-            ),
-            90 =>
-            array(
+            ],
+            90 => [
 
                 'pdf' => '20-06-2023591SNS960412AH4SS0000001141.pdf',
                 'xml' => '20-06-2023591SNS960412AH4SS0000001141.xml',
@@ -7012,9 +6419,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            91 =>
-            array(
+            ],
+            91 => [
 
                 'pdf' => '20-06-2023592CRE9510319D3SS0000001140.pdf',
                 'xml' => '20-06-2023592CRE9510319D3SS0000001140.xml',
@@ -7024,9 +6430,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            92 =>
-            array(
+            ],
+            92 => [
 
                 'pdf' => '20-06-2023593TEP961122B8ASS0000001139.pdf',
                 'xml' => '20-06-2023593TEP961122B8ASS0000001139.xml',
@@ -7036,9 +6441,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 17,
                 'updated_by' => 17,
-            ),
-            93 =>
-            array(
+            ],
+            93 => [
 
                 'pdf' => '11-07-2023594PME380607P35SS0000001119.pdf',
                 'xml' => '11-07-2023594PME380607P35SS0000001119.xml',
@@ -7048,9 +6452,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            94 =>
-            array(
+            ],
+            94 => [
 
                 'pdf' => '11-07-2023595PME380607P35SS0000001134.pdf',
                 'xml' => '11-07-2023595PME380607P35SS0000001134.xml',
@@ -7060,9 +6463,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            95 =>
-            array(
+            ],
+            95 => [
 
                 'pdf' => '11-07-2023596PME380607P35SS0000001147.pdf',
                 'xml' => '11-07-2023596PME380607P35SS0000001147.xml',
@@ -7072,9 +6474,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            96 =>
-            array(
+            ],
+            96 => [
 
                 'pdf' => '11-07-2023597BVM951002LX0SS0000001137.pdf',
                 'xml' => '11-07-2023597BVM951002LX0SS0000001137.xml',
@@ -7084,9 +6485,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            97 =>
-            array(
+            ],
+            97 => [
 
                 'pdf' => '11-07-2023598BVM951002LX0SS0000001138.pdf',
                 'xml' => '11-07-2023598BVM951002LX0SS0000001138.xml',
@@ -7096,9 +6496,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            98 =>
-            array(
+            ],
+            98 => [
 
                 'pdf' => '11-07-2023599BVM951002LX0SS0000001154.pdf',
                 'xml' => '11-07-2023599BVM951002LX0SS0000001154.xml',
@@ -7108,9 +6507,8 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-            99 =>
-            array(
+            ],
+            99 => [
 
                 'pdf' => '11-07-2023600BVM951002LX0SS0000001155.pdf',
                 'xml' => '11-07-2023600BVM951002LX0SS0000001155.xml',
@@ -7120,7 +6518,7 @@ class FacturasFilesTableSeeder extends Seeder
                 'deleted_at' => null,
                 'created_by' => 19,
                 'updated_by' => 19,
-            ),
-        ));
+            ],
+        ]);
     }
 }

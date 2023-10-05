@@ -56,10 +56,9 @@ class CentroCostosController extends Controller
      */
     public function store(Request $request)
     {
-
         $centro = new CentroCosto();
         $centro->descripcion = $request->descripcion;
-        $centro->clave =  $request->clave;
+        $centro->clave = $request->clave;
         $centro->save();
 
         return redirect('/contract_manager/centro-costos');

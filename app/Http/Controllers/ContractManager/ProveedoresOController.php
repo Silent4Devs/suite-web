@@ -56,7 +56,6 @@ class ProveedoresOController extends Controller
      */
     public function store(Request $request)
     {
-
         $proveedores = new ProveedorOC();
         $proveedores->nombre = $request->nombre;
         $proveedores->razon_social = $request->razon_social;

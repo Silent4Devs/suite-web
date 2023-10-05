@@ -56,7 +56,6 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-
         $productos = new Producto();
         $productos->descripcion = $request->descripcion;
         $productos->clave = $request->clave;
