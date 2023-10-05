@@ -426,7 +426,7 @@
 
     </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/2.3.3/signature_pad.min.js"></script>
 @endsection
 @section('scripts')
 <script>
