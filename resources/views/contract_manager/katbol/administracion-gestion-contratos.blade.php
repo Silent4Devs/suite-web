@@ -44,7 +44,7 @@
             <li><a href="{{ route('contract_manager.sucursales.index') }}">
                     <div>
                         <i class="fa-solid fa-building-user"></i>
-                        Sucursales
+                        Razón Social
                     </div>
                 </a></li>
         @endcan
