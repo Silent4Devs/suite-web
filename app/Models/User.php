@@ -62,8 +62,8 @@ class User extends Authenticatable implements Auditable
     //Redis methods
     public static function getAll()
     {
-        return Cache::remember('users_all', 3600 * 24, function () {
-            return self::get();
+        return Cache::remember('Users:users_all', 3600 * 13, function () {
+            return self::select('name', 'n_empleado', 'email', 'approved', 'verified', 'organizacion_id', 'area_id', 'puesto_id', 'is_active', 'empleado_id')->get();
         });
     }
 
