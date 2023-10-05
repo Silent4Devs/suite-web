@@ -58,7 +58,7 @@ class RequisicionesController extends Controller
 
         $id = Auth::user()->id;
         $roles = ModelsUser::find($id)->roles()->get();
-        dd($requisiciones, $requisiciones_solicitante, $roles);
+
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
                 return view('contract_manager.requisiciones.index', compact('ids', 'requisiciones', 'proveedor_indistinto', 'empresa_actual', 'logo_actual'));
