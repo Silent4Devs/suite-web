@@ -95,12 +95,13 @@ class DatabaseSeeder extends Seeder
                 // MonedasTableSeeder::class,
                 // ProveedorOCSTableSeeder::class,
                 // CompradoresSeeder::class,
-                RequsicionesTableSeeder::class,
-                ProductosRequisicionTableSeeder::class,
-                ProveedoresRequisicionesCatalogosTableSeeder::class,
-                ProveedorIndistintosTableSeeder::class,
+                // RequsicionesTableSeeder::class,
+                // ProductosRequisicionTableSeeder::class,
+                // ProveedoresRequisicionesCatalogosTableSeeder::class,
+                // ProveedorIndistintosTableSeeder::class,
+                ProveedorRequisicionsTableSeeder::class,
                 // PermisosKatbol::class,
-                DashboardGestionContratosSeeder::class,
+                // DashboardGestionContratosSeeder::class,
 
                 //kaans
                 // PermisosEscuelaInstructorSeeder::class,
