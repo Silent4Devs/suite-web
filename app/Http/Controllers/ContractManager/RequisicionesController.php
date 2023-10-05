@@ -36,7 +36,7 @@ class RequisicionesController extends Controller
     {
         abort_if(Gate::denies('katbol_requisiciones_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $requisiciones = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato')->orderByDesc('id')->where('archivo', false)->get();
+        $requisiciones = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -45,7 +45,7 @@ class RequisicionesController extends Controller
         $requisiciones_solicitante = null;
         $id = User::getCurrentUser()->id;
 
-        $requisiciones_solicitante = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
+        $requisiciones_solicitante = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
@@ -70,7 +70,7 @@ class RequisicionesController extends Controller
 
     public function getRequisicionIndex(Request $request)
     {
-        $requisiciones = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato')->where('archivo', false)->orderByDesc('id')->get();
+        $requisiciones = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
 
         return datatables()->of($requisiciones)->toJson();
     }
@@ -78,7 +78,7 @@ class RequisicionesController extends Controller
     public function getRequisicionIndexSolicitante(Request $request)
     {
         $id = User::getCurrentUser()->id;
-        $requisiciones_solicitante = KatbolRequsicion::with('contrato')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
+        $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
         return datatables()->of($requisiciones_solicitante)->toJson();
     }

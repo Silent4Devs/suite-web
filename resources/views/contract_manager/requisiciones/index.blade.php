@@ -18,7 +18,7 @@
 
         <div class="card-body datatable-fix">
 
-            <table class="table table-bordered w-100 ">
+            <table class="table table-bordered w-100 datatable-Requisiciones">
                 <thead class="thead-dark">
                     <tr>
 
