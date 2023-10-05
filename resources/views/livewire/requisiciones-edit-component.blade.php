@@ -1615,7 +1615,7 @@
     </script>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/2.3.3/signature_pad.min.js"></script>
 
 
     @section('scripts')
@@ -1623,6 +1623,7 @@
             $(".not-select2").select2('destroy');
         </script>
         <script>
+            //termino
             Livewire.on('render_firma', (id_tab) => {
                 var signaturePad = $('#firma_content').signature({
                     syncField: '#firma',
