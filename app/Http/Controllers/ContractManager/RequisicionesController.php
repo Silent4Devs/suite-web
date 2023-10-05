@@ -56,6 +56,7 @@ class RequisicionesController extends Controller
             $ids = $id;
         }
 
+        $id = Auth::user()->id;
         $roles = ModelsUser::find($id)->roles()->get();
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
