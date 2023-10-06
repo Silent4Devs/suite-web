@@ -8,28 +8,27 @@
         .table tr td:nth-child(4) {
             min-width: 200px !important;
         }
-
     </style>
-     @include('flash::message')
-     @include('partials.flashMessages')
+    @include('flash::message')
+    @include('partials.flashMessages')
     <h5 class="col-12 titulo_general_funcion">Usuarios</h5>
     <div class="mt-5 card">
 
         <div class="d-flex justify-content-between" style="justify-content: flex-end !important;">
 
             <div class="p-2">
-                <a href={{ route('admin.users.eliminados')}}
-                    class="btn btn-danger" role="button" aria-pressed="true">
+                <a href={{ route('admin.users.eliminados') }} class="btn btn-danger" role="button" aria-pressed="true">
                     <i class="fas fa-user-slash"></i>&nbsp &nbsp Usuarios eliminados</a>
             </div>
 
-    </div>
+        </div>
 
         <div class="card-body datatable-fix">
 
 
             @if (!$existsVinculoEmpleadoAdmin)
-                <h5>Por favor da clic en el icono <small class="p-1 border border-primary rounded"><i class="fas fa-user-tag"></i></small> de la fila del usuario Admin</h5>
+                <h5>Por favor da clic en el icono <small class="p-1 border border-primary rounded"><i
+                            class="fas fa-user-tag"></i></small> de la fila del usuario Admin</h5>
             @endif
             <table class="table table-bordered w-100 datatable-User">
                 <thead class="thead-dark">
@@ -58,6 +57,11 @@
                         </th>
                     </tr>
                 </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -311,12 +315,12 @@
                                                 <p><strong>Empleado vinculado actualmente:</strong> ${row.empleado?.name?row.empleado?.name:"Sin vincular"}</p>
                                                 <select name="n_empleado" id="n_empleado${data}" class="select2">
                                                     <option value="" selected disabled>-- Selecciona el empleado a vincular --</option>`;
-                                                    empleados.forEach(empleado => {
-                                                        htmlBotones += `
+                            empleados.forEach(empleado => {
+                                htmlBotones += `
                                                             <option value="${empleado.n_empleado != null ? `NEMPLEADO-${empleado.n_empleado}`:`IDEMPLEADO-${empleado.id}`}">${empleado.name}</option>
                                                         `;
-                                                    });
-                                                htmlBotones += `</select>
+                            });
+                            htmlBotones += `</select>
                                                 <span class="text-sm n_empleado_error errores text-danger"></span>
                                             </div>
                                             <div class="modal-footer">
