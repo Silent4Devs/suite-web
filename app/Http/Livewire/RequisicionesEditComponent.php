@@ -309,7 +309,7 @@ class RequisicionesEditComponent extends Component
 
             Mail::to(trim($this->removeUnicodeCharacters($supervisor)))->send(new RequisicionesEmail($this->editrequisicion, $organizacion, $tipo_firma));
 
-            return redirect(route('requisiciones'));
+            return redirect(route('contract_manager.requisiciones'));
         }
     }
 
