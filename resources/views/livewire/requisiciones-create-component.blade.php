@@ -797,58 +797,6 @@
                     $('#firma').val(dataUrl);
                 });
 
-                if (document.getElementById('firma_content')) {
-                    document.getElementById('firma_content').addEventListener('click', (e) => {
-                        if (e.target.getAttribute('data-action') == 'firmar') {
-
-                            e.preventDefault();
-                            let btnId = e.target.getAttribute('id');
-                            let canvasId = btnId.replaceAll('guardar', 'canvas');
-                            let controlCambios = '';
-                            let url = "{{ route('admin.planificacion-controls.firma-aprobacion') }}";
-                            var canvas = document.getElementById(canvasId);
-                            var dataUrl = canvas.toDataURL();
-                            let tipo = e.target.getAttribute('data-tipo');
-                            var data = {
-                                id: controlCambios.id,
-                                tipo,
-                                firma: '',
-                            };
-                            var isCanvasEmptySigned = isCanvasEmpty(canvas);
-                            if (isCanvasEmptySigned) {
-                                toastr.info('Firma(s) no dibujadas');
-                            } else {
-                                data['firma'] = dataUrl;
-
-                            }
-                            console.log(data);
-                            if (!isCanvasEmptySigned) {
-                                $.ajax({
-                                    headers: {
-                                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                                    },
-                                    type: "POST",
-                                    data: data,
-                                    url: url,
-
-                                    success: function(response) {
-                                        if (response.success) {
-                                            toastr.success('Firmado con éxito');
-                                            setTimeout(() => {
-                                                window.location.reload();
-                                            }, 1500);
-                                        }
-                                    },
-                                    error: function(request, status, error) {
-                                        toastr.error(
-                                            'Ocurrió un error: ' + error);
-                                    }
-                                });
-                            }
-                        }
-                    })
-                }
-
                 function renderCanvas(contenedor, clearBtnCanvas) {
 
                     var canvas = document.getElementById(contenedor);
