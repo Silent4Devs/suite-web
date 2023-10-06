@@ -342,8 +342,12 @@
         }
     }
 </script>
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
+
+
+
 @endsection
 @section('scripts')
 <script>

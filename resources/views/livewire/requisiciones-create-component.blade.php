@@ -680,6 +680,9 @@
                             <div class="flex caja-firmar" wire:ignore>
                                 <div class="flex-item" style="display:flex; justify-content: center;">
                                     <div id="firma_content" class="caja-space-firma">
+                                        <canvas id="firma_requi" style="width:100%;">
+                                            Navegador no compatible
+                                        </canvas>
                                         <input type="hidden" name="firma" id="firma">
                                     </div>
                                 </div>
@@ -761,34 +764,245 @@
     <script type="text/javascript" src="{{ asset('js/jquery.signature.min.js') }}"></script>
 
 
+
     @section('scripts')
         <script>
             $(".not-select2").select2('destroy');
         </script>
         <script>
             Livewire.on('render_firma', (id_tab) => {
-                var signaturePad = $('#firma_content').signature({
-                    syncField: '#firma',
-                    syncFormat: 'PNG',
-                    change: function(event, ui) {
-                        if (signaturePad.signature().length > 0) {
-                            // La firma está presente, lo que indica que se ha terminado de firmar
-                            console.log("Firma completada");
-                            // Ejecutar código adicional aquí
-                            // ...
-                            console.log('ferras');
-                        } else {
-                            // La firma está vacía, lo que indica que aún no se ha firmado
-                            console.log("No se ha firmado");
-                        }
+                (function() {
+
+
+                    window.requestAnimFrame = (function(callback) {
+                        return window.requestAnimationFrame ||
+                            window.webkitRequestAnimationFrame ||
+                            window.mozRequestAnimationFrame ||
+                            window.oRequestAnimationFrame ||
+                            window.msRequestAnimaitonFrame ||
+                            function(callback) {
+                                window.setTimeout(callback, 1000 / 60);
+                            };
+                    })();
+
+                    if (document.getElementById('firma_requi')) {
+                        renderCanvas("firma_requi", "clear");
                     }
+
+                })();
+
+                $('#firma_requi').mouseleave(function() {
+                    var canvas = document.getElementById('firma_requi');
+                    var dataUrl = canvas.toDataURL();
+                    $('#firma').val(dataUrl);
                 });
 
-                $('#clear').click(function(e) {
-                    e.preventDefault();
-                    signaturePad.signature('clear');
-                    $("#firma").val('');
-                });
+                if (document.getElementById('firma_content')) {
+                    document.getElementById('firma_content').addEventListener('click', (e) => {
+                        if (e.target.getAttribute('data-action') == 'firmar') {
+
+                            e.preventDefault();
+                            let btnId = e.target.getAttribute('id');
+                            let canvasId = btnId.replaceAll('guardar', 'canvas');
+                            let controlCambios = '';
+                            let url = "{{ route('admin.planificacion-controls.firma-aprobacion') }}";
+                            var canvas = document.getElementById(canvasId);
+                            var dataUrl = canvas.toDataURL();
+                            let tipo = e.target.getAttribute('data-tipo');
+                            var data = {
+                                id: controlCambios.id,
+                                tipo,
+                                firma: '',
+                            };
+                            var isCanvasEmptySigned = isCanvasEmpty(canvas);
+                            if (isCanvasEmptySigned) {
+                                toastr.info('Firma(s) no dibujadas');
+                            } else {
+                                data['firma'] = dataUrl;
+
+                            }
+                            console.log(data);
+                            if (!isCanvasEmptySigned) {
+                                $.ajax({
+                                    headers: {
+                                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                                    },
+                                    type: "POST",
+                                    data: data,
+                                    url: url,
+
+                                    success: function(response) {
+                                        if (response.success) {
+                                            toastr.success('Firmado con éxito');
+                                            setTimeout(() => {
+                                                window.location.reload();
+                                            }, 1500);
+                                        }
+                                    },
+                                    error: function(request, status, error) {
+                                        toastr.error(
+                                            'Ocurrió un error: ' + error);
+                                    }
+                                });
+                            }
+                        }
+                    })
+                }
+
+                function renderCanvas(contenedor, clearBtnCanvas) {
+
+                    var canvas = document.getElementById(contenedor);
+                    console.log(canvas);
+                    var ctx = canvas.getContext("2d");
+                    ctx.strokeStyle = "#222222";
+                    ctx.lineWidth = 1;
+
+                    var drawing = false;
+                    var mousePos = {
+                        x: 0,
+                        y: 0
+                    };
+                    var lastPos = mousePos;
+
+                    canvas.addEventListener("mousedown", function(e) {
+                        drawing = true;
+                        lastPos = getMousePos(canvas, e);
+                    }, false);
+
+                    canvas.addEventListener("mouseup", function(e) {
+                        drawing = false;
+                    }, false);
+
+                    canvas.addEventListener("mousemove", function(e) {
+                        mousePos = getMousePos(canvas, e);
+                    }, false);
+
+                    // Add touch event support for mobile
+                    canvas.addEventListener("touchstart", function(e) {
+
+                    }, false);
+
+                    canvas.addEventListener("touchmove", function(e) {
+                        var touch = e.touches[0];
+                        var me = new MouseEvent("mousemove", {
+                            clientX: touch.clientX,
+                            clientY: touch.clientY
+                        });
+                        canvas.dispatchEvent(me);
+                    }, false);
+
+                    canvas.addEventListener("touchstart", function(e) {
+                        mousePos = getTouchPos(canvas, e);
+                        var touch = e.touches[0];
+                        var me = new MouseEvent("mousedown", {
+                            clientX: touch.clientX,
+                            clientY: touch.clientY
+                        });
+                        canvas.dispatchEvent(me);
+                    }, false);
+
+                    canvas.addEventListener("touchend", function(e) {
+                        var me = new MouseEvent("mouseup", {});
+                        canvas.dispatchEvent(me);
+                    }, false);
+
+                    function getMousePos(canvasDom, mouseEvent) {
+                        var rect = canvasDom.getBoundingClientRect();
+                        return {
+                            x: mouseEvent.clientX - rect.left,
+                            y: mouseEvent.clientY - rect.top
+                        }
+                    }
+
+                    function getTouchPos(canvasDom, touchEvent) {
+                        var rect = canvasDom.getBoundingClientRect();
+                        return {
+                            x: touchEvent.touches[0].clientX - rect.left,
+                            y: touchEvent.touches[0].clientY - rect.top
+                        }
+                    }
+
+                    function renderCanvas() {
+                        if (drawing) {
+                            ctx.moveTo(lastPos.x, lastPos.y);
+                            ctx.lineTo(mousePos.x, mousePos.y);
+                            ctx.stroke();
+                            lastPos = mousePos;
+                        }
+                    }
+
+                    // Prevent scrolling when touching the canvas
+                    document.body.addEventListener("touchstart", function(e) {
+                        if (e.target == canvas) {
+                            e.preventDefault();
+                        }
+                    }, false);
+                    document.body.addEventListener("touchend", function(e) {
+                        if (e.target == canvas) {
+                            e.preventDefault();
+                        }
+                    }, false);
+                    document.body.addEventListener("touchmove", function(e) {
+                        if (e.target == canvas) {
+                            e.preventDefault();
+                        }
+                    }, false);
+
+                    (function drawLoop() {
+                        requestAnimFrame(drawLoop);
+                        renderCanvas();
+                    })();
+
+                    function clearCanvas() {
+                        canvas.width = canvas.width;
+                    }
+
+                    function isCanvasBlank() {
+                        const context = canvas.getContext('2d');
+
+                        const pixelBuffer = new Uint32Array(
+                            context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                        );
+
+                        return !pixelBuffer.some(color => color !== 0);
+                    }
+
+                    // Set up the UI
+                    // var sigText = document.getElementById(dataBaseCanvas);
+                    // var sigImage = document.getElementById(imageCanvas);
+                    var clearBtn = document.getElementById(clearBtnCanvas);
+                    // var submitBtn = document.getElementById(submitBtnCanvas);
+                    clearBtn.addEventListener("click", function(e) {
+                        clearCanvas();
+                        // sigText.innerHTML = "Data URL for your signature will go here!";
+                        // sigImage.setAttribute("src", "");
+                    }, false);
+                    // submitBtn.addEventListener("click", function(e) {
+                    //     const blank = isCanvasBlank();
+                    //     if (!blank) {
+                    //         // var dataUrl = canvas.toDataURL();
+                    //         // sigText.innerHTML = dataUrl;
+                    //         // sigImage.setAttribute("src", dataUrl);
+                    //     } else {
+                    //         if (toastr) {
+                    //             toastr.info('No has firmado en el canvas');
+                    //         } else {
+                    //             alert('No has firmado en el canvas');
+                    //         }
+                    //     }
+                    // }, false);
+
+                }
+
+                function isCanvasEmpty(canvas) {
+                    const context = canvas.getContext('2d');
+
+                    const pixelBuffer = new Uint32Array(
+                        context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+                    );
+
+                    return !pixelBuffer.some(color => color !== 0);
+                }
             });
         </script>
         <script>

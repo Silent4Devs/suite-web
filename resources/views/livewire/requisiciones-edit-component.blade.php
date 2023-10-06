@@ -1260,11 +1260,6 @@
                     <div class="card card-item doc-requisicion">
                         <div class="flex header-doc">
                             <div class="flex-item item-doc-img">
-                                {{--  @if (isset($logotipo->logotipo))
-                            <img src="{{ url('images/'.$logotipo->logotipo) }}">
-                        @else
-                            <img src="{{ url('img/Silent4Business-Logo-Color.png') }}">
-                        @endif  --}}
                                 <img class="img-doc" src="{{ $organizacion->logotipo }}">
                             </div>
                             <div class="flex-item info-med-doc-header">
@@ -1623,6 +1618,7 @@
             $(".not-select2").select2('destroy');
         </script>
         <script>
+            //termino
             Livewire.on('render_firma', (id_tab) => {
                 var signaturePad = $('#firma_content').signature({
                     syncField: '#firma',
