@@ -167,7 +167,7 @@
         </div>
     </div>
 
-    @livewire('reporte-individual', ['clasificaciones' => $clasificacionesauditorias, 'clausulas' => $clausulasauditorias, 'id_auditoria' => $auditoriaInterna->id_auditoria])
+    @livewire('edit-reporte-individual', ['clasificaciones' => $clasificacionesauditorias, 'clausulas' => $clausulasauditorias, 'id_auditoria' => $auditoriaInterna->id_auditoria])
     {{-- <div class="card card-body">
         <div class="form-group col-md-3 ">
             <div class="form-check {{ $errors->has('cheknoconformidadmenor') ? 'is-invalid' : '' }}">
@@ -623,6 +623,12 @@
                 CKEDITOR.instances.responsabilidades.setData(data);
             })
 
+            window.initSelect2 = () => {
+                $('.select2').select2({
+                    'theme': 'bootstrap4'
+                });
+            }
+
             initSelect2();
 
             Livewire.on('select2', () => {
@@ -663,7 +669,15 @@
                             })
                         .then(response => response.json())
                         .then(data => {
-                            alert('Signature saved successfully.');
+                            if (data.success) {
+                                alert('El lider ha sido notificado!');
+                                window.location.href = '{{ route('admin.auditoria-internas.index') }}';
+                            } else {
+                                alert(
+                                    'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador'
+                                );
+                                window.location.href = '{{ route('admin.auditoria-internas.index') }}';
+                            }
                         })
                         .catch(error => console.error('Error:', error));
                 }
