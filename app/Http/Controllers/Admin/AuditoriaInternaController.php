@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAuditoriaInternaRequest;
 use App\Mail\NotificacionReporteAuditoria;
 use App\Models\AuditoriaInterna;
+use App\Models\AuditoriaInternasReportes;
 use App\Models\ClasificacionesAuditorias;
 use App\Models\Clausula;
 use App\Models\ClausulasAuditorias;
@@ -228,7 +229,7 @@ class AuditoriaInternaController extends Controller
     {
         $audit = AuditoriaInterna::find($auditoriaid);
         $nombre_colaborador = auth()->user()->empleado->name;
-        // dd($audit->lider->email);
+
         $signature = $request->input('signature');
 
         $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
@@ -240,6 +241,17 @@ class AuditoriaInternaController extends Controller
         $filename = '/audit' . $auditoriaid . 'firmaempleado' . auth()->user()->empleado->id . '.png';
 
         Storage::put('public/auditorias-internas/auditoria/' . $auditoriaid . "/firma" . '/' . auth()->user()->empleado->name . $filename, $image);
+
+        $reporte = AuditoriaInternasReportes::where("id_auditoria", "=", $audit->id)
+            ->where("empleado_id", "=", auth()->user()->empleado->id)
+            ->where("lider_id", "=", $audit->lider->id)->first();
+        // dd($reporte);
+        $reporte->update([
+            // "comentarios",
+            "estado" => "enviado",
+            "firma_empleado" => $filename,
+            // "firma_lider",
+        ]);
 
         try {
             $email = new NotificacionReporteAuditoria($nombre_colaborador);

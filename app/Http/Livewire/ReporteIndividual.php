@@ -3,7 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Area;
+use App\Models\AuditoriaInterna;
 use App\Models\AuditoriaInternasHallazgos;
+use App\Models\AuditoriaInternasReportes;
 use App\Models\Proceso;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -31,6 +33,10 @@ class ReporteIndividual extends Component
     public $no_tipo;
     public $titulo;
 
+    public $reporte;
+    public $audit;
+    public $validacionReporte;
+
     public $hallazgoAuditoriaID;
 
     public $view = "create";
@@ -54,8 +60,13 @@ class ReporteIndividual extends Component
         $clasificacionIds = $this->clasificaciones->pluck('id');
 
         $cuentas = AuditoriaInternasHallazgos::with('clasificacion')->whereIn('clasificacion_id', $clasificacionIds)
-            ->where('auditoria_internas_id', $this->id_auditoria)
-            ->select('clasificacion_id', DB::raw('COUNT(*) as count'))
+            ->where('auditoria_internas_id', $this->id_auditoria);
+
+        if ($this->reporte && $this->reporte->id) {
+            $cuentas->orWhere("reporte_id", "=", $this->reporte->id);
+        }
+
+        $cuentas = $cuentas->select('clasificacion_id', DB::raw('COUNT(*) as count'))
             ->groupBy('clasificacion_id')
             ->get();
 
@@ -105,20 +116,40 @@ class ReporteIndividual extends Component
         }
     }
 
+    public function createReporte($audit)
+    {
+        // dd($audit);
+
+        $this->reporte = AuditoriaInternasReportes::create([
+            "id_auditoria" => $audit->id,
+            "empleado_id" => auth()->user()->empleado->id,
+            "lider_id" => $audit->lider->id,
+        ]);
+    }
+
     public function create()
     {
+        $this->view = 'create';
         $this->default();
         $this->emit('abrir-modal');
     }
 
     public function save()
     {
+        $this->audit = AuditoriaInterna::find($this->id_auditoria);
 
-        // dd($this->c_id);
+        $this->reporte = AuditoriaInternasReportes::where("id_auditoria", "=", $this->audit->id)
+            ->where("empleado_id", "=", auth()->user()->empleado->id)
+            ->where("lider_id", "=", $this->audit->lider->id)->first();
+
+        if ($this->reporte === null) {
+            $this->createReporte($this->audit);
+        }
+
+        dd($this->reporte[0]);
+
         $this->validarHallazgosCreate();
         $this->proceso = $this->proceso == '' ? null : $this->proceso;
-        // $this->area = $this->area == '' ? null : $this->area;
-        // dd($this->area);
         $model = AuditoriaInternasHallazgos::create([
             'proceso_id' => $this->proceso,
             'area_id' => auth()->user()->empleado->area_id,
@@ -129,6 +160,7 @@ class ReporteIndividual extends Component
             'auditoria_internas_id' => $this->id_auditoria,
             'no_tipo' => $this->no_tipo,
             'titulo' => $this->titulo,
+            'reporte_id' => $this->reporte->id,
         ]);
 
         $this->reset('descripcion', 'incumplimiento_requisito', 'clasificacion_id', 'proceso', 'area');
@@ -170,12 +202,11 @@ class ReporteIndividual extends Component
         $model = AuditoriaInternasHallazgos::find($this->hallazgoAuditoriaID);
         $model->update([
             'proceso_id' => $this->proceso,
-            // 'area_id' => auth()->user()->empleado->area_id,
             'incumplimiento_requisito' => $this->incumplimiento_requisito,
             'clasificacion_id' => $this->clasificacion_id,
             'clausula_id' => $this->c_edit_id,
             'descripcion' => $this->descripcion,
-            'auditoria_internas_id' => $this->id_auditoria,
+            // 'auditoria_internas_id' => $this->id_auditoria,
             'no_tipo' => $this->no_tipo,
             'titulo' => $this->titulo,
         ]);

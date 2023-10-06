@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('auditoria_internas_reportes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('id_auditoria');
+            $table->unsignedInteger('empleado_id');
+            $table->unsignedInteger('lider_id');
+            $table->longText('comentarios')->nulable();
+            $table->string('estado')->nullable();
+            $table->string('firma_empleado')->nullable();
+            $table->string('firma_lider')->nullable();
             $table->timestamps();
+            $table->foreign('id_auditoria')->references('id')->on('auditoria_internas');
         });
     }
 
