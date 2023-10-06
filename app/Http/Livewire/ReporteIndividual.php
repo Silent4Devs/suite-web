@@ -21,6 +21,7 @@ class ReporteIndividual extends Component
     public $id_auditoria;
 
     public $c_id;
+    public $c_edit_id;
 
     public $descripcion;
     public $proceso;
@@ -29,6 +30,10 @@ class ReporteIndividual extends Component
     public $incumplimiento_requisito;
     public $no_tipo;
     public $titulo;
+
+    public $hallazgoAuditoriaID;
+
+    public $view = "create";
 
     public function mount($clasificaciones, $clausulas, $id_auditoria)
     {
@@ -62,7 +67,7 @@ class ReporteIndividual extends Component
             ->with('id_auditoria', $this->id_auditoria);
     }
 
-    public function validarHallazgos()
+    public function validarHallazgosCreate()
     {
         $this->validate([
             'incumplimiento_requisito' => 'required',
@@ -70,6 +75,34 @@ class ReporteIndividual extends Component
             'clasificacion_id' => 'required',
             'c_id' => 'required',
         ]);
+    }
+
+    public function validarHallazgosEdit()
+    {
+        $this->validate([
+            'incumplimiento_requisito' => 'required',
+            'descripcion' => 'required',
+            'clasificacion_id' => 'required',
+            'c_edit_id' => 'required',
+        ]);
+    }
+
+    public function modal($tipo, $id = null)
+    {
+        switch ($tipo) {
+            case 'crear':
+                $this->create();
+                break;
+            case 'editar':
+                $this->edit($id);
+                break;
+            case 'borrar':
+                $this->destroy($id);
+                break;
+            default:
+                $this->create();
+                break;
+        }
     }
 
     public function create()
@@ -82,7 +115,7 @@ class ReporteIndividual extends Component
     {
 
         // dd($this->c_id);
-        $this->validarHallazgos();
+        $this->validarHallazgosCreate();
         $this->proceso = $this->proceso == '' ? null : $this->proceso;
         // $this->area = $this->area == '' ? null : $this->area;
         // dd($this->area);
@@ -106,6 +139,68 @@ class ReporteIndividual extends Component
             'timer' => 3000,
             'toast' => true,
             'text' => 'Creado con éxito',
+        ]);
+    }
+
+    public function edit($id)
+    {
+        // dd("algo");
+        $this->view = 'edit';
+        $hallazgo = AuditoriaInternasHallazgos::find($id);
+        // dd($id, $hallazgo);
+        $this->hallazgoAuditoriaID = $id;
+        // // dd($model);
+        $this->no_tipo = $hallazgo->no_tipo;
+        $this->titulo = $hallazgo->titulo;
+        $this->descripcion = $hallazgo->descripcion;
+        $this->clasificacion_id = $hallazgo->clasificacion_id;
+        $this->c_edit_id = $hallazgo->clausula_id;
+        // $this->clasificacion_hallazgo = $hallazgo->clasificacion_hallazgo;
+        $this->proceso = $hallazgo->proceso_id;
+        // $this->area = $hallazgo->area_id;
+        $this->incumplimiento_requisito = $hallazgo->incumplimiento_requisito;
+        $this->id_auditoria = $hallazgo->auditoria_internas_id;
+        $this->emit('abrir-modal');
+    }
+
+    public function update()
+    {
+        // dd("si llega");
+        $this->validarHallazgosEdit();
+        $model = AuditoriaInternasHallazgos::find($this->hallazgoAuditoriaID);
+        $model->update([
+            'proceso_id' => $this->proceso,
+            // 'area_id' => auth()->user()->empleado->area_id,
+            'incumplimiento_requisito' => $this->incumplimiento_requisito,
+            'clasificacion_id' => $this->clasificacion_id,
+            'clausula_id' => $this->c_edit_id,
+            'descripcion' => $this->descripcion,
+            'auditoria_internas_id' => $this->id_auditoria,
+            'no_tipo' => $this->no_tipo,
+            'titulo' => $this->titulo,
+        ]);
+
+        $this->emit('cerrar-modal');
+        $this->default();
+        $this->emit('render');
+        $this->alert('success', 'Bien hecho', [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => 'Editado con éxito',
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $model = AuditoriaInternasHallazgos::find($id);
+        $model->delete();
+        $this->emit('render');
+        $this->alert('success', 'Bien hecho', [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => 'Registro eliminado',
         ]);
     }
 

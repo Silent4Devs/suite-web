@@ -43,13 +43,9 @@
             </div>
         </div>
     </div>
-    {{-- Nothing in the world is as soft and yielding as water. --}}
-    {{-- <a class="btn btn-primary"
-    href="{{ route('admin.auditoria-internas.createReporteIndividual', $id_auditoria) }}">Crear Parte
-    Interesada</a> --}}
-    {{-- <button>Documentar Hallazgo</button> --}}
+
     <div class="col-12 mt-4 " style="text-align: end">
-        <button type="button" wire:click.prevent="create" class="btn btn-success">Documentar
+        <button type="button" wire:click.prevent="modal('crear')" class="btn btn-success">Documentar
             Hallazgo</button>
     </div>
     <div class="row">
@@ -63,7 +59,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">
-                                {{ 'Agregar' }} Hallazgos</h5>
+                                {{ $view == 'create' ? 'Agregar' : 'Actualizar' }} Hallazgos</h5>
 
                             <input id="auditoria_internas_id" name="auditoria_internas_id" type="hidden"
                                 value=" {{ $id_auditoria }}" wire:model.defer="auditoria_internas_id">
@@ -73,6 +69,23 @@
                             </button>
                         </div>
                         <div class="modal-body">
+
+                            @if ($view == 'edit')
+                                <div class="row">
+                                    <div class="form-group col-sm-12">
+                                        <label class="form-label select-label">Clausulas</label>
+                                        <select name="c_edit_id" id="c_edit_id"
+                                            class="form-control select {{ $errors->has('c_edit_id') ? 'is-invalid' : '' }}"
+                                            wire:model.defer="c_edit_id" required>
+                                            @foreach ($clausulas as $claus)
+                                                <option value="{{ $claus->id }}">{{ $claus->nombre_clausulas }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="row">
                                 <div class="form-group col-sm-12">
                                     <label class="required" for="incumplimiento_requisito">
@@ -178,18 +191,6 @@
                                 <div class="form-group col-sm-6 col-md-12 col-lg-12">
                                     <label for="area">Área</label>
                                     <div class="form-control">{{ auth()->user()->empleado->area->area }}</div>
-                                    {{-- <input hidden type="text" name="area_id" id="area_id"
-                                        wire:model.defer="area_id" value="{{ auth()->user()->empleado->area_id }}"> --}}
-                                    {{-- <select class="form-control {{ $errors->has('area') ? 'is-invalid' : '' }}"
-                                        name="area_id" id="area_id" wire:model.defer="area">
-                                        <option value="{{ auth()->user()->empleado->area_id }}" readonly>
-                                            {{ auth()->user()->empleado->area->area }}</option>
-                                    </select>
-                                    @if ($errors->has('area'))
-                                        <div class="text-danger">
-                                            {{ $errors->first('area') }}
-                                        </div>
-                                    @endif --}}
                                 </div>
                             </div>
                         </div>
@@ -197,7 +198,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="button" class="btn btn-primary"
-                                wire:click.prevent="{{ 'save' }}">{{ 'Guardar' }}</button>
+                                wire:click.prevent="{{ $view == 'create' ? 'save' : 'update' }}">{{ $view == 'create' ? 'Guardar' : 'Actualizar' }}</button>
                         </div>
                     </div>
                 </div>
@@ -207,9 +208,6 @@
     <div class="card card-body">
         <div class="form-group col-md-12">
 
-            {{-- <div col-12 offset-10>
-                @livewire('auditoria-interna-hallazgos', ['auditoria_internas_id' => $id_auditoria])
-            </div> --}}
             <div class="table-responsive">
                 <table class="table">
                     <thead class="head-light">
@@ -224,18 +222,6 @@
                     <tbody>
                         @foreach ($datas as $data)
                             <tr>
-                                {{--     <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
-                        <td style="min-width:100px;">{{ $data->descripcion }}</td>
-                        <td style="min-width:100px;">{{ $data->clasificacion_id }}</td>
-                        <td style="min-width:100px;">{{ $data->procesos ? $data->procesos->nombre : 'n/a' }}</td>
-                        <td style="min-width:100px;">{{ $data->areas ? $data->areas->area : 'n/a' }}</td>
-                        <td style="min-width:40px;">
-                            <i class="fas fa-edit"
-                                wire:click.prevent="$emit('editarParteInteresada',{{ $data->id }})">
-                            </i>
-                            <i class="fas fa-trash-alt text-danger"
-                                wire:click.prevent="$emit('eliminarParteInteresada',{{ $data->id }})"> </i>
-                        </td> --}}
                                 <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
                                 <td style="min-width:100px;">{{ $data->descripcion }}</td>
                                 <td style="min-width:100px;">
@@ -262,11 +248,12 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"
-                                                href="{{ url('admin/auditorias/clasificacion-auditorias/edit/${data}') }}">
+                                                wire:click.prevent="modal('editar', {{ $data->id }})">
                                                 <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
                                             <a class="dropdown-item"
-                                                href="{{ url('admin/auditorias/clasificacion-auditorias/delete/${data}') }}">
-                                                <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                                                wire:click.prevent="modal('borrar', {{ $data->id }})">
+                                                <i class="fa-solid fa-trash"
+                                                    wire:click.prevent="$emit('eliminarParteInteresada',{{ $data->id }})"></i>&nbsp;Eliminar</a>
                                         </div>
                                     </div>
                                 </td>
@@ -310,7 +297,6 @@
     </div>
 
     <div class="card card-body">
-        {{-- <form method="POST" action="{{ route('admin.auditoria-internas.storeReporteIndividual', $id_auditoria) }}"> --}}
         <div class="row" style="justify-content: center; display: flex;">
             <h3>Firma de Revisión</h3>
         </div>
@@ -326,172 +312,5 @@
             <button id="save" type="submit" class="btn btn-outline-primary"
                 data-auditoria="{{ $id_auditoria }}">Confirmar</button>
         </div>
-        {{-- </form> --}}
     </div>
 </div>
-@section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            Livewire.on('cerrar-modal', (event) => {
-                $('#exampleModal').modal('hide');
-                $('.modal-backdrop').hide();
-
-
-            })
-            Livewire.on('abrir-modal', () => {
-                $('#exampleModal').modal('show');
-                $('.select2').select2({
-                    theme: 'bootstrap4'
-                });
-
-            })
-            Livewire.on('editarParteInteresada', () => {
-                console.log('hola');
-
-
-            });
-            Livewire.on('abrirModalPartesInteresadas', () => {
-                $('#NormasModal').modal('show');
-                setTimeout(() => {
-                    CKEDITOR.replace('responsabilidades', {
-                        toolbar: [{
-                            name: 'paragraph',
-                            groups: ['list', 'indent', 'blocks', 'align'],
-                            items: ['NumberedList', 'BulletedList', '-', 'Outdent',
-                                'Indent', '-',
-                                'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                                'JustifyBlock', '-',
-                                'Bold', 'Italic'
-                            ]
-                        }, {
-                            name: 'clipboard',
-                            items: ['Link', 'Unlink']
-                        }, ]
-                    });
-                }, 1500);
-            })
-            Livewire.on('cerrarModalPartesInteresadas', () => {
-                $('#NormasModal').modal('hide');
-                $('.modal-backdrop').hide();
-
-            })
-        })
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('id_auditado').addEventListener('change', (e) => {
-                let seleccionado = e.target.options[e.target.selectedIndex];
-                let puesto = seleccionado.getAttribute('data-puesto')
-                let area = seleccionado.getAttribute('data-area')
-                console.log(seleccionado);
-                document.getElementById('puesto_asignada').innerHTML = puesto;
-                document.getElementById('area_asignada').innerHTML = area;
-            })
-            Livewire.on('cargar-puesto', (empleado) => {
-                console.log(empleado);
-                let select = document.getElementById('id_auditado');
-                let seleccionado = select.options[select.selectedIndex];
-                let puesto = seleccionado.getAttribute('data-puesto')
-                let area = seleccionado.getAttribute('data-area')
-                console.log(seleccionado);
-                document.getElementById('puesto_asignada').innerHTML = puesto;
-                document.getElementById('area_asignada').innerHTML = area;
-            })
-
-            Livewire.on('abrir-modal', () => {
-                document.getElementById('puesto_asignada').innerHTML = '';
-                document.getElementById('area_asignada').innerHTML = '';
-            })
-
-
-            let editor = CKEDITOR.replace('responsabilidades', {
-                toolbar: [{
-                    name: 'paragraph',
-                    groups: ['list', 'indent', 'blocks', 'align'],
-                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
-                        'Bold', 'Italic'
-                    ]
-                }, {
-                    name: 'clipboard',
-                    items: ['Link', 'Unlink']
-                }, ]
-            });
-            editor.on('change', function(event) {
-                console.log(event.editor.getData())
-                @this.set('responsabilidades', event.editor.getData());
-            })
-            Livewire.on('cerrar-modal', () => {
-                CKEDITOR.instances.responsabilidades.setData('');
-            })
-            Livewire.on('editar-modal', (data) => {
-                CKEDITOR.instances.responsabilidades.setData(data);
-            })
-
-            window.initSelect2 = () => {
-                $('.select2').select2({
-                    'theme': 'bootstrap4'
-                });
-                $('#proceso_id').on('select2:select', function(e) {
-                    var data = e.params.data;
-                    console.log(data);
-                    @this.set('proceso', data.id);
-                });
-            }
-
-            initSelect2();
-
-            Livewire.on('select2', () => {
-                initSelect2();
-            });
-
-
-        })
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var canvas = document.getElementById('signature-pad');
-            var signaturePad = new SignaturePad(canvas);
-
-            document.getElementById('clear').addEventListener('click', function() {
-                signaturePad.clear();
-            });
-
-            document.getElementById('save').addEventListener('click', function() {
-                if (signaturePad.isEmpty()) {
-                    alert('Please provide a signature first.');
-                } else {
-                    var dataURL = signaturePad.toDataURL();
-                    var audId = this.getAttribute('data-auditoria');
-
-                    fetch('{{ route('admin.auditoria-internas.storeReporteIndividual', ['auditoriaInterna' => ':auditoriaInterna']) }}'
-                            .replace(':auditoriaInterna',
-                                audId), {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-Token': '{{ csrf_token() }}',
-                                },
-                                body: JSON.stringify({
-                                    signature: dataURL
-                                }),
-                            })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                alert('El lider ha sido notificado!');
-                                window.location.href = '{{ route('admin.auditoria-internas.index') }}';
-                            } else {
-                                alert(
-                                    'El correo no ha sido posible enviarlo debido a problemas de intermitencia con la red, favor de volver a intentar más tarde, o si esto persiste ponerse en contacto con el administrador');
-                                window.location.href = '{{ route('admin.auditoria-internas.index') }}';
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                }
-            });
-        });
-    </script>
-@endsection
