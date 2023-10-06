@@ -3,9 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
@@ -13,41 +11,27 @@ class NotificacionReporteAuditoria extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $nombre_colaborador;
+
     /**
      * Create a new message instance.
+     *
+     * @return void
      */
-    public function __construct()
+    public function __construct($nombre_colaborador)
     {
         //
+        $this->nombre_colaborador = $nombre_colaborador;
     }
 
     /**
      * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Notificacion Reporte Auditoria',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return \Illuminate\Mail\Mailables\Envelope
      */
-    public function attachments(): array
+    public function build()
     {
-        return [];
+        return $this->view('mails.auditorias.notificacion-auditoria-lider')
+            ->subject('Reporte de auditoria: ' . $this->nombre_colaborador);
     }
 }

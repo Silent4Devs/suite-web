@@ -25,25 +25,6 @@
         </div>
     </div>
 
-    <div class="card mt-4">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-sm-4 col-md-3 col-lg-4">
-                    <h6>Datos Generales*</h6>
-                    <label class="form-label select-label">Clausulas</label>
-                    <select name="c_id" id="c_id"
-                        class="form-control select {{ $errors->has('c_id') ? 'is-invalid' : '' }}"
-                        wire:model.defer="c_id">
-                        <option value="">Seleccione una Clausula</option>
-                        @foreach ($clausulas as $claus)
-                            <option value="{{ $claus->id }}">{{ $claus->nombre_clausulas }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="col-12 mt-4 " style="text-align: end">
         <button type="button" wire:click.prevent="modal('crear')" class="btn btn-success">Documentar
             Hallazgo</button>
@@ -292,6 +273,22 @@
             </div>
             <div>
                 {{ $datas->links() }}
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-body">
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label class="required" for="comentarios">
+                    Comentarios</label>
+                <textarea class="form-control {{ $errors->has('comentarios') ? 'is-invalid' : '' }}" name="comentarios"
+                    id="comentarios" wire:model.defer="comentarios"></textarea>
+                @if ($errors->has('comentarios'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('comentarios') }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>

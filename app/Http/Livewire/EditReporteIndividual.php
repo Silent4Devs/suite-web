@@ -10,7 +10,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class ReporteIndividual extends Component
+class EditReporteIndividual extends Component
 {
     use LivewireAlert;
 
@@ -61,7 +61,7 @@ class ReporteIndividual extends Component
 
         // dd($cuentas);
 
-        return view('livewire.reporte-individual', compact('procesos', 'datas', 'cuentas'))
+        return view('livewire.edit-reporte-individual', compact('procesos', 'datas', 'cuentas'))
             ->with('clasificaciones', $this->clasificaciones)
             ->with('clausulas', $this->clausulas)
             ->with('id_auditoria', $this->id_auditoria);

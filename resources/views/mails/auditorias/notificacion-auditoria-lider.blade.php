@@ -119,8 +119,8 @@
                                             </div>
                                             <p
                                                 style="font-size:11pt; color:#153643;text-align: left; margin-left:25px; margin-right:25px">
-                                                Se ha añadido un reporte por parte de un colaborador. [Nombre de
-                                                colaborador].
+                                                Se ha añadido un reporte por parte de un colaborador.
+                                                {{ $nombre_colaborador }}.
                                                 Para ingresar a revisarlo da clic en la siguiente liga:
                                             </p>
 

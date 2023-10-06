@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAuditoriaInternaRequest;
+use App\Mail\NotificacionReporteAuditoria;
 use App\Models\AuditoriaInterna;
 use App\Models\ClasificacionesAuditorias;
 use App\Models\Clausula;
@@ -15,8 +16,11 @@ use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
+use Throwable;
 
 class AuditoriaInternaController extends Controller
 {
@@ -133,13 +137,17 @@ class AuditoriaInternaController extends Controller
 
         $auditoriaInterna->load('clausulas', 'lider', 'equipo', 'team');
 
+        $clasificacionesauditorias = ClasificacionesAuditorias::all();
+        $clausulasauditorias = ClausulasAuditorias::all();
+
         $clausulas = Clausula::all();
 
         $auditorliders = Empleado::getaltaAll();
 
         $equipoauditorias = Empleado::getaltaAll();
 
-        return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'));
+        return view('admin.auditoriaInternas.edit', compact('clausulas', 'auditorliders', 'equipoauditorias', 'auditoriaInterna'))->with('clasificacionesauditorias', $clasificacionesauditorias)
+            ->with('clausulasauditorias', $clausulasauditorias);
     }
 
     public function update(Request $request, AuditoriaInterna $auditoriaInterna)
@@ -216,9 +224,29 @@ class AuditoriaInternaController extends Controller
         return view('admin.auditoriaInternas.createReporte');
     }
 
-    public function storeReporte($id)
+    public function storeReporte($auditoriaid, Request $request)
     {
-        dd($id);
-        return view('admin.auditoriaInternas.createReporte');
+        $audit = AuditoriaInterna::find($auditoriaid);
+        $nombre_colaborador = auth()->user()->empleado->name;
+        // dd($audit->lider->email);
+        $signature = $request->input('signature');
+
+        $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
+
+        if (!Storage::exists('public/auditorias-internas/auditoria/' . $auditoriaid . '/firma')) {
+            Storage::makeDirectory('public/auditorias-internas/auditoria/' . $auditoriaid . '/firma' . '/' . auth()->user()->empleado->name, 0755, true);
+        }
+
+        $filename = '/audit' . $auditoriaid . 'firmaempleado' . auth()->user()->empleado->id . '.png';
+
+        Storage::put('public/auditorias-internas/auditoria/' . $auditoriaid . "/firma" . '/' . auth()->user()->empleado->name . $filename, $image);
+
+        try {
+            $email = new NotificacionReporteAuditoria($nombre_colaborador);
+            Mail::to(removeUnicodeCharacters($audit->lider->email))->send($email);
+            return response()->json(['success' => true]);
+        } catch (Throwable $e) {
+            return response()->json(['success' => false]);
+        }
     }
 }
