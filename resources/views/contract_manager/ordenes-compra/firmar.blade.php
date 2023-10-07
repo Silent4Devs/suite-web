@@ -387,7 +387,8 @@
             <div class="flex caja-firmar" style=" " wire:ignore>
                 <div class="flex-item"
                     style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
-                    <div id="firma_content" class="caja-space-firma">
+                    <div id="firma_content" class="caja-space-firma"
+                        style="display:flex; justify-content: center; flex-direction: column; align-items:center;">
                         <canvas id="firma_requi" width="500px" height="500px">
                             Navegador no compatible
                         </canvas>
