@@ -180,13 +180,12 @@
                         </div>
                     </div>
 
-                    <div>
-                        <div class="btn btn-add-card" onclick="addCardProductos('servicio')"><i
-                                class="fa-regular fa-square-plus"></i>
-                            AGREGAR SERVICIOS Y PRODUCTOS</div>
-                    </div>
+                    <div class="my-4" style="display:flex; justify-content: space-between;">
+                        <div class="btn btn-add-card" onclick="addCardProductos('servicio')">
+                            <i class="fa-regular fa-square-plus"></i>
+                            AGREGAR SERVICIOS Y PRODUCTOS
+                        </div>
 
-                    <div style="position: relative; top: -2rem; left: 55rem;">
                         <button class="btn btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
@@ -394,12 +393,12 @@
                         @endfor
                     </div>
 
-                    <div>
-                        <div class="btn btn-add-card" onclick="addCardProveedores('proveedor')"><i
-                                class="fa-regular fa-square-plus icon-prior"></i>
-                            AGREGAR PROVEEDOR</div>
-                    </div>
-                    <div style="position: relative; top: -2rem; left: 55rem;">
+                    <div class="my-4" style="display:flex; justify-content: space-between;">
+                        <div class="btn btn-add-card" onclick="addCardProveedores('proveedor')">
+                            <i class="fa-regular fa-square-plus icon-prior"></i>
+                            AGREGAR PROVEEDOR
+                        </div>
+
                         <button class="btn btn-primary" type="submit">
                             Siguiente <i class="fa-solid fa-chevron-right icon-next"></i>
                         </button>
@@ -694,7 +693,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex" style="position: relative; top: -1rem; justify-content: end; ">
+                            <div class="flex my-4" style="justify-content: end;">
                                 <button onclick="validar()" class="btn btn-primary" type="submit">Firmar</button>
                             </div>
                         </div>
@@ -1110,7 +1109,7 @@
                 const fechaFin = new Date(fechaFinInput.value);
 
                 // Verifica si la fecha de finalización es mayor que la fecha de inicio
-                if (fechaFin < fechaInicio) {
+                if (fechaFin < fechaInicio && fechaFin.getFullYear() > 1111) {
                     alert('La fecha de finalización no puede ser mayor que la fecha de inicio');
                     fechaFinInput.value = ''; // Limpia el campo de fecha de finalización
                 }
