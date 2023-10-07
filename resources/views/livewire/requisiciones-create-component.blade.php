@@ -681,7 +681,7 @@
                                 <div class="flex-item" style="display:flex; justify-content: center;">
                                     <div id="firma_content" class="caja-space-firma"
                                         style="display: flex; justify-content: center; align-items: center;">
-                                        <canvas id="firma_requi" width="500px" height="500px">
+                                        <canvas id="firma_requi" width="500px" height="300px">
                                             Navegador no compatible
                                         </canvas>
                                         <input type="hidden" name="firma" id="firma">
