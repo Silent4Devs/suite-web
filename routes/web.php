@@ -1019,7 +1019,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::resource('auditoria-internas', 'AuditoriaInternaController')->except('edit');
         Route::get('auditoria-internas/{auditoriaInterna}/reporteIndividual', 'AuditoriaInternaController@indexReporteIndividual')->name('auditoria-internas.reporteIndividual');
         Route::get('auditoria-internas/{auditoriaInterna}/createReporteIndividual', 'AuditoriaInternaController@createReporte')->name('auditoria-internas.createReporteIndividual');
-        Route::post('auditoria-internas/{auditoriaInterna}/storeReporteIndividual', 'AuditoriaInternaController@storeReporte')->name('auditoria-internas.storeReporteIndividual');
+        Route::post('auditoria-internas/{reporteid}/storeReporteIndividual', 'AuditoriaInternaController@storeReporte')->name('auditoria-internas.storeReporteIndividual');
+        Route::get('auditoria-internas/reporte-rechazado/{id_reporte}', 'AuditoriaInternaController@rechazoReporteIndividual')->name('auditoria-internas.rechazoReporteIndividual');
+        Route::post('auditoria-internas/{reporteid}/storeFirmaReporteLider', 'AuditoriaInternaController@storeFirmaReporteLider')->name('auditoria-internas.storeFirmaReporteLider');
 
         Route::get('auditoria-internas/reportes-crd', 'AuditoriaReporteCards@index')->name('AuditoriaReporteCards.index');
 

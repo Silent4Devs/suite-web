@@ -33,6 +33,8 @@ class EditReporteIndividual extends Component
     public $no_tipo;
     public $titulo;
 
+    public $comentarios;
+
     public $reporte;
 
     public $hallazgoAuditoriaID;

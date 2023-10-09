@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\AuditoriaInterna;
 use App\Models\AuditoriaInternasHallazgos;
 use App\Models\AuditoriaInternasReportes;
+use App\Models\ClasificacionesAuditorias;
 use App\Models\Proceso;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -70,9 +71,14 @@ class ReporteIndividual extends Component
             ->where("reporte_id", "=", $this->reporte->id)
             ->paginate($this->pagination);
 
+        // Assuming $this->clasificaciones is a collection of clasificaciones
+
+        // Assuming $this->clasificaciones is a collection of clasificaciones
+
         $clasificacionIds = $this->clasificaciones->pluck('id');
 
-        $cuentas = AuditoriaInternasHallazgos::with('clasificacion')->whereIn('clasificacion_id', $clasificacionIds)
+        $cuentas = AuditoriaInternasHallazgos::with('clasificacion')
+            ->whereIn('clasificacion_id', $clasificacionIds)
             ->where('auditoria_internas_id', $this->id_auditoria);
 
         if ($this->reporte && $this->reporte->id) {
@@ -83,7 +89,7 @@ class ReporteIndividual extends Component
             ->groupBy('clasificacion_id')
             ->get();
 
-        // dd($cuentas);
+        dd($cuentas);
 
         return view('livewire.reporte-individual', compact('procesos', 'datas', 'cuentas'))
             ->with('clasificaciones', $this->clasificaciones)

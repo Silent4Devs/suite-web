@@ -172,14 +172,14 @@
 
             document.getElementById('save').addEventListener('click', function() {
                 if (signaturePad.isEmpty()) {
-                    alert('Please provide a signature first.');
+                    alert('Por favor firme el area designada.');
                 } else {
                     var dataURL = signaturePad.toDataURL();
-                    var audId = this.getAttribute('data-auditoria');
+                    var repId = this.getAttribute('data-reporte');
 
-                    fetch('{{ route('admin.auditoria-internas.storeReporteIndividual', ['auditoriaInterna' => ':auditoriaInterna']) }}'
-                            .replace(':auditoriaInterna',
-                                audId), {
+                    fetch('{{ route('admin.auditoria-internas.storeReporteIndividual', ['reporteid' => ':reporteauditoria']) }}'
+                            .replace(':reporteauditoria',
+                                repId), {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',

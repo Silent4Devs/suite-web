@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\ClausulasAuditorias;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\AuditoriaInternasReportes;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClausulasAuditoriasController extends Controller

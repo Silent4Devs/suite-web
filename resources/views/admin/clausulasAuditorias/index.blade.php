@@ -19,7 +19,7 @@
                             ID
                         </th>
                         <th style="min-width: 200px;">
-                            Nombre de la Clasificación
+                            Cláusula
                         </th>
                         <th style="min-width: 700px;">
                             Descripción
@@ -201,8 +201,8 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ url('admin/auditorias/clausulas-auditorias/edit/${data}') }}">
                                             <i class="fa-solid fa-pencil"></i>&nbsp;Editar</a>
-                                        <a class="dropdown-item" href="{{ url('admin/auditorias/clausulas-auditorias/delete/${data}') }}">
-                                            <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a>
+                                        {{-- <a class="dropdown-item" href="{{ url('admin/auditorias/clausulas-auditorias/delete/${data}') }}">
+                                             <i class="fa-solid fa-trash"></i>&nbsp;Eliminar</a> --}}
                                     </div>
                                 </div>`;
 

@@ -27,4 +27,9 @@ class AuditoriaInternasReportes extends Model
     {
         return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
     }
+
+    public function lider()
+    {
+        return $this->belongsTo(Empleado::class, 'lider_id')->alta();
+    }
 }
