@@ -35,24 +35,9 @@ class RequisicionesController extends Controller
     public function index()
     {
         abort_if(Gate::denies('katbol_requisiciones_acceso'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
-        $organizacion_actual = Organizacion::select('empresa', 'logotipo')->first();
-        if (is_null($organizacion_actual)) {
-            $organizacion_actual = new Organizacion();
-            $organizacion_actual->logotipo = asset('img/logo_katbol.png');
-            $organizacion_actual->empresa = 'Silent4Business';
-        }
-
-        $requisiciones = KatbolRequsicion::select('id', 'fecha', 'referencia', 'estado', 'area', 'user')->with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
-
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
-
-        $requisiciones_solicitante = null;
-        $id = User::getCurrentUser()->id;
-
-        $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
 
         $proveedor_indistinto = KatbolProveedorIndistinto::pluck('requisicion_id')->first();
 
@@ -68,26 +53,16 @@ class RequisicionesController extends Controller
 
         foreach ($roles as $rol) {
             if ($rol->title === 'Admin') {
+                $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->orderByDesc('id')->where('archivo', false)->get();
                 return view('contract_manager.requisiciones.index', compact('ids', 'requisiciones', 'proveedor_indistinto', 'empresa_actual', 'logo_actual'));
             } else {
+                $requisiciones_solicitante = null;
+                $id = User::getCurrentUser()->id;
+
+                $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
                 return view('contract_manager.requisiciones.index_solicitante', compact('ids', 'requisiciones_solicitante', 'empresa_actual', 'logo_actual', 'proveedor_indistinto'));
             }
         }
-    }
-
-    public function getRequisicionIndex(Request $request)
-    {
-        $requisiciones = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->orderByDesc('id')->get();
-
-        return datatables()->of($requisiciones)->toJson();
-    }
-
-    public function getRequisicionIndexSolicitante(Request $request)
-    {
-        $id = Auth::user()->id;
-        $requisiciones_solicitante = KatbolRequsicion::with('contrato', 'comprador.user', 'sucursal', 'productos_requisiciones.producto')->where('archivo', false)->where('id_user', $id)->orderByDesc('id')->get();
-
-        return datatables()->of($requisiciones_solicitante)->toJson();
     }
 
     /**
