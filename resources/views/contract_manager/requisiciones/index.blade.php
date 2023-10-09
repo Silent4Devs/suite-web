@@ -289,8 +289,22 @@
                     window.location.href = url;
                 }
             };
+            let btnAprobacion = {
+                text: '<i class="fa-solid fa-envelope"></i> Aprobadores',
+                titleAttr: 'Aprobadores requisicion',
+                url: "{{ route('contract_manager.requisiciones.indexAprobadores') }}",
+                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
+                action: function(e, dt, node, config) {
+                    let {
+                        url
+                    } = config;
+                    window.location.href = url;
+                    console.log(url);
+                },
+            };
 
-            dtButtons.push(btnAgregar);
+
+            dtButtons.push(btnAgregar, btnAprobacion);
 
             var table = $('#dom').DataTable({
                 buttons: dtButtons,
