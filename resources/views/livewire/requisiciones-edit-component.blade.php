@@ -110,7 +110,7 @@
                             </div>
                             <div class="col s12 l3 ">
                                 <label for="" class="txt-tamaño">
-                                    Contratos (Proyectos) <font class="asterisco">*</font>
+                                    Proyectos <font class="asterisco">*</font>
                                 </label>
                                 <select required class="browser-default" name="contrato_id">
                                     @foreach ($contratos as $contrato)
