@@ -188,23 +188,25 @@
     </div>
     <div class="card card-body">
         <div class="form-group col-md-12">
+            <h5>Hallazgos {{ $this->reporte->empleado->name }}</h5>
+        </div>
+        <div class="form-group col-md-12">
 
             <div class="table-responsive">
                 <table class="table">
                     <thead class="head-light">
                         <tr>
-                            <th scope="col-6">Requisito</th>
-                            <th scope="col-6">Descripción</th>
+                            <th>Clausula</th>
                             <th scope="col-6">Subtema</th>
-                            <th scope="col-6">Opciones</th>
-
+                            <th scope="col-6"></th>
+                            {{-- <th scope="col-6">Requisito</th>
+                            <th scope="col-6">Descripción</th> --}}
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($datas as $data)
                             <tr>
-                                <td style="min-width:130px;">{{ $data->incumplimiento_requisito }}</td>
-                                <td style="min-width:100px;">{{ $data->descripcion }}</td>
+                                <td style="min-width:130px;">{{ $data->clausula->nombre_clausulas }}</td>
                                 <td style="min-width:100px;">
                                     <div class="row">
                                         <div class="form-group col-sm-6">
@@ -240,18 +242,19 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td style="min-width:100px;">{{ $data->incumplimiento_requisito }}</td>
+                                <td style="min-width:100px;">{{ $data->descripcion }}</td>
                                 <td style="min-width:100px;">
                                     {{ $data->procesos ? $data->procesos->nombre : 'n/a' }}
                                 </td>
+                            </tr>
+                            <tr>
                                 <td style="min-width:100px;">{{ $data->areas ? $data->areas->area : 'n/a' }}</td>
                                 <td style="min-width:100px;">
                                     {{ $data->clasificacion->nombre_clasificaciones ?? $data->clasificacion_hallazgo }}
                                 </td>
-                                <td style="min-width:40px;">
-                                </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
@@ -276,38 +279,42 @@
             </div>
         </div>
     </div>
-
     <div class="card card-body">
         <div class="row">
-            <div class="form-group col-sm-12">
-                <label class="required" for="comentarios">
-                    Comentarios</label>
-                <textarea class="form-control {{ $errors->has('comentarios') ? 'is-invalid' : '' }}" name="comentarios"
-                    id="comentarios" wire:model.defer="comentarios"></textarea>
-                @if ($errors->has('comentarios'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('comentarios') }}
-                    </div>
-                @endif
+            <div class="col-md-6">
+                <div class="row" style="justify-content: center; display: flex;">
+                    <h3>Firma de Revisión</h3>
+                </div>
+                <div class="row" style="justify-content: center; display: flex;">
+                    <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                </div>
+                <div class="row" style="justify-content: center; display: flex;">
+                    <canvas id="signature-pad" class="signature-pad" width="600" height="250"
+                        style="border: 1px solid black;"></canvas>
+                </div>
+                <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                    <button id="save" type="submit" class="btn btn-outline-primary"
+                        data-auditoria="{{ $id_auditoria }}">Confirmar</button>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="card card-body">
-        <div class="row" style="justify-content: center; display: flex;">
-            <h3>Firma de Revisión</h3>
-        </div>
-        <div class="row" style="justify-content: center; display: flex;">
-            <button id="clear" class="btn btn-link">Limpiar Firma</button>
-        </div>
-        <div class="row" style="justify-content: center; display: flex;">
-            <canvas id="signature-pad" class="signature-pad" width="600" height="250"
-                style="border: 1px solid black;"></canvas>
-
-        </div>
-        <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
-            <button id="save" type="submit" class="btn btn-outline-primary"
-                data-auditoria="{{ $id_auditoria }}">Confirmar</button>
+            <div class="col-md-6">
+                <div class="row" style="justify-content: center; display: flex;">
+                    <h3>Firma de Revisión</h3>
+                </div>
+                <div class="row" style="justify-content: center; display: flex;">
+                    <button id="clear" class="btn btn-link">Limpiar Firma</button>
+                </div>
+                <div class="row" style="justify-content: center; display: flex;">
+                    {{-- <canvas id="signature-pad" class="signature-pad" width="600" height="250"
+                style="border: 1px solid black;"></canvas> --}}
+                    <img width="600" height="250"
+                        src="{{ asset('storage/auditorias-internas/auditoria/' . $this->reporte->id_auditoria . '/firma/' . $this->reporte->empleado->name . $this->reporte->firma_empleado) }}">
+                </div>
+                <div class="row" style="justify-content: center; display: flex; margin-top: 10px;">
+                    <button id="save" type="submit" class="btn btn-outline-primary"
+                        data-auditoria="{{ $id_auditoria }}">Confirmar</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

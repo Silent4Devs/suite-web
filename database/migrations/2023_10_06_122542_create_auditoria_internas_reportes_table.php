@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('id_auditoria');
             $table->unsignedInteger('empleado_id');
             $table->unsignedInteger('lider_id');
-            $table->longText('comentarios')->nulable();
+            $table->longText('comentarios')->nullable();
             $table->string('estado')->nullable();
             $table->string('firma_empleado')->nullable();
             $table->string('firma_lider')->nullable();

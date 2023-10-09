@@ -18,6 +18,13 @@ class AuditoriaInternasReportes extends Model
         "comentarios",
         "estado",
         "firma",
-        "reporte_id"
+        "reporte_id",
+        "firma_empleado",
+        "firma_lider",
     ];
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id')->alta();
+    }
 }

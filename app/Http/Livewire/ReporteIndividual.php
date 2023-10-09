@@ -34,8 +34,6 @@ class ReporteIndividual extends Component
     public $titulo;
 
     public $reporte;
-    public $audit;
-    public $validacionReporte;
 
     public $hallazgoAuditoriaID;
 
@@ -46,7 +44,21 @@ class ReporteIndividual extends Component
         $this->clasificaciones = $clasificaciones;
         $this->clausulas = $clausulas;
         $this->id_auditoria = $id_auditoria;
+
+        $audit = AuditoriaInterna::find($this->id_auditoria);
+        $this->reporte = AuditoriaInternasReportes::where("id_auditoria", "=", $audit->id)
+            ->where("empleado_id", "=", auth()->user()->empleado->id)
+            ->where("lider_id", "=", $audit->lider->id);
+
+        if ($this->reporte->exists()) {
+            $this->reporte = $this->reporte->first();
+            // dd($this->reporte);
+        } else {
+            // dd("Crea uno nuevo");
+            $this->createReporte($audit);
+        }
     }
+
 
     public function render()
     {
@@ -55,6 +67,7 @@ class ReporteIndividual extends Component
         // $areas = Area::getAll();
         $procesos = Proceso::getAll();
         $datas = AuditoriaInternasHallazgos::where('auditoria_internas_id', '=', $this->id_auditoria)
+            ->where("reporte_id", "=", $this->reporte->id)
             ->paginate($this->pagination);
 
         $clasificacionIds = $this->clasificaciones->pluck('id');
@@ -136,18 +149,6 @@ class ReporteIndividual extends Component
 
     public function save()
     {
-        $this->audit = AuditoriaInterna::find($this->id_auditoria);
-
-        $this->reporte = AuditoriaInternasReportes::where("id_auditoria", "=", $this->audit->id)
-            ->where("empleado_id", "=", auth()->user()->empleado->id)
-            ->where("lider_id", "=", $this->audit->lider->id)->first();
-
-        if ($this->reporte === null) {
-            $this->createReporte($this->audit);
-        }
-
-        dd($this->reporte[0]);
-
         $this->validarHallazgosCreate();
         $this->proceso = $this->proceso == '' ? null : $this->proceso;
         $model = AuditoriaInternasHallazgos::create([
