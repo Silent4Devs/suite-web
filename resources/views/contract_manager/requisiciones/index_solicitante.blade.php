@@ -14,6 +14,12 @@
     </style>
     <h5 class="col-12 titulo_general_funcion">Requisiciónes</h5>
     <div class="mt-5 card">
+        <form action="{{ route('contract_manager.requisiciones.indexAprobadores') }}" method="GET">
+            @method('GET')
+            <button class="btn btn-primary" type="submit" title="Aprobadores" >
+                Aprobadores
+            </button>
+        </form>
         <div class="card-body datatable-fix">
             <table id="dom" class="table table-bordered w-100 datatable-perspectiva" style="width: 100%">
                 <thead class="thead-dark">
@@ -289,22 +295,8 @@
                     window.location.href = url;
                 }
             };
-            let btnAprobacion = {
-                text: '<i class="fa-solid fa-envelope"></i> Aprobadores',
-                titleAttr: 'Aprobadores requisicion',
-                url: "{{ route('contract_manager.requisiciones.indexAprobadores') }}",
-                className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                action: function(e, dt, node, config) {
-                    let {
-                        url
-                    } = config;
-                    window.location.href = url;
-                    console.log(url);
-                },
-            };
 
-
-            dtButtons.push(btnAgregar, btnAprobacion);
+            dtButtons.push(btnAgregar);
 
             var table = $('#dom').DataTable({
                 buttons: dtButtons,

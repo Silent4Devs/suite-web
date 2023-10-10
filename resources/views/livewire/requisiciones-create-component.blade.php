@@ -24,7 +24,7 @@
                 Productos</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link disable eliminar {{ $disabled }}" id="profile-tab" onclick="eliminar();"
+            <a class="nav-link disable {{ $disabled }}" id="profile-tab"
                 data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"
                 style="pointer-events: none"><i class="number-icon">2</i> Proveedores</a>
         </li>
@@ -741,22 +741,6 @@
                     'Porfavor Intentelo nuevamente',
                     'error')
             }
-        }
-
-        function eliminar() {
-            $.ajax({
-                type: "DELETE",
-                url: "eliminar-registro",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    // Realizar acciones después de eliminar el registro (por ejemplo, actualizar la vista)
-                },
-                error: function(err) {
-                    console.log(err);
-                }
-            });
         }
     </script>
 
